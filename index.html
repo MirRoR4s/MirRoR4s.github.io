@@ -116,6 +116,11 @@
     <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
 
   </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
         <li class="menu-item menu-item-archives">
 
     <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
@@ -198,10 +203,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2022-04-15 20:17:02 / 修改时间：21:45:26" itemprop="dateCreated datePublished" datetime="2022-04-15T20:17:02+08:00">2022-04-15</time>
+              <time title="创建时间：2022-04-15 20:17:02" itemprop="dateCreated datePublished" datetime="2022-04-15T20:17:02+08:00">2022-04-15</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-04-17 22:59:09" itemprop="dateModified" datetime="2022-04-17T22:59:09+08:00">2022-04-17</time>
+              </span>
 
           
 
@@ -218,32 +229,23 @@
 <p>最大子数组问题在算法导论这本书的由来是股票买卖问题。我们可以选择在交易结束的某一天选择买入或者卖出股票，而且我们已知未来股票的价格，想要解决的问题是如何买入&#x2F;卖出股票才能使得我们的利润最大？</p>
 <p>单纯的最低价格时买进，最高价格时卖出是不行的。</p>
 <p>比如</p>
-<p><img src="/%E7%AE%97%E6%B3%95%E5%AF%BC%E8%AE%BA%E7%AC%AC%E5%9B%9B%E7%AB%A0%E5%88%86%E6%B2%BB%E7%AD%96%E7%95%A5%E4%B9%8B%E6%9C%80%E5%A4%A7%E5%AD%90%E6%95%B0%E7%BB%84.assets/1650025335747.png" alt="1650025335747"></p>
 <p>解决本题的直观想法就是从第 i 天开始，假设以这一天买入股票，然后从 j (  i&lt;j &lt;&#x3D;n ) 天循环遍历到末尾天数 n，不断计算价格差，然后最大的价格差就是我们想要的答案</p>
-<p><img src="/%E7%AE%97%E6%B3%95%E5%AF%BC%E8%AE%BA%E7%AC%AC%E5%9B%9B%E7%AB%A0%E5%88%86%E6%B2%BB%E7%AD%96%E7%95%A5%E4%B9%8B%E6%9C%80%E5%A4%A7%E5%AD%90%E6%95%B0%E7%BB%84.assets/1650026105405.png" alt="1650026105405"></p>
 <p>如何找出更好的解决问题的办法？书中给出了一个指引，转换解决问题的角度，不在拘泥于价格本身，而是去观察价格的变化量。</p>
 <p>将价格的变化量统计成一个数组，找出此数组的最大子数组，那么最大子数组的和就是我们能获得的最大收益。</p>
-<p><img src="/%E7%AE%97%E6%B3%95%E5%AF%BC%E8%AE%BA%E7%AC%AC%E5%9B%9B%E7%AB%A0%E5%88%86%E6%B2%BB%E7%AD%96%E7%95%A5%E4%B9%8B%E6%9C%80%E5%A4%A7%E5%AD%90%E6%95%B0%E7%BB%84.assets/1650026338208.png" alt="1650026338208"></p>
-<p><img src="/%E7%AE%97%E6%B3%95%E5%AF%BC%E8%AE%BA%E7%AC%AC%E5%9B%9B%E7%AB%A0%E5%88%86%E6%B2%BB%E7%AD%96%E7%95%A5%E4%B9%8B%E6%9C%80%E5%A4%A7%E5%AD%90%E6%95%B0%E7%BB%84.assets/1650026348305.png" alt="1650026348305"></p>
+<p><img src="/%E7%AE%97%E6%B3%95%E5%AF%BC%E8%AE%BA%E7%AC%AC%E5%9B%9B%E7%AB%A0%E5%88%86%E6%B2%BB%E7%AD%96%E7%95%A5%E4%B9%8B%E6%9C%80%E5%A4%A7%E5%AD%90%E6%95%B0%E7%BB%84.assets/1650025335747.png" alt="1650025335747"></p>
 <p>为什么最大子数组的和就是我们能获得的最大利润呢？这一点或许我也没有想通透。</p>
 <p>首先最大子数组是一个非空的连续子数组，数组的值是价格变化量，下标是天数。那么非空连续子数组的和代表的含义就是在一段连续的天数内，价格变化量的和。</p>
 <p>如果在数组的所有非空连续子数组中，某个子数组和是最大的，也就意味着其对应的那段连续天数的价格变化量的和是最大的，这个和大于所有连续子数组的和。 价格变化量的和越大，代表着从第一天买入股票到该连续天数的最后一天卖出股票所能获得的收益越大。</p>
 <p>那么我们只要在最大子数组代表着的这一段连续天数的第一天购入股票，最后一天卖出股票，就得到了最大的价格变化量之和。显然地，价格变化量之和代表着我们的利润，最大价格变化量之和对应着最大利润即对应着最大的连续子数组。所以最大连续子数组的和就是最大利润！</p>
 <p>好，接下来说如何求解最大子数组。</p>
-<p><img src="/%E7%AE%97%E6%B3%95%E5%AF%BC%E8%AE%BA%E7%AC%AC%E5%9B%9B%E7%AB%A0%E5%88%86%E6%B2%BB%E7%AD%96%E7%95%A5%E4%B9%8B%E6%9C%80%E5%A4%A7%E5%AD%90%E6%95%B0%E7%BB%84.assets/1650027504618.png" alt="1650027504618"></p>
-<p><img src="/%E7%AE%97%E6%B3%95%E5%AF%BC%E8%AE%BA%E7%AC%AC%E5%9B%9B%E7%AB%A0%E5%88%86%E6%B2%BB%E7%AD%96%E7%95%A5%E4%B9%8B%E6%9C%80%E5%A4%A7%E5%AD%90%E6%95%B0%E7%BB%84.assets/1650027532820.png" alt="1650027532820"></p>
 <p>好的，问题求解很显而易见了。A[low..high] 的最大子数组要么在A[low..mid] 要么在A[mid+1..high] 或者说最大子数组跨越了中点。而求解A[low..high]的最大子数组跟求解A[low..mid] A[mid+1..high]的解形式是一样的。所以我们可以递归的求解，当数组中只含有一个元素时，递归返回最大子数组的和为当前元素的值。</p>
 <p>关键是如何求解跨越了中点的最大子数组？因为最大子数组跨越了中点，在我的想法中，可以看作是从中点出发，向两边发散出去，直至遇见最大子数组的左边界 右边界。所以我们可以从中点开始，逆序地求出以中点为结尾的最大子数组，这个可以通过一个循环+比较实现。同理，在从中点下一个节点开始（中点在前面算过了，跳过一下），正序的求出以此节点为起点的最大子数组。</p>
 <p>书上给出的伪代码如下：</p>
-<p><img src="/%E7%AE%97%E6%B3%95%E5%AF%BC%E8%AE%BA%E7%AC%AC%E5%9B%9B%E7%AB%A0%E5%88%86%E6%B2%BB%E7%AD%96%E7%95%A5%E4%B9%8B%E6%9C%80%E5%A4%A7%E5%AD%90%E6%95%B0%E7%BB%84.assets/1650028067425.png" alt="1650028067425"></p>
 <p>咳咳不要问我为什么不说算法时间复杂度分析，我觉得要说就好好说，但是第四章的后面求解算法上下界的那部分我还没学好。。以后再来修改自己写的博客，对我当前的水平来说，不分析也无伤大雅，主要是学习算法的思想。</p>
-<p><img src="/%E7%AE%97%E6%B3%95%E5%AF%BC%E8%AE%BA%E7%AC%AC%E5%9B%9B%E7%AB%A0%E5%88%86%E6%B2%BB%E7%AD%96%E7%95%A5%E4%B9%8B%E6%9C%80%E5%A4%A7%E5%AD%90%E6%95%B0%E7%BB%84.assets/1650028327220.png" alt="1650028327220"></p>
 <p>下面给出自己的python伪代码，这玩意跟伪代码真的很接近了。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">FIND_MAX_CROSSING_SUBARRAY</span>(<span class="params">A,low,mid,high</span>):</span><br><span class="line">    left_sum = -sys.maxsize - <span class="number">1</span> <span class="comment">#首先将left_sum初始化为一个很小的数</span></span><br><span class="line">    <span class="built_in">sum</span> = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(mid,low-<span class="number">1</span>,-<span class="number">1</span>):</span><br><span class="line">        <span class="built_in">sum</span> += A[i]</span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">sum</span> &gt; left_sum):</span><br><span class="line">            left_sum = <span class="built_in">sum</span></span><br><span class="line">            left = i</span><br><span class="line">    right_sum = -sys.maxsize - <span class="number">1</span></span><br><span class="line">    <span class="built_in">sum</span> = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(mid+<span class="number">1</span>,high+<span class="number">1</span>):</span><br><span class="line">        <span class="built_in">sum</span> += A[j]</span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">sum</span> &gt; right_sum):</span><br><span class="line">            right_sum = <span class="built_in">sum</span></span><br><span class="line">            right = j</span><br><span class="line">    <span class="keyword">return</span> (left,right,left_sum + right_sum)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">FIND_MAXIMUN_SUBARRAY</span>(<span class="params">A,low,high</span>):</span><br><span class="line">    <span class="keyword">if</span> (low == high):</span><br><span class="line">        <span class="keyword">return</span> (low,high,A[low])</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        mid = low + (high - low ) // <span class="number">2</span><span class="comment">#分解</span></span><br><span class="line">        left_sum = FIND_MAXIMUN_SUBARRAY(A,low,mid)<span class="comment">#解决</span></span><br><span class="line">        right_sum = FIND_MAXIMUN_SUBARRAY(A,mid+<span class="number">1</span>,high)<span class="comment">#解决</span></span><br><span class="line">        mid_sum = FIND_MAX_CROSSING_SUBARRAY(A,low,mid,high)</span><br><span class="line">        <span class="keyword">if</span> (left_sum[<span class="number">2</span>] &gt;= right_sum[<span class="number">2</span>] <span class="keyword">and</span> left_sum[<span class="number">2</span>] &gt;= mid_sum[<span class="number">2</span>]):</span><br><span class="line">            <span class="keyword">return</span> (left_sum)</span><br><span class="line">        <span class="keyword">elif</span>(right_sum[<span class="number">2</span>] &gt;= left_sum[<span class="number">2</span>] <span class="keyword">and</span> right_sum[<span class="number">2</span>] &gt;= mid_sum[<span class="number">2</span>]):</span><br><span class="line">            <span class="keyword">return</span> (right_sum)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">return</span> (mid_sum)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">A = [-<span class="number">2</span>,<span class="number">1</span>,-<span class="number">3</span>,<span class="number">4</span>,-<span class="number">1</span>,<span class="number">2</span>,<span class="number">1</span>,-<span class="number">5</span>,<span class="number">4</span>]</span><br><span class="line"><span class="built_in">print</span>(FIND_MAXIMUN_SUBARRAY(A,<span class="number">0</span>,<span class="built_in">len</span>(A)-<span class="number">1</span>))</span><br></pre></td></tr></table></figure>
 
 <p>直接拿力扣那个无敌规模的输入测试，卡死我了。。</p>
-<p><img src="/%E7%AE%97%E6%B3%95%E5%AF%BC%E8%AE%BA%E7%AC%AC%E5%9B%9B%E7%AB%A0%E5%88%86%E6%B2%BB%E7%AD%96%E7%95%A5%E4%B9%8B%E6%9C%80%E5%A4%A7%E5%AD%90%E6%95%B0%E7%BB%84.assets/1650030211556.png" alt="1650030211556"></p>
-<p><img src="/%E7%AE%97%E6%B3%95%E5%AF%BC%E8%AE%BA%E7%AC%AC%E5%9B%9B%E7%AB%A0%E5%88%86%E6%B2%BB%E7%AD%96%E7%95%A5%E4%B9%8B%E6%9C%80%E5%A4%A7%E5%AD%90%E6%95%B0%E7%BB%84.assets/1650030224457.png" alt="1650030224457"></p>
 <p>哈哈哈，在我的编译器几乎一秒出答案，而这个力扣的24秒是用线性算法加上C++写的….</p>
 <p>剩下的线性时间复杂度的算法，重头戏了，解决问题的最佳方法。</p>
 
