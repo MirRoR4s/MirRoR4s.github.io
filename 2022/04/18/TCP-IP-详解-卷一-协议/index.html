@@ -20,19 +20,20 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="想成为c++专家 黑客 密码学爱好者">
+  <meta name="description" content="花大概三天左右的时间看完了这本书的开头到TCP章节结束部分，脑壳疼。 下面总结一下课后的习题以及老师曾经布置过的作业 第一章：概述习题： 1.1 请计算有多少个A类 B类和C类网络号？ 答: A类地址网络号为8位，但是最高位固定为0，所以实际上可控的网络号是7位，并且规定网络号全0跟全1非法不能使用，所以真正的A类网络号个数为$2^7$ -2。以下是同理 B类地址网络号为16位，但是最高的前两位固">
 <meta property="og:type" content="article">
-<meta property="og:title" content="test-category">
-<meta property="og:url" content="http://example.com/2022/04/17/test-category/index.html">
+<meta property="og:title" content="TCP&#x2F;IP 详解 卷一:协议">
+<meta property="og:url" content="http://example.com/2022/04/18/TCP-IP-%E8%AF%A6%E8%A7%A3-%E5%8D%B7%E4%B8%80-%E5%8D%8F%E8%AE%AE/index.html">
 <meta property="og:site_name" content="学习记录">
-<meta property="og:description" content="想成为c++专家 黑客 密码学爱好者">
+<meta property="og:description" content="花大概三天左右的时间看完了这本书的开头到TCP章节结束部分，脑壳疼。 下面总结一下课后的习题以及老师曾经布置过的作业 第一章：概述习题： 1.1 请计算有多少个A类 B类和C类网络号？ 答: A类地址网络号为8位，但是最高位固定为0，所以实际上可控的网络号是7位，并且规定网络号全0跟全1非法不能使用，所以真正的A类网络号个数为$2^7$ -2。以下是同理 B类地址网络号为16位，但是最高的前两位固">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2022-04-17T15:14:37.000Z">
-<meta property="article:modified_time" content="2022-04-17T15:14:37.855Z">
+<meta property="article:published_time" content="2022-04-18T03:38:34.000Z">
+<meta property="article:modified_time" content="2022-04-18T04:05:35.545Z">
 <meta property="article:author" content="MirRoR4s">
+<meta property="article:tag" content="计算机网络">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://example.com/2022/04/17/test-category/">
+<link rel="canonical" href="http://example.com/2022/04/18/TCP-IP-%E8%AF%A6%E8%A7%A3-%E5%8D%B7%E4%B8%80-%E5%8D%8F%E8%AE%AE/">
 
 
 <script id="page-configurations">
@@ -45,7 +46,7 @@
   };
 </script>
 
-  <title>test-category | 学习记录</title>
+  <title>TCP/IP 详解 卷一:协议 | 学习记录</title>
   
 
 
@@ -118,6 +119,11 @@
     <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
 
   </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
         <li class="menu-item menu-item-categories">
 
     <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
@@ -126,16 +132,6 @@
         <li class="menu-item menu-item-archives">
 
     <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
-
-  </li>
-        <li class="menu-item menu-item-算法/程序设计">
-
-    <a href="/algorithm/" rel="section"><i class="code fa-fw"></i>算法/程序设计</a>
-
-  </li>
-        <li class="menu-item menu-item-ctf">
-
-    <a href="/ctf/" rel="section"><i class="ctf fa-fw"></i>CTF</a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -193,7 +189,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/04/17/test-category/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/04/18/TCP-IP-%E8%AF%A6%E8%A7%A3-%E5%8D%B7%E4%B8%80-%E5%8D%8F%E8%AE%AE/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -206,7 +202,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          test-category
+          TCP/IP 详解 卷一:协议
         </h1>
 
         <div class="post-meta">
@@ -215,8 +211,18 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
+              
 
-              <time title="创建时间：2022-04-17 23:14:37" itemprop="dateCreated datePublished" datetime="2022-04-17T23:14:37+08:00">2022-04-17</time>
+              <time title="创建时间：2022-04-18 11:38:34 / 修改时间：12:05:35" itemprop="dateCreated datePublished" datetime="2022-04-18T11:38:34+08:00">2022-04-18</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" itemprop="url" rel="index"><span itemprop="name">计算机基础知识</span></a>
+                </span>
             </span>
 
           
@@ -230,7 +236,22 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        
+        <p>花大概三天左右的时间看完了这本书的开头到TCP章节结束部分，脑壳疼。</p>
+<p>下面总结一下课后的习题以及老师曾经布置过的作业</p>
+<h1 id="第一章：概述"><a href="#第一章：概述" class="headerlink" title="第一章：概述"></a>第一章：概述</h1><p>习题：</p>
+<p>1.1 请计算有多少个A类 B类和C类网络号？</p>
+<p>答: A类地址网络号为8位，但是最高位固定为0，所以实际上可控的网络号是7位，并且规定网络号全0跟全1非法不能使用，所以真正的A类网络号个数为$2^7$ -2。以下是同理</p>
+<p>B类地址网络号为16位，但是最高的前两位固定为1 0 ，所以可控位数是14位，同样全0全1不能使用，所以B类网络号个数是2的14次方-2</p>
+<p>C类网络号为24位，最高的前三位固定位 1 1 0，跟以上同理可得C类网络号为2的21次方 - 2</p>
+<p>后面的题大概不用去做了，不是很方便。下面给出曾经老师布置过的第一章题目</p>
+<ol>
+<li><p>简述并发型服务器和循环型服务器的工作过程</p>
+<p>(1)重复型服务器：I1.等待一个客户请求的到来 I2.处理客户请求 I3.发送响应给发送请求的客户 I4.返回I1步</p>
+<p>(2)循环型服务器：C1.等待一个客户请求的到来 C2.启动一个新的服务器来处理这个客户的请求。在这期间可能生成一个新的进程 任务或者线程，并依赖底层操作系统的支持。生成的新服务器对客户的全部请求进行处理。处理结束后，终止这个新服务器。C3.返回C1步</p>
+<p>一般来说TCP服务器是并发的，UDP服务器是重复的</p>
+</li>
+</ol>
+
     </div>
 
     
@@ -238,6 +259,9 @@
     
 
       <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" rel="tag"># 计算机网络</a>
+          </div>
 
         
 
@@ -307,6 +331,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E7%AB%A0%EF%BC%9A%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">第一章：概述</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -324,8 +349,15 @@
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
+          
         <span class="site-state-item-count">2</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
