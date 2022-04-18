@@ -20,30 +20,38 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="想成为c++专家 黑客 密码学爱好者">
-<meta property="og:type" content="website">
-<meta property="og:title" content="学习记录">
-<meta property="og:url" content="http://example.com/index.html">
+  <meta name="description" content="Zhuanxv 题目描述：你只是在扫描目标端口的时候发现了一个开放的web服务  1.使用dirsearch进行目录扫描，得到&#x2F;list后台登陆界面，尝试登陆&#x2F;sql注入无果 2.抓包尝试访问一下 &#x2F; 以及&#x2F;list ,在&#x2F; 下发现 出现jsessionid，说明是java开发的网页。 3.burp抓包发现当访问&#x2F;list目录时，会先加载">
+<meta property="og:type" content="article">
+<meta property="og:title" content="XCTF 4th-SCTF-2018-Web-Zhuanxv">
+<meta property="og:url" content="http://example.com/2022/04/18/XCTF-4th-SCTF-2018-Web-Zhuanxv/index.html">
 <meta property="og:site_name" content="学习记录">
-<meta property="og:description" content="想成为c++专家 黑客 密码学爱好者">
+<meta property="og:description" content="Zhuanxv 题目描述：你只是在扫描目标端口的时候发现了一个开放的web服务  1.使用dirsearch进行目录扫描，得到&#x2F;list后台登陆界面，尝试登陆&#x2F;sql注入无果 2.抓包尝试访问一下 &#x2F; 以及&#x2F;list ,在&#x2F; 下发现 出现jsessionid，说明是java开发的网页。 3.burp抓包发现当访问&#x2F;list目录时，会先加载">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/images/1649936878497.png">
+<meta property="og:image" content="http://example.com/images/1649936821330.png">
+<meta property="og:image" content="http://example.com/images/1649937312485.png">
+<meta property="og:image" content="http://example.com/images/1649937416411.png">
+<meta property="article:published_time" content="2022-04-18T15:17:10.000Z">
+<meta property="article:modified_time" content="2022-04-18T15:17:57.585Z">
 <meta property="article:author" content="MirRoR4s">
+<meta property="article:tag" content="WEB安全">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/1649936878497.png">
 
-<link rel="canonical" href="http://example.com/">
+<link rel="canonical" href="http://example.com/2022/04/18/XCTF-4th-SCTF-2018-Web-Zhuanxv/">
 
 
 <script id="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome : true,
-    isPost : false,
+    isHome : false,
+    isPost : true,
     lang   : 'zh-CN'
   };
 </script>
 
-  <title>学习记录</title>
+  <title>XCTF 4th-SCTF-2018-Web-Zhuanxv | 学习记录</title>
   
 
 
@@ -179,9 +187,10 @@
         <div class="content-wrap">
           
 
-          <div class="content index posts-expand">
+          <div class="content post posts-expand">
             
-      
+
+    
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
@@ -197,10 +206,9 @@
       <meta itemprop="name" content="学习记录">
     </span>
       <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/04/18/XCTF-4th-SCTF-2018-Web-Zhuanxv/" class="post-title-link" itemprop="url">XCTF 4th-SCTF-2018-Web-Zhuanxv</a>
-        </h2>
+        <h1 class="post-title" itemprop="name headline">
+          XCTF 4th-SCTF-2018-Web-Zhuanxv
+        </h1>
 
         <div class="post-meta">
             <span class="post-meta-item">
@@ -233,7 +241,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="Zhuanxv"><a href="#Zhuanxv" class="headerlink" title="Zhuanxv"></a>Zhuanxv</h1><p> 题目描述：你只是在扫描目标端口的时候发现了一个开放的web服务 </p>
+        <h1 id="Zhuanxv"><a href="#Zhuanxv" class="headerlink" title="Zhuanxv"></a>Zhuanxv</h1><p> 题目描述：你只是在扫描目标端口的时候发现了一个开放的web服务 </p>
 <p>1.使用dirsearch进行目录扫描，得到&#x2F;list后台登陆界面，尝试登陆&#x2F;sql注入无果</p>
 <p>2.抓包尝试访问一下 &#x2F; 以及&#x2F;list ,在&#x2F; 下发现<img src="/../images/1649936878497.png" alt="1649936878497"></p>
 <p>出现jsessionid，说明是java开发的网页。</p>
@@ -254,333 +262,34 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">loadimage?fileName=../../WEB-INF/classes/user.hbm.xml</span><br><span class="line">loadimage?fileName=../../WEB-INF/classes/com/cuitctf/service/impl/UserServiceImpl.<span class="keyword">class</span></span><br><span class="line"><span class="title class_">loadimage</span>?fileName=../../WEB-INF/classes/com/cuitctf/dao/impl/UserDaoImpl.class</span><br></pre></td></tr></table></figure>
 
 
-      
     </div>
 
     
     
     
+
       <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
+          <div class="post-tags">
+              <a href="/tags/WEB%E5%AE%89%E5%85%A8/" rel="tag"># WEB安全</a>
+          </div>
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/04/18/TCP-IP-%E8%AF%A6%E8%A7%A3-%E5%8D%B7%E4%B8%80-%E5%8D%8F%E8%AE%AE-2/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="MirRoR4s">
-      <meta itemprop="description" content="想成为c++专家 黑客 密码学爱好者">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="学习记录">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/04/18/TCP-IP-%E8%AF%A6%E8%A7%A3-%E5%8D%B7%E4%B8%80-%E5%8D%8F%E8%AE%AE-2/" class="post-title-link" itemprop="url">TCP-IP-详解-卷一-协议-2</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2022-04-18 18:02:57 / 修改时间：21:30:46" itemprop="dateCreated datePublished" datetime="2022-04-18T18:02:57+08:00">2022-04-18</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" itemprop="url" rel="index"><span itemprop="name">计算机基础知识</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>欲知后事如何，请阅读全文。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/04/18/TCP-IP-%E8%AF%A6%E8%A7%A3-%E5%8D%B7%E4%B8%80-%E5%8D%8F%E8%AE%AE-2/">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
         
-      
-    </div>
 
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/04/18/TCP-IP-%E8%AF%A6%E8%A7%A3-%E5%8D%B7%E4%B8%80-%E5%8D%8F%E8%AE%AE/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="MirRoR4s">
-      <meta itemprop="description" content="想成为c++专家 黑客 密码学爱好者">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="学习记录">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/04/18/TCP-IP-%E8%AF%A6%E8%A7%A3-%E5%8D%B7%E4%B8%80-%E5%8D%8F%E8%AE%AE/" class="post-title-link" itemprop="url">TCP/IP 详解 卷一:协议</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2022-04-18 11:38:34 / 修改时间：21:32:08" itemprop="dateCreated datePublished" datetime="2022-04-18T11:38:34+08:00">2022-04-18</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" itemprop="url" rel="index"><span itemprop="name">计算机基础知识</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>卷一的一些基础章节</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/04/18/TCP-IP-%E8%AF%A6%E8%A7%A3-%E5%8D%B7%E4%B8%80-%E5%8D%8F%E8%AE%AE/">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
         
-      
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/04/18/TCP-IP-%E8%AF%A6%E8%A7%A3-%E5%8D%B7%E4%B8%80-%E5%8D%8F%E8%AE%AE-2/" rel="prev" title="TCP-IP-详解-卷一-协议-2">
+      <i class="fa fa-chevron-left"></i> TCP-IP-详解-卷一-协议-2
+    </a></div>
+      <div class="post-nav-item"></div>
     </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
       </footer>
+    
   </article>
   
   
   
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/04/15/%E7%AE%97%E6%B3%95%E5%AF%BC%E8%AE%BA%E7%AC%AC%E5%9B%9B%E7%AB%A0%E5%88%86%E6%B2%BB%E7%AD%96%E7%95%A5%E4%B9%8B%E6%9C%80%E5%A4%A7%E5%AD%90%E6%95%B0%E7%BB%84/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="MirRoR4s">
-      <meta itemprop="description" content="想成为c++专家 黑客 密码学爱好者">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="学习记录">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/04/15/%E7%AE%97%E6%B3%95%E5%AF%BC%E8%AE%BA%E7%AC%AC%E5%9B%9B%E7%AB%A0%E5%88%86%E6%B2%BB%E7%AD%96%E7%95%A5%E4%B9%8B%E6%9C%80%E5%A4%A7%E5%AD%90%E6%95%B0%E7%BB%84/" class="post-title-link" itemprop="url">算法导论第四章分治策略之最大子数组</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-04-15 20:17:02" itemprop="dateCreated datePublished" datetime="2022-04-15T20:17:02+08:00">2022-04-15</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-04-18 21:32:55" itemprop="dateModified" datetime="2022-04-18T21:32:55+08:00">2022-04-18</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">算法</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>浅谈自己对最大子数组的理解</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/04/15/%E7%AE%97%E6%B3%95%E5%AF%BC%E8%AE%BA%E7%AC%AC%E5%9B%9B%E7%AB%A0%E5%88%86%E6%B2%BB%E7%AD%96%E7%95%A5%E4%B9%8B%E6%9C%80%E5%A4%A7%E5%AD%90%E6%95%B0%E7%BB%84/">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/04/15/%E7%AE%97%E6%B3%95%E5%AF%BC%E8%AE%BA%E7%AC%AC%E5%9B%9B%E7%AB%A0%E5%88%86%E6%B2%BB%E7%AD%96%E7%95%A5/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="MirRoR4s">
-      <meta itemprop="description" content="想成为c++专家 黑客 密码学爱好者">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="学习记录">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/04/15/%E7%AE%97%E6%B3%95%E5%AF%BC%E8%AE%BA%E7%AC%AC%E5%9B%9B%E7%AB%A0%E5%88%86%E6%B2%BB%E7%AD%96%E7%95%A5/" class="post-title-link" itemprop="url">算法导论第四章分治策略</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-04-15 19:04:20" itemprop="dateCreated datePublished" datetime="2022-04-15T19:04:20+08:00">2022-04-15</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-04-18 11:34:11" itemprop="dateModified" datetime="2022-04-18T11:34:11+08:00">2022-04-18</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">算法</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p> 这一章真是脑壳疼…</p>
-<h2 id="4-3-用代入法求解递归式"><a href="#4-3-用代入法求解递归式" class="headerlink" title="4.3 用代入法求解递归式"></a>4.3 用代入法求解递归式</h2><p>代入法的操作步骤：</p>
-<p>1.猜测解的形式。</p>
-<p>2.运用数学归纳法求出解中的常数，并证明解是正确的。</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-
-  
-  <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
-  </nav>
 
 
 
@@ -632,6 +341,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Zhuanxv"><span class="nav-number">1.</span> <span class="nav-text">Zhuanxv</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
