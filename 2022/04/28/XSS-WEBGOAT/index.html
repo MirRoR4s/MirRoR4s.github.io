@@ -20,20 +20,19 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="顺序存储结构是随机存取的结构，能快速取出某个位置的元素。但是不方便添加或者删除元素，为此提出了链式存储结构。">
+  <meta name="description" content="想成为c++专家 黑客 密码学爱好者">
 <meta property="og:type" content="article">
-<meta property="og:title" content="线性表之链式存储结构">
-<meta property="og:url" content="http://example.com/2022/04/28/%E7%BA%BF%E6%80%A7%E8%A1%A8%E4%B9%8B%E9%93%BE%E5%BC%8F%E5%AD%98%E5%82%A8%E7%BB%93%E6%9E%84/index.html">
+<meta property="og:title" content="XSS_WEBGOAT">
+<meta property="og:url" content="http://example.com/2022/04/28/XSS-WEBGOAT/index.html">
 <meta property="og:site_name" content="学习记录">
-<meta property="og:description" content="顺序存储结构是随机存取的结构，能快速取出某个位置的元素。但是不方便添加或者删除元素，为此提出了链式存储结构。">
+<meta property="og:description" content="想成为c++专家 黑客 密码学爱好者">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2022-04-28T01:36:49.000Z">
-<meta property="article:modified_time" content="2022-04-28T07:16:08.701Z">
+<meta property="article:published_time" content="2022-04-28T08:32:46.000Z">
+<meta property="article:modified_time" content="2022-04-28T08:32:46.916Z">
 <meta property="article:author" content="MirRoR4s">
-<meta property="article:tag" content="algorithm">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://example.com/2022/04/28/%E7%BA%BF%E6%80%A7%E8%A1%A8%E4%B9%8B%E9%93%BE%E5%BC%8F%E5%AD%98%E5%82%A8%E7%BB%93%E6%9E%84/">
+<link rel="canonical" href="http://example.com/2022/04/28/XSS-WEBGOAT/">
 
 
 <script id="page-configurations">
@@ -46,7 +45,7 @@
   };
 </script>
 
-  <title>线性表之链式存储结构 | 学习记录</title>
+  <title>XSS_WEBGOAT | 学习记录</title>
   
 
 
@@ -189,7 +188,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/04/28/%E7%BA%BF%E6%80%A7%E8%A1%A8%E4%B9%8B%E9%93%BE%E5%BC%8F%E5%AD%98%E5%82%A8%E7%BB%93%E6%9E%84/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/04/28/XSS-WEBGOAT/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -202,7 +201,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          线性表之链式存储结构
+          XSS_WEBGOAT
         </h1>
 
         <div class="post-meta">
@@ -211,9 +210,8 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2022-04-28 09:36:49 / 修改时间：15:16:08" itemprop="dateCreated datePublished" datetime="2022-04-28T09:36:49+08:00">2022-04-28</time>
+              <time title="创建时间：2022-04-28 16:32:46" itemprop="dateCreated datePublished" datetime="2022-04-28T16:32:46+08:00">2022-04-28</time>
             </span>
 
           
@@ -227,23 +225,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>顺序存储结构是随机存取的结构，能快速取出某个位置的元素。但是不方便添加或者删除元素，为此提出了链式存储结构。<span id="more"></span></p>
-<h2 id="0x01-单链表的创建"><a href="#0x01-单链表的创建" class="headerlink" title="0x01 单链表的创建"></a>0x01 单链表的创建</h2><p>单链表结构组成：</p>
-<p>1）数据域</p>
-<p>2）指针域</p>
-<p>数据域存放当前元素的值，而指针域告诉我们如何去寻找当前元素的下一个元素。</p>
-<p>预定义结构</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> ElemType int</span></span><br></pre></td></tr></table></figure>
-
-<p>单链表定义</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span> <span class="title class_">LNode</span></span><br><span class="line">&#123;</span><br><span class="line">    ElemType data; <span class="comment">//数据域</span></span><br><span class="line">    <span class="keyword">struct</span> <span class="title class_">LNode</span> *next; <span class="comment">//指针域，指向一个LNode结构的指针</span></span><br><span class="line">&#125;LNode,*LinkList;</span><br></pre></td></tr></table></figure>
-
-<p>为了使用方便，以下实现的都是带头节点的单链表。也就是说链表真正的第一个结点是头结点的下一个结点。</p>
-<h2 id="0x02-查找单链表某位置的元素"><a href="#0x02-查找单链表某位置的元素" class="headerlink" title="0x02 查找单链表某位置的元素"></a>0x02 查找单链表某位置的元素</h2><p>单链表查找第i个位置的元素无法像顺序结构的线性表那样直接根据基地址取出，而是必须从头结点开始逐个遍历。</p>
-<p>以下函数实现查单链表中第i个位置的元素，找不到返回-1，找到则返回其值并赋值给e。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">GetElem_L</span><span class="params">(LinkList L,<span class="type">int</span> i,ElemType &amp;e)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    LinkList p = L-&gt;next;<span class="comment">//p指向链表第一个结点，即头结点下一个结点</span></span><br><span class="line">    <span class="type">int</span> j = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">while</span>(p &amp;&amp; j &lt; i)</span><br><span class="line">    &#123;</span><br><span class="line">        p = p-&gt;next;</span><br><span class="line">        ++j;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(!p || j &gt; i)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    e = p-&gt;data;</span><br><span class="line">    <span class="keyword">return</span> e;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
+        
     </div>
 
     
@@ -251,9 +233,6 @@
     
 
       <footer class="post-footer">
-          <div class="post-tags">
-              <a href="/tags/algorithm/" rel="tag"># algorithm</a>
-          </div>
 
         
 
@@ -261,13 +240,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2022/04/27/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84C%E8%AF%AD%E8%A8%80%E7%89%88-%E7%BA%BF%E6%80%A7%E8%A1%A8%E7%9A%84%E9%A1%BA%E5%BA%8F%E5%AD%98%E5%82%A8%E7%BB%93%E6%9E%84%E7%9B%B8%E5%85%B3%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0/" rel="prev" title="数据结构C语言版_线性表的顺序存储结构相关代码实现">
-      <i class="fa fa-chevron-left"></i> 数据结构C语言版_线性表的顺序存储结构相关代码实现
+    <a href="/2022/04/28/XSS/" rel="prev" title="XSS">
+      <i class="fa fa-chevron-left"></i> XSS
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2022/04/28/DVWA-XSS-Reflected/" rel="next" title="DVWA_XSS(Reflected)">
-      DVWA_XSS(Reflected) <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -326,7 +302,6 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#0x01-%E5%8D%95%E9%93%BE%E8%A1%A8%E7%9A%84%E5%88%9B%E5%BB%BA"><span class="nav-number">1.</span> <span class="nav-text">0x01 单链表的创建</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x02-%E6%9F%A5%E6%89%BE%E5%8D%95%E9%93%BE%E8%A1%A8%E6%9F%90%E4%BD%8D%E7%BD%AE%E7%9A%84%E5%85%83%E7%B4%A0"><span class="nav-number">2.</span> <span class="nav-text">0x02 查找单链表某位置的元素</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
