@@ -301,6 +301,10 @@
 <p>安装bwapp的虚拟机： <a href="https://sourceforge.net/projects/bwapp/files/bee-box/bee-box_v1.6.7z/download">https://sourceforge.net/projects/bwapp/files/bee-box/bee-box_v1.6.7z/download</a> ，下载解压用vmware打开里面的vmx文件即可。</p>
 <p>选择NAT模式，不选也可以，反正让现实的主机能访问到即可</p>
 <p>开机之后界面就有bwapp-start图标了，用bee &#x2F;bug 账号密码登陆然后选择漏洞开始测试。bwapp的xxe都是有回显的，比较初级，拿来练手再合适不过。</p>
+<span id="more"></span>
+
+
+
 <h2 id="0x01-low等级"><a href="#0x01-low等级" class="headerlink" title="0x01 (low等级)"></a>0x01 (low等级)</h2><p>原理剖析：</p>
 <p><img src="/../images/1650774373481.png" alt="1650774373481"></p>
 <p>body变量可控，并且作为simplexml_load_string的参数。此函数会将一个符合规范的，良好的xml文档变成一个类对象，例子：</p>
@@ -395,5 +399,29 @@
       <categories>
         <category>算法</category>
       </categories>
+  </entry>
+  <entry>
+    <title>线性表之链式存储结构</title>
+    <url>/2022/04/28/%E7%BA%BF%E6%80%A7%E8%A1%A8%E4%B9%8B%E9%93%BE%E5%BC%8F%E5%AD%98%E5%82%A8%E7%BB%93%E6%9E%84/</url>
+    <content><![CDATA[<p>顺序存储结构是随机存取的结构，能快速取出某个位置的元素。但是不方便添加或者删除元素，为此提出了链式存储结构。<span id="more"></span></p>
+<h2 id="0x01-单链表的创建"><a href="#0x01-单链表的创建" class="headerlink" title="0x01 单链表的创建"></a>0x01 单链表的创建</h2><p>单链表结构组成：</p>
+<p>1）数据域</p>
+<p>2）指针域</p>
+<p>数据域存放当前元素的值，而指针域告诉我们如何去寻找当前元素的下一个元素。</p>
+<p>预定义结构</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> ElemType int</span></span><br></pre></td></tr></table></figure>
+
+<p>单链表定义</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span> <span class="title class_">LNode</span></span><br><span class="line">&#123;</span><br><span class="line">    ElemType data; <span class="comment">//数据域</span></span><br><span class="line">    <span class="keyword">struct</span> <span class="title class_">LNode</span> *next; <span class="comment">//指针域，指向一个LNode结构的指针</span></span><br><span class="line">&#125;LNode,*LinkList;</span><br></pre></td></tr></table></figure>
+
+<p>为了使用方便，以下实现的都是带头节点的单链表。也就是说链表真正的第一个结点是头结点的下一个结点。</p>
+<h2 id="0x02-查找单链表某位置的元素"><a href="#0x02-查找单链表某位置的元素" class="headerlink" title="0x02 查找单链表某位置的元素"></a>0x02 查找单链表某位置的元素</h2><p>单链表查找第i个位置的元素无法像顺序结构的线性表那样直接根据基地址取出，而是必须从头结点开始逐个遍历。</p>
+<p>以下函数实现查单链表中第i个位置的元素，找不到返回-1，找到则返回其值并赋值给e。</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">GetElem_L</span><span class="params">(LinkList L,<span class="type">int</span> i,ElemType &amp;e)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    LinkList p = L-&gt;next;<span class="comment">//p指向链表第一个结点，即头结点下一个结点</span></span><br><span class="line">    <span class="type">int</span> j = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">while</span>(p &amp;&amp; j &lt; i)</span><br><span class="line">    &#123;</span><br><span class="line">        p = p-&gt;next;</span><br><span class="line">        ++j;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(!p || j &gt; i)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    e = p-&gt;data;</span><br><span class="line">    <span class="keyword">return</span> e;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <tags>
+        <tag>算法</tag>
+      </tags>
   </entry>
 </search>
