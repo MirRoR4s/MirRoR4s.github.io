@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.1.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="[TOC] Crypto1.New Keyboard 50 points 80 solves By Marvin  crypto  I bought a new keyboard, but it looks like it’s typing gibberish!  chall.txt  Hint 1 of 2My keyboard&#39;s not broken, I just need to get">
+<meta property="og:type" content="article">
+<meta property="og:title" content="BCACTF 3.0">
+<meta property="og:url" content="http://example.com/2022/06/04/BCACTF-3-0/index.html">
+<meta property="og:site_name" content="学习记录">
+<meta property="og:description" content="[TOC] Crypto1.New Keyboard 50 points 80 solves By Marvin  crypto  I bought a new keyboard, but it looks like it’s typing gibberish!  chall.txt  Hint 1 of 2My keyboard&#39;s not broken, I just need to get">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-06-04T07:38:06.000Z">
+<meta property="article:modified_time" content="2022-06-04T08:07:41.399Z">
+<meta property="article:author" content="MirRoR4s">
+<meta property="article:tag" content="CTF">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2022/06/04/BCACTF-3-0/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>BCACTF 3.0 | 学习记录</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">学习记录</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/06/04/BCACTF-3-0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="MirRoR4s">
+      <meta itemprop="description" content="想成为c++专家 黑客 密码学爱好者">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="学习记录">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          BCACTF 3.0
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-06-04 15:38:06 / 修改时间：16:07:41" itemprop="dateCreated datePublished" datetime="2022-06-04T15:38:06+08:00">2022-06-04</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>[TOC]</p>
+<h2 id="Crypto"><a href="#Crypto" class="headerlink" title="Crypto"></a>Crypto</h2><h3 id="1-New-Keyboard"><a href="#1-New-Keyboard" class="headerlink" title="1.New Keyboard"></a>1.New Keyboard</h3><blockquote>
+<p>50 points 80 solves By Marvin</p>
+<ul>
+<li>crypto</li>
+</ul>
+<p>I bought a new keyboard, but it looks like it’s typing gibberish!</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://objects.bcactf.com/bcactf/keyboard/chall.txt">chall.txt</a></li>
+</ul>
+<p><details open="" style="box-sizing: inherit; margin: 0px; padding: 0px;"><summary style="box-sizing: inherit; margin: 0px; padding: 0px; cursor: pointer; width: fit-content;">Hint 1 of 2</summary><p style="box-sizing: inherit; margin: 0px 0px 1.7rem; padding: 0px; font-size: 1.05em;">My keyboard's not broken, I just need to get used to it.</p><details open="" style="box-sizing: inherit; margin: 0px; padding: 0px;"><summary style="box-sizing: inherit; margin: 0px; padding: 0px; cursor: pointer; width: fit-content;">Hint 2 of 2</summary><p style="box-sizing: inherit; margin: 0px 0px 1.7rem; padding: 0px; font-size: 1.05em;">It uses a different layout from most keyboards.</p></details>&lt;/details&gt;<br>Submit</p>
+</blockquote>
+<h3 id="2-Hidden-Frequencies"><a href="#2-Hidden-Frequencies" class="headerlink" title="2.Hidden Frequencies"></a>2.Hidden Frequencies</h3><blockquote>
+<p>100 points 56 solves By Yusuf</p>
+<ul>
+<li>crypto</li>
+</ul>
+<p>I downloaded one of my friend’s files and he got really defensive… it looks like gibberish but I think there might be more to it.</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://objects.bcactf.com/bcactf/hidden-frequencies/msg.txt">msg.txt</a></li>
+</ul>
+<p><details open="" style="box-sizing: inherit; margin: 0px; padding: 0px;"><summary style="box-sizing: inherit; margin: 0px; padding: 0px; cursor: pointer; width: fit-content;">Hint 1 of 1</summary><p style="box-sizing: inherit; margin: 0px 0px 1.7rem; padding: 0px; font-size: 1.05em;">Do all characters appear the same number of times?</p></details><br>Submit</p>
+</blockquote>
+<h3 id="3-Really-Secure-Algorithm"><a href="#3-Really-Secure-Algorithm" class="headerlink" title="3.Really Secure Algorithm"></a>3.Really Secure Algorithm</h3><blockquote>
+<p>As BCA students, we are always pushing the limits of existing technologies! Today, I had a breakthrough and created a Really Secure Algorithm. Can you see if it’s secure or not?</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://objects.bcactf.com/bcactf/really-secure-algorithm/file.txt">file.txt</a></li>
+</ul>
+<p><details open="" style="box-sizing: inherit; margin: 0px; padding: 0px;"><summary style="box-sizing: inherit; margin: 0px; padding: 0px; cursor: pointer; width: fit-content;">Hint 1 of 1</summary><p style="box-sizing: inherit; margin: 0px 0px 1.7rem; padding: 0px; font-size: 1.05em;">Maybe the challenge name is a hint?</p></details><br>Submit</p>
+</blockquote>
+<h3 id="4-Chessy"><a href="#4-Chessy" class="headerlink" title="4.Chessy"></a>4.Chessy</h3><blockquote>
+<p>I’ve been learning a bit of chess recently. However, I can’t seem to understand whatever this is. Can you help me?</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://objects.bcactf.com/bcactf/chessy/FEN.txt">FEN.txt</a></li>
+</ul>
+<p><details open="" style="box-sizing: inherit; margin: 0px; padding: 0px;"><summary style="box-sizing: inherit; margin: 0px; padding: 0px; cursor: pointer; width: fit-content;">Hint 1 of 2</summary><p style="box-sizing: inherit; margin: 0px 0px 1.7rem; padding: 0px; font-size: 1.05em;">What does FEN stand for?</p><details open="" style="box-sizing: inherit; margin: 0px; padding: 0px;"><summary style="box-sizing: inherit; margin: 0px; padding: 0px; cursor: pointer; width: fit-content;">Hint 2 of 2</summary><p style="box-sizing: inherit; margin: 0px 0px 1.7rem; padding: 0px; font-size: 1.05em;">These positions don't seem like they'd actually be found in real games. Maybe there's something else to them?</p></details>&lt;/details&gt;<br>Submit</p>
+</blockquote>
+<h3 id="5-Funky-Factors"><a href="#5-Funky-Factors" class="headerlink" title="5.Funky Factors"></a>5.Funky Factors</h3><blockquote>
+<p>150 points 22 solves By Yusuf</p>
+<ul>
+<li>crypto</li>
+</ul>
+<p>Okay. Turns out the last algorithm wasn’t secure after all… I think it was because I gave you too much information! Can you see if its really unbreakable this time?</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://objects.bcactf.com/bcactf/funky-factors/file.txt">file.txt</a></li>
+</ul>
+<p><details open="" style="box-sizing: inherit; margin: 0px; padding: 0px;"><summary style="box-sizing: inherit; margin: 0px; padding: 0px; cursor: pointer; width: fit-content;">Hint 1 of 1</summary><p style="box-sizing: inherit; margin: 0px 0px 1.7rem; padding: 0px; font-size: 1.05em;">Maybe there is something special about the size of the factors?</p></details><br>Submit</p>
+<h1 id="Challenges"><a href="#Challenges" class="headerlink" title="Challenges"></a>Challenges</h1></blockquote>
+<h3 id="6-Salty"><a href="#6-Salty" class="headerlink" title="6.Salty"></a>6.Salty</h3><blockquote>
+<h1 id=""><a href="#" class="headerlink" title=" "></a> </h1><h2 id="Salty"><a href="#Salty" class="headerlink" title="Salty"></a>Salty</h2><p>150 points 11 solves By Zsofia Gordon</p>
+<ul>
+<li>crypto</li>
+</ul>
+<p>I found the flag factory!!! They keep their flags locked up. But I have insider info that they only use 4 digit alphanumeric passwords in lowercase. Can you get a flag?</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="http://crypto.bcactf.com:49158/">http://crypto.bcactf.com:49158/</a></li>
+</ul>
+<p><details open="" style="box-sizing: inherit; margin: 0px; padding: 0px;"><summary style="box-sizing: inherit; margin: 0px; padding: 0px; cursor: pointer; width: fit-content;">Hint 1 of 3</summary><p style="box-sizing: inherit; margin: 0px 0px 1.7rem; padding: 0px; font-size: 1.05em;">Looks like a careless programmer left a debug table behind...</p><details open="" style="box-sizing: inherit; margin: 0px; padding: 0px;"><summary style="box-sizing: inherit; margin: 0px; padding: 0px; cursor: pointer; width: fit-content;">Hint 2 of 3</summary><p style="box-sizing: inherit; margin: 0px 0px 1.7rem; padding: 0px; font-size: 1.05em;">Hmmm, that's not the password you put in...</p><details open="" style="box-sizing: inherit; margin: 0px; padding: 0px;"><summary style="box-sizing: inherit; margin: 0px; padding: 0px; cursor: pointer; width: fit-content;">Hint 3 of 3</summary><p style="box-sizing: inherit; margin: 0px 0px 1.7rem; padding: 0px; font-size: 1.05em;">Don't bruteforce passwords on the website...</p></details>&lt;/details&gt;&lt;/details&gt;<br>Submit</p>
+</blockquote>
+<h3 id="7-A-Fine-Line"><a href="#7-A-Fine-Line" class="headerlink" title="7.A Fine Line"></a>7.A Fine Line</h3><blockquote>
+<h2 id="A-Fine-Line"><a href="#A-Fine-Line" class="headerlink" title="A Fine Line"></a>A Fine Line</h2><p>175 points 1 solve By Marvin</p>
+<ul>
+<li>crypto</li>
+</ul>
+<p>I’m carefully drawing <em>a fine line</em> on this piece of paper, letting each portion guide the next… (Digits and letters are 0-9 and 10-35 in their usual orders, and the underscore is 36. {} are not encoded but should be added in afterwards. All letters are lowercase.)</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://objects.bcactf.com/bcactf/a-fine-line/chall.txt">chall.txt</a></li>
+</ul>
+<p><details open="" style="box-sizing: inherit; margin: 0px; padding: 0px;"><summary style="box-sizing: inherit; margin: 0px; padding: 0px; cursor: pointer; width: fit-content;">Hint 1 of 2</summary><p style="box-sizing: inherit; margin: 0px 0px 1.7rem; padding: 0px; font-size: 1.05em;">This uses the affine cipher, as clued by the title and description, but with an added modification.</p><details open="" style="box-sizing: inherit; margin: 0px; padding: 0px;"><summary style="box-sizing: inherit; margin: 0px; padding: 0px; cursor: pointer; width: fit-content;">Hint 2 of 2</summary><p style="box-sizing: inherit; margin: 0px 0px 1.7rem; padding: 0px; font-size: 1.05em;">Each pair of letters decodes the next.</p></details>&lt;/details&gt;<br>Submit</p>
+</blockquote>
+<h3 id="8-Crappy-Colonization-Corp"><a href="#8-Crappy-Colonization-Corp" class="headerlink" title="8.Crappy Colonization Corp"></a>8.Crappy Colonization Corp</h3><blockquote>
+<p>225 points 1 solve By skysky</p>
+<ul>
+<li>crypto</li>
+<li></li>
+<li><p>rev</p>
+</li>
+</ul>
+<p>Yay, we finally got someone to Mars! It’s bureaucracy time!</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://objects.bcactf.com/bcactf/crappy-colonization-corp/provided.rs">provided.rs</a></li>
+<li><code>nc crypto.bcactf.com 49157</code> <a target="_blank" rel="noopener" href="https://play.bcactf.com/challenges/2fb95ebe-9b87-4ba4-9c3a-a1de0c3fac44/solve#">Copy</a></li>
+</ul>
+<p><details open="" style="box-sizing: inherit; margin: 0px; padding: 0px;"><summary style="box-sizing: inherit; margin: 0px; padding: 0px; cursor: pointer; width: fit-content;">Hint 1 of 3</summary><p style="box-sizing: inherit; margin: 0px 0px 1.7rem; padding: 0px; font-size: 1.05em;">Your IGUID is not used as an index into the hashmap. Only the result of the "proprietary algorithm" is used.</p><details open="" style="box-sizing: inherit; margin: 0px; padding: 0px;"><summary style="box-sizing: inherit; margin: 0px; padding: 0px; cursor: pointer; width: fit-content;">Hint 2 of 3</summary><p style="box-sizing: inherit; margin: 0px 0px 1.7rem; padding: 0px; font-size: 1.05em;">Although your IGUID is not used as an index into the hashmap... it is still stored as a vector of bytes in "used_keys".</p><details open="" style="box-sizing: inherit; margin: 0px; padding: 0px;"><summary style="box-sizing: inherit; margin: 0px; padding: 0px; cursor: pointer; width: fit-content;">Hint 3 of 3</summary><p style="box-sizing: inherit; margin: 0px 0px 1.7rem; padding: 0px; font-size: 1.05em;">How proprietary is this "proprietary algorithm", anyway?</p></details>&lt;/details&gt;&lt;/details&gt;<br>Submit</p>
+</blockquote>
+<h3 id="9-Ehrenfest"><a href="#9-Ehrenfest" class="headerlink" title="9.Ehrenfest"></a>9.Ehrenfest</h3><blockquote>
+<p>250 points 0 solves By eiis1000</p>
+<ul>
+<li>crypto</li>
+</ul>
+<p>I wrote this problem after Gray-Scott, and I wanted to keep the code the same, so it’s all Gray-Scott themed. I bet you’re wondering what Gray-Scott is, and for that matter, what Ehrenfest is. I bet you’re thinking I’ll tell you. You’re wrong. Look it up! Don’t be lazy. Take control of your own future. Also, go read the Gray-Scott problem for context.</p>
+<p>Decode the encoded flag, which used a secret key.</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://objects.bcactf.com/bcactf/ehrenfest/encodedflag.txt">encodedflag.txt</a></li>
+<li><a target="_blank" rel="noopener" href="https://objects.bcactf.com/bcactf/ehrenfest/gs1.py">gs1.py</a></li>
+<li><a target="_blank" rel="noopener" href="https://objects.bcactf.com/bcactf/ehrenfest/gray.txt">gray.txt</a></li>
+</ul>
+<p><details open="" style="box-sizing: inherit; margin: 0px; padding: 0px;"><summary style="box-sizing: inherit; margin: 0px; padding: 0px; cursor: pointer; width: fit-content;">Hint 1 of 3</summary><p style="box-sizing: inherit; margin: 0px 0px 1.7rem; padding: 0px; font-size: 1.05em;">What's special about matrices? Something to do with... lines?</p><details open="" style="box-sizing: inherit; margin: 0px; padding: 0px;"><summary style="box-sizing: inherit; margin: 0px; padding: 0px; cursor: pointer; width: fit-content;">Hint 2 of 3</summary><p style="box-sizing: inherit; margin: 0px 0px 1.7rem; padding: 0px; font-size: 1.05em;">How can you use the given encoded messages to decode messages?</p><details open="" style="box-sizing: inherit; margin: 0px; padding: 0px;"><summary style="box-sizing: inherit; margin: 0px; padding: 0px; cursor: pointer; width: fit-content;">Hint 3 of 3</summary><p style="box-sizing: inherit; margin: 0px 0px 1.7rem; padding: 0px; font-size: 1.05em;">How much data is actually lost in this encoding?</p></details>&lt;/details&gt;&lt;/details&gt;<br>Submit</p>
+</blockquote>
+<h3 id="10-Gray-Scott"><a href="#10-Gray-Scott" class="headerlink" title="10.Gray-Scott"></a>10.Gray-Scott</h3><blockquote>
+<p>275 points 0 solves By eiis1000</p>
+<ul>
+<li>crypto</li>
+</ul>
+<p>My YouTube recommendations have been FLOODED with Gray-Scott videos recently. Sure, I watch a lot of videos of random simulations, but how many videos of “Gray-Scott Reaction-Diffusion (satisfying) #short” with 31 views can I endure before I go insane? Anyways, here’s an unrelated crypto problem.</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://objects.bcactf.com/bcactf/gray-scott/gs1.py">gs1.py</a></li>
+<li><a target="_blank" rel="noopener" href="https://objects.bcactf.com/bcactf/gray-scott/gray.txt">gray.txt</a></li>
+</ul>
+<p><details open="" style="box-sizing: inherit; margin: 0px; padding: 0px;"><summary style="box-sizing: inherit; margin: 0px; padding: 0px; cursor: pointer; width: fit-content;">Hint 1 of 2</summary><p style="box-sizing: inherit; margin: 0px 0px 1.7rem; padding: 0px; font-size: 1.05em;">The encryption operates independently on each bit of the bytes in plaintext.</p><details open="" style="box-sizing: inherit; margin: 0px; padding: 0px;"><summary style="box-sizing: inherit; margin: 0px; padding: 0px; cursor: pointer; width: fit-content;">Hint 2 of 2</summary><p style="box-sizing: inherit; margin: 0px 0px 1.7rem; padding: 0px; font-size: 1.05em;">The Gray-Scott system is a reaction-<strong style="box-sizing: inherit; margin: 0px; padding: 0px; font-weight: bold;">diffusion</strong><span>&nbsp;</span>system.</p></details>&lt;/details&gt;<br>Submit</p>
+</blockquote>
+<h3 id="-1"><a href="#-1" class="headerlink" title=" "></a> </h3>
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/CTF/" rel="tag"># CTF</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/06/04/Break-The-Syntax-CTF/" rel="prev" title="Break The Syntax CTF">
+      <i class="fa fa-chevron-left"></i> Break The Syntax CTF
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/06/07/PHP%E6%8E%A2%E9%92%88/" rel="next" title="PHP探针">
+      PHP探针 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Crypto"><span class="nav-number">1.</span> <span class="nav-text">Crypto</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-New-Keyboard"><span class="nav-number">1.1.</span> <span class="nav-text">1.New Keyboard</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-Hidden-Frequencies"><span class="nav-number">1.2.</span> <span class="nav-text">2.Hidden Frequencies</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-Really-Secure-Algorithm"><span class="nav-number">1.3.</span> <span class="nav-text">3.Really Secure Algorithm</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-Chessy"><span class="nav-number">1.4.</span> <span class="nav-text">4.Chessy</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-Funky-Factors"><span class="nav-number">1.5.</span> <span class="nav-text">5.Funky Factors</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Challenges"><span class="nav-number"></span> <span class="nav-text">Challenges</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#6-Salty"><span class="nav-number">0.1.</span> <span class="nav-text">6.Salty</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number"></span> <span class="nav-text"> </span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Salty"><span class="nav-number">1.</span> <span class="nav-text">Salty</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#7-A-Fine-Line"><span class="nav-number">1.1.</span> <span class="nav-text">7.A Fine Line</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#A-Fine-Line"><span class="nav-number">2.</span> <span class="nav-text">A Fine Line</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#8-Crappy-Colonization-Corp"><span class="nav-number">2.1.</span> <span class="nav-text">8.Crappy Colonization Corp</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9-Ehrenfest"><span class="nav-number">2.2.</span> <span class="nav-text">9.Ehrenfest</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#10-Gray-Scott"><span class="nav-number">2.3.</span> <span class="nav-text">10.Gray-Scott</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#-1"><span class="nav-number">2.4.</span> <span class="nav-text"> </span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">MirRoR4s</p>
+  <div class="site-description" itemprop="description">想成为c++专家 黑客 密码学爱好者</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">24</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">MirRoR4s</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+</body>
+</html>

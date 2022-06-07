@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.1.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="[TOC] Crypto第一题-Identity source_code: 12345678910111213141516171819202122232425262728#!&#x2F;ust&#x2F;bin&#x2F;env python3import jsonimport signalprime_p &#x3D; 17772206126847917261803626587639700350926904850426886176704">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Break The Syntax CTF">
+<meta property="og:url" content="http://example.com/2022/06/04/Break-The-Syntax-CTF/index.html">
+<meta property="og:site_name" content="学习记录">
+<meta property="og:description" content="[TOC] Crypto第一题-Identity source_code: 12345678910111213141516171819202122232425262728#!&#x2F;ust&#x2F;bin&#x2F;env python3import jsonimport signalprime_p &#x3D; 17772206126847917261803626587639700350926904850426886176704">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2022/06/04/images/1654326111170.png">
+<meta property="og:image" content="http://example.com/2022/06/04/images/1654326236235.png">
+<meta property="og:image" content="http://example.com/2022/06/04/images/1654326330975.png">
+<meta property="og:image" content="http://example.com/2022/06/04/images/1654326627500.png">
+<meta property="og:image" content="http://example.com/2022/06/04/images/1654326812916.png">
+<meta property="og:image" content="http://example.com/2022/06/04/images/1654326942272.png">
+<meta property="article:published_time" content="2022-06-04T06:59:19.000Z">
+<meta property="article:modified_time" content="2022-06-04T07:34:56.095Z">
+<meta property="article:author" content="MirRoR4s">
+<meta property="article:tag" content="CTF">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2022/06/04/images/1654326111170.png">
+
+<link rel="canonical" href="http://example.com/2022/06/04/Break-The-Syntax-CTF/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Break The Syntax CTF | 学习记录</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">学习记录</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/06/04/Break-The-Syntax-CTF/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="MirRoR4s">
+      <meta itemprop="description" content="想成为c++专家 黑客 密码学爱好者">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="学习记录">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Break The Syntax CTF
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-06-04 14:59:19 / 修改时间：15:34:56" itemprop="dateCreated datePublished" datetime="2022-06-04T14:59:19+08:00">2022-06-04</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>[TOC]</p>
+<h2 id="Crypto"><a href="#Crypto" class="headerlink" title="Crypto"></a>Crypto</h2><h3 id="第一题-Identity"><a href="#第一题-Identity" class="headerlink" title="第一题-Identity"></a>第一题-Identity</h3><p><img src="../images/1654326111170.png" alt="1654326111170"></p>
+<p>source_code:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/ust/bin/env python3</span></span><br><span class="line"><span class="keyword">import</span> json</span><br><span class="line"><span class="keyword">import</span> signal</span><br><span class="line">prime_p = <span class="number">177722061268479172618036265876397003509269048504268861767046046115994443156284488651055714387194800232244730303458489864174073986896097610603558449505871398422283548997781783328299833985053166443389417018452145117134522568709774729520563358860355765070837814475957567869527710749697252440829860298572991179307</span></span><br><span class="line">prime_q = <span class="number">88861030634239586309018132938198501754634524252134430883523023057997221578142244325527857193597400116122365151729244932087036993448048805301779224752935699211141774498890891664149916992526583221694708509226072558567261284354887364760281679430177882535418907237978783934763855374848626220414930149286495589653</span></span><br><span class="line">generator = <span class="number">155023513036247948265047543654868687396096131010469506673664792405197011708229660714554316186573661708325589755749538173765363486885279182722265095526282277543504738661074255038508180451933144124775391105622347889120007632958758010276343139080391061202699695556814560529729431091459632136589488173063954346793</span></span><br><span class="line">pubkey = <span class="number">93091921640159468106305784288442650651946378295897246569419220256788465679993825629909743857075454596032445144833173746431710294553277863156332557755414563641361390587128850058131535616906913180516458195808877783654160132170722826553007632858895507833301845277489859624212766615307390655119628578839365223546</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">verify_identity</span>(<span class="params">x,y</span>):</span><br><span class="line">	r = (<span class="built_in">pow</span>(generator,y,prime_p) * pubkey) % prime_p</span><br><span class="line">    <span class="comment"># 如果x 等于 (gen ^ y ) % p * pub) % p</span></span><br><span class="line">    <span class="comment">#x y 可控,其他参数已知，究极送分题...</span></span><br><span class="line">	<span class="keyword">return</span> r == x</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">main</span>():</span><br><span class="line">	signal.alarm(<span class="number">60</span>)</span><br><span class="line">	proof = <span class="built_in">input</span>(<span class="string">&quot;send proof in json format: &quot;</span>) <span class="comment">#发送json格式的数据</span></span><br><span class="line">	proof = json.loads(proof) <span class="comment">#服务器端解析数据</span></span><br><span class="line">	<span class="keyword">if</span> verify_identity(proof[<span class="string">&#x27;x&#x27;</span>],proof[<span class="string">&#x27;y&#x27;</span>]) : <span class="comment">#数据有两个键名是x跟y，函数返回真即可拿flag</span></span><br><span class="line">		<span class="built_in">print</span>(<span class="string">&quot;Verification success&quot;</span>)</span><br><span class="line">		<span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&quot;./flag.txt&quot;</span>,<span class="string">&quot;r&quot;</span>) <span class="keyword">as</span> flag:</span><br><span class="line">			<span class="built_in">print</span>(flag.read())</span><br><span class="line">	<span class="keyword">else</span>:</span><br><span class="line">		<span class="built_in">print</span>(<span class="string">&quot;Verification failure&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">	main()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p><img src="../images/1654326236235.png" alt="1654326236235"></p>
+<p>payload</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">prime_p = <span class="number">177722061268479172618036265876397003509269048504268861767046046115994443156284488651055714387194800232244730303458489864174073986896097610603558449505871398422283548997781783328299833985053166443389417018452145117134522568709774729520563358860355765070837814475957567869527710749697252440829860298572991179307</span></span><br><span class="line">generator = <span class="number">155023513036247948265047543654868687396096131010469506673664792405197011708229660714554316186573661708325589755749538173765363486885279182722265095526282277543504738661074255038508180451933144124775391105622347889120007632958758010276343139080391061202699695556814560529729431091459632136589488173063954346793</span></span><br><span class="line">pubkey = <span class="number">93091921640159468106305784288442650651946378295897246569419220256788465679993825629909743857075454596032445144833173746431710294553277863156332557755414563641361390587128850058131535616906913180516458195808877783654160132170722826553007632858895507833301845277489859624212766615307390655119628578839365223546</span></span><br><span class="line"><span class="comment">#自己随便选 y ，然后根据题目公式求x，然后对x y 进行json编码</span></span><br><span class="line"><span class="keyword">import</span> json</span><br><span class="line">y = <span class="number">1</span></span><br><span class="line">r = (<span class="built_in">pow</span>(generator,y,prime_p) * pubkey ) %prime_p</span><br><span class="line">x = r</span><br><span class="line"><span class="built_in">print</span>(x)</span><br><span class="line"><span class="built_in">print</span>(y)</span><br><span class="line">data = &#123;<span class="string">&#x27;x&#x27;</span>:x,<span class="string">&#x27;y&#x27;</span>:y&#125;</span><br><span class="line"><span class="built_in">print</span>(json.dumps(data)) <span class="comment">#将python对象转为json字符串</span></span><br><span class="line">t = json.dumps(data)</span><br><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">host = <span class="string">&#x27;34.107.92.149&#x27;</span></span><br><span class="line">port = <span class="number">30085</span></span><br><span class="line">r = remote(host,port)</span><br><span class="line"></span><br><span class="line">r.interactive()</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="第二题-Identity2"><a href="#第二题-Identity2" class="headerlink" title="第二题-Identity2"></a>第二题-Identity2</h3><p><img src="../images/1654326330975.png" alt="1654326330975"></p>
+<p>source_code:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/ust/bin/env python3</span></span><br><span class="line"><span class="keyword">import</span> random</span><br><span class="line"><span class="keyword">import</span> json</span><br><span class="line"><span class="keyword">import</span> signal</span><br><span class="line">prime_p = <span class="number">136062877477772021443963986821466822423928306636725705955189295265171531194630539497933022412421177627488716473227275120023271715397034546804175879349877168981582602251424924699340785448683074807806407936267383798949594772365085169340683942944085482956202789355681500477966677233789310292180313638378062381719</span></span><br><span class="line">prime_q = <span class="number">68031438738886010721981993410733411211964153318362852977594647632585765597315269748966511206210588813744358236613637560011635857698517273402087939674938584490791301125712462349670392724341537403903203968133691899474797386182542584670341971472042741478101394677840750238983338616894655146090156819189031190859</span></span><br><span class="line">generator = <span class="number">68695322546411990097618816719880607069395444393834268960741680054974511660271970026150039567236118658479679444015844573677880347686810169165388385685914903968147097279757787122753390447954112451193808647256026282821032909814441591222220915875289906762225085266354556177943238500761050758957943922408034634359</span></span><br><span class="line">pubkey = <span class="number">36991800195284720665844271720947930981390989677197504667186660329002236402308726349324091955441781822949964937615015455023644196915268032941399396215222246260792225979887225009692399584709504066456654354497353988045808198493705842231370889778472138080706702885925221219949367522908916161488494916365255595354</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">verify_identity</span>(<span class="params">x,y,c</span>):</span><br><span class="line">	r = ( <span class="built_in">pow</span>(generator,y,prime_p) * <span class="built_in">pow</span>(pubkey,c,prime_p) ) % prime_p</span><br><span class="line">	<span class="keyword">return</span> r == x</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">main</span>():</span><br><span class="line">	signal.alarm(<span class="number">60</span>)</span><br><span class="line">	challenge = &#123; <span class="string">&#x27;c&#x27;</span> :  random.randrange(<span class="number">1</span>,<span class="number">2</span>**<span class="number">512</span>) &#125;</span><br><span class="line">	<span class="built_in">print</span>(json.dumps(challenge))</span><br><span class="line">	proof = <span class="built_in">input</span>()</span><br><span class="line">	proof = json.loads(proof)</span><br><span class="line">	<span class="keyword">if</span> verify_identity(proof[<span class="string">&#x27;x&#x27;</span>],proof[<span class="string">&#x27;y&#x27;</span>],challenge[<span class="string">&#x27;c&#x27;</span>]) :</span><br><span class="line">		<span class="built_in">print</span>(<span class="string">&quot;Verification success&quot;</span>)</span><br><span class="line">		<span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&quot;./flag.txt&quot;</span>,<span class="string">&quot;r&quot;</span>) <span class="keyword">as</span> flag:</span><br><span class="line">			<span class="built_in">print</span>(flag.read())</span><br><span class="line">	<span class="keyword">else</span>:</span><br><span class="line">		<span class="built_in">print</span>(<span class="string">&quot;Verification failure&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">	main()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>附带有一个流量包</p>
+<h3 id="第三题-xoxoxo"><a href="#第三题-xoxoxo" class="headerlink" title="第三题-xoxoxo"></a>第三题-xoxoxo</h3><p><img src="../images/1654326627500.png" alt="1654326627500"></p>
+<h3 id="第四题-Shorty"><a href="#第四题-Shorty" class="headerlink" title="第四题-Shorty"></a>第四题-Shorty</h3><p><img src="../images/1654326812916.png" alt="1654326812916"></p>
+<h3 id="第五题-Code-book"><a href="#第五题-Code-book" class="headerlink" title="第五题-Code book"></a>第五题-Code book</h3><h3 id="第六题-It’s-free-real-SPA"><a href="#第六题-It’s-free-real-SPA" class="headerlink" title="第六题-It’s free real SPA"></a>第六题-It’s free real SPA</h3><p><img src="../images/1654326942272.png" alt="1654326942272"></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/CTF/" rel="tag"># CTF</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/06/03/Security-Fest-2022/" rel="prev" title="Security Fest 2022">
+      <i class="fa fa-chevron-left"></i> Security Fest 2022
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/06/04/BCACTF-3-0/" rel="next" title="BCACTF 3.0">
+      BCACTF 3.0 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Crypto"><span class="nav-number">1.</span> <span class="nav-text">Crypto</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E9%A2%98-Identity"><span class="nav-number">1.1.</span> <span class="nav-text">第一题-Identity</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E9%A2%98-Identity2"><span class="nav-number">1.2.</span> <span class="nav-text">第二题-Identity2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E9%A2%98-xoxoxo"><span class="nav-number">1.3.</span> <span class="nav-text">第三题-xoxoxo</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E5%9B%9B%E9%A2%98-Shorty"><span class="nav-number">1.4.</span> <span class="nav-text">第四题-Shorty</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%BA%94%E9%A2%98-Code-book"><span class="nav-number">1.5.</span> <span class="nav-text">第五题-Code book</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E5%85%AD%E9%A2%98-It%E2%80%99s-free-real-SPA"><span class="nav-number">1.6.</span> <span class="nav-text">第六题-It’s free real SPA</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">MirRoR4s</p>
+  <div class="site-description" itemprop="description">想成为c++专家 黑客 密码学爱好者</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">24</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">MirRoR4s</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+</body>
+</html>
