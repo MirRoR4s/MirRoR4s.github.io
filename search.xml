@@ -160,6 +160,7 @@
     <url>/2022/04/21/%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C/</url>
     <content><![CDATA[<p><a href="https://blog.csdn.net/weixin_39877898/article/details/112198269">https://blog.csdn.net/weixin_39877898/article/details/112198269</a></p>
 <p><a href="https://xz.aliyun.com/t/8107#toc-11无字母数字Webshell">https://xz.aliyun.com/t/8107#toc-11无字母数字Webshell</a></p>
+<p><a href="https://www.leavesongs.com/PENETRATION/webshell-without-alphanum-advanced.html无字母数字Webshell提高篇">https://www.leavesongs.com/PENETRATION/webshell-without-alphanum-advanced.html无字母数字Webshell提高篇</a></p>
 <span id="more"></span>
 <h2 id="0x00-一些绕过姿势"><a href="#0x00-一些绕过姿势" class="headerlink" title="0x00:一些绕过姿势"></a>0x00:一些绕过姿势</h2><p>在遇到的一些web题中，会经常将以下几种给过滤或者进行限制：</p>
 <ol>
@@ -689,6 +690,7 @@
     <title>Break The Syntax CTF</title>
     <url>/2022/06/04/Break-The-Syntax-CTF/</url>
     <content><![CDATA[<p>[TOC]</p>
+<span id="more"></span>
 <h2 id="Crypto"><a href="#Crypto" class="headerlink" title="Crypto"></a>Crypto</h2><h3 id="第一题-Identity"><a href="#第一题-Identity" class="headerlink" title="第一题-Identity"></a>第一题-Identity</h3><p><img src="../images/1654326111170.png" alt="1654326111170"></p>
 <p>source_code:</p>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#!/ust/bin/env python3</span></span><br><span class="line"><span class="keyword">import</span> json</span><br><span class="line"><span class="keyword">import</span> signal</span><br><span class="line">prime_p = <span class="number">177722061268479172618036265876397003509269048504268861767046046115994443156284488651055714387194800232244730303458489864174073986896097610603558449505871398422283548997781783328299833985053166443389417018452145117134522568709774729520563358860355765070837814475957567869527710749697252440829860298572991179307</span></span><br><span class="line">prime_q = <span class="number">88861030634239586309018132938198501754634524252134430883523023057997221578142244325527857193597400116122365151729244932087036993448048805301779224752935699211141774498890891664149916992526583221694708509226072558567261284354887364760281679430177882535418907237978783934763855374848626220414930149286495589653</span></span><br><span class="line">generator = <span class="number">155023513036247948265047543654868687396096131010469506673664792405197011708229660714554316186573661708325589755749538173765363486885279182722265095526282277543504738661074255038508180451933144124775391105622347889120007632958758010276343139080391061202699695556814560529729431091459632136589488173063954346793</span></span><br><span class="line">pubkey = <span class="number">93091921640159468106305784288442650651946378295897246569419220256788465679993825629909743857075454596032445144833173746431710294553277863156332557755414563641361390587128850058131535616906913180516458195808877783654160132170722826553007632858895507833301845277489859624212766615307390655119628578839365223546</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">verify_identity</span>(<span class="params">x,y</span>):</span><br><span class="line">	r = (<span class="built_in">pow</span>(generator,y,prime_p) * pubkey) % prime_p</span><br><span class="line">    <span class="comment"># 如果x 等于 (gen ^ y ) % p * pub) % p</span></span><br><span class="line">    <span class="comment">#x y 可控,其他参数已知，究极送分题...</span></span><br><span class="line">	<span class="keyword">return</span> r == x</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">main</span>():</span><br><span class="line">	signal.alarm(<span class="number">60</span>)</span><br><span class="line">	proof = <span class="built_in">input</span>(<span class="string">&quot;send proof in json format: &quot;</span>) <span class="comment">#发送json格式的数据</span></span><br><span class="line">	proof = json.loads(proof) <span class="comment">#服务器端解析数据</span></span><br><span class="line">	<span class="keyword">if</span> verify_identity(proof[<span class="string">&#x27;x&#x27;</span>],proof[<span class="string">&#x27;y&#x27;</span>]) : <span class="comment">#数据有两个键名是x跟y，函数返回真即可拿flag</span></span><br><span class="line">		<span class="built_in">print</span>(<span class="string">&quot;Verification success&quot;</span>)</span><br><span class="line">		<span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&quot;./flag.txt&quot;</span>,<span class="string">&quot;r&quot;</span>) <span class="keyword">as</span> flag:</span><br><span class="line">			<span class="built_in">print</span>(flag.read())</span><br><span class="line">	<span class="keyword">else</span>:</span><br><span class="line">		<span class="built_in">print</span>(<span class="string">&quot;Verification failure&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">	main()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
@@ -711,6 +713,7 @@
     <title>BCACTF 3.0</title>
     <url>/2022/06/04/BCACTF-3-0/</url>
     <content><![CDATA[<p>[TOC]</p>
+<span id="more"></span>
 <h2 id="Crypto"><a href="#Crypto" class="headerlink" title="Crypto"></a>Crypto</h2><h3 id="1-New-Keyboard"><a href="#1-New-Keyboard" class="headerlink" title="1.New Keyboard"></a>1.New Keyboard</h3><blockquote>
 <p>50 points 80 solves By Marvin</p>
 <ul>
@@ -1035,6 +1038,13 @@
   <entry>
     <title>文件包含</title>
     <url>/2022/06/11/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/</url>
-    <content><![CDATA[]]></content>
+    <content><![CDATA[<p>[TOC]</p>
+<h2 id="学习链接："><a href="#学习链接：" class="headerlink" title="学习链接："></a>学习链接：</h2><p><a href="https://www.anquanke.com/post/id/231407">https://www.anquanke.com/post/id/231407</a></p>
+<p><a href="https://www.cnblogs.com/gorillalee/p/14370405.html">https://www.cnblogs.com/gorillalee/p/14370405.html</a></p>
+<h2 id="实战演练"><a href="#实战演练" class="headerlink" title="实战演练"></a>实战演练</h2><p><a href="https://www.anquanke.com/post/id/231407">https://www.anquanke.com/post/id/231407</a></p>
+]]></content>
+      <tags>
+        <tag>Web</tag>
+      </tags>
   </entry>
 </search>
