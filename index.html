@@ -185,6 +185,68 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/06/12/SEETF-2022/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="MirRoR4s">
+      <meta itemprop="description" content="想成为c++专家 黑客 密码学爱好者">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="学习记录">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/06/12/SEETF-2022/" class="post-title-link" itemprop="url">SEETF 2022</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-06-12 16:56:16 / 修改时间：16:57:32" itemprop="dateCreated datePublished" datetime="2022-06-12T16:56:16+08:00">2022-06-12</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="SEETF-2022"><a href="#SEETF-2022" class="headerlink" title="SEETF 2022"></a>SEETF 2022</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> Crypto.Util.number <span class="keyword">import</span> getPrime, long_to_bytes, bytes_to_long</span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&quot;flag.txt&quot;</span>, <span class="string">&quot;rb&quot;</span>) <span class="keyword">as</span> f:</span><br><span class="line">    FLAG = f.read()</span><br><span class="line"></span><br><span class="line">n = bytes_to_long(FLAG)</span><br><span class="line"></span><br><span class="line"><span class="comment">#make sure i have a big modulus</span></span><br><span class="line"><span class="keyword">while</span> n.bit_length() &lt; <span class="number">2048</span>:</span><br><span class="line">    n *= n</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">encrypt</span>(<span class="params">m1, m2</span>):</span><br><span class="line">    e = getPrime(<span class="number">256</span>)</span><br><span class="line">    <span class="keyword">assert</span> m1.bit_length() &gt;= <span class="number">1600</span> <span class="keyword">and</span> long_to_bytes(m1).startswith(<span class="string">b&quot;SEE&#123;&quot;</span>), <span class="string">&#x27;first message must be at least 1600 bits and begin with &quot;SEE&#123;&quot;&#x27;</span></span><br><span class="line">    <span class="keyword">assert</span> <span class="number">500</span> &lt;= m2.bit_length() &lt;= <span class="number">600</span>, <span class="string">&#x27;second message must be within 500 to 600 bits&#x27;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">pow</span>(m1, e, n), <span class="built_in">pow</span>(m2, e, n)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">main</span>():</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        m1 = <span class="built_in">int</span>(<span class="built_in">input</span>(<span class="string">&quot;Message 1 (as integer) : &quot;</span>).strip())</span><br><span class="line">        m2 = <span class="built_in">int</span>(<span class="built_in">input</span>(<span class="string">&quot;Message 2 (as integer) : &quot;</span>).strip())</span><br><span class="line">        c1, c2 = encrypt(m1, m2)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;\nCiphers: \n<span class="subst">&#123;[c1,c2]&#125;</span>&quot;</span>)</span><br><span class="line">    <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">        <span class="built_in">print</span>(e)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure>
+<p><a target="_blank" rel="noopener" href="https://ctf-wiki.org/crypto/asymmetric/rsa/rsa_chosen_plain_cipher/">RSA 选择明密文攻击 - CTF Wiki</a></p>
+<p>解题思路是构造具有特定关系的多组明文对m1 m2 然后求出多组密文对的最大公因数，在本题中公因数大概就是n的幂，随后枚举幂数开根，能够开根出来的就是n了 </p>
+<script type="math/tex; mode=display">c_1 \equiv m_1^e \mod n\\c_2 \equiv m_2^e \mod n\\观察这题的m_1 \space m_1的大小，m_2的平方是小于m_1的，所以构造m_2^3 = m1比较合适\\所以我们有c_1^3 \equiv (m_1^e)^3 \mod n \space 即 c_2^3 \equiv  m_1^e \mod n \space 所以c_1 - c_2^3 \equiv 0 \mod n\\即 c_2^3 - c_1 = kn(等式1)\\我们可以构造多个具有上述关系的m_1 \space m_2 然后得到多个等式1，最后求这些等式的最大\\公因数即可拿到n的幂(因为题目说当n的比特位数小于2048就要乘上自己)</script><p>其实构造具有上述关系的m1 m2 也是需要一点小技巧的，特别是还要求m1以特定字符串开头</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2022/06/12/moscCTF-2022/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -251,7 +313,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/06/11/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/06/04/BCACTF-3-0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -265,7 +327,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2022/06/11/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/" class="post-title-link" itemprop="url">文件包含</a>
+            <a href="/2022/06/04/BCACTF-3-0/" class="post-title-link" itemprop="url">BCACTF 3.0</a>
         </h2>
 
         <div class="post-meta">
@@ -275,14 +337,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2022-06-11 21:36:37" itemprop="dateCreated datePublished" datetime="2022-06-11T21:36:37+08:00">2022-06-11</time>
+              <time title="创建时间：2022-06-04 15:38:06" itemprop="dateCreated datePublished" datetime="2022-06-04T15:38:06+08:00">2022-06-04</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-06-12 12:09:27" itemprop="dateModified" datetime="2022-06-12T12:09:27+08:00">2022-06-12</time>
+                <time title="修改时间：2022-06-12 12:13:22" itemprop="dateModified" datetime="2022-06-12T12:13:22+08:00">2022-06-12</time>
               </span>
 
           
@@ -296,9 +358,15 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>[TOC]</p>
-<h2 id="学习链接："><a href="#学习链接：" class="headerlink" title="学习链接："></a>学习链接：</h2><p><a target="_blank" rel="noopener" href="https://www.anquanke.com/post/id/231407">https://www.anquanke.com/post/id/231407</a></p>
-<h2 id="实战演练"><a href="#实战演练" class="headerlink" title="实战演练"></a>实战演练</h2>
+          <h2 id="Crypto"><a href="#Crypto" class="headerlink" title="Crypto"></a>Crypto</h2>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/06/04/BCACTF-3-0/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -317,7 +385,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/06/10/CTFshow-SQL%E6%B3%A8%E5%85%A5/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/06/04/Break-The-Syntax-CTF/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -331,7 +399,79 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2022/06/10/CTFshow-SQL%E6%B3%A8%E5%85%A5/" class="post-title-link" itemprop="url">CTFshow-SQL注入</a>
+            <a href="/2022/06/04/Break-The-Syntax-CTF/" class="post-title-link" itemprop="url">Break The Syntax CTF</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-06-04 14:59:19" itemprop="dateCreated datePublished" datetime="2022-06-04T14:59:19+08:00">2022-06-04</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-06-12 12:12:59" itemprop="dateModified" datetime="2022-06-12T12:12:59+08:00">2022-06-12</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="Crypto"><a href="#Crypto" class="headerlink" title="Crypto"></a>Crypto</h2>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/06/04/Break-The-Syntax-CTF/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/06/03/Security-Fest-2022/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="MirRoR4s">
+      <meta itemprop="description" content="想成为c++专家 黑客 密码学爱好者">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="学习记录">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/06/03/Security-Fest-2022/" class="post-title-link" itemprop="url">Security Fest 2022</a>
         </h2>
 
         <div class="post-meta">
@@ -342,7 +482,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2022-06-10 22:24:38 / 修改时间：22:25:26" itemprop="dateCreated datePublished" datetime="2022-06-10T22:24:38+08:00">2022-06-10</time>
+              <time title="创建时间：2022-06-03 08:20:01 / 修改时间：09:10:26" itemprop="dateCreated datePublished" datetime="2022-06-03T08:20:01+08:00">2022-06-03</time>
             </span>
 
           
@@ -356,137 +496,15 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p><a target="_blank" rel="noopener" href="https://blog.csdn.net/solitudi/article/details/110144623">https://blog.csdn.net/solitudi/article/details/110144623</a></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/06/08/CTFshow-web%E5%85%A5%E9%97%A821-28-%E7%88%86%E7%A0%B4/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="MirRoR4s">
-      <meta itemprop="description" content="想成为c++专家 黑客 密码学爱好者">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="学习记录">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/06/08/CTFshow-web%E5%85%A5%E9%97%A821-28-%E7%88%86%E7%A0%B4/" class="post-title-link" itemprop="url">CTFshow-web入门21-28(爆破)</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2022-06-08 12:38:33 / 修改时间：15:28:34" itemprop="dateCreated datePublished" datetime="2022-06-08T12:38:33+08:00">2022-06-08</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>题解链接</p>
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_55233040/article/details/119044164">https://blog.csdn.net/qq_55233040/article/details/119044164</a></p>
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/song123sh/article/details/120787344">https://blog.csdn.net/song123sh/article/details/120787344</a> </p>
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_19533763/article/details/123910776">https://blog.csdn.net/qq_19533763/article/details/123910776</a></p>
-<p>配合使用，效果更佳。</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/06/07/CTFshow-web%E5%85%A5%E9%97%A8-%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="MirRoR4s">
-      <meta itemprop="description" content="想成为c++专家 黑客 密码学爱好者">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="学习记录">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/06/07/CTFshow-web%E5%85%A5%E9%97%A8-%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2/" class="post-title-link" itemprop="url">CTFshow web入门(信息泄露)</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-06-07 21:30:27" itemprop="dateCreated datePublished" datetime="2022-06-07T21:30:27+08:00">2022-06-07</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-06-12 12:10:25" itemprop="dateModified" datetime="2022-06-12T12:10:25+08:00">2022-06-12</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>write-up链接：</p>
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/doraemon12345/article/details/117395437?spm=1001.2101.3001.6650.2&amp;utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7Edefault-2-117395437-blog-124714122.pc_relevant_default&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7Edefault-2-117395437-blog-124714122.pc_relevant_default&amp;utm_relevant_index=4">https://blog.csdn.net/doraemon12345/article/details/117395437?spm=1001.2101.3001.6650.2&amp;utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7Edefault-2-117395437-blog-124714122.pc_relevant_default&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7Edefault-2-117395437-blog-124714122.pc_relevant_default&amp;utm_relevant_index=4</a></p>
-
+          <h2 id="Crypto"><a href="#Crypto" class="headerlink" title="Crypto"></a>Crypto</h2>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/06/03/Security-Fest-2022/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -504,7 +522,7 @@
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -570,7 +588,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">28</span>
+          <span class="site-state-item-count">24</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -583,7 +601,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-count">8</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
