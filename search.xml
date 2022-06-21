@@ -1166,7 +1166,9 @@
   <entry>
     <title>SEETF 2022</title>
     <url>/2022/06/12/SEETF-2022/</url>
-    <content><![CDATA[<h1 id="SEETF-2022"><a href="#SEETF-2022" class="headerlink" title="SEETF 2022"></a>SEETF 2022</h1><h2 id="Lost-Modulus"><a href="#Lost-Modulus" class="headerlink" title="Lost Modulus"></a>Lost Modulus</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> Crypto.Util.number <span class="keyword">import</span> getPrime, long_to_bytes, bytes_to_long</span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&quot;flag.txt&quot;</span>, <span class="string">&quot;rb&quot;</span>) <span class="keyword">as</span> f:</span><br><span class="line">    FLAG = f.read()</span><br><span class="line"></span><br><span class="line">n = bytes_to_long(FLAG)</span><br><span class="line"></span><br><span class="line"><span class="comment">#make sure i have a big modulus</span></span><br><span class="line"><span class="keyword">while</span> n.bit_length() &lt; <span class="number">2048</span>:</span><br><span class="line">    n *= n</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">encrypt</span>(<span class="params">m1, m2</span>):</span><br><span class="line">    e = getPrime(<span class="number">256</span>)</span><br><span class="line">    <span class="keyword">assert</span> m1.bit_length() &gt;= <span class="number">1600</span> <span class="keyword">and</span> long_to_bytes(m1).startswith(<span class="string">b&quot;SEE&#123;&quot;</span>), <span class="string">&#x27;first message must be at least 1600 bits and begin with &quot;SEE&#123;&quot;&#x27;</span></span><br><span class="line">    <span class="keyword">assert</span> <span class="number">500</span> &lt;= m2.bit_length() &lt;= <span class="number">600</span>, <span class="string">&#x27;second message must be within 500 to 600 bits&#x27;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">pow</span>(m1, e, n), <span class="built_in">pow</span>(m2, e, n)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">main</span>():</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        m1 = <span class="built_in">int</span>(<span class="built_in">input</span>(<span class="string">&quot;Message 1 (as integer) : &quot;</span>).strip())</span><br><span class="line">        m2 = <span class="built_in">int</span>(<span class="built_in">input</span>(<span class="string">&quot;Message 2 (as integer) : &quot;</span>).strip())</span><br><span class="line">        c1, c2 = encrypt(m1, m2)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;\nCiphers: \n<span class="subst">&#123;[c1,c2]&#125;</span>&quot;</span>)</span><br><span class="line">    <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">        <span class="built_in">print</span>(e)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure>
+    <content><![CDATA[<h1 id="SEETF-2022"><a href="#SEETF-2022" class="headerlink" title="SEETF 2022"></a>SEETF 2022</h1><p><a href="https://blog.maple3142.net/2022/06/06/seetf-2022-writeups/">https://blog.maple3142.net/2022/06/06/seetf-2022-writeups/</a> 题解链接</p>
+<p>[TOC]</p>
+<h2 id="Lost-Modulus"><a href="#Lost-Modulus" class="headerlink" title="Lost Modulus"></a>Lost Modulus</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> Crypto.Util.number <span class="keyword">import</span> getPrime, long_to_bytes, bytes_to_long</span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&quot;flag.txt&quot;</span>, <span class="string">&quot;rb&quot;</span>) <span class="keyword">as</span> f:</span><br><span class="line">    FLAG = f.read()</span><br><span class="line"></span><br><span class="line">n = bytes_to_long(FLAG)</span><br><span class="line"></span><br><span class="line"><span class="comment">#make sure i have a big modulus</span></span><br><span class="line"><span class="keyword">while</span> n.bit_length() &lt; <span class="number">2048</span>:</span><br><span class="line">    n *= n</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">encrypt</span>(<span class="params">m1, m2</span>):</span><br><span class="line">    e = getPrime(<span class="number">256</span>)</span><br><span class="line">    <span class="keyword">assert</span> m1.bit_length() &gt;= <span class="number">1600</span> <span class="keyword">and</span> long_to_bytes(m1).startswith(<span class="string">b&quot;SEE&#123;&quot;</span>), <span class="string">&#x27;first message must be at least 1600 bits and begin with &quot;SEE&#123;&quot;&#x27;</span></span><br><span class="line">    <span class="keyword">assert</span> <span class="number">500</span> &lt;= m2.bit_length() &lt;= <span class="number">600</span>, <span class="string">&#x27;second message must be within 500 to 600 bits&#x27;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">pow</span>(m1, e, n), <span class="built_in">pow</span>(m2, e, n)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">main</span>():</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        m1 = <span class="built_in">int</span>(<span class="built_in">input</span>(<span class="string">&quot;Message 1 (as integer) : &quot;</span>).strip())</span><br><span class="line">        m2 = <span class="built_in">int</span>(<span class="built_in">input</span>(<span class="string">&quot;Message 2 (as integer) : &quot;</span>).strip())</span><br><span class="line">        c1, c2 = encrypt(m1, m2)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;\nCiphers: \n<span class="subst">&#123;[c1,c2]&#125;</span>&quot;</span>)</span><br><span class="line">    <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">        <span class="built_in">print</span>(e)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure>
 <p><a href="https://ctf-wiki.org/crypto/asymmetric/rsa/rsa_chosen_plain_cipher/">RSA 选择明密文攻击 - CTF Wiki</a></p>
 <p>解题思路是构造具有特定关系的多组明文对m1 m2 然后求出多组密文对的最大公因数，在本题中公因数大概就是n的幂，随后枚举幂数开根，能够开根出来的就是n了 </p>
 <script type="math/tex; mode=display">c_1 \equiv m_1^e \mod n\\c_2 \equiv m_2^e \mod n\\观察这题的m_1 \space m_1的大小，m_2的平方是小于m_1的，所以构造m_2^3 = m1比较合适\\所以我们有c_1^3 \equiv (m_1^e)^3 \mod n \space 即 c_2^3 \equiv  m_1^e \mod n \space 所以c_1 - c_2^3 \equiv 0 \mod n\\即 c_2^3 - c_1 = kn(等式1)\\我们可以构造多个具有上述关系的m_1 \space m_2 然后得到多个等式1，最后求这些等式的最大\\公因数即可拿到n的幂(因为题目说当n的比特位数小于2048就要乘上自己)</script><p>其实构造具有上述关系的m1 m2 也是需要一点小技巧的，特别是还要求m1以特定字符串开头</p>
@@ -1194,17 +1196,24 @@
   <entry>
     <title>密码编码学与网络安全-原理与实践(第七版)</title>
     <url>/2022/06/13/%E5%AF%86%E7%A0%81%E7%BC%96%E7%A0%81%E5%AD%A6%E4%B8%8E%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8-%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E8%B7%B5-%E7%AC%AC%E4%B8%83%E7%89%88/</url>
-    <content><![CDATA[<h1 id="密码编码学与网络安全-原理与实践-第七版"><a href="#密码编码学与网络安全-原理与实践-第七版" class="headerlink" title="密码编码学与网络安全-原理与实践(第七版)"></a>密码编码学与网络安全-原理与实践(第七版)</h1><h2 id="第一章习题"><a href="#第一章习题" class="headerlink" title="第一章习题"></a>第一章习题</h2><h2 id="第二章习题"><a href="#第二章习题" class="headerlink" title="第二章习题"></a>第二章习题</h2><h2 id="第三章习题"><a href="#第三章习题" class="headerlink" title="第三章习题"></a>第三章习题</h2><h2 id="第四章习题"><a href="#第四章习题" class="headerlink" title="第四章习题"></a>第四章习题</h2><h3 id="思考题"><a href="#思考题" class="headerlink" title="思考题"></a>思考题</h3><h4 id="4-1"><a href="#4-1" class="headerlink" title="4.1"></a>4.1</h4><p>Feistel密码是对理想分组密码体制的一种近似体制，能够应用在实际加密中</p>
-<h4 id="4-2"><a href="#4-2" class="headerlink" title="4.2"></a>4.2</h4><p>流密码每次加密数据流的一位或一个字节；分组密码是将一个明文分组作为整体加密，并且通常得到的是跟明文等长的密文分组</p>
-<h4 id="4-3"><a href="#4-3" class="headerlink" title="4.3"></a>4.3</h4><p>一般地，对于$n$位的代替分组密码，密钥的规模是$n\times 2^n$</p>
-<p>若分组有抗统计攻击的理想长度，比如$n=64bit$，密钥大小将要为$10^{21}$位，这显然不可能在实际中应用</p>
+    <content><![CDATA[<h1 id="密码编码学与网络安全-原理与实践-第七版"><a href="#密码编码学与网络安全-原理与实践-第七版" class="headerlink" title="密码编码学与网络安全-原理与实践(第七版)"></a>密码编码学与网络安全-原理与实践(第七版)</h1><p>[TOC]</p>
+<h2 id="第一章习题"><a href="#第一章习题" class="headerlink" title="第一章习题"></a>第一章习题</h2><h2 id="第二章习题"><a href="#第二章习题" class="headerlink" title="第二章习题"></a>第二章习题</h2><h2 id="第三章习题"><a href="#第三章习题" class="headerlink" title="第三章习题"></a>第三章习题</h2><h2 id="第四章习题"><a href="#第四章习题" class="headerlink" title="第四章习题"></a>第四章习题</h2><h3 id="思考题"><a href="#思考题" class="headerlink" title="思考题"></a>思考题</h3><h4 id="4-1"><a href="#4-1" class="headerlink" title="4.1"></a>4.1</h4><p>目前使用的很多对称分组加密算法都是基于Feistel分组密码结构。因此，对Feistel结构的研究揭示了这些最新密码背后的原理。</p>
+<h4 id="4-2"><a href="#4-2" class="headerlink" title="4.2"></a>4.2</h4><p>流密码是对数字数据流一次加密一个比特或一个字节的密码。分组密码是将一个明文块作为一个整体来处理，并用它来产生一个长度相等的密文块。</p>
+<h4 id="4-3"><a href="#4-3" class="headerlink" title="4.3"></a>4.3</h4><p>如果使用一个较小的块大小，例如n = 4，那么该系统相当于一个经典的替换密码。对于小的分组块，这样的系统很容易对明文进行统计分析。对于较大的块，密钥的大小是$n * 2^n$的量级，这使得系统不切实际。</p>
 <h4 id="4-4"><a href="#4-4" class="headerlink" title="4.4"></a>4.4</h4><p>乘积密码是依次使用两个或两个以上基本密码，所得结果的密码强度将强于所有单个密码的强度。</p>
 <h4 id="4-5"><a href="#4-5" class="headerlink" title="4.5"></a>4.5</h4><p>扩散的方法是尽可能地使明文和密文间的统计关系变得复杂，以挫败推导出密钥的企图。混淆则是尽可能使密文和加密密钥间的统计关系更加复杂，以阻止攻击者发现密钥。</p>
-<h4 id="4-6"><a href="#4-6" class="headerlink" title="4.6"></a>4.6</h4><p>分组长度；密钥长度；迭代轮数；子密钥产生算法 ；轮函数。</p>
-<h4 id="4-7"><a href="#4-7" class="headerlink" title="4.7"></a>4.7</h4><p>雪崩效应就是指明文或者密钥的某一位发生变化会导致密文的很多位发生变化。</p>
-<h3 id="习题"><a href="#习题" class="headerlink" title="习题"></a>习题</h3><h4 id="4-1-1"><a href="#4-1-1" class="headerlink" title="4.1"></a>4.1</h4><p>(a)$n$位的明文分组长度，共有$2^n$个可能的明文分组；理想分组密码中明文到密文的映射是可逆映射即密文可以被解密为明文。所以这个映射至少应该是单射，否则密文不能唯一对应一个明文。同时理想分组密码的密文长度跟明文长度相等，所以密文也有$2^n$个可能的分组。</p>
-<p>对于第一个明文，我们可以选择$2^n$个密文分组中的任意一个。对于第二个明文，由于密文分组唯一对应一个明文分组，所以第一个明文选择的密文分组不能被第二个明文选择，所以第二个明文分组可以从剩下的$2^n-1$个里选择一个，以此类推。所以如果我们限定在可逆映射上，不同变换的总数是$2^n!$个</p>
-<p>(b)</p>
+<p>在扩散过程中，明文的统计结构被消散到密文当中去。这是通过让每个明文数字影响许多密文数字的值来实现的，这相当于说每个密文数字受许多明文数字的影响。混淆试图使密文的统计数据和加密密钥的值之间的关系尽可能复杂，以再次阻止发现密钥的尝试。因此，即使攻击者能够在一定程度上掌握密文的统计信息，但使用密钥生成密文的方式是如此复杂，以至于很难推断出密钥。这是通过使用复杂的替换算法实现的。</p>
+<h4 id="4-6"><a href="#4-6" class="headerlink" title="4.6"></a>4.6</h4><p>分组长度：更大的分组长度意味着更高的安全性（），但减少了加解密的速度。</p>
+<p>密钥长度：更大的密钥长度意味着更高的安全性，但是也许会减少加解密的速度</p>
+<p>迭代轮数：Feistel密码的本质是一个简单的单轮迭代只能提供不充分的安全性，但是多轮迭代可以增加安全性</p>
+<p>子密钥产生算法：这个算法的复杂度越高，应该导致密码分析越困难。</p>
+<p>轮函数：同样地，更复杂的轮函数通常意味着抵抗密码分析的能力越强。</p>
+<p>快速的软件加密/解密：在许多案例中，加密被嵌入到应用或应用程序的函数当中去，以此替代硬件实现加密/解密的方式。因此，算法执行的速度就成为了一个问题。</p>
+<p>易于分析：尽管我们想要我们的算法在密码分析上尽可能地困难，但是使算法易于分析也有许多的好处。例如，如果算法可以被简洁清晰地解释，那么就更容易对算法进行密码漏洞分析，因此对其强度的保证程度更高。</p>
+<h4 id="4-7"><a href="#4-7" class="headerlink" title="4.7"></a>4.7</h4><p> 雪崩效应是任何加密算法的一种特性，明文或密钥的微小变化都会导致密文的显著变化 </p>
+<h3 id="习题"><a href="#习题" class="headerlink" title="习题"></a>习题</h3><h4 id="4-1-1"><a href="#4-1-1" class="headerlink" title="4.1"></a>4.1</h4><p>  a.$n$比特的明文分组长度，共有$2^n$个可能的不同明文分组以及$2^n$个不同的密文分组；理想分组密码中明文到密文的映射是可逆映射即密文可以被解密为明文。所以这个映射至少应该是单射，否则密文不能唯一对应一个明文。同时理想分组密码的密文长度跟明文长度相等，所以密文也有$2^n$个可能的分组。</p>
+<p>  对于第一个明文，我们可以选择$2^n$个密文分组中的任意一个。对于第二个明文，由于密文分组唯一对应一个明文分组，所以第一个明文选择的密文分组不能被第二个明文选择，所以第二个明文分组可以从剩下的$2^n-1$个里选择一个，以此类推。所以如果我们限定在可逆映射上，不同变换的总数是$2^n!$个</p>
+<p>  b.理论上，密钥长度可以是log2(2n)!位。例如，为每个映射分配一个数字，从$1到(2^n)!$并维护一个表来显示每个这样的数字的映射。然后，密钥只需要log2(2n)!位，但我们也需要这个巨大的表。<br>定义密钥的一种更直接的方法是让密钥由每个明文块的密文值组成，这些密文值对明文块0到2n - 1按顺序列出。这就是表4.1所建议的。在本例中，密钥大小为n × 2n，并且不需要庞大的表进入翻译页面</p>
 <h4 id="4-2-1"><a href="#4-2-1" class="headerlink" title="4.2"></a>4.2</h4><p>在加密明文m的时候，密钥的使用次序依次是$k_1,k_2,k_3,k_4,k_5,k_6,k_7,k_8,k_8,k_7,…k_1$</p>
 <p>根据Feistel密码结构，解密的时候应当逆序使用加密密钥，观察一下就会发现本题Feistel密码结构的加密密钥跟解密密钥是相同的。也就是说如果密文c是明文m用加密oracle加密的，只需要用密文c对oracle做一次提问即可得到m。</p>
 <h4 id="4-3-1"><a href="#4-3-1" class="headerlink" title="4.3"></a>4.3</h4><h4 id="4-4-1"><a href="#4-4-1" class="headerlink" title="4.4"></a>4.4</h4><p>$E(K,.)，E(K’,.)$有$2^n$种映射可能性。</p>
@@ -1234,9 +1243,175 @@
 <p>即$\sigma$和$\tau_K$是对合变换。所以DES加密算法的第i轮变换$(L_i,R_i)=$</p>
 <p>$(R_{i-1},F(R{i-1},K_i)\oplus L{i-1})$可表示为</p>
 <p>$(L_i,R_i)=\sigma \circ \tau_{K_i}(L_{i-1},R{i-1})$，从而完整的16轮加密过程可以表示如下：</p>
-<h4 id="4-8"><a href="#4-8" class="headerlink" title="4.8"></a>4.8</h4>]]></content>
+<p>$Y=E_K(X)=IP^{-1}\circ\tau_{K_{16}}\circ\sigma\space\circ\tau_{K_{15}}\circ…\circ\sigma\circ\tau_{K_{2}}\circ\sigma\circ\tau_{K_{1}}\circ IP(X)$</p>
+<p>故解密算法为</p>
+<p>$X=E_K^{-1}(Y)$</p>
+<p>   $=(IP^{-1}\circ\tau_{K_{16}}\circ\sigma\space\circ\tau_{K_{15}}\circ…\circ\sigma\circ\tau_{K_{2}}\circ\sigma\circ\tau_{K_{1}}\circ IP)^{-1}(Y)$</p>
+<p>   $=IP^{-1}\circ \tau_{K_1}^{-1}\circ \sigma^{-1}\circ \tau_{K_2}^{-1}\circ…\circ\sigma^{-1}\circ\tau_{K_{15}}^{-1}\circ\sigma^{-1}\circ \tau_{K_{16}}^{-1}\circ(IP^{-1})^{-1}(Y)$</p>
+<p>   $=IP^{-1}\circ \tau_{K_1}\circ \sigma\circ\tau_{K_2}\circ…\circ\sigma\circ\tau_{K_{15}}\circ\sigma\circ\tau_{K_{16}}\circ IP(Y)$</p>
+<p>所以解密算法是加密算法的逆。</p>
+<h4 id="4-8"><a href="#4-8" class="headerlink" title="4.8"></a>4.8</h4><p>（a）这是一个复合的变换，先运用结合律将$IP$跟$IP^{-1}$消去，则原式等于如下等式</p>
+<p>$TD_1(T_{17}(T_{16}(L_{15}||R_{15})))=TD_1(T_{17}(L_{16},R_{16}))=TD_1(R_{16},L_{16})=R_{15}||L_{15}$</p>
+<p>所以等式a成立</p>
+<p>（b）如果去掉了加密算法最后的32位的交换，则$T_{16}(L_{15}||R_{15})=L_{16}||R_{16}$</p>
+<p>$TD_1(L_{16}||R_{16})=L_{15}||L_{15}\oplus F(L_{16},K_{16})$</p>
+<p>异或右边不等于$R_{15}$，等式不成立。</p>
+<h2 id="第五章习题"><a href="#第五章习题" class="headerlink" title="第五章习题"></a>第五章习题</h2><h2 id="第六章习题"><a href="#第六章习题" class="headerlink" title="第六章习题"></a>第六章习题</h2><h3 id="思考题-1"><a href="#思考题-1" class="headerlink" title="思考题"></a>思考题</h3><h4 id="6-1"><a href="#6-1" class="headerlink" title="6.1"></a>6.1</h4><p>安全性：实际的安全性；不可预测性；可靠性；其他的安全因素。</p>
+<p>成本：许可要求；计算的效率；存储空间的要求。</p>
+<p>算法和实现特点：灵活性；硬件和软件的适用性；简单性；</p>
+<h4 id="6-2"><a href="#6-2" class="headerlink" title="6.2"></a>6.2</h4><p>总体安全；软件的实现；有限的空间环境；硬件的实现；攻击的实现；加密跟解密的对比；密钥的灵活性；其他通用性和灵活性；指令级并行的潜力。</p>
+<h4 id="6-3"><a href="#6-3" class="headerlink" title="6.3"></a>6.3</h4><p>Rijndael 允许分组长度为128，192，或者是256比特。AES只允许分组长度是128比特。</p>
+<h4 id="6-4"><a href="#6-4" class="headerlink" title="6.4"></a>6.4</h4><p>状态数组在处理的每个阶段保存128比特分组上的中间结果。</p>
+<h4 id="6-5"><a href="#6-5" class="headerlink" title="6.5"></a>6.5</h4><p>1.按字节值的升序逐行初始化S盒。第一行是{00}，{01}，…..，{0F}；第二行是{10}，{11}，…….，{1F}等。因此在行y列x的字节值是{yx}</p>
+<p>2.把S盒中的每个字节映射为它在有限域$GF(2^8)$中的逆；{00}被映射为它自身{00}.</p>
+<p>3.把S盒中的每个字节的8个构成位 记为$(b_7,b_6,b_5,b_4,b_3,b_2,b_1,b_0)$。对S盒的每个字节的每个位做如下的变换：</p>
+<p>$b_i’=b_i\oplus b_{(i+4)\mod8}\oplus b_{(i+5)\mod8}\oplus b_{(i+6)\mod8}\oplus b_{(i+7) \mod 8}\oplus c_i$，这里的$c_i$是指值为{63}的字节c的第i位。即$(c_7 c_6 c_5 c_4 c_3 c_2 c_1 c_0)=(01100011)$。符号$(‘)$表示变量的值要被等式右边的值更新。</p>
+<h4 id="6-6"><a href="#6-6" class="headerlink" title="6.6"></a>6.6</h4><p>状态中每个字节按照如下方式映射为一个新的字节：把该字节的高4位作为行值，低4为作为列值，以这些行列值作为索引从S盒的对应位置取出8比特元素作为输出。</p>
+<h4 id="6-7"><a href="#6-7" class="headerlink" title="6.7"></a>6.7</h4><p>状态的第一行保持不变。对第二行来说，循环左移1个字节。对第三行来说，循环左移2个字节。对第四行来说，循环左移3个字节。</p>
+<h4 id="6-8"><a href="#6-8" class="headerlink" title="6.8"></a>6.8</h4><p>12个字节。</p>
+<h4 id="6-9"><a href="#6-9" class="headerlink" title="6.9"></a>6.9</h4><p>列混淆独立地对每列进行操作。每列中的每个字节被映射为一个新值，此值由该列中的四个字节通过函数变换得到</p>
+<h4 id="6-10"><a href="#6-10" class="headerlink" title="6.10"></a>6.10</h4><p>128位的状态按位与128位的轮密钥进行异或。</p>
+<h4 id="6-11"><a href="#6-11" class="headerlink" title="6.11"></a>6.11</h4><p>AES密钥扩展算法的输入值是4个字（16字节），输出值是一个44个字组成（176字节）组成的一维线性数组。扩展算法由第6.4节中的伪代码定义。</p>
+<h4 id="6-12"><a href="#6-12" class="headerlink" title="6.12"></a>6.12</h4><p>字节代替对状态数组进行操作，使用S盒将每一个字节映射为一个新的字节。字代替对一个字进行操作，使用S盒将每一个字节映射为一个新的字节</p>
+<h4 id="6-13"><a href="#6-13" class="headerlink" title="6.13"></a>6.13</h4><p>行移位在问题6.8中被描述。字循环的功能是使一个字中的四个字节循环左移一个字节。等价于行移位对状态数组的第二行的操作。</p>
+<h4 id="6-14"><a href="#6-14" class="headerlink" title="6.14"></a>6.14</h4><p>AES的解密算法和加密算法不同。尽管在加密和解密中密钥扩展的形式一样，但在解密中变换的顺序与加密中变换的顺序不同。解密算法的一个等价版本与加密算法有同样的结构。这个版本与加密算法的变换顺序相同（用逆变换取代正向变换）。为了到达这个目标，需要对密钥扩展进行改进。</p>
+<h2 id="第七章习题"><a href="#第七章习题" class="headerlink" title="第七章习题"></a>第七章习题</h2><h2 id="第八章习题"><a href="#第八章习题" class="headerlink" title="第八章习题"></a>第八章习题</h2><h2 id="第九章习题"><a href="#第九章习题" class="headerlink" title="第九章习题"></a>第九章习题</h2><h3 id="思考题-2"><a href="#思考题-2" class="headerlink" title="思考题"></a>思考题</h3><h3 id="习题-1"><a href="#习题-1" class="headerlink" title="习题"></a>习题</h3><h4 id="9-1"><a href="#9-1" class="headerlink" title="9.1"></a>9.1</h4><h4 id="9-5"><a href="#9-5" class="headerlink" title="9.5"></a>9.5</h4><p>假设公钥是$n=pq,e$ 。 e在模$\phi(n)$下的阶相对于$\phi(n)$可能比较小，也就是使得$e^x \equiv 1 \mod \phi(n)$成立的x较小。在最坏的情况下，e的阶数是2，此时e在模$\phi(n)$下的逆元d等于e本身。例如如果$p=7,q=5$从而$phi(n)=24$，如果$e=5$，则$e^2\equiv 1 \mod \phi(5*7)$。</p>
+<h4 id="9-6"><a href="#9-6" class="headerlink" title="9.6"></a>9.6</h4><p>有。如果明文块在模n下与n有公因子，那么密文块在模n下也与n有公因子。因为密文块小于$pq$，所以公因子一定是$p$或者$q$，同时明文块一定是$p$或者$p$的倍数。我们可以测试每一个密文块和n的公因子，查看是否是素数。如果是素数，那么这个公因数是$p$或者$q$，如果是$p$，则可以通过$n/p$得到$q$。如果不是素数，我们尝试分解这个公因子并继续检查分解之后的数是否是素数，然后操作同上。</p>
+<h4 id="9-7"><a href="#9-7" class="headerlink" title="9.7"></a>9.7</h4><p>不安全。一旦Bob泄露了他的私钥，Alice可以使用Bob的私钥去分解模数N。随后Alice就可以解密Bob发送的任何信息。</p>
+<p>以下是分解模数N的方法：</p>
+<p>令$k=ed-1$，则$k \equiv 0\mod \phi(N)$</p>
+<p>在乘法群$Z(N)$上随机选择一个数$x$，则$x^k \equiv 1 \mod N$</p>
+<p>则$(x^{k/2})^2 \equiv 1 \mod N &lt;=&gt;(x^{k/2})^2 -1\equiv 0 \mod N$</p>
+<p>1有百分之50的可能性是模N的二次剩余，即上述同余式有解$x^{k/2}$，而且已知$N| (x^{k/2})^2 -1 $，则我们求出同余式的解之后在求一下解和N的最大公因子即可分解N。</p>
+<p>所以$gcd(x^{k/2}-1,N)$会得到一个N的质因子</p>
+<p>如果解太大不是很好求，可以将$x^{k/2}$继续转变成$x^{k/4},x^{k/8}$</p>
+<p>但是这个方法在$x^{k/2^i}\equiv -1 \mod N$时会失败，这个时候我们在随机选择一个新的X即可。运用这个方法可以在多项式时间内分解N。</p>
+<h4 id="9-8"><a href="#9-8" class="headerlink" title="9.8"></a>9.8</h4><p>首先将字母集合$\{A,B,…..,Z\}$根据题目规则映射为明文数字集合，$SM=\{0,1,…..,25\}$，那么对应的密文数字集合为$\{0^e \mod N,1^e\mod N,……25^e\mod N\}$</p>
+<p>密文数字集合可以被每一个知道Bob公钥的人计算。因此对这个加密方案最有效的攻击方法就是枚举所有的明文数字，计算其对应的密文数字。随后建立一个对照表，以密文为关键字，明文为值。</p>
+<h4 id="9-9"><a href="#9-9" class="headerlink" title="9.9"></a>9.9</h4><p>a.</p>
+<p>b. $M=2,e=23,n=233\times 241=56,153$，所以$p=233,q=241,e=23=(10111)_2$</p>
+<p>运用快速模幂算法得到$C=21,811$</p>
+<p>c. $\phi(n) = (p-1)\times(q-1)=55,680$，使用扩展欧几里得算法得到$d=23^{-1}\mod 55680 = 19,367$</p>
+<p>d. </p>
+<h4 id="9-10"><a href="#9-10" class="headerlink" title="9.10"></a>9.10</h4><p>$C=(M^{d_S} \mod NS)^{e_R} \mod NR=S^{e_R}\mod NR$，其中$S=M^{d_S}\mod NS$，$M’ = (C^{d_R}\mod NR)^{e_S} \mod NS = S’^{e_S} \mod NS$，其中$S’ = C^{d_R} \mod NR$</p>
+<p>如果$S\neq S’$，则这个方案不能正确工作。</p>
+<p>这种情况可能发生在$N_S &gt; N_R$时，如果此时 $ N_R&lt;=S&lt;N_S$，那么根据定义$S’&lt;N_R$，所以此时$S\neq S’$，进而$M’ \neq M$。</p>
+<p>但是对于其他$N_S$和$N_R$的大小关系，这个方案能够正确工作，尽管出于安全原因不建议$N_S=N_R$</p>
+<p>所以为了解决上述问题，收发双方可以使用两对密钥，一对用来加密，一对用来签名。并且要使得所有的签名密钥$N_{SGN}$都比加密密钥$N_{ENC}$小</p>
+<h4 id="9-11"><a href="#9-11" class="headerlink" title="9.11"></a>9.11</h4><p>第三个元素是第一个元素的平方</p>
+<p>第五个元素是第一个元素和第二个元素的乘积</p>
+<p>第七个元素是第一个元素的立方</p>
+<h4 id="9-12"><a href="#9-12" class="headerlink" title="9.12"></a>9.12</h4><p>参考图9.5，M1的输入K是RSA中的私钥{d,n}。M2的输入x是RSA中的公钥{e,n}。M2的输入p对应RSA中的明文M；然后M3的输入z对应RSA中的密文C。</p>
+<p>所以M1由$d=e^{-1}\mod \phi(n)$组成</p>
+<p>M2由$M^e \mod n$ 组成</p>
+<p>M3由$C^d\mod n$组成</p>
+<h4 id="9-13"><a href="#9-13" class="headerlink" title="9.13"></a>9.13</h4><p>是的</p>
+<h4 id="9-14"><a href="#9-14" class="headerlink" title="9.14"></a>9.14</h4><p>此算法名为Cocks algorithm</p>
+<p>a.  Cocks利用了中国剩余定理，该定理说，可以用整数的余数对一组相对素数模取模，重构一定范围内的整数。特别是对于质数相对较多的P和Q, 0 &lt; M &lt; N范围内的任何整数M都可以是M mod P和M mod Q的一对数字，并且在给定M mod P和M mod的情况下，有可能恢复M.安全性在于很难找到N的质因数。</p>
+<p>b. 在RSA中，用户构造一对整数d和e，使得$d\times e \equiv 1 \mod ((P-1)(Q-1))$，然后公布e和N作为公钥。</p>
+<p>Cocks是一种特殊情况，其中e=N。</p>
+<p>c.  RSA算法具有对称的优点;加密和解密都使用相同的过程，这简化了所需的软件。此外，还可以任意选择e，以便使用特别简单的版本进行公钥加密。</p>
+<p>d. 私钥k是P和Q；公钥x是N；明文p是M；密文z是C。M1由k的两部分相乘得到。M2是由M的N次幂模N组成。M3由本题描述中的过程组成</p>
+<h4 id="9-15"><a href="#9-15" class="headerlink" title="9.15"></a>9.15</h4><p>1)对手X拦截了A发送给B的消息，即$[A, E(PU_b, M)， B]$</p>
+<p>2) X向B发送消息 $[X, E(PU_b, M)， B]$</p>
+<p>3) B通过向X发送$[B, E(PU_X, M)， X]$确认收到信息</p>
+<p>4) X用自己的秘密解密密钥对$E(PU_X, M)$进行解密，得到M</p>
+<h4 id="9-16"><a href="#9-16" class="headerlink" title="9.16"></a>9.16</h4><div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center">i</th>
+<th style="text-align:center">9</th>
+<th style="text-align:center">8</th>
+<th style="text-align:center">7</th>
+<th style="text-align:center">6</th>
+<th style="text-align:center">5</th>
+<th style="text-align:center">4</th>
+<th style="text-align:center">3</th>
+<th style="text-align:center">2</th>
+<th style="text-align:center">1</th>
+<th style="text-align:center">0</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">$B_i$</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">0</td>
+</tr>
+<tr>
+<td style="text-align:center">C</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">2</td>
+<td style="text-align:center">4</td>
+<td style="text-align:center">5</td>
+<td style="text-align:center">11</td>
+<td style="text-align:center">23</td>
+<td style="text-align:center">46</td>
+<td style="text-align:center">93</td>
+<td style="text-align:center">186</td>
+<td style="text-align:center">372</td>
+</tr>
+<tr>
+<td style="text-align:center">F</td>
+<td style="text-align:center">5</td>
+<td style="text-align:center">25</td>
+<td style="text-align:center">625</td>
+<td style="text-align:center">937</td>
+<td style="text-align:center">595</td>
+<td style="text-align:center">569</td>
+<td style="text-align:center">453</td>
+<td style="text-align:center">591</td>
+<td style="text-align:center">59</td>
+<td style="text-align:center">1013</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h4 id="9-17"><a href="#9-17" class="headerlink" title="9.17"></a>9.17</h4><p>首先，让我们考虑图9.8中的算法。b的二进制表示从左到右读取(从最高位到最低位)，以控制执行哪些操作。本质上，如果c是处理完一些位后指数的当前值，那么如果下一位是O，指数将翻倍(简单地说就是左移1位)或者翻倍并加1。每次循环迭代都使用一个恒等式:</p>
+<p>$a^{2c}\mod n = (a^c)^2 \mod n ,if \space b_i =0$</p>
+<p>$a^{2c+1}\mod n = a \times (a^c)^2 \mod n ,if \space b_i = 1$</p>
+<p>该算法保持不变，即$d = a^c mod n$，当c增加2倍和递增时，直至$c = b$。现在让我们考虑问题中的算法，它改编自[KNUT98, 462页]中的算法。该算法从右到左(最低位到最高位)处理b的二进制表示。在这种情况下，算法保持不变，$a^n=d\times  T^E$。最后，$E = 0$，剩下$a^n = d$。</p>
+<h4 id="9-18"><a href="#9-18" class="headerlink" title="9.18"></a>9.18</h4><p>注意到因为$Z=r^e \mod n$，所以$r=Z^d \mod n $。Bob计算</p>
+<p>$tY \mod n = r^{-1}X^d \mod n =r^{-1}Z^dC^d \mod n =C^d\mod n = M$</p>
+<h4 id="9-19"><a href="#9-19" class="headerlink" title="9.19"></a>9.19</h4>]]></content>
       <tags>
         <tag>Crypto</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>HSCTF9-2022</title>
+    <url>/2022/06/19/HSCTF9-2022/</url>
+    <content><![CDATA[<p>T</p>
+<p><a href="https://hackmd.io/@aplet123/r1TIzZbYq#vending-machine-v2">https://hackmd.io/@aplet123/r1TIzZbYq#vending-machine-v2</a></p>
+]]></content>
+      <tags>
+        <tag>Crypto</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>文件上传漏洞总结</title>
+    <url>/2022/06/14/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E%E6%80%BB%E7%BB%93/</url>
+    <content><![CDATA[<p>学习链接：</p>
+<p><a href="https://yinwc.github.io/2020/04/21/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E%E6%80%BB%E7%BB%93/">https://yinwc.github.io/2020/04/21/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E%E6%80%BB%E7%BB%93/</a></p>
+<p><a href="https://xz.aliyun.com/t/7365">https://xz.aliyun.com/t/7365</a></p>
+<p><a href="https://jiulin.space/2021/01/02/php2/">https://jiulin.space/2021/01/02/php2/</a></p>
+<p>user.ini 文件的妙用：</p>
+<p><a href="https://www.leavesongs.com/PENETRATION/php-user-ini-backdoor.html">https://www.leavesongs.com/PENETRATION/php-user-ini-backdoor.html</a></p>
+<p><a href="https://xz.aliyun.com/t/6091">https://xz.aliyun.com/t/6091</a></p>
+<p>Upload-Labs 题解链接</p>
+<p><a href="https://xz.aliyun.com/t/2435">https://xz.aliyun.com/t/2435</a></p>
+]]></content>
+      <tags>
+        <tag>Web</tag>
       </tags>
   </entry>
 </search>

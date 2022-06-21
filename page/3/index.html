@@ -185,6 +185,150 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/05/08/angstromCTF-2022/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="MirRoR4s">
+      <meta itemprop="description" content="想成为c++专家 黑客 密码学爱好者">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="学习记录">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/05/08/angstromCTF-2022/" class="post-title-link" itemprop="url">ångstromCTF 2022</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-05-08 22:10:19" itemprop="dateCreated datePublished" datetime="2022-05-08T22:10:19+08:00">2022-05-08</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-05-21 18:39:49" itemprop="dateModified" datetime="2022-05-21T18:39:49+08:00">2022-05-21</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="Crypto"><a href="#Crypto" class="headerlink" title="Crypto"></a>Crypto</h1><p>浅析一下本次比赛中log log log的数学逻辑。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> secrets <span class="keyword">import</span> randbits</span><br><span class="line"><span class="keyword">from</span> flag <span class="keyword">import</span> flag</span><br><span class="line"></span><br><span class="line">flagbits = <span class="built_in">len</span>(flag) * <span class="number">8</span></span><br><span class="line">flag = <span class="built_in">int</span>(flag.<span class="built_in">hex</span>(),<span class="number">16</span>)</span><br><span class="line"></span><br><span class="line">q = <span class="number">127049168626532606399765615739991416718436721363030018955400489736067198869364016429387992001701094584958296787947271511542470576257229386752951962268029916809492721741399393261711747273503204896435780180020997260870445775304515469411553711610157730254858210474308834307348659449375607755507371266459204680043</span></span><br><span class="line">p = q * <span class="number">2</span>^<span class="number">1024</span> + <span class="number">1</span></span><br><span class="line"><span class="keyword">assert</span> p <span class="keyword">in</span> Primes()</span><br><span class="line">nbits = p.nbits()-<span class="number">1</span></span><br><span class="line">e = randbits(nbits-flagbits)</span><br><span class="line">e &lt;&lt;= flagbits</span><br><span class="line">e |= flag</span><br><span class="line">K = GF(p) <span class="comment">#定义大小为p的有限域K</span></span><br><span class="line"><span class="comment">#K的阶数应该是p-1，g是生成元，那么g的p-1次方应该modp同a余1</span></span><br><span class="line">g = K.multiplicative_generator()<span class="comment">#返回这个域的生成元g，有限域肯定是乘法循环群</span></span><br><span class="line">a = g^e</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">hex</span>(p))</span><br><span class="line"><span class="built_in">print</span>(g)</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">hex</span>(a))</span><br><span class="line"><span class="built_in">print</span>(flagbits)</span><br><span class="line"><span class="number">0xb4ec8caf1c16a20c421f4f78f3c10be621bc3f9b2401b1ecd6a6b536c9df70bdbf024d4d4b236cbfcb202b702c511aded6141d98202524709a75a13e02f17f2143cd01f2867ca1c4b9744a59d9e7acd0280deb5c256250fb849d96e1e294ad3cf787a08c782ec52594ef5fcf133cd15488521bfaedf485f37990f5bd95d5796b0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001</span></span><br><span class="line"><span class="number">3</span></span><br><span class="line"><span class="number">0xaf99914e5fb222c655367eeae3965f67d8c8b3a0b3c76c56983dd40d5ec45f5bcde78f7a817dce9e49bdbb361e96177f95e5de65a4aa9fd7eafec1142ff2a58cab5a755b23da8aede2d5f77a60eff7fb26aec32a9b6adec4fe4d5e70204897947eb441cc883e4f83141a531026e8a1eb76ee4bff40a8596106306fdd8ffec9d03a9a54eb3905645b12500daeabdb4e44adcfcecc5532348c47c41e9a27b65e71f8bc7cbdabf25cd0f11836696f8137cd98088bd244c56cdc2917efbd1ac9b6664f0518c5e612d4acdb81265652296e4471d894a0bd415b5af74b9b75d358b922f6b088bc5e81d914ae27737b0ef8b6ac2c9ad8998bd02c1ed90200ad6fff4a37</span></span><br><span class="line"><span class="number">880</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>首先题目给的是$a\equiv g^e \mod p,g$是乘法群的生成元，又因为有限域关于乘法做成一个循环群，所以g的阶数等于域的乘法群的阶数，我们用sage验证一下。</p>
+<p><img src="../images/1652868087923.png" alt="1652868087923"></p>
+<p>开始解题：可以看到只要求出了e，就可以得到flag。仔细分析代码就会发现flag的880bits就是e的低位880bits，所以问题就变为了如何求e的低880bits。</p>
+<p>根据生成元的阶等于群的阶我们有$g^{p-1}\equiv1\mod p$ ，而$p-1=2^{1024}*q$</p>
+<p>所以$g^{2^{1024}*q} \equiv 1 \mod p$</p>
+<p>这说明$g^q这个元素的阶是2^{1024}$,接下来看图</p>
+<p><img src="../images/1652019382086-1652277854891.png" alt="1652019382086" style="zoom:25%;" /></p>
+<p>Pohlig-Hellman在sage的discrete_log函数自带的，直接调用就好，具体的算法实现看百度</p>
+<p>payload:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">q=<span class="number">127049168626532606399765615739991416718436721363030018955400489736067198869364016429387992001701094584958296787947271511542470576257229386752951962268029916809492721741399393261711747273503204896435780180020997260870445775304515469411553711610157730254858210474308834307348659449375607755507371266459204680043</span></span><br><span class="line">p = q * <span class="number">2</span>^<span class="number">1024</span> + <span class="number">1</span></span><br><span class="line">K = GF(p)</span><br><span class="line">g = K(<span class="number">3</span>)</span><br><span class="line">a=K(<span class="number">0xaf99914e5fb222c655367eeae3965f67d8c8b3a0b3c76c56983dd40d5ec45f5bcde78f7a817dce9e49bdbb361e96177f95e5de65a4aa9fd7eafec1142ff2a58cab5a755b23da8aede2d5f77a60eff7fb26aec32a9b6adec4fe4d5e70204897947eb441cc883e4f83141a531026e8a1eb76ee4bff40a8596106306fdd8ffec9d03a9a54eb3905645b12500daeabdb4e44adcfcecc5532348c47c41e9a27b65e71f8bc7cbdabf25cd0f11836696f8137cd98088bd244c56cdc2917efbd1ac9b6664f0518c5e612d4acdb81265652296e4471d894a0bd415b5af74b9b75d358b922f6b088bc5e81d914ae27737b0ef8b6ac2c9ad8998bd02c1ed90200ad6fff4a37</span>)</span><br><span class="line">g^=q</span><br><span class="line">a^=q</span><br><span class="line"><span class="keyword">from</span> Crypto.Util.number <span class="keyword">import</span> *</span><br><span class="line">long_to_bytes(discrete_log(a,g,<span class="built_in">ord</span>=<span class="number">2</span>^<span class="number">1024</span>))</span><br></pre></td></tr></table></figure>
+<h2 id="Strike-Slip-Fault"><a href="#Strike-Slip-Fault" class="headerlink" title="Strike-Slip Fault"></a>Strike-Slip Fault</h2><p>简单的同余运算+中途相遇攻击思想的应用。</p>
+<p>什么是中途相遇攻击？</p>
+<p><a target="_blank" rel="noopener" href="https://zh.m.wikipedia.org/zh-sg/%E4%B8%AD%E9%80%94%E7%9B%B8%E9%81%87%E6%94%BB%E6%93%8A">https://zh.m.wikipedia.org/zh-sg/%E4%B8%AD%E9%80%94%E7%9B%B8%E9%81%87%E6%94%BB%E6%93%8A</a></p>
+<p><img src="../images/1652869063212.png" alt="1652869063212"></p>
+<p>源码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/local/bin/python3</span></span><br><span class="line"><span class="keyword">from</span> Crypto.Util.number <span class="keyword">import</span> getStrongPrime, long_to_bytes, bytes_to_long, inverse</span><br><span class="line"><span class="keyword">from</span> secrets <span class="keyword">import</span> randbelow, token_bytes</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Welcome to my super secret service! (under construction)&quot;</span>)</span><br><span class="line">BITS = <span class="number">4096</span></span><br><span class="line">p = getStrongPrime(BITS//<span class="number">2</span>)</span><br><span class="line">q = getStrongPrime(BITS//<span class="number">2</span>)</span><br><span class="line">n = p*q</span><br><span class="line">phi = (p-<span class="number">1</span>)*(q-<span class="number">1</span>)</span><br><span class="line">e = <span class="number">65537</span></span><br><span class="line">flag = [REDACTED]</span><br><span class="line">m = bytes_to_long(flag+token_bytes(BITS//<span class="number">8</span> - <span class="built_in">len</span>(flag) - <span class="number">1</span>))</span><br><span class="line"><span class="comment">#token_bytes(nbytes)返回含 nbytes 个字节的随机字节字符串</span></span><br><span class="line">c = <span class="built_in">pow</span>(m,e,n)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Making sure nothing was tampered with...&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;n =&quot;</span>, n)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;e =&quot;</span>, e)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;c =&quot;</span>, c)</span><br><span class="line">d = inverse(e, phi)</span><br><span class="line">bits = <span class="built_in">list</span>(<span class="built_in">range</span>(d.bit_length()))<span class="comment">#生成一个d的bit_length那么长的列表，值从0到d.length-1</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">3</span>):</span><br><span class="line">        d ^= <span class="number">1</span> &lt;&lt; bits.pop(randbelow(<span class="built_in">len</span>(bits))) <span class="comment"># these cosmic rays man...</span></span><br><span class="line">                  <span class="comment"># randbelow(len(bits)) 返回[0,len(bits) )范围内的随机数</span></span><br><span class="line">                  <span class="comment">#len(bits)=4096</span></span><br><span class="line">                  <span class="comment">#bits.pop(i) 从列表中弹出值为i的元素</span></span><br><span class="line"></span><br><span class="line">ans = long_to_bytes(<span class="built_in">pow</span>(c,d,n))</span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="keyword">if</span> ans.startswith(flag):</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;Check passed!&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;Check failed, <span class="subst">&#123;ans&#125;</span> does not start with the flag.&quot;</span>)</span><br></pre></td></tr></table></figure>
+<p><img src="../images/1652880258798.png" alt="1652880258798"></p>
+<p>题解</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br></pre></td><td class="code"><pre><span class="line">from Crypto.Util.number import *</span><br><span class="line">from gmpy2 import *</span><br><span class="line">from tqdm import tqdm</span><br><span class="line">import itertools</span><br><span class="line">n = 900070490622067320191637256322689412527951600989690014040742293402515652299807355416973524079799412242303695005849373445039400849591465597575071172369743191868426614517714438100741689051321511330353068870085391955380005924193452388879170080569217611534666723431228876665400462326676136834184598097637612462138913958737759322989904101853151206852072163254977079626441345648695044414743061561749348880019607938930572091154083635100263637181513759943165217032366307235262290149121982361740356299744695043277615922872281013512722579789196565526621382570308445038543830946971870143416647314522450656476380450926273955034941922166822345239863969969054173792809511555294506499479460733800203789975490744756171199513541914459052812970878813532508200185561086389173320140400837553390150640118664644728326976956623287728071670363574828765499081630098395101207132121557269428414754204021602411843144222862499913321787608802795431375613453451646357431858538087082423774836125541442108814662883958785416540932102786177408197877642161771714550028264013960050526390792232071691880271991611403599658754594252925331797512039370218705211962522382739680885820067113131946086305783275655204391316332325661610449937310593926456756974934432806107508584687</span><br><span class="line">e = 65537</span><br><span class="line">c = 785019041003063094605338644855048946920785904799316056061128856210648574008947823318103541165223596391441869599653542367469582749735833238881174760706303204193239490503494128261465176354669635814736470937192039240288549501040533102957388190144367063971050093258087028919607189745941929361743460532173075128757057170184845810592063392093611909588608434601111240804241210939629912198253922278311726074613374311364714503593835714701261515902458295964850200883428876941854713297600424159346665228238295844165261930957085099153766532230753418227132506795445835713828219025117217211988132423808868878491252074351084194298227654253015597086572860607173699553442586206642744564518363534136736457282374055689877416438808797889637908338960048452523853477755423540348739016013753910186174575168439451877576061110984631119994270572126858635951627682166569924669328090525845842805274374629938562576743743090674720310052196389604757172761607674745732712177986201837422518542301831341463977319044721933558836609327149863674429302791872305204502140781352055289953107204260973578971800635948027688728015052061073091633479965577903274852755170355267952134264963602557305761624298274953157061326235764865240265336589063356964395136173662984407099988044</span><br><span class="line">ans=b&#x27;\xc0K*/\xfb&#123;\xfd\xa36\xfe\&#x27;\xfc(l\xa5\xe1Nf\x17\xad\x9eZ&quot;\xbd\xc2%rs\xbe\xb9\xf3\xc5e6\xeb\x9e\xceD\x86.\x03\xb2s\x95\xc2\xac&#125;\xee \x9f\xb9\xbb\x87\x1c\x0b\t\x01D7\xcd\x05\xdcp\x84\x07K\xab\xc9\x14\x9e\x8b\xd5\x8e\xe4\xaeB\n(\r\xe3c\xbd\x97\xe9\x93&amp;h5\xdf9\xaf%~\x9f&amp;J\xf02\x9e\xd9JJe\xd6i\x85)\xd2\xb5\&#x27;\xe1x\xb6\xc5K\x84M\xbc_\x01\&#x27;\x80\xb5\xf5\x7f\xa1\x96\xbe\xe7\xb3R\xaa\xe7\xe0\x9c\xd4\xed\xde\n&lt;\xdc\x16q\x10w\x8f\x1d\xa3XH\xe2M&quot;C\xfa\x03\xdb\xf4\x00\xa0\xaf\x93=\x9fm\xb5\x94\xfa\xec\xf8\nd\xb1\x17\x8d\x84\x9f\xdfD\xb0FU\xd3\xc07q+\xcc|\xb7\xe7\x8dlk.\xa6S\xa3\x18\xbfi\x8e\xc2SW\\\xb4\x03o\xdd\xeb\xa41\x7fv\x8e\x07aka\x91i\xeb\xe0\xa6*\x17\x1f_*6\x90x\xcd\xaa$\xf9x\xadt\x00\xea\x01\x19\x11\xa9\xdd\xb6\xfa\x1e6\xa8&lt;\x92\xf3w(\xbf;v\xe5\x92\n\xcd\x8ckD\xb1\x82\xe9\x16\x85\xbf\xbf81\xf6.\x9a\xbe\xe7\xf66+\xf4u\xce\xcf#\xb4i\x966\xbf\x96\xee568r\xc8\xd0\xfa\xf7\xfe\xd8&gt;\x97j^\xbbc[\xc0\xe4\xf5\x9d\xb5\xac\xab2\xed\x90\x9cvf\x1a\xaa\xe2\xb27!h\xa5\xac\x0c\xff\xc8\x86F\x86\xaff\xdb\xc6\xc4\x94\xbd[\xf5\xf2\x85!\x1f\xf6\xb1.9\xc2\xf0&gt;H\xd6 L\x9d\xe8\xf7V&quot;\xfe&quot;1\xf3I\xa9\xa9]\x10\x97&amp;\xf6\xbb\xb3\xf4a_\x98\x85\x15v\xd4U\xfd\xeayj\xf4\x08b\xd95b\xf7\xcfI\xfc\x08k1\x8e\xc6\x98\xabY\x16fNRS-\x05&lt;\xee\xe5\xc4\xe0\xad\x8aE\x03jL\xd5m~\x81\xfeqjw;0\xe5K\x889\xa9T\xa8\xc1/:\x96_\xee\x16\xe0\xca\xa6qm\xcb\xa5&amp;\xd4\x94o\xa9\x94\xc6&#123;sm\xc7\xf9\xff\xfe \xb3\xc0\x02\xc3\xe5O\xe8\xe7\x1d\xe0\xf4i\x07\xda\x97=\xfd\xc0\x0eW\xc0;\x8e(\x93\\G\x9bf\xd8\xcf0\x85&#x27;</span><br><span class="line">ans = bytes_to_long(ans)</span><br><span class="line">ans1 = powmod(ans,e,n)</span><br><span class="line">#ans = pow(c,d&#x27;,n)</span><br><span class="line">#以空间换时间，从0到4096枚举a，建立一个字典，关键字是a，对每一个a计算这样一个值：ans^e*pow(c,+/-2**a,n)并存到字典中去</span><br><span class="line">cc = powmod(c,e,n)</span><br><span class="line">c_inv = powmod(cc,-1,n)</span><br><span class="line">Ta = [cc]# pow(c,2**a,n)</span><br><span class="line">Ta_inv = [c_inv] # pow(c,-2**a,n)</span><br><span class="line">k = ans1 * powmod(c,-1,n) %n</span><br><span class="line">for i in tqdm(range(1,4096)):</span><br><span class="line">    Ta.append( powmod(Ta[-1],2,n))</span><br><span class="line">    Ta_inv.append(powmod(Ta_inv[-1],2,n))</span><br><span class="line">#现在从0到4096枚举b，c，并计算Ta[a] 与c* (pow(c,2^b+2^c,n))，当这两个数mod n同余，则认为找到了b,c</span><br><span class="line">#不要忘记Ta_inv表以及 b，c的正负号</span><br><span class="line">print(Ta[10])</span><br><span class="line">print(Ta_inv[10])</span><br><span class="line">targets = &#123;&#125;</span><br><span class="line">BITS=4096</span><br><span class="line">for i in tqdm(range(BITS)):</span><br><span class="line">	targets[k * Ta[i] % n] = -2**i</span><br><span class="line">for i in tqdm(range(BITS)):</span><br><span class="line">	targets[k * Ta_inv[i] % n] = 2**i</span><br><span class="line"></span><br><span class="line">for i in tqdm(range(BITS//2)):</span><br><span class="line">    b = Ta[i]</span><br><span class="line">    b1 = Ta_inv[i]</span><br><span class="line">    for j in range(i+1,BITS//2):</span><br><span class="line">        c0 = Ta[j]</span><br><span class="line">        c1 = Ta_inv[j]</span><br><span class="line">        if(b*c0%n in targets):</span><br><span class="line">            power = 2**i + 2**j + targets[b*c0%n]</span><br><span class="line"></span><br><span class="line">        elif (b*c1%n in targets):</span><br><span class="line">            power = 2**i - 2**j + targets[b*c1%n]</span><br><span class="line"></span><br><span class="line">        elif(b1*c0%n in targets):</span><br><span class="line">            power = -2**i + 2**j + targets[b1*c0%n]</span><br><span class="line"></span><br><span class="line">        elif(b1*c1%n in targets):</span><br><span class="line">            power = -2**i -2**j + targets[b1*c1%n]</span><br><span class="line">        else:</span><br><span class="line">            continue</span><br><span class="line">        print(long_to_bytes(ans*powmod(c,-power,n)%n))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">for i in tqdm(range(4096//2+1,4096)):</span><br><span class="line">    b = Ta[i]</span><br><span class="line">    b1 = Ta_inv[i]</span><br><span class="line">    for j in range(i+1,4096):</span><br><span class="line">        c0 = Ta[j]</span><br><span class="line">        c1 = Ta_inv[j]</span><br><span class="line">        if(b*c0%n in targets):</span><br><span class="line">            power = 2**i + 2**j + targets[b*c0%n]</span><br><span class="line"></span><br><span class="line">        elif (b*c1%n in targets):</span><br><span class="line">            power = 2**i - 2**j + targets[b*c1%n]</span><br><span class="line"></span><br><span class="line">        elif(b1*c0%n in targets):</span><br><span class="line">            power = -2**i + 2**j + targets[b1*c0%n]</span><br><span class="line"></span><br><span class="line">        elif(b1*c1%n in targets):</span><br><span class="line">            power = -2**i -2**j + targets[b1*c1%n]</span><br><span class="line">        else:</span><br><span class="line">            continue</span><br><span class="line">        print(long_to_bytes(ans*powmod(c,-power,n)%n))</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/05/07/BSGS/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="MirRoR4s">
+      <meta itemprop="description" content="想成为c++专家 黑客 密码学爱好者">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="学习记录">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/05/07/BSGS/" class="post-title-link" itemprop="url">BSGS</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-05-07 21:01:17 / 修改时间：21:01:27" itemprop="dateCreated datePublished" datetime="2022-05-07T21:01:17+08:00">2022-05-07</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p><img src="/../images/1651928485488.png" alt="1651928485488"></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2022/05/02/%E5%AF%86%E7%A0%81%E5%AD%A6%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E8%B7%B5%E7%AC%94%E8%AE%B0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -414,163 +558,10 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/04/28/XSS/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="MirRoR4s">
-      <meta itemprop="description" content="想成为c++专家 黑客 密码学爱好者">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="学习记录">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/04/28/XSS/" class="post-title-link" itemprop="url">XSS</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2022-04-28 12:10:44 / 修改时间：12:16:13" itemprop="dateCreated datePublished" datetime="2022-04-28T12:10:44+08:00">2022-04-28</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/WEB%E5%AE%89%E5%85%A8/" itemprop="url" rel="index"><span itemprop="name">WEB安全</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="0x01-XSS定义"><a href="#0x01-XSS定义" class="headerlink" title="0x01 XSS定义"></a>0x01 XSS定义</h2><p>直接上OWSAP的定义<a target="_blank" rel="noopener" href="https://owasp.org/www-community/attacks/xss/">https://owasp.org/www-community/attacks/xss/</a></p>
-<p>人工翻译🤭</p>
-<p>跨站脚本攻击是一种注入，其中恶意脚本被注入到其他良性和受信任的网站中。XSS攻击发生在攻击者使用WEB应用程序发送恶意代码时，通常是以浏览器端脚本的形式发送给别人。XSS常发生在没有对用户的输入进行验证或者编码就对用户的输入进行了输出的地方。</p>
-<p>一个攻击者可以使用XSS发送一个恶意脚本给用户，但是用户的浏览器无法分辨此脚本是否是值得信任的，从而会执行攻击者发送的恶意脚本。因为浏览器认为脚本来自于一个受信任的源，从而恶意脚本可以访问任何cookies,session tokens 或者是其他保存在浏览器当前网站中的敏感信息。这些脚本甚至可以修改网页的内容。</p>
-<h2 id="0x02-如何避免跨站脚本漏洞"><a href="#0x02-如何避免跨站脚本漏洞" class="headerlink" title="0x02 如何避免跨站脚本漏洞"></a>0x02 如何避免跨站脚本漏洞</h2><ol>
-<li><p>XSS (Cross Site Scripting) Prevention Cheat Sheet :<a target="_blank" rel="noopener" href="https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html">https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html</a></p>
-<p>2.DOM based XSS Prevention Cheat Sheet: <a target="_blank" rel="noopener" href="https://cheatsheetseries.owasp.org/cheatsheets/DOM_based_XSS_Prevention_Cheat_Sheet.html">https://cheatsheetseries.owasp.org/cheatsheets/DOM_based_XSS_Prevention_Cheat_Sheet.html</a></p>
-<p>3.OWASP Development Guide article on Data Validation: <a target="_blank" rel="noopener" href="https://wiki.owasp.org/index.php/Data_Validation">https://wiki.owasp.org/index.php/Data_Validation</a></p>
-</li>
-</ol>
-<p>​    4.OWASP Development Guide article on Phishing:  <a target="_blank" rel="noopener" href="https://wiki.owasp.org/index.php/Phishing">https://wiki.owasp.org/index.php/Phishing</a></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/04/28/DVWA-XSS-Reflected/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="MirRoR4s">
-      <meta itemprop="description" content="想成为c++专家 黑客 密码学爱好者">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="学习记录">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/04/28/DVWA-XSS-Reflected/" class="post-title-link" itemprop="url">DVWA_XSS(Reflected)</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2022-04-28 11:32:18 / 修改时间：16:17:42" itemprop="dateCreated datePublished" datetime="2022-04-28T11:32:18+08:00">2022-04-28</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/WEB%E5%AE%89%E5%85%A8/" itemprop="url" rel="index"><span itemprop="name">WEB安全</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>从MRCTF的那道XSS之后感觉对XSS的实战太陌生了，回来靶场练基本功，先从dvwa开始吧。网上的答案什么的全是测一下能否弹窗然后就结束了，太简单了，这一次练习必须所有题目都可以偷到cookie！
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/04/28/DVWA-XSS-Reflected/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/4/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/4/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -636,7 +627,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">25</span>
+          <span class="site-state-item-count">27</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -649,7 +640,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-count">9</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
