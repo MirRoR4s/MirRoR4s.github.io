@@ -2504,10 +2504,11 @@
     <content><![CDATA[<p>红队渗透测试学习历程</p>
 <p>在利用kali操作系统学习红队渗透之前，最好在kali下配置好代理。方便我们更新软件</p>
 <p><a href="https://zhuanlan.zhihu.com/p/414998586">https://zhuanlan.zhihu.com/p/414998586</a> kali代理福音！！</p>
-<h1 id="信息收集"><a href="#信息收集" class="headerlink" title="信息收集"></a>信息收集</h1><p>[TOC]</p>
-<h2 id="1-Nmap"><a href="#1-Nmap" class="headerlink" title="1.Nmap"></a>1.Nmap</h2><p>安装：Ubuntu: apt-get install nmap</p>
+<span id="more"></span>
+<h1><span id="信息收集">信息收集</span></h1><p>[TOC]</p>
+<h2><span id="1nmap">1.Nmap</span></h2><p>安装：Ubuntu: apt-get install nmap</p>
 <p>手册：<a href="https://nmap.org/man/zh/index.html">https://nmap.org/man/zh/index.html</a></p>
-<h4 id="扫描方式"><a href="#扫描方式" class="headerlink" title="扫描方式"></a>扫描方式</h4><ul>
+<h4><span id="扫描方式">扫描方式</span></h4><ul>
 <li>[ ] TCP : -sT</li>
 <li>[ ] SYN : -sS</li>
 <li>[ ] ACK : -sA</li>
@@ -2516,30 +2517,30 @@
 <li>[ ] ICMP : -sP</li>
 <li>[ ] Disable Port Scan : -sn</li>
 </ul>
-<h4 id="常见扫描方案"><a href="#常见扫描方案" class="headerlink" title="常见扫描方案"></a>常见扫描方案</h4><ul>
-<li>[ ] 扫描10000端口、操作系统、版本: namp -T4 -A <Target></li>
-<li>[ ] 版本探测: nmap -sV <Target></li>
-<li>[ ] nmap -O <Target></li>
+<h4><span id="常见扫描方案">常见扫描方案</span></h4><ul>
+<li>[ ] 扫描10000端口、操作系统、版本: namp -T4 -A <target></target></li>
+<li>[ ] 版本探测: nmap -sV <target></target></li>
+<li>[ ] nmap -O <target></target></li>
 </ul>
 <p>如上可以看出nmap的参数使用方式大多都是 -s? ，s应该代表扫描的意思，后面的字符表明了扫描的方式。</p>
-<h4 id="其他技巧"><a href="#其他技巧" class="headerlink" title="其他技巧"></a>其他技巧</h4><ul>
+<h4><span id="其他技巧">其他技巧</span></h4><ul>
 <li>[ ] —host-timeout 主机超时时间，通常选值：18000</li>
 <li>[ ] —scan-delay 报文时间间隔，通常选址：1000</li>
 <li>[ ] -S &lt;源地址&gt; 定义扫描源地址，为了不被发现 </li>
 </ul>
-<h4 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h4><p><code>nmap -V -iR 100000 -P0 -p 80</code> 随机选择100000台主机扫描是否允许Web服务器（80端口）。由起始阶段发送探测报文来确定主机是否工作非常浪费时间，而且只需探测主机的一个端口，因此使用-P0禁止对主机列表</p>
+<h4><span id="示例">示例</span></h4><p><code>nmap -V -iR 100000 -P0 -p 80</code> 随机选择100000台主机扫描是否允许Web服务器（80端口）。由起始阶段发送探测报文来确定主机是否工作非常浪费时间，而且只需探测主机的一个端口，因此使用-P0禁止对主机列表</p>
 <p><code>host -l company.com | cut -d -f 4 | nmap -v -iL</code> 进行DNS区域传输，以发现company.com中的主机，然后将ip地址提供给Nmap</p>
-<h4 id="输出"><a href="#输出" class="headerlink" title="输出"></a>输出</h4><ul>
-<li><p>[ ] -oN <File></p>
+<h4><span id="输出">输出</span></h4><ul>
+<li><p>[ ] -oN <file></file></p>
 </li>
-<li><p>[ ] -oX <XML File></p>
+<li><p>[ ] -oX <xml file></xml></p>
 </li>
-<li><p>[ ] -oG <filespec></p>
+<li><p>[ ] -oG <filespec></filespec></p>
 <p>Grep输出参考 ： <a href="http://www.unspecific.com/nmap-oG-output/">http://www.unspecific.com/nmap-oG-output/</a></p>
 </li>
 </ul>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo nmap -O -oG - 10.1.1.100</span><br><span class="line">sudo nmap -oG -</span><br><span class="line">sudo nmap -oG test.txt baidu.com </span><br><span class="line">test.txt默认保存在当前的目录下</span><br></pre></td></tr></table></figure>
-<h2 id="2-masscan"><a href="#2-masscan" class="headerlink" title="2.masscan"></a>2.masscan</h2><p>项目地址： <a href="https://github.com/robertdavidgraham/masscan">https://github.com/robertdavidgraham/masscan</a></p>
+<h2><span id="2masscan">2.masscan</span></h2><p>项目地址： <a href="https://github.com/robertdavidgraham/masscan">https://github.com/robertdavidgraham/masscan</a></p>
 <p>安装：</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo apt-get install git gcc make libpcap-dev</span><br><span class="line">git clone https://github.com/robertdavidgraham/masscan</span><br><span class="line">cd masscan</span><br><span class="line">make</span><br></pre></td></tr></table></figure>
 <p>该工具兼容Nmap的参数</p>
@@ -2554,7 +2555,7 @@
 <li>[ ] —includefile,-iL 读取一个范围列表进行扫描</li>
 <li>[ ] —wait 指定发送完包之后的等待时间，默认为10秒</li>
 </ul>
-<h2 id="3-Nbtscan"><a href="#3-Nbtscan" class="headerlink" title="3.Nbtscan"></a>3.Nbtscan</h2><p>Nbtscan是一个扫描Windows网络NetBIOS信息的小工具，身材娇小，简单快速。但只能用于局域网，可以显示IP，主机名，用户名称和MAC地址等等，通常用于后渗透、内网渗透的信息收集。</p>
+<h2><span id="3nbtscan">3.Nbtscan</span></h2><p>Nbtscan是一个扫描Windows网络NetBIOS信息的小工具，身材娇小，简单快速。但只能用于局域网，可以显示IP，主机名，用户名称和MAC地址等等，通常用于后渗透、内网渗透的信息收集。</p>
 <p>下载地址：</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">https://github.com/search?q=nbtscan</span><br></pre></td></tr></table></figure>
 <p>Nbtscan在Kali中自带了。</p>
@@ -2570,7 +2571,7 @@
 <p>四、扫描文件里的目标范围：</p>
 <p>扫描参数： nbtscan -f 文件名</p>
 <p><img src="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LKwvIuOmsoicpffk7N0cVibfD2ibjEuJjicYBl9TJ7Zwh1ichS8L6oOAHXRRoLTHibVUMrY3IdMVicQjjRBA/640" alt="img"></p>
-<h2 id="4-Hping3-信息搜集"><a href="#4-Hping3-信息搜集" class="headerlink" title="4.Hping3-信息搜集"></a>4.Hping3-信息搜集</h2><p>hping3是一款免费的数据包生成器和分析器。可用于安全审计、防火墙规则测试、网络测试、端口扫描、性能测试、压力测试，几乎可以发送任意类型的TCP/IP数据包。功能强大但是每次只能向一个IP地址发送数据包，还能够在两个相互包含的通道之间传送文件。</p>
+<h2><span id="4hping3-信息搜集">4.Hping3-信息搜集</span></h2><p>hping3是一款免费的数据包生成器和分析器。可用于安全审计、防火墙规则测试、网络测试、端口扫描、性能测试、压力测试，几乎可以发送任意类型的TCP/IP数据包。功能强大但是每次只能向一个IP地址发送数据包，还能够在两个相互包含的通道之间传送文件。</p>
 <p>下载地址：</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">http://www.hping.org/download.html</span><br></pre></td></tr></table></figure>
 <p>Hping3常见的使用方法：</p>
@@ -2589,7 +2590,7 @@
 <p>扫描参数： hping3 -S —flood -rand —source -p 80 目标</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">-S 表示发送的是SYN包。这里涉及到TCP的三次握手，客户端与服务器要建立连接，首先要先由客户端向发服务器发送一个SYN包请求连接，服务器收到客户端发来的SYN包后会回复一个SYN+ACK包表示可以进行连接，之后客户端再发送一个SYN+ACK包，当这个包发送完成之后，客户端和服务器的连接就算成功了。因此，这个参数导致的结果时向服务器发送SYN包却不对返回的SYN+ACK包进行回应，使服务器保持在一种&quot;半连接&quot;在状态</span><br><span class="line">--flood 表示以洪水的方式发送，就是拼了命地发</span><br><span class="line">-rand--source 是指定随机来源，意思是假装有很多台主机要和服务器连接，实际上这些主机IP都是伪造的-p 80 指定端口号为80</span><br></pre></td></tr></table></figure>
 <p><img src="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LJaYja8J7lQyQjNvnZkYa5ia6Jp3wtjK1wA21r7us6ZBwUOicxT4aoemeMia4oqLJD8FJzHatbrETSIw/640?wx_fmt=png" alt="img"></p>
-<h2 id="5-Pydictor字典生成-信息收集"><a href="#5-Pydictor字典生成-信息收集" class="headerlink" title="5.Pydictor字典生成-信息收集"></a>5.Pydictor字典生成-信息收集</h2><p>关联信息生成：</p>
+<h2><span id="5pydictor字典生成-信息收集">5.Pydictor字典生成-信息收集</span></h2><p>关联信息生成：</p>
 <p>在渗透前期工作开展之前，需要对目标的各种信息进行分析、研究、组合。</p>
 <p>例如：某度</p>
 <p>根据地域习惯、宗教、互联网开放信息等信息进行简要分析，假设获取到的信息如下：</p>
@@ -2617,7 +2618,7 @@
 <p><a href="https://www.cnblogs.com/R-S-PY/p/12929170.html">https://www.cnblogs.com/R-S-PY/p/12929170.html</a></p>
 <p><a href="https://github.com/LandGrey/pydictor/blob/master/README_CN.md">https://github.com/LandGrey/pydictor/blob/master/README_CN.md</a></p>
 <p><a href="https://github.com/LandGrey/pydictor/blob/master/docs/doc/usage.md">https://github.com/LandGrey/pydictor/blob/master/docs/doc/usage.md</a></p>
-<h2 id="6-如何实现精准GPS定位IP及坐标，精确误差50m范围左右-信息搜集"><a href="#6-如何实现精准GPS定位IP及坐标，精确误差50m范围左右-信息搜集" class="headerlink" title="6.如何实现精准GPS定位IP及坐标，精确误差50m范围左右-信息搜集"></a>6.如何实现精准GPS定位IP及坐标，精确误差50m范围左右-信息搜集</h2><p>无论是在hvv期间的红队还是蓝队，又或者是在实际情况中，信息搜集是最为重要的。但你获取到足够多的情报那么你的任务就已经完成了一半。而你只需要想：我拿到信息之后如何去利用它？</p>
+<h2><span id="6如何实现精准gps定位ip及坐标精确误差50m范围左右-信息搜集">6.如何实现精准GPS定位IP及坐标，精确误差50m范围左右-信息搜集</span></h2><p>无论是在hvv期间的红队还是蓝队，又或者是在实际情况中，信息搜集是最为重要的。但你获取到足够多的情报那么你的任务就已经完成了一半。而你只需要想：我拿到信息之后如何去利用它？</p>
 <p>精准定位- <code>Seeker</code></p>
 <p>Seeker背后的概念很简单，就像我们托管网络钓鱼页面以获得凭据一样，为什么不托管一个伪造页面来请求你的位置，就像许多流行的基于位置得网站一样。Seeker在内置PHP服务器上托管了一个虚假网站，并使用Serveo生成了一个链接，该链接将转发给目录，网站要求提供位置许可，如果目标允许，我们可以获得：</p>
 <p>经度、纬度、精准性、高度-并非总是可用、方向-仅在用户移动时可用、速度-仅在用户移动时可用</p>
@@ -2628,7 +2629,7 @@
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git clone https://github.com/thewhiteh4t/seeker.git</span><br><span class="line">cd seeker/</span><br><span class="line">chmod 777 install.sh</span><br><span class="line">./install.sh</span><br></pre></td></tr></table></figure>
 <p><img src="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LLtiaBc8GsMDzm1y3ibCZ6LbXBm67N4jdBX2zDSpya09DMIqmc45mMhR4rLYwGTlgFB3kp2zOuCNf9A/640?wx_fmt=png" alt="img"></p>
 <p>后面要用到公网域名了，以后再补这个工具把。</p>
-<h2 id="7-开放漏洞（exp、poc）情报搜集"><a href="#7-开放漏洞（exp、poc）情报搜集" class="headerlink" title="7.开放漏洞（exp、poc）情报搜集"></a>7.开放漏洞（exp、poc）情报搜集</h2><h3 id="常见漏洞情报网站"><a href="#常见漏洞情报网站" class="headerlink" title="常见漏洞情报网站"></a>常见漏洞情报网站</h3><p><strong>Exploit-DB</strong>是一个面向全世界黑客的漏洞提交平台，该平台会公布最新漏洞的相关情况，这些可用帮助企业改善公司的安全状况，同时也以帮助安全研究者和渗透测试工程师更好的进行安全测试工作。<strong>Exploit-DB</strong>提供一整套庞大的归档体系，其中涵盖了各类公开的攻击事件、漏洞报告、安全文章以及技术教程等资源。</p>
+<h2><span id="7开放漏洞exp-poc情报搜集">7.开放漏洞（exp、poc）情报搜集</span></h2><h3><span id="常见漏洞情报网站">常见漏洞情报网站</span></h3><p><strong>Exploit-DB</strong>是一个面向全世界黑客的漏洞提交平台，该平台会公布最新漏洞的相关情况，这些可用帮助企业改善公司的安全状况，同时也以帮助安全研究者和渗透测试工程师更好的进行安全测试工作。<strong>Exploit-DB</strong>提供一整套庞大的归档体系，其中涵盖了各类公开的攻击事件、漏洞报告、安全文章以及技术教程等资源。</p>
 <p>官方网站：</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">https://www.exploit-db.com/</span><br></pre></td></tr></table></figure>
 <p>命令参数介绍</p>
@@ -2670,7 +2671,7 @@
 <p><a href="https://www.freebuf.com/sectool/139685.html">https://www.freebuf.com/sectool/139685.html</a></p>
 <p><a href="https://blog.csdn.net/qq_20336817/article/details/42320189">https://blog.csdn.net/qq_20336817/article/details/42320189</a></p>
 <p><a href="https://www.jianshu.com/p/ca234f8cd661">https://www.jianshu.com/p/ca234f8cd661</a></p>
-<h2 id="8-Whois、Dns、旁站C段查询-信息搜集篇"><a href="#8-Whois、Dns、旁站C段查询-信息搜集篇" class="headerlink" title="8.  Whois、Dns、旁站C段查询-信息搜集篇"></a>8.  Whois、Dns、旁站C段查询-信息搜集篇</h2><h3 id="主机发现"><a href="#主机发现" class="headerlink" title="主机发现"></a>主机发现</h3><p>在知道目标的域名之后，您想做的第一件事可能就是从whois数据库里获取域名的注册信息。whois数据库记录有该域名的DNS服务器信息和注册人的联系信息。</p>
+<h2><span id="8-whois-dns-旁站c段查询-信息搜集篇">8.  Whois、Dns、旁站C段查询-信息搜集篇</span></h2><h3><span id="主机发现">主机发现</span></h3><p>在知道目标的域名之后，您想做的第一件事可能就是从whois数据库里获取域名的注册信息。whois数据库记录有该域名的DNS服务器信息和注册人的联系信息。</p>
 <p>WHOIS是一个标准的互联网协议，可用于收集网络注册、注册域名、ip地址和自治系统的信息。</p>
 <p>Kali Linux带有whois客户端程序。如果需要查询某一域名的whois信息，可在终端中使用下述whois指令：</p>
 <p>查询命令：</p>
@@ -2680,14 +2681,14 @@
 <p><img src="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LKynSSqTP7HazbNic3tlLk93L8Hqsl26rNOo3bYt8ib2Vaa8XuYJlG6yiaYuOt7tIaFq5PXKAUibMLbnA/640?wx_fmt=png" alt="img"></p>
 <p>还可以通过whois反查域名或者邮箱还注册了那些域名：</p>
 <p><img src="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LKynSSqTP7HazbNic3tlLk93kEAo9x8ibp1to3wSOF9TFhXZWOjgsvnfwDicNEMBCia2dbhqdXSqiaG3Tg/640?wx_fmt=png" alt="img"></p>
-<h3 id="DNS历史解析"><a href="#DNS历史解析" class="headerlink" title="DNS历史解析"></a>DNS历史解析</h3><p>查询网站曾经解析到过那些服务器，对于了解一个网站成长过程，信息搜集，对我们红队人员有很大的帮助！先说一下什么是A记录、别名记录、MX记录、TXT记录、NS记录。</p>
-<h4 id="A记录："><a href="#A记录：" class="headerlink" title="A记录："></a>A记录：</h4><p>是用来指定主机名或域名对应的IP地址记录。用户可以将该域名下的网站服务器指向到自己的web server上。同时也可以设置您域名的二级域名。</p>
-<h4 id="别名-CNAME-记录："><a href="#别名-CNAME-记录：" class="headerlink" title="别名(CNAME)记录："></a>别名(CNAME)记录：</h4><p>也被成为规范名字。这种记录允许您将多个名字映射到同一台计算机。通常用于同时提供WWW和MAIL服务的计算机。例如，有一台计算机名为 <code>host.mydomain.com</code>（A记录）。它同时提供WWW和MAIL服务，为了便于用户访问服务。可以为该计算机设置两个别名（CNAME）：WWW和MAIL。这两个别名的全称就是<code>www.mydomain.com</code>和<code>mail.mydomain.com</code>。实际上他们都指向<code>host.mydomain.com</code>。同样的方法可以用于当您拥有多个域名需要指向同一服务器IP，此时您就可以将一个域名做A记录指向服务器IP，此时您就可以将一个域名做A记录指向服务器IP，然后将其他得域名做别名到之前做A记录得域名上，那么当您得服务器IP地址变更时您就可以不必麻烦得一个一个域名更改指向了，只需要改做A记录得那个域名其他做别名得那些域名得指向也将自动更改到新得IP地址上了。</p>
+<h3><span id="dns历史解析">DNS历史解析</span></h3><p>查询网站曾经解析到过那些服务器，对于了解一个网站成长过程，信息搜集，对我们红队人员有很大的帮助！先说一下什么是A记录、别名记录、MX记录、TXT记录、NS记录。</p>
+<h4><span id="a记录">A记录：</span></h4><p>是用来指定主机名或域名对应的IP地址记录。用户可以将该域名下的网站服务器指向到自己的web server上。同时也可以设置您域名的二级域名。</p>
+<h4><span id="别名cname记录">别名(CNAME)记录：</span></h4><p>也被成为规范名字。这种记录允许您将多个名字映射到同一台计算机。通常用于同时提供WWW和MAIL服务的计算机。例如，有一台计算机名为 <code>host.mydomain.com</code>（A记录）。它同时提供WWW和MAIL服务，为了便于用户访问服务。可以为该计算机设置两个别名（CNAME）：WWW和MAIL。这两个别名的全称就是<code>www.mydomain.com</code>和<code>mail.mydomain.com</code>。实际上他们都指向<code>host.mydomain.com</code>。同样的方法可以用于当您拥有多个域名需要指向同一服务器IP，此时您就可以将一个域名做A记录指向服务器IP，此时您就可以将一个域名做A记录指向服务器IP，然后将其他得域名做别名到之前做A记录得域名上，那么当您得服务器IP地址变更时您就可以不必麻烦得一个一个域名更改指向了，只需要改做A记录得那个域名其他做别名得那些域名得指向也将自动更改到新得IP地址上了。</p>
 <p>如何检测CNAME记录？</p>
 <p>1、进行命令行状态；</p>
 <p>2、输入命令“nslookup -q=cname 这里填写对应得域名或二级域名”查看返回得结果于设置得是否一致即可。</p>
-<h4 id="MX（Mail-Exchange）记录："><a href="#MX（Mail-Exchange）记录：" class="headerlink" title="MX（Mail Exchange）记录："></a>MX（Mail Exchange）记录：</h4><p>是邮件交换记录，它指向一个邮件服务器，用于电子邮件系统发邮件时根据收信人的地址后缀来定位邮件服务器。例如，当Internet上的某用户要发一封信给user@mydomain.com时，该用户的邮件系统通过DNS查找mydomain.com这个域名的MX记录，如果MX记录存在，用户计算机就将邮件发送到MX记录所指定的邮件服务器上。</p>
-<h4 id="什么是TXT记录？"><a href="#什么是TXT记录？" class="headerlink" title="什么是TXT记录？"></a>什么是TXT记录？</h4><p>TXT记录一般指为某个主机名或域名设置的说明，如：</p>
+<h4><span id="mxmail-exchange记录">MX（Mail Exchange）记录：</span></h4><p>是邮件交换记录，它指向一个邮件服务器，用于电子邮件系统发邮件时根据收信人的地址后缀来定位邮件服务器。例如，当Internet上的某用户要发一封信给user@mydomain.com时，该用户的邮件系统通过DNS查找mydomain.com这个域名的MX记录，如果MX记录存在，用户计算机就将邮件发送到MX记录所指定的邮件服务器上。</p>
+<h4><span id="什么是txt记录">什么是TXT记录？</span></h4><p>TXT记录一般指为某个主机名或域名设置的说明，如：</p>
 <p>1）admin IN TXT “jack，mobile：13800138000”；</p>
 <p>2）mail IN TXT “邮件主机，存放在xxx，管理人：AAA”</p>
 <p>也就是您可以设置TXT，以便使别人联系到您。</p>
@@ -2695,7 +2696,7 @@
 <p>1、进入命令状态；</p>
 <p>2、输入命令 “nslookup -q=txt 这里填写对应的域名或二级域名”，查看返回的结果与设置的是否一致即可。</p>
 <p><img src="C:\Users\mirror\AppData\Roaming\Typora\typora-user-images\image-20220801134902496.png" alt="image-20220801134902496"></p>
-<h4 id="什么是NS记录"><a href="#什么是NS记录" class="headerlink" title="什么是NS记录"></a>什么是NS记录</h4><p>ns记录全称为Name Server是一种域名服务器记录，用来明确当前你的域名是由哪个DNS服务器来进行解析的</p>
+<h4><span id="什么是ns记录">什么是NS记录</span></h4><p>ns记录全称为Name Server是一种域名服务器记录，用来明确当前你的域名是由哪个DNS服务器来进行解析的</p>
 <p>参考文章：<a href="https://www.22.cn/help_34.html">https://www.22.cn/help_34.html</a></p>
 <p>在Kali Linux下，查询DNS解析可以通过nslookup来进行查询：</p>
 <p>查询命令：<code>nslookup 要查询的域名</code></p>
@@ -2710,13 +2711,13 @@
 <p><img src="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LKynSSqTP7HazbNic3tlLk93bHE98eNgBFsgt7XOYL5qKxOz26j960mTCvdWYFibkx7JDhQDx2uk93w/640?wx_fmt=png" alt="img"></p>
 <p>还有以下查询： </p>
 <p>​    A 地址记录(Ipv4)<br>　　AAAA 地址记录（Ipv6）<br>　　AFSDB Andrew文件系统数据库服务器记录（不懂）<br>　　ATMA ATM地址记录（不是自动提款机）<br>　　CNAME 别名记录<br>　　HINFO 硬件配置记录，包括CPU、操作系统信息<br>　　ISDN 域名对应的ISDN号码<br>　　MB 存放指定邮箱的服务器<br>　　MG 邮件组记录<br>　　MINFO 邮件组和邮箱的信息记录<br>　　MR 改名的邮箱记录<br>　　MX 邮件服务器记录<br>　　NS 名字服务器记录<br>　　PTR 反向记录（从IP地址解释域名）<br>　　RP 负责人记录<br>　　RT 路由穿透记录（不懂）<br>　　SRV TCP服务器信息记录（将有大用处）<br>　　TXT 域名对应的文本信息<br>　　X25 域名对应的X.25地址记录</p>
-<h4 id="在kali下还有一个命令可以查看DNS解析：dig命令。"><a href="#在kali下还有一个命令可以查看DNS解析：dig命令。" class="headerlink" title="在kali下还有一个命令可以查看DNS解析：dig命令。"></a>在kali下还有一个命令可以查看DNS解析：dig命令。</h4><h5 id="命令查询：dig-baidu-com"><a href="#命令查询：dig-baidu-com" class="headerlink" title="命令查询：dig baidu.com"></a>命令查询：dig baidu.com</h5><p><img src="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LKynSSqTP7HazbNic3tlLk93kqtWhG8sVUf3frPTzkr2ia4ouwJDvXXYOn3cWaxPSweQjKooOybOxNA/640?wx_fmt=png" alt="img"></p>
-<h5 id="也可以指定DNS服务器查询："><a href="#也可以指定DNS服务器查询：" class="headerlink" title="也可以指定DNS服务器查询："></a>也可以指定DNS服务器查询：</h5><p>命令查询：dig @114.114.114.114 baidu.com</p>
+<h4><span id="在kali下还有一个命令可以查看dns解析dig命令">在kali下还有一个命令可以查看DNS解析：dig命令。</span></h4><h5><span id="命令查询dig-baiducom">命令查询：dig baidu.com</span></h5><p><img src="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LKynSSqTP7HazbNic3tlLk93kqtWhG8sVUf3frPTzkr2ia4ouwJDvXXYOn3cWaxPSweQjKooOybOxNA/640?wx_fmt=png" alt="img"></p>
+<h5><span id="也可以指定dns服务器查询">也可以指定DNS服务器查询：</span></h5><p>命令查询：dig @114.114.114.114 baidu.com</p>
 <p><img src="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LKynSSqTP7HazbNic3tlLk93VcObicTTadHdcUt99rVrFAsbsjutfqbPkLZFndU8DOWMR3aR6nyoHEA/640?wx_fmt=png" alt="img"></p>
-<h5 id="查询MX记录：dig-baidu-com-MX"><a href="#查询MX记录：dig-baidu-com-MX" class="headerlink" title="查询MX记录：dig baidu.com MX"></a>查询MX记录：dig baidu.com MX</h5><p><img src="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LKynSSqTP7HazbNic3tlLk934ZY9kvbHQtkUpxplEib0E9kCLzch8pfw2d3am5q01Agxb53XOoIzgqg/640?wx_fmt=png" alt="img"></p>
-<h5 id="IP反查域名："><a href="#IP反查域名：" class="headerlink" title="IP反查域名："></a>IP反查域名：</h5><p>命令查询：dig -x IP</p>
+<h5><span id="查询mx记录dig-baiducom-mx">查询MX记录：dig baidu.com MX</span></h5><p><img src="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LKynSSqTP7HazbNic3tlLk934ZY9kvbHQtkUpxplEib0E9kCLzch8pfw2d3am5q01Agxb53XOoIzgqg/640?wx_fmt=png" alt="img"></p>
+<h5><span id="ip反查域名">IP反查域名：</span></h5><p>命令查询：dig -x IP</p>
 <p><img src="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LKynSSqTP7HazbNic3tlLk93fns254DY8DBJL085Nrj4AQzGnlEVn1MwUa16oUJr0x6EDqsjiaiacBdw/640?wx_fmt=png" alt="img"></p>
-<h4 id="旁站C段查询-隔山打牛"><a href="#旁站C段查询-隔山打牛" class="headerlink" title="旁站C段查询-隔山打牛"></a>旁站C段查询-隔山打牛</h4><p>什么是旁站？旁站就是和目标网站在同一台服务器上的其他网站。</p>
+<h4><span id="旁站c段查询-隔山打牛">旁站C段查询-隔山打牛</span></h4><p>什么是旁站？旁站就是和目标网站在同一台服务器上的其他网站。</p>
 <p>在我们做渗透过程中，当一个网站没有漏洞，无法突破，但是他有一个旁站，我们通过拿到旁站的Webshell提权拿到服务器，就相当于我们也同样的完成了本次渗透。</p>
 <p>旁站查询有很多工具和网站，我这边就用在线网站吧：</p>
 <p>域名：<a href="https://www.webscan.cc/">https://www.webscan.cc/</a></p>
@@ -2725,32 +2726,32 @@
 <p><img src="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LKynSSqTP7HazbNic3tlLk93oA9ebr0wz0f0TRb9GT8cCicdzicqMlBmJhichGU2vKQgH5eAw37700LUQ/640?wx_fmt=png" alt="img"></p>
 <p>参考文章：</p>
 <p><a href="https://blog.csdn.net/qq_38265674/article/details/87898449">https://blog.csdn.net/qq_38265674/article/details/87898449</a></p>
-<h2 id="9-Github-Hacking-Google-Hacking"><a href="#9-Github-Hacking-Google-Hacking" class="headerlink" title="9.Github Hacking | Google Hacking"></a>9.Github Hacking | Google Hacking</h2><p>我们都听过社会工程学这个名词，准确来说，社会工程学不是一门科学，而是一门艺术。而在社会工程学中，对信息掌握的充分程度是其中的关键。不光是这，在其它很多领域里我们都需要尽可能的搜集多的信息。</p>
+<h2><span id="9github-hacking-google-hacking">9.Github Hacking | Google Hacking</span></h2><p>我们都听过社会工程学这个名词，准确来说，社会工程学不是一门科学，而是一门艺术。而在社会工程学中，对信息掌握的充分程度是其中的关键。不光是这，在其它很多领域里我们都需要尽可能的搜集多的信息。</p>
 <p>Github不仅能托管代码，还能对代码进行搜索，我们感受到了其便利的同时，也应该时刻注意，当你上传并公开你的代码时，一时大意，让某些敏感的配置信息文件等暴露于众。</p>
 <p>Github官方网站：<strong><a href="https://github.com/">https://github.com/</a></strong></p>
 <p>我们可以通过搜索页面或高级搜索页面搜索Github。</p>
 <p>我们还可以使用 &gt;, &gt;=, &lt;, 和 &lt;= 搜索，分别为：大于、大于等于、小于和小于等于。</p>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line">查询 示例</span><br><span class="line">&gt;n cats stars:&gt;<span class="number">1000</span> <span class="comment">#匹配含有&quot;cats&quot;字样、星标超过1000个的仓库。</span></span><br><span class="line">&gt;=n cats topics:&gt;=<span class="number">5</span> 匹配含有<span class="string">&quot;cats&quot;</span>字样、有<span class="number">5</span>个或更多主题的仓库。</span><br><span class="line">&lt;n cats size:&lt;<span class="number">10000</span> 匹配小于10kb的文件中含有<span class="string">&quot;cats&quot;</span>字样的代码。</span><br><span class="line">&lt;=n cats stars:&lt;=<span class="number">50</span> 匹配含有<span class="string">&quot;cats&quot;</span> 字样、星标不超过<span class="number">50</span>个的仓库。</span><br><span class="line">n..* cats stars:<span class="number">10.</span>.* 等同于stars:&gt;=<span class="number">10</span> 并匹配含有<span class="string">&quot;cats&quot;</span>字样、有<span class="number">10</span>个或更多星号的仓库</span><br><span class="line">*..n  cats stars:*.<span class="number">.10</span> 等同于 stars:&lt;=<span class="number">10</span> 并匹配含有 <span class="string">&quot;cats&quot;</span> 字样、有不超过 <span class="number">10</span> 个星号的仓库。</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h5 id="注意事项："><a href="#注意事项：" class="headerlink" title="注意事项："></a>注意事项：</h5><p>只能搜索小于384KB的文件。</p>
+<h5><span id="注意事项">注意事项：</span></h5><p>只能搜索小于384KB的文件。</p>
 <p>只能搜索少于500，000个文件的存储库</p>
 <p>登录的用户可以搜索所有公共存储库。</p>
 <p>除filename搜索外，搜索源代码时必须至少包含一个搜索词。例如，搜索</p>
 <p><code>language:javascript</code>无效，而是这样：<code>amazing language:javascript</code></p>
 <p>搜索结果最多可以显示来自同一文件的两个片段，但文件中可能会有更多结果。</p>
 <p>不能将以下通配符用作搜索查询的一部分：<strong>. , : ; / ‘ “ = * ! ? # $ &amp; + ^ | ~ &lt; &gt; ( ) { } 。</strong>搜索将忽略这些符号。</p>
-<h5 id="日期条件："><a href="#日期条件：" class="headerlink" title="日期条件："></a>日期条件：</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cats pushed:&lt;2012-0705 搜索在2012年7月05日前push的代码，且cats作为关键</span><br><span class="line">cats pushed:2016-04-30..2016-07-04 日期区间</span><br><span class="line">cats created:&gt;=2017-04-01 创建时间</span><br></pre></td></tr></table></figure>
-<h5 id="逻辑运算："><a href="#逻辑运算：" class="headerlink" title="逻辑运算："></a>逻辑运算：</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">AND、OR、NOT</span><br></pre></td></tr></table></figure>
-<h5 id="排除运算："><a href="#排除运算：" class="headerlink" title="排除运算："></a>排除运算：</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">搜索在2012年07月05日前push代码，且cats作为关键字，排除java语言仓库</span><br><span class="line">cats pushed:&lt;2012-07-05 - language:java</span><br></pre></td></tr></table></figure>
-<h5 id="包含搜索："><a href="#包含搜索：" class="headerlink" title="包含搜索："></a>包含搜索：</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Hacker in:file 搜索文件中包含Hacker的代码</span><br><span class="line">Hacker in:path 搜索路径中包含Hacker的代码</span><br><span class="line">Hacker in:path,file 搜索路径、文件中包含Hacker的代码</span><br><span class="line">console path:app/public language:javascript #搜索关键字console，且语言为Javascript且路径在app/public下的代码</span><br></pre></td></tr></table></figure>
+<h5><span id="日期条件">日期条件：</span></h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cats pushed:&lt;2012-0705 搜索在2012年7月05日前push的代码，且cats作为关键</span><br><span class="line">cats pushed:2016-04-30..2016-07-04 日期区间</span><br><span class="line">cats created:&gt;=2017-04-01 创建时间</span><br></pre></td></tr></table></figure>
+<h5><span id="逻辑运算">逻辑运算：</span></h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">AND、OR、NOT</span><br></pre></td></tr></table></figure>
+<h5><span id="排除运算">排除运算：</span></h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">搜索在2012年07月05日前push代码，且cats作为关键字，排除java语言仓库</span><br><span class="line">cats pushed:&lt;2012-07-05 - language:java</span><br></pre></td></tr></table></figure>
+<h5><span id="包含搜索">包含搜索：</span></h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Hacker in:file 搜索文件中包含Hacker的代码</span><br><span class="line">Hacker in:path 搜索路径中包含Hacker的代码</span><br><span class="line">Hacker in:path,file 搜索路径、文件中包含Hacker的代码</span><br><span class="line">console path:app/public language:javascript #搜索关键字console，且语言为Javascript且路径在app/public下的代码</span><br></pre></td></tr></table></figure>
 <p><img src="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LLLkjlBgpjQMZJhXKXVvRrgy0uFiamRiaBMYJg87E4p8glErZGIunuMiaG85X80W2Lmv49faIOpGZCAQ/640?wx_fmt=png" alt="img"></p>
-<h5 id="主体搜索："><a href="#主体搜索：" class="headerlink" title="主体搜索："></a>主体搜索：</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">user:USERNAME  用户名搜索</span><br><span class="line">org:``ORGNAME  组织搜索</span><br><span class="line">repo:USERNAME/PEPOSITORY  制定仓库搜索</span><br></pre></td></tr></table></figure>
+<h5><span id="主体搜索">主体搜索：</span></h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">user:USERNAME  用户名搜索</span><br><span class="line">org:``ORGNAME  组织搜索</span><br><span class="line">repo:USERNAME/PEPOSITORY  制定仓库搜索</span><br></pre></td></tr></table></figure>
 <p><img src="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LLLkjlBgpjQMZJhXKXVvRrgiaicj3FGPY3e6L6KVibRUBXK7zD4qcMnz2Wb9iaOd8UaNoicJU81qdYb28A/640?wx_fmt=png" alt="img"></p>
-<h5 id="文件大小："><a href="#文件大小：" class="headerlink" title="文件大小："></a>文件大小：</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">size:&gt;1000 搜索大小大于1KB的文件</span><br></pre></td></tr></table></figure>
-<h5 id=""><a href="#" class="headerlink" title=""></a><img src="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LLLkjlBgpjQMZJhXKXVvRrgO56ug2mHr3gxzcZlGpNIPOzsAaicKWEibdwpYk4utnuGZmW86KvDkAqw/640?wx_fmt=png" alt="img"></h5><h5 id="文件名称："><a href="#文件名称：" class="headerlink" title="文件名称："></a>文件名称：</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">搜索文件名为config.php，且语言为PHP的代码</span><br><span class="line">filename:config.php language:php</span><br></pre></td></tr></table></figure>
+<h5><span id="文件大小">文件大小：</span></h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">size:&gt;1000 搜索大小大于1KB的文件</span><br></pre></td></tr></table></figure>
+<h5><span id><img src="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LLLkjlBgpjQMZJhXKXVvRrgO56ug2mHr3gxzcZlGpNIPOzsAaicKWEibdwpYk4utnuGZmW86KvDkAqw/640?wx_fmt=png" alt="img"></span></h5><h5><span id="文件名称">文件名称：</span></h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">搜索文件名为config.php，且语言为PHP的代码</span><br><span class="line">filename:config.php language:php</span><br></pre></td></tr></table></figure>
 <p><img src="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LLLkjlBgpjQMZJhXKXVvRrg1nUXN9IiareGh7AKMeLlnQ9JibsBpQHFxuXXz6eBQtcDjKDdnywFRibgw/640?wx_fmt=png" alt="img"></p>
-<h5 id="扩展名："><a href="#扩展名：" class="headerlink" title="扩展名："></a>扩展名：</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">extension:EXTENSION 指定扩展名搜索</span><br><span class="line">例如：php extension:config</span><br></pre></td></tr></table></figure>
+<h5><span id="扩展名">扩展名：</span></h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">extension:EXTENSION 指定扩展名搜索</span><br><span class="line">例如：php extension:config</span><br></pre></td></tr></table></figure>
 <p><img src="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LLLkjlBgpjQMZJhXKXVvRrgAbrSnFiaeHPDdwKakJjUq7QibGajlSSgbVpiabdkk4CicO14YUJ2cibunBA/640?wx_fmt=png" alt="img"></p>
-<h2 id="10-Google-Hacking"><a href="#10-Google-Hacking" class="headerlink" title="10.Google Hacking"></a>10.Google Hacking</h2><p>利用Google搜索相关信息并进行入侵的过程就叫做Google Hack。</p>
+<h2><span id="10google-hacking">10.Google Hacking</span></h2><p>利用Google搜索相关信息并进行入侵的过程就叫做Google Hack。</p>
 <p><img src="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LLLkjlBgpjQMZJhXKXVvRrg1YISyKuPORqmENTJKFuhgARro4zt58Ja7ic1ToMN1susoMwYHmI525A/640?wx_fmt=png" alt="img"></p>
 <p><strong>通配符：</strong></p>
 <div class="table-container">
@@ -2797,7 +2798,7 @@
 </tbody>
 </table>
 </div>
-<h4 id="高级语法："><a href="#高级语法：" class="headerlink" title="高级语法："></a>高级语法：</h4><p>语法的组成——— 语句:关键词</p>
+<h4><span id="高级语法">高级语法：</span></h4><p>语法的组成——— 语句:关键词</p>
 <div class="table-container">
 <table>
 <thead>
@@ -2846,9 +2847,9 @@
 </tbody>
 </table>
 </div>
-<h5 id="示例一：搜索标题含有login的网站"><a href="#示例一：搜索标题含有login的网站" class="headerlink" title="示例一：搜索标题含有login的网站"></a>示例一：搜索标题含有login的网站</h5><p><code>intitle:login</code></p>
+<h5><span id="示例一搜索标题含有login的网站">示例一：搜索标题含有login的网站</span></h5><p><code>intitle:login</code></p>
 <p><img src="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LLLkjlBgpjQMZJhXKXVvRrgn3cYpFnkPbpvCXGKsmIqswg0kRZX04Po4ibP5PcVuVwfGtKa8Bc5IicQ/640?wx_fmt=png" alt="img"></p>
-<h5 id="示例二：搜索链接含有-wp-login-php-也就是wordpress-的网站"><a href="#示例二：搜索链接含有-wp-login-php-也就是wordpress-的网站" class="headerlink" title="示例二：搜索链接含有/wp-login.php(也就是wordpress)的网站"></a>示例二：搜索链接含有/wp-login.php(也就是wordpress)的网站</h5><p><code>inurl:/wp-login.php</code></p>
+<h5><span id="示例二搜索链接含有wp-loginphp也就是wordpress的网站">示例二：搜索链接含有/wp-login.php(也就是wordpress)的网站</span></h5><p><code>inurl:/wp-login.php</code></p>
 <p><img src="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LLLkjlBgpjQMZJhXKXVvRrgChyicWHJxMRWy8kK0KT0FfwzNib2Vibib8l5TgBQHMLS4GfpQe9nnAZ9VQ/640?wx_fmt=png" alt="img"></p>
 <p>参考文章：</p>
 <p><a href="https://docs.github.com/cn/free-pro-team@latest/github/searching-for-information-on-github/understanding-the-search-syntax">https://docs.github.com/cn/free-pro-team@latest/github/searching-for-information-on-github/understanding-the-search-syntax</a></p>
