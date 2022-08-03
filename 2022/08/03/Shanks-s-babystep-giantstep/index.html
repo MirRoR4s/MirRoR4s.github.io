@@ -20,16 +20,17 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="想成为c++专家 黑客 密码学爱好者">
+  <meta name="description" content="小步大步发sage实现">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Shanks&#39;s_babystep-giantstep">
 <meta property="og:url" content="http://example.com/2022/08/03/Shanks-s-babystep-giantstep/index.html">
 <meta property="og:site_name" content="学习记录">
-<meta property="og:description" content="想成为c++专家 黑客 密码学爱好者">
+<meta property="og:description" content="小步大步发sage实现">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-08-03T05:31:42.000Z">
-<meta property="article:modified_time" content="2022-08-03T05:31:42.546Z">
+<meta property="article:modified_time" content="2022-08-03T05:41:16.756Z">
 <meta property="article:author" content="MirRoR4s">
+<meta property="article:tag" content="Crypto">
 <meta name="twitter:card" content="summary">
 
 <link rel="canonical" href="http://example.com/2022/08/03/Shanks-s-babystep-giantstep/">
@@ -210,8 +211,9 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
+              
 
-              <time title="创建时间：2022-08-03 13:31:42" itemprop="dateCreated datePublished" datetime="2022-08-03T13:31:42+08:00">2022-08-03</time>
+              <time title="创建时间：2022-08-03 13:31:42 / 修改时间：13:41:16" itemprop="dateCreated datePublished" datetime="2022-08-03T13:31:42+08:00">2022-08-03</time>
             </span>
 
           
@@ -225,7 +227,13 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        
+        <!--toc-->
+<p>小步大步发sage实现</p>
+<span id="more"></span>
+<p>今天用sage简单实现一个shanks的小步大步法，主要还是求一个元素的阶自己比较疑惑，能想到的是根据拉格朗日定理分解p，那么模p下这个元素的阶肯定整除p，所以元素的阶可以从p的因子当中去寻找。</p>
+<p>书上的关键其实还是在证明说为什么这个算法一定能够找到正确的解，但是这一次也不关心这里，来看看具体地实现吧。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#sage</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">shanks</span>(<span class="params">g,h,p</span>): <span class="comment">#利用shanks的碰撞算法求解 g^x = h mod p 的解x</span></span><br><span class="line">    Fp = GF(p)</span><br><span class="line">    g = Fp(g)</span><br><span class="line">    N = g.multiplicative_order()</span><br><span class="line">    n = <span class="number">1</span> + <span class="built_in">int</span>(sqrt(N))</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;n=&#x27;</span>,n)</span><br><span class="line">    u = g^(-n)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;u=&#x27;</span>,u)</span><br><span class="line">    <span class="comment">#制作表1</span></span><br><span class="line">    list1 = <span class="built_in">dict</span>()</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(n+<span class="number">1</span>):</span><br><span class="line">        list1[g^i] = i</span><br><span class="line">    <span class="built_in">print</span>(list1)</span><br><span class="line">    <span class="comment">#制作表2</span></span><br><span class="line">    list2 = <span class="built_in">dict</span>()</span><br><span class="line">    list2[h] = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>,n+<span class="number">1</span>):</span><br><span class="line">        list2[h*(u^(i))] = i*n</span><br><span class="line">    <span class="built_in">print</span>(list2)</span><br><span class="line">    <span class="comment">#找到表1跟表2中的match</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> k <span class="keyword">in</span> list1:</span><br><span class="line">        <span class="keyword">if</span> (list2.get(k) != <span class="literal">None</span>):</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&#x27;k=&#123;&#125;,list1[k]=&#123;&#125;&#x27;</span>.<span class="built_in">format</span>(k,list1[k]))</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&#x27;list2[k]=&#123;&#125;&#x27;</span>.<span class="built_in">format</span>(list2[k]))</span><br><span class="line">            x = list1[k] + <span class="built_in">abs</span>(list2[k])</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&#x27;find x = &#123;&#125;&#x27;</span>.<span class="built_in">format</span>(x))</span><br><span class="line">            <span class="built_in">print</span>(g^x == h)</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">shanks(<span class="number">9704</span>,<span class="number">13896</span>,<span class="number">17389</span>)</span><br></pre></td></tr></table></figure>
+
     </div>
 
     
@@ -233,6 +241,9 @@
     
 
       <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Crypto/" rel="tag"># Crypto</a>
+          </div>
 
         
 
@@ -243,7 +254,10 @@
     <a href="/2022/07/30/Access-Denied-CTF-2022/" rel="prev" title="Access_Denied_CTF-2022">
       <i class="fa fa-chevron-left"></i> Access_Denied_CTF-2022
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2022/08/03/%E6%9C%AA%E6%8E%88%E6%9D%83%E8%AE%BF%E9%97%AE%E6%BC%8F%E6%B4%9E/" rel="next" title="未授权访问漏洞">
+      未授权访问漏洞 <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -315,7 +329,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">51</span>
+          <span class="site-state-item-count">53</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
