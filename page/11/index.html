@@ -185,6 +185,141 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/04/28/XSS-WEBGOAT/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="MirRoR4s">
+      <meta itemprop="description" content="想成为c++专家 黑客 密码学爱好者">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="学习记录">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/04/28/XSS-WEBGOAT/" class="post-title-link" itemprop="url">XSS_WEBGOAT</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-04-28 16:32:46" itemprop="dateCreated datePublished" datetime="2022-04-28T16:32:46+08:00">2022-04-28</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/04/28/XSS/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="MirRoR4s">
+      <meta itemprop="description" content="想成为c++专家 黑客 密码学爱好者">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="学习记录">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/04/28/XSS/" class="post-title-link" itemprop="url">XSS</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-04-28 12:10:44 / 修改时间：12:16:13" itemprop="dateCreated datePublished" datetime="2022-04-28T12:10:44+08:00">2022-04-28</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/WEB%E5%AE%89%E5%85%A8/" itemprop="url" rel="index"><span itemprop="name">WEB安全</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="0x01-XSS定义"><a href="#0x01-XSS定义" class="headerlink" title="0x01 XSS定义"></a>0x01 XSS定义</h2><p>直接上OWSAP的定义<a target="_blank" rel="noopener" href="https://owasp.org/www-community/attacks/xss/">https://owasp.org/www-community/attacks/xss/</a></p>
+<p>人工翻译🤭</p>
+<p>跨站脚本攻击是一种注入，其中恶意脚本被注入到其他良性和受信任的网站中。XSS攻击发生在攻击者使用WEB应用程序发送恶意代码时，通常是以浏览器端脚本的形式发送给别人。XSS常发生在没有对用户的输入进行验证或者编码就对用户的输入进行了输出的地方。</p>
+<p>一个攻击者可以使用XSS发送一个恶意脚本给用户，但是用户的浏览器无法分辨此脚本是否是值得信任的，从而会执行攻击者发送的恶意脚本。因为浏览器认为脚本来自于一个受信任的源，从而恶意脚本可以访问任何cookies,session tokens 或者是其他保存在浏览器当前网站中的敏感信息。这些脚本甚至可以修改网页的内容。</p>
+<h2 id="0x02-如何避免跨站脚本漏洞"><a href="#0x02-如何避免跨站脚本漏洞" class="headerlink" title="0x02 如何避免跨站脚本漏洞"></a>0x02 如何避免跨站脚本漏洞</h2><ol>
+<li><p>XSS (Cross Site Scripting) Prevention Cheat Sheet :<a target="_blank" rel="noopener" href="https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html">https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html</a></p>
+<p>2.DOM based XSS Prevention Cheat Sheet: <a target="_blank" rel="noopener" href="https://cheatsheetseries.owasp.org/cheatsheets/DOM_based_XSS_Prevention_Cheat_Sheet.html">https://cheatsheetseries.owasp.org/cheatsheets/DOM_based_XSS_Prevention_Cheat_Sheet.html</a></p>
+<p>3.OWASP Development Guide article on Data Validation: <a target="_blank" rel="noopener" href="https://wiki.owasp.org/index.php/Data_Validation">https://wiki.owasp.org/index.php/Data_Validation</a></p>
+</li>
+</ol>
+<p>​    4.OWASP Development Guide article on Phishing:  <a target="_blank" rel="noopener" href="https://wiki.owasp.org/index.php/Phishing">https://wiki.owasp.org/index.php/Phishing</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2022/04/28/DVWA-XSS-Reflected/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -403,174 +538,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/04/24/bWAPP%E9%9D%B6%E5%9C%BA%E4%B9%8BXXE%E6%BC%8F%E6%B4%9E/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="MirRoR4s">
-      <meta itemprop="description" content="想成为c++专家 黑客 密码学爱好者">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="学习记录">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/04/24/bWAPP%E9%9D%B6%E5%9C%BA%E4%B9%8BXXE%E6%BC%8F%E6%B4%9E/" class="post-title-link" itemprop="url">bWAPP靶场之XXE漏洞</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-04-24 12:06:10" itemprop="dateCreated datePublished" datetime="2022-04-24T12:06:10+08:00">2022-04-24</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-04-28 15:18:13" itemprop="dateModified" datetime="2022-04-28T15:18:13+08:00">2022-04-28</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/WEB%E5%AE%89%E5%85%A8/" itemprop="url" rel="index"><span itemprop="name">WEB安全</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>漏洞详解<a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/3357#toc-10">https://xz.aliyun.com/t/3357#toc-10</a></p>
-<p>接下来2个月就在各种靶场度过，打好基本功再来实战吧。</p>
-<p>安装bwapp的虚拟机： <a target="_blank" rel="noopener" href="https://sourceforge.net/projects/bwapp/files/bee-box/bee-box_v1.6.7z/download">https://sourceforge.net/projects/bwapp/files/bee-box/bee-box_v1.6.7z/download</a> ，下载解压用vmware打开里面的vmx文件即可。</p>
-<p>选择NAT模式，不选也可以，反正让现实的主机能访问到即可</p>
-<p>开机之后界面就有bwapp-start图标了，用bee &#x2F;bug 账号密码登陆然后选择漏洞开始测试。bwapp的xxe都是有回显的，比较初级，拿来练手再合适不过。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/04/24/bWAPP%E9%9D%B6%E5%9C%BA%E4%B9%8BXXE%E6%BC%8F%E6%B4%9E/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/04/21/%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="MirRoR4s">
-      <meta itemprop="description" content="想成为c++专家 黑客 密码学爱好者">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="学习记录">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/04/21/%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C/" class="post-title-link" itemprop="url">命令执行</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-04-21 20:52:53" itemprop="dateCreated datePublished" datetime="2022-04-21T20:52:53+08:00">2022-04-21</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-06-11 22:58:02" itemprop="dateModified" datetime="2022-06-11T22:58:02+08:00">2022-06-11</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/CTF/" itemprop="url" rel="index"><span itemprop="name">CTF</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_39877898/article/details/112198269">https://blog.csdn.net/weixin_39877898/article/details/112198269</a></p>
-<p><a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/8107#toc-11无字母数字Webshell">https://xz.aliyun.com/t/8107#toc-11无字母数字Webshell</a></p>
-<p><a target="_blank" rel="noopener" href="https://www.leavesongs.com/PENETRATION/webshell-without-alphanum-advanced.html无字母数字Webshell提高篇">https://www.leavesongs.com/PENETRATION/webshell-without-alphanum-advanced.html无字母数字Webshell提高篇</a></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/04/21/%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -640,7 +607,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">61</span>
+          <span class="site-state-item-count">63</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
