@@ -20,18 +20,21 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="翻译一下这篇著名的论文。">
-<meta property="og:type" content="article">
+  <meta property="og:type" content="article">
 <meta property="og:title" content="A_Method_for_Obtaining_Digital_Signatures_and_Public-Key_Cryptosystems翻译">
 <meta property="og:url" content="http://example.com/2022/08/06/A-Method-for-Obtaining-Digital-Signatures-and-Public-Key-Cryptosystems%E7%BF%BB%E8%AF%91/index.html">
 <meta property="og:site_name" content="学习记录">
-<meta property="og:description" content="翻译一下这篇著名的论文。">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="c:/Users/mirror/Desktop/write-up/blog/source/images/image-20220828173303245.png">
+<meta property="og:image" content="c:/Users/mirror/Desktop/write-up/blog/source/images/image-20220828173248561.png">
+<meta property="og:image" content="c:/Users/mirror/Desktop/write-up/blog/source/images/image-20220828235142473.png">
+<meta property="og:image" content="c:/Users/mirror/Desktop/write-up/blog/source/images/image-20220828234351455.png">
 <meta property="article:published_time" content="2022-08-06T14:21:38.000Z">
-<meta property="article:modified_time" content="2022-08-07T05:08:52.439Z">
+<meta property="article:modified_time" content="2022-08-29T00:36:28.336Z">
 <meta property="article:author" content="MirRoR4s">
 <meta property="article:tag" content="Crypto">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="c:/Users/mirror/Desktop/write-up/blog/source/images/image-20220828173303245.png">
 
 <link rel="canonical" href="http://example.com/2022/08/06/A-Method-for-Obtaining-Digital-Signatures-and-Public-Key-Cryptosystems%E7%BF%BB%E8%AF%91/">
 
@@ -194,7 +197,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
       <meta itemprop="name" content="MirRoR4s">
-      <meta itemprop="description" content="想成为c++专家 黑客 密码学爱好者">
+      <meta itemprop="description" content="不能说的秘密">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -219,7 +222,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-08-07 13:08:52" itemprop="dateModified" datetime="2022-08-07T13:08:52+08:00">2022-08-07</time>
+                <time title="修改时间：2022-08-29 08:36:28" itemprop="dateModified" datetime="2022-08-29T08:36:28+08:00">2022-08-29</time>
               </span>
 
           
@@ -234,31 +237,120 @@
 
       
         <!--toc-->
-<p>翻译一下这篇著名的论文。</p>
 <span id="more"></span>
 <p>[TOC]</p>
-<h1 id="huo-de-shu-zi-qian-ming-he-gong-yao-mi-ma-xi-tong-de-yi-ge-fang-fa-r-l-rivese-a-shamir-and-l-adleman"><a href="#获得数字签名和公钥密码系统的一个方法-R-L-Rivese-A-Shamir-and-L-Adleman" class="headerlink" title="获得数字签名和公钥密码系统的一个方法-R.L Rivese, A. Shamir, and L. Adleman"></a>获得数字签名和公钥密码系统的一个方法-R.L Rivese, A. Shamir, and L. Adleman<a href="#huo-de-shu-zi-qian-ming-he-gong-yao-mi-ma-xi-tong-de-yi-ge-fang-fa-r-l-rivese-a-shamir-and-l-adleman" class="header-anchor">#</a></h1><h2 id="zhai-yao"><a href="#摘要" class="headerlink" title="摘要"></a>摘要<a href="#zhai-yao" class="header-anchor">#</a></h2><p>一个具有新特性的加密方法，能够公开地透露一个加密密钥而不会因此泄露出相应的解密密钥。这有两个重要的影响：</p>
-<p>1.传送密钥不再需要信使或者其他安全手段，因为信息可以用预期的接收方所公开透露的加密密钥加密。只有他可以解密信息，因为只有他知道对应的解密密钥。</p>
-<p>2.通过一个私人持有的解密密钥，信息可以被签名。任何人都可以使用对应的被公开透露的加密密钥去验证这个签名。签名不能被伪造，并且签名者之后不能否认他的签名的有效性。这在电子邮件和电子资金转账系统中有明显的应用。</p>
-<p>通过将信息表示成一个数字M，信息可以被加密。具体地加密流程如下：计算M的e次幂，e是一个公开地被特定选择的指数。如果计算结果被公开指定的乘积n所整除，那么就将计算结果取余。其中n是两个巨大的、私密的素数p、q的乘积。解密是相似的；但是要使用一个不同于e的、私密的指数d。其中$e\cdot d \equiv 1 (\mod (p-1)\cdot(q-1))$。该系统的安全性部分取决于对公开的除数n进行因式分解的难度。</p>
-<p>关键词汇：数字签名，公钥密钥系统，隐私，授权，安全，因子分解，素数，电子邮件，消息传递，电子资金转账，密码学。</p>
-<h2 id="i-introduction"><a href="#I-Introduction" class="headerlink" title="I Introduction"></a>I Introduction<a href="#i-introduction" class="header-anchor">#</a></h2><p>电子邮件的时代可能很快就要来临了；我们必须确保保留现有“纸质邮件”系统的两个重要特性：(a)信息是私密的，(b)信息可以被签名。在这篇论文中，我们演示如何将这些功能构建到电子邮件系统中。</p>
-<p>我们的核心目标是一个新的加密方法。这种方法提供了一个公钥密码系统（由Diffie and Hellman发明的一个简练的概念）的一个实现。他们的文章启发了我们的研究，因为他们提出了这个概念，但是却没有给出这样的系统的一个实际的实现。熟悉这些概念的读者可能希望直接跳到第五节来阅读我们关于方法的描述。</p>
-<h2 id="ii-public-key-cryptosystems"><a href="#II-Public-Key-Cryptosystems" class="headerlink" title="II Public-Key Cryptosystems"></a>II Public-Key Cryptosystems<a href="#ii-public-key-cryptosystems" class="header-anchor">#</a></h2><p>在公钥密码系统中，每个用户在一个公共文件中放置一个加密程序e。也就是说，这个公共文件是一个目录，给出每个用户的加密过程。用户对其对应的解密程序$D$的细节保密。</p>
-<p>这些程序具有以下四个属性：</p>
-<p>$(a)$ 破译加密形式的消息$M$得到$M$，形式上可以写成$D(E(M))=M \space$       $(1)$</p>
-<p>$(b)$ $E$和$D$都很容易计算。</p>
-<p>$(c)$ 通过某用户公开的$E$，其他用户不能揭露出计算$D$的简单方法。这意味着在实践中，只有该用户可以解密用E加密的消息，或者有效地计算D。</p>
-<p>$(d)$ 如果一个消息先被解密后被加密，那么结果是消息本身。形式上可以写成$E(D(M))=M$        $(2)$。</p>
-<p>一个加密（解密）程序通常包含一个通用的加密算法和一个加密密钥。通用的加密算法在密钥的控制下，将信息M转为加密形式的信息，通常称为密文。每个人都可以使用相同的通用算法；一个给定的程序的安全性取决于密钥的安全性。揭露加密算法意味着揭露密钥。</p>
-<p>当用户泄露了加密算法E，他就泄露了计算$D(C)$的一个非常低效的方法：尝试信息M的所有可能的值，直到找到某个信息$E(M)=C$。如果信息$M$转为数字后的形式满足性质$(c)$，那么尝试的数量将会非常巨大，以至于这个方法在实际当中是不可行的。</p>
-<p>满足性质$(a)-(c)$的函数E被称为单向陷门函数；如果还满足$(d)$，那么这个函数也被成为单向陷门置换。Diffle和Hellman介绍了单向陷门函数的概念，但是却没有给出任何例子。该函数被称为单向的是因为函数在一个方向上计算是容易的，但是在该方向相反的方向上计算是困难的。而函数之所以被称为陷门函数，是因为一旦知晓了确定的、私密的陷门信息，那么相反方向的计算事实上就会变得很容易。满足性质$(d)$的单向陷门函数一定是一个置换：每一条消息都是另一条消息的密文，而每一条密文本身就是一条合法的消息。（这个映射是一个一对一的映射。）性质$(d)$只有在实现签名的时候才需要。</p>
-<p>读者最好阅读一下Diffle和Hellman的优秀文章，以便进一步了解相关背景。比如公钥密码体制概念的阐述和密码学领域的相关问题的探讨。确保隐私和实现签名（在下面的章节三和四描述）的方法归功于Diffle和Hellman。</p>
-<p>在我们的场景中，我们假设A和B（也被称为Alice和Bob）是一个公钥密码体制的两个用户。我们用$E_A,D_A,E_B,D_B$ 区分他们的加密和解密程序。</p>
-<h2 id="iii-privacy"><a href="#III-Privacy" class="headerlink" title="III Privacy"></a>III Privacy<a href="#iii-privacy" class="header-anchor">#</a></h2><p>加密是使信息变为私密的标准方法。发送方在将信息发送给接收方之前，对每一个信息进行加密。接收者（得到授权的人）知道合适的解密函数，能够将接受到的信息还原成初始的信息。截获信息的窃听者只能看见没有意义的密文，因为他不知道如何解密密文。</p>
-<p>目前储存在计算机数据库中并通过电话线传输的大量的个人的和敏感的信息使得加密变得越来越重要。在考虑到效率的实际情况下，高质量的加密技术是非常需要的，但供不应求，the National Bureau of Standards最近已经采纳了一个由IBM提出的加密算法，叫做”Data Encryption Standard”。这个加密算法不满足性质(c)-需要实现一个公钥密码体制。</p>
-<p>所有传统的加密方法（包括NBS标准）都会遭受密钥分发的问题。这个问题就是在一个私密的通信开始之前，另一个私有机构需要分别地给发送方和接收方分配加密密钥和解密密钥。通常一个私有的信使将密钥从发送方传送到接收方。</p>
-
+<h1 id="jian-jie"><a href="#简介" class="headerlink" title="简介"></a>简介<a href="#jian-jie" class="header-anchor">#</a></h1><p>1977年，<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/罗纳德·李维斯特/700199">罗纳德·李维斯特</a>（Ron Rivest）、<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/阿迪·萨莫尔">阿迪·萨莫尔</a>（Adi Shamir）和<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/伦纳德·阿德曼/12575612">伦纳德·阿德曼</a>（Leonard Adleman）共同发表了一篇在密码学历史上的著名论文——A Method for Obtaining Digital Signatures and Public-Key Cryptosystems，在他们的论文中，给出了现在著名的RSA公钥密码系统的相关实现方法，从而开启了公钥密码学的新篇章。本篇文章就对这篇经典的论文进行简短的翻译，如果错误，敬请指正。</p>
+<h1 id="yi-ge-gou-jian-shu-zi-qian-ming-he-gong-yao-mi-ma-xi-tong-de-fang-fa-r-l-rivese-a-shamir-and-l-adleman"><a href="#一个构建数字签名和公钥密码系统的方法-R-L-Rivese-A-Shamir-and-L-Adleman" class="headerlink" title="一个构建数字签名和公钥密码系统的方法-R.L Rivese, A. Shamir, and L. Adleman"></a>一个构建数字签名和公钥密码系统的方法-R.L Rivese, A. Shamir, and L. Adleman<a href="#yi-ge-gou-jian-shu-zi-qian-ming-he-gong-yao-mi-ma-xi-tong-de-fang-fa-r-l-rivese-a-shamir-and-l-adleman" class="header-anchor">#</a></h1><h2 id="zhai-yao"><a href="#摘要" class="headerlink" title="摘要"></a>摘要<a href="#zhai-yao" class="header-anchor">#</a></h2><p>  一个具有新特性的加密方法：能够公开地透露一个加密密钥却不会因此泄露相应的解密密钥。这有两个重要的影响：</p>
+<p>  1.传送密钥不再需要信使或者其他安全手段，因为信息可以用预期的接收者所公开透露的加密密钥加密。并且因为只有他知道对应的解密密钥，所以只有他可以解密信息。</p>
+<p>  2.信息可以通过一个私人持有的解密密钥被签名。而任何人都可以使用对应的公开透露的加密密钥去验证这个签名。此外，签名不能被伪造，并且签名者在签名之后不能否认签名的有效性。这在电子邮件和电子资金转账系统中有明显的应用。</p>
+<p>  我们通过将信息表示成一个数字 $M$ 来加密信息。具体地加密流程如下：计算$ M$ 的 $e$ 次幂，$e$ 是一个公开地被特定选择的指数。如果计算结果超过了公开的特定乘积 $n$ ，那么就将计算结果取余。其中 $n$ 是两个巨大的、私密的素数$p、q$的乘积。解密是相似的；但是要使用一个不同于 $e$ 的、私密的指数 $d$ 。其中$e\cdot d \equiv 1\mod ((p-1)\cdot(q-1))$。该系统的安全性部分取决于对公开的除数 $n$ 进行因子分解的难度。</p>
+<p>  关键词汇：数字签名，公钥密钥系统，隐私，授权，安全，因子分解，素数，电子邮件，消息传递，电子资金转账，密码学。</p>
+<h2 id="i-yin-yan"><a href="#I-引言" class="headerlink" title="I 引言"></a>I 引言<a href="#i-yin-yan" class="header-anchor">#</a></h2><p>  电子邮件的时代可能很快就要来临了，我们必须确保保留现有纸质邮件系统的两个重要特性：(a) 信息是私密的，(b) 可以对电子信息进行签名。在这篇论文中，我们演示如何将这些功能构建到电子邮件系统中。</p>
+<p>  我们的核心目标是一个新的加密方法。这种方法提供了一个公钥密码系统（由Diffie and Hellman发明的一个简练的概念）的实现。他们的文章启发了我们的研究，因为他们提出了这个概念，但是却没有给出这样的系统的一个具体的实现。熟悉这些概念的读者可能希望直接跳到第五节来阅读我们关于方法的描述。</p>
+<h2 id="ii-gong-yao-mi-ma-xi-tong"><a href="#II-公钥密码系统" class="headerlink" title="II 公钥密码系统"></a>II 公钥密码系统<a href="#ii-gong-yao-mi-ma-xi-tong" class="header-anchor">#</a></h2><p>  在公钥密码系统中，每个用户在一个公共文件中放置一个加密程序 $E$。实际上，这个公共文件是一个指南，给出了每个用户的加密程序，但是用户会将相应的解密程序 $D$ 的细节保密。这些程序具有以下四个性质 :</p>
+<p>  $(a)$ 对信息 $M$ 的加密形式（即密文）进行解密能够恢复 $M$ ，形式上可以写成 $D(E(M))=M\space\space(1)$ </p>
+<p>  $(b)$ 加密程序 $E$ 和解密程序 $D$ 在计算上是很容易的。</p>
+<p>  $(c)$ 通过某用户公开的 $E$，其他用户不能揭露出计算 $D$ 的简单方法。这意味着在实践中，只有该用户可以解密用 $E$ 加密的消息，或者有效地计算 $D$ 。</p>
+<p>  $(d)$ 如果一个信息先被解密之后再被加密，那么得到的结果是信息本身。形式上可以写成$E(D(M))=M\space(2)$     </p>
+<p>  一个加密（解密）程序通常包含一个通用的加密算法和一个加密密钥。通用的加密算法在密钥的控制下，将信息 $M$ 转为加密形式的信息，通常称为密文。每个人都可以使用相同的通用算法；加密（解密）程序的安全性取决于密钥的安全性。</p>
+<p>  当用户公布了加密程序 $E$ ，他就泄露了计算 $D(C)$ 的一个非常低效的方法：尝试信息 $M$ 的所有可能的值，直到找到某个信息 $M$ 使得 $E(M)=C$。如果信息 $M$ 转为数字后的形式满足性质 $(c)$，那么尝试的数量将会非常巨大，以至于这个方法在实际当中是不可行的。</p>
+<p>  满足性质 $(a)-(c)$ 的函数 $E$ 被称为单向陷门函数；如果该函数还满足 性质$(d)$，那么这个函数也被称为单向陷门置换。Diffle和Hellman介绍了单向陷门函数的概念，但是却没有给出任何例子。该函数之所以被称为单向函数是因为函数在一个方向上（比如加密）的计算是很容易的，但是在该方向相反的方向上（比如解密）的计算却很困难。而函数之所以被称为陷门函数，是因为一旦知晓了确定的、私密的陷门信息，那么相反方向上的计算事实上就变得很容易。满足性质 $(d)$ 的单向陷门函数一定是一个<strong>置换</strong>：每一条信息都是另一条信息的密文，而每一条密文本身就是一条合法的信息。（这个映射是一个<strong>一对一</strong>的映射。）性质 $(d)$ 只有在实现签名的时候才需要。</p>
+<p>  读者最好阅读一下Diffle和Hellman的优秀文章，以便进一步了解相关背景。比如公钥密码系统概念的阐述和密码学领域相关问题的探讨。Diffle和Hellman给出了在公钥密码系统中确保隐私和实现签名（在下面的章节三和四描述）的方法。</p>
+<p>  在我们的场景中，我们假设 $A$ 和 $B$（也被称为<strong>Alice</strong>和<strong>Bob</strong>）是一个公钥密码系统的两个用户。我们用$E_A,D_A,E_B,D_B$ 区分他们的加密和解密程序。</p>
+<h2 id="iii-yin-si"><a href="#III-隐私" class="headerlink" title="III 隐私"></a>III 隐私<a href="#iii-yin-si" class="header-anchor">#</a></h2><p>  加密是实现私密通信标准方法。发送者在将信息传递给接收者之前，对每一个信息进行加密。接收者（得到授权的人）知道合适的解密函数，能够将接收到的密文还原成原始的信息。而对于通信中的窃听者，即使他得知了传输的信息（密文），因为他不知道如何解密，所以他也只能得到没有意义的无用信息。</p>
+<p>  目前储存在计算机数据库中，通过电话线传输的大量个人和敏感的信息使得加密变得越来越重要。在考虑到效率的实际情况下，我们非常需要高质量的加密技术，但是却供不应求；美国国家标准局最近已经采纳了一个由IBM提出的加密算法，名为”数据加密标准（<strong>Data Encryption Standard</strong>）”。这个加密算法不满足前面提到的性质 $(c)$ 即需要实现一个公钥密码系统。</p>
+<p>  所有传统的加密方法（包括NBS标准即数据加密标准算法）都存在<strong>密钥分发</strong>的问题。这里存在的密钥分发问题是指在一个私密的通信开始之前，另一个私有事务需要分别地给发送者和接收者分配加密密钥和解密密钥。我们通常使用一个私密信使来将密钥从发送者传递到接收者。如果想让电子邮件系统变得快速且便宜，那么这样的做法是不可行的。而公钥密码系统则不需要私有的信使，密钥可以在不安全的信道上被分发。</p>
+<p>  <strong>Bob</strong>如何才能使用公钥密码系统给<strong>Alice</strong>发送一个私密的信息 $M$ 呢？首先，他从<strong>Alice</strong>的公共文件中检索出<strong>Alice</strong>的公钥 $E_A$ 。随后他用加密程序 $E_A$ 加密他的信息 $M$ ，加密结果记为 $E_A(M)$ ，并将 $E_A(M)$ 发送给<strong>Alice</strong>。<strong>Alice</strong>通过计算 $D_A(E_A(M))=M$ 来解密信息，其中$D_A$ 是<strong>Alice</strong>的解密程序。根据前面提到的公钥密码系统的性质 $(c)$ 我们知道，只有<strong>Alice</strong>才可以解密 $E_A(M)$ 。类似地，<strong>Alice</strong>也可以从<strong>Bob</strong>的公共文件中检索出<strong>Bob</strong>的公钥，并用其加密给<strong>Bob</strong>的回复信息。</p>
+<p>  注意到<strong>Alice</strong>和<strong>Bob</strong>之间不需要任何私有事务来建立私有通信，唯一需要的“设置”就是每个希望进行私密通信的用户必须将其加密算法放在公共文件中。当然，两个用户也可以在不事先放置公共文件的情况下，在一个不安全的通信信道上建立私密通信，每个用户都将他的加密密钥发送给另一方，然后所有信息都使用接收方的加密密钥加密，就像在公钥系统中一样。监听信道的入侵者不能够解密任何信息，因为从加密密钥获得解密密钥是不可能的（假设入侵者不能修改或插入信息到信道上）。</p>
+<p>  如果我们的加密方法比标准加密方案（比如NBS方案）的加密速度慢，我们也可以使用公钥密码系统引导到标准加密方案。这就是说我们可以使用公钥密码系统传输用于标准加密方案的密钥，当这个用于标准加密方案的密钥传输完毕，我们就可以通过标准加密方案来加密我们要传输的信息，而不是使用公钥密码系统。（如果使用专用的硬件加密设备，NBS方案可能会更快一些;我们的方案在通用计算机上可能会更快，因为多精度算术运算比复杂的比特操作更容易实现。）</p>
+<h2 id="iv-qian-ming"><a href="#IV-签名" class="headerlink" title="IV 签名"></a>IV 签名<a href="#iv-qian-ming" class="header-anchor">#</a></h2><p>  如果电子邮件系统要取代现有的纸质邮件系统进行商业贸易，那么对一个电子信息进行签名必须是可能做到的，且一个签名信息的接收者必须要有证据表明信息源自发送者。这个要求比单纯的身份验证更苛刻，（因为接收者可以验证信息来自于发送者）而且接收者也要使得某个裁决机构（比如法院、法官）相信是签名者发送了这个信息。为了做到这一点，他必须要使得该裁决机构相信他自己没有伪造这个已签名的信息。而在身份验证的问题中，接收者无需担心伪造的可能性，因为他只是想让自己确信信息来自于发送者。</p>
+<p>  电子签名必须跟信息相关，也必须跟签名者相关，否则接收者就可以在将签名和信息展示给裁决机构之前，在不修改签名的情况下改变信息；或者他可以将签名附加到任意的信息上。（因为监测电子的复制和粘贴是不可能的）</p>
+<p>  为了实现签名，公钥密码系统一定要用单向陷门置换实现（即具有前面所说的性质 $(d)$ ，因为解密算法将会被用在未加密的信息上。）</p>
+<p>  在公钥密码系统当中，用户<strong>Bob</strong>怎样才能给<strong>Alice</strong>发送一个签名的信息 $M$ 呢？他首先使用 $D_B$  即他的解密程序计算信息 $M$ 的签名 $S = D_B(M)$（根据公钥密码系统的性质 $(d)$，解密一个未加密的信息是有意义的。），然后为了保密签名 $S$，他使用 $E_A$ 对 $S$ 进行加密；最后将结果 $E_A(S)$  发送给<strong>Alice</strong>。因为信息 $M$ 可以从 $S$ 中计算出来，所以他不需要发送 $M$。</p>
+<p>  <strong>Alice</strong>在收到密文后，首先用她的解密程序 $D_A$ 解密密文得到 $S$，她知道谁是这个签名预期的发送者（在本例中是<strong>Bob</strong>）；如果有必要，可以将发送者的信息以明文的形式附加到 $S$ 当中。随后她用发送者的加密程序提取出信息，在本例中加密程序即是$E_B$，在公共文件中可以获得，形式化地可以表述为：$M = E_B(S)$。现在<strong>Alice</strong>拥有了一个信息-签名对 $(M,S)$，其属性类似于签名后的纸质文件。</p>
+<p>  <strong>Bob</strong>之后不能否认给<strong>Alice</strong>发送过该信息，因为除了他之外，没有人可以创造 $S=D_B(M)$。<strong>Alice</strong>能使裁决机构相信 $E_B(S)=M$，所以她有证据表明<strong>Bob</strong>签名了该文件。</p>
+<p>  显然地，<strong>Alice</strong>不能将 $M$ 修改为其他不同的信息 $M’$，如果她想做到这一点，她就不得不创造 $M’$ 对应的签名 $S’=D_B(M’)$，而<strong>Alice</strong>并没有$D_B$，所以这对<strong>Alice</strong>来说是不可行的。因此<strong>Alice</strong>已经收到了一个由<strong>Bob</strong>签名后的信息，且<strong>Alice</strong>可以证明是<strong>Bob</strong>发送了该信息，同时<strong>Alice</strong>也无法修改该信息。（<strong>Alice</strong>也不能伪造<strong>Bob</strong>的签名用于其他信息）</p>
+<p>  上述所说的签名系统可以用在一个电子校验系统上。很容易想象在你的家庭终端上有一个加密设备，允许你签署通过电子邮件发送给收款人的支票。只需要在每张支票中包含一个唯一的支票号码，这样即使收款人复制了支票，银行也只承兑它看到的第一个版本的支票。</p>
+<p>  如果加密设备的加密速度足够快的话，该系统可能也存在其他的应用：将电话通话当中每个被说出的单词在传输之前通过加密设备进行签名。</p>
+<p>  在以上我们假设每位用户都能可靠地访问到公共文件，但是在一个计算机网络中这也许会很困难。一个入侵者也许会伪造信息，并且宣称这个信息来自于公共文件。用户想要确保他获得的加密程序来自于他所期望的通信者，而不是入侵者所伪造的加密程序。如果公共文件将其发送给某用户的每个信息都进行签名，那么就可以杜绝这种危险情况。用户可以用公共文件的加密算法 $E<em>{PF}$ 检查签名。当每个用户第一次加入公钥密码系统并存放他的公共加密程序时，可以通过向每个用户提供 $E</em>{PF}$ 的描述来避免在公共文件中查找$E<em>{PF}$ 的问题。随后他存储该 $E</em>{PF}$ 的描述而不是再次查找它。综上所述，通过使用公钥密码系统，原先在一对通信的用户之间需要一个信使的要求，就由这一对用户和公共文件管理者之间需要有一个简单的安全会面这个新的要求所替代。另一个解决方案就是给每一对通信的用户分发一本手册，手册里面包含了该系统中所有用户的加密密钥。</p>
+<h2 id="v-wo-men-de-jia-mi-he-jie-mi-fang-fa"><a href="#V-我们的加密和解密方法" class="headerlink" title="V 我们的加密和解密方法"></a>V 我们的加密和解密方法<a href="#v-wo-men-de-jia-mi-he-jie-mi-fang-fa" class="header-anchor">#</a></h2><p>  为了使用我们的方法加密一个信息 $M$，需要按照如下的过程使用一个公共的加密密钥 $(e,n)$ ，这里 $n$ 和 $e$ 是一对正整数。</p>
+<p>  首先，将信息表示为一个 $0$ 到 $n-1$ （包括 $n-1$ ）之间的整数（将一个过长的信息打散为一系列的块，将每一块表示为这样的数字）。这一步的目的不是为了加密信息，只是为了将信息转换为加密所需的数字形式。</p>
+<p>  然后，通过计算信息在模 $n$ 下的 $e$ 次方来计算信息的密文（信息已转化为数字形式）。模 $n$ 的意思表示的是当信息 $M^e$ 大于 $n$ 时，要将其除以 $n$ 并取余数，余数就是我们的加密结果即密文 $C$ 。</p>
+<p>  为了解密密文，需要计算密文的 $d$ 次方，同样需要模 $n$ 。（ $d$ 如何求下文会给出）加密和解密算法表示如下：</p>
+<p>  对一个信息 $M$ 来说，$C=E(M)\equiv M^e\space ( mod\space n)$</p>
+<p>  对一个密文 $C$ 来说，$D(C)\equiv C^d\space(mod \space n)$</p>
+<p>  注意到加密没有增加信息的大小，信息和其对应的密文都是位于 $0$ 到 $n-1$ 之间的整数。</p>
+<p>  所以加密的密钥是正整数对 $(e,n)$；类似地，解密密钥是正整数对 $(d,n)$。每个用户都会公开他的加密密钥，同时使得对应的解密密钥保持私密。</p>
+<p>  如果你想要使用我们的方法加密信息，你应该如何选择你的加密和解密密钥呢？</p>
+<p>  首先，你计算 $n$ 为两个素数 $p,q$ 的乘积：$n=p\cdot q$，这两个素数是非常大的、随机的素数，尽管你会公开 $n$，但是对每个人来说， $n$ 的因子 $p,q$ 将会被高效地隐藏起来，因为分解 $n$ 是非常困难的；这同样也隐藏了从 $e$ 得到 $d$ 的方式。</p>
+<p>  随后你选择一个巨大的、随机的整数d，并且 $d$ 和 $(p-1)\cdot (q-1)$  是互素的，即你需要检查 $d$ 是否满足$gcd(d,(p-1)\cdot(q-1))=1$（ $gcd$ 的意思是最大公因数）</p>
+<p>  最后我们从 $p,q,d$ 当中计算 $e$ ， $e$ 是 $d$ 在模$(p-1)\cdot (q-1)$下的乘法逆元，所以我们有$e\cdot d \equiv 1 (\space mod \space(p-1)\cdot(q-1))$。我们将在下一节证明，这保证了前面所说的公钥密码系统的性质 $(1)$ 和$(2)$ 是成立的，即 $E$ 和 $D$ 是互逆的置换。小节VII将会展示如何高效地实现以上所说的运算。</p>
+<h2 id="vi-ji-chu-shu-xue"><a href="#VI-基础数学" class="headerlink" title="VI 基础数学"></a>VI 基础数学<a href="#vi-ji-chu-shu-xue" class="header-anchor">#</a></h2><p>考虑到有些读者没有接触过数论，笔者在这里先给出一些基本的数学概念</p>
+<p><img src="C:/Users/mirror/Desktop/write-up/blog/source/images/image-20220828173303245.png" alt="image-20220828173303245"></p>
+<p><img src="C:/Users/mirror/Desktop/write-up/blog/source/images/image-20220828173248561.png" alt="image-20220828173248561"></p>
+<p> <img src="C:/Users/mirror/Desktop/write-up/blog/source/images/image-20220828235142473.png" alt="image-20220828235142473"></p>
+<p> 我们使用一个由欧拉和费马的发现的恒等式来证明解密算法的正确性。</p>
+<p>  欧拉定理：对任意与 $n$ 互素的整数（信息）$M$，$M^{\phi(n)}\equiv 1\space (\space mod\space n)\space\space(3)$</p>
+<p>  在这里，$\phi(n)$ 表示的是小于 $n$ 且与 $n$ 互素的正整数的个数。对一个素数 $p$ 来说，$\phi(p)=p-1$。</p>
+<p>  在我们的案例中，通过欧拉函数的基本性质，我们有$\phi(n)=\phi(p)\cdot \phi(q)=(p-1)\cdot(q-1)=n-(p+q)+1\space\space(4)$。</p>
+<p>  因为 $d$ 和 $\phi(n)$  是互素的，所以 $d$ 在模$\phi(n)$的整数环（可以将整数环简单理解为 $0$ 到 $\phi(n)-1$ 的整数所构成的集合，但是这个集合定义了一些运算规则）下有一个乘法逆元，所以我们有$e\cdot d \equiv 1 (\space mod\space \phi(n))\space(5)$。</p>
+<p>  我们现在要证明等式$(1)$和等式$(2)$是成立的（只要我们按照如上所说的方法选择$e$、$d$ 的话）。根据上述所讲，现在我们有:</p>
+<p>$D(E(M))\equiv(E(M))^d\equiv(M^e)^d\space(\space mod\space n\space)=M^{e\cdot d}\space(\space mod\space n)$</p>
+<p>$E(D(M))\equiv(D(M))^e\space(\space mod\space n )=M^{e\cdot d}\space(\space mod \space n)$</p>
+<p>以及</p>
+<p>$M^{e\cdot d}\equiv M^{k\cdot \phi(n)+1}\space(\space mod \space n )$ ，$k$ 是一个任意的整数</p>
+<p>从 $(3)$ 我们知道对所有不能被 $p$ 整除的 $M$，都有如下等式：</p>
+<p>$M^{p-1}\equiv1\space(\space mod\space p\space)$ (费马小定理)</p>
+<p>同时因为 $(p-1)$ 整除 $\phi(n)$ ，所以可以令 $\phi(n)=a\cdot(p-1)$ ，于是最终我们得到：</p>
+<p>$M^{k\cdot\phi(n)+1}\equiv M^{k\cdot (a\cdot (p-1))+1} \equiv (M^{p-1})^{ak}\cdot M \equiv 1\cdot M\equiv M\space(mod \space p)$</p>
+<p>我们还可以看到，当 $p$ 整除 $M$ 时,上述等式也成立，此时 $M \equiv 0\space(mod\space p)$。所以上述等式实际上对所有的 $M$ 都成立。我们对q进行类似地运算也可以得到：</p>
+<p>$M^{k\cdot\phi(n)+1}\equiv M\space(mod\space q)$</p>
+<p>将以上得到了两个最终的等式联合起来，我们可以得到：</p>
+<p>$M^{e\cdot d}\equiv M^{k\cdot\phi(n)+1}\equiv M\space(mod\space n)$，该等式对所有的 $M$ 都成立。</p>
+<p>这就表明了对所有 $ 0 &lt;= M &lt; n$ 的 $M$ 来说，$(1)$ 和  $(2)$ 是成立的，所以 $E$ 和 $D$ 是互逆的置换。</p>
+<h2 id="vii-suan-fa"><a href="#VII-算法" class="headerlink" title="VII 算法"></a>VII 算法<a href="#vii-suan-fa" class="header-anchor">#</a></h2><p>为了表明我们所说的加密/解密方法是可行的，我们对加密/解密过程中的每一步操作给出一个高效的算法。</p>
+<h3 id="a-ru-he-gao-xiao-di-jia-mi-he-jie-mi"><a href="#A-如何高效地加密和解密" class="headerlink" title="A 如何高效地加密和解密"></a>A 如何高效地加密和解密<a href="#a-ru-he-gao-xiao-di-jia-mi-he-jie-mi" class="header-anchor">#</a></h3><p>使用以下描述的算法步骤，计算 $M^e\space(mod\space n)$ 至多需要 $2\cdot log_2(e)$ 次乘法和 $2\cdot log_2(e)$ 次除法。（解密的时候将算法参数的 $e$ 更换成 $d$ 即可）</p>
+<p>步骤1：令 $e<em>ke</em>{k-1….}e_1e_0$ 表示 $e$ 的二进制位展开（e的高位在前）。</p>
+<p>步骤2：令变量 $C$ 为1，即 $C = 1$</p>
+<p>步骤3：重复以下步骤3a和步骤3b $k+1$ 次，循环变量  $i=k,k-1_…..,0$</p>
+<p>​              步骤3a：如果$e_i=1$，那么令 $C$ 为 $C\cdot M$ 除以 $n$ 所得余数，即$C=C\cdot M \mod n $</p>
+<p>​              步骤3b：令 $M$ 为 $M$ 的平方除以 $n$ 所得余数，即 $M = M^2 \mod n $</p>
+<p>步骤4：算法结束，$C$ 的最终结果就是 $M$ 的加密值。</p>
+<p>在这里，笔者给出该算法的一个<strong>python</strong>实现</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">cal</span>(<span class="params">M,e,n</span>): <span class="comment">#计算M的e次方模n的值</span></span><br><span class="line">    C = <span class="number">1</span></span><br><span class="line">    <span class="keyword">while</span> e != <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">if</span> e &amp; <span class="number">1</span> == <span class="number">1</span>:</span><br><span class="line">            C = (C * M) % n</span><br><span class="line">        M = (M**<span class="number">2</span>) % n</span><br><span class="line">        e = e &gt;&gt; <span class="number">1</span></span><br><span class="line">    <span class="keyword">return</span> C</span><br><span class="line">a,b,c= <span class="built_in">map</span>(<span class="built_in">int</span>,<span class="built_in">input</span>().split())<span class="comment">#从键盘输入a、b、c</span></span><br><span class="line">ans = cal(a,b,c)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;&#123;&#125;^&#123;&#125; mod &#123;&#125;=&#123;&#125;&quot;</span>.<span class="built_in">format</span>(a,b,c,ans))</span><br></pre></td></tr></table></figure>
+<p>  上述算法叫做模重复平方计算法或是快速幂算法，在计算机科学当中被频繁使用。解密的时候只需要将 $M$ 和 $e$ 的值变为 $C$ 和  $d$  即可，所以加密函数和解密函数在结构上是相同的，这就使得RSA的加密和解密的实现很简单。</p>
+<p>  一个高速的计算机可以在几秒之内加密一个200个十进制位数的信息 $M$ ；如果使用特定的硬件则会更加快速，同时注意到每块分组的加密时间不比 $n$ 的位数的立方增长的快。</p>
+<h3 id="b-ru-he-zhao-dao-ju-da-de-su-shu"><a href="#B-如何找到巨大的素数" class="headerlink" title="B 如何找到巨大的素数"></a>B 如何找到巨大的素数<a href="#b-ru-he-zhao-dao-ju-da-de-su-shu" class="header-anchor">#</a></h3><p>每位用户都需要私密地选择两个大素数以得到他的加密密钥和解密密钥。这两个数字必须要足够大，使得通过分解 $n=p\cdot q$ 得到 $p$、$q$ 的值在计算上是不可行的（要记住 $n$ 将会被公布在公共文件中，而不是 $p$ 或者 $q$）。我们建议使用100个十进制位数的素数 $p$ 和 $q$，这样 $n$ 就有200个十进制位数。</p>
+<p>  为了找到一个100个十进制位数的随机素数，我们会随机生成具有100个十进制位数的随机数（奇数）直到我们找到一个素数。根据素数定理，在我们找到一个素数之前，大约需要生成115个数字。</p>
+<p>  为了测试一个巨大的数字是否是素数，我们建议使用Solovay和Strassen发明的一个优雅的概率性算法。该算法从一个特定的区间 ${1,….,b-1}$ 随机选择一个数字a，并测试这个数是否满足如下等式：</p>
+<p>$gcd(a,b)=1\space  and\space J(a,b)=a^{(b-1)/2}\space(mod\space b),\space(6)$</p>
+<p>其中 $J(a,b)$ 表示雅可比符号。如果 $b$ 是素数，那么 $(6)$ 就成立。如果 $b$ 是合数的话，那么 $(6)$ 至少有一半的概率为假。如果 $(6)$对100个随机选择的数字 $a$ 都成立，那么 $b$ 几乎可以确定是一个素数；尽管还是存在 $b$ 是合数的可能性，但是这个概率微乎其微。即使在加密过程中，我们错误地选择了一个合数用于加密，只要接收者发现解密没有成功，他就会发现这一情况。当 $b$ 是一个奇数且 $a&lt;=b、gcd(a,b)=1$ 时，$a、b$ 的雅可比符号$J(a,b)$的值为 $-1$ 或 $1$，我们可以通过如下算法高效地求解 $a、b$ 的雅可比符号值：</p>
+<p><img src="C:/Users/mirror/Desktop/write-up/blog/source/images/image-20220828234351455.png" alt="image-20220828234351455"></p>
+<p>注意到该算法没有通过尝试分解因子来判断某个数是否为素数。当前现在也存在其他的辨别一个数字是否为素数的更加高效的算法，读者可以自行查找。</p>
+<p>  为了获得额外的保护以对抗复杂巧妙的因子分解算法，$p$ 和 $q$ 的长度应该相差几位，同时 $(p-1)$ 和 $(q-1)$ 应该包含大的素因子并且 $gcd(p-1,q-1)$ 应该要很小。</p>
+<p>  为了找到一个使得 $(p-1)$ 具有一个大的素因子的素数 $p$ ，我们生成一个巨大的随机素数u，然后令p是序列 $i\cdot u+1,i=2,4,6,…$ （序列不应该取太长）的第一个素数。最后我们通过确保 $(u-1)$ 有一个巨大的素因子来得到额外的安全性。</p>
+<p>  一个高速计算机可以在几秒之内决定一个100位的数字是否是素数，同时也可以在一两分钟之内找出给定区间内的第一个素数。</p>
+<h3 id="c-ru-he-xuan-ze-d"><a href="#C-如何选择-d" class="headerlink" title="C 如何选择 $d$"></a>C 如何选择 $d$<a href="#c-ru-he-xuan-ze-d" class="header-anchor">#</a></h3><p>选择一个和 $\phi(n)$ 是互素的整数 $d$ 是十分容易的。举个例子，任何大于 $max(p, q)$ 的素数都与 $\phi(n)$ 互素。$d$ 应该从一个足够大的集合中选择是十分重要的，这是为了防止密码分析者通过直接搜索的方法找到 $d$ 。 </p>
+<h3 id="d-ru-he-cong-d-he-phi-n-ji-suan-e"><a href="#D-如何从-d-和-phi-n-计算-e" class="headerlink" title="D 如何从 $d$ 和 $\phi(n)$ 计算 $e$"></a>D 如何从 $d$ 和 $\phi(n)$ 计算 $e$<a href="#d-ru-he-cong-d-he-phi-n-ji-suan-e" class="header-anchor">#</a></h3><p>  为了计算 $e$ ，我们可以使用<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E8%BC%BE%E8%BD%89%E7%9B%B8%E9%99%A4%E6%B3%95">欧几里得算法</a>来计算 $\phi(n)$ 和 $d$ 的最大公因数。首先我们通过计算一系列满足 $x<em>0\equiv \phi(n),x_1=d,x</em>{i+1}\equiv x_{i-1}\space(mod\space x_i)$ 的 $x_0,x_1,x_2,…$ 直到某个$x_k\equiv 0$ 来得到 $gcd(\phi(n),d)$，</p>
+<p>随后 $gcd(\phi(n),d)=gcd(x<em>0,x_1)=x</em>{k-1}$。对每个$x_i$，我们计算$a_i,b_i$ 使得 $x_i\equiv a_i \cdot x_0 + b_i\cdot x_1$。</p>
+<p>如果 $x<em>{k-1}=1$ ，那么 $b</em>{k-1}$ 为 $x_1\space(mod\space x_0)$ 的乘法逆元。因为 $k$ 小于 $2log_2(n)$，所以该计算特别快速。</p>
+<p>  如果最后得到的 $e$ 小于$log_2(n)$，那么应该重新选择一个其他的 $d$ 并计算相应的 $e$ 。这能够保证每个加密的信息（除了 $M=0$ 或者 $M=1$ ）在模 $n$ 下得到一些约化。</p>
+<h2 id="viii-yi-ge-xiao-li-zi"><a href="#VIII-一个小例子" class="headerlink" title="VIII 一个小例子"></a>VIII 一个小例子<a href="#viii-yi-ge-xiao-li-zi" class="header-anchor">#</a></h2><p>  考虑 $p=47,q=59,n=p\cdot q = 47\cdot 59 = 2773$ 以及 $d=157$ 的情况。$phi(2773)=26\cdot58=2668$ ,根据如下步骤计算 $e$ 。</p>
+<p>  $x_0=2668,\space a_0=1,\space b_0=0,$</p>
+<p>  $x_1=157,\space a_1=0,\space b_1=1,$</p>
+<p>  $x_2=156,\space a_2=0,\space b_2=-16$ (因为 $2668 = 157\cdot 16 + 156$)</p>
+<p>  $x_3 =1,\space a_3 = -1,\space b_3 = 17$（因为 $157=1\cdot156+1$）</p>
+<p>  所以 $e=17$，d的乘法逆元 $(mod\space 2668)=157$。</p>
+<p>  当 $n=2773$ ，我们令一个分组长度为两个明文字母，同时我们将要加密的明文字母表示为一个两位的数字，即 $blank=00,A=01,B=02,…,Z=26$。所以信息 <code>ITS ALL GREEK TO ME</code></p>
+<p>就被编码为：</p>
+<p>  <strong>0920 1900 0112 1200 0718 0505 1100 2015 0013 0500</strong></p>
+<p>  因为e的二进制表达式为 $10001$，所以第一个分组（$M=920$）被加密为：</p>
+<p>  $M^{17}=((((((1)^2\cdot M)^2)^2)^2)^2\cdot M = 948 \space(mod\space2773)$</p>
+<p>  整个信息被加密为：</p>
+<p>  <strong>0948 2342 1084 1444 2663 2390 0778 0774 0219 1655</strong></p>
+<p>  读者可以通过如下等式检查第一个分组解密是否正确：</p>
+<p>  $948^{157}\equiv 920\space(mod\space2773)$，其余分组也是类似的检查方法。</p>
+<h2 id><a href="#" class="headerlink" title="#"></a>#<a href="#" class="header-anchor">#</a></h2>
     </div>
 
     
@@ -341,21 +433,21 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#huo-de-shu-zi-qian-ming-he-gong-yao-mi-ma-xi-tong-de-yi-ge-fang-fa-r-l-rivese-a-shamir-and-l-adleman"><span class="nav-number">1.</span> <span class="nav-text">获得数字签名和公钥密码系统的一个方法-R.L Rivese, A. Shamir, and L. Adleman</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#zhai-yao"><span class="nav-number">1.1.</span> <span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#i-introduction"><span class="nav-number">1.2.</span> <span class="nav-text">I Introduction</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ii-public-key-cryptosystems"><span class="nav-number">1.3.</span> <span class="nav-text">II Public-Key Cryptosystems</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#iii-privacy"><span class="nav-number">1.4.</span> <span class="nav-text">III Privacy</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#jian-jie"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#yi-ge-gou-jian-shu-zi-qian-ming-he-gong-yao-mi-ma-xi-tong-de-fang-fa-r-l-rivese-a-shamir-and-l-adleman"><span class="nav-number">2.</span> <span class="nav-text">一个构建数字签名和公钥密码系统的方法-R.L Rivese, A. Shamir, and L. Adleman</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#zhai-yao"><span class="nav-number">2.1.</span> <span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#i-yin-yan"><span class="nav-number">2.2.</span> <span class="nav-text">I 引言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ii-gong-yao-mi-ma-xi-tong"><span class="nav-number">2.3.</span> <span class="nav-text">II 公钥密码系统</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#iii-yin-si"><span class="nav-number">2.4.</span> <span class="nav-text">III 隐私</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#iv-qian-ming"><span class="nav-number">2.5.</span> <span class="nav-text">IV 签名</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#v-wo-men-de-jia-mi-he-jie-mi-fang-fa"><span class="nav-number">2.6.</span> <span class="nav-text">V 我们的加密和解密方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#vi-ji-chu-shu-xue"><span class="nav-number">2.7.</span> <span class="nav-text">VI 基础数学</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#vii-suan-fa"><span class="nav-number">2.8.</span> <span class="nav-text">VII 算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#a-ru-he-gao-xiao-di-jia-mi-he-jie-mi"><span class="nav-number">2.8.1.</span> <span class="nav-text">A 如何高效地加密和解密</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#b-ru-he-zhao-dao-ju-da-de-su-shu"><span class="nav-number">2.8.2.</span> <span class="nav-text">B 如何找到巨大的素数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#c-ru-he-xuan-ze-d"><span class="nav-number">2.8.3.</span> <span class="nav-text">C 如何选择 $d$</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#d-ru-he-cong-d-he-phi-n-ji-suan-e"><span class="nav-number">2.8.4.</span> <span class="nav-text">D 如何从 $d$ 和 $\phi(n)$ 计算 $e$</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#viii-yi-ge-xiao-li-zi"><span class="nav-number">2.9.</span> <span class="nav-text">VIII 一个小例子</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">2.10.</span> <span class="nav-text">#</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
   <p class="site-author-name" itemprop="name">MirRoR4s</p>
-  <div class="site-description" itemprop="description">想成为c++专家 黑客 密码学爱好者</div>
+  <div class="site-description" itemprop="description">不能说的秘密</div>
 </div>
 <div class="site-state-wrap motion-element">
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">63</span>
+          <span class="site-state-item-count">65</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
