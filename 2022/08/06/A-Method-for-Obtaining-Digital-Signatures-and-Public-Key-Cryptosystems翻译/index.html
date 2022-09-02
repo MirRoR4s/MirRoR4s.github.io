@@ -32,7 +32,7 @@
 <meta property="og:image" content="https://i.imgur.com/WmKJk02.png">
 <meta property="og:image" content="https://i.imgur.com/0RLKTFG.png">
 <meta property="article:published_time" content="2022-08-06T14:21:38.000Z">
-<meta property="article:modified_time" content="2022-09-02T12:13:13.762Z">
+<meta property="article:modified_time" content="2022-09-02T12:28:14.053Z">
 <meta property="article:author" content="MirRoR4s">
 <meta property="article:tag" content="Crypto">
 <meta name="twitter:card" content="summary">
@@ -224,7 +224,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-09-02 20:13:13" itemprop="dateModified" datetime="2022-09-02T20:13:13+08:00">2022-09-02</time>
+                <time title="修改时间：2022-09-02 20:28:14" itemprop="dateModified" datetime="2022-09-02T20:28:14+08:00">2022-09-02</time>
               </span>
 
           
@@ -248,17 +248,17 @@
 <li><p>传送密钥不再需要信使或者其他安全手段，因为信息可以用预期的接收者所公开透露的加密密钥加密，并且因为只有他知道对应的解密密钥，所以只有他可以解密信息。</p>
 </li>
 <li><p>我们通过一个私人持有的解密密钥来对信息进行签名，任何人都可以使用对应的公开的加密密钥去验证这个签名。此外，签名不能被伪造，并且签名者在签名之后不能否认签名的有效性；这在电子邮件和电子资金转账体制中有明显的应用。</p>
-<p>我们通过将信息表示成一个数字 $M$ 来加密信息。具体地加密流程如下：计算 $M$ 的 $e$ 次幂，$e$ 是一个公开地被特定选择的指数。如果计算结果超过了公开的特定乘积 $n$ ，那么就将计算结果取余。其中 $n$ 是两个巨大的、私密的素数 $p$  和  $q$  的乘积。解密是相似的；但是要使用一个不同于 $e$ 的、私密的指数 $d$ 。其中$e⋅d≡1\space mod((p−1)⋅(q−1))$。该体制的安全性部分取决于对公开的除数 n 进行因子分解的难度。</p>
+<p>我们通过将信息表示成一个数字 $M$ 来加密信息。具体地加密流程如下：计算 $M$ 的 $e$ 次幂，$e$ 是一个公开地被特定选择的指数。如果计算结果超过了公开的特定乘积 $n$ ，那么就将计算结果取余。其中 $n$ 是两个巨大的、私密的素数 $p$  和  $q$  的乘积。解密是相似的；但是要使用一个不同于 $e$ 的，私密的指数 $d$ 。其中$e⋅d≡1\space mod((p−1)⋅(q−1))$。该体制的安全性部分取决于对公开的除数 n 进行因子分解的难度。</p>
 <p>关键词汇：数字签名，公钥密钥体制，隐私，授权，安全，因子分解，素数，电子邮件，消息传递，电子资金转账，密码学。</p>
 </li>
 </ol>
-<h2 id="i-introduction"><a href="#I-Introduction" class="headerlink" title="I Introduction"></a>I Introduction<a href="#i-introduction" class="header-anchor">#</a></h2><p>电子邮件 [10] 的时代可能很快就要来临了，我们必须确保保留现有纸质邮件体制的两个重要特性：$(a)$ 信息是私密的，$(b)$ 可以对电子信息进行签名。在这篇论文中，我们演示如何将这些功能构建到电子邮件体制中。</p>
-<p>我们的核心目标是一个新的加密方法。这种方法提供了一个公钥密码体制（由Diffie and Hellman [1] 发明的一个简练的概念）的实现。因为他们提出了这个概念，所以他们的文章启发了我们的研究，尽管他们并没有给出这样的体制的一个具体实现。熟悉这些概念 [1] 的读者可能希望直接跳到第五节来阅读我们关于方法的描述。</p>
-<h2 id="ii-gong-yao-mi-ma-ti-zhi"><a href="#II-公钥密码体制" class="headerlink" title="II 公钥密码体制"></a>II 公钥密码体制<a href="#ii-gong-yao-mi-ma-ti-zhi" class="header-anchor">#</a></h2><p>在公钥密码体制中，每个用户在一个公共文件上放置一个加密程序 E。实际上，这个公共文件是一个指南，给出了每个用户的加密程序，但是用户会保密相应的解密程序 $D$ 的细节。这些程序具有以下四个性质 :</p>
-<p>(a) 对信息 $M$ 的加密形式（即密文）进行解密能够恢复 $M$ ，形式上可以写成 $D(E(M))=M (1)$</p>
-<p>(b) 加密程序 $E$ 和解密程序 $D$ 在计算上是很容易的。</p>
-<p>(c) 通过某用户公开的 $E$，其他用户不能揭露出计算 $D$ 的简单方法。这意味着在实践中，只有该用户可以解密用 $E$ 加密的消息，或者有效地计算 $D$ 。</p>
-<p>(d) 如果一个信息先解密之后再加密，那么得到的结果是信息本身。形式上可以写成 $E(D(M))=M (2)$</p>
+<h2 id="i-introduction"><a href="#I-Introduction" class="headerlink" title="I Introduction"></a>I Introduction<a href="#i-introduction" class="header-anchor">#</a></h2><p>电子邮件 [10] 的时代可能很快就要来临了，我们必须确保保留现有纸质邮件系统的两个重要特性：$(a)$ 信息是私密的，$(b)$ 可以对电子信息进行签名。在这篇论文中，我们演示如何将这些功能构建到电子邮件体制中。</p>
+<p>我们的核心目标是一个新的加密方法。这种方法提供了一个公钥密码体制（由Diffie and Hellman [1] 发明的一个简练的概念）的实现。他们的文章启发了我们的研究，尽管他们并没有给出这样的体制的一个具体实现。熟悉这些概念 [1] 的读者可能希望直接跳到第五节来阅读我们关于方法的描述。</p>
+<h2 id="ii-gong-yao-mi-ma-ti-zhi"><a href="#II-公钥密码体制" class="headerlink" title="II 公钥密码体制"></a>II 公钥密码体制<a href="#ii-gong-yao-mi-ma-ti-zhi" class="header-anchor">#</a></h2><p>在公钥密码体制中，每个用户在一个公共文件上放置一个加密程序 $E$ 。实际上，这个公共文件是一个指南，给出了每个用户的加密程序，但是用户会保密相应的解密程序 $D$ 的细节。这些程序具有以下四个性质 :</p>
+<p>$(a)$ 对信息 $M$ 的加密形式（即密文）进行解密能够恢复 $M$ ，形式上可以写成 $D(E(M))=M \space(1)$</p>
+<p>$(b)$ 加密程序 $E$ 和解密程序 $D$ 在计算上是很容易的。</p>
+<p>$(c)$ 通过某用户公开的 $E$，其他用户不能揭露出计算 $D$ 的简单方法。这意味着在实践中，只有该用户可以解密用 $E$ 加密的消息，或者有效地计算 $D$ 。</p>
+<p>$(d)$ 如果一个信息先解密之后再加密，那么得到的结果是信息本身。形式上可以写成 $E(D(M))=M \space(2)$</p>
 <p>一个加密（解密）程序通常包含一个通用的加密算法和一个加密密钥。通用的加密算法在密钥的控制下，将信息 M 转为加密形式的信息，通常称为密文。每个人都可以使用相同的通用算法；加密（解密）程序的安全性取决于密钥的安全性。</p>
 <p>当用户公布了加密程序 $E$ ，他就泄露了计算 $D(C)$ 的一个非常低效的方法：尝试信息 $M$ 所有可能的值，直到找到某个信息 $M$ 使得 $E(M)=C$。如果信息 $M$ 转为数字后的形式满足性质 $(c)$，那么尝试的数量将会非常巨大，以至于这个方法在实际当中是不可行的。</p>
 <p>满足性质 $(a)−(c)$ 的函数 $E$ 被称为单向陷门函数；如果该函数还满足 性质 $(d)$，那么这个函数也被称为单向陷门置换。Diffle和Hellman [1] 介绍了单向陷门函数的概念，但是却没有给出任何例子。该函数之所以被称为单向函数是因为函数在一个方向上（比如加密）的计算是很容易的，但是在该方向相反的方向上（比如解密）的计算却很困难。而函数之所以被称为陷门函数，是因为一旦知晓了确定的、私密的陷门信息，那么相反方向上的计算事实上就变得很容易。满足性质 $(d)$ 的单向陷门函数一定是一个<strong>置换</strong>：每一条信息都是另一条信息的密文，而每一条密文本身就是一条合法的信息。（这个映射是一个<strong>一对一</strong>的映射。）性质 $(d)$ 只有在实现签名的时候才需要。</p>
@@ -267,18 +267,18 @@
 <h2 id="iii-yin-si"><a href="#III-隐私" class="headerlink" title="III 隐私"></a>III 隐私<a href="#iii-yin-si" class="header-anchor">#</a></h2><p>加密是实现私密通信的标准方法。发送者在将信息传递给接收者之前，对每一个信息进行加密。接收者（得到授权的人）知道对应的解密函数，能够将接收到的密文还原成原始的信息。而对于通信中的窃听者，即使他获得了传输的信息（密文），由于他不知道如何解密，所以最终他也只能得到没有意义的无用信息。</p>
 <p>目前储存在计算机数据库中，通过电话线传输的大量个人和敏感的信息使得加密变得越来越重要。在考虑到效率的实际情况下，我们非常需要高质量的加密技术；美国国家标准局最近已经采纳了一个由IBM提出的加密算法，名为”数据加密标准（<strong>Data Encryption Standard</strong> [13,14]）”。这个加密算法不满足前面提到的性质 $(c)$ 即需要实现一个公钥密码体制。</p>
 <p>所有传统的加密方法（包括NBS标准即数据加密标准算法）都存在<strong>密钥分发</strong>的问题。这里的密钥分发问题是指在一个私密的通信开始之前，另一个私有事务（通常是一个受信任的第三方机构）需要分别地给发送者和接收者分配加密密钥和解密密钥。我们通常使用一个私密信使来将密钥从发送者传递到接收者。如果想让电子邮件体制变得快速且便宜，那么这样的做法是不可行的。而公钥密码体制则不需要私有的信使，密钥可以在不安全的信道上被分发。</p>
-<p><strong>Bob</strong> 如何才能使用公钥密码体制给 <strong>Alice</strong> 发送一个私密的信息 M 呢？首先，他从 <strong>Alice</strong> 的公共文件中检索出<strong>Alice </strong>的公钥 EA 。随后他用加密程序 $E_A$ 加密他的信息 $M$ ，加密结果记为 $E_A(M)$ ，并将 $E_A(M)$ 发送给<strong>Alice</strong>。<strong>Alice</strong> 通过计算 $DA(EA(M))=M$ 来解密信息，其中 $D_A$ 是 <strong>Alice</strong> 的解密程序。根据前面提到的公钥密码体制的性质 $(c)$ 我们知道，只有 <strong>Alice</strong> 才可以解密 $E_A(M)$ 。类似地，<strong>Alice</strong> 也可以从 <strong>Bob</strong> 的公共文件中检索出 <strong>Bob</strong> 的公钥，并用其加密给 <strong>Bob</strong> 的回复信息。</p>
+<p><strong>Bob</strong> 如何才能使用公钥密码体制给 <strong>Alice</strong> 发送一个私密的信息 M 呢？首先，他从 <strong>Alice</strong> 的公共文件中检索出<strong>Alice </strong>的公钥 EA 。随后他用加密程序 $E_A$ 加密他的信息 $M$ ，加密结果记为 $E_A(M)$ ，并将 $E_A(M)$ 发送给<strong>Alice</strong>。<strong>Alice</strong> 通过计算 $D_A(E_A(M))=M$ 来解密信息，其中 $D_A$ 是 <strong>Alice</strong> 的解密程序。根据前面提到的公钥密码体制的性质 $(c)$ 我们知道，只有 <strong>Alice</strong> 才可以解密 $E_A(M)$ 。类似地，<strong>Alice</strong> 也可以从 <strong>Bob</strong> 的公共文件中检索出 <strong>Bob</strong> 的公钥，并用其加密给 <strong>Bob</strong> 的回复信息。</p>
 <p>注意到 <strong>Alice</strong> 和 <strong>Bob </strong>之间不需要任何私有事务来建立私有通信，每个希望进行私密通信的用户唯一需要做的事情就是必须将其加密算法放置在公共文件中。当然，两个用户也可以在不事先放置公共文件的情况下，在一个不安全的通信信道上建立私密通信：每个用户都将他的加密密钥发送给另一方，然后所有信息都使用接收方的加密密钥加密，就像在公钥体制中一样。监听信道的入侵者不能够解密任何信息，因为从加密密钥获得解密密钥是不可能的（假设入侵者不能修改或插入信息到信道上）。</p>
 <p>如果我们的加密方法比标准加密方案（比如NBS方案）的加密速度要慢，我们也可以使用公钥密码体制“引导”到标准加密方案。这就是说我们可以使用公钥密码体制传输用于标准加密方案的密钥，当这个用于标准加密方案的密钥传输完毕，我们就可以通过标准加密方案来加密我们要传输的信息，而不是使用公钥密码体制。（如果使用专用的硬件加密设备，NBS方案可能会更快一些;我们的方案在通用计算机上可能会更快，因为多精度算术运算比复杂的比特操作更容易实现。）</p>
 <h2 id="iv-qian-ming"><a href="#IV-签名" class="headerlink" title="IV 签名"></a>IV 签名<a href="#iv-qian-ming" class="header-anchor">#</a></h2><p>如果电子邮件系统要取代现有的纸质邮件系统进行商业贸易，那么对一个电子信息进行签名必须是可能做到的，且一个签名信息的接收者必须要有证据表明信息源自发送者。这个要求比单纯的身份验证更加苛刻，（因为接收者需要验证信息来自于发送者）而且接收者也要使得某个裁决机构（比如法院、法官）相信是签名者发送了这个信息。为了做到这一点，他必须要使得该裁决机构相信他自己没有伪造这个已签名的信息。而在身份验证的问题中，接收者无需担心伪造的可能性，因为他只是想让自己确信信息来自于发送者，但是对传输的信息的真伪并没有要求；而签名不仅仅要完成身份的验证，还必须保证信息没有被伪造等。</p>
 <p>一个电子的签名必须跟信息相关，也必须跟签名者相关，否则接收者就可以在将签名和信息展示给裁决机构之前，在不修改签名的情况下改变信息；或者他可以将签名附加到任意的信息上。（因为监测电子的复制和粘贴是不可能的）</p>
 <p>为了实现签名，公钥密码体制一定要用单向陷门置换实现（即具有前面所说的性质 (d) ，因为解密算法将会被用在未加密的信息上。）</p>
-<p>在公钥密码体制当中，用户 <strong>Bob</strong> 怎样才能给 <strong>Alice</strong> 发送一个签名的信息 $M$ 呢？他首先使用 $D_B$ 即他的解密程序计算信息 $M$ 的签名 $S=DB(M)$（根据公钥密码体制的性质 $(d)$，解密一个未加密的信息是有意义的。），然后为了保密签名 $S$，他使用 $E_A$ 对 $S$ 进行加密；最后将结果 $E_A(S)$ 发送给 <strong>Alice</strong> 。因为信息 $M$ 可以从 $S$ 中计算出来，所以他不需要发送 $M$。</p>
+<p>在公钥密码体制当中，用户 <strong>Bob</strong> 怎样才能给 <strong>Alice</strong> 发送一个签名的信息 $M$ 呢？他首先使用 $D_B$ 即他的解密程序计算信息 $M$ 的签名 $S=D_B(M)$（根据公钥密码体制的性质 $(d)$，解密一个未加密的信息是有意义的。），然后为了保密签名 $S$，他使用 $E_A$ 对 $S$ 进行加密；最后将结果 $E_A(S)$ 发送给 <strong>Alice</strong> 。因为信息 $M$ 可以从 $S$ 中计算出来，所以他不需要发送 $M$。</p>
 <p><strong>Alice</strong> 在收到密文后，首先用她的解密程序 $D_A$ 解密密文得到 $S$，她知道谁是这个签名预期的发送者（在本例中是<strong>Bob</strong>）；如果有必要，可以将发送者的信息以明文的形式附加到 $S$ 当中。随后她用发送者的加密程序提取出信息，在本例中加密程序即是 $E_B$，在公共文件中可以获得，形式化地可以表述为：$M=E_B(S)$。现在<strong>Alice</strong> 拥有了一个信息-签名对 $(M,S)$，其属性类似于签名后的纸质文件。</p>
-<p><strong>Bob</strong>之后不能否认给<strong>Alice</strong>发送过该信息，因为除了他之外，没有人可以创造 $S=DB(M)$。<strong>Alice</strong> 能使裁决机构相信 $E_B(S)=M$，所以她有证据表明 <strong>Bob</strong> 签名了该文件。</p>
-<p>显然地，<strong>Alice</strong> 不能将 $M$ 修改为其他不同的信息 $M’$，如果她想做到这一点，她就不得不创造 $M′$ 对应的签名 $S’=DB(M’)$，而 <strong>Alice</strong> 并没有 $D_B$，所以这对 <strong>Alice</strong> 来说是不可行的。因此 <strong>Alice</strong> 已经收到了一个由<strong>Bob</strong> 签名后的信息，且 <strong>Alice</strong> 可以证明是 <strong>Bob</strong> 发送了该信息，同时 <strong>Alice</strong> 也无法修改该信息。（<strong>Alice</strong> 也不能伪造 <strong>Bob</strong> 的签名用于其他信息）</p>
+<p><strong>Bob</strong>之后不能否认给<strong>Alice</strong>发送过该信息，因为除了他之外，没有人可以创造 $S=D_B(M)$。<strong>Alice</strong> 能使裁决机构相信 $E_B(S)=M$，所以她有证据表明 <strong>Bob</strong> 签名了该文件。</p>
+<p>显然地，<strong>Alice</strong> 不能将 $M$ 修改为其他不同的信息 $M’$，如果她想做到这一点，她就不得不创造 $M’$ 对应的签名 $S’=D_B(M’)$，而 <strong>Alice</strong> 并没有 $D_B$，所以这对 <strong>Alice</strong> 来说是不可行的。因此 <strong>Alice</strong> 已经收到了一个由<strong>Bob</strong> 签名后的信息，且 <strong>Alice</strong> 可以证明是 <strong>Bob</strong> 发送了该信息，同时 <strong>Alice</strong> 也无法修改该信息。（<strong>Alice</strong> 也不能伪造 <strong>Bob</strong> 的签名用于其他信息）</p>
 <p> 上述所说的签名体制可以用于电子校验系统中。很容易想象在你的家庭终端上有一个加密设备，允许你签署通过电子邮件发送给收款人的支票。为了防止收款人多次兑换支票，只需要在每张支票中包含一个唯一的支票号码，这样即使收款人复制了支票，银行也只承兑它看到的第一个版本的支票。</p>
-<p>如果加密设备的加密速度足够快的话，该体制也可能存在其他的应用：将一个电话通信当中交谈双方说出的每一个单词在传送之前进行签名。</p>
+<p>如果加密设备的加密速度足够快的话，该体制也可能存在其他的应用：将电话通信当中交谈双方说出的每一个单词在传送之前进行签名。</p>
 <p>在以上我们假设每位用户都能可靠地访问到公共文件，但是在一个计算机网络中这也许会很困难。一个入侵者也许会伪造信息，并且宣称这个信息来自于公共文件。用户想要确保他获得的加密程序来自于他所期望的通信者，而不是入侵者所伪造的加密程序。如果公共文件管理者将其发送给某用户的每个信息都进行签名，那么就可以杜绝这种危险情况。用户可以用公共文件的加密算法 $E<em>{PF}$ 检查签名。当每个用户第一次加入公钥密码体制并存放他的公共加密程序时，可以通过向每个用户提供检查签名。当每个用户第一次加入公钥密码体制并存放他的公共加密程序时，可以通过向每个用户提供 $E</em>{PF}$ 的描述来避免在公共文件中查找的描述来避免在公共文件中查找 $E<em>{PF}$ 的问题。随后他存储该的问题。随后他存储该 $E</em>{PF}$ 的描述而不是再次查找它。综上所述，通过使用公钥密码体制，原先在一对通信的用户之间需要一个信使的要求，就由这一对用户和公共文件管理者之间需要有一个简单的安全会面这个新的要求所替代。另一个解决方案就是给每一对通信的用户分发一本手册，手册里面包含了该体制中所有用户的加密密钥。</p>
 <h2 id="v-jia-mi-ji-jie-mi"><a href="#V-加密及解密" class="headerlink" title="V 加密及解密"></a>V 加密及解密<a href="#v-jia-mi-ji-jie-mi" class="header-anchor">#</a></h2><p>为了使用我们的方法加密一个信息 $M$，需要按照如下的过程使用一个公共的加密密钥 $(e,n)$ ，这里 $n$ 和 $e$ 是一对正整数。</p>
 <p>首先，将信息表示为一个 $0$ 到 $n−1$ （包括 $n−1$ ）之间的整数（将一个过长的信息打散为一系列的块，将每一块表示为这样的数字）。这一步的目的不是为了加密信息，只是为了将信息转换为加密所需的数字形式。</p>
@@ -359,7 +359,7 @@
 <p><strong>0948 2342 1084 1444 2663 2390 0778 0774 0219 1655</strong></p>
 <p>读者可以通过如下等式检查第一个分组解密是否正确：</p>
 <p>$948157≡920 \space(mod\space 2773)$，其余分组也是类似的检查方法。</p>
-<h2 id="ix-fang-fa-de-an-quan-xing-mi-ma-fen-xi-fang-fa"><a href="#IX-方法的安全性：密码分析方法" class="headerlink" title="IX 方法的安全性：密码分析方法"></a>IX 方法的安全性：密码分析方法<a href="#ix-fang-fa-de-an-quan-xing-mi-ma-fen-xi-fang-fa" class="header-anchor">#</a></h2><p>因为不存在证明一个加密方案是否安全的技术，所以测试一个加密方案是否安全的唯一办法就是大家能否找到一种方法来打破该加密方案。NBS标准的安全性就是通过这种方法来证明的；IBM的专家们徒劳地花费了大约17年的时间来尝试打破该方案。一旦一个加密方案成功地经受住了这样竭尽全力的攻击，那么就可以认为该方案在实际应用中是安全的。（实际上存在一些对NBS方案 [2] 安全性的争议和担忧）。</p>
+<h2 id="ix-fang-fa-an-quan-xing-zhi-mi-ma-fen-xi-fang-fa"><a href="#IX-方法安全性之密码分析方法" class="headerlink" title="IX 方法安全性之密码分析方法"></a>IX 方法安全性之密码分析方法<a href="#ix-fang-fa-an-quan-xing-zhi-mi-ma-fen-xi-fang-fa" class="header-anchor">#</a></h2><p>因为不存在证明一个加密方案是否安全的技术，所以测试一个加密方案是否安全的唯一办法就是大家能否找到一种方法来打破该加密方案。NBS标准的安全性就是通过这种方法来证明的；IBM的专家们徒劳地花费了大约17年的时间来尝试打破该方案。一旦一个加密方案成功地经受住了这样竭尽全力的攻击，那么就可以认为该方案在实际应用中是安全的。（实际上存在一些对NBS方案 [2] 安全性的争议和担忧）。</p>
 <p>我们将在下一节证明所有打破我们体制的方法都至少跟分解 n 一样困难。分解大数不是可证明困难的，这是一个著名的问题，在过去的三百年里，许多著名的数学家都在研究这个问题。费马和勒让德发展了因子分解算法；今天一些更加高效的算法大都基于勒让德的研究成果。然而，正如我们在下一节将看到的；目前还没有人找到一个能在合理的时间内分解一个200位的数字的因子分解算法。根据先前人们对找到更加高效的因子分解算法的努力，可以推断我们体制的安全性已经得到了部分验证。</p>
 <p>在接下来的章节，我们考虑一些密码分析者可能会从公开发布的加密密钥推导出私密的解密密钥的方法。我们不关心在盗窃方面对私钥的保护措施；寻常的物理的安全方法就足够了。（例如，加密设备可以是一个用来生成加密和解密密钥的独立设备，这样一来解密密钥就从不会被打印输出，而是只能用于解密信息。同时如果该设备被攻击时也可以自动删除解密密钥。）</p>
 <h3 id="a-fen-jie-n"><a href="#A-分解-n" class="headerlink" title="A 分解 n"></a>A 分解 n<a href="#a-fen-jie-n" class="header-anchor">#</a></h3><p>因为 $n$ 的因子允许敌方的密码分析者计算 $\phi(n)$ 从而得到 $d$ 的值，所以分解 $n$ 将导致他可以打破我们的体制。</p>
@@ -377,34 +377,34 @@
 </thead>
 <tbody>
 <tr>
-<td>50</td>
-<td>1.4×1010</td>
-<td>3.9 小时</td>
+<td>$50$</td>
+<td>$1.4×1010$</td>
+<td>$3.9$ 小时</td>
 </tr>
 <tr>
-<td>75</td>
-<td>9.0×1012</td>
-<td>104 天</td>
+<td>$75$</td>
+<td>$9.0×1012$</td>
+<td>$104$ 天</td>
 </tr>
 <tr>
-<td>100</td>
-<td>2.3×1015</td>
-<td>74 年</td>
+<td>$100$</td>
+<td>$2.3×1015$</td>
+<td>$74$ 年</td>
 </tr>
 <tr>
-<td>200</td>
-<td>1.2×1023</td>
-<td>3.8×109 年</td>
+<td>$200$</td>
+<td>$1.2×1023$</td>
+<td>$3.8×109$ 年</td>
 </tr>
 <tr>
-<td>300</td>
-<td>1.5×1029</td>
-<td>4.9×1015 年</td>
+<td>$300$</td>
+<td>$1.5×1029$</td>
+<td>$4.9×1015$ 年</td>
 </tr>
 <tr>
-<td>500</td>
-<td>1.3×1039</td>
-<td>4.2×1025 年</td>
+<td>$500$</td>
+<td>$1.3×1039$</td>
+<td>$4.2×1025$ 年</td>
 </tr>
 </tbody>
 </table>
@@ -526,7 +526,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#jian-jie"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#yi-ge-gou-jian-shu-zi-qian-ming-he-gong-yao-mi-ma-ti-zhi-de-fang-fa-r-l-rivese-a-shamir-and-l-adleman"><span class="nav-number">2.</span> <span class="nav-text">一个构建数字签名和公钥密码体制的方法-R.L Rivese, A. Shamir, and L. Adleman</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#zhai-yao"><span class="nav-number">2.1.</span> <span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#i-introduction"><span class="nav-number">2.2.</span> <span class="nav-text">I Introduction</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ii-gong-yao-mi-ma-ti-zhi"><span class="nav-number">2.3.</span> <span class="nav-text">II 公钥密码体制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#iii-yin-si"><span class="nav-number">2.4.</span> <span class="nav-text">III 隐私</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#iv-qian-ming"><span class="nav-number">2.5.</span> <span class="nav-text">IV 签名</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#v-jia-mi-ji-jie-mi"><span class="nav-number">2.6.</span> <span class="nav-text">V 加密及解密</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#vi-ji-chu-shu-xue"><span class="nav-number">2.7.</span> <span class="nav-text">VI 基础数学</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#vii-suan-fa"><span class="nav-number">2.8.</span> <span class="nav-text">VII 算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#a-ru-he-gao-xiao-di-jia-mi-he-jie-mi"><span class="nav-number">2.8.1.</span> <span class="nav-text">A 如何高效地加密和解密</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#b-ru-he-zhao-dao-ju-da-de-su-shu"><span class="nav-number">2.8.2.</span> <span class="nav-text">B 如何找到巨大的素数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#c-ru-he-xuan-ze-d"><span class="nav-number">2.8.3.</span> <span class="nav-text">C 如何选择 $d$</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#d-ru-he-cong-d-he-phi-n-ji-suan-e"><span class="nav-number">2.8.4.</span> <span class="nav-text">D 如何从 $d$ 和 $\phi(n)$ 计算 $e$</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#viii-yi-ge-xiao-li-zi"><span class="nav-number">2.9.</span> <span class="nav-text">VIII 一个小例子</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ix-fang-fa-de-an-quan-xing-mi-ma-fen-xi-fang-fa"><span class="nav-number">2.10.</span> <span class="nav-text">IX 方法的安全性：密码分析方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#a-fen-jie-n"><span class="nav-number">2.10.1.</span> <span class="nav-text">A 分解 n</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#b-zai-bu-fen-jie-n-de-qing-kuang-xia-ji-suan-phi-n"><span class="nav-number">2.10.2.</span> <span class="nav-text">B 在不分解 $n$ 的情况下计算 $\phi(n)$</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#c-zai-bu-fen-jie-n-huo-ji-suan-phi-n-de-qing-kuang-xia-que-ding-d"><span class="nav-number">2.10.3.</span> <span class="nav-text">C 在不分解 $n$ 或计算 $\phi(n)$ 的情况下确定 $d$</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#d-yong-yi-xie-qi-ta-de-fang-fa-ji-suan-d"><span class="nav-number">2.10.4.</span> <span class="nav-text">D 用一些其他的方法计算 $D$</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#x-ru-he-bi-mian-fen-kuai-yi-ge-yi-qian-ming-de-xin-xi"><span class="nav-number">2.11.</span> <span class="nav-text">X 如何避免分块一个已签名的信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#xi-jie-lun"><span class="nav-number">2.12.</span> <span class="nav-text">XI 结论</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#yin-yong"><span class="nav-number">2.13.</span> <span class="nav-text">引用</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#jian-jie"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#yi-ge-gou-jian-shu-zi-qian-ming-he-gong-yao-mi-ma-ti-zhi-de-fang-fa-r-l-rivese-a-shamir-and-l-adleman"><span class="nav-number">2.</span> <span class="nav-text">一个构建数字签名和公钥密码体制的方法-R.L Rivese, A. Shamir, and L. Adleman</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#zhai-yao"><span class="nav-number">2.1.</span> <span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#i-introduction"><span class="nav-number">2.2.</span> <span class="nav-text">I Introduction</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ii-gong-yao-mi-ma-ti-zhi"><span class="nav-number">2.3.</span> <span class="nav-text">II 公钥密码体制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#iii-yin-si"><span class="nav-number">2.4.</span> <span class="nav-text">III 隐私</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#iv-qian-ming"><span class="nav-number">2.5.</span> <span class="nav-text">IV 签名</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#v-jia-mi-ji-jie-mi"><span class="nav-number">2.6.</span> <span class="nav-text">V 加密及解密</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#vi-ji-chu-shu-xue"><span class="nav-number">2.7.</span> <span class="nav-text">VI 基础数学</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#vii-suan-fa"><span class="nav-number">2.8.</span> <span class="nav-text">VII 算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#a-ru-he-gao-xiao-di-jia-mi-he-jie-mi"><span class="nav-number">2.8.1.</span> <span class="nav-text">A 如何高效地加密和解密</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#b-ru-he-zhao-dao-ju-da-de-su-shu"><span class="nav-number">2.8.2.</span> <span class="nav-text">B 如何找到巨大的素数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#c-ru-he-xuan-ze-d"><span class="nav-number">2.8.3.</span> <span class="nav-text">C 如何选择 $d$</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#d-ru-he-cong-d-he-phi-n-ji-suan-e"><span class="nav-number">2.8.4.</span> <span class="nav-text">D 如何从 $d$ 和 $\phi(n)$ 计算 $e$</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#viii-yi-ge-xiao-li-zi"><span class="nav-number">2.9.</span> <span class="nav-text">VIII 一个小例子</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ix-fang-fa-an-quan-xing-zhi-mi-ma-fen-xi-fang-fa"><span class="nav-number">2.10.</span> <span class="nav-text">IX 方法安全性之密码分析方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#a-fen-jie-n"><span class="nav-number">2.10.1.</span> <span class="nav-text">A 分解 n</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#b-zai-bu-fen-jie-n-de-qing-kuang-xia-ji-suan-phi-n"><span class="nav-number">2.10.2.</span> <span class="nav-text">B 在不分解 $n$ 的情况下计算 $\phi(n)$</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#c-zai-bu-fen-jie-n-huo-ji-suan-phi-n-de-qing-kuang-xia-que-ding-d"><span class="nav-number">2.10.3.</span> <span class="nav-text">C 在不分解 $n$ 或计算 $\phi(n)$ 的情况下确定 $d$</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#d-yong-yi-xie-qi-ta-de-fang-fa-ji-suan-d"><span class="nav-number">2.10.4.</span> <span class="nav-text">D 用一些其他的方法计算 $D$</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#x-ru-he-bi-mian-fen-kuai-yi-ge-yi-qian-ming-de-xin-xi"><span class="nav-number">2.11.</span> <span class="nav-text">X 如何避免分块一个已签名的信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#xi-jie-lun"><span class="nav-number">2.12.</span> <span class="nav-text">XI 结论</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#yin-yong"><span class="nav-number">2.13.</span> <span class="nav-text">引用</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
