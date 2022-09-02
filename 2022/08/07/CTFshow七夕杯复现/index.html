@@ -27,14 +27,14 @@
 <meta property="og:site_name" content="学习记录">
 <meta property="og:description" content="hhh，玩一下这个七夕杯">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="c:/Users/mirror/Desktop/write-up/blog/source/images/image-20220807183934882.png">
-<meta property="og:image" content="c:/Users/mirror/Desktop/write-up/blog/source/images/image-20220807222613199.png">
+<meta property="og:image" content="http://example.com/.com//Users/mirror/Desktop/write-up/blog/source/images/image-20220807183934882.png">
+<meta property="og:image" content="http://example.com/.com//Users/mirror/Desktop/write-up/blog/source/images/image-20220807222613199.png">
 <meta property="article:published_time" content="2022-08-07T10:34:52.000Z">
 <meta property="article:modified_time" content="2022-08-08T00:36:49.670Z">
 <meta property="article:author" content="MirRoR4s">
 <meta property="article:tag" content="Web">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="c:/Users/mirror/Desktop/write-up/blog/source/images/image-20220807183934882.png">
+<meta name="twitter:image" content="http://example.com/.com//Users/mirror/Desktop/write-up/blog/source/images/image-20220807183934882.png">
 
 <link rel="canonical" href="http://example.com/2022/08/07/CTFshow%E4%B8%83%E5%A4%95%E6%9D%AF%E5%A4%8D%E7%8E%B0/">
 
@@ -240,7 +240,7 @@
 <p>hhh，玩一下这个七夕杯</p>
 <span id="more"></span>
 <h3 id="web1-qian-dao"><a href="#web1-签到" class="headerlink" title="web1 签到"></a>web1 签到<a href="#web1-qian-dao" class="header-anchor">#</a></h3><p>打开题目如下：</p>
-<p><img src="C:\Users\mirror\Desktop\write-up\blog\source\images\image-20220807183934882.png" alt="image-20220807183934882"></p>
+<p><img src="/.com//Users\mirror\Desktop\write-up\blog\source\images\image-20220807183934882.png" alt="image-20220807183934882"></p>
 <p>能够执行短命令，但是不会回显。查看网页的源代码发现了前端javascript限制了输入命令的长度。</p>
 <p>以为直接burpsuite抓包绕过即可，没想到还是提示命令过长，所以后端应该也有一个校验，或者这个js就是后端的代码。</p>
 <p>答案思路：向服务器上传一个文件，然后执行这个临时文件即可。</p>
@@ -261,7 +261,7 @@
 <h3 id="easy-sql"><a href="#easy-sql" class="headerlink" title="easy_sql"></a>easy_sql<a href="#easy-sql" class="header-anchor">#</a></h3><p>下载打开题目的附件，看到WEB-INF，应该是javaweb没跑了。直接用IDEA打开。</p>
 <p>但是不知道从什么地方入手，因为我对javaweb并不熟悉。看答案是从controller开始审计的。</p>
 <p>后面发现<code>AppController</code>中有如下</p>
-<p><img src="C:\Users\mirror\Desktop\write-up\blog\source\images\image-20220807222613199.png" alt="image-20220807222613199"></p>
+<p><img src="/.com//Users\mirror\Desktop\write-up\blog\source\images\image-20220807222613199.png" alt="image-20220807222613199"></p>
 <p>这正是我们访问页面的时候出现的url参数，所以<code>AppController</code>就是页面的处理代码，故从这里开始审计代码。阅读代码知道，服务器会将我们传入的用户名和密码进行一个select查询，同时为了防止sql注入有一个<code>sql_check</code>函数的检查操作。</p>
 <p>跟进一下<code>sql_check</code>函数</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">String[] ban = <span class="keyword">new</span> <span class="title class_">String</span>[]&#123;<span class="string">&quot;&#x27;&quot;</span>, <span class="string">&quot;file&quot;</span>, <span class="string">&quot;information&quot;</span>, <span class="string">&quot;mysql&quot;</span>, <span class="string">&quot;from&quot;</span>, <span class="string">&quot;update&quot;</span>, <span class="string">&quot;delete&quot;</span>, <span class="string">&quot;select&quot;</span>, <span class="string">&quot;,&quot;</span>, <span class="string">&quot;union&quot;</span>, <span class="string">&quot;sleep&quot;</span>, <span class="string">&quot;(&quot;</span>&#125;;</span><br><span class="line">       String[] var2 = ban;</span><br></pre></td></tr></table></figure>
