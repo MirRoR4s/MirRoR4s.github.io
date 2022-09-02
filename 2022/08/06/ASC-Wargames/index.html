@@ -27,13 +27,13 @@
 <meta property="og:site_name" content="学习记录">
 <meta property="og:description" content="周六参加的比赛，名字很酷，似乎是叫阿拉伯网络安全战争游戏？">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/.com//Users/mirror/Desktop/write-up/blog/source/images/image-20220808201958831.png">
+<meta property="og:image" content="c:/Users/mirror/Desktop/write-up/blog/source/images/image-20220808201958831.png">
 <meta property="article:published_time" content="2022-08-06T05:17:04.000Z">
-<meta property="article:modified_time" content="2022-08-14T04:32:46.205Z">
+<meta property="article:modified_time" content="2022-09-02T08:53:48.440Z">
 <meta property="article:author" content="MirRoR4s">
 <meta property="article:tag" content="Crypto">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/.com//Users/mirror/Desktop/write-up/blog/source/images/image-20220808201958831.png">
+<meta name="twitter:image" content="c:/Users/mirror/Desktop/write-up/blog/source/images/image-20220808201958831.png">
 
 <link rel="canonical" href="http://example.com/2022/08/06/ASC-Wargames/">
 
@@ -221,7 +221,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-08-14 12:32:46" itemprop="dateModified" datetime="2022-08-14T12:32:46+08:00">2022-08-14</time>
+                <time title="修改时间：2022-09-02 16:53:48" itemprop="dateModified" datetime="2022-09-02T16:53:48+08:00">2022-09-02</time>
               </span>
 
           
@@ -240,7 +240,7 @@
 <span id="more"></span>
 <p>[TOC]</p>
 <p>可以哒，虽然不强，但是我已经很棒了！</p>
-<p><img src="/.com//Users\mirror\Desktop\write-up\blog\source\images\image-20220808201958831.png" alt="image-20220808201958831"></p>
+<p><img src="C:\Users\mirror\Desktop\write-up\blog\source\images\image-20220808201958831.png" alt="image-20220808201958831"></p>
 <h3 id="warm-up"><a href="#Warm-UP" class="headerlink" title="Warm-UP"></a>Warm-UP<a href="#warm-up" class="header-anchor">#</a></h3><p>阅读代码就会发现4个人使用的模数有公因数，直接GCD求解即可。</p>
 <p>破防了，求出四个人的明文数字没flag，想打出题人</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># WildRSA.py</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> Crypto.Util.number <span class="keyword">import</span> getRandomNBitInteger, bytes_to_long, long_to_bytes, getStrongPrime, isPrime</span><br><span class="line"></span><br><span class="line">BITS = <span class="number">512</span></span><br><span class="line">SEED = <span class="number">1</span></span><br><span class="line"><span class="keyword">while</span> SEED &amp; <span class="number">1</span>:</span><br><span class="line">SEED = getRandomNBitInteger(BITS//<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">WildRSA</span>:</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, seed=getRandomNBitInteger(<span class="params">BITS//<span class="number">2</span></span>)</span>):</span><br><span class="line">self.P = getStrongPrime(BITS)</span><br><span class="line">self.seed = seed</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__get_q</span>(<span class="params">self, s</span>):</span><br><span class="line">        Q = s</span><br><span class="line">        <span class="keyword">while</span> <span class="keyword">not</span> isPrime(Q+<span class="number">1</span>):</span><br><span class="line">            Q = s</span><br><span class="line">            <span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">8</span>):</span><br><span class="line">                Q *= getRandomNBitInteger(<span class="number">32</span>)</span><br><span class="line">        <span class="keyword">return</span> Q + <span class="number">1</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">pub</span>(<span class="params">self</span>):</span><br><span class="line">        N = self.P * self.__get_q(self.seed)</span><br><span class="line">        <span class="keyword">return</span> N, <span class="number">0x10001</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> secret <span class="keyword">import</span> APT</span><br><span class="line">obj = WildRSA(SEED)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> _, user <span class="keyword">in</span> APT.items():</span><br><span class="line">    N, E = obj.pub()</span><br><span class="line">    key = N</span><br><span class="line">    msg = <span class="built_in">pow</span>(bytes_to_long(user[<span class="string">&quot;msg&quot;</span>]),E, N)</span><br><span class="line">    <span class="built_in">print</span>(key, msg)</span><br></pre></td></tr></table></figure>
@@ -385,7 +385,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">65</span>
+          <span class="site-state-item-count">64</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
