@@ -185,6 +185,251 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/05/02/%E5%AF%86%E7%A0%81%E5%AD%A6%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E8%B7%B5%E7%AC%94%E8%AE%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="MirRoR4s">
+      <meta itemprop="description" content="不能说的秘密">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="学习记录">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/05/02/%E5%AF%86%E7%A0%81%E5%AD%A6%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E8%B7%B5%E7%AC%94%E8%AE%B0/" class="post-title-link" itemprop="url">密码学原理与实践笔记</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-05-02 15:06:24" itemprop="dateCreated datePublished" datetime="2022-05-02T15:06:24+08:00">2022-05-02</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-09-02 16:53:26" itemprop="dateModified" datetime="2022-09-02T16:53:26+08:00">2022-09-02</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="mi-ma-xue-yuan-li-yu-shi-jian-bi-ji"><a href="#密码学原理与实践笔记" class="headerlink" title="密码学原理与实践笔记"></a>密码学原理与实践笔记<a href="#mi-ma-xue-yuan-li-yu-shi-jian-bi-ji" class="header-anchor">#</a></h1><h2 id="di-1-zhang-gu-dian-mi-ma-xue"><a href="#第1章-古典密码学" class="headerlink" title="第1章 古典密码学"></a>第1章 古典密码学<a href="#di-1-zhang-gu-dian-mi-ma-xue" class="header-anchor">#</a></h2><h3 id="1-1-ji-ge-jian-dan-de-mi-ma-ti-zhi"><a href="#1-1-几个简单的密码体制" class="headerlink" title="1.1 几个简单的密码体制"></a>1.1 几个简单的密码体制<a href="#1-1-ji-ge-jian-dan-de-mi-ma-ti-zhi" class="header-anchor">#</a></h3><p><img src="../images/1651474676178-1651475210782.png" alt="1651474676178"></p>
+<p>$\varepsilon$的含义书中没有给出具体说明，但是应该是一个由多个映射组成的集合，我称它为加密映射集合。$e_k \in$ $\varepsilon$, $e_k$是一个从P-&gt;C的单射，同理D是解密映射集合。加密映射跟解密映射满足这么一种条件：对于属于明文集合的某个元素x来说，在加密映射之后得到的结果在经过一个解密映射之后可以恢复出x​</p>
+<p>$e_k$至少需要是一个单射是因为必须保证不同的明文加密之后得到的两个密文不能相同，否则会让接收者无法分辨此密文对应那个明文。当明文集合P跟密文集合C相同的时候，从P到C的映射就是从P到P的映射，这显然是一个P上的变换，凯撒密码显然就是这样的例子。</p>
+<h4 id="1-1-1-yi-wei-mi-ma-shift-cipher"><a href="#1-1-1-移位密码-Shift-Cipher" class="headerlink" title="1.1.1 移位密码(Shift Cipher)"></a>1.1.1 移位密码(Shift Cipher)<a href="#1-1-1-yi-wei-mi-ma-shift-cipher" class="header-anchor">#</a></h4><p>移位密码的基础就是数论中的模运算。</p>
+<p><img src="../images/1651475158151-1651475210783.png" alt="1651475158151"></p>
+<p>书中规定a mod m 恒为非负值，这跟在计算机中实际运算不同。</p>
+<p><img src="../images/1651475288286.png" alt="1651475288286"></p>
+<p><img src="../images/1651475314153.png" alt="1651475314153"></p>
+<p><img src="../images/1651475348680.png" alt="1651475348680"></p>
+<p>显然地，$Z_m$对加法构成一个交换加群，也就是阿贝尔群。对于乘法来说满足封闭性 结合律 有单位元 交换律。所以$Z_m$至少是一个有单位元的交换环，本书所关心的环均是有限环。</p>
+<p><img src="../images/1651475471282.png" alt="1651475471282"></p>
+<p><img src="../images/1651475509990.png" alt="1651475509990"></p>
+<p>观察移位密码的定义，发现明文集合=密文集合=密钥集合，三个集合都由26个数字/字母组成。还定义了其上的加密映射跟解密映射 $e_k,d_k$</p>
+<p>凯撒加密特别简单，将你要加密的英文句子中的所有字母都变换为0-25之间的数字，具体地说按顺序将a变为0，b变为1，以此类推。<img src="../images/1651475654751.png" alt="1651475654751"></p>
+<p>将所有字母变为数字之后，再根据加密映射的K对数字进行模26的加法，具体地说就是(数字+K)mod26 = 密文数字</p>
+<p>实例：</p>
+<p><img src="../images/1651475786061.png" alt="1651475786061"></p>
+<p>解密过程跟加密过程很类似，不多叙述。</p>
+<p><img src="../images/1651475869571.png" alt="1651475869571"></p>
+<p>凯撒密码显然是很脆弱的密码，这取决于它的密钥空间太小了。一个密码体制安全的必要条件是能抵抗穷尽密钥搜索攻击，普通的做法是使密钥空间足够大，但是很大的密钥空间并不是保证密码体制安全的充分条件。</p>
+<h3 id="1-1-2-dai-huan-mi-ma-substitution-cipher"><a href="#1-1-2-代换密码-Substitution-Cipher" class="headerlink" title="1.1.2 代换密码(Substitution Cipher)"></a>1.1.2 代换密码(Substitution Cipher)<a href="#1-1-2-dai-huan-mi-ma-substitution-cipher" class="header-anchor">#</a></h3><p><img src="../images/1651476026570.png" alt="1651476026570"></p>
+<p><img src="../images/1651476119118.png" alt="1651476119118"><img src="../images/1651476147178.png" alt="1651476147178"></p>
+<p>很容易的发现代换密码跟凯撒密码的区别，代换密码对全体的明文集合都定义了一个不同的加密映射，而对于凯撒密码来说，当K确定之后，所有的明文集合转为数字之后都加上K然后变为密文，所以凯撒密码是全体明文集合定义了一个共同的加密映射。</p>
+<p><img src="../images/1651476266385.png" alt="1651476266385"></p>
+<p>代换密码一个密钥有26种可能的英文字母对应，总共的置换有26的阶乘种，因为加密映射是把一个字母变为字母表上另一个字母，第一个字母有26种可能，第二个字母有25种，以此类推，一共有26个字母要映射。所以总置换数=$26<em>25</em>24<em>23<strong>*</strong></em>1=26!$</p>
+<p>解密上面的密文代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">alpha = <span class="string">&#x27;XNYAHPOGZQWBTSFLRCVMUEKJDI&#x27;</span><span class="comment">#加密映射表</span></span><br><span class="line">alpha1 = <span class="string">&#x27;dlryvohezxwptbgfjqnmuskaci&#x27;</span><span class="comment">#解密映射表</span></span><br><span class="line">cipher = <span class="string">&#x27;MGZVYZLGHCMHJMYXSSFMNHAHYCDLMHA&#x27;</span></span><br><span class="line"><span class="built_in">dict</span>   = <span class="string">&#x27;ABCDEFGHIJKLMNOPQRSTUVWXYZ&#x27;</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">decrypt</span>(<span class="params">cipher,alpha1</span>):</span><br><span class="line">    plain = <span class="string">&#x27;&#x27;</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> cipher:</span><br><span class="line">        index = <span class="built_in">dict</span>.index(i)</span><br><span class="line">        plain+=alpha1[index]</span><br><span class="line">    <span class="keyword">return</span> plain</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(decrypt(cipher,alpha1))</span><br></pre></td></tr></table></figure>
+<p>明文：thisciphertextcannotbedecrypted</p>
+<h3 id="1-1-3-fang-she-mi-ma-affine-cipher"><a href="#1-1-3-仿射密码-Affine-Cipher" class="headerlink" title="1.1.3 仿射密码(Affine Cipher)"></a>1.1.3 仿射密码(Affine Cipher)<a href="#1-1-3-fang-she-mi-ma-affine-cipher" class="header-anchor">#</a></h3><p><img src="../images/1651496549159.png" alt="1651496549159"></p>
+<p><img src="../images/1651496598708.png" alt="1651496598708"></p>
+<p>那么什么时候上述同余方程有唯一解x呢？答案是$gcd(a,26)=1$。</p>
+<p>只要这两个数的最大公因数是1，我们就断言同余方程有唯一解，可以对密文进行解密。</p>
+<p>分析如下：</p>
+<p>假设$gcd(a,26)=d&gt;1，那么同余方程ax\equiv 0(mod\,26)明显地有两个解，分别是x=0，跟x=26/d$</p>
+<p>$在这种情况下，e(x)=(ax+b)mod\,26不是一个单射函数，因为不同的明文得到了相同的密文。因此不能用来作为一个有效的加密函数。$</p>
+<p>$例如，gcd(4,26)=2，显然4x+7不是一个有效的加密函数，因为对任意的x\in Z_{26},x和x+13将被加密成相同的密文$</p>
+<p><img src="../images/1651498113027.png" alt="1651498113027"></p>
+<p><img src="../images/1651496978422.png" alt="1651496978422"></p>
+<p><img src="../images/1651497145748.png" alt="1651497145748"></p>
+<h3 id="1-1-4-wei-ji-ni-ya-mi-ma"><a href="#1-1-4-维吉尼亚密码" class="headerlink" title="1.1.4 维吉尼亚密码"></a>1.1.4 维吉尼亚密码<a href="#1-1-4-wei-ji-ni-ya-mi-ma" class="header-anchor">#</a></h3><p>维吉尼亚密码是一种多表代换密码。</p>
+<p><img src="../images/1651502420722.png" alt="1651502420722"></p>
+<h3 id="1-1-5-xi-er-mi-ma-hill-cipher"><a href="#1-1-5-希尔密码-Hill-Cipher" class="headerlink" title="1.1.5 希尔密码(Hill Cipher)"></a>1.1.5 希尔密码(Hill Cipher)<a href="#1-1-5-xi-er-mi-ma-hill-cipher" class="header-anchor">#</a></h3><p>希尔密码也是一种多表代换密码。</p>
+<p><img src="../images/1651503167754.png" alt="1651503167754"></p>
+<h3 id="1-1-6-zhi-huan-mi-ma"><a href="#1-1-6-置换密码" class="headerlink" title="1.1.6 置换密码"></a>1.1.6 置换密码<a href="#1-1-6-zhi-huan-mi-ma" class="header-anchor">#</a></h3><p><img src="../images/1651503313393.png" alt="1651503313393"></p>
+<h3 id="1-1-7-liu-mi-ma"><a href="#1-1-7-流密码" class="headerlink" title="1.1.7 流密码"></a>1.1.7 流密码<a href="#1-1-7-liu-mi-ma" class="header-anchor">#</a></h3><p><img src="../images/1651503607645.png" alt="1651503607645"></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/04/29/CTFSHOW-web%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="MirRoR4s">
+      <meta itemprop="description" content="不能说的秘密">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="学习记录">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/04/29/CTFSHOW-web%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C/" class="post-title-link" itemprop="url">CTFSHOW 命令执行</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-04-29 15:39:56" itemprop="dateCreated datePublished" datetime="2022-04-29T15:39:56+08:00">2022-04-29</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-09-02 16:53:43" itemprop="dateModified" datetime="2022-09-02T16:53:43+08:00">2022-09-02</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>CTFSHOW
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/04/29/CTFSHOW-web%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/04/28/XSS-WEBGOAT/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="MirRoR4s">
+      <meta itemprop="description" content="不能说的秘密">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="学习记录">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/04/28/XSS-WEBGOAT/" class="post-title-link" itemprop="url">XSS_WEBGOAT</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-04-28 16:32:46" itemprop="dateCreated datePublished" datetime="2022-04-28T16:32:46+08:00">2022-04-28</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-09-02 16:53:31" itemprop="dateModified" datetime="2022-09-02T16:53:31+08:00">2022-09-02</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2022/04/28/XSS/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -347,244 +592,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/04/28/%E7%BA%BF%E6%80%A7%E8%A1%A8%E4%B9%8B%E9%93%BE%E5%BC%8F%E5%AD%98%E5%82%A8%E7%BB%93%E6%9E%84/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="MirRoR4s">
-      <meta itemprop="description" content="不能说的秘密">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="学习记录">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/04/28/%E7%BA%BF%E6%80%A7%E8%A1%A8%E4%B9%8B%E9%93%BE%E5%BC%8F%E5%AD%98%E5%82%A8%E7%BB%93%E6%9E%84/" class="post-title-link" itemprop="url">线性表之链式存储结构</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-04-28 09:36:49" itemprop="dateCreated datePublished" datetime="2022-04-28T09:36:49+08:00">2022-04-28</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-09-02 16:53:23" itemprop="dateModified" datetime="2022-09-02T16:53:23+08:00">2022-09-02</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>顺序存储结构是随机存取的结构，能快速取出某个位置的元素。但是不方便添加或者删除元素，为此提出了链式存储结构。
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/04/28/%E7%BA%BF%E6%80%A7%E8%A1%A8%E4%B9%8B%E9%93%BE%E5%BC%8F%E5%AD%98%E5%82%A8%E7%BB%93%E6%9E%84/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/04/27/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84C%E8%AF%AD%E8%A8%80%E7%89%88-%E7%BA%BF%E6%80%A7%E8%A1%A8%E7%9A%84%E9%A1%BA%E5%BA%8F%E5%AD%98%E5%82%A8%E7%BB%93%E6%9E%84%E7%9B%B8%E5%85%B3%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="MirRoR4s">
-      <meta itemprop="description" content="不能说的秘密">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="学习记录">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/04/27/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84C%E8%AF%AD%E8%A8%80%E7%89%88-%E7%BA%BF%E6%80%A7%E8%A1%A8%E7%9A%84%E9%A1%BA%E5%BA%8F%E5%AD%98%E5%82%A8%E7%BB%93%E6%9E%84%E7%9B%B8%E5%85%B3%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0/" class="post-title-link" itemprop="url">数据结构C语言版_线性表的顺序存储结构相关代码实现</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-04-27 11:58:59" itemprop="dateCreated datePublished" datetime="2022-04-27T11:58:59+08:00">2022-04-27</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-09-02 16:53:24" itemprop="dateModified" datetime="2022-09-02T16:53:24+08:00">2022-09-02</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">算法</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>C/C++语言实现线性表的顺序存储结构，附带 增 删 改 查。不要问为什么c跟c++混一起，书上的引用也是c++的，所以说不要拘泥于语言啦
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/04/27/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84C%E8%AF%AD%E8%A8%80%E7%89%88-%E7%BA%BF%E6%80%A7%E8%A1%A8%E7%9A%84%E9%A1%BA%E5%BA%8F%E5%AD%98%E5%82%A8%E7%BB%93%E6%9E%84%E7%9B%B8%E5%85%B3%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/04/24/bWAPP%E9%9D%B6%E5%9C%BA%E4%B9%8BXXE%E6%BC%8F%E6%B4%9E/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="MirRoR4s">
-      <meta itemprop="description" content="不能说的秘密">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="学习记录">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/04/24/bWAPP%E9%9D%B6%E5%9C%BA%E4%B9%8BXXE%E6%BC%8F%E6%B4%9E/" class="post-title-link" itemprop="url">bWAPP靶场之XXE漏洞</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-04-24 12:06:10" itemprop="dateCreated datePublished" datetime="2022-04-24T12:06:10+08:00">2022-04-24</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-09-02 16:53:46" itemprop="dateModified" datetime="2022-09-02T16:53:46+08:00">2022-09-02</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/WEB%E5%AE%89%E5%85%A8/" itemprop="url" rel="index"><span itemprop="name">WEB安全</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>漏洞详解<a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/3357#toc-10">https://xz.aliyun.com/t/3357#toc-10</a></p>
-<p>接下来2个月就在各种靶场度过，打好基本功再来实战吧。</p>
-<p>安装bwapp的虚拟机： <a target="_blank" rel="noopener" href="https://sourceforge.net/projects/bwapp/files/bee-box/bee-box_v1.6.7z/download">https://sourceforge.net/projects/bwapp/files/bee-box/bee-box_v1.6.7z/download</a> ，下载解压用vmware打开里面的vmx文件即可。</p>
-<p>选择NAT模式，不选也可以，反正让现实的主机能访问到即可</p>
-<p>开机之后界面就有bwapp-start图标了，用bee /bug 账号密码登陆然后选择漏洞开始测试。bwapp的xxe都是有回显的，比较初级，拿来练手再合适不过。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/04/24/bWAPP%E9%9D%B6%E5%9C%BA%E4%B9%8BXXE%E6%BC%8F%E6%B4%9E/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -654,7 +661,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">72</span>
+          <span class="site-state-item-count">75</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
