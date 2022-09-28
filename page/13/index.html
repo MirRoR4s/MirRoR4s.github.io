@@ -185,6 +185,99 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/05/17/%E7%BA%BF%E6%80%A7%E5%AF%86%E7%A0%81%E5%88%86%E6%9E%90/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="MirRoR4s">
+      <meta itemprop="description" content="不能说的秘密">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="学习记录">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/05/17/%E7%BA%BF%E6%80%A7%E5%AF%86%E7%A0%81%E5%88%86%E6%9E%90/" class="post-title-link" itemprop="url">线性密码分析</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-05-17 18:41:16" itemprop="dateCreated datePublished" datetime="2022-05-17T18:41:16+08:00">2022-05-17</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-09-02 16:53:23" itemprop="dateModified" datetime="2022-09-02T16:53:23+08:00">2022-09-02</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <!-- more !-->
+<p>未完成…需要补充概率以及抽代</p>
+<h2 id="3-3-1-dui-ji-yin-li"><a href="#3-3-1-堆积引理" class="headerlink" title="3.3.1 堆积引理"></a>3.3.1 堆积引理<a href="#3-3-1-dui-ji-yin-li" class="header-anchor">#</a></h2><p>线性密码分析的思想：假设能够在一个明文比特子集与最后一轮即将进行代换的输入状态比特子集之间找到一个概率线性关系，即存在一个比特子集使得其中元素的异或表现出非随机的分布，比如该异或值以偏离1/2的概率取值0。我们使用已知明文攻击，对每一个明-密文对，用所有可能的候选密钥来对最后一轮的密文解密。对每一个候选密钥，计算包含在线性关系式中的相关状态比特的异或值，然后确定上述的线性关系是否成立，如果成立，就在对应于特定候选密钥的计数器上加1，在这个过程的最后，我们希望计数频率里明-密文对数的一半最远的候选密钥含有哪些密钥比特的正确值。</p>
+<p>堆积引理：<img src="../images/1652784166365.png" alt="1652784166365"></p>
+<p>随机变量$X_i$取值于集合${0,1}$，偏差定义为随机变量$X_i$取值为0的概率$p_i$与$1/2$的差值。</p>
+<p>证明采用的是数学归纳法，在此不加证明。</p>
+<p><img src="../images/1652784808313.png" alt="1652784808313"></p>
+<p>推论3.2是很显然的，不过我们要注意堆积引理一般只有在随机变量$X_i$统计独立的情况下才成立。</p>
+<p><img src="../images/1652784977989.png" alt="1652784977989"></p>
+<h2 id="3-3-2-s-he-de-xian-xing-bi-jin"><a href="#3-3-2-S盒的线性逼近" class="headerlink" title="3.3.2 S盒的线性逼近"></a>3.3.2 S盒的线性逼近<a href="#3-3-2-s-he-de-xian-xing-bi-jin" class="header-anchor">#</a></h2><p><img src="../images/1652786177880.png" alt="1652786177880"></p>
+<p>m重的输入是均匀随机地从集合${0,1}^m$中选择的，那么选到0的概率跟选到1的概率相等，所以随机变量$X_i$的偏差为0。上述还说了m个随机变量相互独立，这告诉我们这m个随机变量乘积的偏差满足堆积引理。</p>
+<p>现在有一个n重输出Y，一般情况下Y中的n个随机变量并不相互独立，并且跟输入X中的随机变量$X_i$也不相互独立。</p>
+<p><img src="../images/1652786392821.png" alt="1652786392821"></p>
+<p><img src="../images/1652786753420.png" alt="1652786753420"></p>
+<p>书中应该笔误了，第一个是不等于，第二个应该是等于。也就是说当我们定义置换$\pi_s$的结果是输出Y的时候，那么输入是X且输出是Y的概率为$2^{-m}$。因为输入是$X=(x_1,x_2,…..,x_m)的概率为 (1/2)^m=2^{-m}$</p>
+<p>不要忘记输入是均匀随机的选择，所以不管是什么输入它的概率都是1/2，而且各个输入间是独立的，所以同时成立的概率是乘积。在上图的最后我们看到，当我们把置换$\pi_s$的作用结果定义为Y的时候，输入是X<strong>或者</strong>输出是Y的概率等于1，之前的是输入是X且输入是Y的概率。</p>
+<h3 id="xian-xing-mi-ma-fen-xi-li-zi"><a href="#线性密码分析例子" class="headerlink" title="线性密码分析例子"></a>线性密码分析例子<a href="#xian-xing-mi-ma-fen-xi-li-zi" class="header-anchor">#</a></h3><h4 id="li-3-2"><a href="#例3-2" class="headerlink" title="例3.2"></a>例3.2<a href="#li-3-2" class="header-anchor">#</a></h4><p><img src="../images/1652786962660.png" alt="1652786962660"></p>
+<p><img src="../images/1652787533966.png" alt="1652787533966"></p>
+<p><img src="../images/1652787541484.png" alt="1652787541484"></p>
+<p>写脚本帮我们判断x1,x4,y2异或为0的概率</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">X = [<span class="literal">None</span>]*<span class="number">16</span></span><br><span class="line">Y = [<span class="literal">None</span>]*<span class="number">16</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">16</span>):</span><br><span class="line">    tmp = <span class="built_in">bin</span>(i)[<span class="number">2</span>:].zfill(<span class="number">4</span>)</span><br><span class="line">    X[i] = tmp</span><br><span class="line"><span class="built_in">print</span>(X)</span><br><span class="line">Y = [<span class="number">14</span>,<span class="number">4</span>,<span class="number">13</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">15</span>,<span class="number">11</span>,<span class="number">8</span>,<span class="number">3</span>,<span class="number">10</span>,<span class="number">6</span>,<span class="number">12</span>,<span class="number">5</span>,<span class="number">9</span>,<span class="number">0</span>,<span class="number">7</span>]</span><br><span class="line">Y1 = []</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> Y:</span><br><span class="line">    Y1.append(<span class="built_in">bin</span>(i)[<span class="number">2</span>:].zfill(<span class="number">4</span>))</span><br><span class="line"><span class="built_in">print</span>(Y1)</span><br><span class="line">cnt = <span class="number">0</span></span><br><span class="line"><span class="keyword">assert</span>  <span class="built_in">len</span>(Y1) == <span class="built_in">len</span>(X)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">16</span>):</span><br><span class="line">    x1 = <span class="built_in">int</span>(X[i][<span class="number">0</span>])</span><br><span class="line">    x4 = <span class="built_in">int</span>(X[i][<span class="number">3</span>])</span><br><span class="line">    y2 = <span class="built_in">int</span>(Y1[i][<span class="number">1</span>])</span><br><span class="line">    ans = x1^x4^y2</span><br><span class="line">    <span class="keyword">if</span>(ans == <span class="number">0</span>):</span><br><span class="line">        cnt+=<span class="number">1</span></span><br><span class="line"><span class="built_in">print</span>(cnt)<span class="comment">#8</span></span><br><span class="line"><span class="built_in">print</span>(cnt/<span class="number">16</span>)<span class="comment">#0.5</span></span><br><span class="line"><span class="comment">#确实是1/2</span></span><br></pre></td></tr></table></figure>
+<p><img src="../images/1652787851470.png" alt="1652787851470"></p>
+<p><img src="../images/1652787844289.png" alt="1652787844289"></p>
+<p>确实是$-3/8$</p>
+<h3 id="3-3-3-spn-de-xian-xing-mi-ma-fen-xi"><a href="#3-3-3-SPN的线性密码分析" class="headerlink" title="3.3.3 SPN的线性密码分析"></a>3.3.3 SPN的线性密码分析<a href="#3-3-3-spn-de-xian-xing-mi-ma-fen-xi" class="header-anchor">#</a></h3><p>线性密码分析要求找出一组S盒的线性逼近，这组线性逼近能够用来导出一个整个SPN（除最后一轮外）的线性逼近。</p>
+<p><img src="../images/1652841059091.png" alt="1652841059091"></p>
+<p><img src="../images/1652841074443.png" alt="1652841074443"></p>
+<p>上面的偏差是如何计算的呢？从定义着手，随机变量T1的变量为T1取0的概率减去1/2,那么T1取0的概率其实就是这四个变量$U_5^1,..,V_6^1$异或值为0的概率，那么这个概率是多少呢？在异或当中，如果有偶数个0，那么异或结果为0；如果有奇数个0，那么异或结果为1。注意0个0也算偶数个0</p>
+<p>有偶数个0的概率=4个都是0的概率+只有2个值为0的概率 + 全是1的概率 = $1/16 + 6/16 + 1/16 = 8/16$</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2022/05/08/angstromCTF-2022/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -512,70 +605,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/04/28/XSS-WEBGOAT/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="MirRoR4s">
-      <meta itemprop="description" content="不能说的秘密">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="学习记录">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/04/28/XSS-WEBGOAT/" class="post-title-link" itemprop="url">XSS_WEBGOAT</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-04-28 16:32:46" itemprop="dateCreated datePublished" datetime="2022-04-28T16:32:46+08:00">2022-04-28</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-09-02 16:53:31" itemprop="dateModified" datetime="2022-09-02T16:53:31+08:00">2022-09-02</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -645,7 +674,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">77</span>
+          <span class="site-state-item-count">78</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -748,6 +777,59 @@
   
 
   
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
 
   
 
