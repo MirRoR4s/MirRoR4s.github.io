@@ -20,18 +20,19 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="本文依据来源于中华人民共和国密码行业标准(GM&#x2F;T)文本，下载链接：https:&#x2F;&#x2F;github.com&#x2F;guanzhi&#x2F;GM-Standards">
-<meta property="og:type" content="article">
-<meta property="og:title" content="祖冲之序列密码算法">
+  <meta property="og:type" content="article">
+<meta property="og:title" content="GMT 0001.1-2012 祖冲之序列密码算法">
 <meta property="og:url" content="http://example.com/2022/09/21/%E7%A5%96%E5%86%B2%E4%B9%8B%E5%BA%8F%E5%88%97%E5%AF%86%E7%A0%81%E7%AE%97%E6%B3%95/index.html">
 <meta property="og:site_name" content="学习记录">
-<meta property="og:description" content="本文依据来源于中华人民共和国密码行业标准(GM&#x2F;T)文本，下载链接：https:&#x2F;&#x2F;github.com&#x2F;guanzhi&#x2F;GM-Standards">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2022/09/21/images/image-20221017170325164.png">
+<meta property="og:image" content="http://example.com/2022/09/21/images/image-20221017170536707.png">
 <meta property="article:published_time" content="2022-09-21T14:57:19.000Z">
-<meta property="article:modified_time" content="2022-09-21T15:23:03.578Z">
+<meta property="article:modified_time" content="2022-10-17T09:17:24.965Z">
 <meta property="article:author" content="MirRoR4s">
 <meta property="article:tag" content="Crypto">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2022/09/21/images/image-20221017170325164.png">
 
 <link rel="canonical" href="http://example.com/2022/09/21/%E7%A5%96%E5%86%B2%E4%B9%8B%E5%BA%8F%E5%88%97%E5%AF%86%E7%A0%81%E7%AE%97%E6%B3%95/">
 
@@ -46,7 +47,7 @@
   };
 </script>
 
-  <title>祖冲之序列密码算法 | 学习记录</title>
+  <title>GMT 0001.1-2012 祖冲之序列密码算法 | 学习记录</title>
   
 
 
@@ -202,7 +203,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          祖冲之序列密码算法
+          GMT 0001.1-2012 祖冲之序列密码算法
         </h1>
 
         <div class="post-meta">
@@ -211,10 +212,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2022-09-21 22:57:19 / 修改时间：23:23:03" itemprop="dateCreated datePublished" datetime="2022-09-21T22:57:19+08:00">2022-09-21</time>
+              <time title="创建时间：2022-09-21 22:57:19" itemprop="dateCreated datePublished" datetime="2022-09-21T22:57:19+08:00">2022-09-21</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-10-17 17:17:24" itemprop="dateModified" datetime="2022-10-17T17:17:24+08:00">2022-10-17</time>
+              </span>
 
           
 
@@ -228,20 +235,17 @@
 
       
         <!--toc-->
-<p>本文依据来源于中华人民共和国密码行业标准(GM/T)文本，下载链接：<a target="_blank" rel="noopener" href="https://github.com/guanzhi/GM-Standards">https://github.com/guanzhi/GM-Standards</a></p>
 <span id="more"></span>
-<h1 id="zu-chong-zhi-xu-lie-mi-ma-suan-fa-di-1-bu-fen-suan-fa-miao-shu"><a href="#祖冲之序列密码算法-第-1-部分：算法描述" class="headerlink" title="祖冲之序列密码算法 第 1 部分：算法描述"></a>祖冲之序列密码算法 第 1 部分：算法描述<a href="#zu-chong-zhi-xu-lie-mi-ma-suan-fa-di-1-bu-fen-suan-fa-miao-shu" class="header-anchor">#</a></h1><h2 id="zuc-stream-cipher-algorithm-part-1-description-of-the-algorithm"><a href="#ZUC-stream-cipher-algorithm——Part-1：Description-of-the-algorithm" class="headerlink" title="ZUC stream cipher algorithm——Part 1：Description of the algorithm"></a>ZUC stream cipher algorithm——Part 1：Description of the algorithm<a href="#zuc-stream-cipher-algorithm-part-1-description-of-the-algorithm" class="header-anchor">#</a></h2><h3 id="qian-yan"><a href="#前言" class="headerlink" title="前言"></a>前言<a href="#qian-yan" class="header-anchor">#</a></h3><p>《祖冲之序列密码》包括三部分：</p>
-<p>1、算法描述</p>
-<p>2、基于祖冲之算法的机密性算法；</p>
-<p>3、基于祖冲之算法的完整性算法。</p>
-<p>这篇文章主要说明祖冲之算法的算法描述部分。</p>
-<h3 id="zu-chong-zhi-xu-lie-mi-ma-suan-fa-di-1-bu-fen-suan-fa-miao-shu"><a href="#祖冲之序列密码算法-第-1-部分：算法描述-1" class="headerlink" title="祖冲之序列密码算法 第 1 部分：算法描述"></a>祖冲之序列密码算法 第 1 部分：算法描述<a href="#zu-chong-zhi-xu-lie-mi-ma-suan-fa-di-1-bu-fen-suan-fa-miao-shu" class="header-anchor">#</a></h3><h4 id="1-fan-wei"><a href="#1-范围" class="headerlink" title="1 范围"></a>1 范围<a href="#1-fan-wei" class="header-anchor">#</a></h4><h4 id="2-xiang-guan-zhu-yu-he-yue-ding"><a href="#2-相关术语和约定" class="headerlink" title="2 相关术语和约定"></a>2 相关术语和约定<a href="#2-xiang-guan-zhu-yu-he-yue-ding" class="header-anchor">#</a></h4><h5 id="2-1-bi-te-bit"><a href="#2-1-比特-bit" class="headerlink" title="2.1 比特 bit"></a>2.1 比特 bit<a href="#2-1-bi-te-bit" class="header-anchor">#</a></h5><p>二进制字符 0 和 1 称之为比特。</p>
-<h5 id="zi-jie-byte"><a href="#字节-byte" class="headerlink" title="字节 byte"></a>字节 byte<a href="#zi-jie-byte" class="header-anchor">#</a></h5><p>由8个比特组成的比特串称之为字节。</p>
-<h5 id="zi-word"><a href="#字-word" class="headerlink" title="字 word"></a>字 word<a href="#zi-word" class="header-anchor">#</a></h5><p>由2个以上（包含2个）比特组成的比特串称之为字。</p>
-<p>本部分主要使用31比特字和32比特字。</p>
-<h5 id="zi-biao-shi-word-representation"><a href="#字表示-word-representation" class="headerlink" title="字表示 word representation"></a>字表示 word representation<a href="#zi-biao-shi-word-representation" class="header-anchor">#</a></h5><p>本部分默认采用十进制表示。当字采用其他进制表示时，总是在字的表示之前或之后添加指示符。例如，前缀 0x 指示该字符采用十六进制表示，后缀下角标 2 指示该字采用二进制表示。</p>
-<h5 id="gao-di-wei-shun-xu-bit-ordering"><a href="#高低位顺序-bit-ordering" class="headerlink" title="高低位顺序 bit ordering"></a>高低位顺序 bit ordering<a href="#gao-di-wei-shun-xu-bit-ordering" class="header-anchor">#</a></h5><p>本部分规定字的最高位总是位于字表示中的最左边，最低位总是位于字表示中的最右边。</p>
-<h4 id="3-fu-hao-he-suo-lue-yu"><a href="#3-符号和缩略语" class="headerlink" title="3 符号和缩略语"></a>3 符号和缩略语<a href="#3-fu-hao-he-suo-lue-yu" class="header-anchor">#</a></h4><p>$+\ 算术加法运算\mod\ 整数取余运算\ \oplus 按比特位逐位异或$</p>
+<h2 id="zu-chong-zhi-xu-lie-mi-ma-suan-fa-di-1-bu-fen-xue-xi-zong-jie"><a href="#祖冲之序列密码算法第-1-部分学习总结" class="headerlink" title="祖冲之序列密码算法第 1 部分学习总结"></a>祖冲之序列密码算法第 1 部分学习总结<a href="#zu-chong-zhi-xu-lie-mi-ma-suan-fa-di-1-bu-fen-xue-xi-zong-jie" class="header-anchor">#</a></h2><h2 id="zu-chong-zhi-xu-lie-mi-ma-suan-fa-di-1-bu-fen-suan-fa-miao-shu"><a href="#祖冲之序列密码算法-第-1-部分：算法描述" class="headerlink" title="祖冲之序列密码算法 第 1 部分：算法描述"></a>祖冲之序列密码算法 第 1 部分：算法描述<a href="#zu-chong-zhi-xu-lie-mi-ma-suan-fa-di-1-bu-fen-suan-fa-miao-shu" class="header-anchor">#</a></h2><p>具体的内容在pdf已讲述得很清楚，所以总结主要囊括在一些细节的部分。</p>
+<h4 id="lfsr-chu-shi-hua-mo-shi"><a href="#LFSR初始化模式" class="headerlink" title="LFSR初始化模式"></a>LFSR初始化模式<a href="#lfsr-chu-shi-hua-mo-shi" class="header-anchor">#</a></h4><p>初始化模式接收一个31比特字u。u是由非线性函数F的32比特输出W通过舍弃最低位比特得到。</p>
+<p>1、注意到在初始化模式中反馈函数一共只使用了16个寄存器中的5个，分别是$s<em>{15},s</em>{13},s<em>{10},s_4,s</em>{0}$。<strong>但这五个寄存器前面的乘数目前不知道是如何选择的</strong>。$2^{15}s<em>{15}$ 表示$s</em>{15}$ 左移15位，其余同理。（这里pdf没有明确表明是否这个表示乘法）由此可见，祖冲之序列密码算法的LFSR并不是寻常的定义在GF(2)上的LFSR。</p>
+<p><img src="../images/image-20221017170325164.png" alt="image-20221017170325164"></p>
+<p>2、模数的选择，由于LFSR接收一个31比特的字u，所以模数是$2^{31}-1$，正好是31个1。</p>
+<p>3、在迭代的时候如果新生成的寄存器值为全零，那么就将其取反为全1。</p>
+<h4 id="lfsr-gong-zuo-mo-shi"><a href="#LFSR工作模式" class="headerlink" title="LFSR工作模式"></a>LFSR工作模式<a href="#lfsr-gong-zuo-mo-shi" class="header-anchor">#</a></h4><p><img src="../images/image-20221017170536707.png" alt="image-20221017170536707"></p>
+<p>工作模式的反馈函数和初始化模式的是一样的</p>
+<h3 id="yin-yong"><a href="#引用" class="headerlink" title="引用"></a>引用<a href="#yin-yong" class="header-anchor">#</a></h3><p>本文依据来源于中华人民共和国密码行业标准(GM/T)文本：<a target="_blank" rel="noopener" href="http://www.gmbz.org.cn/main/bzlb.html">http://www.gmbz.org.cn/main/bzlb.html</a></p>
+<p>相关pdf下载链接：<a target="_blank" rel="noopener" href="https://github.com/guanzhi/GM-Standards">https://github.com/guanzhi/GM-Standards</a></p>
 
     </div>
 
@@ -325,7 +329,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#zu-chong-zhi-xu-lie-mi-ma-suan-fa-di-1-bu-fen-suan-fa-miao-shu"><span class="nav-number">1.</span> <span class="nav-text">祖冲之序列密码算法 第 1 部分：算法描述</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#zuc-stream-cipher-algorithm-part-1-description-of-the-algorithm"><span class="nav-number">1.1.</span> <span class="nav-text">ZUC stream cipher algorithm——Part 1：Description of the algorithm</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#qian-yan"><span class="nav-number">1.1.1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#zu-chong-zhi-xu-lie-mi-ma-suan-fa-di-1-bu-fen-suan-fa-miao-shu"><span class="nav-number">1.1.2.</span> <span class="nav-text">祖冲之序列密码算法 第 1 部分：算法描述</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-fan-wei"><span class="nav-number">1.1.2.1.</span> <span class="nav-text">1 范围</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-xiang-guan-zhu-yu-he-yue-ding"><span class="nav-number">1.1.2.2.</span> <span class="nav-text">2 相关术语和约定</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#2-1-bi-te-bit"><span class="nav-number">1.1.2.2.1.</span> <span class="nav-text">2.1 比特 bit</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#zi-jie-byte"><span class="nav-number">1.1.2.2.2.</span> <span class="nav-text">字节 byte</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#zi-word"><span class="nav-number">1.1.2.2.3.</span> <span class="nav-text">字 word</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#zi-biao-shi-word-representation"><span class="nav-number">1.1.2.2.4.</span> <span class="nav-text">字表示 word representation</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#gao-di-wei-shun-xu-bit-ordering"><span class="nav-number">1.1.2.2.5.</span> <span class="nav-text">高低位顺序 bit ordering</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-fu-hao-he-suo-lue-yu"><span class="nav-number">1.1.2.3.</span> <span class="nav-text">3 符号和缩略语</span></a></li></ol></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#zu-chong-zhi-xu-lie-mi-ma-suan-fa-di-1-bu-fen-xue-xi-zong-jie"><span class="nav-number">1.</span> <span class="nav-text">祖冲之序列密码算法第 1 部分学习总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#zu-chong-zhi-xu-lie-mi-ma-suan-fa-di-1-bu-fen-suan-fa-miao-shu"><span class="nav-number">2.</span> <span class="nav-text">祖冲之序列密码算法 第 1 部分：算法描述</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#lfsr-chu-shi-hua-mo-shi"><span class="nav-number">2.0.1.</span> <span class="nav-text">LFSR初始化模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#lfsr-gong-zuo-mo-shi"><span class="nav-number">2.0.2.</span> <span class="nav-text">LFSR工作模式</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#yin-yong"><span class="nav-number">2.1.</span> <span class="nav-text">引用</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -339,20 +343,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">95</span>
+          <span class="site-state-item-count">96</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-count">11</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-count">22</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
