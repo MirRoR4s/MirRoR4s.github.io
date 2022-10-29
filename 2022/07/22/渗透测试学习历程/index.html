@@ -1,0 +1,705 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>渗透测试学习历程 | 学习记录</title><meta name="author" content="MirRoR4s"><meta name="copyright" content="MirRoR4s"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="红队渗透测试学习历程 在利用kali操作系统学习红队渗透之前，最好在kali下配置好代理。方便我们更新软件 https:&#x2F;&#x2F;zhuanlan.zhihu.com&#x2F;p&#x2F;414998586 kali代理福音！！">
+<meta property="og:type" content="article">
+<meta property="og:title" content="渗透测试学习历程">
+<meta property="og:url" content="https://mirror4s.top/2022/07/22/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E5%AD%A6%E4%B9%A0%E5%8E%86%E7%A8%8B/index.html">
+<meta property="og:site_name" content="学习记录">
+<meta property="og:description" content="红队渗透测试学习历程 在利用kali操作系统学习红队渗透之前，最好在kali下配置好代理。方便我们更新软件 https:&#x2F;&#x2F;zhuanlan.zhihu.com&#x2F;p&#x2F;414998586 kali代理福音！！">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://s2.loli.net/2022/10/29/IfNThRa5dqZ2KAH.png">
+<meta property="article:published_time" content="2022-07-22T01:34:37.000Z">
+<meta property="article:modified_time" content="2022-09-02T08:53:24.867Z">
+<meta property="article:author" content="MirRoR4s">
+<meta property="article:tag" content="Web">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s2.loli.net/2022/10/29/IfNThRa5dqZ2KAH.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://mirror4s.top/2022/07/22/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E5%AD%A6%E4%B9%A0%E5%8E%86%E7%A8%8B/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta/><meta/><meta/><meta/><meta/><meta/><meta/><meta/><meta/><meta/><meta/><meta/><meta/><meta/><meta/><meta/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '渗透测试学习历程',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: true,
+  isToc: true,
+  postUpdate: '2022-09-02 16:53:24'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.1.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://s2.loli.net/2022/10/29/9JUMAPsw5BOigto.jpg" onerror="onerror=null;src='/img/output.jpg'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">108</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">28</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">13</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://s2.loli.net/2022/10/29/IfNThRa5dqZ2KAH.png')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">学习记录</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">渗透测试学习历程</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-07-22T01:34:37.000Z" title="发表于 2022-07-22 09:34:37">2022-07-22</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-09-02T08:53:24.867Z" title="更新于 2022-09-02 16:53:24">2022-09-02</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="渗透测试学习历程"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><!--toc-->
+<p><code>红队渗透测试学习历程</code></p>
+<p>在利用kali操作系统学习红队渗透之前，最好在kali下配置好代理。方便我们更新软件</p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/414998586">https://zhuanlan.zhihu.com/p/414998586</a> kali代理福音！！</p>
+<span id="more"></span>
+<h1 id="xin-xi-shou-ji"><a href="#信息收集" class="headerlink" title="信息收集"></a>信息收集<a href="#xin-xi-shou-ji" class="header-anchor">#</a></h1><p>[TOC]</p>
+<h2 id="nmap"><a href="#Nmap" class="headerlink" title="Nmap"></a>Nmap<a href="#nmap" class="header-anchor">#</a></h2><p>安装：Ubuntu: apt-get install nmap</p>
+<p>手册：<a target="_blank" rel="noopener" href="https://nmap.org/man/zh/index.html">https://nmap.org/man/zh/index.html</a></p>
+<h4 id="sao-miao-fang-shi"><a href="#扫描方式" class="headerlink" title="扫描方式"></a>扫描方式<a href="#sao-miao-fang-shi" class="header-anchor">#</a></h4><ul>
+<li>[ ] TCP : -sT</li>
+<li>[ ] SYN : -sS</li>
+<li>[ ] ACK : -sA</li>
+<li>[ ] UDP : -sU</li>
+<li>[ ] RPC : -sR</li>
+<li>[ ] ICMP : -sP</li>
+<li>[ ] Disable Port Scan : -sn</li>
+</ul>
+<h4 id="chang-jian-sao-miao-fang-an"><a href="#常见扫描方案" class="headerlink" title="常见扫描方案"></a>常见扫描方案<a href="#chang-jian-sao-miao-fang-an" class="header-anchor">#</a></h4><ul>
+<li>[ ] 扫描10000端口、操作系统、版本: namp -T4 -A <target></target></li>
+<li>[ ] 版本探测: nmap -sV <target></target></li>
+<li>[ ] nmap -O <target></target></li>
+</ul>
+<p>如上可以看出nmap的参数使用方式大多都是 -s? ，s应该代表扫描的意思，后面的字符表明了扫描的方式。</p>
+<h4 id="qi-ta-ji-qiao"><a href="#其他技巧" class="headerlink" title="其他技巧"></a>其他技巧<a href="#qi-ta-ji-qiao" class="header-anchor">#</a></h4><ul>
+<li>[ ] —host-timeout 主机超时时间，通常选值：18000</li>
+<li>[ ] —scan-delay 报文时间间隔，通常选址：1000</li>
+<li>[ ] -S &lt;源地址&gt; 定义扫描源地址，为了不被发现 </li>
+</ul>
+<h4 id="shi-li"><a href="#示例" class="headerlink" title="示例"></a>示例<a href="#shi-li" class="header-anchor">#</a></h4><p><code>nmap -V -iR 100000 -P0 -p 80</code> 随机选择100000台主机扫描是否允许Web服务器（80端口）。由起始阶段发送探测报文来确定主机是否工作非常浪费时间，而且只需探测主机的一个端口，因此使用-P0禁止对主机列表</p>
+<p><code>host -l company.com | cut -d -f 4 | nmap -v -iL</code> 进行DNS区域传输，以发现company.com中的主机，然后将ip地址提供给Nmap</p>
+<h4 id="shu-chu"><a href="#输出" class="headerlink" title="输出"></a>输出<a href="#shu-chu" class="header-anchor">#</a></h4><ul>
+<li><p>[ ] -oN <file></file></p>
+</li>
+<li><p>[ ] -oX <xml file></xml></p>
+</li>
+<li><p>[ ] -oG <filespec></filespec></p>
+<p>Grep输出参考 ： <a target="_blank" rel="noopener" href="http://www.unspecific.com/nmap-oG-output/">http://www.unspecific.com/nmap-oG-output/</a></p>
+</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sudo nmap -O -oG - 10.1.1.100</span><br><span class="line">sudo nmap -oG -</span><br><span class="line">sudo nmap -oG test.txt baidu.com </span><br><span class="line">test.txt默认保存在当前的目录下</span><br></pre></td></tr></table></figure>
+<h2 id="masscan"><a href="#masscan" class="headerlink" title="masscan"></a>masscan<a href="#masscan" class="header-anchor">#</a></h2><p>项目地址： <a target="_blank" rel="noopener" href="https://github.com/robertdavidgraham/masscan">https://github.com/robertdavidgraham/masscan</a></p>
+<p>安装：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install git gcc make libpcap-dev</span><br><span class="line">git clone https://github.com/robertdavidgraham/masscan</span><br><span class="line">cd masscan</span><br><span class="line">make</span><br></pre></td></tr></table></figure>
+<p>该工具兼容Nmap的参数</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">masscan --ports <span class="number">1</span>-<span class="number">10000</span> <span class="number">192.168</span><span class="number">.117</span><span class="number">.130</span> --adapter-ip <span class="number">192.168</span><span class="number">.117</span><span class="number">.1</span></span><br><span class="line">扫描 <span class="number">192.168</span><span class="number">.117</span><span class="number">.130</span>的<span class="number">1</span>到<span class="number">10000</span>端口，并以源ip为<span class="number">192.168</span><span class="number">.117</span><span class="number">.1</span>发送探测包</span><br></pre></td></tr></table></figure>
+<ul>
+<li>[ ] —adapter-ip 指定发包的IP地址</li>
+<li>[ ] —adapter-port 指定发包的源端口</li>
+<li>[ ] —adapter-mac 指定发包的源MAC地址</li>
+<li>[ ] —router-mac 指定网关的MAC地址</li>
+<li>[ ] —exclude IP地址范围黑名单，防止masscan扫描</li>
+<li>[ ] —excludefile 指定IP地址范围黑名单文件</li>
+<li>[ ] —includefile,-iL 读取一个范围列表进行扫描</li>
+<li>[ ] —wait 指定发送完包之后的等待时间，默认为10秒</li>
+</ul>
+<h2 id="nbtscan"><a href="#Nbtscan" class="headerlink" title="Nbtscan"></a>Nbtscan<a href="#nbtscan" class="header-anchor">#</a></h2><p>Nbtscan是一个扫描Windows网络NetBIOS信息的小工具，身材娇小，简单快速。但只能用于局域网，可以显示IP，主机名，用户名称和MAC地址等等，通常用于后渗透、内网渗透的信息收集。</p>
+<p>下载地址：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://github.com/search?q=nbtscan</span><br></pre></td></tr></table></figure>
+<p>Nbtscan在Kali中自带了。</p>
+<p>Nbtscan的常用扫描命令：</p>
+<p>一、扫描整个C段：</p>
+<p>扫描参数：nbtscan -r 目标/24</p>
+<p><img src="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LKwvIuOmsoicpffk7N0cVibfDiaxOEvN9kZQRicOJDy4ibrzSPphE4AmWCdvl2qe1wnic1gGjhSS8GPfIww/640" alt="img"></p>
+<p>二、扫描一个范围：</p>
+<p>扫描参数：nbtscan 目标（起始）- 目标 （结尾）</p>
+<p><img src="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LKwvIuOmsoicpffk7N0cVibfDicykw5Q8df9DSlGZVPvqibelHc77otbTTN8BN77MrW9KcdyG9epmNuow/640" alt="img"></p>
+<p>三、以：分割显示结果：<br>扫描参数： nbtscan -v -s : 目标</p>
+<p><img src="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LKwvIuOmsoicpffk7N0cVibfD3LP2SkReulpC3WEgOg9Hdt8MFTFibY9GI78icUBfIjOFibrP4SDshjYAA/640" alt="img"></p>
+<p>四、扫描文件里的目标范围：</p>
+<p>扫描参数： nbtscan -f 文件名</p>
+<p><img src="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LKwvIuOmsoicpffk7N0cVibfD2ibjEuJjicYBl9TJ7Zwh1ichS8L6oOAHXRRoLTHibVUMrY3IdMVicQjjRBA/640" alt="img"></p>
+<h2 id="hping3-xin-xi-sou-ji"><a href="#Hping3-信息搜集" class="headerlink" title="Hping3-信息搜集"></a>Hping3-信息搜集<a href="#hping3-xin-xi-sou-ji" class="header-anchor">#</a></h2><p>hping3是一款免费的数据包生成器和分析器。可用于安全审计、防火墙规则测试、网络测试、端口扫描、性能测试、压力测试，几乎可以发送任意类型的TCP/IP数据包。功能强大但是每次只能向一个IP地址发送数据包，还能够在两个相互包含的通道之间传送文件。</p>
+<p>下载地址：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://www.hping.org/download.html</span><br></pre></td></tr></table></figure>
+<p>Hping3常见的使用方法：</p>
+<p>一、ICMP测试</p>
+<p>扫描参数：hping3 -1 目标 （类似于ping命令）</p>
+<p><img src="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LJaYja8J7lQyQjNvnZkYa5iabHcGMiaRNIVFbt0IqL1QhBgm2vVfwekyz8Vs57DlsZS1Meh6PlZWcMA/640?wx_fmt=png" alt="img"></p>
+<p>二、SYN方式扫描主机端口</p>
+<p>扫描参数：hping3 —scan 端口范围 -S 目标</p>
+<p><img src="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LJaYja8J7lQyQjNvnZkYa5iau00ficRv9fPoW2iczJuFpFvxOfKdPSK5eia93qXecmRtfI4ssVAibR140Q/640?wx_fmt=png" alt="img"></p>
+<p>由上图可见，目标主机回复了 S..A，代表的是SYN/ACK</p>
+<p>三、数据包追踪</p>
+<p>类似于：traceroute www.baidu.com</p>
+<p>扫描参数： hping3 —traceroute -V -1 www.baidu.com</p>
+<p><img src="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LJaYja8J7lQyQjNvnZkYa5ia2nCULFH6gG1wOvVJtTqJUxAb4OkCCKLwGL3faswa0zLEibZFG1UbxOQ/640?wx_fmt=png" alt="img"></p>
+<p>四、进行洪水攻击</p>
+<p>扫描参数： hping3 -S —flood -rand —source -p 80 目标</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">-S 表示发送的是SYN包。这里涉及到TCP的三次握手，客户端与服务器要建立连接，首先要先由客户端向发服务器发送一个SYN包请求连接，服务器收到客户端发来的SYN包后会回复一个SYN+ACK包表示可以进行连接，之后客户端再发送一个SYN+ACK包，当这个包发送完成之后，客户端和服务器的连接就算成功了。因此，这个参数导致的结果时向服务器发送SYN包却不对返回的SYN+ACK包进行回应，使服务器保持在一种&quot;半连接&quot;在状态</span><br><span class="line">--flood 表示以洪水的方式发送，就是拼了命地发</span><br><span class="line">-rand--source 是指定随机来源，意思是假装有很多台主机要和服务器连接，实际上这些主机IP都是伪造的-p 80 指定端口号为80</span><br></pre></td></tr></table></figure>
+<p><img src="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LJaYja8J7lQyQjNvnZkYa5ia6Jp3wtjK1wA21r7us6ZBwUOicxT4aoemeMia4oqLJD8FJzHatbrETSIw/640?wx_fmt=png" alt="img"></p>
+<h2 id="pydictor-zi-dian-sheng-cheng-xin-xi-shou-ji"><a href="#Pydictor字典生成-信息收集" class="headerlink" title="Pydictor字典生成-信息收集"></a>Pydictor字典生成-信息收集<a href="#pydictor-zi-dian-sheng-cheng-xin-xi-shou-ji" class="header-anchor">#</a></h2><p>关联信息生成：</p>
+<p>在渗透前期工作开展之前，需要对目标的各种信息进行分析、研究、组合。</p>
+<p>例如：某度</p>
+<p>根据地域习惯、宗教、互联网开放信息等信息进行简要分析，假设获取到的信息如下：</p>
+<p>拿手抓饭</p>
+<p>用手擦屁屁</p>
+<p>当地人信奉伊斯兰教</p>
+<p>根据生活习惯、宗教信仰、获取到的已有信息等，为后续的字典进行生成，为后续的一些鱼叉、水抗攻击做铺垫</p>
+<p>pydictor是一个强大使用的黑客暴力破解字典建立工具</p>
+<p>下载地址：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git clone --depth=1 --branch=master https://www.github.com/landgrey/pydictor.git</span><br><span class="line">cd pydictor/</span><br><span class="line">chmod +x pydictor.py</span><br><span class="line">python pydictor.py</span><br></pre></td></tr></table></figure>
+<p>官方手册语法：<a target="_blank" rel="noopener" href="https://github.com/LandGrey/pydictor/blob/master/README_CN.md">https://github.com/LandGrey/pydictor/blob/master/README_CN.md</a></p>
+<p>常见的生成字典模式：</p>
+<p>一、生成纯数字字典：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">python pydictor.py -base -d --len 1 6 #生成1-6位纯数字密码字典</span><br><span class="line">python pydictor.py -base -d --len 6 6 #生成6位纯数字密码字典</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p><img src="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LIcHiccRN6Xs2gordw5KPYUNaI4Lj4R3N1sWdE7G0AJnqdp4vcyaOOIwGmkg6mgOI4cLiaFjnGpeLog/640?wx_fmt=png" alt="img"></p>
+<p><img src="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LIcHiccRN6Xs2gordw5KPYUNBoY1ziaIRUdibKbKeFxwkhWYm67WD7QwHoBMKDK5X4Hmibwd45TgHj5BA/640?wx_fmt=png" alt="img"></p>
+<p>二、生成数字+字母的字典</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">python pydictor.py -base dL --len 1 3  #生成1-3位数字小写字母混合密码</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p><img src="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LIcHiccRN6Xs2gordw5KPYUN6Emsr1vr0mBGzfOlxtEXibfFFN6Rhu2YvMgAWOk6Rkkoic3GaiaftRgFg/640?wx_fmt=png" alt="img"></p>
+<p><img src="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LIcHiccRN6Xs2gordw5KPYUN55pnqvyTzibqzIMo4Hz6gNNIL5GgHalIfcswSDWwIHljQS7icmSMFWhg/640?wx_fmt=png" alt="img"></p>
+<p>三、根据社会工程学生成字典：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">python pydictor.py --setdb</span><br><span class="line">用set 来设置参数，如:</span><br><span class="line">set cname RedTeaming</span><br><span class="line">set phone 5201314</span><br><span class="line">set email RedTeam@hacker</span><br><span class="line">设置完参数运行： run</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p><img src="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LIcHiccRN6Xs2gordw5KPYUN6TLXZAgszsWDeia8rb8HiaBctsBJdZLMt60wI7Z3zVhFES2ibWic9VIf3w/640?wx_fmt=png" alt="img"></p>
+<p>参考文章：</p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/R-S-PY/p/12929170.html">https://www.cnblogs.com/R-S-PY/p/12929170.html</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/LandGrey/pydictor/blob/master/README_CN.md">https://github.com/LandGrey/pydictor/blob/master/README_CN.md</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/LandGrey/pydictor/blob/master/docs/doc/usage.md">https://github.com/LandGrey/pydictor/blob/master/docs/doc/usage.md</a></p>
+<h2 id="ru-he-shi-xian-jing-zhun-gps-ding-wei-ip-ji-zuo-biao-jing-que-wu-chai-50m-fan-wei-zuo-you-xin-xi-sou-ji"><a href="#如何实现精准GPS定位IP及坐标，精确误差50m范围左右-信息搜集" class="headerlink" title="如何实现精准GPS定位IP及坐标，精确误差50m范围左右-信息搜集"></a>如何实现精准GPS定位IP及坐标，精确误差50m范围左右-信息搜集<a href="#ru-he-shi-xian-jing-zhun-gps-ding-wei-ip-ji-zuo-biao-jing-que-wu-chai-50m-fan-wei-zuo-you-xin-xi-sou-ji" class="header-anchor">#</a></h2><p>无论是在hvv期间的红队还是蓝队，又或者是在实际情况中，信息搜集是最为重要的。但你获取到足够多的情报那么你的任务就已经完成了一半。而你只需要想：我拿到信息之后如何去利用它？</p>
+<p>精准定位- <code>Seeker</code></p>
+<p>Seeker背后的概念很简单，就像我们托管网络钓鱼页面以获得凭据一样，为什么不托管一个伪造页面来请求你的位置，就像许多流行的基于位置得网站一样。Seeker在内置PHP服务器上托管了一个虚假网站，并使用Serveo生成了一个链接，该链接将转发给目录，网站要求提供位置许可，如果目标允许，我们可以获得：</p>
+<p>经度、纬度、精准性、高度-并非总是可用、方向-仅在用户移动时可用、速度-仅在用户移动时可用</p>
+<p>除位置信息外，我们还获得未经任何许可的设备信息：</p>
+<p>操作系统、平台、CPU核心数、RAM数量-近似结果、屏幕分辨率、浏览器名称和版本、公用IP地址、IP地址侦察</p>
+<p>该工具是概念证明，仅用于教育目的，Seeker会显示恶意网站可用收集有关您和您的设备的数据，以及为什么您不应该单机随机链接并允许诸如位置等关键权限的原因。</p>
+<p>下载安装：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/thewhiteh4t/seeker.git</span><br><span class="line">cd seeker/</span><br><span class="line">chmod 777 install.sh</span><br><span class="line">./install.sh</span><br></pre></td></tr></table></figure>
+<p><img src="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LLtiaBc8GsMDzm1y3ibCZ6LbXBm67N4jdBX2zDSpya09DMIqmc45mMhR4rLYwGTlgFB3kp2zOuCNf9A/640?wx_fmt=png" alt="img"></p>
+<p>后面要用到公网域名了，以后再补这个工具把。</p>
+<h2 id="kai-fang-lou-dong-exp-poc-qing-bao-sou-ji"><a href="#开放漏洞（exp、poc）情报搜集" class="headerlink" title="开放漏洞（exp、poc）情报搜集"></a>开放漏洞（exp、poc）情报搜集<a href="#kai-fang-lou-dong-exp-poc-qing-bao-sou-ji" class="header-anchor">#</a></h2><h3 id="chang-jian-lou-dong-qing-bao-wang-zhan"><a href="#常见漏洞情报网站" class="headerlink" title="常见漏洞情报网站"></a>常见漏洞情报网站<a href="#chang-jian-lou-dong-qing-bao-wang-zhan" class="header-anchor">#</a></h3><p><strong>Exploit-DB</strong>是一个面向全世界黑客的漏洞提交平台，该平台会公布最新漏洞的相关情况，这些可用帮助企业改善公司的安全状况，同时也以帮助安全研究者和渗透测试工程师更好的进行安全测试工作。<strong>Exploit-DB</strong>提供一整套庞大的归档体系，其中涵盖了各类公开的攻击事件、漏洞报告、安全文章以及技术教程等资源。</p>
+<p>官方网站：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://www.exploit-db.com/</span><br></pre></td></tr></table></figure>
+<p>命令参数介绍</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">Usage: searchsploit [options] term1 [term2] ... [termN]</span><br><span class="line"> </span><br><span class="line">==========</span><br><span class="line"> Examples</span><br><span class="line">==========</span><br><span class="line">  searchsploit afd windows local</span><br><span class="line">  searchsploit -t oracle windows</span><br><span class="line">  searchsploit -p 39446</span><br><span class="line">  searchsploit linux kernel 3.2 --exclude=&quot;(PoC)|/dos/&quot;</span><br><span class="line"> </span><br><span class="line">  For more examples, see the manual: https://www.exploit-db.com/searchsploit/</span><br><span class="line"> </span><br><span class="line">=========</span><br><span class="line"> Options</span><br><span class="line">=========</span><br><span class="line">   -c, --case     [Term]      区分大小写(默认不区分大小写)</span><br><span class="line">   -e, --exact    [Term]      对exploit标题进行EXACT匹配 (默认为 AND) [Implies &quot;-t&quot;].</span><br><span class="line">   -h, --help                 显示帮助</span><br><span class="line">   -j, --json     [Term]      以JSON格式显示结果</span><br><span class="line">   -m, --mirror   [EDB-ID]    把一个exp拷贝到当前工作目录,参数后加目标id</span><br><span class="line">   -o, --overflow [Term]      Exploit标题被允许溢出其列</span><br><span class="line">   -p, --path     [EDB-ID]    显示漏洞利用的完整路径（如果可能，还将路径复制到剪贴板），后面跟漏洞ID号</span><br><span class="line">   -t, --title    [Term]      仅仅搜索漏洞标题（默认是标题和文件的路径）</span><br><span class="line">   -u, --update               检查并安装任何exploitdb软件包更新（deb或git）</span><br><span class="line">   -w, --www      [Term]      显示Exploit-DB.com的URL而不是本地路径（在线搜索）</span><br><span class="line">   -x, --examine  [EDB-ID]    使用$ PAGER检查（副本）Exp</span><br><span class="line">       --colour               搜索结果不高亮显示关键词</span><br><span class="line">       --id                   显示EDB-ID</span><br><span class="line">       --nmap     [file.xml]  使用服务版本检查Nmap XML输出中的所有结果（例如：nmap -sV -oX file.xml）</span><br><span class="line">                                使用“-v”（详细）来尝试更多的组合</span><br><span class="line">       --exclude=&quot;term&quot;       从结果中删除值。通过使用“|”分隔多个值</span><br><span class="line">                              例如--exclude=“term1 | term2 | term3”。</span><br><span class="line"> </span><br><span class="line">=======</span><br><span class="line"> Notes</span><br><span class="line">=======</span><br><span class="line"> * 你可以使用任意数量的搜索词。</span><br><span class="line"> * Search terms are not case-sensitive (by default), and ordering is irrelevant.</span><br><span class="line">   * 搜索术语不区分大小写(默认情况下)，而排序则无关紧要。</span><br><span class="line">   * 如果你想用精确的匹配来过滤结果，请使用用 -e 参数</span><br><span class="line"> * 使用&#x27; - t &#x27;将文件的路径排除，以过滤搜索结果</span><br><span class="line">   * 删除误报(特别是在搜索使用数字时 - i.e. 版本).</span><br><span class="line"> * 当更新或显示帮助时，搜索项将被忽略。</span><br></pre></td></tr></table></figure>
+<p>在Kali linux下自带了Exploit-DB搜索，我们可用输入命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">searchsploit</span><br></pre></td></tr></table></figure>
+<p>示例一：搜索有关Windos提权漏洞</p>
+<p>搜索命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">searchsploit -t windows local</span><br></pre></td></tr></table></figure>
+<p><img src="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LKVhucMAdyFtAiaN8E5A5qH4oIamdIJic1CDAwz0CQ1azebtN4iacDRlTUOvDb1zpD2fKJBUKdStIlsw/640?wx_fmt=png" alt="img"></p>
+<p>示例二：搜索有关于Linux提权漏洞</p>
+<p>搜索命令</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">searchsploit -t linux local</span><br></pre></td></tr></table></figure>
+<p><img src="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LKVhucMAdyFtAiaN8E5A5qH42Y42RLmaGHibsyjSGcN0iaib6NanmRWQgrf3eDLUuqZFxzeSSu2RqV55Q/640?wx_fmt=png" alt="img"></p>
+<p>示例三：搜索有关于Apache相关漏洞</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">searchsploit -t apache</span><br></pre></td></tr></table></figure>
+<p><img src="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LKVhucMAdyFtAiaN8E5A5qH4jJJAdPBAjejVNqMkjdgkgNrBPRwOhN6jVdpwIe6DXCibefKpjFceYiaw/640?wx_fmt=png" alt="img"></p>
+<p>示例四：Kali下的exploit-DB默认是没有更新的，如果想要更新那么就使用这条命令（更新速度取决于你的网速和你的源）</p>
+<p>更新命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">searchsploit -u</span><br></pre></td></tr></table></figure>
+<p><img src="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LKVhucMAdyFtAiaN8E5A5qH4cUUZHYJwQRvf04ZOe74I7RRex5BTWHTTweicI7mKxiaib2Sl5BHJm2E7g/640?wx_fmt=png" alt="img"></p>
+<p><strong>在线接口</strong></p>
+<p>一：The Web of WebScan（一个同IP、旁站、C段在线查询网址）</p>
+<p>域名：<strong><a target="_blank" rel="noopener" href="https://www.webscan.cc/">https://www.webscan.cc/</a></strong></p>
+<p><img src="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LKVhucMAdyFtAiaN8E5A5qH4W8btibfzribl8hdFyzZ6s2uicEB3j8tjc2uV2Dr9vdmAms5v4uB2a4JcQ/640?wx_fmt=png" alt="img"></p>
+<p>二：在线子域名查询-接口光速版</p>
+<p>域名：<strong><a target="_blank" rel="noopener" href="http://sbd.ximcx.cn/">http://sbd.ximcx.cn/</a></strong></p>
+<p><img src="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LKVhucMAdyFtAiaN8E5A5qH4r25jPyhTxLypUFH8fdluB3LCgJyZ9yNibxfgviaPtw6SHYUT5ROWBNTQ/640?wx_fmt=png" alt="img"></p>
+<p>三：在线cms指纹识别</p>
+<p>域名：<strong><a target="_blank" rel="noopener" href="http://whatweb.bugscaner.com/look/">http://whatweb.bugscaner.com/look/</a></strong></p>
+<p><img src="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LKVhucMAdyFtAiaN8E5A5qH45SWUuiaegvhicYlv57V7JZyYBwNO2icZeBRkbibLLVuEdTq6IICPgHtzrg/640?wx_fmt=png" alt="img"></p>
+<p>还有以下网址：</p>
+<p>域名：<strong><a target="_blank" rel="noopener" href="https://url.fht.im/">https://url.fht.im/</a></strong></p>
+<p>域名：<strong><a target="_blank" rel="noopener" href="http://viewdns.info/">http://viewdns.info/</a>
+</strong>域名：<strong><a target="_blank" rel="noopener" href="http://www.t1shopper.com/tools/port-scan/">http://www.t1shopper.com/tools/port-scan/</a></strong></p>
+<p>……等等</p>
+<hr>
+<p>参考文章：</p>
+<p><a target="_blank" rel="noopener" href="https://www.freebuf.com/sectool/139685.html">https://www.freebuf.com/sectool/139685.html</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_20336817/article/details/42320189">https://blog.csdn.net/qq_20336817/article/details/42320189</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/ca234f8cd661">https://www.jianshu.com/p/ca234f8cd661</a></p>
+<h2 id="whois-dns-pang-zhan-c-duan-cha-xun-xin-xi-sou-ji-pian"><a href="#Whois、Dns、旁站C段查询-信息搜集篇" class="headerlink" title="Whois、Dns、旁站C段查询-信息搜集篇"></a>Whois、Dns、旁站C段查询-信息搜集篇<a href="#whois-dns-pang-zhan-c-duan-cha-xun-xin-xi-sou-ji-pian" class="header-anchor">#</a></h2><h3 id="zhu-ji-fa-xian"><a href="#主机发现" class="headerlink" title="主机发现"></a>主机发现<a href="#zhu-ji-fa-xian" class="header-anchor">#</a></h3><p>在知道目标的域名之后，您想做的第一件事可能就是从whois数据库里获取域名的注册信息。whois数据库记录有该域名的DNS服务器信息和注册人的联系信息。</p>
+<p>WHOIS是一个标准的互联网协议，可用于收集网络注册、注册域名、ip地址和自治系统的信息。</p>
+<p>Kali Linux带有whois客户端程序。如果需要查询某一域名的whois信息，可在终端中使用下述whois指令：</p>
+<p>查询命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">whois baidu.com</span><br></pre></td></tr></table></figure>
+<p><img src="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LKynSSqTP7HazbNic3tlLk93icaxGddPtT1TAMe5SkSu4bMopNqibFiaeWse4iclK48kBT4jbvPh4yZ3Dg/640?wx_fmt=png" alt="img"></p>
+<p>同样我们还可用通过在线查询网站查询：<strong><a target="_blank" rel="noopener" href="http://whois.chinaz.com/">http://whois.chinaz.com/</a></strong></p>
+<p><img src="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LKynSSqTP7HazbNic3tlLk93L8Hqsl26rNOo3bYt8ib2Vaa8XuYJlG6yiaYuOt7tIaFq5PXKAUibMLbnA/640?wx_fmt=png" alt="img"></p>
+<p>还可以通过whois反查域名或者邮箱还注册了那些域名：</p>
+<p><img src="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LKynSSqTP7HazbNic3tlLk93kEAo9x8ibp1to3wSOF9TFhXZWOjgsvnfwDicNEMBCia2dbhqdXSqiaG3Tg/640?wx_fmt=png" alt="img"></p>
+<h3 id="dns-li-shi-jie-xi"><a href="#DNS历史解析" class="headerlink" title="DNS历史解析"></a>DNS历史解析<a href="#dns-li-shi-jie-xi" class="header-anchor">#</a></h3><p>查询网站曾经解析到过那些服务器，对于了解一个网站成长过程，信息搜集，对我们红队人员有很大的帮助！先说一下什么是A记录、别名记录、MX记录、TXT记录、NS记录。</p>
+<h4 id="a-ji-lu"><a href="#A记录：" class="headerlink" title="A记录："></a>A记录：<a href="#a-ji-lu" class="header-anchor">#</a></h4><p>是用来指定主机名或域名对应的IP地址记录。用户可以将该域名下的网站服务器指向到自己的web server上。同时也可以设置您域名的二级域名。</p>
+<h4 id="bie-ming-cname-ji-lu"><a href="#别名-CNAME-记录：" class="headerlink" title="别名(CNAME)记录："></a>别名(CNAME)记录：<a href="#bie-ming-cname-ji-lu" class="header-anchor">#</a></h4><p>也被成为规范名字。这种记录允许您将多个名字映射到同一台计算机。通常用于同时提供WWW和MAIL服务的计算机。例如，有一台计算机名为 <code>host.mydomain.com</code>（A记录）。它同时提供WWW和MAIL服务，为了便于用户访问服务。可以为该计算机设置两个别名（CNAME）：WWW和MAIL。这两个别名的全称就是<code>www.mydomain.com</code>和<code>mail.mydomain.com</code>。实际上他们都指向<code>host.mydomain.com</code>。同样的方法可以用于当您拥有多个域名需要指向同一服务器IP，此时您就可以将一个域名做A记录指向服务器IP，此时您就可以将一个域名做A记录指向服务器IP，然后将其他得域名做别名到之前做A记录得域名上，那么当您得服务器IP地址变更时您就可以不必麻烦得一个一个域名更改指向了，只需要改做A记录得那个域名其他做别名得那些域名得指向也将自动更改到新得IP地址上了。</p>
+<p>如何检测CNAME记录？</p>
+<p>1、进行命令行状态；</p>
+<p>2、输入命令“nslookup -q=cname 这里填写对应得域名或二级域名”查看返回得结果于设置得是否一致即可。</p>
+<h4 id="mx-mail-exchange-ji-lu"><a href="#MX（Mail-Exchange）记录：" class="headerlink" title="MX（Mail Exchange）记录："></a>MX（Mail Exchange）记录：<a href="#mx-mail-exchange-ji-lu" class="header-anchor">#</a></h4><p>是邮件交换记录，它指向一个邮件服务器，用于电子邮件系统发邮件时根据收信人的地址后缀来定位邮件服务器。例如，当Internet上的某用户要发一封信给user@mydomain.com时，该用户的邮件系统通过DNS查找mydomain.com这个域名的MX记录，如果MX记录存在，用户计算机就将邮件发送到MX记录所指定的邮件服务器上。</p>
+<h4 id="shi-me-shi-txt-ji-lu"><a href="#什么是TXT记录？" class="headerlink" title="什么是TXT记录？"></a>什么是TXT记录？<a href="#shi-me-shi-txt-ji-lu" class="header-anchor">#</a></h4><p>TXT记录一般指为某个主机名或域名设置的说明，如：</p>
+<p>1）admin IN TXT “jack，mobile：13800138000”；</p>
+<p>2）mail IN TXT “邮件主机，存放在xxx，管理人：AAA”</p>
+<p>也就是您可以设置TXT，以便使别人联系到您。</p>
+<p>如何检测TXT记录？</p>
+<p>1、进入命令状态；</p>
+<p>2、输入命令 “nslookup -q=txt 这里填写对应的域名或二级域名”，查看返回的结果与设置的是否一致即可。</p>
+<p><img src="C:\Users\mirror\AppData\Roaming\Typora\typora-user-images\image-20220801134902496.png" alt="image-20220801134902496"></p>
+<h4 id="shi-me-shi-ns-ji-lu"><a href="#什么是NS记录" class="headerlink" title="什么是NS记录"></a>什么是NS记录<a href="#shi-me-shi-ns-ji-lu" class="header-anchor">#</a></h4><p>ns记录全称为Name Server是一种域名服务器记录，用来明确当前你的域名是由哪个DNS服务器来进行解析的</p>
+<p>参考文章：<a target="_blank" rel="noopener" href="https://www.22.cn/help_34.html">https://www.22.cn/help_34.html</a></p>
+<p>在Kali Linux下，查询DNS解析可以通过nslookup来进行查询：</p>
+<p>查询命令：<code>nslookup 要查询的域名</code></p>
+<p><img src="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LKynSSqTP7HazbNic3tlLk93LwsXwTptNDtk0PbKAibs9EXb2qOETB29jz1VClY1g7JccOKETHtuibUQ/640?wx_fmt=png" alt="img"></p>
+<p>首先解析成了www.a.shifen.com，是一个cname记录。</p>
+<p>cname记录：别名记录，允许将多个域名映射到同一个IP地址。</p>
+<p>在解析cname，最终得到最终地址14.215.177.38和14.215.177.39。</p>
+<p>上面的DNS服务器是本地的，也可以自己指定一个DNS服务器：</p>
+<p>设置命令： server 114.114.114.114</p>
+<p><img src="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LKynSSqTP7HazbNic3tlLk93nYPMFoFUCiaCdNR7W8eNe68WcGvx5C7oKqmTUw97VOp2XANXs22ibX8Q/640?wx_fmt=png" alt="img"></p>
+<p>还可以查询mx记录：查询命令：set type = mx 要查询的域名</p>
+<p><img src="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LKynSSqTP7HazbNic3tlLk93bHE98eNgBFsgt7XOYL5qKxOz26j960mTCvdWYFibkx7JDhQDx2uk93w/640?wx_fmt=png" alt="img"></p>
+<p>还有以下查询： </p>
+<p>​    A 地址记录(Ipv4)<br>　　AAAA 地址记录（Ipv6）<br>　　AFSDB Andrew文件系统数据库服务器记录（不懂）<br>　　ATMA ATM地址记录（不是自动提款机）<br>　　CNAME 别名记录<br>　　HINFO 硬件配置记录，包括CPU、操作系统信息<br>　　ISDN 域名对应的ISDN号码<br>　　MB 存放指定邮箱的服务器<br>　　MG 邮件组记录<br>　　MINFO 邮件组和邮箱的信息记录<br>　　MR 改名的邮箱记录<br>　　MX 邮件服务器记录<br>　　NS 名字服务器记录<br>　　PTR 反向记录（从IP地址解释域名）<br>　　RP 负责人记录<br>　　RT 路由穿透记录（不懂）<br>　　SRV TCP服务器信息记录（将有大用处）<br>　　TXT 域名对应的文本信息<br>　　X25 域名对应的X.25地址记录</p>
+<h4 id="zai-kali-xia-huan-you-yi-ge-ming-ling-ke-yi-cha-kan-dns-jie-xi-dig-ming-ling"><a href="#在kali下还有一个命令可以查看DNS解析：dig命令。" class="headerlink" title="在kali下还有一个命令可以查看DNS解析：dig命令。"></a>在kali下还有一个命令可以查看DNS解析：dig命令。<a href="#zai-kali-xia-huan-you-yi-ge-ming-ling-ke-yi-cha-kan-dns-jie-xi-dig-ming-ling" class="header-anchor">#</a></h4><h5 id="ming-ling-cha-xun-dig-baidu-com"><a href="#命令查询：dig-baidu-com" class="headerlink" title="命令查询：dig baidu.com"></a>命令查询：dig baidu.com<a href="#ming-ling-cha-xun-dig-baidu-com" class="header-anchor">#</a></h5><p><img src="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LKynSSqTP7HazbNic3tlLk93kqtWhG8sVUf3frPTzkr2ia4ouwJDvXXYOn3cWaxPSweQjKooOybOxNA/640?wx_fmt=png" alt="img"></p>
+<h5 id="ye-ke-yi-zhi-ding-dns-fu-wu-qi-cha-xun"><a href="#也可以指定DNS服务器查询：" class="headerlink" title="也可以指定DNS服务器查询："></a>也可以指定DNS服务器查询：<a href="#ye-ke-yi-zhi-ding-dns-fu-wu-qi-cha-xun" class="header-anchor">#</a></h5><p>命令查询：dig @114.114.114.114 baidu.com</p>
+<p><img src="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LKynSSqTP7HazbNic3tlLk93VcObicTTadHdcUt99rVrFAsbsjutfqbPkLZFndU8DOWMR3aR6nyoHEA/640?wx_fmt=png" alt="img"></p>
+<h5 id="cha-xun-mx-ji-lu-dig-baidu-com-mx"><a href="#查询MX记录：dig-baidu-com-MX" class="headerlink" title="查询MX记录：dig baidu.com MX"></a>查询MX记录：dig baidu.com MX<a href="#cha-xun-mx-ji-lu-dig-baidu-com-mx" class="header-anchor">#</a></h5><p><img src="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LKynSSqTP7HazbNic3tlLk934ZY9kvbHQtkUpxplEib0E9kCLzch8pfw2d3am5q01Agxb53XOoIzgqg/640?wx_fmt=png" alt="img"></p>
+<h5 id="ip-fan-cha-yu-ming"><a href="#IP反查域名：" class="headerlink" title="IP反查域名："></a>IP反查域名：<a href="#ip-fan-cha-yu-ming" class="header-anchor">#</a></h5><p>命令查询：dig -x IP</p>
+<p><img src="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LKynSSqTP7HazbNic3tlLk93fns254DY8DBJL085Nrj4AQzGnlEVn1MwUa16oUJr0x6EDqsjiaiacBdw/640?wx_fmt=png" alt="img"></p>
+<h4 id="pang-zhan-c-duan-cha-xun-ge-shan-da-niu"><a href="#旁站C段查询-隔山打牛" class="headerlink" title="旁站C段查询-隔山打牛"></a>旁站C段查询-隔山打牛<a href="#pang-zhan-c-duan-cha-xun-ge-shan-da-niu" class="header-anchor">#</a></h4><p>什么是旁站？旁站就是和目标网站在同一台服务器上的其他网站。</p>
+<p>在我们做渗透过程中，当一个网站没有漏洞，无法突破，但是他有一个旁站，我们通过拿到旁站的Webshell提权拿到服务器，就相当于我们也同样的完成了本次渗透。</p>
+<p>旁站查询有很多工具和网站，我这边就用在线网站吧：</p>
+<p>域名：<a target="_blank" rel="noopener" href="https://www.webscan.cc/">https://www.webscan.cc/</a></p>
+<p>那什么又是C段？C段是和目标服务器ip处在同一个C段的其他服务器</p>
+<p>C段查询有很多工具和网站，我这边就随便用一个工具吧：</p>
+<p><img src="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LKynSSqTP7HazbNic3tlLk93oA9ebr0wz0f0TRb9GT8cCicdzicqMlBmJhichGU2vKQgH5eAw37700LUQ/640?wx_fmt=png" alt="img"></p>
+<p>参考文章：</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_38265674/article/details/87898449">https://blog.csdn.net/qq_38265674/article/details/87898449</a></p>
+<h2 id="github-hacking-google-hacking"><a href="#Github-Hacking-Google-Hacking" class="headerlink" title="Github Hacking | Google Hacking"></a>Github Hacking | Google Hacking<a href="#github-hacking-google-hacking" class="header-anchor">#</a></h2><p>我们都听过社会工程学这个名词，准确来说，社会工程学不是一门科学，而是一门艺术。而在社会工程学中，对信息掌握的充分程度是其中的关键。不光是这，在其它很多领域里我们都需要尽可能的搜集多的信息。</p>
+<p>Github不仅能托管代码，还能对代码进行搜索，我们感受到了其便利的同时，也应该时刻注意，当你上传并公开你的代码时，一时大意，让某些敏感的配置信息文件等暴露于众。</p>
+<p>Github官方网站：<strong><a target="_blank" rel="noopener" href="https://github.com/">https://github.com/</a></strong></p>
+<p>我们可以通过搜索页面或高级搜索页面搜索Github。</p>
+<p>我们还可以使用 &gt;, &gt;=, &lt;, 和 &lt;= 搜索，分别为：大于、大于等于、小于和小于等于。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">查询 示例</span><br><span class="line">&gt;n cats stars:&gt;<span class="number">1000</span> <span class="comment">#匹配含有&quot;cats&quot;字样、星标超过1000个的仓库。</span></span><br><span class="line">&gt;=n cats topics:&gt;=<span class="number">5</span> 匹配含有<span class="string">&quot;cats&quot;</span>字样、有<span class="number">5</span>个或更多主题的仓库。</span><br><span class="line">&lt;n cats size:&lt;<span class="number">10000</span> 匹配小于10kb的文件中含有<span class="string">&quot;cats&quot;</span>字样的代码。</span><br><span class="line">&lt;=n cats stars:&lt;=<span class="number">50</span> 匹配含有<span class="string">&quot;cats&quot;</span> 字样、星标不超过<span class="number">50</span>个的仓库。</span><br><span class="line">n..* cats stars:<span class="number">10.</span>.* 等同于stars:&gt;=<span class="number">10</span> 并匹配含有<span class="string">&quot;cats&quot;</span>字样、有<span class="number">10</span>个或更多星号的仓库</span><br><span class="line">*..n  cats stars:*.<span class="number">.10</span> 等同于 stars:&lt;=<span class="number">10</span> 并匹配含有 <span class="string">&quot;cats&quot;</span> 字样、有不超过 <span class="number">10</span> 个星号的仓库。</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h5 id="zhu-yi-shi-xiang"><a href="#注意事项：" class="headerlink" title="注意事项："></a>注意事项：<a href="#zhu-yi-shi-xiang" class="header-anchor">#</a></h5><p>只能搜索小于384KB的文件。</p>
+<p>只能搜索少于500，000个文件的存储库</p>
+<p>登录的用户可以搜索所有公共存储库。</p>
+<p>除filename搜索外，搜索源代码时必须至少包含一个搜索词。例如，搜索</p>
+<p><code>language:javascript</code>无效，而是这样：<code>amazing language:javascript</code></p>
+<p>搜索结果最多可以显示来自同一文件的两个片段，但文件中可能会有更多结果。</p>
+<p>不能将以下通配符用作搜索查询的一部分：<strong>. , : ; / ‘ “ = * ! ? # $ &amp; + ^ | ~ &lt; &gt; ( ) { } 。</strong>搜索将忽略这些符号。</p>
+<h5 id="ri-qi-tiao-jian"><a href="#日期条件：" class="headerlink" title="日期条件："></a>日期条件：<a href="#ri-qi-tiao-jian" class="header-anchor">#</a></h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cats pushed:&lt;2012-0705 搜索在2012年7月05日前push的代码，且cats作为关键</span><br><span class="line">cats pushed:2016-04-30..2016-07-04 日期区间</span><br><span class="line">cats created:&gt;=2017-04-01 创建时间</span><br></pre></td></tr></table></figure>
+<h5 id="luo-ji-yun-suan"><a href="#逻辑运算：" class="headerlink" title="逻辑运算："></a>逻辑运算：<a href="#luo-ji-yun-suan" class="header-anchor">#</a></h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">AND、OR、NOT</span><br></pre></td></tr></table></figure>
+<h5 id="pai-chu-yun-suan"><a href="#排除运算：" class="headerlink" title="排除运算："></a>排除运算：<a href="#pai-chu-yun-suan" class="header-anchor">#</a></h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">搜索在2012年07月05日前push代码，且cats作为关键字，排除java语言仓库</span><br><span class="line">cats pushed:&lt;2012-07-05 - language:java</span><br></pre></td></tr></table></figure>
+<h5 id="bao-han-sou-suo"><a href="#包含搜索：" class="headerlink" title="包含搜索："></a>包含搜索：<a href="#bao-han-sou-suo" class="header-anchor">#</a></h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Hacker in:file 搜索文件中包含Hacker的代码</span><br><span class="line">Hacker in:path 搜索路径中包含Hacker的代码</span><br><span class="line">Hacker in:path,file 搜索路径、文件中包含Hacker的代码</span><br><span class="line">console path:app/public language:javascript #搜索关键字console，且语言为Javascript且路径在app/public下的代码</span><br></pre></td></tr></table></figure>
+<p><img src="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LLLkjlBgpjQMZJhXKXVvRrgy0uFiamRiaBMYJg87E4p8glErZGIunuMiaG85X80W2Lmv49faIOpGZCAQ/640?wx_fmt=png" alt="img"></p>
+<h5 id="zhu-ti-sou-suo"><a href="#主体搜索：" class="headerlink" title="主体搜索："></a>主体搜索：<a href="#zhu-ti-sou-suo" class="header-anchor">#</a></h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">user:USERNAME  用户名搜索</span><br><span class="line">org:``ORGNAME  组织搜索</span><br><span class="line">repo:USERNAME/PEPOSITORY  制定仓库搜索</span><br></pre></td></tr></table></figure>
+<p><img src="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LLLkjlBgpjQMZJhXKXVvRrgiaicj3FGPY3e6L6KVibRUBXK7zD4qcMnz2Wb9iaOd8UaNoicJU81qdYb28A/640?wx_fmt=png" alt="img"></p>
+<h5 id="wen-jian-da-xiao"><a href="#文件大小：" class="headerlink" title="文件大小："></a>文件大小：<a href="#wen-jian-da-xiao" class="header-anchor">#</a></h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">size:&gt;1000 搜索大小大于1KB的文件</span><br></pre></td></tr></table></figure>
+<p><img src="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LLLkjlBgpjQMZJhXKXVvRrgO56ug2mHr3gxzcZlGpNIPOzsAaicKWEibdwpYk4utnuGZmW86KvDkAqw/640?wx_fmt=png" alt="img"></p>
+<h5 id="wen-jian-ming-cheng"><a href="#文件名称：" class="headerlink" title="文件名称："></a>文件名称：<a href="#wen-jian-ming-cheng" class="header-anchor">#</a></h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">搜索文件名为config.php，且语言为PHP的代码</span><br><span class="line">filename:config.php language:php</span><br></pre></td></tr></table></figure>
+<p><img src="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LLLkjlBgpjQMZJhXKXVvRrg1nUXN9IiareGh7AKMeLlnQ9JibsBpQHFxuXXz6eBQtcDjKDdnywFRibgw/640?wx_fmt=png" alt="img"></p>
+<h5 id="kuo-zhan-ming"><a href="#扩展名：" class="headerlink" title="扩展名："></a>扩展名：<a href="#kuo-zhan-ming" class="header-anchor">#</a></h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">extension:EXTENSION 指定扩展名搜索</span><br><span class="line">例如：php extension:config</span><br></pre></td></tr></table></figure>
+<p><img src="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LLLkjlBgpjQMZJhXKXVvRrgAbrSnFiaeHPDdwKakJjUq7QibGajlSSgbVpiabdkk4CicO14YUJ2cibunBA/640?wx_fmt=png" alt="img"></p>
+<h2 id="google-hacking"><a href="#Google-Hacking" class="headerlink" title="Google Hacking"></a>Google Hacking<a href="#google-hacking" class="header-anchor">#</a></h2><p>利用Google搜索相关信息并进行入侵的过程就叫做Google Hack。</p>
+<p><img src="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LLLkjlBgpjQMZJhXKXVvRrg1YISyKuPORqmENTJKFuhgARro4zt58Ja7ic1ToMN1susoMwYHmI525A/640?wx_fmt=png" alt="img"></p>
+<p><strong>通配符：</strong></p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>通配符</th>
+<th>语义</th>
+<th>说明</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>+</td>
+<td>包含关键字</td>
+<td>+前面必须要有一个空格</td>
+<td>admin +login</td>
+</tr>
+<tr>
+<td>-</td>
+<td>排除关键字</td>
+<td>-前面必须要有一个空格</td>
+<td>mysql -csdn</td>
+</tr>
+<tr>
+<td>~</td>
+<td>同义词</td>
+<td>~前面必须要有一个空格</td>
+<td>mysql ~csdn</td>
+</tr>
+<tr>
+<td>*</td>
+<td>模糊查询</td>
+<td>*代表任意字符</td>
+<td>mysql**</td>
+</tr>
+<tr>
+<td>‘’’’</td>
+<td>强调</td>
+<td></td>
+<td>“mysql”</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h4 id="gao-ji-yu-fa"><a href="#高级语法：" class="headerlink" title="高级语法："></a>高级语法：<a href="#gao-ji-yu-fa" class="header-anchor">#</a></h4><p>语法的组成——— 语句:关键词</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center">语法</th>
+<th style="text-align:center">语义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">intitle</td>
+<td style="text-align:center">包含标题</td>
+</tr>
+<tr>
+<td style="text-align:center">intext</td>
+<td style="text-align:center">包含内容</td>
+</tr>
+<tr>
+<td style="text-align:center">filetype</td>
+<td style="text-align:center">文件类型</td>
+</tr>
+<tr>
+<td style="text-align:center">info</td>
+<td style="text-align:center">基本信息</td>
+</tr>
+<tr>
+<td style="text-align:center">site</td>
+<td style="text-align:center">指定网站</td>
+</tr>
+<tr>
+<td style="text-align:center">inurl</td>
+<td style="text-align:center">包含某个url</td>
+</tr>
+<tr>
+<td style="text-align:center">link</td>
+<td style="text-align:center">包含指定链接</td>
+</tr>
+<tr>
+<td style="text-align:center">cache</td>
+<td style="text-align:center">显示页面的缓存版本</td>
+</tr>
+<tr>
+<td style="text-align:center">numberange</td>
+<td style="text-align:center">搜索一个数字</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h5 id="shi-li-yi-sou-suo-biao-ti-han-you-login-de-wang-zhan"><a href="#示例一：搜索标题含有login的网站" class="headerlink" title="示例一：搜索标题含有login的网站"></a>示例一：搜索标题含有login的网站<a href="#shi-li-yi-sou-suo-biao-ti-han-you-login-de-wang-zhan" class="header-anchor">#</a></h5><p><code>intitle:login</code></p>
+<p><img src="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LLLkjlBgpjQMZJhXKXVvRrgn3cYpFnkPbpvCXGKsmIqswg0kRZX04Po4ibP5PcVuVwfGtKa8Bc5IicQ/640?wx_fmt=png" alt="img"></p>
+<h5 id="shi-li-er-sou-suo-lian-jie-han-you-wp-login-php-ye-jiu-shi-wordpress-de-wang-zhan"><a href="#示例二：搜索链接含有-wp-login-php-也就是wordpress-的网站" class="headerlink" title="示例二：搜索链接含有/wp-login.php(也就是wordpress)的网站"></a>示例二：搜索链接含有/wp-login.php(也就是wordpress)的网站<a href="#shi-li-er-sou-suo-lian-jie-han-you-wp-login-php-ye-jiu-shi-wordpress-de-wang-zhan" class="header-anchor">#</a></h5><p><code>inurl:/wp-login.php</code></p>
+<p><img src="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LLLkjlBgpjQMZJhXKXVvRrgChyicWHJxMRWy8kK0KT0FfwzNib2Vibib8l5TgBQHMLS4GfpQe9nnAZ9VQ/640?wx_fmt=png" alt="img"></p>
+<p>参考文章：</p>
+<p><a target="_blank" rel="noopener" href="https://docs.github.com/cn/free-pro-team@latest/github/searching-for-information-on-github/understanding-the-search-syntax">https://docs.github.com/cn/free-pro-team@latest/github/searching-for-information-on-github/understanding-the-search-syntax</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_36119192/article/details/99690742">https://blog.csdn.net/qq_36119192/article/details/99690742</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/jerrylocker/p/10956631.html">https://www.cnblogs.com/jerrylocker/p/10956631.html</a></p>
+<h2 id="hui-zong-lian-xi-wei-rao-yi-xia-san-ge-mo-kuai-shou-ji-xiang-guan-an-li-bao-gua-shi-jian-guo-cheng-de-qi-yin-jing-guo-jie-guo-yi-ji-dui-wo-men-de-qi-shi"><a href="#汇总练习-围绕以下三个模块收集相关案例，包括事件过程的起因、经过、结果以及对我们的启示" class="headerlink" title="汇总练习-围绕以下三个模块收集相关案例，包括事件过程的起因、经过、结果以及对我们的启示"></a>汇总练习-围绕以下三个模块收集相关案例，包括事件过程的起因、经过、结果以及对我们的启示<a href="#hui-zong-lian-xi-wei-rao-yi-xia-san-ge-mo-kuai-shou-ji-xiang-guan-an-li-bao-gua-shi-jian-guo-cheng-de-qi-yin-jing-guo-jie-guo-yi-ji-dui-wo-men-de-qi-shi" class="header-anchor">#</a></h2><h3 id="shang-wang-an-quan"><a href="#上网安全" class="headerlink" title="上网安全"></a>上网安全<a href="#shang-wang-an-quan" class="header-anchor">#</a></h3><h3 id="mi-ma-kou-ling"><a href="#密码口令" class="headerlink" title="密码口令"></a>密码口令<a href="#mi-ma-kou-ling" class="header-anchor">#</a></h3><h3 id="shu-ju-an-quan"><a href="#数据安全" class="headerlink" title="数据安全"></a>数据安全<a href="#shu-ju-an-quan" class="header-anchor">#</a></h3><h4 id="1-chuan-wei-bo-5-38-yi-yong-hu-shu-ju-zai-an-wang-chu-shou-guan-fang-cheng-jin-shou-ji-hao-xie-lu"><a href="#1-传微博5-38亿用户数据在暗网出售，官方称仅手机号泄露" class="headerlink" title="1.传微博5.38亿用户数据在暗网出售，官方称仅手机号泄露"></a>1.传微博5.38亿用户数据在暗网出售，官方称仅手机号泄露<a href="#1-chuan-wei-bo-5-38-yi-yong-hu-shu-ju-zai-an-wang-chu-shou-guan-fang-cheng-jin-shou-ji-hao-xie-lu" class="header-anchor">#</a></h4><p><strong>起因</strong>：某新闻频道3月19日讯，近日，有用户发现5.38亿条微博用户信息在暗网出售，其中，1.72亿条有账户基本信息，售价0.177比特币。涉及到的账号信息包括用户ID、账号发布的微博数、粉丝数、关注数、性别、地理位置等。</p>
+<p><strong>经过</strong>：3 月 19 日，安全专家云舒在微博上称：“很多人的手机号码泄露了，根据微博账号就能查到手机号… 已经有人通过微博泄露查到我的手机号码，来加我微信了。” 在其微博留言中，多名微博网友确认手机号泄露。有一名网友留言，“刚刚查了下我的，确实泄露了，电话号码、身份证、物理地址都正确。”除了网友手机号，“包括明星、企业家、公务员等人在内”的手机号都被泄露。</p>
+<p>据悉，“安全 _ 云舒”微博的个人主页显示，他是默安科技创始人兼 CTO，原阿里集团安全研究实验室总监。根据 36 氪的求证，这名网友为默安科技 CTO 魏兴国。</p>
+<p>截至笔者撰文时，“安全 _ 云舒”发布的 2 条相关微博已经删除。</p>
+<p><strong>结果</strong>：针对本次数据泄露事件，微博认证“微博安全总监”的网友罗诗尧在微博中回复称：多谢关心，每隔段时间就有人在网上卖（数据），每次都会引起一波舆情，本不想回应，这条微博今后还会用得上。</p>
+<p>至于本次数据泄露的原因，安全 _ 云舒称，这次数据泄露或是由于微博在 2019 年被人通过接口“薅走了一些数据”，而不是所谓的“数据拖库”。</p>
+<p>而罗诗尧回应，泄漏的手机号是 19 年通过通讯录上传接口被暴力匹配的，其余公开信息都是网上抓来的。他还表示,19 年被刷的部分数据，<code>内部突发现异常后马上堵住了口子。我们第一时间报了警，取证后把相关信息递到了警方，同时一直也在追查网上售卖信息的黑灰产</code>。用户的隐私至关重要，尤其还是涉及到手机号。</p>
+<p>微博方面表示，微博一直提供根据通讯录手机号查询微博好友昵称的服务，用户授权后可以使用该服务，但微博不提供用户性别和身份证号等信息，也没有“根据用户昵称查手机号的服务。2018 年底，有用户利用微博相关接口通过批量手机批量上传通讯录，匹配出几百万个账号昵称，再加上通过其他渠道获取的信息一起对外出售。此次非法调用微博接口匹配出的信息为微博账号昵称，不涉及身份证、密码，对微博服务没有影响。“发现异常后，我们及时加强了安全策略，今后还将不断强化。</p>
+<p><strong>心得</strong>：对于本次数据泄露事件，一名业内安全专家向笔者表示，对于微博的数据泄露，第一不能轻视，第二也不用太夸大，因为这是我们每年许多数据泄露事件中的一起。现在，随着所有互联网公司都在做数字化转型，其实每一个企业都掌握了大量客户信息。这些信息如果保护不到位的话，都会出现数据泄露。同时这些企业本身也要做好用户数据的隐私保护工作，对内部员工加强监管。而作为一个普通用户，我们可以采取一些举措去有效地保护个人数据：</p>
+<ol>
+<li>在不同平台设置不同密码，并在某个固定时间去修改所有密码。这样虽然麻烦点，但是好处是，一旦数据泄露，影响面比较小。并且，频繁修改密码后，即使发生泄露，信息有效性的时间会比较短；</li>
+<li>重要信息分类使用。当获取服务时，手机要绑定个人信息，要多加注意被绑定的信息。</li>
+</ol>
+<h4 id="2-wordpress-zhong-yi-zhi-lou-dong-bei-hei-ke-li-yong-shu-bai-wan-wang-zhan-shu-ju-ku-zao-dao-qie-qu"><a href="#2-WordPress中已知漏洞被黑客利用，数百万网站数据库遭到窃取" class="headerlink" title="2.WordPress中已知漏洞被黑客利用，数百万网站数据库遭到窃取"></a>2.WordPress中已知漏洞被黑客利用，数百万网站数据库遭到窃取<a href="#2-wordpress-zhong-yi-zhi-lou-dong-bei-hei-ke-li-yong-shu-bai-wan-wang-zhan-shu-ju-ku-zao-dao-qie-qu" class="header-anchor">#</a></h4><p>起因：据外媒报道，2020年中旬，黑客组织试图利用主题和插件中的已知漏洞从数百万个WordPress网站窃取数据库凭据。对于此次WordPress面临的威胁，根据WordPress安全公司Defiant的研究数据，其防火墙在5月29日至5月31日之间阻止了超过1.3亿次尝试从130万个站点收集数据库凭据，请求的数量在5月30日达到峰值。随后，Defiant接受记者采访时表示，这些攻击影响了WordPress三分之一以上的客户，同时，该公司认为此活动针对的网站总数可能超过1000万。</p>
+<p>经过：在这场大规模的攻击活动中，网络犯罪分子在整个WordPress生态系统中使用了多个插件和主题漏洞。具体来说，他们尝试从WordPress网站下载wp-config.php配置文件，该文件除其他信息外，还包含可用于访问WordPress网站数据库的用户名和密码。</p>
+<p>对攻击的分析表明，研究人员能够将此次黑客攻击与先前相似规模的针对XSS漏洞的同一威胁行动联系起来。先前的活动是使用20000个不同的IP地址进行的，而此次新的活动也使用了相同的IP地址。而且，所有攻击都针对过时的插件或主题较旧漏洞，攻击者可以利用这些漏洞下载文件或导出。</p>
+<h2 id="li-yong-icmp-xie-yi-fan-dan-shell"><a href="#利用icmp协议反弹shell" class="headerlink" title="利用icmp协议反弹shell"></a>利用icmp协议反弹shell<a href="#li-yong-icmp-xie-yi-fan-dan-shell" class="header-anchor">#</a></h2><h2 id="nei-wang-xin-xi-sou-ji"><a href="#内网信息搜集" class="headerlink" title="内网信息搜集"></a>内网信息搜集<a href="#nei-wang-xin-xi-sou-ji" class="header-anchor">#</a></h2><h3 id="li-zu-dian"><a href="#立足点" class="headerlink" title="立足点"></a>立足点<a href="#li-zu-dian" class="header-anchor">#</a></h3><p>我们已经拿到内网中一台主机权限，作为内网渗透的突破口，我们所有的操作，包括流量转发、端口扫描、漏扫等操作，都会利用此主机为我们搭桥铺路，为以后的内网横向打下坚实的基础。</p>
+<h4 id="li-zu-dian-de-xin-xi-shou-ji"><a href="#立足点的信息收集" class="headerlink" title="立足点的信息收集"></a>立足点的信息收集<a href="#li-zu-dian-de-xin-xi-shou-ji" class="header-anchor">#</a></h4><p>立足点的信息收集包括：</p>
+<p>操作系统、权限、内网ip段、杀毒软件、端口、服务、补丁更新频率、网络连接、共享、会话等。需要注意的是如果是域内主机，那么OS、应用软件、补丁、服务、杀软这些一般都是批量安装的。</p>
+<p>下面先简要介绍windows中的域、工作组的概念，然后正式开始介绍内网信息搜集的相关命令</p>
+<h4 id="windows-yu-gong-zuo-zu"><a href="#Windows（-域、工作组）" class="headerlink" title="Windows（ 域、工作组）"></a>Windows（ 域、工作组）<a href="#windows-yu-gong-zuo-zu" class="header-anchor">#</a></h4><h5 id="shi-me-shi-windows-yu"><a href="#什么是Windows域？" class="headerlink" title="什么是Windows域？"></a>什么是Windows域？<a href="#shi-me-shi-windows-yu" class="header-anchor">#</a></h5><p>windows中，若局域网中的设备有共享资源等需求，实现的方式有两种：工作组和域。所以在介绍域之前，要简单的介绍一下工作组的概念以及不足。</p>
+<h5 id="gong-zuo-zu"><a href="#工作组" class="headerlink" title="工作组"></a>工作组<a href="#gong-zuo-zu" class="header-anchor">#</a></h5><p>工作组在逻辑上为一体，例如一个公司中财务部的几台电脑间，想共享资源，那么只需要将这几台电脑加入一个工作组中即可，加入后，要想访问同一工作组中其他主机上共享资源的文件，只需要输入对方设置的用户名与密码即可（如果对方设置的话），就像一个“俱乐部”，任何“人”想进就进，想出就出，在出口/入口处，完全没有验证，安全系数很低，而且，由于缺少工作组的管理者，若一个工作组中的主机非常多，相互之间的访问也会变得非常混乱。而域则可以解决这个问题。</p>
+<h5 id="yu"><a href="#域" class="headerlink" title="域"></a>域<a href="#yu" class="header-anchor">#</a></h5><p>在windows网络操作系统中，域是一个有安全边界的集合。</p>
+<p>Domain是Windows网络中独立运行的单位，域之间建立连接，需要先建立信任关系，建立关系之后，两个domain间不但可以相互进行管理，还可以实现网络资源的共享以及相同通信与数据传输。</p>
+<h5 id="yu-yu-gong-zuo-zu-de-qu-bie"><a href="#域与工作组的区别" class="headerlink" title="域与工作组的区别"></a>域与工作组的区别<a href="#yu-yu-gong-zuo-zu-de-qu-bie" class="header-anchor">#</a></h5><p>域中各种策略都运行在域控制器上，用户名与密码也是放在域控制器（DC）上，通常DC由一台PC或服务器充当，也就是说你的账号密码可以在同一域的任意一台计算机上使用，若一个用户想要登录到域中，首先会根据其输入的账户密码在DC上进行验证，若验证未通过，则不允许其加入域——这样便解决了上述工作组安全性不高的问题。</p>
+<p>参考链接：<a target="_blank" rel="noopener" href="https://www.freebuf.com/articles/system/255488.html">https://www.freebuf.com/articles/system/255488.html</a></p>
+<h4 id="cha-xun-wang-luo-pei-zhi-ming-ling"><a href="#查询网络配置命令" class="headerlink" title="查询网络配置命令"></a>查询网络配置命令<a href="#cha-xun-wang-luo-pei-zhi-ming-ling" class="header-anchor">#</a></h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">windows: ipconfig /all</span><br><span class="line">linux: </span><br><span class="line">ifconfig /all</span><br><span class="line">cat /etc/resolv.conf</span><br><span class="line">cat /etc/sysconfig/network</span><br><span class="line">cat /etc/networks</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h4 id="cha-xun-cao-zuo-xi-tong-ji-ruan-jian-de-xin-xi"><a href="#查询操作系统及软件的信息" class="headerlink" title="查询操作系统及软件的信息"></a>查询操作系统及软件的信息<a href="#cha-xun-cao-zuo-xi-tong-ji-ruan-jian-de-xin-xi" class="header-anchor">#</a></h4><h5 id="1-cha-kan-cao-zuo-xi-tong-he-ban-ben-xin-xi"><a href="#1）查看操作系统和版本信息" class="headerlink" title="1）查看操作系统和版本信息"></a>1）查看操作系统和版本信息<a href="#1-cha-kan-cao-zuo-xi-tong-he-ban-ben-xin-xi" class="header-anchor">#</a></h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">windows:</span><br><span class="line">systeminfo | findstr /B /C:&quot;OS Name&quot; /C:&quot;OS Version&quot;//适用于英文的操作系统，中文的：systeminfo | findstr /B /C:&quot;OS 名称&quot; /C:&quot;OS 版本&quot;&#x27;</span><br><span class="line"></span><br><span class="line">linux:</span><br><span class="line">查看服务器版本信息:</span><br><span class="line">cat /etc/issue</span><br><span class="line">cat /etc/*-release</span><br><span class="line">cat /etc/lsb-release #基于debian</span><br><span class="line">cat /etc/redhat-release #基于redhat</span><br><span class="line">查看内核版本信息:</span><br><span class="line">cat /proc/version</span><br><span class="line">uname -a</span><br><span class="line">uname -mrs</span><br><span class="line">rpm -q kernel</span><br><span class="line">dmesg | grep linux</span><br></pre></td></tr></table></figure>
+<p> 2）<strong>查看系统体系结构</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">windows</span>:</span><br><span class="line">          echo %<span class="variable constant_">PROCESSOR_ARCHITECTURE</span>%</span><br><span class="line"></span><br><span class="line"><span class="title class_">Linux</span>:    </span><br><span class="line">          uname -a</span><br><span class="line">          dpkg --print-architecture  <span class="comment">//此命令只适用于基于 Debian 和 Ubuntu 的                                   Linux 发行版。</span></span><br><span class="line">          getconf <span class="variable constant_">LONG_BIT</span></span><br><span class="line">          arch</span><br><span class="line">          file /sbin/init</span><br><span class="line">    </span><br><span class="line">   查看安装的软件及版本、路径等</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="attr">windows</span>:</span><br><span class="line">          wmic product get name,version</span><br><span class="line">          <span class="title class_">Powershell</span>版本：</span><br><span class="line">          powershell.<span class="property">exe</span> <span class="string">&quot;Get-WmiObject -class Win32_Product | Select-Object -Property name,Version</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Linux:    </span></span><br><span class="line"><span class="string">          Ls -alh /usr/bin/</span></span><br><span class="line"><span class="string">          Ls -alh /sbin/</span></span><br><span class="line"><span class="string">          Dpkg -l</span></span><br><span class="line"><span class="string">          Rpm -qa</span></span><br><span class="line"><span class="string">          Ls -alh /var/cache/apt/archivesO</span></span><br><span class="line"><span class="string">          Ls -alh /var/cache/yum/</span></span><br></pre></td></tr></table></figure>
+<p><strong>3.查询本机服务信息</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">windows</span>:</span><br><span class="line">          wmic service list brief</span><br><span class="line">    </span><br><span class="line"><span class="title class_">Linux</span>:   </span><br><span class="line">          service --status-all</span><br><span class="line">          chkconfig --list</span><br><span class="line">          ps aux</span><br><span class="line">          进入init.<span class="property">d</span>目录查看</span><br><span class="line">          netstat -lntp</span><br><span class="line">          ntsysv</span><br></pre></td></tr></table></figure>
+<p>复制</p>
+<p><strong>4.查询进程列表</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">windows</span>:           </span><br><span class="line">         tasklist<span class="comment">//或者wmic process list brief </span></span><br><span class="line">   </span><br><span class="line"><span class="title class_">Linux</span>:    </span><br><span class="line">         ps aux </span><br><span class="line">          </span><br><span class="line">常见杀毒软件进程：                  </span><br><span class="line">360sd.<span class="property">exe</span>                    </span><br><span class="line">360tray.<span class="property">exe</span>                   </span><br><span class="line"><span class="title class_">ZhuDongFangYu</span>.<span class="property">exe</span>                   </span><br><span class="line"><span class="title class_">KSafeTray</span>.<span class="property">exe</span>                   </span><br><span class="line"><span class="title class_">SafeDogUpdateCenter</span>.<span class="property">exe</span>                   </span><br><span class="line"><span class="title class_">McAfee</span> <span class="title class_">McShield</span>.<span class="property">exe</span>                   </span><br><span class="line">egui.<span class="property">exe</span> <span class="comment">//NOD32                    </span></span><br><span class="line"><span class="variable constant_">AVP</span>.<span class="property">EXE</span>  <span class="comment">//卡巴斯基                   </span></span><br><span class="line">avguard.<span class="property">exe</span>    <span class="comment">//小红伞                   </span></span><br><span class="line">bdagent.<span class="property">exe</span>    <span class="comment">//BitDefender</span></span><br></pre></td></tr></table></figure>
+<p><strong>5.查看启动程序信息</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">windows</span>:</span><br><span class="line">          wmic startup get command,caption</span><br><span class="line"></span><br><span class="line"><span class="title class_">Linux</span>:    </span><br><span class="line">          <span class="variable constant_">PS</span></span><br><span class="line">          ps aux | less  </span><br><span class="line">          top</span><br><span class="line">          pstree</span><br><span class="line">          htop</span><br><span class="line">          atop</span><br></pre></td></tr></table></figure>
+<p> <strong>6.查看计划任务</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">windows</span>:</span><br><span class="line">          schtasks /query /fo <span class="variable constant_">LIST</span> /v</span><br><span class="line">   </span><br><span class="line"><span class="title class_">Linux</span>:    </span><br><span class="line">          crontab -l               </span><br></pre></td></tr></table></figure>
+<p><strong>7.查看主机开机时间</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">windows</span>:</span><br><span class="line">           net statistics workstation</span><br><span class="line">   </span><br><span class="line"><span class="title class_">Linux</span>:    </span><br><span class="line">           last  reboot <span class="comment">//查看历史启动时间</span></span><br><span class="line">           W<span class="comment">//系统到目前运行了多久时间。反过来推算系统重启时间</span></span><br><span class="line">           uptime</span><br><span class="line">           <span class="variable constant_">TOP</span><span class="comment">//up后表示系统到目前运行了多久时间。反过来推算时间</span></span><br><span class="line">           who -b 查看最后一次系统启动的时间。</span><br><span class="line">           who -r 查看当前系统运行时间</span><br></pre></td></tr></table></figure>
+<p><strong>8.查询用户列表</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">windows</span>:</span><br><span class="line">          net user</span><br><span class="line">          net localgroup adinistrators<span class="comment">//获取本地管理员组成员</span></span><br><span class="line">          query user || qwinsta<span class="comment">//查看当前再线用户</span></span><br><span class="line">   </span><br><span class="line"><span class="title class_">Linux</span>:    </span><br><span class="line">          cat /etc/passwd</span><br><span class="line">          cat /etc/group</span><br><span class="line">          延申：cat /etc/passwd|grep -v nologin|grep -v halt|grep -v shutdown|awk -F<span class="string">&quot;:&quot;</span><span class="string">&#x27;&#123; print $1&quot;|&quot;$3&quot;|&quot;$4 &#125;&#x27;</span>|more</span><br></pre></td></tr></table></figure>
+<p>复制</p>
+<p><strong>9.列出或断开本地计算机与所连接的客户端之间的会话</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">windows</span>:</span><br><span class="line">          net session</span><br><span class="line"></span><br><span class="line"><span class="title class_">Linux</span>:    </span><br><span class="line">          who -a</span><br></pre></td></tr></table></figure>
+<p>复制</p>
+<p><strong>10.查询端口列表</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">netstat -ano</span><br></pre></td></tr></table></figure>
+<p>复制</p>
+<p><strong>11.查询补丁列表</strong> </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">windows</span>:</span><br><span class="line">          systeminfo</span><br><span class="line">          <span class="comment">//查找提权补丁信息</span></span><br><span class="line">          systeminfo&gt;<span class="attr">C</span>:\<span class="title class_">Temp</span>&gt;micropoor.<span class="property">txt</span>&amp;(<span class="keyword">for</span> %i <span class="keyword">in</span> ( <span class="title class_">KB977165</span> <span class="title class_">KB2160329</span> <span class="title class_">KB2503665</span> <span class="title class_">KB2592799</span></span><br><span class="line">          <span class="title class_">KB2707511</span> <span class="title class_">KB2829361</span> <span class="title class_">KB2850851</span> <span class="title class_">KB3000061</span> <span class="title class_">KB3045171</span> <span class="title class_">KB3077657</span> <span class="title class_">KB3079904</span></span><br><span class="line">          <span class="title class_">KB3134228</span> <span class="title class_">KB3143141</span> <span class="title class_">KB3141780</span> ) <span class="keyword">do</span> @type micropoor.<span class="property">txt</span>|@find /i</span><br><span class="line">          <span class="string">&quot;%i&quot;</span>|| @echo %i you can fuck)&amp;del /f /q /a micropoor.<span class="property">txt</span>        <span class="comment">//里面可以任意添加删除补丁编号</span></span><br><span class="line"></span><br><span class="line"> <span class="title class_">Linux</span>:  </span><br><span class="line">          linux需要查看内核版本信息，查看安装的软件包，然后进行对比</span><br></pre></td></tr></table></figure>
+<p><strong>12.查询本机共享列表</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">windows</span>:</span><br><span class="line">          net share<span class="comment">//wmic:</span></span><br><span class="line">          wmic share get name,path,status</span><br><span class="line">  </span><br><span class="line"><span class="title class_">Linux</span>:   </span><br><span class="line">          在/mnt/hgfs目录下查看</span><br></pre></td></tr></table></figure>
+<p>复制</p>
+<p><strong>13.查询路由表及所有可用接口的ARP缓存表</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">windows</span>:</span><br><span class="line">          route print</span><br><span class="line">          arp -a</span><br><span class="line"></span><br><span class="line"><span class="title class_">Linux</span>:    </span><br><span class="line">          arp –a</span><br><span class="line">          <span class="title class_">Route</span></span><br><span class="line">          /sbin/route -nee</span><br></pre></td></tr></table></figure>
+<p>复制</p>
+<p><strong>14.查询防火墙相关配置</strong></p>
+<p> 1）关闭防火墙 </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">windows</span>:  </span><br><span class="line">          <span class="comment">//windows server 2003之前</span></span><br><span class="line">          netsh firewall set opmode disable                                  </span><br><span class="line">          <span class="comment">//Windows server 2003之后</span></span><br><span class="line">          netsh advfirewall set allprofile state off</span><br><span class="line">  </span><br><span class="line"><span class="title class_">Linux</span>:    </span><br><span class="line">          <span class="comment">//暂时关闭防火墙</span></span><br><span class="line">          systemctl stop firewalld</span><br><span class="line">          service iptables stop</span><br><span class="line">          <span class="comment">//永久关闭防火墙</span></span><br><span class="line">          systemctl disable firewalld</span><br><span class="line">          chkconfig iptables  off        </span><br></pre></td></tr></table></figure>
+<p>复制</p>
+<p> 2）查看防火墙配置 </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">windows</span>:</span><br><span class="line">          netsh firewall show config</span><br><span class="line"> </span><br><span class="line"><span class="title class_">Llinux</span>:   </span><br><span class="line">          <span class="title class_">Iptables</span>-save &gt;ipt.<span class="property">txt</span>           </span><br></pre></td></tr></table></figure>
+<p> \3) 修改防火墙配置</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"> <span class="attr">windows</span>:</span><br><span class="line">          <span class="comment">//windows server 2003之前允许指定程序全部连接</span></span><br><span class="line">          netsh firewall add allowedprogram <span class="attr">c</span>:\nc.<span class="property">exe</span> <span class="string">&quot;allow nc&quot;</span> enable</span><br><span class="line">          <span class="comment">//windows server 2003之后的版本</span></span><br><span class="line">          netsh advfirewall firewall add rule name=<span class="string">&quot;pass nc&quot;</span> dir=<span class="keyword">in</span> action=allow program=<span class="string">&quot;c:\nc.exe&quot;</span></span><br><span class="line">          <span class="comment">//允许指定程序退出</span></span><br><span class="line">          netsh advfirewall firewall add rule name=<span class="string">&quot;Allow nc&quot;</span> dir=out action=allow program=<span class="string">&quot;C:\nc.exe&quot;</span></span><br><span class="line">          <span class="comment">//允许3389端口放行</span></span><br><span class="line">          netsh advfirewall firewall add rule name=<span class="string">&quot;Remote Desktop&quot;</span> protocol=<span class="variable constant_">TCP</span> dir=<span class="keyword">in</span> localport=<span class="number">3389</span> action=allow</span><br><span class="line"></span><br><span class="line">linux：   </span><br><span class="line">          <span class="comment">//查看防火墙状态</span></span><br><span class="line">          systemctl status firewalld</span><br><span class="line">          <span class="comment">//启动防火墙</span></span><br><span class="line">          systemctl start firewalld.<span class="property">service</span></span><br><span class="line">          <span class="comment">//开放TCP的80端口，并重载防火墙</span></span><br><span class="line">          firewall-cmd --zone=public --add-port=<span class="number">80</span>/tcp --permanent</span><br><span class="line">          <span class="comment">//重载防火墙 </span></span><br><span class="line">          firewall-cmd --reload</span><br><span class="line">          <span class="comment">//查看防火墙开放端口</span></span><br><span class="line">          firewall-cmd --zone=public --list-ports</span><br></pre></td></tr></table></figure>
+<p>复制</p>
+<p> 4)自定义防火墙日志的存储位置 </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">windows</span>:</span><br><span class="line">          netsh advfirewall set currentprofile logging filename <span class="string">&quot;C:\windows\temp\fw.log&quot;</span></span><br><span class="line"><span class="title class_">Linux</span>:  </span><br><span class="line">          参考文章<span class="attr">https</span>:<span class="comment">//blog.csdn.net/xiexievv/article/details/48001261</span></span><br></pre></td></tr></table></figure>
+<p>复制</p>
+<p><strong>15.查看代理配置情况</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">windows</span>:</span><br><span class="line">          reg query <span class="string">&quot;HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Internet Settings&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="title class_">Linux</span>:    </span><br><span class="line">          source /etc/profile     </span><br></pre></td></tr></table></figure>
+<p>复制</p>
+<p><strong>16.查询并开启远程连接服务</strong></p>
+<p> 1）查看远程连接端口 </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">reg query <span class="string">&quot;HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp&quot;</span> /V <span class="title class_">PortNumber</span></span><br></pre></td></tr></table></figure>
+<p>复制</p>
+<p> 2)在Windows server 2003中开启3389 </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wmic path win32_terminalservicesetting where (__CLASS !=<span class="string">&quot;&quot;</span>) call setallowtsconnections <span class="number">1</span></span><br></pre></td></tr></table></figure>
+<p>复制</p>
+<p> 3)在Windows server 2008和2012中 </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wmic /<span class="attr">namespace</span>:\\root\cimv2\terminalservices path win32_terminalservicesetting where (__CLASS !=<span class="string">&quot;&quot;</span>) call setallowtsconnections <span class="number">1</span><span class="comment">//修改注册表方式reg query &quot;HKLM\System\CURRENT\CONTROLSET\CONTROL\TERMINAL SERVER&quot; /v fSingleSessionPerUser /t REG_DWORD /d 0 /f</span></span><br></pre></td></tr></table></figure>
+<p>复制</p>
+<p><strong>17.自动收集信息</strong></p>
+<p> Empire下的主机信息收集，输出到格式为html文件</p>
+<p> 使用模块： </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">usemodule situational_awareness/host/winenum</span><br><span class="line">execute</span><br></pre></td></tr></table></figure>
+<p>复制</p>
+<p><strong>18.查询当前权限</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">windows</span>:</span><br><span class="line">          whoami /all</span><br><span class="line">          <span class="comment">//查询指定用户的详细信息</span></span><br><span class="line">          net user xxx /domain</span><br><span class="line"></span><br><span class="line"><span class="title class_">Linux</span>:    </span><br><span class="line">          id</span><br><span class="line">          whoami</span><br></pre></td></tr></table></figure>
+<p>复制</p>
+<p>03</p>
+<p>—</p>
+<p><strong>域内的信息收集</strong></p>
+<p>1<strong>.判断是否存在域</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">查看dns服务器</span><br><span class="line">               ipconfig /all</span><br><span class="line">               nslookup dc.<span class="property">test</span>.<span class="property">local</span><span class="comment">//将查看到的DNS服务器用nslookup进行解析</span></span><br><span class="line">      </span><br><span class="line">查看系统详细信息</span><br><span class="line">                systeminfo | findstr /B /<span class="attr">C</span>:<span class="string">&quot;登录服务器&quot;</span><span class="comment">//如果结果不为&quot;WORKGROUP&quot;则主机为域主机                      </span></span><br><span class="line">                <span class="comment">//查询当前登录域及登录用户信息</span></span><br><span class="line">                net group workstation                     </span><br><span class="line">                <span class="comment">//判断主域</span></span><br><span class="line">                net time /domain<span class="comment">//命令用于查看域内时间，同时也可以查看域控制器     </span></span><br></pre></td></tr></table></figure>
+<p>复制</p>
+<p><strong>2. 探测域内存活主机</strong> </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">使用<span class="title function_">nbtscan</span>(<span class="attr">http</span>:<span class="comment">//www.unixwiz.net/tools/nbtscan.html)探测当前网段主机</span></span><br><span class="line">                    nbt.<span class="property">exe</span> <span class="number">192.168</span><span class="number">.2</span><span class="number">.0</span>/<span class="number">20</span></span><br><span class="line">      </span><br><span class="line">使用<span class="variable constant_">ICMP</span>探测</span><br><span class="line">                    <span class="keyword">for</span> /L %I <span class="keyword">in</span> (<span class="number">1</span>,<span class="number">1</span>,<span class="number">254</span>) <span class="variable constant_">DO</span> @ping -w <span class="number">1</span> -n <span class="number">1</span> <span class="number">192.168</span><span class="number">.2</span>.%I | findstr <span class="string">&quot;TTL=&quot;</span></span><br><span class="line">      </span><br><span class="line">通过<span class="title class_">ARPscan</span>工具扫描探测内网</span><br><span class="line">                    arp.<span class="property">exe</span> -t <span class="number">192.168</span><span class="number">.2</span><span class="number">.0</span>/<span class="number">20</span></span><br><span class="line">      </span><br><span class="line"><span class="title class_">Empire</span>中的<span class="title class_">ARPscan</span>模块</span><br><span class="line">                    usemode situational_awareness/network/arpscan</span><br><span class="line">                    execute</span><br><span class="line"><span class="title class_">Nishang</span>中的<span class="title class_">Invoke</span>-<span class="title class_">ARPScan</span>.<span class="property">ps1</span> </span><br><span class="line">                    powershell.<span class="property">exe</span> -exec bypass -<span class="title class_">Command</span> <span class="string">&quot;&amp; (Import-module c:\windows\temp\Invoke-ARPscan.ps1; Invoke-ARPScan -CIDR 192.168.1.0/20)&quot;</span> &gt;&gt; <span class="attr">c</span>:\windows\temp\log.<span class="property">txt</span></span><br><span class="line">                    type <span class="attr">c</span>:\windows\temp\log.<span class="property">txt</span></span><br><span class="line">      </span><br><span class="line">通过常规的<span class="variable constant_">TCP</span>/<span class="variable constant_">UDP</span>端口扫描探测内网</span><br><span class="line">                    上传<span class="title class_">ScanLine</span>进行扫描：</span><br><span class="line">                    scanline -h -t <span class="number">22</span>,<span class="number">80</span>-<span class="number">90</span>,<span class="number">110</span>,<span class="number">445</span> -u <span class="number">53</span>,<span class="number">161</span> -O <span class="attr">c</span>:\windows\temp\log.<span class="property">txt</span> -p <span class="number">192.168</span><span class="number">.1</span><span class="number">.1</span>-<span class="number">254</span> /b</span><br></pre></td></tr></table></figure>
+<p>复制</p>
+<p><strong>3.扫描域内端口</strong> </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">telnet</span>(但是这个速度太慢了点)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="title class_">Metasploit</span>端口扫描:</span><br><span class="line">                    auxiliary/scanner/portscan/tcp</span><br><span class="line">                    set ports <span class="number">1</span>-<span class="number">1000</span></span><br><span class="line">                    set <span class="variable constant_">RHOST</span> <span class="number">192.168</span><span class="number">.1</span><span class="number">.1</span></span><br><span class="line">                    set <span class="variable constant_">THREADS</span> <span class="number">10</span></span><br><span class="line">                    run</span><br><span class="line">      </span><br><span class="line"><span class="title class_">PowerSploit</span>、<span class="title class_">NiShang</span>的<span class="title class_">Invoke</span>-portscan脚本</span><br><span class="line"></span><br><span class="line">注：msf记得添加路由或代理</span><br><span class="line">                    autoroute添加路由</span><br><span class="line">                    run autoroute –h #查看帮助</span><br><span class="line">                    run autoroute -s <span class="number">192.168</span><span class="number">.159</span><span class="number">.0</span>/<span class="number">24</span>  #添加到目标环境网络</span><br><span class="line">                    run autoroute –p  #查看添加的路由</span><br><span class="line">                    </span><br><span class="line">当然msf不止有扫描端口的脚本，这里在列举几个其他脚本：</span><br><span class="line">                    <span class="number">1.</span> use auxiliary/scanner/http/dir_scanner</span><br><span class="line">                    <span class="number">2.</span> use auxiliary/scanner/http/jboss_vulnscan</span><br><span class="line">                    <span class="number">3.</span> use auxiliary/scanner/mssql/mssql_login</span><br><span class="line">                    <span class="number">4.</span> use auxiliary/scanner/mysql/mysql_version</span><br><span class="line">                    <span class="number">5.</span> use auxiliary/scanner/oracle/oracle_login</span><br><span class="line">                    <span class="comment">//扫描的脚本位于：</span></span><br><span class="line">                    /usr/share/metasploit-framework/modules/auxiliary/scanner/</span><br></pre></td></tr></table></figure>
+<p>复制</p>
+<ul>
+<li><p><strong>4. 收集域内基础信息</strong> </p>
+</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">net view /domain<span class="comment">//查询域</span></span><br><span class="line">net view /<span class="attr">domain</span>:test<span class="comment">//查询域内所有计算机</span></span><br><span class="line">net group /domain<span class="comment">//查询域内所有用户组列表 </span></span><br><span class="line">net group <span class="string">&quot;domain computers&quot;</span> /domain<span class="comment">//查询所有域成员计算机列表</span></span><br><span class="line">net accounts /domain<span class="comment">//获取域内密码信息</span></span><br><span class="line">nltest /domain_trusts<span class="comment">//域内信任信息</span></span><br></pre></td></tr></table></figure>
+<p>复制</p>
+<p><strong>5. 查找域控</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">nltest /<span class="attr">DCLIST</span>:test</span><br><span class="line"></span><br><span class="line">net time /domain</span><br><span class="line"></span><br><span class="line"><span class="title class_">Nslookup</span> -type=<span class="variable constant_">SRV</span> _ldap.<span class="property">_tcp</span></span><br><span class="line"></span><br><span class="line">net group <span class="string">&quot;Domain Controllers&quot;</span> /domain</span><br><span class="line"></span><br><span class="line">netdom query pdc<span class="comment">//查看主控制器</span></span><br></pre></td></tr></table></figure>
+<p>复制</p>
+<p><strong>6. 获取域内的用户和管理员信息</strong> </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//查询所有域用户列表</span></span><br><span class="line">net user /domain </span><br><span class="line"><span class="comment">//获取域内用户的详细信息</span></span><br><span class="line">wmic useraccount get /all </span><br><span class="line"><span class="comment">//查看存在的用户,但是这个只能在域控或者安装了对应服务的主机使用，否则会提示命令不存在</span></span><br><span class="line">dsquery user </span><br><span class="line"><span class="comment">//查找目录中的计算机</span></span><br><span class="line">dsquery computer </span><br><span class="line"><span class="comment">//查询本地管理员组用户</span></span><br><span class="line">net localgroup administrators </span><br><span class="line"><span class="comment">//查询域管理员用户组</span></span><br><span class="line">net group <span class="string">&quot;domain admins&quot;</span> /domain </span><br><span class="line"><span class="comment">//查询管理员用户组</span></span><br><span class="line">net group <span class="string">&quot;Enterprise Admins&quot;</span> /domain</span><br></pre></td></tr></table></figure>
+<p>复制</p>
+<p><strong>7. 定位域管理员</strong></p>
+<p>  在获取了Windows域中的普通权限在进行横向渗透时，需要知道域内用户登录的位置，是否是任何系统/主机的本地管理员，以及所属组等关键信息。 这里直接用前辈们造的轮子吧，能够使用的轮子有：psloggedon.exe、PVEFindADUser.exe、netness.exe、hunter、NetView、PowerView。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">psloggedon.<span class="property">exe</span></span><br><span class="line">        <span class="comment">//能够通过此工具查看远程计算机的资源，也就是说能够查看目标主机有哪些账户在登录状态        </span></span><br><span class="line">        下载地址：<span class="attr">https</span>:<span class="comment">//docs.microsoft.com/zh-cn/sysinternals/downloads/psloggedon</span></span><br><span class="line">        使用：psloggedon.<span class="property">exe</span> \\dc2012</span><br><span class="line"></span><br><span class="line"><span class="title class_">PVEFindADUser</span></span><br><span class="line">         <span class="comment">//PVEFindADUser能够用于查找活动目录用户登录的位置，枚举与用户，以及查找在特定计算机上登录的用户。包括本地用户、通过RDP登录的用户、用于运行服务和计划任务的用户。（这个工具需要.NET 3.5）Windows Server 2012安装.NET 3.5可能不成功，需要指定安装源：https://www.cr173.com/soft/921507.html</span></span><br><span class="line">         下载地址：<span class="attr">https</span>:<span class="comment">//github.com/chrisdee/Tools/tree/master/AD/ADFindUsersLoggedOn</span></span><br><span class="line">          <span class="title class_">PVEFindADUser</span>.<span class="property">exe</span> -current</span><br><span class="line">      </span><br><span class="line"><span class="title class_">NetView</span></span><br><span class="line">         <span class="comment">//NetView是一个枚举工具，使用WinAPI枚举系统，利用NetSessionEnum找寻登陆会话，利用NetShareEnum找寻共享，利用NetWkstaUserEnum枚举登录的用户。同时还能够查询共享入口和有价值的用户。</span></span><br><span class="line">         下载地址：<span class="attr">https</span>:<span class="comment">//github.com/mubix/netview</span></span><br><span class="line">         </span><br><span class="line"><span class="title class_">PowerView</span></span><br><span class="line">          使用<span class="title class_">Powerview</span>的<span class="title class_">Invoke</span>-<span class="title class_">UserHunter</span>。</span><br><span class="line">          </span><br><span class="line"><span class="title class_">Empire</span></span><br><span class="line">          <span class="comment">//Empire中也存在此类型的脚本：</span></span><br><span class="line">          usemodule situational_awareness/network/powerview/user_hunter</span><br><span class="line">          execute</span><br><span class="line">          </span><br><span class="line"><span class="title class_">Nmap</span>的<span class="variable constant_">NSE</span>脚本</span><br><span class="line">          <span class="comment">//通过Nmap的NSE脚本获取远程机器的登陆会话。</span></span><br><span class="line">          smb-enum-sessions.<span class="property">nse</span>获取域内主机的用户登录会话，查看当前是否有用户登录。下载地址：<span class="attr">https</span>:<span class="comment">//nmap.org/nsedoc/scripts/smb-enum-sessions.html</span></span><br><span class="line">          smb-enum-domains.<span class="property">nse</span>对域控制器进行信息收集，可以获取主机信息用户、可使用密码策略的用户等。</span><br><span class="line">          smb-enum-users.<span class="property">nse</span>可以使用此脚本对域控进行扫描。</span><br></pre></td></tr></table></figure>
+<p>复制</p>
+<p><strong>8. 查找域管理进程</strong></p>
+<p>​          参考文章：<a target="_blank" rel="noopener" href="https://yq.aliyun.com/articles/599377?type=2">https://yq.aliyun.com/articles/599377?type=2</a> </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">本机检查：</span><br><span class="line">              <span class="comment">//获取域管理员列表</span></span><br><span class="line">              net group <span class="string">&quot;Domain Admins&quot;</span> /domain</span><br><span class="line">              <span class="comment">//列出本机的所有进程和进程用户</span></span><br><span class="line">              tasklist /v</span><br><span class="line">              <span class="comment">//查询域控的域用户会话</span></span><br><span class="line">              <span class="comment">//查询域控列表</span></span><br><span class="line">              net group <span class="string">&quot;Domain Controllers&quot;</span> /domain</span><br><span class="line">              <span class="comment">//收集所有活动域的会话列表</span></span><br><span class="line">              netsess -h</span><br></pre></td></tr></table></figure>
+<p>复制</p>
+<p><strong>9. 补充一点linux信息收集姿势</strong> </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"> 常见的配置文件有那些？有没有可攻击的插件：</span><br><span class="line">      <span class="title class_">Cat</span> /etc/syslog.<span class="property">conf</span></span><br><span class="line">      <span class="title class_">Cat</span> /etc/chttp.<span class="property">conf</span></span><br><span class="line">      <span class="title class_">Cat</span> /etc/lighttpd.<span class="property">conf</span></span><br><span class="line">      <span class="title class_">Cat</span> /etc/cups/cupsd.<span class="property">conf</span></span><br><span class="line">      <span class="title class_">Cat</span> /etc/inetd.<span class="property">conf</span></span><br><span class="line">      <span class="title class_">Cat</span> /etc/apache2/apache2.<span class="property">conf</span></span><br><span class="line">      <span class="title class_">Cat</span> /etc/my.<span class="property">conf</span></span><br><span class="line">      <span class="title class_">Cat</span> /etc/http/conf/http.<span class="property">conf</span></span><br><span class="line">      <span class="title class_">Cat</span> /opt/lampp/etc/httpd.<span class="property">conf</span></span><br><span class="line">      <span class="title class_">Ls</span> -aRl /etc/ | awk <span class="string">&#x27;$1 ~ /^.r./</span></span><br><span class="line"><span class="string">      </span></span><br><span class="line"><span class="string">查找系统内跟用户名和密码的有关的文件</span></span><br><span class="line"><span class="string">      Grep -I user [filename]</span></span><br><span class="line"><span class="string">      grep -i pass [filename] grep -C 5 “password” [filename] find </span></span><br></pre></td></tr></table></figure>
+<h2 id="nei-wang-heng-xiang-chang-jian-duan-kou-xiang-jie"><a href="#内网横向常见端口详解" class="headerlink" title="内网横向常见端口详解"></a>内网横向常见端口详解<a href="#nei-wang-heng-xiang-chang-jian-duan-kou-xiang-jie" class="header-anchor">#</a></h2><h2 id="port-445"><a href="#Port：445" class="headerlink" title="Port：445"></a>Port：445<a href="#port-445" class="header-anchor">#</a></h2><p>SMB（Server Message Block）Windows协议族，主要功能为文件打印共享服务，简单来讲就是共享文件夹</p>
+<p>该端口也是近年来内网横向扩展中比较火的端口，大名鼎鼎的永恒之蓝漏洞就是利用该端口，操作为扫描其是否存在MS17-010漏洞。正常情况下，其命令主要是建立IPC服务空会话</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">net use \\192.168.1.2</span><br></pre></td></tr></table></figure>
+<p>远程本地认证</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">net use \\192.168.1.2 /user:a\username password</span><br></pre></td></tr></table></figure>
+<p>注：a/username 中 a 为工作组情况下的机器命名，可以为任意字符，例如 workgroup/username</p>
+<p>域 test.local 远程认证</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">net use \\192.168.1.2 /user:test\username password</span><br></pre></td></tr></table></figure>
+<h2 id="port-137-138-139"><a href="#Port：137、138、139" class="headerlink" title="Port：137、138、139"></a>Port：137、138、139<a href="#port-137-138-139" class="header-anchor">#</a></h2><p>NetBios端口，137、138为UDP端口，主要用于内网传输文件，而NetBios/SMB服务器的获取主要是通过139端口的</p>
+<h2 id="port-135"><a href="#Port：135" class="headerlink" title="Port：135"></a>Port：135<a href="#port-135" class="header-anchor">#</a></h2><p>该端口主要使用DCOM和RPC（Remote Procedure Call）服务，我们利用这个端口主要做WMI（Windos Management Instrumentation）管理工具的远程操作</p>
+<ul>
+<li>使用时需要开启wmic服务</li>
+<li>几乎所有的命令都是管理员权限</li>
+<li>如果出现”Invalid Global Switch”，需要使用双引号把该加的地方都加上</li>
+<li>远程系统的本地安全策略的”网络访问：本地账户的共享和安全模式”应设为”经典-本地用户以自己的身份验证”</li>
+<li>防火墙最好是关闭状态</li>
+</ul>
+<p>同时，wmic还有很多版本 类似于 python版本、Powershell版本和exe版本等等</p>
+<p>该端口还可以验证是否开启Exchange Server</p>
+<h2 id="port-53"><a href="#Port：53" class="headerlink" title="Port：53"></a>Port：53<a href="#port-53" class="header-anchor">#</a></h2><p>该端口为DNS服务端口，只要提供域名解析服务使用，该端口在渗透过程中可以寻找一下DNS域传送漏洞，在内网中可以使用DNS协议进行通信传输，隐蔽性更加好，参考文章：</p>
+<ul>
+<li>dns隧道之dns2tcp</li>
+<li>dns隧道之dnscat2</li>
+</ul>
+<h2 id="port-389"><a href="#Port：389" class="headerlink" title="Port：389"></a>Port：389<a href="#port-389" class="header-anchor">#</a></h2><p>用于LADP（轻量级目录访问协议），属于TCP/IP协议，在域过程中一般出现在域控上出现该端口，进行权限认证服务，如果拥有对该域的用户，且担心net或者其他爆破方法不可行的情况，可以尝试使用LADP端口进行爆破</p>
+<p>工具可以使用类似于hydra等开源项目</p>
+<h2 id="port-88"><a href="#Port：88" class="headerlink" title="Port：88"></a>Port：88<a href="#port-88" class="header-anchor">#</a></h2><p>该端口主要开启kerberos服务，属于TCP/IP协议，主要任务是监听KDC的票据请求，该协议在渗透过程中可以进行黄金票据和白银票据的伪造，以横向扩展某些服务</p>
+<h2 id="port-5985"><a href="#Port：5985" class="headerlink" title="Port：5985"></a>Port：5985<a href="#port-5985" class="header-anchor">#</a></h2><p>该端口主要介绍WinRM服务，WinRM是Windows对WS-Management的实现，WinRM允许远程用户使用工具和脚本对Windows服务进行管理并获取数据。并且WinRM服务自Windows Vista开始成为Windows的默认组件</p>
+<p>条件：</p>
+<ul>
+<li>Windows Vista上必须手动启动，而Windows Server 2008中服务是默认开启的</li>
+<li>服务在后台开启，但端口还没有开启监听，所以需要开启端口</li>
+<li>使用 winrm quickconfig 对WinRM进行配置，开启HTTP和HTTPS监听，且需要开启防火墙</li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://mirror4s.top">MirRoR4s</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://mirror4s.top/2022/07/22/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E5%AD%A6%E4%B9%A0%E5%8E%86%E7%A8%8B/">https://mirror4s.top/2022/07/22/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E5%AD%A6%E4%B9%A0%E5%8E%86%E7%A8%8B/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://mirror4s.top" target="_blank">学习记录</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Web/">Web</a></div><div class="post_share"><div class="social-share" data-image="https://s2.loli.net/2022/10/29/IfNThRa5dqZ2KAH.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2022/07/22/CTFSHOW-%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/"><img class="prev-cover" src="https://s2.loli.net/2022/10/29/IfNThRa5dqZ2KAH.png" onerror="onerror=null;src='https://github.com/MirRoR4s/MirRoR4s.github.io/blob/main/images/output.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">CTFSHOW-文件包含</div></div></a></div><div class="next-post pull-right"><a href="/2022/07/20/ImaginaryCTF-2022/"><img class="next-cover" src="https://s2.loli.net/2022/10/29/IfNThRa5dqZ2KAH.png" onerror="onerror=null;src='https://github.com/MirRoR4s/MirRoR4s.github.io/blob/main/images/output.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">ImaginaryCTF-2022</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2022/10/09/CTFshow%E6%96%B0%E6%89%8B%E6%9D%AF/" title="CTFshow新手杯"><img class="cover" src="https://s2.loli.net/2022/10/29/IfNThRa5dqZ2KAH.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-10-09</div><div class="title">CTFshow新手杯</div></div></a></div><div><a href="/2022/08/07/CTFshow%E4%B8%83%E5%A4%95%E6%9D%AF%E5%A4%8D%E7%8E%B0/" title="CTFshow七夕杯复现"><img class="cover" src="https://s2.loli.net/2022/10/29/IfNThRa5dqZ2KAH.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-08-07</div><div class="title">CTFshow七夕杯复现</div></div></a></div><div><a href="/2022/07/22/CTFSHOW-%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/" title="CTFSHOW-文件包含"><img class="cover" src="https://s2.loli.net/2022/10/29/IfNThRa5dqZ2KAH.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-07-22</div><div class="title">CTFSHOW-文件包含</div></div></a></div><div><a href="/2022/09/20/ctfshow-php%E6%96%B0%E7%89%B9%E6%80%A7/" title="ctfshow-php新特性"><img class="cover" src="https://s2.loli.net/2022/10/29/IfNThRa5dqZ2KAH.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-09-20</div><div class="title">ctfshow-php新特性</div></div></a></div><div><a href="/2022/10/09/java%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86/" title="java动态代理"><img class="cover" src="https://s2.loli.net/2022/10/29/IfNThRa5dqZ2KAH.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-10-09</div><div class="title">java动态代理</div></div></a></div><div><a href="/2022/10/09/java%E5%8F%8D%E5%B0%84%E6%9C%BA%E5%88%B6/" title="java反射机制"><img class="cover" src="https://s2.loli.net/2022/10/29/IfNThRa5dqZ2KAH.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-10-09</div><div class="title">java反射机制</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://s2.loli.net/2022/10/29/9JUMAPsw5BOigto.jpg" onerror="this.onerror=null;this.src='/img/output.jpg'" alt="avatar"/></div><div class="author-info__name">MirRoR4s</div><div class="author-info__description">不能说的秘密</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">108</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">28</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">13</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/MirRoR4s"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/MirRoR4s" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:mirror4s@birkenwald.cn" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">不以物喜，不以己悲。</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#xin-xi-shou-ji"><span class="toc-number">1.</span> <span class="toc-text">信息收集</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#nmap"><span class="toc-number">1.1.</span> <span class="toc-text">Nmap</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#sao-miao-fang-shi"><span class="toc-number">1.1.0.1.</span> <span class="toc-text">扫描方式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#chang-jian-sao-miao-fang-an"><span class="toc-number">1.1.0.2.</span> <span class="toc-text">常见扫描方案</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#qi-ta-ji-qiao"><span class="toc-number">1.1.0.3.</span> <span class="toc-text">其他技巧</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#shi-li"><span class="toc-number">1.1.0.4.</span> <span class="toc-text">示例</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#shu-chu"><span class="toc-number">1.1.0.5.</span> <span class="toc-text">输出</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#masscan"><span class="toc-number">1.2.</span> <span class="toc-text">masscan</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#nbtscan"><span class="toc-number">1.3.</span> <span class="toc-text">Nbtscan</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#hping3-xin-xi-sou-ji"><span class="toc-number">1.4.</span> <span class="toc-text">Hping3-信息搜集</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#pydictor-zi-dian-sheng-cheng-xin-xi-shou-ji"><span class="toc-number">1.5.</span> <span class="toc-text">Pydictor字典生成-信息收集</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ru-he-shi-xian-jing-zhun-gps-ding-wei-ip-ji-zuo-biao-jing-que-wu-chai-50m-fan-wei-zuo-you-xin-xi-sou-ji"><span class="toc-number">1.6.</span> <span class="toc-text">如何实现精准GPS定位IP及坐标，精确误差50m范围左右-信息搜集</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#kai-fang-lou-dong-exp-poc-qing-bao-sou-ji"><span class="toc-number">1.7.</span> <span class="toc-text">开放漏洞（exp、poc）情报搜集</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#chang-jian-lou-dong-qing-bao-wang-zhan"><span class="toc-number">1.7.1.</span> <span class="toc-text">常见漏洞情报网站</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#whois-dns-pang-zhan-c-duan-cha-xun-xin-xi-sou-ji-pian"><span class="toc-number">1.8.</span> <span class="toc-text">Whois、Dns、旁站C段查询-信息搜集篇</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#zhu-ji-fa-xian"><span class="toc-number">1.8.1.</span> <span class="toc-text">主机发现</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#dns-li-shi-jie-xi"><span class="toc-number">1.8.2.</span> <span class="toc-text">DNS历史解析</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#a-ji-lu"><span class="toc-number">1.8.2.1.</span> <span class="toc-text">A记录：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#bie-ming-cname-ji-lu"><span class="toc-number">1.8.2.2.</span> <span class="toc-text">别名(CNAME)记录：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#mx-mail-exchange-ji-lu"><span class="toc-number">1.8.2.3.</span> <span class="toc-text">MX（Mail Exchange）记录：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#shi-me-shi-txt-ji-lu"><span class="toc-number">1.8.2.4.</span> <span class="toc-text">什么是TXT记录？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#shi-me-shi-ns-ji-lu"><span class="toc-number">1.8.2.5.</span> <span class="toc-text">什么是NS记录</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#zai-kali-xia-huan-you-yi-ge-ming-ling-ke-yi-cha-kan-dns-jie-xi-dig-ming-ling"><span class="toc-number">1.8.2.6.</span> <span class="toc-text">在kali下还有一个命令可以查看DNS解析：dig命令。</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#ming-ling-cha-xun-dig-baidu-com"><span class="toc-number">1.8.2.6.1.</span> <span class="toc-text">命令查询：dig baidu.com</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#ye-ke-yi-zhi-ding-dns-fu-wu-qi-cha-xun"><span class="toc-number">1.8.2.6.2.</span> <span class="toc-text">也可以指定DNS服务器查询：</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#cha-xun-mx-ji-lu-dig-baidu-com-mx"><span class="toc-number">1.8.2.6.3.</span> <span class="toc-text">查询MX记录：dig baidu.com MX</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#ip-fan-cha-yu-ming"><span class="toc-number">1.8.2.6.4.</span> <span class="toc-text">IP反查域名：</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#pang-zhan-c-duan-cha-xun-ge-shan-da-niu"><span class="toc-number">1.8.2.7.</span> <span class="toc-text">旁站C段查询-隔山打牛</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#github-hacking-google-hacking"><span class="toc-number">1.9.</span> <span class="toc-text">Github Hacking | Google Hacking</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#zhu-yi-shi-xiang"><span class="toc-number">1.9.0.0.1.</span> <span class="toc-text">注意事项：</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#ri-qi-tiao-jian"><span class="toc-number">1.9.0.0.2.</span> <span class="toc-text">日期条件：</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#luo-ji-yun-suan"><span class="toc-number">1.9.0.0.3.</span> <span class="toc-text">逻辑运算：</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#pai-chu-yun-suan"><span class="toc-number">1.9.0.0.4.</span> <span class="toc-text">排除运算：</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#bao-han-sou-suo"><span class="toc-number">1.9.0.0.5.</span> <span class="toc-text">包含搜索：</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#zhu-ti-sou-suo"><span class="toc-number">1.9.0.0.6.</span> <span class="toc-text">主体搜索：</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#wen-jian-da-xiao"><span class="toc-number">1.9.0.0.7.</span> <span class="toc-text">文件大小：</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#wen-jian-ming-cheng"><span class="toc-number">1.9.0.0.8.</span> <span class="toc-text">文件名称：</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#kuo-zhan-ming"><span class="toc-number">1.9.0.0.9.</span> <span class="toc-text">扩展名：</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#google-hacking"><span class="toc-number">1.10.</span> <span class="toc-text">Google Hacking</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#gao-ji-yu-fa"><span class="toc-number">1.10.0.1.</span> <span class="toc-text">高级语法：</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#shi-li-yi-sou-suo-biao-ti-han-you-login-de-wang-zhan"><span class="toc-number">1.10.0.1.1.</span> <span class="toc-text">示例一：搜索标题含有login的网站</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#shi-li-er-sou-suo-lian-jie-han-you-wp-login-php-ye-jiu-shi-wordpress-de-wang-zhan"><span class="toc-number">1.10.0.1.2.</span> <span class="toc-text">示例二：搜索链接含有&#x2F;wp-login.php(也就是wordpress)的网站</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#hui-zong-lian-xi-wei-rao-yi-xia-san-ge-mo-kuai-shou-ji-xiang-guan-an-li-bao-gua-shi-jian-guo-cheng-de-qi-yin-jing-guo-jie-guo-yi-ji-dui-wo-men-de-qi-shi"><span class="toc-number">1.11.</span> <span class="toc-text">汇总练习-围绕以下三个模块收集相关案例，包括事件过程的起因、经过、结果以及对我们的启示</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#shang-wang-an-quan"><span class="toc-number">1.11.1.</span> <span class="toc-text">上网安全</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#mi-ma-kou-ling"><span class="toc-number">1.11.2.</span> <span class="toc-text">密码口令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#shu-ju-an-quan"><span class="toc-number">1.11.3.</span> <span class="toc-text">数据安全</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-chuan-wei-bo-5-38-yi-yong-hu-shu-ju-zai-an-wang-chu-shou-guan-fang-cheng-jin-shou-ji-hao-xie-lu"><span class="toc-number">1.11.3.1.</span> <span class="toc-text">1.传微博5.38亿用户数据在暗网出售，官方称仅手机号泄露</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-wordpress-zhong-yi-zhi-lou-dong-bei-hei-ke-li-yong-shu-bai-wan-wang-zhan-shu-ju-ku-zao-dao-qie-qu"><span class="toc-number">1.11.3.2.</span> <span class="toc-text">2.WordPress中已知漏洞被黑客利用，数百万网站数据库遭到窃取</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#li-yong-icmp-xie-yi-fan-dan-shell"><span class="toc-number">1.12.</span> <span class="toc-text">利用icmp协议反弹shell</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#nei-wang-xin-xi-sou-ji"><span class="toc-number">1.13.</span> <span class="toc-text">内网信息搜集</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#li-zu-dian"><span class="toc-number">1.13.1.</span> <span class="toc-text">立足点</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#li-zu-dian-de-xin-xi-shou-ji"><span class="toc-number">1.13.1.1.</span> <span class="toc-text">立足点的信息收集</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#windows-yu-gong-zuo-zu"><span class="toc-number">1.13.1.2.</span> <span class="toc-text">Windows（ 域、工作组）</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#shi-me-shi-windows-yu"><span class="toc-number">1.13.1.2.1.</span> <span class="toc-text">什么是Windows域？</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#gong-zuo-zu"><span class="toc-number">1.13.1.2.2.</span> <span class="toc-text">工作组</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#yu"><span class="toc-number">1.13.1.2.3.</span> <span class="toc-text">域</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#yu-yu-gong-zuo-zu-de-qu-bie"><span class="toc-number">1.13.1.2.4.</span> <span class="toc-text">域与工作组的区别</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#cha-xun-wang-luo-pei-zhi-ming-ling"><span class="toc-number">1.13.1.3.</span> <span class="toc-text">查询网络配置命令</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#cha-xun-cao-zuo-xi-tong-ji-ruan-jian-de-xin-xi"><span class="toc-number">1.13.1.4.</span> <span class="toc-text">查询操作系统及软件的信息</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1-cha-kan-cao-zuo-xi-tong-he-ban-ben-xin-xi"><span class="toc-number">1.13.1.4.1.</span> <span class="toc-text">1）查看操作系统和版本信息</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#nei-wang-heng-xiang-chang-jian-duan-kou-xiang-jie"><span class="toc-number">1.14.</span> <span class="toc-text">内网横向常见端口详解</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#port-445"><span class="toc-number">1.15.</span> <span class="toc-text">Port：445</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#port-137-138-139"><span class="toc-number">1.16.</span> <span class="toc-text">Port：137、138、139</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#port-135"><span class="toc-number">1.17.</span> <span class="toc-text">Port：135</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#port-53"><span class="toc-number">1.18.</span> <span class="toc-text">Port：53</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#port-389"><span class="toc-number">1.19.</span> <span class="toc-text">Port：389</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#port-88"><span class="toc-number">1.20.</span> <span class="toc-text">Port：88</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#port-5985"><span class="toc-number">1.21.</span> <span class="toc-text">Port：5985</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2022/10/29/%E7%A5%A5%E4%BA%91%E6%9D%AF-2022/" title="祥云杯-2022"><img src="https://s2.loli.net/2022/10/29/9JUMAPsw5BOigto.jpg" onerror="this.onerror=null;this.src='https://github.com/MirRoR4s/MirRoR4s.github.io/blob/main/images/output.jpg'" alt="祥云杯-2022"/></a><div class="content"><a class="title" href="/2022/10/29/%E7%A5%A5%E4%BA%91%E6%9D%AF-2022/" title="祥云杯-2022">祥云杯-2022</a><time datetime="2022-10-29T04:31:22.000Z" title="发表于 2022-10-29 12:31:22">2022-10-29</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/10/28/XSCTF-2022/" title="XSCTF-2022"><img src="https://s2.loli.net/2022/10/29/IfNThRa5dqZ2KAH.png" onerror="this.onerror=null;this.src='https://github.com/MirRoR4s/MirRoR4s.github.io/blob/main/images/output.jpg'" alt="XSCTF-2022"/></a><div class="content"><a class="title" href="/2022/10/28/XSCTF-2022/" title="XSCTF-2022">XSCTF-2022</a><time datetime="2022-10-28T13:20:15.000Z" title="发表于 2022-10-28 21:20:15">2022-10-28</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/10/27/OpenSSH%E7%A7%81%E9%92%A5%E6%A0%BC%E5%BC%8F%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93/" title="OpenSSH私钥格式学习总结"><img src="https://s2.loli.net/2022/10/29/IfNThRa5dqZ2KAH.png" onerror="this.onerror=null;this.src='https://github.com/MirRoR4s/MirRoR4s.github.io/blob/main/images/output.jpg'" alt="OpenSSH私钥格式学习总结"/></a><div class="content"><a class="title" href="/2022/10/27/OpenSSH%E7%A7%81%E9%92%A5%E6%A0%BC%E5%BC%8F%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93/" title="OpenSSH私钥格式学习总结">OpenSSH私钥格式学习总结</a><time datetime="2022-10-27T12:33:13.000Z" title="发表于 2022-10-27 20:33:13">2022-10-27</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/10/27/SDCTF-2022/" title="SDCTF-2022"><img src="https://s2.loli.net/2022/10/29/IfNThRa5dqZ2KAH.png" onerror="this.onerror=null;this.src='https://github.com/MirRoR4s/MirRoR4s.github.io/blob/main/images/output.jpg'" alt="SDCTF-2022"/></a><div class="content"><a class="title" href="/2022/10/27/SDCTF-2022/" title="SDCTF-2022">SDCTF-2022</a><time datetime="2022-10-27T12:05:20.000Z" title="发表于 2022-10-27 20:05:20">2022-10-27</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/10/24/NISACTF%E6%96%B0%E7%94%9F%E8%B5%9B/" title="NISACTF新生赛"><img src="https://s2.loli.net/2022/10/29/IfNThRa5dqZ2KAH.png" onerror="this.onerror=null;this.src='https://github.com/MirRoR4s/MirRoR4s.github.io/blob/main/images/output.jpg'" alt="NISACTF新生赛"/></a><div class="content"><a class="title" href="/2022/10/24/NISACTF%E6%96%B0%E7%94%9F%E8%B5%9B/" title="NISACTF新生赛">NISACTF新生赛</a><time datetime="2022-10-24T05:45:03.000Z" title="发表于 2022-10-24 13:45:03">2022-10-24</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2022 By MirRoR4s</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.2
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        insertScript: [200, () => {
+          document.querySelectorAll('mjx-container:not\([display]\)').forEach(node => {
+            const target = node.parentNode
+            if (target.nodeName.toLowerCase() === 'li') {
+              target.parentNode.classList.add('has-jax')
+            } else {
+              target.classList.add('has-jax')
+            }
+          });
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax/es5/tex-mml-chtml.min.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
