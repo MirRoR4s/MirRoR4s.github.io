@@ -1,281 +1,148 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-  <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
-<meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 6.1.0">
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
-  <link rel="mask-icon" href="/images/logo.svg" color="#222">
-
-<link rel="stylesheet" href="/css/main.css">
-
-
-<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
-
-<script id="hexo-configurations">
-    var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
-  </script>
-
-  <meta name="description" content="红队渗透测试学习历程 在利用kali操作系统学习红队渗透之前，最好在kali下配置好代理。方便我们更新软件 https:&#x2F;&#x2F;zhuanlan.zhihu.com&#x2F;p&#x2F;414998586 kali代理福音！！">
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>渗透测试学习历程 | 学习记录</title><meta name="author" content="MirRoR4s"><meta name="copyright" content="MirRoR4s"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="红队渗透测试学习历程 在利用kali操作系统学习红队渗透之前，最好在kali下配置好代理。方便我们更新软件 https:&#x2F;&#x2F;zhuanlan.zhihu.com&#x2F;p&#x2F;414998586 kali代理福音！！">
 <meta property="og:type" content="article">
 <meta property="og:title" content="渗透测试学习历程">
-<meta property="og:url" content="http://example.com/2022/07/22/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E5%AD%A6%E4%B9%A0%E5%8E%86%E7%A8%8B/index.html">
+<meta property="og:url" content="https://github.com/MirRoR4s/2022/07/22/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E5%AD%A6%E4%B9%A0%E5%8E%86%E7%A8%8B/index.html">
 <meta property="og:site_name" content="学习记录">
 <meta property="og:description" content="红队渗透测试学习历程 在利用kali操作系统学习红队渗透之前，最好在kali下配置好代理。方便我们更新软件 https:&#x2F;&#x2F;zhuanlan.zhihu.com&#x2F;p&#x2F;414998586 kali代理福音！！">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LKwvIuOmsoicpffk7N0cVibfDiaxOEvN9kZQRicOJDy4ibrzSPphE4AmWCdvl2qe1wnic1gGjhSS8GPfIww/640">
-<meta property="og:image" content="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LKwvIuOmsoicpffk7N0cVibfDicykw5Q8df9DSlGZVPvqibelHc77otbTTN8BN77MrW9KcdyG9epmNuow/640">
-<meta property="og:image" content="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LKwvIuOmsoicpffk7N0cVibfD3LP2SkReulpC3WEgOg9Hdt8MFTFibY9GI78icUBfIjOFibrP4SDshjYAA/640">
-<meta property="og:image" content="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LKwvIuOmsoicpffk7N0cVibfD2ibjEuJjicYBl9TJ7Zwh1ichS8L6oOAHXRRoLTHibVUMrY3IdMVicQjjRBA/640">
-<meta property="og:image" content="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LJaYja8J7lQyQjNvnZkYa5iabHcGMiaRNIVFbt0IqL1QhBgm2vVfwekyz8Vs57DlsZS1Meh6PlZWcMA/640?wx_fmt=png">
-<meta property="og:image" content="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LJaYja8J7lQyQjNvnZkYa5iau00ficRv9fPoW2iczJuFpFvxOfKdPSK5eia93qXecmRtfI4ssVAibR140Q/640?wx_fmt=png">
-<meta property="og:image" content="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LJaYja8J7lQyQjNvnZkYa5ia2nCULFH6gG1wOvVJtTqJUxAb4OkCCKLwGL3faswa0zLEibZFG1UbxOQ/640?wx_fmt=png">
-<meta property="og:image" content="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LJaYja8J7lQyQjNvnZkYa5ia6Jp3wtjK1wA21r7us6ZBwUOicxT4aoemeMia4oqLJD8FJzHatbrETSIw/640?wx_fmt=png">
-<meta property="og:image" content="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LIcHiccRN6Xs2gordw5KPYUNaI4Lj4R3N1sWdE7G0AJnqdp4vcyaOOIwGmkg6mgOI4cLiaFjnGpeLog/640?wx_fmt=png">
-<meta property="og:image" content="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LIcHiccRN6Xs2gordw5KPYUNBoY1ziaIRUdibKbKeFxwkhWYm67WD7QwHoBMKDK5X4Hmibwd45TgHj5BA/640?wx_fmt=png">
-<meta property="og:image" content="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LIcHiccRN6Xs2gordw5KPYUN6Emsr1vr0mBGzfOlxtEXibfFFN6Rhu2YvMgAWOk6Rkkoic3GaiaftRgFg/640?wx_fmt=png">
-<meta property="og:image" content="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LIcHiccRN6Xs2gordw5KPYUN55pnqvyTzibqzIMo4Hz6gNNIL5GgHalIfcswSDWwIHljQS7icmSMFWhg/640?wx_fmt=png">
-<meta property="og:image" content="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LIcHiccRN6Xs2gordw5KPYUN6TLXZAgszsWDeia8rb8HiaBctsBJdZLMt60wI7Z3zVhFES2ibWic9VIf3w/640?wx_fmt=png">
-<meta property="og:image" content="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LLtiaBc8GsMDzm1y3ibCZ6LbXBm67N4jdBX2zDSpya09DMIqmc45mMhR4rLYwGTlgFB3kp2zOuCNf9A/640?wx_fmt=png">
-<meta property="og:image" content="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LKVhucMAdyFtAiaN8E5A5qH4oIamdIJic1CDAwz0CQ1azebtN4iacDRlTUOvDb1zpD2fKJBUKdStIlsw/640?wx_fmt=png">
-<meta property="og:image" content="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LKVhucMAdyFtAiaN8E5A5qH42Y42RLmaGHibsyjSGcN0iaib6NanmRWQgrf3eDLUuqZFxzeSSu2RqV55Q/640?wx_fmt=png">
-<meta property="og:image" content="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LKVhucMAdyFtAiaN8E5A5qH4jJJAdPBAjejVNqMkjdgkgNrBPRwOhN6jVdpwIe6DXCibefKpjFceYiaw/640?wx_fmt=png">
-<meta property="og:image" content="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LKVhucMAdyFtAiaN8E5A5qH4cUUZHYJwQRvf04ZOe74I7RRex5BTWHTTweicI7mKxiaib2Sl5BHJm2E7g/640?wx_fmt=png">
-<meta property="og:image" content="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LKVhucMAdyFtAiaN8E5A5qH4W8btibfzribl8hdFyzZ6s2uicEB3j8tjc2uV2Dr9vdmAms5v4uB2a4JcQ/640?wx_fmt=png">
-<meta property="og:image" content="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LKVhucMAdyFtAiaN8E5A5qH4r25jPyhTxLypUFH8fdluB3LCgJyZ9yNibxfgviaPtw6SHYUT5ROWBNTQ/640?wx_fmt=png">
-<meta property="og:image" content="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LKVhucMAdyFtAiaN8E5A5qH45SWUuiaegvhicYlv57V7JZyYBwNO2icZeBRkbibLLVuEdTq6IICPgHtzrg/640?wx_fmt=png">
-<meta property="og:image" content="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LKynSSqTP7HazbNic3tlLk93icaxGddPtT1TAMe5SkSu4bMopNqibFiaeWse4iclK48kBT4jbvPh4yZ3Dg/640?wx_fmt=png">
-<meta property="og:image" content="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LKynSSqTP7HazbNic3tlLk93L8Hqsl26rNOo3bYt8ib2Vaa8XuYJlG6yiaYuOt7tIaFq5PXKAUibMLbnA/640?wx_fmt=png">
-<meta property="og:image" content="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LKynSSqTP7HazbNic3tlLk93kEAo9x8ibp1to3wSOF9TFhXZWOjgsvnfwDicNEMBCia2dbhqdXSqiaG3Tg/640?wx_fmt=png">
-<meta property="og:image" content="c:/Users/mirror/AppData/Roaming/Typora/typora-user-images/image-20220801134902496.png">
-<meta property="og:image" content="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LKynSSqTP7HazbNic3tlLk93LwsXwTptNDtk0PbKAibs9EXb2qOETB29jz1VClY1g7JccOKETHtuibUQ/640?wx_fmt=png">
-<meta property="og:image" content="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LKynSSqTP7HazbNic3tlLk93nYPMFoFUCiaCdNR7W8eNe68WcGvx5C7oKqmTUw97VOp2XANXs22ibX8Q/640?wx_fmt=png">
-<meta property="og:image" content="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LKynSSqTP7HazbNic3tlLk93bHE98eNgBFsgt7XOYL5qKxOz26j960mTCvdWYFibkx7JDhQDx2uk93w/640?wx_fmt=png">
-<meta property="og:image" content="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LKynSSqTP7HazbNic3tlLk93kqtWhG8sVUf3frPTzkr2ia4ouwJDvXXYOn3cWaxPSweQjKooOybOxNA/640?wx_fmt=png">
-<meta property="og:image" content="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LKynSSqTP7HazbNic3tlLk93VcObicTTadHdcUt99rVrFAsbsjutfqbPkLZFndU8DOWMR3aR6nyoHEA/640?wx_fmt=png">
-<meta property="og:image" content="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LKynSSqTP7HazbNic3tlLk934ZY9kvbHQtkUpxplEib0E9kCLzch8pfw2d3am5q01Agxb53XOoIzgqg/640?wx_fmt=png">
-<meta property="og:image" content="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LKynSSqTP7HazbNic3tlLk93fns254DY8DBJL085Nrj4AQzGnlEVn1MwUa16oUJr0x6EDqsjiaiacBdw/640?wx_fmt=png">
-<meta property="og:image" content="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LKynSSqTP7HazbNic3tlLk93oA9ebr0wz0f0TRb9GT8cCicdzicqMlBmJhichGU2vKQgH5eAw37700LUQ/640?wx_fmt=png">
-<meta property="og:image" content="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LLLkjlBgpjQMZJhXKXVvRrgy0uFiamRiaBMYJg87E4p8glErZGIunuMiaG85X80W2Lmv49faIOpGZCAQ/640?wx_fmt=png">
-<meta property="og:image" content="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LLLkjlBgpjQMZJhXKXVvRrgiaicj3FGPY3e6L6KVibRUBXK7zD4qcMnz2Wb9iaOd8UaNoicJU81qdYb28A/640?wx_fmt=png">
-<meta property="og:image" content="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LLLkjlBgpjQMZJhXKXVvRrgO56ug2mHr3gxzcZlGpNIPOzsAaicKWEibdwpYk4utnuGZmW86KvDkAqw/640?wx_fmt=png">
-<meta property="og:image" content="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LLLkjlBgpjQMZJhXKXVvRrg1nUXN9IiareGh7AKMeLlnQ9JibsBpQHFxuXXz6eBQtcDjKDdnywFRibgw/640?wx_fmt=png">
-<meta property="og:image" content="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LLLkjlBgpjQMZJhXKXVvRrgAbrSnFiaeHPDdwKakJjUq7QibGajlSSgbVpiabdkk4CicO14YUJ2cibunBA/640?wx_fmt=png">
-<meta property="og:image" content="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LLLkjlBgpjQMZJhXKXVvRrg1YISyKuPORqmENTJKFuhgARro4zt58Ja7ic1ToMN1susoMwYHmI525A/640?wx_fmt=png">
-<meta property="og:image" content="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LLLkjlBgpjQMZJhXKXVvRrgn3cYpFnkPbpvCXGKsmIqswg0kRZX04Po4ibP5PcVuVwfGtKa8Bc5IicQ/640?wx_fmt=png">
-<meta property="og:image" content="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LLLkjlBgpjQMZJhXKXVvRrgChyicWHJxMRWy8kK0KT0FfwzNib2Vibib8l5TgBQHMLS4GfpQe9nnAZ9VQ/640?wx_fmt=png">
+<meta property="og:image" content="https://s2.loli.net/2022/10/29/IfNThRa5dqZ2KAH.png">
 <meta property="article:published_time" content="2022-07-22T01:34:37.000Z">
 <meta property="article:modified_time" content="2022-09-02T08:53:24.867Z">
 <meta property="article:author" content="MirRoR4s">
 <meta property="article:tag" content="Web">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LKwvIuOmsoicpffk7N0cVibfDiaxOEvN9kZQRicOJDy4ibrzSPphE4AmWCdvl2qe1wnic1gGjhSS8GPfIww/640">
-
-<link rel="canonical" href="http://example.com/2022/07/22/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E5%AD%A6%E4%B9%A0%E5%8E%86%E7%A8%8B/">
-
-
-<script id="page-configurations">
-  // https://hexo.io/docs/variables.html
-  CONFIG.page = {
-    sidebar: "",
-    isHome : false,
-    isPost : true,
-    lang   : 'zh-CN'
-  };
-</script>
-
-  <title>渗透测试学习历程 | 学习记录</title>
-  
-
-
-
-
-
-
-  <noscript>
-  <style>
-  .use-motion .brand,
-  .use-motion .menu-item,
-  .sidebar-inner,
-  .use-motion .post-block,
-  .use-motion .pagination,
-  .use-motion .comments,
-  .use-motion .post-header,
-  .use-motion .post-body,
-  .use-motion .collection-header { opacity: initial; }
-
-  .use-motion .site-title,
-  .use-motion .site-subtitle {
-    opacity: initial;
-    top: initial;
+<meta name="twitter:image" content="https://s2.loli.net/2022/10/29/IfNThRa5dqZ2KAH.png"><link rel="shortcut icon" href="/MirRoR4s/img/favicon.png"><link rel="canonical" href="https://github.com/MirRoR4s/2022/07/22/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E5%AD%A6%E4%B9%A0%E5%8E%86%E7%A8%8B/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta/><meta/><meta/><meta/><meta/><meta/><meta/><meta/><meta/><meta/><meta/><meta/><meta/><meta/><meta/><meta/><link rel="stylesheet" href="/MirRoR4s/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/MirRoR4s/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '渗透测试学习历程',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: true,
+  isToc: true,
+  postUpdate: '2022-09-02 16:53:24'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
   }
 
-  .use-motion .logo-line-before i { left: initial; }
-  .use-motion .logo-line-after i { right: initial; }
-  </style>
-</noscript>
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
 
-</head>
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
 
-<body itemscope itemtype="http://schema.org/WebPage">
-  <div class="container use-motion">
-    <div class="headband"></div>
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
 
-    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-container">
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
-    </div>
-  </div>
-
-  <div class="site-meta">
-
-    <a href="/" class="brand" rel="start">
-      <span class="logo-line-before"><i></i></span>
-      <h1 class="site-title">学习记录</h1>
-      <span class="logo-line-after"><i></i></span>
-    </a>
-  </div>
-
-  <div class="site-nav-right">
-    <div class="toggle popup-trigger">
-        <i class="fa fa-search fa-fw fa-lg"></i>
-    </div>
-  </div>
-</div>
-
-
-
-
-<nav class="site-nav">
-  <ul id="menu" class="main-menu menu">
-        <li class="menu-item menu-item-home">
-
-    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
-
-  </li>
-        <li class="menu-item menu-item-tags">
-
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
-
-  </li>
-        <li class="menu-item menu-item-categories">
-
-    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
-
-  </li>
-        <li class="menu-item menu-item-archives">
-
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
-
-  </li>
-      <li class="menu-item menu-item-search">
-        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
-        </a>
-      </li>
-  </ul>
-</nav>
-
-
-
-  <div class="search-pop-overlay">
-    <div class="popup search-popup">
-        <div class="search-header">
-  <span class="search-icon">
-    <i class="fa fa-search"></i>
-  </span>
-  <div class="search-input-container">
-    <input autocomplete="off" autocapitalize="off"
-           placeholder="搜索..." spellcheck="false"
-           type="search" class="search-input">
-  </div>
-  <span class="popup-btn-close">
-    <i class="fa fa-times-circle"></i>
-  </span>
-</div>
-<div id="search-result">
-  <div id="no-result">
-    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
-  </div>
-</div>
-
-    </div>
-  </div>
-
-</div>
-    </header>
-
-    
-  <div class="back-to-top">
-    <i class="fa fa-arrow-up"></i>
-    <span>0%</span>
-  </div>
-
-
-    <main class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          
-
-          <div class="content post posts-expand">
-            
-
-    
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
   
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
   
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/07/22/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E5%AD%A6%E4%B9%A0%E5%8E%86%E7%A8%8B/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="MirRoR4s">
-      <meta itemprop="description" content="不能说的秘密">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="学习记录">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          渗透测试学习历程
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-07-22 09:34:37" itemprop="dateCreated datePublished" datetime="2022-07-22T09:34:37+08:00">2022-07-22</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-09-02 16:53:24" itemprop="dateModified" datetime="2022-09-02T16:53:24+08:00">2022-09-02</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
     
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
     
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-        <!--toc-->
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.1.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://s2.loli.net/2022/10/29/9JUMAPsw5BOigto.jpg" onerror="onerror=null;src='/img/output.jpg'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/MirRoR4s/archives/"><div class="headline">文章</div><div class="length-num">108</div></a><a href="/MirRoR4s/tags/"><div class="headline">标签</div><div class="length-num">28</div></a><a href="/MirRoR4s/categories/"><div class="headline">分类</div><div class="length-num">13</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/MirRoR4s/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/MirRoR4s/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/MirRoR4s/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/MirRoR4s/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/MirRoR4s/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/MirRoR4s/movies/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/MirRoR4s/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/MirRoR4s/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://s2.loli.net/2022/10/29/IfNThRa5dqZ2KAH.png')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/MirRoR4s/">学习记录</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/MirRoR4s/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/MirRoR4s/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/MirRoR4s/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/MirRoR4s/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/MirRoR4s/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/MirRoR4s/movies/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/MirRoR4s/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/MirRoR4s/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">渗透测试学习历程</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-07-22T01:34:37.000Z" title="发表于 2022-07-22 09:34:37">2022-07-22</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-09-02T08:53:24.867Z" title="更新于 2022-09-02 16:53:24">2022-09-02</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="渗透测试学习历程"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><!--toc-->
 <p><code>红队渗透测试学习历程</code></p>
 <p>在利用kali操作系统学习红队渗透之前，最好在kali下配置好代理。方便我们更新软件</p>
 <p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/414998586">https://zhuanlan.zhihu.com/p/414998586</a> kali代理福音！！</p>
@@ -315,7 +182,7 @@
 </li>
 </ul>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sudo nmap -O -oG - 10.1.1.100</span><br><span class="line">sudo nmap -oG -</span><br><span class="line">sudo nmap -oG test.txt baidu.com </span><br><span class="line">test.txt默认保存在当前的目录下</span><br></pre></td></tr></table></figure>
-<h2 id="masscan"><a href="#masscan" class="headerlink" title="masscan"></a>masscan<a href="#masscan" class="header-anchor">#</a></h2><p>项目地址： <a target="_blank" rel="noopener" href="https://github.com/robertdavidgraham/masscan">https://github.com/robertdavidgraham/masscan</a></p>
+<h2 id="masscan"><a href="#masscan" class="headerlink" title="masscan"></a>masscan<a href="#masscan" class="header-anchor">#</a></h2><p>项目地址： <a href="https://github.com/robertdavidgraham/masscan">https://github.com/robertdavidgraham/masscan</a></p>
 <p>安装：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install git gcc make libpcap-dev</span><br><span class="line">git clone https://github.com/robertdavidgraham/masscan</span><br><span class="line">cd masscan</span><br><span class="line">make</span><br></pre></td></tr></table></figure>
 <p>该工具兼容Nmap的参数</p>
@@ -376,7 +243,7 @@
 <p>pydictor是一个强大使用的黑客暴力破解字典建立工具</p>
 <p>下载地址：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git clone --depth=1 --branch=master https://www.github.com/landgrey/pydictor.git</span><br><span class="line">cd pydictor/</span><br><span class="line">chmod +x pydictor.py</span><br><span class="line">python pydictor.py</span><br></pre></td></tr></table></figure>
-<p>官方手册语法：<a target="_blank" rel="noopener" href="https://github.com/LandGrey/pydictor/blob/master/README_CN.md">https://github.com/LandGrey/pydictor/blob/master/README_CN.md</a></p>
+<p>官方手册语法：<a href="https://github.com/LandGrey/pydictor/blob/master/README_CN.md">https://github.com/LandGrey/pydictor/blob/master/README_CN.md</a></p>
 <p>常见的生成字典模式：</p>
 <p>一、生成纯数字字典：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">python pydictor.py -base -d --len 1 6 #生成1-6位纯数字密码字典</span><br><span class="line">python pydictor.py -base -d --len 6 6 #生成6位纯数字密码字典</span><br><span class="line"></span><br></pre></td></tr></table></figure>
@@ -391,8 +258,8 @@
 <p><img src="https://mmbiz.qpic.cn/sz_mmbiz_png/dzeEUCA16LIcHiccRN6Xs2gordw5KPYUN6TLXZAgszsWDeia8rb8HiaBctsBJdZLMt60wI7Z3zVhFES2ibWic9VIf3w/640?wx_fmt=png" alt="img"></p>
 <p>参考文章：</p>
 <p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/R-S-PY/p/12929170.html">https://www.cnblogs.com/R-S-PY/p/12929170.html</a></p>
-<p><a target="_blank" rel="noopener" href="https://github.com/LandGrey/pydictor/blob/master/README_CN.md">https://github.com/LandGrey/pydictor/blob/master/README_CN.md</a></p>
-<p><a target="_blank" rel="noopener" href="https://github.com/LandGrey/pydictor/blob/master/docs/doc/usage.md">https://github.com/LandGrey/pydictor/blob/master/docs/doc/usage.md</a></p>
+<p><a href="https://github.com/LandGrey/pydictor/blob/master/README_CN.md">https://github.com/LandGrey/pydictor/blob/master/README_CN.md</a></p>
+<p><a href="https://github.com/LandGrey/pydictor/blob/master/docs/doc/usage.md">https://github.com/LandGrey/pydictor/blob/master/docs/doc/usage.md</a></p>
 <h2 id="ru-he-shi-xian-jing-zhun-gps-ding-wei-ip-ji-zuo-biao-jing-que-wu-chai-50m-fan-wei-zuo-you-xin-xi-sou-ji"><a href="#如何实现精准GPS定位IP及坐标，精确误差50m范围左右-信息搜集" class="headerlink" title="如何实现精准GPS定位IP及坐标，精确误差50m范围左右-信息搜集"></a>如何实现精准GPS定位IP及坐标，精确误差50m范围左右-信息搜集<a href="#ru-he-shi-xian-jing-zhun-gps-ding-wei-ip-ji-zuo-biao-jing-que-wu-chai-50m-fan-wei-zuo-you-xin-xi-sou-ji" class="header-anchor">#</a></h2><p>无论是在hvv期间的红队还是蓝队，又或者是在实际情况中，信息搜集是最为重要的。但你获取到足够多的情报那么你的任务就已经完成了一半。而你只需要想：我拿到信息之后如何去利用它？</p>
 <p>精准定位- <code>Seeker</code></p>
 <p>Seeker背后的概念很简单，就像我们托管网络钓鱼页面以获得凭据一样，为什么不托管一个伪造页面来请求你的位置，就像许多流行的基于位置得网站一样。Seeker在内置PHP服务器上托管了一个虚假网站，并使用Serveo生成了一个链接，该链接将转发给目录，网站要求提供位置许可，如果目标允许，我们可以获得：</p>
@@ -503,7 +370,7 @@
 <p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_38265674/article/details/87898449">https://blog.csdn.net/qq_38265674/article/details/87898449</a></p>
 <h2 id="github-hacking-google-hacking"><a href="#Github-Hacking-Google-Hacking" class="headerlink" title="Github Hacking | Google Hacking"></a>Github Hacking | Google Hacking<a href="#github-hacking-google-hacking" class="header-anchor">#</a></h2><p>我们都听过社会工程学这个名词，准确来说，社会工程学不是一门科学，而是一门艺术。而在社会工程学中，对信息掌握的充分程度是其中的关键。不光是这，在其它很多领域里我们都需要尽可能的搜集多的信息。</p>
 <p>Github不仅能托管代码，还能对代码进行搜索，我们感受到了其便利的同时，也应该时刻注意，当你上传并公开你的代码时，一时大意，让某些敏感的配置信息文件等暴露于众。</p>
-<p>Github官方网站：<strong><a target="_blank" rel="noopener" href="https://github.com/">https://github.com/</a></strong></p>
+<p>Github官方网站：<strong><a href="https://github.com/">https://github.com/</a></strong></p>
 <p>我们可以通过搜索页面或高级搜索页面搜索Github。</p>
 <p>我们还可以使用 &gt;, &gt;=, &lt;, 和 &lt;= 搜索，分别为：大于、大于等于、小于和小于等于。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">查询 示例</span><br><span class="line">&gt;n cats stars:&gt;<span class="number">1000</span> <span class="comment">#匹配含有&quot;cats&quot;字样、星标超过1000个的仓库。</span></span><br><span class="line">&gt;=n cats topics:&gt;=<span class="number">5</span> 匹配含有<span class="string">&quot;cats&quot;</span>字样、有<span class="number">5</span>个或更多主题的仓库。</span><br><span class="line">&lt;n cats size:&lt;<span class="number">10000</span> 匹配小于10kb的文件中含有<span class="string">&quot;cats&quot;</span>字样的代码。</span><br><span class="line">&lt;=n cats stars:&lt;=<span class="number">50</span> 匹配含有<span class="string">&quot;cats&quot;</span> 字样、星标不超过<span class="number">50</span>个的仓库。</span><br><span class="line">n..* cats stars:<span class="number">10.</span>.* 等同于stars:&gt;=<span class="number">10</span> 并匹配含有<span class="string">&quot;cats&quot;</span>字样、有<span class="number">10</span>个或更多星号的仓库</span><br><span class="line">*..n  cats stars:*.<span class="number">.10</span> 等同于 stars:&lt;=<span class="number">10</span> 并匹配含有 <span class="string">&quot;cats&quot;</span> 字样、有不超过 <span class="number">10</span> 个星号的仓库。</span><br><span class="line"></span><br></pre></td></tr></table></figure>
@@ -790,261 +657,49 @@
 <li>服务在后台开启，但端口还没有开启监听，所以需要开启端口</li>
 <li>使用 winrm quickconfig 对WinRM进行配置，开启HTTP和HTTPS监听，且需要开启防火墙</li>
 </ul>
-
-    </div>
-
-    
-    
-    
-
-      <footer class="post-footer">
-          <div class="post-tags">
-              <a href="/tags/Web/" rel="tag"># Web</a>
-          </div>
-
-        
-
-
-        
-    <div class="post-nav">
-      <div class="post-nav-item">
-    <a href="/2022/07/20/ImaginaryCTF-2022/" rel="prev" title="ImaginaryCTF-2022">
-      <i class="fa fa-chevron-left"></i> ImaginaryCTF-2022
-    </a></div>
-      <div class="post-nav-item">
-    <a href="/2022/07/22/CTFSHOW-%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/" rel="next" title="CTFSHOW-文件包含">
-      CTFSHOW-文件包含 <i class="fa fa-chevron-right"></i>
-    </a></div>
-    </div>
-      </footer>
-    
-  </article>
-  
-  
-  
-
-
-
-          </div>
-          
-
-<script>
-  window.addEventListener('tabs:register', () => {
-    let { activeClass } = CONFIG.comments;
-    if (CONFIG.comments.storage) {
-      activeClass = localStorage.getItem('comments_active') || activeClass;
-    }
-    if (activeClass) {
-      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
-      if (activeTab) {
-        activeTab.click();
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://github.com/MirRoR4s">MirRoR4s</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://github.com/MirRoR4s/2022/07/22/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E5%AD%A6%E4%B9%A0%E5%8E%86%E7%A8%8B/">https://github.com/MirRoR4s/2022/07/22/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E5%AD%A6%E4%B9%A0%E5%8E%86%E7%A8%8B/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://github.com/MirRoR4s" target="_blank">学习记录</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/MirRoR4s/tags/Web/">Web</a></div><div class="post_share"><div class="social-share" data-image="https://s2.loli.net/2022/10/29/IfNThRa5dqZ2KAH.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/MirRoR4s/2022/07/22/CTFSHOW-%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/"><img class="prev-cover" src="https://s2.loli.net/2022/10/29/IfNThRa5dqZ2KAH.png" onerror="onerror=null;src='https://github.com/MirRoR4s/MirRoR4s.github.io/blob/main/images/output.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">CTFSHOW-文件包含</div></div></a></div><div class="next-post pull-right"><a href="/MirRoR4s/2022/07/20/ImaginaryCTF-2022/"><img class="next-cover" src="https://s2.loli.net/2022/10/29/IfNThRa5dqZ2KAH.png" onerror="onerror=null;src='https://github.com/MirRoR4s/MirRoR4s.github.io/blob/main/images/output.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">ImaginaryCTF-2022</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/MirRoR4s/2022/07/22/CTFSHOW-%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/" title="CTFSHOW-文件包含"><img class="cover" src="https://s2.loli.net/2022/10/29/IfNThRa5dqZ2KAH.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-07-22</div><div class="title">CTFSHOW-文件包含</div></div></a></div><div><a href="/MirRoR4s/2022/08/07/CTFshow%E4%B8%83%E5%A4%95%E6%9D%AF%E5%A4%8D%E7%8E%B0/" title="CTFshow七夕杯复现"><img class="cover" src="https://s2.loli.net/2022/10/29/IfNThRa5dqZ2KAH.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-08-07</div><div class="title">CTFshow七夕杯复现</div></div></a></div><div><a href="/MirRoR4s/2022/10/09/CTFshow%E6%96%B0%E6%89%8B%E6%9D%AF/" title="CTFshow新手杯"><img class="cover" src="https://s2.loli.net/2022/10/29/IfNThRa5dqZ2KAH.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-10-09</div><div class="title">CTFshow新手杯</div></div></a></div><div><a href="/MirRoR4s/2022/09/20/ctfshow-php%E6%96%B0%E7%89%B9%E6%80%A7/" title="ctfshow-php新特性"><img class="cover" src="https://s2.loli.net/2022/10/29/IfNThRa5dqZ2KAH.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-09-20</div><div class="title">ctfshow-php新特性</div></div></a></div><div><a href="/MirRoR4s/2022/10/09/java%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86/" title="java动态代理"><img class="cover" src="https://s2.loli.net/2022/10/29/IfNThRa5dqZ2KAH.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-10-09</div><div class="title">java动态代理</div></div></a></div><div><a href="/MirRoR4s/2022/10/09/java%E5%8F%8D%E5%B0%84%E6%9C%BA%E5%88%B6/" title="java反射机制"><img class="cover" src="https://s2.loli.net/2022/10/29/IfNThRa5dqZ2KAH.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-10-09</div><div class="title">java反射机制</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://s2.loli.net/2022/10/29/9JUMAPsw5BOigto.jpg" onerror="this.onerror=null;this.src='/MirRoR4s/img/output.jpg'" alt="avatar"/></div><div class="author-info__name">MirRoR4s</div><div class="author-info__description">不能说的秘密</div></div><div class="card-info-data site-data is-center"><a href="/MirRoR4s/archives/"><div class="headline">文章</div><div class="length-num">108</div></a><a href="/MirRoR4s/tags/"><div class="headline">标签</div><div class="length-num">28</div></a><a href="/MirRoR4s/categories/"><div class="headline">分类</div><div class="length-num">13</div></a></div><a id="card-info-btn" href="https://github.com/MirRoR4s"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/MirRoR4s" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:mirror4s@birkenwald.cn" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">不以物喜，不以己悲。</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#xin-xi-shou-ji"><span class="toc-number">1.</span> <span class="toc-text">信息收集</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#nmap"><span class="toc-number">1.1.</span> <span class="toc-text">Nmap</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#sao-miao-fang-shi"><span class="toc-number">1.1.0.1.</span> <span class="toc-text">扫描方式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#chang-jian-sao-miao-fang-an"><span class="toc-number">1.1.0.2.</span> <span class="toc-text">常见扫描方案</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#qi-ta-ji-qiao"><span class="toc-number">1.1.0.3.</span> <span class="toc-text">其他技巧</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#shi-li"><span class="toc-number">1.1.0.4.</span> <span class="toc-text">示例</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#shu-chu"><span class="toc-number">1.1.0.5.</span> <span class="toc-text">输出</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#masscan"><span class="toc-number">1.2.</span> <span class="toc-text">masscan</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#nbtscan"><span class="toc-number">1.3.</span> <span class="toc-text">Nbtscan</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#hping3-xin-xi-sou-ji"><span class="toc-number">1.4.</span> <span class="toc-text">Hping3-信息搜集</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#pydictor-zi-dian-sheng-cheng-xin-xi-shou-ji"><span class="toc-number">1.5.</span> <span class="toc-text">Pydictor字典生成-信息收集</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ru-he-shi-xian-jing-zhun-gps-ding-wei-ip-ji-zuo-biao-jing-que-wu-chai-50m-fan-wei-zuo-you-xin-xi-sou-ji"><span class="toc-number">1.6.</span> <span class="toc-text">如何实现精准GPS定位IP及坐标，精确误差50m范围左右-信息搜集</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#kai-fang-lou-dong-exp-poc-qing-bao-sou-ji"><span class="toc-number">1.7.</span> <span class="toc-text">开放漏洞（exp、poc）情报搜集</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#chang-jian-lou-dong-qing-bao-wang-zhan"><span class="toc-number">1.7.1.</span> <span class="toc-text">常见漏洞情报网站</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#whois-dns-pang-zhan-c-duan-cha-xun-xin-xi-sou-ji-pian"><span class="toc-number">1.8.</span> <span class="toc-text">Whois、Dns、旁站C段查询-信息搜集篇</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#zhu-ji-fa-xian"><span class="toc-number">1.8.1.</span> <span class="toc-text">主机发现</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#dns-li-shi-jie-xi"><span class="toc-number">1.8.2.</span> <span class="toc-text">DNS历史解析</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#a-ji-lu"><span class="toc-number">1.8.2.1.</span> <span class="toc-text">A记录：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#bie-ming-cname-ji-lu"><span class="toc-number">1.8.2.2.</span> <span class="toc-text">别名(CNAME)记录：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#mx-mail-exchange-ji-lu"><span class="toc-number">1.8.2.3.</span> <span class="toc-text">MX（Mail Exchange）记录：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#shi-me-shi-txt-ji-lu"><span class="toc-number">1.8.2.4.</span> <span class="toc-text">什么是TXT记录？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#shi-me-shi-ns-ji-lu"><span class="toc-number">1.8.2.5.</span> <span class="toc-text">什么是NS记录</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#zai-kali-xia-huan-you-yi-ge-ming-ling-ke-yi-cha-kan-dns-jie-xi-dig-ming-ling"><span class="toc-number">1.8.2.6.</span> <span class="toc-text">在kali下还有一个命令可以查看DNS解析：dig命令。</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#ming-ling-cha-xun-dig-baidu-com"><span class="toc-number">1.8.2.6.1.</span> <span class="toc-text">命令查询：dig baidu.com</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#ye-ke-yi-zhi-ding-dns-fu-wu-qi-cha-xun"><span class="toc-number">1.8.2.6.2.</span> <span class="toc-text">也可以指定DNS服务器查询：</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#cha-xun-mx-ji-lu-dig-baidu-com-mx"><span class="toc-number">1.8.2.6.3.</span> <span class="toc-text">查询MX记录：dig baidu.com MX</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#ip-fan-cha-yu-ming"><span class="toc-number">1.8.2.6.4.</span> <span class="toc-text">IP反查域名：</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#pang-zhan-c-duan-cha-xun-ge-shan-da-niu"><span class="toc-number">1.8.2.7.</span> <span class="toc-text">旁站C段查询-隔山打牛</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#github-hacking-google-hacking"><span class="toc-number">1.9.</span> <span class="toc-text">Github Hacking | Google Hacking</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#zhu-yi-shi-xiang"><span class="toc-number">1.9.0.0.1.</span> <span class="toc-text">注意事项：</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#ri-qi-tiao-jian"><span class="toc-number">1.9.0.0.2.</span> <span class="toc-text">日期条件：</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#luo-ji-yun-suan"><span class="toc-number">1.9.0.0.3.</span> <span class="toc-text">逻辑运算：</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#pai-chu-yun-suan"><span class="toc-number">1.9.0.0.4.</span> <span class="toc-text">排除运算：</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#bao-han-sou-suo"><span class="toc-number">1.9.0.0.5.</span> <span class="toc-text">包含搜索：</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#zhu-ti-sou-suo"><span class="toc-number">1.9.0.0.6.</span> <span class="toc-text">主体搜索：</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#wen-jian-da-xiao"><span class="toc-number">1.9.0.0.7.</span> <span class="toc-text">文件大小：</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#wen-jian-ming-cheng"><span class="toc-number">1.9.0.0.8.</span> <span class="toc-text">文件名称：</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#kuo-zhan-ming"><span class="toc-number">1.9.0.0.9.</span> <span class="toc-text">扩展名：</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#google-hacking"><span class="toc-number">1.10.</span> <span class="toc-text">Google Hacking</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#gao-ji-yu-fa"><span class="toc-number">1.10.0.1.</span> <span class="toc-text">高级语法：</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#shi-li-yi-sou-suo-biao-ti-han-you-login-de-wang-zhan"><span class="toc-number">1.10.0.1.1.</span> <span class="toc-text">示例一：搜索标题含有login的网站</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#shi-li-er-sou-suo-lian-jie-han-you-wp-login-php-ye-jiu-shi-wordpress-de-wang-zhan"><span class="toc-number">1.10.0.1.2.</span> <span class="toc-text">示例二：搜索链接含有&#x2F;wp-login.php(也就是wordpress)的网站</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#hui-zong-lian-xi-wei-rao-yi-xia-san-ge-mo-kuai-shou-ji-xiang-guan-an-li-bao-gua-shi-jian-guo-cheng-de-qi-yin-jing-guo-jie-guo-yi-ji-dui-wo-men-de-qi-shi"><span class="toc-number">1.11.</span> <span class="toc-text">汇总练习-围绕以下三个模块收集相关案例，包括事件过程的起因、经过、结果以及对我们的启示</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#shang-wang-an-quan"><span class="toc-number">1.11.1.</span> <span class="toc-text">上网安全</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#mi-ma-kou-ling"><span class="toc-number">1.11.2.</span> <span class="toc-text">密码口令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#shu-ju-an-quan"><span class="toc-number">1.11.3.</span> <span class="toc-text">数据安全</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-chuan-wei-bo-5-38-yi-yong-hu-shu-ju-zai-an-wang-chu-shou-guan-fang-cheng-jin-shou-ji-hao-xie-lu"><span class="toc-number">1.11.3.1.</span> <span class="toc-text">1.传微博5.38亿用户数据在暗网出售，官方称仅手机号泄露</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-wordpress-zhong-yi-zhi-lou-dong-bei-hei-ke-li-yong-shu-bai-wan-wang-zhan-shu-ju-ku-zao-dao-qie-qu"><span class="toc-number">1.11.3.2.</span> <span class="toc-text">2.WordPress中已知漏洞被黑客利用，数百万网站数据库遭到窃取</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#li-yong-icmp-xie-yi-fan-dan-shell"><span class="toc-number">1.12.</span> <span class="toc-text">利用icmp协议反弹shell</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#nei-wang-xin-xi-sou-ji"><span class="toc-number">1.13.</span> <span class="toc-text">内网信息搜集</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#li-zu-dian"><span class="toc-number">1.13.1.</span> <span class="toc-text">立足点</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#li-zu-dian-de-xin-xi-shou-ji"><span class="toc-number">1.13.1.1.</span> <span class="toc-text">立足点的信息收集</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#windows-yu-gong-zuo-zu"><span class="toc-number">1.13.1.2.</span> <span class="toc-text">Windows（ 域、工作组）</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#shi-me-shi-windows-yu"><span class="toc-number">1.13.1.2.1.</span> <span class="toc-text">什么是Windows域？</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#gong-zuo-zu"><span class="toc-number">1.13.1.2.2.</span> <span class="toc-text">工作组</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#yu"><span class="toc-number">1.13.1.2.3.</span> <span class="toc-text">域</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#yu-yu-gong-zuo-zu-de-qu-bie"><span class="toc-number">1.13.1.2.4.</span> <span class="toc-text">域与工作组的区别</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#cha-xun-wang-luo-pei-zhi-ming-ling"><span class="toc-number">1.13.1.3.</span> <span class="toc-text">查询网络配置命令</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#cha-xun-cao-zuo-xi-tong-ji-ruan-jian-de-xin-xi"><span class="toc-number">1.13.1.4.</span> <span class="toc-text">查询操作系统及软件的信息</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1-cha-kan-cao-zuo-xi-tong-he-ban-ben-xin-xi"><span class="toc-number">1.13.1.4.1.</span> <span class="toc-text">1）查看操作系统和版本信息</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#nei-wang-heng-xiang-chang-jian-duan-kou-xiang-jie"><span class="toc-number">1.14.</span> <span class="toc-text">内网横向常见端口详解</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#port-445"><span class="toc-number">1.15.</span> <span class="toc-text">Port：445</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#port-137-138-139"><span class="toc-number">1.16.</span> <span class="toc-text">Port：137、138、139</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#port-135"><span class="toc-number">1.17.</span> <span class="toc-text">Port：135</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#port-53"><span class="toc-number">1.18.</span> <span class="toc-text">Port：53</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#port-389"><span class="toc-number">1.19.</span> <span class="toc-text">Port：389</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#port-88"><span class="toc-number">1.20.</span> <span class="toc-text">Port：88</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#port-5985"><span class="toc-number">1.21.</span> <span class="toc-text">Port：5985</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/MirRoR4s/2022/10/29/%E7%A5%A5%E4%BA%91%E6%9D%AF-2022/" title="祥云杯-2022"><img src="https://s2.loli.net/2022/10/29/9JUMAPsw5BOigto.jpg" onerror="this.onerror=null;this.src='https://github.com/MirRoR4s/MirRoR4s.github.io/blob/main/images/output.jpg'" alt="祥云杯-2022"/></a><div class="content"><a class="title" href="/MirRoR4s/2022/10/29/%E7%A5%A5%E4%BA%91%E6%9D%AF-2022/" title="祥云杯-2022">祥云杯-2022</a><time datetime="2022-10-29T04:31:22.000Z" title="发表于 2022-10-29 12:31:22">2022-10-29</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/MirRoR4s/2022/10/28/XSCTF-2022/" title="XSCTF-2022"><img src="https://s2.loli.net/2022/10/29/IfNThRa5dqZ2KAH.png" onerror="this.onerror=null;this.src='https://github.com/MirRoR4s/MirRoR4s.github.io/blob/main/images/output.jpg'" alt="XSCTF-2022"/></a><div class="content"><a class="title" href="/MirRoR4s/2022/10/28/XSCTF-2022/" title="XSCTF-2022">XSCTF-2022</a><time datetime="2022-10-28T13:20:15.000Z" title="发表于 2022-10-28 21:20:15">2022-10-28</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/MirRoR4s/2022/10/27/OpenSSH%E7%A7%81%E9%92%A5%E6%A0%BC%E5%BC%8F%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93/" title="OpenSSH私钥格式学习总结"><img src="https://s2.loli.net/2022/10/29/IfNThRa5dqZ2KAH.png" onerror="this.onerror=null;this.src='https://github.com/MirRoR4s/MirRoR4s.github.io/blob/main/images/output.jpg'" alt="OpenSSH私钥格式学习总结"/></a><div class="content"><a class="title" href="/MirRoR4s/2022/10/27/OpenSSH%E7%A7%81%E9%92%A5%E6%A0%BC%E5%BC%8F%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93/" title="OpenSSH私钥格式学习总结">OpenSSH私钥格式学习总结</a><time datetime="2022-10-27T12:33:13.000Z" title="发表于 2022-10-27 20:33:13">2022-10-27</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/MirRoR4s/2022/10/27/SDCTF-2022/" title="SDCTF-2022"><img src="https://s2.loli.net/2022/10/29/IfNThRa5dqZ2KAH.png" onerror="this.onerror=null;this.src='https://github.com/MirRoR4s/MirRoR4s.github.io/blob/main/images/output.jpg'" alt="SDCTF-2022"/></a><div class="content"><a class="title" href="/MirRoR4s/2022/10/27/SDCTF-2022/" title="SDCTF-2022">SDCTF-2022</a><time datetime="2022-10-27T12:05:20.000Z" title="发表于 2022-10-27 20:05:20">2022-10-27</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/MirRoR4s/2022/10/24/NISACTF%E6%96%B0%E7%94%9F%E8%B5%9B/" title="NISACTF新生赛"><img src="https://s2.loli.net/2022/10/29/IfNThRa5dqZ2KAH.png" onerror="this.onerror=null;this.src='https://github.com/MirRoR4s/MirRoR4s.github.io/blob/main/images/output.jpg'" alt="NISACTF新生赛"/></a><div class="content"><a class="title" href="/MirRoR4s/2022/10/24/NISACTF%E6%96%B0%E7%94%9F%E8%B5%9B/" title="NISACTF新生赛">NISACTF新生赛</a><time datetime="2022-10-24T05:45:03.000Z" title="发表于 2022-10-24 13:45:03">2022-10-24</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2022 By MirRoR4s</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/MirRoR4s/js/utils.js"></script><script src="/MirRoR4s/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.2
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        insertScript: [200, () => {
+          document.querySelectorAll('mjx-container:not\([display]\)').forEach(node => {
+            const target = node.parentNode
+            if (target.nodeName.toLowerCase() === 'li') {
+              target.parentNode.classList.add('has-jax')
+            } else {
+              target.classList.add('has-jax')
+            }
+          });
+        }, '', false]
       }
     }
-  });
-  if (CONFIG.comments.storage) {
-    window.addEventListener('tabs:click', event => {
-      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
-      let commentClass = event.target.classList[1];
-      localStorage.setItem('comments_active', commentClass);
-    });
   }
-</script>
-
-        </div>
-          
   
-  <div class="toggle sidebar-toggle">
-    <span class="toggle-line toggle-line-first"></span>
-    <span class="toggle-line toggle-line-middle"></span>
-    <span class="toggle-line toggle-line-last"></span>
-  </div>
-
-  <aside class="sidebar">
-    <div class="sidebar-inner">
-
-      <ul class="sidebar-nav motion-element">
-        <li class="sidebar-nav-toc">
-          文章目录
-        </li>
-        <li class="sidebar-nav-overview">
-          站点概览
-        </li>
-      </ul>
-
-      <!--noindex-->
-      <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#xin-xi-shou-ji"><span class="nav-number">1.</span> <span class="nav-text">信息收集</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#nmap"><span class="nav-number">1.1.</span> <span class="nav-text">Nmap</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#sao-miao-fang-shi"><span class="nav-number">1.1.0.1.</span> <span class="nav-text">扫描方式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#chang-jian-sao-miao-fang-an"><span class="nav-number">1.1.0.2.</span> <span class="nav-text">常见扫描方案</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#qi-ta-ji-qiao"><span class="nav-number">1.1.0.3.</span> <span class="nav-text">其他技巧</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#shi-li"><span class="nav-number">1.1.0.4.</span> <span class="nav-text">示例</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#shu-chu"><span class="nav-number">1.1.0.5.</span> <span class="nav-text">输出</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#masscan"><span class="nav-number">1.2.</span> <span class="nav-text">masscan</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#nbtscan"><span class="nav-number">1.3.</span> <span class="nav-text">Nbtscan</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hping3-xin-xi-sou-ji"><span class="nav-number">1.4.</span> <span class="nav-text">Hping3-信息搜集</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pydictor-zi-dian-sheng-cheng-xin-xi-shou-ji"><span class="nav-number">1.5.</span> <span class="nav-text">Pydictor字典生成-信息收集</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ru-he-shi-xian-jing-zhun-gps-ding-wei-ip-ji-zuo-biao-jing-que-wu-chai-50m-fan-wei-zuo-you-xin-xi-sou-ji"><span class="nav-number">1.6.</span> <span class="nav-text">如何实现精准GPS定位IP及坐标，精确误差50m范围左右-信息搜集</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#kai-fang-lou-dong-exp-poc-qing-bao-sou-ji"><span class="nav-number">1.7.</span> <span class="nav-text">开放漏洞（exp、poc）情报搜集</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#chang-jian-lou-dong-qing-bao-wang-zhan"><span class="nav-number">1.7.1.</span> <span class="nav-text">常见漏洞情报网站</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#whois-dns-pang-zhan-c-duan-cha-xun-xin-xi-sou-ji-pian"><span class="nav-number">1.8.</span> <span class="nav-text">Whois、Dns、旁站C段查询-信息搜集篇</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#zhu-ji-fa-xian"><span class="nav-number">1.8.1.</span> <span class="nav-text">主机发现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#dns-li-shi-jie-xi"><span class="nav-number">1.8.2.</span> <span class="nav-text">DNS历史解析</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#a-ji-lu"><span class="nav-number">1.8.2.1.</span> <span class="nav-text">A记录：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#bie-ming-cname-ji-lu"><span class="nav-number">1.8.2.2.</span> <span class="nav-text">别名(CNAME)记录：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#mx-mail-exchange-ji-lu"><span class="nav-number">1.8.2.3.</span> <span class="nav-text">MX（Mail Exchange）记录：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#shi-me-shi-txt-ji-lu"><span class="nav-number">1.8.2.4.</span> <span class="nav-text">什么是TXT记录？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#shi-me-shi-ns-ji-lu"><span class="nav-number">1.8.2.5.</span> <span class="nav-text">什么是NS记录</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#zai-kali-xia-huan-you-yi-ge-ming-ling-ke-yi-cha-kan-dns-jie-xi-dig-ming-ling"><span class="nav-number">1.8.2.6.</span> <span class="nav-text">在kali下还有一个命令可以查看DNS解析：dig命令。</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#ming-ling-cha-xun-dig-baidu-com"><span class="nav-number">1.8.2.6.1.</span> <span class="nav-text">命令查询：dig baidu.com</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#ye-ke-yi-zhi-ding-dns-fu-wu-qi-cha-xun"><span class="nav-number">1.8.2.6.2.</span> <span class="nav-text">也可以指定DNS服务器查询：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#cha-xun-mx-ji-lu-dig-baidu-com-mx"><span class="nav-number">1.8.2.6.3.</span> <span class="nav-text">查询MX记录：dig baidu.com MX</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#ip-fan-cha-yu-ming"><span class="nav-number">1.8.2.6.4.</span> <span class="nav-text">IP反查域名：</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#pang-zhan-c-duan-cha-xun-ge-shan-da-niu"><span class="nav-number">1.8.2.7.</span> <span class="nav-text">旁站C段查询-隔山打牛</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#github-hacking-google-hacking"><span class="nav-number">1.9.</span> <span class="nav-text">Github Hacking | Google Hacking</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#zhu-yi-shi-xiang"><span class="nav-number">1.9.0.0.1.</span> <span class="nav-text">注意事项：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#ri-qi-tiao-jian"><span class="nav-number">1.9.0.0.2.</span> <span class="nav-text">日期条件：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#luo-ji-yun-suan"><span class="nav-number">1.9.0.0.3.</span> <span class="nav-text">逻辑运算：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#pai-chu-yun-suan"><span class="nav-number">1.9.0.0.4.</span> <span class="nav-text">排除运算：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#bao-han-sou-suo"><span class="nav-number">1.9.0.0.5.</span> <span class="nav-text">包含搜索：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#zhu-ti-sou-suo"><span class="nav-number">1.9.0.0.6.</span> <span class="nav-text">主体搜索：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#wen-jian-da-xiao"><span class="nav-number">1.9.0.0.7.</span> <span class="nav-text">文件大小：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#wen-jian-ming-cheng"><span class="nav-number">1.9.0.0.8.</span> <span class="nav-text">文件名称：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#kuo-zhan-ming"><span class="nav-number">1.9.0.0.9.</span> <span class="nav-text">扩展名：</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#google-hacking"><span class="nav-number">1.10.</span> <span class="nav-text">Google Hacking</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#gao-ji-yu-fa"><span class="nav-number">1.10.0.1.</span> <span class="nav-text">高级语法：</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#shi-li-yi-sou-suo-biao-ti-han-you-login-de-wang-zhan"><span class="nav-number">1.10.0.1.1.</span> <span class="nav-text">示例一：搜索标题含有login的网站</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#shi-li-er-sou-suo-lian-jie-han-you-wp-login-php-ye-jiu-shi-wordpress-de-wang-zhan"><span class="nav-number">1.10.0.1.2.</span> <span class="nav-text">示例二：搜索链接含有&#x2F;wp-login.php(也就是wordpress)的网站</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hui-zong-lian-xi-wei-rao-yi-xia-san-ge-mo-kuai-shou-ji-xiang-guan-an-li-bao-gua-shi-jian-guo-cheng-de-qi-yin-jing-guo-jie-guo-yi-ji-dui-wo-men-de-qi-shi"><span class="nav-number">1.11.</span> <span class="nav-text">汇总练习-围绕以下三个模块收集相关案例，包括事件过程的起因、经过、结果以及对我们的启示</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#shang-wang-an-quan"><span class="nav-number">1.11.1.</span> <span class="nav-text">上网安全</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mi-ma-kou-ling"><span class="nav-number">1.11.2.</span> <span class="nav-text">密码口令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#shu-ju-an-quan"><span class="nav-number">1.11.3.</span> <span class="nav-text">数据安全</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-chuan-wei-bo-5-38-yi-yong-hu-shu-ju-zai-an-wang-chu-shou-guan-fang-cheng-jin-shou-ji-hao-xie-lu"><span class="nav-number">1.11.3.1.</span> <span class="nav-text">1.传微博5.38亿用户数据在暗网出售，官方称仅手机号泄露</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-wordpress-zhong-yi-zhi-lou-dong-bei-hei-ke-li-yong-shu-bai-wan-wang-zhan-shu-ju-ku-zao-dao-qie-qu"><span class="nav-number">1.11.3.2.</span> <span class="nav-text">2.WordPress中已知漏洞被黑客利用，数百万网站数据库遭到窃取</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#li-yong-icmp-xie-yi-fan-dan-shell"><span class="nav-number">1.12.</span> <span class="nav-text">利用icmp协议反弹shell</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#nei-wang-xin-xi-sou-ji"><span class="nav-number">1.13.</span> <span class="nav-text">内网信息搜集</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#li-zu-dian"><span class="nav-number">1.13.1.</span> <span class="nav-text">立足点</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#li-zu-dian-de-xin-xi-shou-ji"><span class="nav-number">1.13.1.1.</span> <span class="nav-text">立足点的信息收集</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#windows-yu-gong-zuo-zu"><span class="nav-number">1.13.1.2.</span> <span class="nav-text">Windows（ 域、工作组）</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#shi-me-shi-windows-yu"><span class="nav-number">1.13.1.2.1.</span> <span class="nav-text">什么是Windows域？</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#gong-zuo-zu"><span class="nav-number">1.13.1.2.2.</span> <span class="nav-text">工作组</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#yu"><span class="nav-number">1.13.1.2.3.</span> <span class="nav-text">域</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#yu-yu-gong-zuo-zu-de-qu-bie"><span class="nav-number">1.13.1.2.4.</span> <span class="nav-text">域与工作组的区别</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#cha-xun-wang-luo-pei-zhi-ming-ling"><span class="nav-number">1.13.1.3.</span> <span class="nav-text">查询网络配置命令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#cha-xun-cao-zuo-xi-tong-ji-ruan-jian-de-xin-xi"><span class="nav-number">1.13.1.4.</span> <span class="nav-text">查询操作系统及软件的信息</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-cha-kan-cao-zuo-xi-tong-he-ban-ben-xin-xi"><span class="nav-number">1.13.1.4.1.</span> <span class="nav-text">1）查看操作系统和版本信息</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#nei-wang-heng-xiang-chang-jian-duan-kou-xiang-jie"><span class="nav-number">1.14.</span> <span class="nav-text">内网横向常见端口详解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#port-445"><span class="nav-number">1.15.</span> <span class="nav-text">Port：445</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#port-137-138-139"><span class="nav-number">1.16.</span> <span class="nav-text">Port：137、138、139</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#port-135"><span class="nav-number">1.17.</span> <span class="nav-text">Port：135</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#port-53"><span class="nav-number">1.18.</span> <span class="nav-text">Port：53</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#port-389"><span class="nav-number">1.19.</span> <span class="nav-text">Port：389</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#port-88"><span class="nav-number">1.20.</span> <span class="nav-text">Port：88</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#port-5985"><span class="nav-number">1.21.</span> <span class="nav-text">Port：5985</span></a></li></ol></li></ol></div>
-      </div>
-      <!--/noindex-->
-
-      <div class="site-overview-wrap sidebar-panel">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <p class="site-author-name" itemprop="name">MirRoR4s</p>
-  <div class="site-description" itemprop="description">不能说的秘密</div>
-</div>
-<div class="site-state-wrap motion-element">
-  <nav class="site-state">
-      <div class="site-state-item site-state-posts">
-          <a href="/archives/">
-        
-          <span class="site-state-item-count">106</span>
-          <span class="site-state-item-name">日志</span>
-        </a>
-      </div>
-      <div class="site-state-item site-state-categories">
-            <a href="/categories/">
-          
-        <span class="site-state-item-count">13</span>
-        <span class="site-state-item-name">分类</span></a>
-      </div>
-      <div class="site-state-item site-state-tags">
-            <a href="/tags/">
-          
-        <span class="site-state-item-count">29</span>
-        <span class="site-state-item-name">标签</span></a>
-      </div>
-  </nav>
-</div>
-
-
-
-      </div>
-
-    </div>
-  </aside>
-  <div id="sidebar-dimmer"></div>
-
-
-      </div>
-    </main>
-
-    <footer class="footer">
-      <div class="footer-inner">
-        
-
-        
-
-<div class="copyright">
-  
-  &copy; 
-  <span itemprop="copyrightYear">2022</span>
-  <span class="with-love">
-    <i class="fa fa-heart"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">MirRoR4s</span>
-</div>
-  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
-  </div>
-
-        
-
-
-
-
-
-
-
-
-      </div>
-    </footer>
-  </div>
-
-  
-  <script src="/lib/anime.min.js"></script>
-  <script src="/lib/velocity/velocity.min.js"></script>
-  <script src="/lib/velocity/velocity.ui.min.js"></script>
-
-<script src="/js/utils.js"></script>
-
-<script src="/js/motion.js"></script>
-
-
-<script src="/js/schemes/pisces.js"></script>
-
-
-<script src="/js/next-boot.js"></script>
-
-
-
-
-  
-
-
-
-
-  
-<script src="/js/local-search.js"></script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-  
-      
-
-<script>
-  if (typeof MathJax === 'undefined') {
-    window.MathJax = {
-      loader: {
-        source: {
-          '[tex]/amsCd': '[tex]/amscd',
-          '[tex]/AMScd': '[tex]/amscd'
-        }
-      },
-      tex: {
-        inlineMath: {'[+]': [['$', '$']]},
-        tags: 'ams'
-      },
-      options: {
-        renderActions: {
-          findScript: [10, doc => {
-            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
-              const display = !!node.type.match(/; *mode=display/);
-              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
-              const text = document.createTextNode('');
-              node.parentNode.replaceChild(text, node);
-              math.start = {node: text, delim: '', n: 0};
-              math.end = {node: text, delim: '', n: 0};
-              doc.math.push(math);
-            });
-          }, '', false],
-          insertedScript: [200, () => {
-            document.querySelectorAll('mjx-container').forEach(node => {
-              let target = node.parentNode;
-              if (target.nodeName.toLowerCase() === 'li') {
-                target.parentNode.classList.add('has-jax');
-              }
-            });
-          }, '', false]
-        }
-      }
-    };
-    (function () {
-      var script = document.createElement('script');
-      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
-      script.defer = true;
-      document.head.appendChild(script);
-    })();
-  } else {
-    MathJax.startup.document.state(0);
-    MathJax.texReset();
-    MathJax.typeset();
-  }
-</script>
-
-    
-
-  
-
-</body>
-</html>
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax/es5/tex-mml-chtml.min.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
