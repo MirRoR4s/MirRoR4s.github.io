@@ -123,7 +123,7 @@
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#0x01-dan-lian-biao-de-chuang-jian"><span class="toc-number">1.</span> <span class="toc-text">0x01 单链表的创建点我</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x02-cha-zhao-dan-lian-biao-mou-wei-zhi-de-yuan-su"><span class="toc-number">2.</span> <span class="toc-text">0x02 查找单链表某位置的元素点我</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#0x01-dan-lian-biao-de-chuang-jian"><span class="toc-number">1.</span> <span class="toc-text">0x01 单链表的创建</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x02-cha-zhao-dan-lian-biao-mou-wei-zhi-de-yuan-su"><span class="toc-number">2.</span> <span class="toc-text">0x02 查找单链表某位置的元素</span></a></li></ol>
     </div>
   </span>
 </div>
@@ -170,7 +170,7 @@
 
   <div class="content" itemprop="articleBody">
     <p>顺序存储结构是随机存取的结构，能快速取出某个位置的元素。但是不方便添加或者删除元素，为此提出了链式存储结构。<span id="more"></span></p>
-<h2 id="0x01-dan-lian-biao-de-chuang-jian"><a href="#0x01-单链表的创建" class="headerlink" title="0x01 单链表的创建"></a>0x01 单链表的创建<a href="#0x01-dan-lian-biao-de-chuang-jian" class="header-anchor">点我</a></h2><p>单链表结构组成：</p>
+<h2 id="0x01-dan-lian-biao-de-chuang-jian"><a href="#0x01-单链表的创建" class="headerlink" title="0x01 单链表的创建"></a>0x01 单链表的创建<a href="#0x01-dan-lian-biao-de-chuang-jian" class="header-anchor">#</a></h2><p>单链表结构组成：</p>
 <p>1）数据域</p>
 <p>2）指针域</p>
 <p>数据域存放当前元素的值，而指针域告诉我们如何去寻找当前元素的下一个元素。</p>
@@ -181,7 +181,7 @@
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span> <span class="title class_">LNode</span></span><br><span class="line">&#123;</span><br><span class="line">    ElemType data; <span class="comment">//数据域</span></span><br><span class="line">    <span class="keyword">struct</span> <span class="title class_">LNode</span> *next; <span class="comment">//指针域，指向一个LNode结构的指针</span></span><br><span class="line">&#125;LNode,*LinkList;</span><br></pre></td></tr></table></figure>
 
 <p>为了使用方便，以下实现的都是带头节点的单链表。也就是说链表真正的第一个结点是头结点的下一个结点。</p>
-<h2 id="0x02-cha-zhao-dan-lian-biao-mou-wei-zhi-de-yuan-su"><a href="#0x02-查找单链表某位置的元素" class="headerlink" title="0x02 查找单链表某位置的元素"></a>0x02 查找单链表某位置的元素<a href="#0x02-cha-zhao-dan-lian-biao-mou-wei-zhi-de-yuan-su" class="header-anchor">点我</a></h2><p>单链表查找第i个位置的元素无法像顺序结构的线性表那样直接根据基地址取出，而是必须从头结点开始逐个遍历。</p>
+<h2 id="0x02-cha-zhao-dan-lian-biao-mou-wei-zhi-de-yuan-su"><a href="#0x02-查找单链表某位置的元素" class="headerlink" title="0x02 查找单链表某位置的元素"></a>0x02 查找单链表某位置的元素<a href="#0x02-cha-zhao-dan-lian-biao-mou-wei-zhi-de-yuan-su" class="header-anchor">#</a></h2><p>单链表查找第i个位置的元素无法像顺序结构的线性表那样直接根据基地址取出，而是必须从头结点开始逐个遍历。</p>
 <p>以下函数实现查单链表中第i个位置的元素，找不到返回-1，找到则返回其值并赋值给e。</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">GetElem_L</span><span class="params">(LinkList L,<span class="type">int</span> i,ElemType &amp;e)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    LinkList p = L-&gt;next;<span class="comment">//p指向链表第一个结点，即头结点下一个结点</span></span><br><span class="line">    <span class="type">int</span> j = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">while</span>(p &amp;&amp; j &lt; i)</span><br><span class="line">    &#123;</span><br><span class="line">        p = p-&gt;next;</span><br><span class="line">        ++j;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(!p || j &gt; i)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    e = p-&gt;data;</span><br><span class="line">    <span class="keyword">return</span> e;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -218,7 +218,7 @@
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#0x01-dan-lian-biao-de-chuang-jian"><span class="toc-number">1.</span> <span class="toc-text">0x01 单链表的创建点我</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x02-cha-zhao-dan-lian-biao-mou-wei-zhi-de-yuan-su"><span class="toc-number">2.</span> <span class="toc-text">0x02 查找单链表某位置的元素点我</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#0x01-dan-lian-biao-de-chuang-jian"><span class="toc-number">1.</span> <span class="toc-text">0x01 单链表的创建</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x02-cha-zhao-dan-lian-biao-mou-wei-zhi-de-yuan-su"><span class="toc-number">2.</span> <span class="toc-text">0x02 查找单链表某位置的元素</span></a></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">
