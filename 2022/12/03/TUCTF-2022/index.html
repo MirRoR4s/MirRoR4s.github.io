@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="闲来无事参加的小比赛">
+<meta property="og:type" content="article">
+<meta property="og:title" content="TUCTF-2022">
+<meta property="og:url" content="https://example.com/2022/12/03/TUCTF-2022/index.html">
+<meta property="og:site_name" content="学习记录">
+<meta property="og:description" content="闲来无事参加的小比赛">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://example.com/images/TUCTF-2022/image-20221203163158498.png">
+<meta property="og:image" content="https://example.com/images/TUCTF-2022/image-20221203162335971.png">
+<meta property="og:image" content="https://example.com/images/TUCTF-2022/image-20221203162513731.png">
+<meta property="og:image" content="https://example.com/images/TUCTF-2022/image-20221203162525832.png">
+<meta property="article:published_time" content="2022-12-03T08:22:07.000Z">
+<meta property="article:modified_time" content="2022-12-03T14:41:52.855Z">
+<meta property="article:author" content="MirRoR4s">
+<meta property="article:tag" content="Crypto">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://example.com/images/TUCTF-2022/image-20221203163158498.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>TUCTF-2022</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body class="max-width mx-auto px3 ltr">    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="目录"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="目录"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="顶部" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="http://github.com/probberechts">项目</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/MirRoR4s">MyGithub</a></li><!--
+     --><!--
+       --><li><a href="/search/">搜索</a></li><!--
+     --><!--
+       --><li><a href="/tags/">标签</a></li><!--
+     --><!--
+       --><li><a href="/categories/">分类</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="上一篇" href="/2022/12/03/NCTF2022/index.html"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="下一篇" href="/2022/11/29/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8CWeb%E5%88%B7%E9%A2%98%E6%B1%87%E6%80%BB/index.html"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://example.com/2022/12/03/TUCTF-2022/index.html"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://example.com/2022/12/03/TUCTF-2022/index.html&text=TUCTF-2022"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://example.com/2022/12/03/TUCTF-2022/index.html&title=TUCTF-2022"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://example.com/2022/12/03/TUCTF-2022/index.html&is_video=false&description=TUCTF-2022"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=TUCTF-2022&body=Check out this article: https://example.com/2022/12/03/TUCTF-2022/index.html"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://example.com/2022/12/03/TUCTF-2022/index.html&title=TUCTF-2022"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://example.com/2022/12/03/TUCTF-2022/index.html&title=TUCTF-2022"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://example.com/2022/12/03/TUCTF-2022/index.html&title=TUCTF-2022"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://example.com/2022/12/03/TUCTF-2022/index.html&title=TUCTF-2022"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://example.com/2022/12/03/TUCTF-2022/index.html&name=TUCTF-2022&description=&lt;!--toc--&gt;
+&lt;p&gt;闲来无事参加的小比赛&lt;/p&gt;"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://example.com/2022/12/03/TUCTF-2022/index.html&t=TUCTF-2022"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#crypto"><span class="toc-number">1.</span> <span class="toc-text">Crypto</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#a-sheep-jumps-over-fence"><span class="toc-number">2.</span> <span class="toc-text">A Sheep Jumps Over Fence</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#ti-mu-miao-shu"><span class="toc-number">2.0.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#jie-ti-bu-zou"><span class="toc-number">2.0.2.</span> <span class="toc-text">解题步骤</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#that-one-rsa-challenge"><span class="toc-number">3.</span> <span class="toc-text">That One RSA Challenge</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#ti-mu-miao-shu"><span class="toc-number">3.0.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#jie-ti-bu-zou"><span class="toc-number">3.0.2.</span> <span class="toc-text">解题步骤</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#more-effort"><span class="toc-number">4.</span> <span class="toc-text">More Effort</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#ti-mu-miao-shu"><span class="toc-number">4.0.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#jie-ti-bu-zou"><span class="toc-number">4.0.2.</span> <span class="toc-text">解题步骤</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#unmix-the-flag"><span class="toc-number">5.</span> <span class="toc-text">Unmix The Flag</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#ti-mu-miao-shu"><span class="toc-number">5.0.1.</span> <span class="toc-text">题目描述</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#two-part-hashing"><span class="toc-number">5.1.</span> <span class="toc-text">Two Part Hashing</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#ti-mu-miao-shu"><span class="toc-number">5.1.1.</span> <span class="toc-text">题目描述</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#play-fair"><span class="toc-number">5.2.</span> <span class="toc-text">Play Fair</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#ti-mu-miao-shu"><span class="toc-number">5.2.1.</span> <span class="toc-text">题目描述</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#never-ending-crypto-bacon"><span class="toc-number">6.</span> <span class="toc-text">Never Ending Crypto - Bacon</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#ti-mu-miao-shu"><span class="toc-number">6.0.1.</span> <span class="toc-text">题目描述</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#making-the-rounds"><span class="toc-number">7.</span> <span class="toc-text">Making The Rounds</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#ti-mu-miao-shu"><span class="toc-number">7.0.1.</span> <span class="toc-text">题目描述</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#oracle-wizard"><span class="toc-number">8.</span> <span class="toc-text">Oracle Wizard</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#ti-mu-miao-shu"><span class="toc-number">8.0.1.</span> <span class="toc-text">题目描述</span></a></li></ol></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        TUCTF-2022
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">MirRoR4s</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2022-12-03T08:22:07.000Z" itemprop="datePublished">2022-12-03</time>
+        
+        (Updated: <time datetime="2022-12-03T14:41:52.855Z" itemprop="dateModified">2022-12-03</time>)
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/CTF/">CTF</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/Crypto/" rel="tag">Crypto</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <!--toc-->
+<p>闲来无事参加的小比赛</p>
+<span id="more"></span>
+<h2 id="crypto"><a href="#Crypto" class="headerlink" title="Crypto"></a>Crypto<a href="#crypto" class="header-anchor">#</a></h2><h2 id="a-sheep-jumps-over-fence"><a href="#A-Sheep-Jumps-Over-Fence" class="headerlink" title="A Sheep Jumps Over Fence"></a>A Sheep Jumps Over Fence<a href="#a-sheep-jumps-over-fence" class="header-anchor">#</a></h2><h4 id="ti-mu-miao-shu"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述<a href="#ti-mu-miao-shu" class="header-anchor">#</a></h4><p>I designed an algorithm to encrypt a message. No one can decrypt it without any information about my algorithm.</p>
+<h4 id="jie-ti-bu-zou"><a href="#解题步骤" class="headerlink" title="解题步骤"></a>解题步骤<a href="#jie-ti-bu-zou" class="header-anchor">#</a></h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> Crypto.Util.number <span class="keyword">import</span> *</span><br><span class="line">cipher = <span class="string">&#x27;56455a7059574e7459584a685a576c756557646f59565637633364765a57647664474e305a48427965584e4464476c6c62584e6c6257463165574e3059574e7a5647687a6247567a5a6d527a636d46796233427366513d3d&#x27;</span></span><br><span class="line">c = <span class="built_in">bytes</span>.fromhex(cipher)</span><br><span class="line"><span class="built_in">print</span>(c)</span><br><span class="line"><span class="keyword">import</span> base64</span><br><span class="line"><span class="built_in">print</span>(base64.b64decode(c))</span><br></pre></td></tr></table></figure>
+<p>给了一个十六进制，转成bytes之后发现是base64编码的数据，解码之后得到了一个特别像栅栏加密的东西。送去bugku枚举果然得到了答案。</p>
+<p><img src="/images/TUCTF-2022/image-20221203163158498.png" alt="image-20221203163158498"></p>
+<h2 id="that-one-rsa-challenge"><a href="#That-One-RSA-Challenge" class="headerlink" title="That One RSA Challenge"></a>That One RSA Challenge<a href="#that-one-rsa-challenge" class="header-anchor">#</a></h2><h4 id="ti-mu-miao-shu"><a href="#题目描述-1" class="headerlink" title="题目描述"></a>题目描述<a href="#ti-mu-miao-shu" class="header-anchor">#</a></h4><p>Every CTF needs an RSA challenge, right? This one is pretty easy, but it’s a good warmup for the harder ones.<code>nc chals.tuctf.com 30003</code></p>
+<h4 id="jie-ti-bu-zou"><a href="#解题步骤-1" class="headerlink" title="解题步骤"></a>解题步骤<a href="#jie-ti-bu-zou" class="header-anchor">#</a></h4><p>nc 连接过去之后会给出一系列的公钥和密文，在线分解了一下n发现是不可以的。之后猜测是用多组公钥加密了同一个明文，所以在本地CRT之后再开五次方根求解出来了。</p>
+<p><img src="/images/TUCTF-2022/image-20221203162335971.png" alt="image-20221203162335971"></p>
+<p><img src="/images/TUCTF-2022/image-20221203162513731.png" alt="image-20221203162513731"></p>
+<p><img src="/images/TUCTF-2022/image-20221203162525832.png" alt="image-20221203162525832"></p>
+<h2 id="more-effort"><a href="#More-Effort" class="headerlink" title="More Effort"></a>More Effort<a href="#more-effort" class="header-anchor">#</a></h2><h4 id="ti-mu-miao-shu"><a href="#题目描述-2" class="headerlink" title="题目描述"></a>题目描述<a href="#ti-mu-miao-shu" class="header-anchor">#</a></h4><p>I have designed a revised RSA algorithm which I believe it’s more secure. I am confident you cannot compromise my message with the p value. Meanwhile, it’s time-consuming to complete the encryption. You may need more effort to brute force it as it takes much longer to complete the encryption.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python3</span></span><br><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">Created on Wed Nov 23 22:26:57 2022</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">@author: weiping</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> random</span><br><span class="line"><span class="keyword">from</span> Crypto.Util.number <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">import</span> gmpy2</span><br><span class="line"></span><br><span class="line">flag = <span class="string">b&#x27;xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">RSA</span>():</span><br><span class="line">	<span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>):</span><br><span class="line">		self.p = getPrime(<span class="number">512</span>)</span><br><span class="line">		self.s = <span class="number">0</span></span><br><span class="line">		<span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, <span class="number">18000000</span>):</span><br><span class="line">			self.s += <span class="built_in">pow</span>(i, self.p-<span class="number">2</span>, self.p)</span><br><span class="line">		self.s = self.s % self.p</span><br><span class="line">		self.q = gmpy2.next_prime(self.s)</span><br><span class="line">		self.n = self.p * self.q</span><br><span class="line">		self.phi = (self.p - <span class="number">1</span>) * (self.q - <span class="number">1</span>)</span><br><span class="line">		self.e = <span class="number">65537</span></span><br><span class="line">		self.d = <span class="built_in">pow</span>(self.e, -<span class="number">1</span>, self.phi)</span><br><span class="line"></span><br><span class="line">	<span class="keyword">def</span> <span class="title function_">encrypt</span>(<span class="params">self, m: <span class="built_in">int</span></span>):</span><br><span class="line">		<span class="keyword">return</span> <span class="built_in">pow</span>(m, self.e, self.n)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">main</span>():</span><br><span class="line">    rsa = RSA()</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;p = <span class="subst">&#123;rsa.p&#125;</span>&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;e = <span class="subst">&#123;rsa.e&#125;</span>&quot;</span>)</span><br><span class="line">    c = rsa.encrypt(bytes_to_long(flag))</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;c = &#x27;</span>, c)</span><br><span class="line">    <span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">    p = 11545307730112922786664290405312669819594345207377186481347514368962838475959085036399074594822885814719354871659183685801279739518405830244888530641898849</span></span><br><span class="line"><span class="string">    e = 65537</span></span><br><span class="line"><span class="string">    c =  114894293598203268417380013863687165686775727976061560608696207173455730179934925684529986102237419507146768083815607566149240438056135058988227916482404733131796310418493418060300571541865427288945087911872630289527954636816219365941817260989104786329938318143577075200571833575709614521758701838099810751</span></span><br><span class="line"><span class="string">    &#x27;&#x27;&#x27;</span></span><br><span class="line">    </span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">	main()</span><br></pre></td></tr></table></figure>
+<h4 id="jie-ti-bu-zou"><a href="#解题步骤-2" class="headerlink" title="解题步骤"></a>解题步骤<a href="#jie-ti-bu-zou" class="header-anchor">#</a></h4><p>素数p已经给定了，似乎我们只要运行一下题目中的算法就可以获取s的值，但是在我的计算机上要花费三个小时。我们可以利用费马小定理来加快运算。由于 p 是一个素数，而 1-1800000000 都和 p 互素，由费马小定理可以知道</p>
+<p>$i^{p-1}\equiv1\mod\,p$，所以 $i^{p-2}\equiv\,i^{-1}\,\mod\,p$。所以可以将模幂运算转化为求逆运算，而使用扩展的欧几里得算法的求逆运算是特别快速的，所以我们可以在一分钟之内完成求和从而得到 s。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> gmpy2</span><br><span class="line"><span class="keyword">from</span> tqdm <span class="keyword">import</span> tqdm</span><br><span class="line"><span class="keyword">from</span> Crypto.Util.number <span class="keyword">import</span> *</span><br><span class="line">p=<span class="number">11545307730112922786664290405312669819594345207377186481347514368962838475959085036399074594822885814719354871659183685801279739518405830244888530641898849</span></span><br><span class="line">s = <span class="number">0</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> tqdm(<span class="built_in">range</span>(<span class="number">1</span>, <span class="number">18000000</span>)):</span><br><span class="line">    s += <span class="built_in">int</span>(gmpy2.invert(i,p))</span><br><span class="line">s = s % p</span><br><span class="line">q = gmpy2.next_prime(s)</span><br><span class="line"><span class="built_in">print</span>(q)</span><br><span class="line">p = <span class="number">11545307730112922786664290405312669819594345207377186481347514368962838475959085036399074594822885814719354871659183685801279739518405830244888530641898849</span></span><br><span class="line">n = p * q</span><br><span class="line">phi = (p-<span class="number">1</span>) * (q-<span class="number">1</span>)</span><br><span class="line">e = <span class="number">65537</span></span><br><span class="line">d = <span class="built_in">pow</span>(e,-<span class="number">1</span>,phi)</span><br><span class="line">c = <span class="number">114894293598203268417380013863687165686775727976061560608696207173455730179934925684529986102237419507146768083815607566149240438056135058988227916482404733131796310418493418060300571541865427288945087911872630289527954636816219365941817260989104786329938318143577075200571833575709614521758701838099810751</span></span><br><span class="line"></span><br><span class="line">m = <span class="built_in">pow</span>(c,d,n)</span><br><span class="line"><span class="built_in">print</span>(long_to_bytes(m))</span><br></pre></td></tr></table></figure>
+<h2 id="unmix-the-flag"><a href="#Unmix-The-Flag" class="headerlink" title="Unmix The Flag"></a>Unmix The <strong>Flag</strong><a href="#unmix-the-flag" class="header-anchor">#</a></h2><h4 id="ti-mu-miao-shu"><a href="#题目描述-3" class="headerlink" title="题目描述"></a>题目描述<a href="#ti-mu-miao-shu" class="header-anchor">#</a></h4><p>Try to find the flag! :) Wait… Here’s the encryption: <code>⠱⠁ ⠹⠣ ⠱⠹ ⠱⠁ ⠹⠣ ⠹⠳ ⠱⠁ ⠹⠣ ⠹⠪ ⠱⠁ ⠹⠣ ⠱⠩ ⠹⠣ ⠱⠩ ⠹⠱ ⠻⠁ ⠫⠩ ⠫⠡ ⠻⠻ ⠹⠣ ⠱⠩ ⠹⠱ ⠻⠁ ⠻⠪ ⠻⠁ ⠻⠱ ⠫⠡ ⠻⠻ ⠫⠡ ⠫⠩</code> Make sure to enclose the message inside the TUCTF{}. Have fun!!</p>
+<p>hint：It is GS-8 Braille</p>
+<h3 id="two-part-hashing"><a href="#Two-Part-Hashing" class="headerlink" title="Two Part Hashing"></a>Two Part Hashing<a href="#two-part-hashing" class="header-anchor">#</a></h3><h4 id="ti-mu-miao-shu"><a href="#题目描述-4" class="headerlink" title="题目描述"></a>题目描述<a href="#ti-mu-miao-shu" class="header-anchor">#</a></h4><p>Can you find the parts to the hash?</p>
+<h3 id="play-fair"><a href="#Play-Fair" class="headerlink" title="Play Fair"></a>Play Fair<a href="#play-fair" class="header-anchor">#</a></h3><h4 id="ti-mu-miao-shu"><a href="#题目描述-5" class="headerlink" title="题目描述"></a>题目描述<a href="#ti-mu-miao-shu" class="header-anchor">#</a></h4><p>Something isn’t right with this cipher. Can you help me figure it out? Need a hint? IDK, Don’t ASCII.</p>
+<h2 id="never-ending-crypto-bacon"><a href="#Never-Ending-Crypto-Bacon" class="headerlink" title="Never Ending Crypto - Bacon"></a>Never Ending Crypto - Bacon<a href="#never-ending-crypto-bacon" class="header-anchor">#</a></h2><h4 id="ti-mu-miao-shu"><a href="#题目描述-6" class="headerlink" title="题目描述"></a>题目描述<a href="#ti-mu-miao-shu" class="header-anchor">#</a></h4><p>Might as well solve a never ending stream of crypto challenges while you get that bacon nice and crispy.</p>
+<h2 id="making-the-rounds"><a href="#Making-The-Rounds" class="headerlink" title="Making The Rounds"></a>Making The Rounds<a href="#making-the-rounds" class="header-anchor">#</a></h2><h4 id="ti-mu-miao-shu"><a href="#题目描述-7" class="headerlink" title="题目描述"></a>题目描述<a href="#ti-mu-miao-shu" class="header-anchor">#</a></h4><p>My friend just learned about AES and decided to write his own implementation. He’s not very good at it, though, something about it seems incomplete. Can you help decipher this message he sent me?</p>
+<p>Key: 679cc57d79127c6683df3830128c153c<br>IV: 0f0df6d13611737517e3f1b400bf7ee5</p>
+<h2 id="oracle-wizard"><a href="#Oracle-Wizard" class="headerlink" title="Oracle Wizard"></a>Oracle Wizard<a href="#oracle-wizard" class="header-anchor">#</a></h2><h4 id="ti-mu-miao-shu"><a href="#题目描述-8" class="headerlink" title="题目描述"></a>题目描述<a href="#ti-mu-miao-shu" class="header-anchor">#</a></h4><p>If I focus I can see it… Yes! It’s surrounded with curly braces… its so close I can almost make it out… T .. U .. C .. T .. F .. {<code>nc chals.tuctf.com 30004</code></p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="http://github.com/probberechts">项目</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://github.com/MirRoR4s">MyGithub</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+         
+          <li><a href="/tags/">标签</a></li>
+         
+          <li><a href="/categories/">分类</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#crypto"><span class="toc-number">1.</span> <span class="toc-text">Crypto</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#a-sheep-jumps-over-fence"><span class="toc-number">2.</span> <span class="toc-text">A Sheep Jumps Over Fence</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#ti-mu-miao-shu"><span class="toc-number">2.0.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#jie-ti-bu-zou"><span class="toc-number">2.0.2.</span> <span class="toc-text">解题步骤</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#that-one-rsa-challenge"><span class="toc-number">3.</span> <span class="toc-text">That One RSA Challenge</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#ti-mu-miao-shu"><span class="toc-number">3.0.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#jie-ti-bu-zou"><span class="toc-number">3.0.2.</span> <span class="toc-text">解题步骤</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#more-effort"><span class="toc-number">4.</span> <span class="toc-text">More Effort</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#ti-mu-miao-shu"><span class="toc-number">4.0.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#jie-ti-bu-zou"><span class="toc-number">4.0.2.</span> <span class="toc-text">解题步骤</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#unmix-the-flag"><span class="toc-number">5.</span> <span class="toc-text">Unmix The Flag</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#ti-mu-miao-shu"><span class="toc-number">5.0.1.</span> <span class="toc-text">题目描述</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#two-part-hashing"><span class="toc-number">5.1.</span> <span class="toc-text">Two Part Hashing</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#ti-mu-miao-shu"><span class="toc-number">5.1.1.</span> <span class="toc-text">题目描述</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#play-fair"><span class="toc-number">5.2.</span> <span class="toc-text">Play Fair</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#ti-mu-miao-shu"><span class="toc-number">5.2.1.</span> <span class="toc-text">题目描述</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#never-ending-crypto-bacon"><span class="toc-number">6.</span> <span class="toc-text">Never Ending Crypto - Bacon</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#ti-mu-miao-shu"><span class="toc-number">6.0.1.</span> <span class="toc-text">题目描述</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#making-the-rounds"><span class="toc-number">7.</span> <span class="toc-text">Making The Rounds</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#ti-mu-miao-shu"><span class="toc-number">7.0.1.</span> <span class="toc-text">题目描述</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#oracle-wizard"><span class="toc-number">8.</span> <span class="toc-text">Oracle Wizard</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#ti-mu-miao-shu"><span class="toc-number">8.0.1.</span> <span class="toc-text">题目描述</span></a></li></ol></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://example.com/2022/12/03/TUCTF-2022/index.html"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://example.com/2022/12/03/TUCTF-2022/index.html&text=TUCTF-2022"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://example.com/2022/12/03/TUCTF-2022/index.html&title=TUCTF-2022"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://example.com/2022/12/03/TUCTF-2022/index.html&is_video=false&description=TUCTF-2022"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=TUCTF-2022&body=Check out this article: https://example.com/2022/12/03/TUCTF-2022/index.html"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://example.com/2022/12/03/TUCTF-2022/index.html&title=TUCTF-2022"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://example.com/2022/12/03/TUCTF-2022/index.html&title=TUCTF-2022"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://example.com/2022/12/03/TUCTF-2022/index.html&title=TUCTF-2022"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://example.com/2022/12/03/TUCTF-2022/index.html&title=TUCTF-2022"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://example.com/2022/12/03/TUCTF-2022/index.html&name=TUCTF-2022&description=&lt;!--toc--&gt;
+&lt;p&gt;闲来无事参加的小比赛&lt;/p&gt;"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://example.com/2022/12/03/TUCTF-2022/index.html&t=TUCTF-2022"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    1999-2022
+    MirRoR4s
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="http://github.com/probberechts">项目</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/MirRoR4s">MyGithub</a></li><!--
+     --><!--
+       --><li><a href="/search/">搜索</a></li><!--
+     --><!--
+       --><li><a href="/tags/">标签</a></li><!--
+     --><!--
+       --><li><a href="/categories/">分类</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板！\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功！");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>
