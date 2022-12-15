@@ -20,9 +20,8 @@
 <meta property="og:image" content="https://example.com/images/NCTF2022/640-16705646320993.png">
 <meta property="og:image" content="https://example.com/images/NCTF2022/640-16705647016086.png">
 <meta property="article:published_time" content="2022-12-03T10:13:52.000Z">
-<meta property="article:modified_time" content="2022-12-15T08:19:45.508Z">
+<meta property="article:modified_time" content="2022-12-15T08:22:05.305Z">
 <meta property="article:author" content="MirRoR4s">
-<meta property="article:tag" content="Crypto">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://example.com/images/NCTF2022/image-20221203181912060.png">
     
@@ -68,8 +67,7 @@
 	
 <meta name="generator" content="Hexo 6.1.0"></head>
 
-<body class="max-width mx-auto px3 ltr">
-    
+<body class="max-width mx-auto px3 ltr">    
       <div id="header-post">
   <a id="menu-icon" href="#" aria-label="目录"><i class="fas fa-bars fa-lg"></i></a>
   <a id="menu-icon-tablet" href="#" aria-label="目录"><i class="fas fa-bars fa-lg"></i></a>
@@ -157,25 +155,15 @@
       
         <time datetime="2022-12-03T10:13:52.000Z" itemprop="datePublished">2022-12-03</time>
         
-        (Updated: <time datetime="2022-12-15T08:19:45.508Z" itemprop="dateModified">2022-12-15</time>)
+        (Updated: <time datetime="2022-12-15T08:22:05.305Z" itemprop="dateModified">2022-12-15</time>)
         
       
     </div>
 
 
       
-    <div class="article-category">
-        <i class="fas fa-archive"></i>
-        <a class="category-link" href="/categories/CTF/">CTF</a>
-    </div>
-
 
       
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link-link" href="/tags/Crypto/" rel="tag">Crypto</a>
-    </div>
-
 
     </div>
   </header>
@@ -190,7 +178,10 @@
 <p>基本思想是很简单的，利用异或的性质可以知道两个密文的异或等于这两个密文对应的两个明文的异或。写成式子就是：</p>
 <p>$c1\oplus,c2&#x3D;m1\oplus,m2$</p>
 <p>然后我们就要利用小写字母异或空格等于对应的大写字母，大写字母异或空格等于对应的小写字母这一特性。具体的说就是我们可以选择一个密文组比如是 $c1$ ，然后将 $c1$ 和其它不同的密文组进行异或，这样我们会得到多组 $c1$ 和其它密文组异或而来的新的分组。对于这些分组中的某个位置，比如是 $col$ ，如果在这个位置出现了很多字母，我们就可以较大概率地认为 $m1[col]$ 是一个空格。</p>
-<p>所以根据 $c1[col]\oplus,c2[col]&#x3D;m1[col],\oplus,m2[col]$ ，我们就可以得到 $m2[col] &#x3D; c1[col]\oplus,c2[col]\oplus空格$</p>
+<p>所以根据</p>
+<p> $c1[col]\oplus,c2[col]&#x3D;m1[col],\oplus,m2[col]$ </p>
+<p>我们就可以得到</p>
+<p> $m2[col] &#x3D; c1[col]\oplus,c2[col]\oplus空格$</p>
 <p>解题的代码：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> Crypto.Util.strxor <span class="keyword">as</span> xo</span><br><span class="line"><span class="keyword">import</span> libnum, codecs, numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">from</span> hashlib <span class="keyword">import</span> md5</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">isChr</span>(<span class="params">x</span>):</span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">ord</span>(<span class="string">&#x27;a&#x27;</span>) &lt;= x <span class="keyword">and</span> x &lt;= <span class="built_in">ord</span>(<span class="string">&#x27;z&#x27;</span>): <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">ord</span>(<span class="string">&#x27;A&#x27;</span>) &lt;= x <span class="keyword">and</span> x &lt;= <span class="built_in">ord</span>(<span class="string">&#x27;Z&#x27;</span>): <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">infer</span>(<span class="params">index, pos</span>):</span><br><span class="line">    <span class="keyword">if</span> msg[index, pos] != <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    msg[index, pos] = <span class="built_in">ord</span>(<span class="string">&#x27; &#x27;</span>)</span><br><span class="line">    <span class="keyword">for</span> x <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(c)):</span><br><span class="line">        <span class="keyword">if</span> x != index:</span><br><span class="line">            msg[x][pos] = xo.strxor(c[x], c[index])[pos] ^ <span class="built_in">ord</span>(<span class="string">&#x27; &#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">know</span>(<span class="params">index, pos, ch</span>):</span><br><span class="line">    msg[index, pos] = <span class="built_in">ord</span>(ch)</span><br><span class="line">    <span class="keyword">for</span> x <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(c)):</span><br><span class="line">        <span class="keyword">if</span> x != index:</span><br><span class="line">            msg[x][pos] = xo.strxor(c[x], c[index])[pos] ^ <span class="built_in">ord</span>(ch)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">dat = []</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">getSpace</span>():</span><br><span class="line">    <span class="keyword">for</span> index, x <span class="keyword">in</span> <span class="built_in">enumerate</span>(c):</span><br><span class="line">        res = [xo.strxor(x, y) <span class="keyword">for</span> y <span class="keyword">in</span> c <span class="keyword">if</span> x!=y]</span><br><span class="line">        f = <span class="keyword">lambda</span> pos: <span class="built_in">len</span>(<span class="built_in">list</span>(<span class="built_in">filter</span>(isChr, [s[pos] <span class="keyword">for</span> s <span class="keyword">in</span> res])))</span><br><span class="line">        cnt = [f(pos) <span class="keyword">for</span> pos <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(x))]</span><br><span class="line">        <span class="keyword">for</span> pos <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(x)):</span><br><span class="line">            dat.append((f(pos), index, pos))</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__==<span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">  c = <span class="string">&#x27;8781e362ed6919575946b0e38757a632ff85c6ea5ec9683c7f1c2f116243145eb282e331a27d4d45405df3eec251ab20f683dfea1fe85a11765d620d7f48575ba186e82df76f4d545840f5e48f12a139ee8ec8b858a6670a765b271063545547b69aa629e7651e535e57f1e8c250ae3ffd8ddee656f146173554621f74431447bb8ce862da533f424812e7ec965ae224f6838dba1ae7471022593a0a2644585cb082f562f6734d404946b0f18a57e233f796c5af04f24b062212623473554013b29aa635eb6805074346f8e09012b124ec83cca756e5470e3e59300d2a06525fba99f62bec7b4d460c50f9f1c25bac70ea8ec8ea15ef5e16334e361b7e521443a186e237e1791e074d12f6e98b42b235fac6cfa302a6471076482a1b26565852ba87f227fa684d465812e4ed8712b131f3838da619e54f0a3f532c5026725c5aa0c9f630ed6c0855584bb0e48e5ead27edc6c0ab18ff0e1b244e2d0c2b455b41a18ce536eb720a074f5df4e09112b63fbe80d8a415f24711381c2c11744b555fbf90a627f47903075b5af5ebc253b220f28fc8ae56e44b18394e275e63485741aa99f22bed7243&#x27;</span></span><br><span class="line">  l = <span class="built_in">len</span>(c)</span><br><span class="line">  c = [codecs.decode(c[i*<span class="number">64</span>:i*<span class="number">64</span>+<span class="number">64</span>].strip().encode(), <span class="string">&#x27;hex&#x27;</span>) <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(l//<span class="number">64</span>+<span class="number">1</span>)]</span><br><span class="line">  c[-<span class="number">1</span>] += <span class="string">b&#x27;\x00&#x27;</span> * (<span class="number">32</span> - <span class="built_in">len</span>(c[-<span class="number">1</span>]))</span><br><span class="line"></span><br><span class="line">  msg = np.zeros([<span class="built_in">len</span>(c), <span class="built_in">len</span>(c[<span class="number">0</span>])], dtype=<span class="built_in">int</span>)</span><br><span class="line"></span><br><span class="line">  getSpace()</span><br><span class="line"></span><br><span class="line">  dat = <span class="built_in">sorted</span>(dat)[::-<span class="number">1</span>]</span><br><span class="line">  <span class="keyword">for</span> w, index, pos <span class="keyword">in</span> dat:</span><br><span class="line">      infer(index, pos)</span><br><span class="line">  </span><br><span class="line">  <span class="comment">#这里用自己拿到的数据调</span></span><br><span class="line">  know(<span class="number">0</span>, <span class="number">0</span>, <span class="string">&#x27;T&#x27;</span>)</span><br><span class="line">  know(<span class="number">0</span>, <span class="number">5</span>, <span class="string">&#x27;u&#x27;</span>)</span><br><span class="line">  know(<span class="number">1</span>, <span class="number">11</span>, <span class="string">&#x27;k&#x27;</span>)</span><br><span class="line">  know(<span class="number">0</span>, <span class="number">12</span>, <span class="string">&#x27;e&#x27;</span>)</span><br><span class="line">  know(<span class="number">0</span>, <span class="number">23</span>, <span class="string">&#x27;B&#x27;</span>)</span><br><span class="line">  know(<span class="number">0</span>, <span class="number">29</span>, <span class="string">&#x27;e&#x27;</span>)</span><br><span class="line"></span><br><span class="line">  <span class="comment">#print(&#x27;\n&#x27;.join([&#x27;&#x27;.join([chr(c) for c in x]) for x in msg]))</span></span><br><span class="line">  m = <span class="string">&#x27;&#x27;</span>.join([<span class="string">&#x27;&#x27;</span>.join([<span class="built_in">chr</span>(c) <span class="keyword">for</span> c <span class="keyword">in</span> x]) <span class="keyword">for</span> x <span class="keyword">in</span> msg])[:l//<span class="number">2</span>]</span><br><span class="line">  <span class="built_in">print</span>(m)</span><br><span class="line">  <span class="built_in">print</span>(md5(m.encode()).hexdigest())</span><br></pre></td></tr></table></figure>
 
@@ -373,5 +364,20 @@
 
 <!-- utterances Comments -->
 
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>
