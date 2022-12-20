@@ -93,11 +93,11 @@
      --><!--
        --><li><a href="/archives/">归档</a></li><!--
      --><!--
-       --><li><a target="_blank" rel="noopener" href="http://github.com/probberechts">项目</a></li><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/MirRoR4s">项目</a></li><!--
      --><!--
        --><li><a target="_blank" rel="noopener" href="https://github.com/MirRoR4s">MyGithub</a></li><!--
      --><!--
-       --><li><a href="/search/">搜索</a></li><!--
+       --><li><a href="/Search/">Search</a></li><!--
      --><!--
        --><li><a href="/tags/">标签</a></li><!--
      --><!--
@@ -135,7 +135,6 @@
   <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://example.com/2022/08/03/java%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C/index.html&title=java命令执行"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
   <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://example.com/2022/08/03/java%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C/index.html&title=java命令执行"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
   <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://example.com/2022/08/03/java%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C/index.html&name=java命令执行&description=&lt;!--toc--&gt;
-
 &lt;p&gt;今天开始学java的web安全相关内容，冲！&lt;/p&gt;"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
   <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://example.com/2022/08/03/java%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C/index.html&t=java命令执行"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
 </ul>
@@ -189,22 +188,18 @@
 
   <div class="content" itemprop="articleBody">
     <!--toc-->
-
 <p>今天开始学java的web安全相关内容，冲！</p>
 <span id="more"></span>
-
-<p>vscode：<a target="_blank" rel="noopener" href="https://blog.csdn.net/cheng_xu_yuan_yy/article/details/109015442%EF%BC%8C%E7%84%B6%E5%90%8E%E6%88%90%E5%8A%9F%E5%8F%91%E8%BD%A6%E3%80%82">https://blog.csdn.net/cheng_xu_yuan_yy/article/details/109015442，然后成功发车。</a></p>
+<p>vscode：<a target="_blank" rel="noopener" href="https://blog.csdn.net/cheng_xu_yuan_yy/article/details/109015442，然后成功发车。">https://blog.csdn.net/cheng_xu_yuan_yy/article/details/109015442，然后成功发车。</a></p>
 <p>IDEA：<a target="_blank" rel="noopener" href="https://blog.csdn.net/oschina_41790905/article/details/79475187">https://blog.csdn.net/oschina_41790905/article/details/79475187</a></p>
 <p>学习博客：</p>
 <p><a target="_blank" rel="noopener" href="https://www.geekby.site/2022/02/java%E6%9C%AC%E5%9C%B0%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E/">https://www.geekby.site/2022/02/java%E6%9C%AC%E5%9C%B0%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E/</a></p>
 <p><a target="_blank" rel="noopener" href="https://www.anquanke.com/post/id/243329">https://www.anquanke.com/post/id/243329</a> 安全客这篇更好！</p>
 <h3 id="java-ben-di-ming-ling-zhi-xing-lou-dong"><a href="#Java本地命令执行漏洞" class="headerlink" title="Java本地命令执行漏洞"></a>Java本地命令执行漏洞<a href="#java-ben-di-ming-ling-zhi-xing-lou-dong" class="header-anchor">#</a></h3><h4 id="bei-jing"><a href="#背景" class="headerlink" title="背景"></a>背景<a href="#bei-jing" class="header-anchor">#</a></h4><p>类似于php，java也提供了本地系统命令执行的函数，攻击者可以通过这些函数在目标服务器中执行任意系统命令，在java中可用于执行系统命令的API有：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">java.lang.Runtime</span><br><span class="line">java.lang.ProcessBuilder</span><br><span class="line">java.lang.UNIXProcess / ProcessImpl</span><br></pre></td></tr></table></figure>
-
 <h4 id="runtime-ming-ling-zhi-xing"><a href="#Runtime命令执行" class="headerlink" title="Runtime命令执行"></a>Runtime命令执行<a href="#runtime-ming-ling-zhi-xing" class="header-anchor">#</a></h4><h5 id="exec-string-command"><a href="#exec-String-command" class="headerlink" title="exec(String command)"></a>exec(String command)<a href="#exec-string-command" class="header-anchor">#</a></h5><p>在java中通常会使用<code>java.lang.Runtime</code>类的<code>exec</code>方法来执行本地系统命令。</p>
 <p>以如下程序执行命令为例：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">linux_cmd</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException &#123;</span><br><span class="line">        <span class="type">String</span> <span class="variable">cmd</span> <span class="operator">=</span><span class="keyword">new</span> <span class="title class_">String</span>(<span class="string">&quot;;echo 1 &gt; 1.txt&quot;</span>);</span><br><span class="line">        <span class="type">String</span> <span class="variable">Command</span> <span class="operator">=</span> <span class="string">&quot;ping 127.0.0.1&quot;</span>+cmd;</span><br><span class="line">        Runtime.getRuntime().exec(Command);</span><br><span class="line">        <span class="comment">//Runtime.getRuntime().exec(new String[]&#123;&quot;/bin/sh&quot;, &quot;-c&quot;, Command&#125;);</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <p>直接执行上面的代码，不能成功创建1.txt。而执行注释的那一部分代码，则可以成功创建1.txt。</p>
 <p>下面开始对执行的代码进行调试分析。跟进 <code>Runtime.getRuntime().exec()</code></p>
 <p><img src="Users\mirror\Desktop\write-up\blog\source\images\image-20220805151529205.png" alt="image-20220805151529205"></p>
@@ -231,7 +226,6 @@
 <p>经过 StringTokenizer 对字符串的处理，命令执行的语义发生了改变，并不是最初设定的想法。</p>
 <h5 id="exec-string-cmdarray"><a href="#exec-String-cmdarray" class="headerlink" title="exec(String cmdarray[])"></a>exec(String cmdarray[])<a href="#exec-string-cmdarray" class="header-anchor">#</a></h5><p>这个函数是上一个函数的重载函数，也是在Java Runtime包中。其参数类型为字符串数组。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.geekby;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.BufferedReader;</span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.io.InputStream;</span><br><span class="line"><span class="keyword">import</span> java.io.InputStreamReader;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Main</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException &#123;</span><br><span class="line">        <span class="type">String</span> <span class="variable">cmd</span> <span class="operator">=</span> <span class="string">&quot;;pwd&quot;</span>;</span><br><span class="line">        <span class="type">Process</span> <span class="variable">p</span> <span class="operator">=</span> Runtime.getRuntime().exec(<span class="keyword">new</span> <span class="title class_">String</span>[]&#123;<span class="string">&quot;/bin/sh&quot;</span>, <span class="string">&quot;-c&quot;</span>, cmd&#125;);</span><br><span class="line">        <span class="type">InputStream</span> <span class="variable">fis</span> <span class="operator">=</span> p.getInputStream();</span><br><span class="line">        <span class="type">BufferedReader</span> <span class="variable">br</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">BufferedReader</span>(<span class="keyword">new</span> <span class="title class_">InputStreamReader</span>(fis));</span><br><span class="line">        <span class="type">String</span> <span class="variable">line</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">        <span class="keyword">while</span> ((line = br.readLine()) != <span class="literal">null</span>) &#123;</span><br><span class="line">            System.out.println(line);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
 <p>蚌埠住了，装的windows的IDEA，没有<code>UNIXProcess</code>方法…..</p>
 <p>我已经想要弄一个linux主系统了…..</p>
 <p>但是问题不大，不影响我学会分析代码执行过程。</p>
@@ -241,19 +235,15 @@
 <p>综上可以看到这个Runtime下的exec方法不能采用命令分割的形式进行命令注入。</p>
 <h5 id="load"><a href="#load" class="headerlink" title="load()"></a>load()<a href="#load" class="header-anchor">#</a></h5><p>在Java Runtime包中，还有另一种加载外部库的形式去命令执行。通过加载动态链接库，如linux下的so文件，windows下的dll文件。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">public class RCE &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        Runtime rt = Runtime.getRuntime();</span><br><span class="line">        rt.load(&quot;D:\\calc.dll&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
 <h4 id="processbuilder"><a href="#ProcessBuilder" class="headerlink" title="ProcessBuilder"></a>ProcessBuilder<a href="#processbuilder" class="header-anchor">#</a></h4><p>使用ProcessBuilder类创建一个进程，创建ProcessBuilder实例，指定该进程的名称和所需参数。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.geekby;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Main</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException &#123;</span><br><span class="line">        <span class="type">String</span> <span class="variable">cmd</span> <span class="operator">=</span> <span class="string">&quot;;pwd&quot;</span>;</span><br><span class="line">        <span class="type">ProcessBuilder</span> <span class="variable">pb</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ProcessBuilder</span>(<span class="string">&quot;ping&quot;</span>, <span class="string">&quot;127.0.0.1&quot;</span>, cmd);</span><br><span class="line">        <span class="comment">//ProcessBuilder类用于创建操作系统进程</span></span><br><span class="line">        <span class="type">Process</span> <span class="variable">process</span> <span class="operator">=</span> pb.start(); <span class="comment">//返回一个process类对象</span></span><br><span class="line">        <span class="type">InputStream</span> <span class="variable">fis</span> <span class="operator">=</span> process.getInputStream();</span><br><span class="line">        <span class="type">BufferedReader</span> <span class="variable">br</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">BufferedReader</span>(<span class="keyword">new</span> <span class="title class_">InputStreamReader</span>(fis));</span><br><span class="line">        <span class="type">String</span> <span class="variable">line</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">        <span class="keyword">while</span> ((line = br.readLine()) != <span class="literal">null</span>) &#123;</span><br><span class="line">            System.out.println(line);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-
 <p><img src="Users\mirror\Desktop\write-up\blog\source\images\image-20220804142713847.png" alt="image-20220804142713847"></p>
 <p><img src="Users\mirror\Desktop\write-up\blog\source\images\image-20220804142837527.png" alt="image-20220804142837527"></p>
 <p><img src="Users\mirror\Desktop\write-up\blog\source\images\image-20220804142932635.png" alt="image-20220804142932635"></p>
 <p><img src="Users\mirror\Desktop\write-up\blog\source\images\image-20220804143121346.png" alt="image-20220804143121346"></p>
 <p>所以上述代码实现的功能就是创建子进程执行ping命令，然后输出命令执行的结果。通过分析调用栈可以发现，ProcessBuilder 在底层调用的逻辑与 Runtime.getRuntime.exec 逻辑相似，在此不做赘述。</p>
 <p>忽然发现自己不明白什么是java反射，网上搜到一篇文章</p>
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/pzjtian/article/details/107852022?spm=1001.2101.3001.6661.1&amp;utm_medium=distribute.pc_relevant_t0.none-task-blog-2~default~CTRLIST~default-1-107852022-blog-125000051.pc_relevant_multi_platform_featuressortv2removedup&amp;depth_1-utm_source=distribute.pc_relevant_t0.none-task-blog-2~default~CTRLIST~default-1-107852022-blog-125000051.pc_relevant_multi_platform_featuressortv2removedup&amp;utm_relevant_index=1">https://blog.csdn.net/pzjtian/article/details/107852022?spm=1001.2101.3001.6661.1&amp;utm_medium=distribute.pc_relevant_t0.none-task-blog-2%7Edefault%7ECTRLIST%7Edefault-1-107852022-blog-125000051.pc_relevant_multi_platform_featuressortv2removedup&amp;depth_1-utm_source=distribute.pc_relevant_t0.none-task-blog-2%7Edefault%7ECTRLIST%7Edefault-1-107852022-blog-125000051.pc_relevant_multi_platform_featuressortv2removedup&amp;utm_relevant_index=1</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/pzjtian/article/details/107852022?spm=1001.2101.3001.6661.1&amp;utm_medium=distribute.pc_relevant_t0.none-task-blog-2%7Edefault%7ECTRLIST%7Edefault-1-107852022-blog-125000051.pc_relevant_multi_platform_featuressortv2removedup&amp;depth_1-utm_source=distribute.pc_relevant_t0.none-task-blog-2%7Edefault%7ECTRLIST%7Edefault-1-107852022-blog-125000051.pc_relevant_multi_platform_featuressortv2removedup&amp;utm_relevant_index=1">https://blog.csdn.net/pzjtian/article/details/107852022?spm=1001.2101.3001.6661.1&amp;utm_medium=distribute.pc_relevant_t0.none-task-blog-2%7Edefault%7ECTRLIST%7Edefault-1-107852022-blog-125000051.pc_relevant_multi_platform_featuressortv2removedup&amp;depth_1-utm_source=distribute.pc_relevant_t0.none-task-blog-2%7Edefault%7ECTRLIST%7Edefault-1-107852022-blog-125000051.pc_relevant_multi_platform_featuressortv2removedup&amp;utm_relevant_index=1</a></p>
 
   </div>
 </article>
@@ -273,11 +263,11 @@
          
           <li><a href="/archives/">归档</a></li>
          
-          <li><a target="_blank" rel="noopener" href="http://github.com/probberechts">项目</a></li>
+          <li><a target="_blank" rel="noopener" href="https://github.com/MirRoR4s">项目</a></li>
          
           <li><a target="_blank" rel="noopener" href="https://github.com/MirRoR4s">MyGithub</a></li>
          
-          <li><a href="/search/">搜索</a></li>
+          <li><a href="/Search/">Search</a></li>
          
           <li><a href="/tags/">标签</a></li>
          
@@ -302,7 +292,6 @@
   <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://example.com/2022/08/03/java%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C/index.html&title=java命令执行"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
   <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://example.com/2022/08/03/java%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C/index.html&title=java命令执行"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
   <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://example.com/2022/08/03/java%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C/index.html&name=java命令执行&description=&lt;!--toc--&gt;
-
 &lt;p&gt;今天开始学java的web安全相关内容，冲！&lt;/p&gt;"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
   <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://example.com/2022/08/03/java%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C/index.html&t=java命令执行"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
 </ul>
@@ -338,11 +327,11 @@
      --><!--
        --><li><a href="/archives/">归档</a></li><!--
      --><!--
-       --><li><a target="_blank" rel="noopener" href="http://github.com/probberechts">项目</a></li><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/MirRoR4s">项目</a></li><!--
      --><!--
        --><li><a target="_blank" rel="noopener" href="https://github.com/MirRoR4s">MyGithub</a></li><!--
      --><!--
-       --><li><a href="/search/">搜索</a></li><!--
+       --><li><a href="/Search/">Search</a></li><!--
      --><!--
        --><li><a href="/tags/">标签</a></li><!--
      --><!--

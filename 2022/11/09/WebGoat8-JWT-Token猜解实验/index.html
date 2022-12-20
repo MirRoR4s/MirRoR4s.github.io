@@ -79,11 +79,11 @@
      --><!--
        --><li><a href="/archives/">归档</a></li><!--
      --><!--
-       --><li><a target="_blank" rel="noopener" href="http://github.com/probberechts">项目</a></li><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/MirRoR4s">项目</a></li><!--
      --><!--
        --><li><a target="_blank" rel="noopener" href="https://github.com/MirRoR4s">MyGithub</a></li><!--
      --><!--
-       --><li><a href="/search/">搜索</a></li><!--
+       --><li><a href="/Search/">Search</a></li><!--
      --><!--
        --><li><a href="/tags/">标签</a></li><!--
      --><!--
@@ -168,9 +168,7 @@
 
   <div class="content" itemprop="articleBody">
     <!--toc-->
-
 <span id="more"></span>
-
 <h3 id="an-zhuang"><a href="#安装" class="headerlink" title="安装"></a>安装<a href="#an-zhuang" class="header-anchor">#</a></h3><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/lsdb/p/8881544.html">WebGoat 8安装、配置、使用教程（CentOS） - 诸子流 - 博客园 (cnblogs.com)</a></p>
 <p><img src="/images/image-20221109191130601.png" alt="image-20221109191130601"></p>
 <p>建议使用docker！运行完docker命令之后访问 <code>127.0.0.1:8080/WebGoat</code> 完成注册之后就可以啦。</p>
@@ -181,9 +179,6 @@
 <h4 id="introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction<a href="#introduction" class="header-anchor">#</a></h4><p>许多应用程序使用 JSON Web Tokens (JWT) 来允许客户端指示身份，以便在身份验证后进一步进行信息的交换。</p>
 <p>来自于 <a target="_blank" rel="noopener" href="https://jwt.io/introduction">https://jwt.io/introduction</a>:</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">JSON Web Token (JWT) is an open standard (RFC 7519) that defines a compact</span><br><span class="line">and self-contained way for securely transmitting</span><br><span class="line">information between parties as a JSON object. This information can be</span><br><span class="line">verified and trusted because it is digitally signed. JWTs can be signed using</span><br><span class="line">a secret (with the HMAC algorithm) or a public/private key pair using RSA.</span><br><span class="line"></span><br><span class="line">JSON Web Token is used to carry information related to the identity and</span><br><span class="line">characteristics (claims) of a client. This &quot;container&quot; is signed by the server</span><br><span class="line">in order to avoid that a client tamper it in order to change, for example,</span><br><span class="line">the identity or any characteristics (example: change the role from simple</span><br><span class="line">user to admin or change the client login). This token is created during</span><br><span class="line">authentication (is provided in case of successful authentication) and is</span><br><span class="line">verified by the server before any processing. It is used by an application</span><br><span class="line">to allow a client to present a token representing his &quot;identity card&quot; (container</span><br><span class="line">with all user information about him) to server and allow the server to verify</span><br><span class="line">the validity and integrity of the token in a secure way, all of this in a stateless</span><br><span class="line">and portable approach (portable in the way that client and server technologies can</span><br><span class="line">be different including also the transport channel even if HTTP is the most often used)</span><br></pre></td></tr></table></figure>
-
-
-
 <h4 id="yi-ge-jwt-token-de-jie-gou"><a href="#一个-JWT-token-的结构" class="headerlink" title="一个 JWT token 的结构"></a>一个 JWT token 的结构<a href="#yi-ge-jwt-token-de-jie-gou" class="header-anchor">#</a></h4><p><img src="/images/image-20221109192020590.png" alt="image-20221109192020590"></p>
 <p>token 由 三部分经过了 base64编码的数据组成：</p>
 <p>1、header</p>
@@ -192,19 +187,14 @@
 <p>标头和声明都由 JSON 对象标识。标头描述了用于 JWT的加密操作以及一些可选的、额外的 JWT 的性质。</p>
 <h4 id="jie-ma-yi-ge-jwt-token"><a href="#解码一个-JWT-token" class="headerlink" title="解码一个 JWT token"></a>解码一个 JWT token<a href="#jie-ma-yi-ge-jwt-token" class="header-anchor">#</a></h4><p>解码以下 JWT token并找到其中的用户名：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">eyJhbGciOiJIUzI1NiJ9.ew0KICAiYXV0aG9yaXRpZXMiIDogWyAiUk9MRV9BRE1JTiIsICJST0xFX1VTRVIiIF0sDQogICJjbGllbnRfaWQiIDogIm15LWNsaWVudC13aXRoLXNlY3JldCIsDQogICJleHAiIDogMTYwNzA5OTYwOCwNCiAgImp0aSIgOiAiOWJjOTJhNDQtMGIxYS00YzVlLWJlNzAtZGE1MjA3NWI5YTg0IiwNCiAgInNjb3BlIiA6IFsgInJlYWQiLCAid3JpdGUiIF0sDQogICJ1c2VyX25hbWUiIDogInVzZXIiDQp9.9lYaULTuoIDJ86-zKDSntJQyHPpJ2mZAbnWRfel99iI</span><br></pre></td></tr></table></figure>
-
 <p>由于 页面提供的 WebWolf 莫名报错了，所以使用 <a target="_blank" rel="noopener" href="https://jwt.io/">JSON Web Tokens - jwt.io</a> 来解码</p>
 <p><img src="/images/image-20221109192828558.png" alt="image-20221109192828558"></p>
 <h4 id="yan-zheng-he-de-dao-yi-ge-jwt-token"><a href="#验证和得到一个-JWT-token" class="headerlink" title="验证和得到一个 JWT token"></a>验证和得到一个 JWT token<a href="#yan-zheng-he-de-dao-yi-ge-jwt-token" class="header-anchor">#</a></h4><p>获得一个token的基本顺序如下：</p>
 <p><img src="/images/image-20221109194638205.png" alt="image-20221109194638205"></p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">In this flow, you can see the user logs in with a username and password on successful authentication the server returns. The server creates a new token and returns this one to the client. When the client makes a successive call toward the server it attaches the new token in the &quot;Authorization&quot; header. The server reads the token and first validates the signature after a successful verification the server uses the information in the token to identify the user.</span><br></pre></td></tr></table></figure>
-
 <h4 id="claims"><a href="#Claims" class="headerlink" title="Claims"></a>Claims<a href="#claims" class="header-anchor">#</a></h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">The token contains claims to identify the user and all other information necessary for the server to fulfill the request. Be aware not to store sensitive information in the token and always send it over a secure channel.</span><br></pre></td></tr></table></figure>
-
 <h4 id="jwt-signing"><a href="#JWT-signing" class="headerlink" title="JWT signing"></a>JWT signing<a href="#jwt-signing" class="header-anchor">#</a></h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Each JWT token should at least be signed before sending it to a client, if a token is not signed the client application would be able to change the contents of the token. The signing specifications are defined [here](https://tools.ietf.org/html/rfc7515) the specific algorithms you can use are described [here](https://tools.ietf.org/html/rfc7518) It basically comes down you use &quot;HMAC with SHA-2 Functions&quot; or &quot;Digital Signature with RSASSA-PKCS1-v1_5/ECDSA/RSASSA-PSS&quot; function for signing the token.</span><br></pre></td></tr></table></figure>
-
 <h4 id="checking-the-signature"><a href="#Checking-the-signature" class="headerlink" title="Checking the signature"></a>Checking the signature<a href="#checking-the-signature" class="header-anchor">#</a></h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Checking the signature</span><br><span class="line">One important step is to verify the signature before performing any other action, let’s try to see some things you need to be aware of before validating the token.</span><br></pre></td></tr></table></figure>
-
 <h4 id="assignment"><a href="#Assignment" class="headerlink" title="Assignment"></a>Assignment<a href="#assignment" class="header-anchor">#</a></h4>
   </div>
 </article>
@@ -224,11 +214,11 @@
          
           <li><a href="/archives/">归档</a></li>
          
-          <li><a target="_blank" rel="noopener" href="http://github.com/probberechts">项目</a></li>
+          <li><a target="_blank" rel="noopener" href="https://github.com/MirRoR4s">项目</a></li>
          
           <li><a target="_blank" rel="noopener" href="https://github.com/MirRoR4s">MyGithub</a></li>
          
-          <li><a href="/search/">搜索</a></li>
+          <li><a href="/Search/">Search</a></li>
          
           <li><a href="/tags/">标签</a></li>
          
@@ -287,11 +277,11 @@
      --><!--
        --><li><a href="/archives/">归档</a></li><!--
      --><!--
-       --><li><a target="_blank" rel="noopener" href="http://github.com/probberechts">项目</a></li><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/MirRoR4s">项目</a></li><!--
      --><!--
        --><li><a target="_blank" rel="noopener" href="https://github.com/MirRoR4s">MyGithub</a></li><!--
      --><!--
-       --><li><a href="/search/">搜索</a></li><!--
+       --><li><a href="/Search/">Search</a></li><!--
      --><!--
        --><li><a href="/tags/">标签</a></li><!--
      --><!--
