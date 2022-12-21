@@ -80,7 +80,7 @@
      --><!--
        --><li><a target="_blank" rel="noopener" href="https://github.com/MirRoR4s">MyGithub</a></li><!--
      --><!--
-       --><li><a href="/Search/">Search</a></li><!--
+       --><li><a href="/search/">Search</a></li><!--
      --><!--
        --><li><a href="/tags/">标签</a></li><!--
      --><!--
@@ -171,7 +171,11 @@
   <div class="content" itemprop="articleBody">
     <p>等待更新中。</p>
 <span id="more"></span>
+
+
+
 <h1 id="mch2022-ctf-write-up"><a href="#MCH2022-CTF-Write-Up" class="headerlink" title="MCH2022 CTF Write-Up"></a>MCH2022 CTF Write-Up<a href="#mch2022-ctf-write-up" class="header-anchor">#</a></h1><h2 id="crypto-machine-1"><a href="#crypto-machine-1" class="headerlink" title="crypto machine 1"></a>crypto machine 1<a href="#crypto-machine-1" class="header-anchor">#</a></h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> binascii</span><br><span class="line"><span class="keyword">import</span> base64</span><br><span class="line"><span class="keyword">import</span> string</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">h</span>(<span class="params">m</span>):</span><br><span class="line">    <span class="keyword">return</span> binascii.hexlify(m)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">h_</span>(<span class="params">m</span>):</span><br><span class="line">    <span class="keyword">return</span> binascii.unhexlify(m)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">b</span>(<span class="params">m</span>):</span><br><span class="line">    <span class="keyword">return</span> base64.b64encode(m)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">b_</span>(<span class="params">m</span>):</span><br><span class="line">    <span class="keyword">return</span> base64.b64decode(m)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">r</span>(<span class="params">m</span>):</span><br><span class="line">    t = string.maketrans(</span><br><span class="line">        <span class="string">&quot;ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz&quot;</span>,</span><br><span class="line">        <span class="string">&quot;NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm&quot;</span>)</span><br><span class="line">    <span class="keyword">return</span> string.translate(m,t)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">r_</span>(<span class="params">m</span>):</span><br><span class="line">    t = string.maketrans(</span><br><span class="line">        <span class="string">&quot;ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz&quot;</span>,</span><br><span class="line">        <span class="string">&quot;NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm&quot;</span></span><br><span class="line"></span><br><span class="line">    )</span><br><span class="line">    <span class="keyword">return</span> string.translate(m,t)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">x</span>(<span class="params">m</span>):</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;&#x27;</span>.join(<span class="built_in">chr</span>(<span class="built_in">ord</span>(c)^<span class="number">0x42</span>) <span class="keyword">for</span> c <span class="keyword">in</span> m)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">encrypt</span>(<span class="params">s</span>):</span><br><span class="line">    <span class="built_in">print</span>(b(x(h(r(s)))))</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">decrypt</span>(<span class="params">s</span>):</span><br><span class="line">    <span class="built_in">print</span>(r_(h_(x(b_(s)))))</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    decrypt(<span class="string">&#x27;diN1cHV7dXtwcnVzdHB0c3VwcCFwcnV0dHVwcnR0dXB1cHUjdHRwcnRwdHp0d3BydXB0c3VydHd0IXRxdHV1dHRwdHNwcnUjdCd1cnV3dXR0c3VwcHJ1c3RwdXB0dHRzcHV0dXBydCN0cHR3dXpwcnR1dXd0J3R1cHJ1dnRwdHB1c3AncHJ3dnR6dXB0dHR0cHJ0I3VwcHJ1d3QndHt1cHBydHV0cHBydXZ0cHBydCR0J3VydXpwcnR1dHBwcnR1dXd1cHBydXN0d3QndCN1dHRzdXZwcnR1dCd0JHV7dXBwJ3Byd3J0cHRzdXZ0d3QndHV0enV7dCd0dXV0dHB0c3R0cCFwcnQhdHB0enBydXN1cHR0dXB0d3R7dXBwcnQncHJ1cXV7dCd1dnEjcHJ1cXV7dCd1dnUgdXNxdnFzdXNxenVydXNxe3F6dXFxcnFydCRxcHFycXZ1cHF7cXpxcnFycXtxe3F6dXB1cnVxcXpxdnFwcXV1cHUm&#x27;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
 
   </div>
 </article>
@@ -195,7 +199,7 @@
          
           <li><a target="_blank" rel="noopener" href="https://github.com/MirRoR4s">MyGithub</a></li>
          
-          <li><a href="/Search/">Search</a></li>
+          <li><a href="/search/">Search</a></li>
          
           <li><a href="/tags/">标签</a></li>
          
@@ -258,7 +262,7 @@
      --><!--
        --><li><a target="_blank" rel="noopener" href="https://github.com/MirRoR4s">MyGithub</a></li><!--
      --><!--
-       --><li><a href="/Search/">Search</a></li><!--
+       --><li><a href="/search/">Search</a></li><!--
      --><!--
        --><li><a href="/tags/">标签</a></li><!--
      --><!--

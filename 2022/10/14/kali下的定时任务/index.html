@@ -82,7 +82,7 @@
      --><!--
        --><li><a target="_blank" rel="noopener" href="https://github.com/MirRoR4s">MyGithub</a></li><!--
      --><!--
-       --><li><a href="/Search/">Search</a></li><!--
+       --><li><a href="/search/">Search</a></li><!--
      --><!--
        --><li><a href="/tags/">标签</a></li><!--
      --><!--
@@ -120,6 +120,7 @@
   <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://example.com/2022/10/14/kali%E4%B8%8B%E7%9A%84%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1/index.html&title=定时任务"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
   <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://example.com/2022/10/14/kali%E4%B8%8B%E7%9A%84%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1/index.html&title=定时任务"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
   <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://example.com/2022/10/14/kali%E4%B8%8B%E7%9A%84%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1/index.html&name=定时任务&description=&lt;!--toc--&gt;
+
 &lt;p&gt;今天工作要求是写一个每日自动执行python脚本并自动发送邮箱的代码出来。于是乎很自然地想到了kali或者说是linux下的crontab命令。&lt;/p&gt;"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
   <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://example.com/2022/10/14/kali%E4%B8%8B%E7%9A%84%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1/index.html&t=定时任务"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
 </ul>
@@ -178,13 +179,17 @@
 
   <div class="content" itemprop="articleBody">
     <!--toc-->
+
 <p>今天工作要求是写一个每日自动执行python脚本并自动发送邮箱的代码出来。于是乎很自然地想到了kali或者说是linux下的crontab命令。</p>
 <span id="more"></span>
+
 <h3 id="wen-ti-shuo-ming"><a href="#问题说明" class="headerlink" title="问题说明"></a>问题说明<a href="#wen-ti-shuo-ming" class="header-anchor">#</a></h3><p>crontab的使用很简单，经过一番百度我就书写完了我的定时任务，但是一直无法执行</p>
 <p>一开始的命令是</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">* * * * * python3 /home/kali/Desktop/test.py</span><br></pre></td></tr></table></figure>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">* * * * * python3 <span class="regexp">/home/</span>kali<span class="regexp">/Desktop/</span>test.py</span><br></pre></td></tr></table></figure>
+
 <p><strong>后面观察到需要先cd到执行脚本的目录下</strong></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">* * * * * <span class="built_in">cd</span> /home/kali/Desktop;python3 test.py</span><br></pre></td></tr></table></figure>
+
 <h4 id="guan-yu-windows-de-ding-shi-ren-wu"><a href="#关于windows的定时任务" class="headerlink" title="关于windows的定时任务"></a>关于windows的定时任务<a href="#guan-yu-windows-de-ding-shi-ren-wu" class="header-anchor">#</a></h4><p>后续我发现windows的定时任务相比于linux简单得多，唯一不好的是似乎windows要求执行的命令必须是bat或者exe后缀文件。由于我要执行的是一个python脚本，我必须进行一个py到bat文件格式的转换。</p>
 <p>后续在知乎上看到了一个很简单的操作，但是似乎需要特定的条件。</p>
 <p><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/350315846">https://www.zhihu.com/question/350315846</a></p>
@@ -192,7 +197,7 @@
 <h3 id="yin-yong-lian-jie"><a href="#引用链接" class="headerlink" title="引用链接"></a>引用链接<a href="#yin-yong-lian-jie" class="header-anchor">#</a></h3><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/Hi-blog/p/Schedule-Tasks-On-Linux-And-Windows.html">https://www.cnblogs.com/Hi-blog/p/Schedule-Tasks-On-Linux-And-Windows.html</a></p>
 <p><a target="_blank" rel="noopener" href="https://bbskali.cn/thread-2157-1-1.html">https://bbskali.cn/thread-2157-1-1.html</a></p>
 <p><a target="_blank" rel="noopener" href="https://www.runoob.com/w3cnote/linux-crontab-tasks.html">https://www.runoob.com/w3cnote/linux-crontab-tasks.html</a></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">schtasks /create /tn &quot;sync-opensource1&quot; /tr &quot;test.bat的绝对路径&quot; /sc daily</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">schtasks /create /tn <span class="string">&quot;sync-opensource1&quot;</span> /tr <span class="string">&quot;test.bat的绝对路径&quot;</span> /sc daily</span><br></pre></td></tr></table></figure>
 
   </div>
 </article>
@@ -216,7 +221,7 @@
          
           <li><a target="_blank" rel="noopener" href="https://github.com/MirRoR4s">MyGithub</a></li>
          
-          <li><a href="/Search/">Search</a></li>
+          <li><a href="/search/">Search</a></li>
          
           <li><a href="/tags/">标签</a></li>
          
@@ -241,6 +246,7 @@
   <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://example.com/2022/10/14/kali%E4%B8%8B%E7%9A%84%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1/index.html&title=定时任务"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
   <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://example.com/2022/10/14/kali%E4%B8%8B%E7%9A%84%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1/index.html&title=定时任务"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
   <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://example.com/2022/10/14/kali%E4%B8%8B%E7%9A%84%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1/index.html&name=定时任务&description=&lt;!--toc--&gt;
+
 &lt;p&gt;今天工作要求是写一个每日自动执行python脚本并自动发送邮箱的代码出来。于是乎很自然地想到了kali或者说是linux下的crontab命令。&lt;/p&gt;"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
   <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://example.com/2022/10/14/kali%E4%B8%8B%E7%9A%84%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1/index.html&t=定时任务"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
 </ul>
@@ -280,7 +286,7 @@
      --><!--
        --><li><a target="_blank" rel="noopener" href="https://github.com/MirRoR4s">MyGithub</a></li><!--
      --><!--
-       --><li><a href="/Search/">Search</a></li><!--
+       --><li><a href="/search/">Search</a></li><!--
      --><!--
        --><li><a href="/tags/">标签</a></li><!--
      --><!--

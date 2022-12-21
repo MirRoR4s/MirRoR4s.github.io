@@ -79,7 +79,7 @@
      --><!--
        --><li><a target="_blank" rel="noopener" href="https://github.com/MirRoR4s">MyGithub</a></li><!--
      --><!--
-       --><li><a href="/Search/">Search</a></li><!--
+       --><li><a href="/search/">Search</a></li><!--
      --><!--
        --><li><a href="/tags/">标签</a></li><!--
      --><!--
@@ -117,6 +117,7 @@
   <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://example.com/2022/10/30/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/index.html&title=文件包含"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
   <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://example.com/2022/10/30/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/index.html&title=文件包含"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
   <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://example.com/2022/10/30/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/index.html&name=文件包含&description=&lt;!--toc--&gt;
+
 &lt;p&gt;汇总互联网上优秀的文件包含漏洞讲解文章，并总结成我的知识！&lt;/p&gt;"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
   <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://example.com/2022/10/30/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/index.html&t=文件包含"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
 </ul>
@@ -165,22 +166,27 @@
 
   <div class="content" itemprop="articleBody">
     <!--toc-->
+
 <p>汇总互联网上优秀的文件包含漏洞讲解文章，并总结成我的知识！</p>
 <span id="more"></span>
+
 <h2 id="wen-jian-bao-han-lou-dong-gai-shu"><a href="#文件包含漏洞概述" class="headerlink" title="文件包含漏洞概述"></a>文件包含漏洞概述<a href="#wen-jian-bao-han-lou-dong-gai-shu" class="header-anchor">#</a></h2><h3 id="lou-dong-jie-shao"><a href="#漏洞介绍" class="headerlink" title="漏洞介绍"></a>漏洞介绍<a href="#lou-dong-jie-shao" class="header-anchor">#</a></h3><p>程序开发人员一般会把重复使用的函数写到单个文件中，需要使用某个函数时直接调用此文件，而无需再次编写，这种文件调用的过程一般被称为文件包含。程序开发人员一般希望代码更灵活，所以将被包含的文件设置为变量，用来进行动态调用，但正是由于这种灵活性，从而导致客户端可以调用一个恶意文件，造成文件包含漏洞。</p>
 <p>在通过PHP的函数引入文件时，由于传入的文件名没有经过合理的校验，从而操作了预想之外的文件，导致意外的文件泄露甚至恶意的代码注入。</p>
 <h3 id="dong-tai-bao-han"><a href="#动态包含" class="headerlink" title="动态包含"></a>动态包含<a href="#dong-tai-bao-han" class="header-anchor">#</a></h3><p>在使用文件包含的时候，为了更灵活的包含文件，将文件包含的名字处设置为变量，而这个变量是通过GET方式来获取的值，这样即可通过前端所输入的文件名进行包含对应的文件。</p>
 <h3 id="lou-dong-chan-sheng-yuan-yin"><a href="#漏洞产生原因" class="headerlink" title="漏洞产生原因"></a>漏洞产生原因<a href="#lou-dong-chan-sheng-yuan-yin" class="header-anchor">#</a></h3><p>程序没有对文件的来源进行严格的审查，可以被用户控制，包含其他恶意文件，导致执行了非预期的代码，也就是程序员在编写代码的时候触犯的逻辑性的错误，就可以会导致文件读取漏洞和其他类型的漏洞。</p>
 <h3 id="bao-han-han-shu"><a href="#包含函数" class="headerlink" title="包含函数"></a>包含函数<a href="#bao-han-han-shu" class="header-anchor">#</a></h3><p>PHP中文件包含函数有以下四种：</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">require</span>()</span><br><span class="line"><span class="title function_ invoke__">requeire_once</span>()</span><br><span class="line"><span class="keyword">include</span>()</span><br><span class="line"><span class="keyword">include_once</span>()</span><br></pre></td></tr></table></figure>
+
 <p>require和include的区别在于 require 执行如果发生错误，函数会输出错误信息，并终止脚本的运行。</p>
 <p>require_once 的功能和 require相同，区别在于当重复调用同一文件时，程序只调用依次。</p>
 <p>include # 当使用该函数包含文件时，只有代码执行到 include 函数时才将文件包含进来，发送错误时给出一个警告，继续向下执行。</p>
 <p>include_once # 功能和 include相同，区别在于重复调用同一文件时，程序只调用一次。</p>
 <p>当利用这四个函数来包含文件时，不管文件是什么类型（图片、txt等等），都会直接作为php文件进行解析。测试代码：</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="variable">$file</span> = <span class="variable">$_GETp</span>[<span class="string">&#x27;file&#x27;</span>]</span><br><span class="line"><span class="keyword">include</span> <span class="variable">$file</span></span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
 <p>在同目录下有一个phpinfo.txt，其内容为 <code>&lt;?phpinfo();?&gt;</code>。则只需要访问：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?file=phpinfo.txt</span><br></pre></td></tr></table></figure>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?<span class="attribute">file</span>=phpinfo.txt</span><br></pre></td></tr></table></figure>
+
 <p>即可成功解析 phpinfo。</p>
 <h3 id="li-yong-chang-jing"><a href="#利用场景" class="headerlink" title="利用场景"></a>利用场景<a href="#li-yong-chang-jing" class="header-anchor">#</a></h3><p>1、具有相关的文件包含函数。</p>
 <p>2、文件包含函数中存在动态变量。</p>
@@ -209,7 +215,7 @@
          
           <li><a target="_blank" rel="noopener" href="https://github.com/MirRoR4s">MyGithub</a></li>
          
-          <li><a href="/Search/">Search</a></li>
+          <li><a href="/search/">Search</a></li>
          
           <li><a href="/tags/">标签</a></li>
          
@@ -234,6 +240,7 @@
   <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://example.com/2022/10/30/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/index.html&title=文件包含"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
   <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://example.com/2022/10/30/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/index.html&title=文件包含"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
   <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://example.com/2022/10/30/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/index.html&name=文件包含&description=&lt;!--toc--&gt;
+
 &lt;p&gt;汇总互联网上优秀的文件包含漏洞讲解文章，并总结成我的知识！&lt;/p&gt;"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
   <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://example.com/2022/10/30/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/index.html&t=文件包含"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
 </ul>
@@ -273,7 +280,7 @@
      --><!--
        --><li><a target="_blank" rel="noopener" href="https://github.com/MirRoR4s">MyGithub</a></li><!--
      --><!--
-       --><li><a href="/Search/">Search</a></li><!--
+       --><li><a href="/search/">Search</a></li><!--
      --><!--
        --><li><a href="/tags/">标签</a></li><!--
      --><!--

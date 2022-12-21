@@ -6,12 +6,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
-    <meta name="description" content="从官网下载到这个靶机之后，解压并用vmware打开。发现登录的时候需要账号密码，这个应该就是我们此次攻击的目的——拿到账号密码。">
+    <meta name="description" content="从官网下载到这个靶机之后，解压并用vmware打开。发现登录的时候需要账号密码，这个应该就是我们此次攻击的目的—-拿到账号密码。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="vulnhub之billu_b0x靶机实践记录">
 <meta property="og:url" content="https://example.com/2022/08/17/vulnhub%E4%B9%8Bbillu-b0x%E9%9D%B6%E6%9C%BA%E5%AE%9E%E8%B7%B5%E8%AE%B0%E5%BD%95/index.html">
 <meta property="og:site_name" content="学习记录">
-<meta property="og:description" content="从官网下载到这个靶机之后，解压并用vmware打开。发现登录的时候需要账号密码，这个应该就是我们此次攻击的目的——拿到账号密码。">
+<meta property="og:description" content="从官网下载到这个靶机之后，解压并用vmware打开。发现登录的时候需要账号密码，这个应该就是我们此次攻击的目的—-拿到账号密码。">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://example.com/2022/08/17/vulnhub%E4%B9%8Bbillu-b0x%E9%9D%B6%E6%9C%BA%E5%AE%9E%E8%B7%B5%E8%AE%B0%E5%BD%95/Users/mirror/Desktop/write-up/blog/source/images/image-20220817085720326.png">
 <meta property="og:image" content="https://example.com/2022/08/17/vulnhub%E4%B9%8Bbillu-b0x%E9%9D%B6%E6%9C%BA%E5%AE%9E%E8%B7%B5%E8%AE%B0%E5%BD%95/Users/mirror/Desktop/write-up/blog/source/images/image-20220817090806117.png">
@@ -86,7 +86,7 @@
      --><!--
        --><li><a target="_blank" rel="noopener" href="https://github.com/MirRoR4s">MyGithub</a></li><!--
      --><!--
-       --><li><a href="/Search/">Search</a></li><!--
+       --><li><a href="/search/">Search</a></li><!--
      --><!--
        --><li><a href="/tags/">标签</a></li><!--
      --><!--
@@ -124,7 +124,8 @@
   <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://example.com/2022/08/17/vulnhub%E4%B9%8Bbillu-b0x%E9%9D%B6%E6%9C%BA%E5%AE%9E%E8%B7%B5%E8%AE%B0%E5%BD%95/index.html&title=vulnhub之billu_b0x靶机实践记录"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
   <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://example.com/2022/08/17/vulnhub%E4%B9%8Bbillu-b0x%E9%9D%B6%E6%9C%BA%E5%AE%9E%E8%B7%B5%E8%AE%B0%E5%BD%95/index.html&title=vulnhub之billu_b0x靶机实践记录"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
   <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://example.com/2022/08/17/vulnhub%E4%B9%8Bbillu-b0x%E9%9D%B6%E6%9C%BA%E5%AE%9E%E8%B7%B5%E8%AE%B0%E5%BD%95/index.html&name=vulnhub之billu_b0x靶机实践记录&description=&lt;!--toc--&gt;
-&lt;p&gt;从官网下载到这个靶机之后，解压并用vmware打开。发现登录的时候需要账号密码，这个应该就是我们此次攻击的目的——拿到账号密码。&lt;/p&gt;"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+
+&lt;p&gt;从官网下载到这个靶机之后，解压并用vmware打开。发现登录的时候需要账号密码，这个应该就是我们此次攻击的目的—-拿到账号密码。&lt;/p&gt;"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
   <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://example.com/2022/08/17/vulnhub%E4%B9%8Bbillu-b0x%E9%9D%B6%E6%9C%BA%E5%AE%9E%E8%B7%B5%E8%AE%B0%E5%BD%95/index.html&t=vulnhub之billu_b0x靶机实践记录"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
 </ul>
 
@@ -177,31 +178,43 @@
 
   <div class="content" itemprop="articleBody">
     <!--toc-->
-<p>从官网下载到这个靶机之后，解压并用vmware打开。发现登录的时候需要账号密码，这个应该就是我们此次攻击的目的——拿到账号密码。</p>
+
+<p>从官网下载到这个靶机之后，解压并用vmware打开。发现登录的时候需要账号密码，这个应该就是我们此次攻击的目的—-拿到账号密码。</p>
 <span id="more"></span>
+
+
+
+
+
 <h3 id="que-ding-ba-ji-ip-qing-kuang"><a href="#确定靶机IP情况" class="headerlink" title="确定靶机IP情况"></a>确定靶机IP情况<a href="#que-ding-ba-ji-ip-qing-kuang" class="header-anchor">#</a></h3><p>由于不能登进实验机器，所以不知道其ip、端口的相关情况，由于我的kali攻击机跟这个实验靶机在同一个网段下，所以先用arpscan命令找出当前局域网内的所有主机。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">arp-scan -l #对本地局域网进行arp广播请求，这个命令需要root权限</span><br></pre></td></tr></table></figure>
+<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">arp-<span class="keyword">scan </span>-l <span class="comment">#对本地局域网进行arp广播请求，这个命令需要root权限</span></span><br></pre></td></tr></table></figure>
+
 <p><img src="Users\mirror\Desktop\write-up\blog\source\images\image-20220817085720326.png" alt="image-20220817085720326"></p>
 <h3 id="que-ding-ba-ji-duan-kou-kai-fang-qing-kuang"><a href="#确定靶机端口开放情况" class="headerlink" title="确定靶机端口开放情况"></a>确定靶机端口开放情况<a href="#que-ding-ba-ji-duan-kou-kai-fang-qing-kuang" class="header-anchor">#</a></h3><p>从上一个步骤可以看到当前局域网内一共扫描出三个ip地址，我们分别ping一下发现只有<code>.2</code>和<code>.130</code> 会回复。所以我们的靶机ip地址一定就在这两个ip之间。我们用Nmap扫描一下这两个ip地址的端口开放情况。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nmap -sS -V 192.168.163.2 192.168.163.130</span><br></pre></td></tr></table></figure>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">nmap</span> -sS -V <span class="number">192.168.163.2</span> <span class="number">192.168.163.130</span></span><br></pre></td></tr></table></figure>
+
 <p>扫描到只有130开放了相关端口，而2没有反应，所以我们的靶机地址应该就是<code>192.168.163.130</code></p>
 <p><img src="Users\mirror\Desktop\write-up\blog\source\images\image-20220817090806117.png" alt="image-20220817090806117"></p>
 <p>继续进行系统版本扫描</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nmap -O -v 192.168.163.130</span><br></pre></td></tr></table></figure>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">nmap</span> -O -v <span class="number">192.168.163.130</span></span><br></pre></td></tr></table></figure>
+
 <p><img src="Users\mirror\Desktop\write-up\blog\source\images\image-20220817091211390.png" alt="image-20220817091211390"></p>
 <p>靶机开放了80端口，在网页访问一下发现是一个登录页面，并提示让我们展示sqli技能，可能存在SQL注入漏洞。抓包将我们的post登陆请求保存到文件里，然后打开sqlmap</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sqlmap -r /home/kali/Desktop/tar.txt #-r表示从文件中读取sqlmap目标</span><br></pre></td></tr></table></figure>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sqlmap -r <span class="regexp">/home/</span>kali<span class="regexp">/Desktop/</span>tar.txt <span class="comment">#-r表示从文件中读取sqlmap目标</span></span><br></pre></td></tr></table></figure>
+
 <p>经过一番扫描sqlmap没有探测出SQL注入漏洞，</p>
-<h3 id="dirsearch-sao-miao-web-mu-lu"><a href="#dirsearch扫描web目录" class="headerlink" title="dirsearch扫描web目录"></a>dirsearch扫描web目录<a href="#dirsearch-sao-miao-web-mu-lu" class="header-anchor">#</a></h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dirsearch.py -u 192.168.163.130 </span><br></pre></td></tr></table></figure>
+<h3 id="dirsearch-sao-miao-web-mu-lu"><a href="#dirsearch扫描web目录" class="headerlink" title="dirsearch扫描web目录"></a>dirsearch扫描web目录<a href="#dirsearch-sao-miao-web-mu-lu" class="header-anchor">#</a></h3><figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">dirsearch</span>.py -u <span class="number">192.168.163.130</span> </span><br></pre></td></tr></table></figure>
+
 <p><img src="Users\mirror\Desktop\write-up\blog\source\images\image-20220817094521749.png" alt="image-20220817094521749"></p>
 <p>add.php是一个文件上传点，但是不知道上传路径，暂时放过。</p>
 <p>访问images，但是并没有我们刚上传的图片，跳过。</p>
 <p>访问phpmy是一个phpadmin登录平台，暂时跳过。</p>
 <p>访问test.php时发现</p>
 <p><img src="Users\mirror\Desktop\write-up\blog\source\images\image-20220817094133200.png" alt="image-20220817094133200"></p>
-<p>get传参?file=index.php还是说file参数为空，改post方式传递，发现可以下载文件。将我们刚刚扫描出的200、302的文件全部下载下来。</p>
+<p>get传参?file&#x3D;index.php还是说file参数为空，改post方式传递，发现可以下载文件。将我们刚刚扫描出的200、302的文件全部下载下来。</p>
 <p>index.php内容如下</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="title function_ invoke__">session_start</span>();</span><br><span class="line"></span><br><span class="line"><span class="keyword">include</span>(<span class="string">&#x27;c.php&#x27;</span>);</span><br><span class="line"><span class="keyword">include</span>(<span class="string">&#x27;head.php&#x27;</span>);</span><br><span class="line"><span class="keyword">if</span>(@<span class="variable">$_SESSION</span>[<span class="string">&#x27;logged&#x27;</span>]!=<span class="literal">true</span>)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="variable">$_SESSION</span>[<span class="string">&#x27;logged&#x27;</span>]=<span class="string">&#x27;&#x27;</span>;</span><br><span class="line">	</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(<span class="variable">$_SESSION</span>[<span class="string">&#x27;logged&#x27;</span>]==<span class="literal">true</span> &amp;&amp;  <span class="variable">$_SESSION</span>[<span class="string">&#x27;admin&#x27;</span>]!=<span class="string">&#x27;&#x27;</span>)</span><br><span class="line">&#123;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">echo</span> <span class="string">&quot;you are logged in :)&quot;</span>;</span><br><span class="line">	<span class="title function_ invoke__">header</span>(<span class="string">&#x27;Location: panel.php&#x27;</span>, <span class="literal">true</span>, <span class="number">302</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">echo</span> <span class="string">&#x27;&lt;div align=center style=&quot;margin:30px 0px 0px 0px;&quot;&gt;</span></span><br><span class="line"><span class="string">&lt;font size=8 face=&quot;comic sans ms&quot;&gt;--==[[ billu b0x ]]==--&lt;/font&gt; </span></span><br><span class="line"><span class="string">&lt;br&gt;&lt;br&gt;</span></span><br><span class="line"><span class="string">Show me your SQLI skills &lt;br&gt;</span></span><br><span class="line"><span class="string">&lt;form method=post&gt;</span></span><br><span class="line"><span class="string">Username :- &lt;Input type=text name=un&gt; &amp;nbsp Password:- &lt;input type=password name=ps&gt; &lt;br&gt;&lt;br&gt;</span></span><br><span class="line"><span class="string">&lt;input type=submit name=login value=&quot;let\&#x27;s login&quot;&gt;&#x27;</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;login&#x27;</span>]))</span><br><span class="line">&#123;</span><br><span class="line">	<span class="variable">$uname</span>=<span class="title function_ invoke__">str_replace</span>(<span class="string">&#x27;\&#x27;&#x27;</span>,<span class="string">&#x27;&#x27;</span>,<span class="title function_ invoke__">urldecode</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;un&#x27;</span>]));</span><br><span class="line">	<span class="variable">$pass</span>=<span class="title function_ invoke__">str_replace</span>(<span class="string">&#x27;\&#x27;&#x27;</span>,<span class="string">&#x27;&#x27;</span>,<span class="title function_ invoke__">urldecode</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;ps&#x27;</span>]));</span><br><span class="line">	<span class="variable">$run</span>=<span class="string">&#x27;select * from auth where  pass=\&#x27;&#x27;</span>.<span class="variable">$pass</span>.<span class="string">&#x27;\&#x27; and uname=\&#x27;&#x27;</span>.<span class="variable">$uname</span>.<span class="string">&#x27;\&#x27;&#x27;</span>;</span><br><span class="line">	<span class="variable">$result</span> = <span class="title function_ invoke__">mysqli_query</span>(<span class="variable">$conn</span>, <span class="variable">$run</span>);</span><br><span class="line"><span class="keyword">if</span> (<span class="title function_ invoke__">mysqli_num_rows</span>(<span class="variable">$result</span>) &gt; <span class="number">0</span>) &#123;</span><br><span class="line"></span><br><span class="line"><span class="variable">$row</span> = <span class="title function_ invoke__">mysqli_fetch_assoc</span>(<span class="variable">$result</span>);</span><br><span class="line">	   <span class="keyword">echo</span> <span class="string">&quot;You are allowed&lt;br&gt;&quot;</span>;</span><br><span class="line">	   <span class="variable">$_SESSION</span>[<span class="string">&#x27;logged&#x27;</span>]=<span class="literal">true</span>;</span><br><span class="line">	   <span class="variable">$_SESSION</span>[<span class="string">&#x27;admin&#x27;</span>]=<span class="variable">$row</span>[<span class="string">&#x27;username&#x27;</span>];</span><br><span class="line">	   </span><br><span class="line">	 <span class="title function_ invoke__">header</span>(<span class="string">&#x27;Location: panel.php&#x27;</span>, <span class="literal">true</span>, <span class="number">302</span>);</span><br><span class="line">   </span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">echo</span> <span class="string">&quot;&lt;script&gt;alert(&#x27;Try again&#x27;);&lt;/script&gt;&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line">	</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;&lt;font size=5 face=\&quot;comic sans ms\&quot; style=\&quot;left: 0;bottom: 0; position: absolute;margin: 0px 0px 5px;\&quot;&gt;B0X Powered By &lt;font color=#ff9933&gt;Pirates&lt;/font&gt; &quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
 <p>阅读代码可以知道利用<code>str_replace</code>函数将我们的单引号全部换为空</p>
 
   </div>
@@ -226,7 +239,7 @@
          
           <li><a target="_blank" rel="noopener" href="https://github.com/MirRoR4s">MyGithub</a></li>
          
-          <li><a href="/Search/">Search</a></li>
+          <li><a href="/search/">Search</a></li>
          
           <li><a href="/tags/">标签</a></li>
          
@@ -251,7 +264,8 @@
   <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://example.com/2022/08/17/vulnhub%E4%B9%8Bbillu-b0x%E9%9D%B6%E6%9C%BA%E5%AE%9E%E8%B7%B5%E8%AE%B0%E5%BD%95/index.html&title=vulnhub之billu_b0x靶机实践记录"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
   <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://example.com/2022/08/17/vulnhub%E4%B9%8Bbillu-b0x%E9%9D%B6%E6%9C%BA%E5%AE%9E%E8%B7%B5%E8%AE%B0%E5%BD%95/index.html&title=vulnhub之billu_b0x靶机实践记录"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
   <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://example.com/2022/08/17/vulnhub%E4%B9%8Bbillu-b0x%E9%9D%B6%E6%9C%BA%E5%AE%9E%E8%B7%B5%E8%AE%B0%E5%BD%95/index.html&name=vulnhub之billu_b0x靶机实践记录&description=&lt;!--toc--&gt;
-&lt;p&gt;从官网下载到这个靶机之后，解压并用vmware打开。发现登录的时候需要账号密码，这个应该就是我们此次攻击的目的——拿到账号密码。&lt;/p&gt;"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+
+&lt;p&gt;从官网下载到这个靶机之后，解压并用vmware打开。发现登录的时候需要账号密码，这个应该就是我们此次攻击的目的—-拿到账号密码。&lt;/p&gt;"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
   <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://example.com/2022/08/17/vulnhub%E4%B9%8Bbillu-b0x%E9%9D%B6%E6%9C%BA%E5%AE%9E%E8%B7%B5%E8%AE%B0%E5%BD%95/index.html&t=vulnhub之billu_b0x靶机实践记录"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
@@ -290,7 +304,7 @@
      --><!--
        --><li><a target="_blank" rel="noopener" href="https://github.com/MirRoR4s">MyGithub</a></li><!--
      --><!--
-       --><li><a href="/Search/">Search</a></li><!--
+       --><li><a href="/search/">Search</a></li><!--
      --><!--
        --><li><a href="/tags/">标签</a></li><!--
      --><!--
