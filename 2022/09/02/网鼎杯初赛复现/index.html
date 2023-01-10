@@ -19,7 +19,7 @@
 <meta property="og:image" content="https://i.imgur.com/sVUiqCR.png">
 <meta property="og:image" content="https://i.imgur.com/scR0nA2.png">
 <meta property="article:published_time" content="2022-09-02T10:50:02.000Z">
-<meta property="article:modified_time" content="2022-09-02T12:34:11.490Z">
+<meta property="article:modified_time" content="2023-01-10T09:21:07.783Z">
 <meta property="article:author" content="MirRoR4s">
 <meta property="article:tag" content="Crypto">
 <meta name="twitter:card" content="summary">
@@ -186,7 +186,9 @@
 <p>欢迎</p>
 <span id="more"></span>
 
-<h1 id="wang-ding-bei-chu-sai-fu-xian"><a href="#网鼎杯初赛复现" class="headerlink" title="网鼎杯初赛复现"></a>网鼎杯初赛复现<a href="#wang-ding-bei-chu-sai-fu-xian" class="header-anchor">#</a></h1><h3 id="crypto092"><a href="#crypto092" class="headerlink" title="crypto092"></a>crypto092<a href="#crypto092" class="header-anchor">#</a></h3><p>题目说了是170号段首批放号的联通号码，百度查到相关信息，然后咱们国家代码是86，未知的哈希值是13位的纯数字，根据已有信息直接爆破。</p>
+
+
+<h3 id="crypto"><a href="#CRYPTO" class="headerlink" title="CRYPTO"></a>CRYPTO<a href="#crypto" class="header-anchor">#</a></h3><h3 id="crypto092"><a href="#crypto092" class="headerlink" title="crypto092"></a>crypto092<a href="#crypto092" class="header-anchor">#</a></h3><p>题目说了是170号段首批放号的联通号码，百度查到相关信息，然后咱们国家代码是86，未知的哈希值是13位的纯数字，根据已有信息直接爆破。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> hashlib</span><br><span class="line"><span class="keyword">import</span> string</span><br><span class="line"><span class="keyword">import</span> itertools</span><br><span class="line"><span class="keyword">from</span> tqdm <span class="keyword">import</span> tqdm</span><br><span class="line">alp = string.digits</span><br><span class="line">a1 = <span class="string">&#x27;86170&#x27;</span></span><br><span class="line">tar = <span class="string">&#x27;c22a563acc2a587afbfaaaa6d67bc6e628872b00bd7e998873881f7c6fdc62fc&#x27;</span></span><br><span class="line"><span class="keyword">for</span> k <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">7</span>,<span class="number">20</span>):</span><br><span class="line">    a = a1 + <span class="built_in">str</span>(k)</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> tqdm(itertools.product(alp, repeat=<span class="number">7</span>)):</span><br><span class="line">        tmp = <span class="string">&#x27;&#x27;</span>.join(i)</span><br><span class="line">        num = a + tmp</span><br><span class="line">        <span class="built_in">hash</span> = hashlib.sha256(num.encode()).hexdigest()</span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">hash</span> == tar:</span><br><span class="line">            <span class="built_in">print</span>(num)</span><br><span class="line">            <span class="keyword">break</span></span><br></pre></td></tr></table></figure>
 
 <h3 id="crypto405"><a href="#crypto405" class="headerlink" title="crypto405"></a>crypto405<a href="#crypto405" class="header-anchor">#</a></h3><p>根据flag的格式，很容易猜出flag的开头前五个是flag{。随后我们不妨从每一组密文间的关系入手，根据题目的加密过程，我们首先通过如下代码剖析一下每组密文间的关系，注意这里先不考虑模素数p。</p>
@@ -358,7 +360,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#wang-ding-bei-chu-sai-fu-xian"><span class="toc-number">1.</span> <span class="toc-text">网鼎杯初赛复现</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#crypto092"><span class="toc-number">1.0.1.</span> <span class="toc-text">crypto092</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#crypto405"><span class="toc-number">1.0.2.</span> <span class="toc-text">crypto405</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#crypto162"><span class="toc-number">1.0.3.</span> <span class="toc-text">crypto162</span></a></li></ol></li></ol></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#crypto"><span class="toc-number">1.</span> <span class="toc-text">CRYPTO</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#crypto092"><span class="toc-number">2.</span> <span class="toc-text">crypto092</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#crypto405"><span class="toc-number">3.</span> <span class="toc-text">crypto405</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#crypto162"><span class="toc-number">4.</span> <span class="toc-text">crypto162</span></a></li></ol>
                     </div>
                 </span>
             </div>
@@ -495,15 +497,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">CTF</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Crypto</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">赛题记录</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">CTF</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -607,6 +609,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Ubuntu</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">web安全</a>
               </li>
              
@@ -615,11 +621,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">初等数论及其应用</a>
+                <a href="javascript:void(0)" class="js-tag color5">初等数论</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">初等数论</a>
+                <a href="javascript:void(0)" class="js-tag color4">初等数论及其应用</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -631,6 +637,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">资源记录</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">线性表顺序存储结构</a>
               </li>
              
@@ -639,7 +649,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">虚拟机</a>
+                <a href="javascript:void(0)" class="js-tag color5">分治策略</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -647,15 +657,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">虚拟机</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">开发</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">分治策略</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">资源记录</a>
               </li>
             
             <div class="clearfix"></div>

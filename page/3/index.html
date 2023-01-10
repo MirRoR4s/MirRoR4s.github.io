@@ -156,6 +156,155 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-2022年11月28日周报" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2022/11/28/2022%E5%B9%B411%E6%9C%8828%E6%97%A5%E5%91%A8%E6%8A%A5/index.html">2022年11月28日周报</a>
+    </h1>
+  
+
+        
+        <a href="/2022/11/28/2022%E5%B9%B411%E6%9C%8828%E6%97%A5%E5%91%A8%E6%8A%A5/index.html" class="archive-article-date">
+  	<time datetime="2022-11-28T01:17:39.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-11-28</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!--toc-->
+
+<p>11月28日至12月3日周报</p>
+<h3 id="ben-zhou-mu-biao"><a href="#本周目标" class="headerlink" title="本周目标"></a>本周目标<a href="#ben-zhou-mu-biao" class="header-anchor">#</a></h3><p>密码学：基础理论与应用 第二章</p>
+<p>初等数论及其应用 第十二章 连分数</p>
+<p>抽象代数 第二章 群 习题</p>
+<h3 id="mi-ma-xue-ji-chu-li-lun-yu-ying-yong-di-er-zhang"><a href="#密码学：基础理论与应用-第二章" class="headerlink" title="密码学：基础理论与应用 第二章"></a>密码学：基础理论与应用 第二章<a href="#mi-ma-xue-ji-chu-li-lun-yu-ying-yong-di-er-zhang" class="header-anchor">#</a></h3><h4 id="ying-wen-ge-zi-mu-chu-xian-de-pin-lu-biao"><a href="#英文各字母出现的频率表" class="headerlink" title="英文各字母出现的频率表"></a>英文各字母出现的频率表<a href="#ying-wen-ge-zi-mu-chu-xian-de-pin-lu-biao" class="header-anchor">#</a></h4><p><img src="/images/2022%E5%B9%B411%E6%9C%8828%E6%97%A5%E5%91%A8%E6%8A%A5/image-20221128092058087.png" alt="image-20221128092058087"></p>
+<p><img src="/images/2022%E5%B9%B411%E6%9C%8828%E6%97%A5%E5%91%A8%E6%8A%A5/image-20221128092024411.png" alt="image-20221128092024411"></p>
+<p><img src="/images/2022%E5%B9%B411%E6%9C%8828%E6%97%A5%E5%91%A8%E6%8A%A5/image-20221128092032522.png" alt="image-20221128092032522"></p>
+<h4 id="xi-ti"><a href="#习题" class="headerlink" title="习题"></a>习题<a href="#xi-ti" class="header-anchor">#</a></h4><p><img src="/images/2022%E5%B9%B411%E6%9C%8828%E6%97%A5%E5%91%A8%E6%8A%A5/image-20221128134617878.png" alt="image-20221128134617878"></p>
+<h5 id="di-yi-ti"><a href="#第一题" class="headerlink" title="第一题"></a>第一题<a href="#di-yi-ti" class="header-anchor">#</a></h5><p>在 bugku 枚举解密，但是好像没发现有意义的英文？<a target="_blank" rel="noopener" href="https://ctf.bugku.com/tool/caesar">凯撒(Caesar)加密&#x2F;解密 - Bugku CTF</a></p>
+<h5 id="di-er-ti"><a href="#第二题" class="headerlink" title="第二题"></a>第二题<a href="#di-er-ti" class="header-anchor">#</a></h5><p>用列置换加密明文。用 python 程序 实现一下加密算法。思路是先将字母转为0-25的数字组成矩阵，随后进行矩阵列的交换。注意到 对换是到 5，那么一行的长度也是 5 ，不够的用 -1填充吧。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">a = a[:,[<span class="number">1</span>,<span class="number">2</span>,<span class="number">0</span>]] <span class="comment"># 将a矩阵的第0列换到第2列 ，第1，2列提前一列</span></span><br><span class="line"></span><br><span class="line">a = a[[<span class="number">1</span>,<span class="number">0</span>,<span class="number">2</span>],:] <span class="comment"># 将a矩阵的第0行换到第1行，第1行提前一行</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>被折磨了几小时，最后勉强弄好了。最后的置换要少一次，比如(143)(56)，在置换完第五列和第六列就要结束，而不是再将第六列和第五列置换。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> string</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">col_per_enc</span>(<span class="params">plt,key_len,key</span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    :param plt: 明文</span></span><br><span class="line"><span class="string">    :param key_len: 对换的长度</span></span><br><span class="line"><span class="string">    :param key:  一个多维列表</span></span><br><span class="line"><span class="string">    :return:</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    table = string.digits + string.ascii_letters</span><br><span class="line">    plt = plt.replace(<span class="string">&#x27; &#x27;</span>,<span class="string">&#x27;&#x27;</span>)</span><br><span class="line">    plt = [table.find(i) <span class="keyword">if</span> table.find(i)!=-<span class="number">1</span> <span class="keyword">else</span> i <span class="keyword">for</span> i <span class="keyword">in</span> plt]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> <span class="built_in">len</span>(plt) % key_len != <span class="number">0</span>:</span><br><span class="line">        plt.append(<span class="string">&#x27;*&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    mat = [plt[i:i + key_len] <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">0</span>, <span class="built_in">len</span>(plt), key_len)]</span><br><span class="line">    mat = np.array(mat)</span><br><span class="line">    Mat = np.asmatrix(mat)</span><br><span class="line">    row,col = Mat.shape</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(row):</span><br><span class="line">        tmp = <span class="string">&quot;&quot;</span></span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(col):</span><br><span class="line">            <span class="keyword">if</span> Mat[i,j] == <span class="string">&#x27;*&#x27;</span>:</span><br><span class="line">                tmp += <span class="string">&#x27;*&#x27;</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                tmp1 = <span class="built_in">int</span>(Mat[i,j])</span><br><span class="line">                tmp += table[ tmp1 ]</span><br><span class="line">        <span class="built_in">print</span>(tmp)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;-&#x27;</span>*<span class="number">20</span>)</span><br><span class="line">    <span class="comment"># [1 4 3] [5 6]</span></span><br><span class="line">    key_dict = &#123;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> key:</span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(i)):</span><br><span class="line">            key_dict[i[j]] = i[ (j+<span class="number">1</span>) % <span class="built_in">len</span>(i)]</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>,<span class="built_in">len</span>(key_dict)):</span><br><span class="line">        <span class="keyword">if</span> i <span class="keyword">not</span> <span class="keyword">in</span> key_dict:</span><br><span class="line">            key_dict[i] = i</span><br><span class="line">    <span class="built_in">print</span>(key_dict)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;Mat\n&quot;</span>, Mat)</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(key_dict)-<span class="number">1</span>):</span><br><span class="line">        tmp = <span class="built_in">int</span>(key_dict[i+<span class="number">1</span>]) - <span class="number">1</span></span><br><span class="line">        <span class="built_in">print</span>([i,tmp])</span><br><span class="line">        Mat[:,[i,tmp]] = Mat[:,[tmp,i]]</span><br><span class="line">        <span class="built_in">print</span>(Mat)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;-&#x27;</span>*<span class="number">20</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment">#Mat[:, [0, 1]] = Mat[:, [1, 0]]</span></span><br><span class="line"></span><br><span class="line">    C = Mat</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;C\n&quot;</span>,C)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;密文矩阵为:\n&quot;</span>,C)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;-&#x27;</span>*<span class="number">20</span>)</span><br><span class="line">    cipher = <span class="string">&quot;&quot;</span></span><br><span class="line">    row,col = C.shape</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(col):</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(row):</span><br><span class="line">            <span class="keyword">if</span> C[i,j] == <span class="string">&#x27;*&#x27;</span>:</span><br><span class="line">                cipher += <span class="string">&#x27;*&#x27;</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                cipher += table[ <span class="built_in">int</span>(C[i,j]) ]</span><br><span class="line"></span><br><span class="line">    <span class="built_in">print</span>(cipher)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">(col_per_enc(<span class="string">&quot;Beijing 2022 Olympic Winter Games&quot;</span>,<span class="number">6</span>,[[<span class="number">1</span>,<span class="number">4</span>,<span class="number">3</span>],[<span class="number">5</span>,<span class="number">6</span>]]))</span><br><span class="line"><span class="comment">#</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>最后密文是amuiixdm*niexaa，其中 * 标识填充字符。</p>
+<h5 id="di-san-ti"><a href="#第三题" class="headerlink" title="第三题"></a>第三题<a href="#di-san-ti" class="header-anchor">#</a></h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> string</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> string</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">vig_cipher</span>(<span class="params">plt:<span class="built_in">str</span>,key:<span class="built_in">str</span></span>)-&gt;<span class="built_in">str</span>:</span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    :param plt:</span></span><br><span class="line"><span class="string">    :param key:</span></span><br><span class="line"><span class="string">    :return:</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    plt = plt.lower().replace(<span class="string">&#x27; &#x27;</span>,<span class="string">&#x27;&#x27;</span>)</span><br><span class="line">    table = string.ascii_lowercase</span><br><span class="line">    cipher = <span class="string">&quot;&quot;</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(plt)):</span><br><span class="line">        index = (table.find(plt[i]) + table.find(key[i % <span class="built_in">len</span>(key)])) % <span class="number">26</span></span><br><span class="line">        cipher += table[index]</span><br><span class="line">    <span class="keyword">return</span> cipher</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(vig_cipher(<span class="string">&quot;We are discovered save yourself&quot;</span>,<span class="string">&quot; deceptive&quot;</span>))</span><br></pre></td></tr></table></figure>
+
+<h5 id="di-si-ti"><a href="#第四题" class="headerlink" title="第四题"></a>第四题<a href="#di-si-ti" class="header-anchor">#</a></h5>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2022/11/28/2022%E5%B9%B411%E6%9C%8828%E6%97%A5%E5%91%A8%E6%8A%A5/index.html">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-HITCTF-2022" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2022/11/26/HITCTF-2022/index.html">HITCTF-2022</a>
+    </h1>
+  
+
+        
+        <a href="/2022/11/26/HITCTF-2022/index.html" class="archive-article-date">
+  	<time datetime="2022-11-26T11:22:14.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-11-26</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!--toc-->
+
+<p>赛中记录、赛后复盘</p>
+        
+          <a class="article-more-a" href="/2022/11/26/HITCTF-2022/index.html#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2022/11/26/HITCTF-2022/index.html">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-HITCON-CTF" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1264,182 +1413,6 @@
 
 
   
-    <article id="post-SECCON-CTF-2022-Quals" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2022/11/12/SECCON-CTF-2022-Quals/index.html">SECCON_CTF_2022_Quals</a>
-    </h1>
-  
-
-        
-        <a href="/2022/11/12/SECCON-CTF-2022-Quals/index.html" class="archive-article-date">
-  	<time datetime="2022-11-12T14:23:27.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-11-12</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <!--toc-->
-        
-          <a class="article-more-a" href="/2022/11/12/SECCON-CTF-2022-Quals/index.html#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Crypto</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/CTF//" class="article-tag-list-link color4">CTF</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2022/11/12/SECCON-CTF-2022-Quals/index.html">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-弱口令安全实验室招新赛" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2022/11/12/%E5%BC%B1%E5%8F%A3%E4%BB%A4%E5%AE%89%E5%85%A8%E5%AE%9E%E9%AA%8C%E5%AE%A4%E6%8B%9B%E6%96%B0%E8%B5%9B/index.html">弱口令安全实验室招新赛</a>
-    </h1>
-  
-
-        
-        <a href="/2022/11/12/%E5%BC%B1%E5%8F%A3%E4%BB%A4%E5%AE%89%E5%85%A8%E5%AE%9E%E9%AA%8C%E5%AE%A4%E6%8B%9B%E6%96%B0%E8%B5%9B/index.html" class="archive-article-date">
-  	<time datetime="2022-11-12T07:05:55.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-11-12</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <!--toc-->
-
-<p>三个密码题记录。</p>
-        
-          <a class="article-more-a" href="/2022/11/12/%E5%BC%B1%E5%8F%A3%E4%BB%A4%E5%AE%89%E5%85%A8%E5%AE%9E%E9%AA%8C%E5%AE%A4%E6%8B%9B%E6%96%B0%E8%B5%9B/index.html#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Crypto</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/CTF//" class="article-tag-list-link color4">CTF</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2022/11/12/%E5%BC%B1%E5%8F%A3%E4%BB%A4%E5%AE%89%E5%85%A8%E5%AE%9E%E9%AA%8C%E5%AE%A4%E6%8B%9B%E6%96%B0%E8%B5%9B/index.html">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/2/">&amp;laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><a class="extend next" rel="next" href="/page/4/">Next &amp;raquo;</a>
@@ -1562,15 +1535,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">CTF</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Crypto</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">赛题记录</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">CTF</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1674,6 +1647,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Ubuntu</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">web安全</a>
               </li>
              
@@ -1682,11 +1659,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">初等数论及其应用</a>
+                <a href="javascript:void(0)" class="js-tag color5">初等数论</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">初等数论</a>
+                <a href="javascript:void(0)" class="js-tag color4">初等数论及其应用</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1698,6 +1675,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">资源记录</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">线性表顺序存储结构</a>
               </li>
              
@@ -1706,7 +1687,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">虚拟机</a>
+                <a href="javascript:void(0)" class="js-tag color5">分治策略</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1714,15 +1695,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">虚拟机</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">开发</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">分治策略</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">资源记录</a>
               </li>
             
             <div class="clearfix"></div>
