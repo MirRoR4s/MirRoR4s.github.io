@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="从一个公众号上看到这个可以锻炼红队技术的网站，我看了一下还不错。所以打算在开学之前刷完这些。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="TryHackMe-Introduction-to-Cyber-Security-待更新">
+<meta property="og:url" content="https://example.com/2023/01/15/TryHackMe-Introduction-to-Cyber-Security/index.html">
+<meta property="og:site_name" content="学习记录">
+<meta property="og:description" content="从一个公众号上看到这个可以锻炼红队技术的网站，我看了一下还不错。所以打算在开学之前刷完这些。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://example.com/images/TryHackMe-Introduction-to-Cyber-Security/10bfd751e4cd249e9d1ad0614d7fc049.png">
+<meta property="og:image" content="https://example.com/images/TryHackMe-Introduction-to-Cyber-Security/a2af30e1a7c6e76592b5a538314d438d.png">
+<meta property="og:image" content="https://example.com/images/TryHackMe-Introduction-to-Cyber-Security/2cda5a329da765e848fca91939e092b9.png">
+<meta property="article:published_time" content="2023-01-15T01:01:40.000Z">
+<meta property="article:modified_time" content="2023-01-15T03:28:49.135Z">
+<meta property="article:author" content="MirRoR4s">
+<meta property="article:tag" content="红队技术">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://example.com/images/TryHackMe-Introduction-to-Cyber-Security/10bfd751e4cd249e9d1ad0614d7fc049.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>TryHackMe-Introduction-to-Cyber-Security-待更新</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body class="max-width mx-auto px3 ltr">    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="目录"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="目录"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="顶部" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/MirRoR4s">项目</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/MirRoR4s">MyGithub</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a href="/tags/">标签</a></li><!--
+     --><!--
+       --><li><a href="/categories/">分类</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" aria-label="下一篇" href="/2023/01/14/SQL%E6%B3%A8%E5%85%A5%E6%80%BB%E7%BB%93/index.html"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://example.com/2023/01/15/TryHackMe-Introduction-to-Cyber-Security/index.html"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://example.com/2023/01/15/TryHackMe-Introduction-to-Cyber-Security/index.html&text=TryHackMe-Introduction-to-Cyber-Security-待更新"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://example.com/2023/01/15/TryHackMe-Introduction-to-Cyber-Security/index.html&title=TryHackMe-Introduction-to-Cyber-Security-待更新"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://example.com/2023/01/15/TryHackMe-Introduction-to-Cyber-Security/index.html&is_video=false&description=TryHackMe-Introduction-to-Cyber-Security-待更新"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=TryHackMe-Introduction-to-Cyber-Security-待更新&body=Check out this article: https://example.com/2023/01/15/TryHackMe-Introduction-to-Cyber-Security/index.html"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://example.com/2023/01/15/TryHackMe-Introduction-to-Cyber-Security/index.html&title=TryHackMe-Introduction-to-Cyber-Security-待更新"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://example.com/2023/01/15/TryHackMe-Introduction-to-Cyber-Security/index.html&title=TryHackMe-Introduction-to-Cyber-Security-待更新"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://example.com/2023/01/15/TryHackMe-Introduction-to-Cyber-Security/index.html&title=TryHackMe-Introduction-to-Cyber-Security-待更新"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://example.com/2023/01/15/TryHackMe-Introduction-to-Cyber-Security/index.html&title=TryHackMe-Introduction-to-Cyber-Security-待更新"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://example.com/2023/01/15/TryHackMe-Introduction-to-Cyber-Security/index.html&name=TryHackMe-Introduction-to-Cyber-Security-待更新&description=&lt;!--toc--&gt;
+&lt;p&gt;从一个公众号上看到这个可以锻炼红队技术的网站，我看了一下还不错。所以打算在开学之前刷完这些。&lt;/p&gt;"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://example.com/2023/01/15/TryHackMe-Introduction-to-Cyber-Security/index.html&t=TryHackMe-Introduction-to-Cyber-Security-待更新"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#intro-to-offensive-security"><span class="toc-number">1.</span> <span class="toc-text">Intro to Offensive Security</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#fang-yu-xing-an-quan-qian-yan-intro-to-defensive-security"><span class="toc-number">2.</span> <span class="toc-text">防御性安全前言 Intro to Defensive Security</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#fang-yu-an-quan-jian-jie-introduction-to-defensive-security"><span class="toc-number">2.1.</span> <span class="toc-text">防御安全简介 Introduction to Defensive Security</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#areas-of-defensive-security"><span class="toc-number">2.2.</span> <span class="toc-text">Areas of Defensive Security</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#an-quan-yun-ying-zhong-xin-soc"><span class="toc-number">2.2.1.</span> <span class="toc-text">安全运营中心（SOC）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#threat-intelligence-wei-xie-qing-bao"><span class="toc-number">2.2.2.</span> <span class="toc-text">Threat Intelligence 威胁情报</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#digital-forensics-and-incident-response-dian-zi-qu-zheng-he-ying-ji-xiang-ying-dfir"><span class="toc-number">2.2.3.</span> <span class="toc-text">Digital Forensics and Incident Response 电子取证和应急响应 (DFIR)</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#dian-zi-qu-zheng"><span class="toc-number">2.2.3.1.</span> <span class="toc-text">电子取证</span></a></li></ol></li></ol></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        TryHackMe-Introduction-to-Cyber-Security-待更新
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">MirRoR4s</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2023-01-15T01:01:40.000Z" itemprop="datePublished">2023-01-15</time>
+        
+        (Updated: <time datetime="2023-01-15T03:28:49.135Z" itemprop="dateModified">2023-01-15</time>)
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/%E7%BA%A2%E9%98%9F%E6%8A%80%E6%9C%AF/">红队技术</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/%E7%BA%A2%E9%98%9F%E6%8A%80%E6%9C%AF/" rel="tag">红队技术</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <!--toc-->
+<p>从一个公众号上看到这个可以锻炼红队技术的网站，我看了一下还不错。所以打算在开学之前刷完这些。</p>
+<span id="more"></span>
+<h2 id="intro-to-offensive-security"><a href="#Intro-to-Offensive-Security" class="headerlink" title="Intro to Offensive Security"></a>Intro to Offensive Security<a href="#intro-to-offensive-security" class="header-anchor">#</a></h2><h2 id="fang-yu-xing-an-quan-qian-yan-intro-to-defensive-security"><a href="#防御性安全前言-Intro-to-Defensive-Security" class="headerlink" title="防御性安全前言 Intro to Defensive Security"></a>防御性安全前言 Intro to Defensive Security<a href="#fang-yu-xing-an-quan-qian-yan-intro-to-defensive-security" class="header-anchor">#</a></h2><p>本篇介绍了一些 defensive security 和 相关的主题，比如 威胁情报、SOC、DFIR、SIEM 等。</p>
+<h3 id="fang-yu-an-quan-jian-jie-introduction-to-defensive-security"><a href="#防御安全简介-Introduction-to-Defensive-Security" class="headerlink" title="防御安全简介 Introduction to Defensive Security"></a>防御安全简介 Introduction to Defensive Security<a href="#fang-yu-an-quan-jian-jie-introduction-to-defensive-security" class="header-anchor">#</a></h3><p>Offensive security（进攻性安全？不知道咋翻译这个名词）聚焦于一件事情：侵入系统。侵入系统可以通过利用漏洞、滥用不安全的设置、利用未强制的访问控制策略等方式实现。红队和渗透测试人员专门负责进攻性安全。</p>
+<p>Defensive security（防御性安全）在某种程度上与进攻性安全相反，因为其涉及到两个主要的任务：</p>
+<ol>
+<li>阻止入侵的发生</li>
+<li>在入侵发生时检测入侵并正确响应</li>
+</ol>
+<p>蓝队是 defensive security 情形的一部分</p>
+<p><img src="/images/TryHackMe-Introduction-to-Cyber-Security/10bfd751e4cd249e9d1ad0614d7fc049.png" alt="img"></p>
+<p>一些和 defensive security 相关联的任务包括：</p>
+<ul>
+<li>用户网络安全意识：对用户进行网络安全培训有助于防止针对其系统的各种攻击</li>
+<li>记录和管理资产：我们需要知道我们必须正确管理和保护的系统和设备的类型</li>
+<li>更修和修补系统：确保计算机、服务器和网络设备正确地更新以及修补任何已知的漏洞或是弱点</li>
+<li>设置预防性安全设备：防火墙和入侵防御系统（IPS）是预防性安全的重要组成部分，防火墙控制哪些网络流量可以进入系统或网络，哪些可以离开系统或网络。IPS会阻断任何匹配当前规则和攻击特征的网络流量。</li>
+<li>设置日志和监控设备：如果没有对网络进行适当的日志记录和监控，就不可能检测到恶意活动和入侵。如果一个新的未经授权的设备出现在我们的网络上，我们应该能够知道。</li>
+</ul>
+<p>关于 defensive security 防御安全还有很多，上面的列表只涵盖了一些常见的主题。</p>
+<p>In this room, we cover:</p>
+<ul>
+<li>Security Operations Center (SOC) 安全运营中心</li>
+<li>Threat Intelligence 威胁情报 </li>
+<li>Digital Forensics and Incident Response (DFIR) 电子取证和应急响应</li>
+<li>Malware Analysis 恶意软件分析</li>
+</ul>
+<blockquote>
+<p>入侵防御系统(IPS)是一种能够主动检测和阻止入侵行为的设备或应用。它们通常部署在受保护资产的前面，阻止任何潜在的威胁到达目标。</p>
+<p>安全运营中心(SOC)是一个由IT安全专业人员组成的团队，负责监控、预防、检测、调查和响应公司网络和系统中的威胁。</p>
+</blockquote>
+<h3 id="areas-of-defensive-security"><a href="#Areas-of-Defensive-Security" class="headerlink" title="Areas of Defensive Security"></a>Areas of Defensive Security<a href="#areas-of-defensive-security" class="header-anchor">#</a></h3><p>在这项任务中，我们将讨论与防御安全相关的两个主要主题：</p>
+<ul>
+<li>安全行动中心(SOC)，在那里我们覆盖威胁情报</li>
+<li>电子取证和事件响应(DFIR)，其中我们还包括恶意软件分析</li>
+</ul>
+<h4 id="an-quan-yun-ying-zhong-xin-soc"><a href="#安全运营中心（SOC）" class="headerlink" title="安全运营中心（SOC）"></a>安全运营中心（SOC）<a href="#an-quan-yun-ying-zhong-xin-soc" class="header-anchor">#</a></h4><p>SOC (Security Operations Center)是一个由网络安全专业人员组成的团队，负责监控网络及其系统，以检测恶意网络安全事件。SOC 的一些主要兴趣领域是:</p>
+<ul>
+<li>漏洞：无论何时发现系统漏洞(弱点)，都必须通过安装适当的更新或补丁来修复它。当修复程序不可用时，应该采取必要的措施来防止攻击者利用它。虽然修复漏洞对SOC至关重要，但并不一定要分配给他们（也就是 SOC 并不一定还要负责修复漏洞）</li>
+<li><p>Policy violations：我们可以把安全策略看作是保护网络和系统所需的一组规则。例如，如果用户开始将机密公司数据上传到在线存储服务，这可能是违反策略的。</p>
+</li>
+<li><p>未经授权的活动:考虑这样一种情况，用户的登录名和密码被盗，攻击者使用它们登录到网络。SOC需要检测到这样的事件，并在进一步破坏之前尽快阻止它</p>
+</li>
+<li><p>网络入侵:无论你的安全性有多好，总会有被入侵的机会。当用户单击恶意链接或攻击者利用公共服务器时，就可能发生入侵。无论哪种方式，当入侵发生时，我们必须尽快检测到它，以防止进一步的破坏。</p>
+</li>
+</ul>
+<p>Security operations 安全操作涵盖各种任务以确保安全;其中一项任务就是威胁情报。</p>
+<p><img src="/images/TryHackMe-Introduction-to-Cyber-Security/a2af30e1a7c6e76592b5a538314d438d.png" alt="img"></p>
+<h4 id="threat-intelligence-wei-xie-qing-bao"><a href="#Threat-Intelligence-威胁情报" class="headerlink" title="Threat Intelligence 威胁情报"></a>Threat Intelligence 威胁情报<a href="#threat-intelligence-wei-xie-qing-bao" class="header-anchor">#</a></h4><p>在当前语境下，情报是指你收集到的明面上的和潜在的敌人的信息，威胁是可以破坏或对系统产生不利影响的任何操作。威胁情报旨在收集信息，帮助公司更好地应对潜在的敌手，其目的是实现威胁知情防御。</p>
+<p>不同的公司有不同的敌手，一些攻击者可能试图从移动运营商窃取客户数据。然而，其他敌手对停止一家炼油厂的生产感兴趣（这里指的是攻击者企图让公司丧失提供服务的能力）。例如常见的敌手可能包括出于政治原因的民族国家网络军队和出于金融目的的勒索软件组织。Based on the company (target), we can expect adversaries.</p>
+<p><img src="/images/TryHackMe-Introduction-to-Cyber-Security/2cda5a329da765e848fca91939e092b9.png" alt="img"></p>
+<p>情报需要数据，所以我们必须收集、处理和分析数据。我们可以从本地来源（比如网络日志）或是公有来源（比如论坛）收集数据。数据处理的目的是将它们排列成适合分析的格式。分析阶段试图找到更多关于攻击者及其动机的信息，此外，它的目的是创建一个建议和可操作步骤的列表。</p>
+<p>了解你的对手可以让你了解他们的战术、技术和程序。作为威胁情报的结果，我们可以识别威胁行为者(敌手)，预测他们的活动，因此，我们将能够减轻他们的攻击并准备响应策略</p>
+<h4 id="digital-forensics-and-incident-response-dian-zi-qu-zheng-he-ying-ji-xiang-ying-dfir"><a href="#Digital-Forensics-and-Incident-Response-电子取证和应急响应-DFIR" class="headerlink" title="Digital Forensics and Incident Response 电子取证和应急响应 (DFIR)"></a>Digital Forensics and Incident Response 电子取证和应急响应 (DFIR)<a href="#digital-forensics-and-incident-response-dian-zi-qu-zheng-he-ying-ji-xiang-ying-dfir" class="header-anchor">#</a></h4><p>这一小节是关于电子取证和应急响应的（DFIR），我们将会涵盖以下内容：</p>
+<ul>
+<li>电子取证</li>
+<li>应急响应</li>
+<li>恶意软件分析</li>
+</ul>
+<h5 id="dian-zi-qu-zheng"><a href="#电子取证" class="headerlink" title="电子取证"></a>电子取证<a href="#dian-zi-qu-zheng" class="header-anchor">#</a></h5><p>取证是调查犯罪和查明真相的科学应用，随着信息系统的使用和传播，例如计算机和智能手机，取证诞生了一个调查相关犯罪的新分支：计算机取证——后来演变成了电子取证。</p>
+<p>在防御性安全 defensive security 中，电子取证的重点转移到分析攻击及其肇事者的证据以及其他领域，如知识产权盗窃、网络间谍活动和拥有未经授权的内容。因此，电子取证将专注于不同的领域，如:</p>
+<ul>
+<li>文件系统：分析系统存储的数字取证映像(低级副本)可以揭示许多信息，例如已安装的程序、已创建的文件、已部分覆盖的文件和已删除的文件。</li>
+</ul>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://github.com/MirRoR4s">项目</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://github.com/MirRoR4s">MyGithub</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+         
+          <li><a href="/tags/">标签</a></li>
+         
+          <li><a href="/categories/">分类</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#intro-to-offensive-security"><span class="toc-number">1.</span> <span class="toc-text">Intro to Offensive Security</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#fang-yu-xing-an-quan-qian-yan-intro-to-defensive-security"><span class="toc-number">2.</span> <span class="toc-text">防御性安全前言 Intro to Defensive Security</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#fang-yu-an-quan-jian-jie-introduction-to-defensive-security"><span class="toc-number">2.1.</span> <span class="toc-text">防御安全简介 Introduction to Defensive Security</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#areas-of-defensive-security"><span class="toc-number">2.2.</span> <span class="toc-text">Areas of Defensive Security</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#an-quan-yun-ying-zhong-xin-soc"><span class="toc-number">2.2.1.</span> <span class="toc-text">安全运营中心（SOC）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#threat-intelligence-wei-xie-qing-bao"><span class="toc-number">2.2.2.</span> <span class="toc-text">Threat Intelligence 威胁情报</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#digital-forensics-and-incident-response-dian-zi-qu-zheng-he-ying-ji-xiang-ying-dfir"><span class="toc-number">2.2.3.</span> <span class="toc-text">Digital Forensics and Incident Response 电子取证和应急响应 (DFIR)</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#dian-zi-qu-zheng"><span class="toc-number">2.2.3.1.</span> <span class="toc-text">电子取证</span></a></li></ol></li></ol></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://example.com/2023/01/15/TryHackMe-Introduction-to-Cyber-Security/index.html"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://example.com/2023/01/15/TryHackMe-Introduction-to-Cyber-Security/index.html&text=TryHackMe-Introduction-to-Cyber-Security-待更新"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://example.com/2023/01/15/TryHackMe-Introduction-to-Cyber-Security/index.html&title=TryHackMe-Introduction-to-Cyber-Security-待更新"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://example.com/2023/01/15/TryHackMe-Introduction-to-Cyber-Security/index.html&is_video=false&description=TryHackMe-Introduction-to-Cyber-Security-待更新"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=TryHackMe-Introduction-to-Cyber-Security-待更新&body=Check out this article: https://example.com/2023/01/15/TryHackMe-Introduction-to-Cyber-Security/index.html"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://example.com/2023/01/15/TryHackMe-Introduction-to-Cyber-Security/index.html&title=TryHackMe-Introduction-to-Cyber-Security-待更新"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://example.com/2023/01/15/TryHackMe-Introduction-to-Cyber-Security/index.html&title=TryHackMe-Introduction-to-Cyber-Security-待更新"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://example.com/2023/01/15/TryHackMe-Introduction-to-Cyber-Security/index.html&title=TryHackMe-Introduction-to-Cyber-Security-待更新"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://example.com/2023/01/15/TryHackMe-Introduction-to-Cyber-Security/index.html&title=TryHackMe-Introduction-to-Cyber-Security-待更新"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://example.com/2023/01/15/TryHackMe-Introduction-to-Cyber-Security/index.html&name=TryHackMe-Introduction-to-Cyber-Security-待更新&description=&lt;!--toc--&gt;
+&lt;p&gt;从一个公众号上看到这个可以锻炼红队技术的网站，我看了一下还不错。所以打算在开学之前刷完这些。&lt;/p&gt;"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://example.com/2023/01/15/TryHackMe-Introduction-to-Cyber-Security/index.html&t=TryHackMe-Introduction-to-Cyber-Security-待更新"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    1999-2022
+    MirRoR4s
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/MirRoR4s">项目</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/MirRoR4s">MyGithub</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a href="/tags/">标签</a></li><!--
+     --><!--
+       --><li><a href="/categories/">分类</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板！\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功！");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>
