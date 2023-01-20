@@ -6,18 +6,25 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
-    <meta name="description" content="做过很多个 SQL 注入的题，于是我想总结自己的 SQL 注入知识点。   绕过空格过滤#一般代替空格的字符串有  %09 %0a %0b %0d %0c  绕过回显关键字过滤#有时候题目可能会在回显的时候限制不能出现 flag 等字符，这种情况下我们一般可以采用编码绕过，常见的编码函数有  to_base64 hex  如果题目还限制了不能出现数字，那我们只能采用盲注了">
+    <meta name="description" content="做过很多个 SQL 注入的题，于是我想总结自己的 SQL 注入知识点。   MySQL#报错注入#前言#报错注入适用于页面无回显位置，但是仍然返回报错信息的情况。 什么是报错注入？#报错注入是指通过特殊函数错误使用并使其输出错误结果来获取信息。简单地说，就是在可以进行 sql 注入的位置，调用特殊的函数，利用函数报错使其输出错误结果来获取数据库的相关信息。（数据库的信息包含在错误结果中） 报错">
 <meta property="og:type" content="article">
-<meta property="og:title" content="SQL注入总结">
+<meta property="og:title" content="报错注入总结">
 <meta property="og:url" content="https://example.com/2023/01/14/SQL%E6%B3%A8%E5%85%A5%E6%80%BB%E7%BB%93/index.html">
 <meta property="og:site_name" content="学习记录">
-<meta property="og:description" content="做过很多个 SQL 注入的题，于是我想总结自己的 SQL 注入知识点。   绕过空格过滤#一般代替空格的字符串有  %09 %0a %0b %0d %0c  绕过回显关键字过滤#有时候题目可能会在回显的时候限制不能出现 flag 等字符，这种情况下我们一般可以采用编码绕过，常见的编码函数有  to_base64 hex  如果题目还限制了不能出现数字，那我们只能采用盲注了">
+<meta property="og:description" content="做过很多个 SQL 注入的题，于是我想总结自己的 SQL 注入知识点。   MySQL#报错注入#前言#报错注入适用于页面无回显位置，但是仍然返回报错信息的情况。 什么是报错注入？#报错注入是指通过特殊函数错误使用并使其输出错误结果来获取信息。简单地说，就是在可以进行 sql 注入的位置，调用特殊的函数，利用函数报错使其输出错误结果来获取数据库的相关信息。（数据库的信息包含在错误结果中） 报错">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://example.com/images/SQL%E6%B3%A8%E5%85%A5%E6%80%BB%E7%BB%93/image-20230120111216405.png">
+<meta property="og:image" content="https://example.com/images/SQL%E6%B3%A8%E5%85%A5%E6%80%BB%E7%BB%93/image-20230120111454374.png">
+<meta property="og:image" content="https://example.com/images/SQL%E6%B3%A8%E5%85%A5%E6%80%BB%E7%BB%93/image-20230120112920673.png">
+<meta property="og:image" content="https://example.com/images/SQL%E6%B3%A8%E5%85%A5%E6%80%BB%E7%BB%93/image-20230120114119601.png">
+<meta property="og:image" content="https://example.com/images/SQL%E6%B3%A8%E5%85%A5%E6%80%BB%E7%BB%93/image-20230120114005165.png">
+<meta property="og:image" content="https://example.com/images/SQL%E6%B3%A8%E5%85%A5%E6%80%BB%E7%BB%93/image-20230120114056805.png">
 <meta property="article:published_time" content="2023-01-14T03:10:25.000Z">
-<meta property="article:modified_time" content="2023-01-20T01:18:13.652Z">
+<meta property="article:modified_time" content="2023-01-20T04:49:46.955Z">
 <meta property="article:author" content="MirRoR4s">
-<meta property="article:tag" content="SQL注入">
+<meta property="article:tag" content="报错注入">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://example.com/images/SQL%E6%B3%A8%E5%85%A5%E6%80%BB%E7%BB%93/image-20230120111216405.png">
     
     
       
@@ -37,7 +44,7 @@
       
     
     <!-- title -->
-    <title>SQL注入总结</title>
+    <title>报错注入总结</title>
     <!-- styles -->
     
 <link rel="stylesheet" href="/css/style.css">
@@ -109,21 +116,21 @@
     <div id="share" style="display: none">
       <ul>
   <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://example.com/2023/01/14/SQL%E6%B3%A8%E5%85%A5%E6%80%BB%E7%BB%93/index.html"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://example.com/2023/01/14/SQL%E6%B3%A8%E5%85%A5%E6%80%BB%E7%BB%93/index.html&text=SQL注入总结"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://example.com/2023/01/14/SQL%E6%B3%A8%E5%85%A5%E6%80%BB%E7%BB%93/index.html&title=SQL注入总结"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://example.com/2023/01/14/SQL%E6%B3%A8%E5%85%A5%E6%80%BB%E7%BB%93/index.html&is_video=false&description=SQL注入总结"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=SQL注入总结&body=Check out this article: https://example.com/2023/01/14/SQL%E6%B3%A8%E5%85%A5%E6%80%BB%E7%BB%93/index.html"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://example.com/2023/01/14/SQL%E6%B3%A8%E5%85%A5%E6%80%BB%E7%BB%93/index.html&title=SQL注入总结"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://example.com/2023/01/14/SQL%E6%B3%A8%E5%85%A5%E6%80%BB%E7%BB%93/index.html&title=SQL注入总结"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://example.com/2023/01/14/SQL%E6%B3%A8%E5%85%A5%E6%80%BB%E7%BB%93/index.html&title=SQL注入总结"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://example.com/2023/01/14/SQL%E6%B3%A8%E5%85%A5%E6%80%BB%E7%BB%93/index.html&title=SQL注入总结"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://example.com/2023/01/14/SQL%E6%B3%A8%E5%85%A5%E6%80%BB%E7%BB%93/index.html&name=SQL注入总结&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://example.com/2023/01/14/SQL%E6%B3%A8%E5%85%A5%E6%80%BB%E7%BB%93/index.html&t=SQL注入总结"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://example.com/2023/01/14/SQL%E6%B3%A8%E5%85%A5%E6%80%BB%E7%BB%93/index.html&text=报错注入总结"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://example.com/2023/01/14/SQL%E6%B3%A8%E5%85%A5%E6%80%BB%E7%BB%93/index.html&title=报错注入总结"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://example.com/2023/01/14/SQL%E6%B3%A8%E5%85%A5%E6%80%BB%E7%BB%93/index.html&is_video=false&description=报错注入总结"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=报错注入总结&body=Check out this article: https://example.com/2023/01/14/SQL%E6%B3%A8%E5%85%A5%E6%80%BB%E7%BB%93/index.html"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://example.com/2023/01/14/SQL%E6%B3%A8%E5%85%A5%E6%80%BB%E7%BB%93/index.html&title=报错注入总结"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://example.com/2023/01/14/SQL%E6%B3%A8%E5%85%A5%E6%80%BB%E7%BB%93/index.html&title=报错注入总结"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://example.com/2023/01/14/SQL%E6%B3%A8%E5%85%A5%E6%80%BB%E7%BB%93/index.html&title=报错注入总结"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://example.com/2023/01/14/SQL%E6%B3%A8%E5%85%A5%E6%80%BB%E7%BB%93/index.html&title=报错注入总结"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://example.com/2023/01/14/SQL%E6%B3%A8%E5%85%A5%E6%80%BB%E7%BB%93/index.html&name=报错注入总结&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://example.com/2023/01/14/SQL%E6%B3%A8%E5%85%A5%E6%80%BB%E7%BB%93/index.html&t=报错注入总结"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#rao-guo-kong-ge-guo-lu"><span class="toc-number">1.</span> <span class="toc-text">绕过空格过滤</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#rao-guo-hui-xian-guan-jian-zi-guo-lu"><span class="toc-number">2.</span> <span class="toc-text">绕过回显关键字过滤</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#mysql"><span class="toc-number">1.</span> <span class="toc-text">MySQL</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#bao-cuo-zhu-ru"><span class="toc-number">1.1.</span> <span class="toc-text">报错注入</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#qian-yan"><span class="toc-number">1.1.1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#shi-me-shi-bao-cuo-zhu-ru"><span class="toc-number">1.1.2.</span> <span class="toc-text">什么是报错注入？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#bao-cuo-zhu-ru-de-qian-ti"><span class="toc-number">1.1.3.</span> <span class="toc-text">报错注入的前提</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#bao-cuo-zhu-ru-de-chong-lei"><span class="toc-number">1.1.4.</span> <span class="toc-text">报错注入的种类</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#bao-cuo-zhu-ru-bu-zou"><span class="toc-number">1.1.5.</span> <span class="toc-text">报错注入步骤</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#bao-cuo-zhu-ru-yuan-li"><span class="toc-number">1.1.6.</span> <span class="toc-text">报错注入原理</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#exp"><span class="toc-number">1.1.6.1.</span> <span class="toc-text">exp()</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#updatexml"><span class="toc-number">1.1.6.2.</span> <span class="toc-text">updatexml()</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#extractvalue"><span class="toc-number">1.1.6.3.</span> <span class="toc-text">extractvalue()</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#rand-group-count"><span class="toc-number">1.1.6.4.</span> <span class="toc-text">rand()+group()+count()</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#rao-guo-guo-lu"><span class="toc-number">2.</span> <span class="toc-text">绕过过滤</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#rao-guo-kong-ge-guo-lu"><span class="toc-number">2.1.</span> <span class="toc-text">绕过空格过滤</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#rao-guo-hui-xian-guan-jian-zi-guo-lu"><span class="toc-number">2.2.</span> <span class="toc-text">绕过回显关键字过滤</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#can-kao-lian-jie"><span class="toc-number">3.</span> <span class="toc-text">参考链接</span></a></li></ol>
     </div>
   </span>
 </div>
@@ -135,7 +142,7 @@
   <header>
     
     <h1 class="posttitle" itemprop="name headline">
-        SQL注入总结
+        报错注入总结
     </h1>
 
 
@@ -149,7 +156,7 @@
       
         <time datetime="2023-01-14T03:10:25.000Z" itemprop="datePublished">2023-01-14</time>
         
-        (Updated: <time datetime="2023-01-20T01:18:13.652Z" itemprop="dateModified">2023-01-20</time>)
+        (Updated: <time datetime="2023-01-20T04:49:46.955Z" itemprop="dateModified">2023-01-20</time>)
         
       
     </div>
@@ -165,7 +172,7 @@
       
     <div class="article-tag">
         <i class="fas fa-tag"></i>
-        <a class="tag-link-link" href="/tags/SQL%E6%B3%A8%E5%85%A5/" rel="tag">SQL注入</a>
+        <a class="tag-link-link" href="/tags/%E6%8A%A5%E9%94%99%E6%B3%A8%E5%85%A5/" rel="tag">报错注入</a>
     </div>
 
 
@@ -179,7 +186,74 @@
 <p>做过很多个 SQL 注入的题，于是我想总结自己的 SQL 注入知识点。</p>
 <blockquote>
 </blockquote>
-<h3 id="rao-guo-kong-ge-guo-lu"><a href="#绕过空格过滤" class="headerlink" title="绕过空格过滤"></a>绕过空格过滤<a href="#rao-guo-kong-ge-guo-lu" class="header-anchor">#</a></h3><p>一般代替空格的字符串有</p>
+<h2 id="mysql"><a href="#MySQL" class="headerlink" title="MySQL"></a>MySQL<a href="#mysql" class="header-anchor">#</a></h2><h3 id="bao-cuo-zhu-ru"><a href="#报错注入" class="headerlink" title="报错注入"></a>报错注入<a href="#bao-cuo-zhu-ru" class="header-anchor">#</a></h3><h4 id="qian-yan"><a href="#前言" class="headerlink" title="前言"></a>前言<a href="#qian-yan" class="header-anchor">#</a></h4><p>报错注入适用于页面无回显位置，但是仍然返回报错信息的情况。</p>
+<h4 id="shi-me-shi-bao-cuo-zhu-ru"><a href="#什么是报错注入？" class="headerlink" title="什么是报错注入？"></a>什么是报错注入？<a href="#shi-me-shi-bao-cuo-zhu-ru" class="header-anchor">#</a></h4><p>报错注入是指通过特殊函数错误使用并使其输出错误结果来获取信息。简单地说，就是在可以进行 sql 注入的位置，调用特殊的函数，利用函数报错使其输出错误结果来获取数据库的相关信息。（数据库的信息包含在错误结果中）</p>
+<h4 id="bao-cuo-zhu-ru-de-qian-ti"><a href="#报错注入的前提" class="headerlink" title="报错注入的前提"></a>报错注入的前提<a href="#bao-cuo-zhu-ru-de-qian-ti" class="header-anchor">#</a></h4><p>可以利用报错注入的前提条件是页面的错误信息会显示出来</p>
+<h4 id="bao-cuo-zhu-ru-de-chong-lei"><a href="#报错注入的种类" class="headerlink" title="报错注入的种类"></a>报错注入的种类<a href="#bao-cuo-zhu-ru-de-chong-lei" class="header-anchor">#</a></h4><p>mysql 的报错注入主要是利用 mysql 数据库的一些逻辑漏洞，主要可以分为以下几类：</p>
+<ul>
+<li>BigInt 等数据类型溢出</li>
+<li>函数参数格式错误</li>
+<li>主键&#x2F;字段重复</li>
+</ul>
+<h4 id="bao-cuo-zhu-ru-bu-zou"><a href="#报错注入步骤" class="headerlink" title="报错注入步骤"></a>报错注入步骤<a href="#bao-cuo-zhu-ru-bu-zou" class="header-anchor">#</a></h4><p>通过特殊函数的错误使用使其参数被页面输出。</p>
+<p>前提：服务器开启报错信息返回，也就是发生错误时返回报错信息。</p>
+<p>常见的利用函数有：</p>
+<ul>
+<li>exp</li>
+<li>floor+rand</li>
+<li>updatexml</li>
+<li>extractvalue</li>
+</ul>
+<p>注意：</p>
+<ul>
+<li>报错函数通常对报错输出的长度有限制，面对这种情况可以进行分割输出。</li>
+<li>可以使用 group_concat 等函数聚合数据</li>
+</ul>
+<h4 id="bao-cuo-zhu-ru-yuan-li"><a href="#报错注入原理" class="headerlink" title="报错注入原理"></a>报错注入原理<a href="#bao-cuo-zhu-ru-yuan-li" class="header-anchor">#</a></h4><p>前边说到，报错注入是通过特殊函数错误使用并使其输出错误结果来获取信息的，那么我们都有哪些特殊函数以及如何使用它们呢？</p>
+<h5 id="exp"><a href="#exp" class="headerlink" title="exp()"></a>exp()<a href="#exp" class="header-anchor">#</a></h5><p>函数语法：<code>exp(int)</code></p>
+<p>适用版本：5.5.5~5.5.49</p>
+<p>该函数会返回 e 的 x 次方结果，如下图：</p>
+<p><img src="/images/SQL%E6%B3%A8%E5%85%A5%E6%80%BB%E7%BB%93/image-20230120111216405.png" alt="image-20230120111216405"></p>
+<p>使用该函数时什么时候会报错呢？我们知道，次方到后边每增加 1，其结果都将跨度极大，而 mysql 能记录的 double 数值范围有限，一旦结果超过范围，那么该函数就会报错。如下图：</p>
+<p><img src="/images/SQL%E6%B3%A8%E5%85%A5%E6%80%BB%E7%BB%93/image-20230120111454374.png" alt="image-20230120111454374"></p>
+<p>我们利用该函数进行报错注入的 payload 为：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">exp</span>(<span class="operator">~</span>(<span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span>(<span class="keyword">select</span> <span class="keyword">user</span>())a))</span><br></pre></td></tr></table></figure>
+
+<p>其中，~ 符号为取反运算符。我们通常将字符串经过处理后变成大整数，再放到 exp 函数内，得到的结果就可以超过 mysql 的 double 数值范围，从而报错输出。<strong>至于为什么需要用两层子查询，这点我暂时还没有弄明白。</strong></p>
+<blockquote>
+<p>为何用子查询？一般在<a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=%E5%AD%90%E6%9F%A5%E8%AF%A2&spm=1001.2101.3001.7020">子查询</a>中，程序先运行在嵌套在最内层的语句，再运行外层</p>
+<p>带入在这里就是先执行 select user() 生成一个别名为 a 的表然后再用 select 查询这个表 a ，然后 exp 函数报错，mysql 告诉我们报错信息从而带出用户名</p>
+</blockquote>
+<p><img src="/images/SQL%E6%B3%A8%E5%85%A5%E6%80%BB%E7%BB%93/image-20230120112920673.png" alt="image-20230120112920673"></p>
+<p>除了<code>exp()</code>之外，还有类似<code>pow()</code>之类的相似函数同样是可利用的，他们的原理相同。</p>
+<h5 id="updatexml"><a href="#updatexml" class="headerlink" title="updatexml()"></a>updatexml()<a href="#updatexml" class="header-anchor">#</a></h5><p>函数语法：<code>updatexml(XML_document, XPath_string, new_value);</code></p>
+<p>适用版本：5.15+</p>
+<p>与 exp() 不同，updatexml 是由于参数的格式不正确而产生的错误，同样也会返回参数的信息</p>
+<p>payload:</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">updatexml</span>(<span class="number">1</span>,concat(<span class="number">0</span>x7e,(select user()),<span class="number">0</span>x7e),<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+
+<p>我们在以上 payload 的前后添加 ~(0x7e) 使其不符合 xpath 格式从而报错。</p>
+<h5 id="extractvalue"><a href="#extractvalue" class="headerlink" title="extractvalue()"></a>extractvalue()<a href="#extractvalue" class="header-anchor">#</a></h5><p>函数语法：<code>EXTRACTVALUE (XML_document, XPath_string);</code></p>
+<p>适用版本：5.1.5+</p>
+<p>利用原理与 updatexml 函数相同</p>
+<p>payload：</p>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">and (<span class="name">extractvalue</span>(<span class="number">1</span>,concat(<span class="number">0</span>x7e,(<span class="name">select</span> user()),<span class="number">0</span>x7e)))</span><br></pre></td></tr></table></figure>
+
+<h5 id="rand-group-count"><a href="#rand-group-count" class="headerlink" title="rand()+group()+count()"></a>rand()+group()+count()<a href="#rand-group-count" class="header-anchor">#</a></h5><blockquote>
+<p>关于以上三个函数组合形成报错注入的原理分析，强烈建议看这篇文章：<a target="_blank" rel="noopener" href="https://wooyun.js.org/drops/Mysql%E6%8A%A5%E9%94%99%E6%B3%A8%E5%85%A5%E5%8E%9F%E7%90%86%E5%88%86%E6%9E%90(count()%E3%80%81rand()%E3%80%81group%20by).html">wooyun</a></p>
+<p>关于相关函数函数介绍在这里：<a target="_blank" rel="noopener" href="https://www.yiibai.com/mysql/count.html">count</a></p>
+</blockquote>
+<p><img src="/images/SQL%E6%B3%A8%E5%85%A5%E6%80%BB%E7%BB%93/image-20230120114119601.png" alt="image-20230120114119601"></p>
+<p><img src="/images/SQL%E6%B3%A8%E5%85%A5%E6%80%BB%E7%BB%93/image-20230120114005165.png" alt="image-20230120114005165"></p>
+<p><img src="/images/SQL%E6%B3%A8%E5%85%A5%E6%80%BB%E7%BB%93/image-20230120114056805.png" alt="image-20230120114056805"></p>
+<p>payload 用法：</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">union</span> <span class="keyword">select</span> count(*),<span class="number">2</span>,concat(<span class="string">&#x27;:&#x27;</span>,(<span class="keyword">select</span> <span class="keyword">database</span>()),<span class="string">&#x27;:&#x27;</span>,floor(rand()*<span class="number">2</span>))<span class="keyword">as</span> a <span class="keyword">from</span> information_schema.<span class="keyword">tables</span> <span class="keyword">group</span> <span class="keyword">by</span> a</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h2 id="rao-guo-guo-lu"><a href="#绕过过滤" class="headerlink" title="绕过过滤"></a>绕过过滤<a href="#rao-guo-guo-lu" class="header-anchor">#</a></h2><h3 id="rao-guo-kong-ge-guo-lu"><a href="#绕过空格过滤" class="headerlink" title="绕过空格过滤"></a>绕过空格过滤<a href="#rao-guo-kong-ge-guo-lu" class="header-anchor">#</a></h3><p>一般代替空格的字符串有</p>
 <ul>
 <li>%09</li>
 <li>%0a</li>
@@ -193,6 +267,7 @@
 <li>hex</li>
 </ul>
 <p>如果题目还限制了不能出现数字，那我们只能采用盲注了</p>
+<h2 id="can-kao-lian-jie"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接<a href="#can-kao-lian-jie" class="header-anchor">#</a></h2><p><a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/7169#toc-18">对MYSQL注入相关内容及部分Trick的归类小结</a></p>
 
   </div>
 </article>
@@ -226,22 +301,22 @@
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#rao-guo-kong-ge-guo-lu"><span class="toc-number">1.</span> <span class="toc-text">绕过空格过滤</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#rao-guo-hui-xian-guan-jian-zi-guo-lu"><span class="toc-number">2.</span> <span class="toc-text">绕过回显关键字过滤</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#mysql"><span class="toc-number">1.</span> <span class="toc-text">MySQL</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#bao-cuo-zhu-ru"><span class="toc-number">1.1.</span> <span class="toc-text">报错注入</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#qian-yan"><span class="toc-number">1.1.1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#shi-me-shi-bao-cuo-zhu-ru"><span class="toc-number">1.1.2.</span> <span class="toc-text">什么是报错注入？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#bao-cuo-zhu-ru-de-qian-ti"><span class="toc-number">1.1.3.</span> <span class="toc-text">报错注入的前提</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#bao-cuo-zhu-ru-de-chong-lei"><span class="toc-number">1.1.4.</span> <span class="toc-text">报错注入的种类</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#bao-cuo-zhu-ru-bu-zou"><span class="toc-number">1.1.5.</span> <span class="toc-text">报错注入步骤</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#bao-cuo-zhu-ru-yuan-li"><span class="toc-number">1.1.6.</span> <span class="toc-text">报错注入原理</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#exp"><span class="toc-number">1.1.6.1.</span> <span class="toc-text">exp()</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#updatexml"><span class="toc-number">1.1.6.2.</span> <span class="toc-text">updatexml()</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#extractvalue"><span class="toc-number">1.1.6.3.</span> <span class="toc-text">extractvalue()</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#rand-group-count"><span class="toc-number">1.1.6.4.</span> <span class="toc-text">rand()+group()+count()</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#rao-guo-guo-lu"><span class="toc-number">2.</span> <span class="toc-text">绕过过滤</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#rao-guo-kong-ge-guo-lu"><span class="toc-number">2.1.</span> <span class="toc-text">绕过空格过滤</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#rao-guo-hui-xian-guan-jian-zi-guo-lu"><span class="toc-number">2.2.</span> <span class="toc-text">绕过回显关键字过滤</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#can-kao-lian-jie"><span class="toc-number">3.</span> <span class="toc-text">参考链接</span></a></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">
       <ul>
   <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://example.com/2023/01/14/SQL%E6%B3%A8%E5%85%A5%E6%80%BB%E7%BB%93/index.html"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://example.com/2023/01/14/SQL%E6%B3%A8%E5%85%A5%E6%80%BB%E7%BB%93/index.html&text=SQL注入总结"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://example.com/2023/01/14/SQL%E6%B3%A8%E5%85%A5%E6%80%BB%E7%BB%93/index.html&title=SQL注入总结"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://example.com/2023/01/14/SQL%E6%B3%A8%E5%85%A5%E6%80%BB%E7%BB%93/index.html&is_video=false&description=SQL注入总结"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=SQL注入总结&body=Check out this article: https://example.com/2023/01/14/SQL%E6%B3%A8%E5%85%A5%E6%80%BB%E7%BB%93/index.html"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://example.com/2023/01/14/SQL%E6%B3%A8%E5%85%A5%E6%80%BB%E7%BB%93/index.html&title=SQL注入总结"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://example.com/2023/01/14/SQL%E6%B3%A8%E5%85%A5%E6%80%BB%E7%BB%93/index.html&title=SQL注入总结"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://example.com/2023/01/14/SQL%E6%B3%A8%E5%85%A5%E6%80%BB%E7%BB%93/index.html&title=SQL注入总结"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://example.com/2023/01/14/SQL%E6%B3%A8%E5%85%A5%E6%80%BB%E7%BB%93/index.html&title=SQL注入总结"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://example.com/2023/01/14/SQL%E6%B3%A8%E5%85%A5%E6%80%BB%E7%BB%93/index.html&name=SQL注入总结&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://example.com/2023/01/14/SQL%E6%B3%A8%E5%85%A5%E6%80%BB%E7%BB%93/index.html&t=SQL注入总结"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://example.com/2023/01/14/SQL%E6%B3%A8%E5%85%A5%E6%80%BB%E7%BB%93/index.html&text=报错注入总结"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://example.com/2023/01/14/SQL%E6%B3%A8%E5%85%A5%E6%80%BB%E7%BB%93/index.html&title=报错注入总结"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://example.com/2023/01/14/SQL%E6%B3%A8%E5%85%A5%E6%80%BB%E7%BB%93/index.html&is_video=false&description=报错注入总结"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=报错注入总结&body=Check out this article: https://example.com/2023/01/14/SQL%E6%B3%A8%E5%85%A5%E6%80%BB%E7%BB%93/index.html"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://example.com/2023/01/14/SQL%E6%B3%A8%E5%85%A5%E6%80%BB%E7%BB%93/index.html&title=报错注入总结"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://example.com/2023/01/14/SQL%E6%B3%A8%E5%85%A5%E6%80%BB%E7%BB%93/index.html&title=报错注入总结"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://example.com/2023/01/14/SQL%E6%B3%A8%E5%85%A5%E6%80%BB%E7%BB%93/index.html&title=报错注入总结"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://example.com/2023/01/14/SQL%E6%B3%A8%E5%85%A5%E6%80%BB%E7%BB%93/index.html&title=报错注入总结"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://example.com/2023/01/14/SQL%E6%B3%A8%E5%85%A5%E6%80%BB%E7%BB%93/index.html&name=报错注入总结&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://example.com/2023/01/14/SQL%E6%B3%A8%E5%85%A5%E6%80%BB%E7%BB%93/index.html&t=报错注入总结"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
