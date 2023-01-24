@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="每日图一乐之php代码审计">
+<meta property="og:type" content="article">
+<meta property="og:title" content="代码审计Day1-in_array函数缺陷">
+<meta property="og:url" content="https://example.com/2023/01/24/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1Day1-in-array%E5%87%BD%E6%95%B0%E7%BC%BA%E9%99%B7/index.html">
+<meta property="og:site_name" content="学习记录">
+<meta property="og:description" content="每日图一乐之php代码审计">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://example.com/images/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1Day1-in-array%E5%87%BD%E6%95%B0%E7%BC%BA%E9%99%B7/image-20230124104642539.png">
+<meta property="article:published_time" content="2023-01-24T02:20:56.000Z">
+<meta property="article:modified_time" content="2023-01-24T08:53:51.652Z">
+<meta property="article:author" content="MirRoR4s">
+<meta property="article:tag" content="PHP代码审计">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://example.com/images/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1Day1-in-array%E5%87%BD%E6%95%B0%E7%BC%BA%E9%99%B7/image-20230124104642539.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>代码审计Day1-in_array函数缺陷</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body class="max-width mx-auto px3 ltr">    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="目录"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="目录"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="顶部" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/MirRoR4s">项目</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/MirRoR4s">MyGithub</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a href="/tags/">标签</a></li><!--
+     --><!--
+       --><li><a href="/categories/">分类</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="上一篇" href="/2023/01/24/WebGoat8-JWT-Token/index.html"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="下一篇" href="/2023/01/24/NodeJS%E5%B8%B8%E7%94%A8%E7%B1%BB%E5%BA%93/index.html"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://example.com/2023/01/24/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1Day1-in-array%E5%87%BD%E6%95%B0%E7%BC%BA%E9%99%B7/index.html"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://example.com/2023/01/24/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1Day1-in-array%E5%87%BD%E6%95%B0%E7%BC%BA%E9%99%B7/index.html&text=代码审计Day1-in_array函数缺陷"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://example.com/2023/01/24/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1Day1-in-array%E5%87%BD%E6%95%B0%E7%BC%BA%E9%99%B7/index.html&title=代码审计Day1-in_array函数缺陷"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://example.com/2023/01/24/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1Day1-in-array%E5%87%BD%E6%95%B0%E7%BC%BA%E9%99%B7/index.html&is_video=false&description=代码审计Day1-in_array函数缺陷"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=代码审计Day1-in_array函数缺陷&body=Check out this article: https://example.com/2023/01/24/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1Day1-in-array%E5%87%BD%E6%95%B0%E7%BC%BA%E9%99%B7/index.html"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://example.com/2023/01/24/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1Day1-in-array%E5%87%BD%E6%95%B0%E7%BC%BA%E9%99%B7/index.html&title=代码审计Day1-in_array函数缺陷"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://example.com/2023/01/24/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1Day1-in-array%E5%87%BD%E6%95%B0%E7%BC%BA%E9%99%B7/index.html&title=代码审计Day1-in_array函数缺陷"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://example.com/2023/01/24/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1Day1-in-array%E5%87%BD%E6%95%B0%E7%BC%BA%E9%99%B7/index.html&title=代码审计Day1-in_array函数缺陷"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://example.com/2023/01/24/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1Day1-in-array%E5%87%BD%E6%95%B0%E7%BC%BA%E9%99%B7/index.html&title=代码审计Day1-in_array函数缺陷"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://example.com/2023/01/24/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1Day1-in-array%E5%87%BD%E6%95%B0%E7%BC%BA%E9%99%B7/index.html&name=代码审计Day1-in_array函数缺陷&description=&lt;!--toc--&gt;
+
+&lt;p&gt;每日图一乐之php代码审计&lt;/p&gt;"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://example.com/2023/01/24/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1Day1-in-array%E5%87%BD%E6%95%B0%E7%BC%BA%E9%99%B7/index.html&t=代码审计Day1-in_array函数缺陷"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#qian-yan"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ti-mu-lou-dong-dai-ma"><span class="toc-number">2.</span> <span class="toc-text">题目漏洞代码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ti-mu-lou-dong-fen-xi"><span class="toc-number">3.</span> <span class="toc-text">题目漏洞分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#can-kao-lian-jie"><span class="toc-number">4.</span> <span class="toc-text">参考链接</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        代码审计Day1-in_array函数缺陷
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">MirRoR4s</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2023-01-24T02:20:56.000Z" itemprop="datePublished">2023-01-24</time>
+        
+        (Updated: <time datetime="2023-01-24T08:53:51.652Z" itemprop="dateModified">2023-01-24</time>)
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/PHP%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/">PHP代码审计</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/PHP%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" rel="tag">PHP代码审计</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <!--toc-->
+
+<p>每日图一乐之php代码审计</p>
+<span id="more"></span>
+
+<h3 id="qian-yan"><a href="#前言" class="headerlink" title="前言"></a>前言<a href="#qian-yan" class="header-anchor">#</a></h3><p>不得不说红日安全写的是真的好，让人看的很舒服，也学到了很多东西。这一篇文章是在看完Day1后针对留下的习题而写的，in_array函数的漏洞分析直接看原文就可以了。</p>
+<h3 id="ti-mu-lou-dong-dai-ma"><a href="#题目漏洞代码" class="headerlink" title="题目漏洞代码"></a>题目漏洞代码<a href="#ti-mu-lou-dong-dai-ma" class="header-anchor">#</a></h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//index.php</span></span><br><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">include</span> <span class="string">&#x27;config.php&#x27;</span>;</span><br><span class="line"><span class="variable">$conn</span> = <span class="keyword">new</span> <span class="title function_ invoke__">mysqli</span>(<span class="variable">$servername</span>, <span class="variable">$username</span>, <span class="variable">$password</span>, <span class="variable">$dbname</span>);</span><br><span class="line"><span class="keyword">if</span> (<span class="variable">$conn</span>-&gt;connect_error) &#123;</span><br><span class="line">    <span class="keyword">die</span>(<span class="string">&quot;连接失败: &quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="variable">$sql</span> = <span class="string">&quot;SELECT COUNT(*) FROM users&quot;</span>;</span><br><span class="line"><span class="variable">$whitelist</span> = <span class="keyword">array</span>();</span><br><span class="line"><span class="variable">$result</span> = <span class="variable">$conn</span>-&gt;<span class="title function_ invoke__">query</span>(<span class="variable">$sql</span>);</span><br><span class="line"><span class="keyword">if</span>(<span class="variable">$result</span>-&gt;num_rows &gt; <span class="number">0</span>)&#123;</span><br><span class="line">    <span class="variable">$row</span> = <span class="variable">$result</span>-&gt;<span class="title function_ invoke__">fetch_assoc</span>();</span><br><span class="line">    <span class="variable">$whitelist</span> = <span class="title function_ invoke__">range</span>(<span class="number">1</span>, <span class="variable">$row</span>[<span class="string">&#x27;COUNT(*)&#x27;</span>]);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="variable">$id</span> = <span class="title function_ invoke__">stop_hack</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;id&#x27;</span>]);</span><br><span class="line"><span class="variable">$sql</span> = <span class="string">&quot;SELECT * FROM users WHERE id=<span class="subst">$id</span>&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (!<span class="title function_ invoke__">in_array</span>(<span class="variable">$id</span>, <span class="variable">$whitelist</span>)) &#123;</span><br><span class="line">    <span class="keyword">die</span>(<span class="string">&quot;id <span class="subst">$id</span> is not in whitelist.&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="variable">$result</span> = <span class="variable">$conn</span>-&gt;<span class="title function_ invoke__">query</span>(<span class="variable">$sql</span>);</span><br><span class="line"><span class="keyword">if</span>(<span class="variable">$result</span>-&gt;num_rows &gt; <span class="number">0</span>)&#123;</span><br><span class="line">    <span class="variable">$row</span> = <span class="variable">$result</span>-&gt;<span class="title function_ invoke__">fetch_assoc</span>();</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">&quot;&lt;center&gt;&lt;table border=&#x27;1&#x27;&gt;&quot;</span>;</span><br><span class="line">    <span class="keyword">foreach</span> (<span class="variable">$row</span> <span class="keyword">as</span> <span class="variable">$key</span> =&gt; <span class="variable">$value</span>) &#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">&quot;&lt;tr&gt;&lt;td&gt;&lt;center&gt;<span class="subst">$key</span>&lt;/center&gt;&lt;/td&gt;&lt;br&gt;&quot;</span>;</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">&quot;&lt;td&gt;&lt;center&gt;<span class="subst">$value</span>&lt;/center&gt;&lt;/td&gt;&lt;/tr&gt;&lt;br&gt;&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">&quot;&lt;/table&gt;&lt;/center&gt;&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span>&#123;</span><br><span class="line">    <span class="keyword">die</span>(<span class="variable">$conn</span>-&gt;error);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//config.php</span></span><br><span class="line"><span class="meta">&lt;?php</span>  </span><br><span class="line"><span class="variable">$servername</span> = <span class="string">&quot;localhost&quot;</span>;</span><br><span class="line"><span class="variable">$username</span> = <span class="string">&quot;fire&quot;</span>;</span><br><span class="line"><span class="variable">$password</span> = <span class="string">&quot;fire&quot;</span>;</span><br><span class="line"><span class="variable">$dbname</span> = <span class="string">&quot;day1&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">stop_hack</span>(<span class="params"><span class="variable">$value</span></span>)</span>&#123;</span><br><span class="line">	<span class="variable">$pattern</span> = <span class="string">&quot;insert|delete|or|concat|concat_ws|group_concat|join|floor|\/\*|\*|\.\.\/|\.\/|union|into|load_file|outfile|dumpfile|sub|hex|file_put_contents|fwrite|curl|system|eval&quot;</span>;</span><br><span class="line">	<span class="variable">$back_list</span> = <span class="title function_ invoke__">explode</span>(<span class="string">&quot;|&quot;</span>,<span class="variable">$pattern</span>);</span><br><span class="line">	<span class="keyword">foreach</span>(<span class="variable">$back_list</span> <span class="keyword">as</span> <span class="variable">$hack</span>)&#123;</span><br><span class="line">		<span class="keyword">if</span>(<span class="title function_ invoke__">preg_match</span>(<span class="string">&quot;/<span class="subst">$hack</span>/i&quot;</span>, <span class="variable">$value</span>))</span><br><span class="line">			<span class="keyword">die</span>(<span class="string">&quot;<span class="subst">$hack</span> detected!&quot;</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="variable">$value</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"># 搭建CTF环境使用的<span class="keyword">sql</span>语句</span><br><span class="line"><span class="keyword">create</span> <span class="keyword">database</span> day1;</span><br><span class="line">use day1;</span><br><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> users (</span><br><span class="line">id <span class="type">int</span>(<span class="number">6</span>) unsigned auto_increment <span class="keyword">primary key</span>,</span><br><span class="line"><span class="type">name</span> <span class="type">varchar</span>(<span class="number">20</span>) <span class="keyword">not</span> <span class="keyword">null</span>,</span><br><span class="line">email <span class="type">varchar</span>(<span class="number">30</span>) <span class="keyword">not</span> <span class="keyword">null</span>,</span><br><span class="line">salary <span class="type">int</span>(<span class="number">8</span>) unsigned <span class="keyword">not</span> <span class="keyword">null</span> );</span><br><span class="line"></span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> users <span class="keyword">VALUES</span>(<span class="number">1</span>,<span class="string">&#x27;Lucia&#x27;</span>,<span class="string">&#x27;Lucia@hongri.com&#x27;</span>,<span class="number">3000</span>);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> users <span class="keyword">VALUES</span>(<span class="number">2</span>,<span class="string">&#x27;Danny&#x27;</span>,<span class="string">&#x27;Danny@hongri.com&#x27;</span>,<span class="number">4500</span>);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> users <span class="keyword">VALUES</span>(<span class="number">3</span>,<span class="string">&#x27;Alina&#x27;</span>,<span class="string">&#x27;Alina@hongri.com&#x27;</span>,<span class="number">2700</span>);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> users <span class="keyword">VALUES</span>(<span class="number">4</span>,<span class="string">&#x27;Jameson&#x27;</span>,<span class="string">&#x27;Jameson@hongri.com&#x27;</span>,<span class="number">10000</span>);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> users <span class="keyword">VALUES</span>(<span class="number">5</span>,<span class="string">&#x27;Allie&#x27;</span>,<span class="string">&#x27;Allie@hongri.com&#x27;</span>,<span class="number">6000</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> flag(flag <span class="type">varchar</span>(<span class="number">30</span>) <span class="keyword">not</span> <span class="keyword">null</span>);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> flag <span class="keyword">VALUES</span>(<span class="string">&#x27;HRCTF&#123;1n0rrY_i3_Vu1n3rab13&#125;&#x27;</span>);</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h3 id="ti-mu-lou-dong-fen-xi"><a href="#题目漏洞分析" class="headerlink" title="题目漏洞分析"></a>题目漏洞分析<a href="#ti-mu-lou-dong-fen-xi" class="header-anchor">#</a></h3><p>题目会接收一个名字为 id 的参数，然后进行SQL查询，注意到这里是有一个黑名单的过滤的。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$id</span> = <span class="title function_ invoke__">stop_hack</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;id&#x27;</span>]);</span><br><span class="line"><span class="variable">$sql</span> = <span class="string">&quot;SELECT * FROM users WHERE id=<span class="subst">$id</span>&quot;</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">stop_hack</span>(<span class="params"><span class="variable">$value</span></span>)</span>&#123;</span><br><span class="line">	<span class="variable">$pattern</span> = <span class="string">&quot;insert|delete|or|concat|concat_ws|group_concat|join|floor|\/\*|\*|\.\.\/|\.\/|union|into|load_file|outfile|dumpfile|sub|hex|file_put_contents|fwrite|curl|system|eval&quot;</span>;</span><br><span class="line">	<span class="variable">$back_list</span> = <span class="title function_ invoke__">explode</span>(<span class="string">&quot;|&quot;</span>,<span class="variable">$pattern</span>);</span><br><span class="line">	<span class="keyword">foreach</span>(<span class="variable">$back_list</span> <span class="keyword">as</span> <span class="variable">$hack</span>)&#123;</span><br><span class="line">		<span class="keyword">if</span>(<span class="title function_ invoke__">preg_match</span>(<span class="string">&quot;/<span class="subst">$hack</span>/i&quot;</span>, <span class="variable">$value</span>))</span><br><span class="line">			<span class="keyword">die</span>(<span class="string">&quot;<span class="subst">$hack</span> detected!&quot;</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="variable">$value</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>同时查询完毕之后还有一个 <code>in_array()</code> 函数过滤，其会判断传入经过 stop_hac k函数过滤后的 id 是否在白名单内，如果在就把 sql 语句的查询结果告诉我们，否则就 die。</p>
+<p><code>in_array()</code> 函数在这里第三个参数并没有设置 true，所以比较是一个弱类型的比较，那么我们传入 1a 和 1 比较会被认为是相等的，所以这一步很容易就可以绕过。</p>
+<p>关键的问题在于如何构造sql语句，观察stop_hack 会发现 union 被过滤了，那么联合注入就不行。同时 or 被过滤，导致不能查 information_schema 表。</p>
+<p>最后的 payload 是</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://localhost/<span class="keyword">index</span>.php?id=<span class="number">4</span> <span class="keyword">and</span> (<span class="keyword">select</span> updatexml(<span class="number">1</span>,make_set(<span class="number">3</span>,<span class="string">&#x27;~&#x27;</span>,(<span class="keyword">select</span> flag <span class="keyword">from</span> flag)),<span class="number">1</span>))</span><br></pre></td></tr></table></figure>
+
+<p>关于 updatexml 和 make_set 可以看这篇 <a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/2160">updatexml injection without concat - 先知社区 (aliyun.com)</a></p>
+<p>但是坦白地说，这个 payload 过于理想了，看起来像是提前知道了表名和字段名都是flag。</p>
+<p>若想要进行正常的 sql 注入该怎么办？现在是查不了 information_schema 数据库的</p>
+<blockquote>
+<p>可以看看这篇 <a target="_blank" rel="noopener" href="https://blog.csdn.net/m0_49835838/article/details/109159839">绕过information_schema以及无列名注入</a></p>
+</blockquote>
+<blockquote>
+<p>本地测试的时候 phpstorm 可能会说接收到未授权请求然后阻止了我们脚本的访问，这种情况按照下图设置一下就好了</p>
+</blockquote>
+<p><img src="/images/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1Day1-in-array%E5%87%BD%E6%95%B0%E7%BC%BA%E9%99%B7/image-20230124104642539.png" alt="image-20230124104642539"></p>
+<h3 id="can-kao-lian-jie"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接<a href="#can-kao-lian-jie" class="header-anchor">#</a></h3><p>[<a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/2491">红日安全]PHP-Audit-Labs题解之Day1-4 - 先知社区 (aliyun.com)</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/hongriSec/PHP-Audit-Labs/blob/master/Part1/Day1/files/README.md">红日安全-七月火</a></p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://github.com/MirRoR4s">项目</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://github.com/MirRoR4s">MyGithub</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+         
+          <li><a href="/tags/">标签</a></li>
+         
+          <li><a href="/categories/">分类</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#qian-yan"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ti-mu-lou-dong-dai-ma"><span class="toc-number">2.</span> <span class="toc-text">题目漏洞代码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ti-mu-lou-dong-fen-xi"><span class="toc-number">3.</span> <span class="toc-text">题目漏洞分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#can-kao-lian-jie"><span class="toc-number">4.</span> <span class="toc-text">参考链接</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://example.com/2023/01/24/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1Day1-in-array%E5%87%BD%E6%95%B0%E7%BC%BA%E9%99%B7/index.html"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://example.com/2023/01/24/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1Day1-in-array%E5%87%BD%E6%95%B0%E7%BC%BA%E9%99%B7/index.html&text=代码审计Day1-in_array函数缺陷"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://example.com/2023/01/24/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1Day1-in-array%E5%87%BD%E6%95%B0%E7%BC%BA%E9%99%B7/index.html&title=代码审计Day1-in_array函数缺陷"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://example.com/2023/01/24/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1Day1-in-array%E5%87%BD%E6%95%B0%E7%BC%BA%E9%99%B7/index.html&is_video=false&description=代码审计Day1-in_array函数缺陷"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=代码审计Day1-in_array函数缺陷&body=Check out this article: https://example.com/2023/01/24/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1Day1-in-array%E5%87%BD%E6%95%B0%E7%BC%BA%E9%99%B7/index.html"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://example.com/2023/01/24/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1Day1-in-array%E5%87%BD%E6%95%B0%E7%BC%BA%E9%99%B7/index.html&title=代码审计Day1-in_array函数缺陷"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://example.com/2023/01/24/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1Day1-in-array%E5%87%BD%E6%95%B0%E7%BC%BA%E9%99%B7/index.html&title=代码审计Day1-in_array函数缺陷"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://example.com/2023/01/24/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1Day1-in-array%E5%87%BD%E6%95%B0%E7%BC%BA%E9%99%B7/index.html&title=代码审计Day1-in_array函数缺陷"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://example.com/2023/01/24/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1Day1-in-array%E5%87%BD%E6%95%B0%E7%BC%BA%E9%99%B7/index.html&title=代码审计Day1-in_array函数缺陷"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://example.com/2023/01/24/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1Day1-in-array%E5%87%BD%E6%95%B0%E7%BC%BA%E9%99%B7/index.html&name=代码审计Day1-in_array函数缺陷&description=&lt;!--toc--&gt;
+
+&lt;p&gt;每日图一乐之php代码审计&lt;/p&gt;"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://example.com/2023/01/24/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1Day1-in-array%E5%87%BD%E6%95%B0%E7%BC%BA%E9%99%B7/index.html&t=代码审计Day1-in_array函数缺陷"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    1999-2022
+    MirRoR4s
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/MirRoR4s">项目</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/MirRoR4s">MyGithub</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a href="/tags/">标签</a></li><!--
+     --><!--
+       --><li><a href="/categories/">分类</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板！\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功！");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>

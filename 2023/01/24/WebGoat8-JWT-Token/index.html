@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="图一乐之简单的一次 java代码审计">
+<meta property="og:type" content="article">
+<meta property="og:title" content="WebGoat8-JWT-Token">
+<meta property="og:url" content="https://example.com/2023/01/24/WebGoat8-JWT-Token/index.html">
+<meta property="og:site_name" content="学习记录">
+<meta property="og:description" content="图一乐之简单的一次 java代码审计">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://example.com/source/images/WebGoat8-JWT-Token/image-20230124171148198.png">
+<meta property="og:image" content="https://example.com/source/images/WebGoat8-JWT-Token/image-20230124171755987.png">
+<meta property="og:image" content="https://example.com/source/images/WebGoat8-JWT-Token/image-20230124171949601.png">
+<meta property="og:image" content="https://example.com/source/images/WebGoat8-JWT-Token/image-20230124172340017.png">
+<meta property="og:image" content="https://example.com/source/images/WebGoat8-JWT-Token/image-20230124172756843.png">
+<meta property="og:image" content="https://example.com/source/images/WebGoat8-JWT-Token/image-20230124173503743.png">
+<meta property="og:image" content="https://example.com/source/images/WebGoat8-JWT-Token/image-20230124174509473.png">
+<meta property="og:image" content="https://example.com/source/images/WebGoat8-JWT-Token/image-20230124172951156.png">
+<meta property="article:published_time" content="2023-01-24T09:05:17.000Z">
+<meta property="article:modified_time" content="2023-01-24T10:14:33.708Z">
+<meta property="article:author" content="MirRoR4s">
+<meta property="article:tag" content="JAVA代码审计">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://example.com/source/images/WebGoat8-JWT-Token/image-20230124171148198.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>WebGoat8-JWT-Token</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body class="max-width mx-auto px3 ltr">    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="目录"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="目录"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="顶部" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/MirRoR4s">项目</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/MirRoR4s">MyGithub</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a href="/tags/">标签</a></li><!--
+     --><!--
+       --><li><a href="/categories/">分类</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" aria-label="下一篇" href="/2023/01/24/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1Day1-in-array%E5%87%BD%E6%95%B0%E7%BC%BA%E9%99%B7/index.html"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://example.com/2023/01/24/WebGoat8-JWT-Token/index.html"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://example.com/2023/01/24/WebGoat8-JWT-Token/index.html&text=WebGoat8-JWT-Token"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://example.com/2023/01/24/WebGoat8-JWT-Token/index.html&title=WebGoat8-JWT-Token"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://example.com/2023/01/24/WebGoat8-JWT-Token/index.html&is_video=false&description=WebGoat8-JWT-Token"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=WebGoat8-JWT-Token&body=Check out this article: https://example.com/2023/01/24/WebGoat8-JWT-Token/index.html"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://example.com/2023/01/24/WebGoat8-JWT-Token/index.html&title=WebGoat8-JWT-Token"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://example.com/2023/01/24/WebGoat8-JWT-Token/index.html&title=WebGoat8-JWT-Token"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://example.com/2023/01/24/WebGoat8-JWT-Token/index.html&title=WebGoat8-JWT-Token"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://example.com/2023/01/24/WebGoat8-JWT-Token/index.html&title=WebGoat8-JWT-Token"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://example.com/2023/01/24/WebGoat8-JWT-Token/index.html&name=WebGoat8-JWT-Token&description=&lt;!--toc--&gt;
+
+&lt;p&gt;图一乐之简单的一次 java代码审计&lt;/p&gt;"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://example.com/2023/01/24/WebGoat8-JWT-Token/index.html&t=WebGoat8-JWT-Token"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#huan-jing-da-jian"><span class="toc-number">1.</span> <span class="toc-text">环境搭建</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#dai-ma-shen-ji"><span class="toc-number">2.</span> <span class="toc-text">代码审计</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#can-kao-lian-jie"><span class="toc-number">3.</span> <span class="toc-text">参考链接</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        WebGoat8-JWT-Token
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">MirRoR4s</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2023-01-24T09:05:17.000Z" itemprop="datePublished">2023-01-24</time>
+        
+        (Updated: <time datetime="2023-01-24T10:14:33.708Z" itemprop="dateModified">2023-01-24</time>)
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/JAVA%E5%AE%89%E5%85%A8/">JAVA安全</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/JAVA%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" rel="tag">JAVA代码审计</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <!--toc-->
+
+<p>图一乐之简单的一次 java代码审计</p>
+<span id="more"></span>
+
+<h3 id="huan-jing-da-jian"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建<a href="#huan-jing-da-jian" class="header-anchor">#</a></h3><p>去github页面下载源码然后用 idea 打开即可。同时使用官方给的命令把容器搭建起来：</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">docker</span> run -it -p <span class="number">127.0.0.1:8080</span>:<span class="number">8080</span> -p <span class="number">127.0.0.1:9090</span>:<span class="number">9090</span> -e TZ=Europe/Amsterdam webgoat/webgoat</span><br></pre></td></tr></table></figure>
+
+<h3 id="dai-ma-shen-ji"><a href="#代码审计" class="headerlink" title="代码审计"></a>代码审计<a href="#dai-ma-shen-ji" class="header-anchor">#</a></h3><p>JWT Token 猜解实验的目标是改token为管理员的token并且重置投票。</p>
+<blockquote>
+<p>实验思路：通过抓取 “重置投票” 的 HTTP 请求数据包，以期在找到关键的接口信息后进行定向的代码审计</p>
+</blockquote>
+<p>首先是初始页面（老版本 WebGoat 的 JWT Token 实验应该是在 A2，我们现在是在 A7）</p>
+<p><img src="/source/images/WebGoat8-JWT-Token/image-20230124171148198.png" alt="image-20230124171148198"></p>
+<p>投票页面在第五关</p>
+<p><img src="/source/images/WebGoat8-JWT-Token/image-20230124171755987.png" alt="image-20230124171755987"></p>
+<p>当点击 reset vote 按钮（下图的垃圾桶图标）之后会向 JWT&#x2F;Votings 发送一个 http 请求包</p>
+<p><img src="/source/images/WebGoat8-JWT-Token/image-20230124171949601.png" alt="image-20230124171949601"></p>
+<p>为了在源码中快速定位到该接口对应的方法，可以在idea下输入 <code>ctrl+shift+r</code> 查找 <code>Votings</code> </p>
+<blockquote>
+<p>注意正确的代码在最后一条结果，不要选到 test 的代码了!</p>
+</blockquote>
+<p><img src="/source/images/WebGoat8-JWT-Token/image-20230124172340017.png" alt="image-20230124172340017"></p>
+<p>跟进去发现如下：</p>
+<p><img src="/source/images/WebGoat8-JWT-Token/image-20230124172756843.png" alt="image-20230124172756843"></p>
+<p>首先有一个判断 <code>accesstoekn</code> 是否为空的操作，为空直接退出来。</p>
+<p>圈红的代码顾名思义一下就是设置 jwt 的签名密钥之后去解析 accessToken，然后获取 claims 中的 admin 参数的值，若 “Boolean.valueOf(String.valueOf(claims.get(“admin”)))” 的返回值为 true，则判断该 token 是有效的，并将进行“重置投票”操作。</p>
+<p>那么变量 accessToken 是如何产生的？通过 resetVotes 方法的注解，可以发现该变量存储于 Cookie 中，且 Cookie 的键名为 <code>access_token</code></p>
+<p><img src="/source/images/WebGoat8-JWT-Token/image-20230124173503743.png" alt="image-20230124173503743"></p>
+<p>那这个 Cookie 对象在哪里被创建和定义呢？这里我也不知道咋找的，书里直接说是在 <code>login</code> 方法中被创建。可能用户在登录的时候会进行 Cookie 相关设置吧。idea下输入 <code>ctrl+f</code> 搜 login 找到了这个方法</p>
+<p><img src="/source/images/WebGoat8-JWT-Token/image-20230124174509473.png" alt="image-20230124174509473"></p>
+<p>在 134 行 用 <code>access_token</code> 和 token 参数的值实例化了一个 Cookie 类对象（这里可能是建立了一个键值对，键是 access_token，值是 token），而这个 token 显然就是我们在重置投票接口那里的 accesstoken。现在我们终于弄清楚这个 accesstoken 是咋来的了，那我们到底如何进行漏洞利用呢？</p>
+<p>根据前面的分析我们知道 jwt 的签名密钥是一个固定值，这使得我们可以伪造 jwt Tokens！</p>
+<p><img src="/source/images/WebGoat8-JWT-Token/image-20230124172951156.png" alt="image-20230124172951156"></p>
+<p>我们要做的事情就是访问 &#x2F;JWT&#x2F;Votings 接口然后伪造管理员的 accesstoken。我们先用一个普通用户的 accsstoken 访问过去看看回显</p>
+<blockquote>
+<p>麻了，ubuntu 没有 burp suite 不好抓包，今天先到这里</p>
+</blockquote>
+<h3 id="can-kao-lian-jie"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接<a href="#can-kao-lian-jie" class="header-anchor">#</a></h3><p><a target="_blank" rel="noopener" href="https://github.com/WebGoat/WebGoat">https://github.com/WebGoat/WebGoat</a></p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://github.com/MirRoR4s">项目</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://github.com/MirRoR4s">MyGithub</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+         
+          <li><a href="/tags/">标签</a></li>
+         
+          <li><a href="/categories/">分类</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#huan-jing-da-jian"><span class="toc-number">1.</span> <span class="toc-text">环境搭建</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#dai-ma-shen-ji"><span class="toc-number">2.</span> <span class="toc-text">代码审计</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#can-kao-lian-jie"><span class="toc-number">3.</span> <span class="toc-text">参考链接</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://example.com/2023/01/24/WebGoat8-JWT-Token/index.html"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://example.com/2023/01/24/WebGoat8-JWT-Token/index.html&text=WebGoat8-JWT-Token"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://example.com/2023/01/24/WebGoat8-JWT-Token/index.html&title=WebGoat8-JWT-Token"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://example.com/2023/01/24/WebGoat8-JWT-Token/index.html&is_video=false&description=WebGoat8-JWT-Token"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=WebGoat8-JWT-Token&body=Check out this article: https://example.com/2023/01/24/WebGoat8-JWT-Token/index.html"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://example.com/2023/01/24/WebGoat8-JWT-Token/index.html&title=WebGoat8-JWT-Token"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://example.com/2023/01/24/WebGoat8-JWT-Token/index.html&title=WebGoat8-JWT-Token"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://example.com/2023/01/24/WebGoat8-JWT-Token/index.html&title=WebGoat8-JWT-Token"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://example.com/2023/01/24/WebGoat8-JWT-Token/index.html&title=WebGoat8-JWT-Token"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://example.com/2023/01/24/WebGoat8-JWT-Token/index.html&name=WebGoat8-JWT-Token&description=&lt;!--toc--&gt;
+
+&lt;p&gt;图一乐之简单的一次 java代码审计&lt;/p&gt;"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://example.com/2023/01/24/WebGoat8-JWT-Token/index.html&t=WebGoat8-JWT-Token"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    1999-2022
+    MirRoR4s
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/MirRoR4s">项目</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/MirRoR4s">MyGithub</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a href="/tags/">标签</a></li><!--
+     --><!--
+       --><li><a href="/categories/">分类</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板！\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功！");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>
