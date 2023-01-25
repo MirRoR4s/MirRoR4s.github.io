@@ -1,402 +1,1838 @@
-<!DOCTYPE html>
-<html lang=zh>
-<head>
-    <!-- so meta -->
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="HandheldFriendly" content="True">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
-    <meta name="description" content="2022年12月10日的国外CTF比赛。">
-<meta property="og:type" content="article">
-<meta property="og:title" content="BSides Mumbai CTF 2022">
-<meta property="og:url" content="https://example.com/2022/12/15/BSides-Mumbai-CTF-2022/index.html">
-<meta property="og:site_name" content="学习记录">
-<meta property="og:description" content="2022年12月10日的国外CTF比赛。">
-<meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://example.com/images/BSides-Mumbai-CTF-2022/image-20221216180401342.png">
-<meta property="article:published_time" content="2022-12-15T12:56:32.000Z">
-<meta property="article:modified_time" content="2022-12-16T10:56:01.276Z">
-<meta property="article:author" content="MirRoR4s">
-<meta property="article:tag" content="Crypto">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://example.com/images/BSides-Mumbai-CTF-2022/image-20221216180401342.png">
-    
-    
-      
-        
-          <link rel="shortcut icon" href="/images/favicon.ico">
-        
-      
-      
-        
-          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
-        
-      
-      
-        
-          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
-        
-      
-    
-    <!-- title -->
-    <title>BSides Mumbai CTF 2022</title>
-    <!-- styles -->
-    
-<link rel="stylesheet" href="/css/style.css">
+<!DOCTYPE HTML>
+<html lang="zh-CN">
 
-    <!-- persian styles -->
-    
-    <!-- rss -->
-    
-    
-	<!-- mathjax -->
-	
-		<script type="text/x-mathjax-config">
-		  MathJax.Hub.Config({
-			tex2jax: {
-			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
-			  inlineMath: [['$','$']]
-			}
-		  });
-		</script>
-		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
-	
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="BSides Mumbai CTF 2022, 学习记录">
+    <meta name="description" content="欢迎来到我的博客">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>BSides Mumbai CTF 2022 | 学习记录</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+
+    <script src="/libs/jquery/jquery.min.js"></script>
+
 <meta name="generator" content="Hexo 6.1.0"></head>
 
-<body class="max-width mx-auto px3 ltr">    
-      <div id="header-post">
-  <a id="menu-icon" href="#" aria-label="目录"><i class="fas fa-bars fa-lg"></i></a>
-  <a id="menu-icon-tablet" href="#" aria-label="目录"><i class="fas fa-bars fa-lg"></i></a>
-  <a id="top-icon-tablet" href="#" aria-label="顶部" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
-  <span id="menu">
-    <span id="nav">
-      <ul>
-        <!--
-       --><li><a href="/">首页</a></li><!--
-     --><!--
-       --><li><a href="/about/">关于</a></li><!--
-     --><!--
-       --><li><a href="/archives/">归档</a></li><!--
-     --><!--
-       --><li><a target="_blank" rel="noopener" href="https://github.com/MirRoR4s">项目</a></li><!--
-     --><!--
-       --><li><a target="_blank" rel="noopener" href="https://github.com/MirRoR4s">MyGithub</a></li><!--
-     --><!--
-       --><li><a href="/search/">Search</a></li><!--
-     --><!--
-       --><li><a href="/tags/">标签</a></li><!--
-     --><!--
-       --><li><a href="/categories/">分类</a></li><!--
-     -->
-      </ul>
-    </span>
-    <br/>
-    <span id="actions">
-      <ul>
-        
-        <li><a class="icon" aria-label="上一篇" href="/2022/12/16/KITCTFCTF-2022/index.html"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
-        
-        
-        <li><a class="icon" aria-label="下一篇" href="/2022/12/10/Hackappatoi-CTF-2022/index.html"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
-        
-        <li><a class="icon" aria-label="返回顶部" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
-        <li><a class="icon" aria-label="分享文章" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
-      </ul>
-      <span id="i-prev" class="info" style="display:none;">上一篇</span>
-      <span id="i-next" class="info" style="display:none;">下一篇</span>
-      <span id="i-top" class="info" style="display:none;">返回顶部</span>
-      <span id="i-share" class="info" style="display:none;">分享文章</span>
-    </span>
-    <br/>
-    <div id="share" style="display: none">
-      <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://example.com/2022/12/15/BSides-Mumbai-CTF-2022/index.html"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://example.com/2022/12/15/BSides-Mumbai-CTF-2022/index.html&text=BSides Mumbai CTF 2022"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://example.com/2022/12/15/BSides-Mumbai-CTF-2022/index.html&title=BSides Mumbai CTF 2022"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://example.com/2022/12/15/BSides-Mumbai-CTF-2022/index.html&is_video=false&description=BSides Mumbai CTF 2022"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=BSides Mumbai CTF 2022&body=Check out this article: https://example.com/2022/12/15/BSides-Mumbai-CTF-2022/index.html"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://example.com/2022/12/15/BSides-Mumbai-CTF-2022/index.html&title=BSides Mumbai CTF 2022"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://example.com/2022/12/15/BSides-Mumbai-CTF-2022/index.html&title=BSides Mumbai CTF 2022"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://example.com/2022/12/15/BSides-Mumbai-CTF-2022/index.html&title=BSides Mumbai CTF 2022"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://example.com/2022/12/15/BSides-Mumbai-CTF-2022/index.html&title=BSides Mumbai CTF 2022"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://example.com/2022/12/15/BSides-Mumbai-CTF-2022/index.html&name=BSides Mumbai CTF 2022&description=&lt;!--toc--&gt;
-&lt;p&gt;2022年12月10日的国外CTF比赛。&lt;/p&gt;"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://example.com/2022/12/15/BSides-Mumbai-CTF-2022/index.html&t=BSides Mumbai CTF 2022"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">学习记录</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/contact" class="waves-effect waves-light">
+      
+      <i class="fas fa-comments" style="zoom: 0.6;"></i>
+      
+      <span>留言板</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/friends" class="waves-effect waves-light">
+      
+      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
+      
+      <span>友情链接</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
 </ul>
 
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">学习记录</div>
+        <div class="logo-desc">
+            
+            欢迎来到我的博客
+            
+        </div>
     </div>
-    <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#crypto"><span class="toc-number">1.</span> <span class="toc-text">Crypto</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#poet-xor-jian-dan-yi-huo"><span class="toc-number">1.1.</span> <span class="toc-text">Poet Xor-简单异或</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#ti-mu-miao-shu"><span class="toc-number">1.1.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ti-mu-nei-rong"><span class="toc-number">1.1.2.</span> <span class="toc-text">题目内容</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#jie-ti-fen-xi"><span class="toc-number">1.1.3.</span> <span class="toc-text">解题分析</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#jie-ti-jiao-ben"><span class="toc-number">1.1.4.</span> <span class="toc-text">解题脚本</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#big-rsa-boneh-durfee-s-attack"><span class="toc-number">1.2.</span> <span class="toc-text">Big RSA-Boneh-Durfee’s attack</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#ti-mu-miao-shu"><span class="toc-number">1.2.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ti-mu-nei-rong"><span class="toc-number">1.2.2.</span> <span class="toc-text">题目内容</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#jie-ti-fen-xi"><span class="toc-number">1.2.3.</span> <span class="toc-text">解题分析</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#jie-ti-jiao-ben"><span class="toc-number">1.2.4.</span> <span class="toc-text">解题脚本</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#egglamal"><span class="toc-number">1.3.</span> <span class="toc-text">EggLamal</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#ti-mu-miao-shu"><span class="toc-number">1.3.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ti-mu-nei-rong"><span class="toc-number">1.3.2.</span> <span class="toc-text">题目内容</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#jie-ti-fen-xi"><span class="toc-number">1.3.3.</span> <span class="toc-text">解题分析</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#jie-ti-jiao-ben"><span class="toc-number">1.3.4.</span> <span class="toc-text">解题脚本</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#eccsub"><span class="toc-number">1.4.</span> <span class="toc-text">ECCSub</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#ti-mu-miao-shu"><span class="toc-number">1.4.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ti-mu-nei-rong"><span class="toc-number">1.4.2.</span> <span class="toc-text">题目内容</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#jie-ti-fen-xi"><span class="toc-number">1.4.3.</span> <span class="toc-text">解题分析</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#jie-ti-jiao-ben"><span class="toc-number">1.4.4.</span> <span class="toc-text">解题脚本</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#asd-sea"><span class="toc-number">1.5.</span> <span class="toc-text">ASD-SEA</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#ti-mu-miao-shu"><span class="toc-number">1.5.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ti-mu-nei-rong"><span class="toc-number">1.5.2.</span> <span class="toc-text">题目内容</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#jie-ti-fen-xi"><span class="toc-number">1.5.3.</span> <span class="toc-text">解题分析</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#jie-ti-jiao-ben"><span class="toc-number">1.5.4.</span> <span class="toc-text">解题脚本</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#guan-fang-wp"><span class="toc-number">1.6.</span> <span class="toc-text">官方WP</span></a></li></ol></li></ol>
-    </div>
-  </span>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/contact" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-comments"></i>
+			
+			留言板
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/friends" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-address-book"></i>
+			
+			友情链接
+		</a>
+          
+        </li>
+        
+        
+        <li><div class="divider"></div></li>
+        <li>
+            <a href="https://github.com/blinkfox/hexo-theme-matery" class="waves-effect waves-light" target="_blank">
+                <i class="fab fa-github-square fa-fw"></i>Fork Me
+            </a>
+        </li>
+        
+    </ul>
 </div>
 
+
+        </div>
+
+        
+            <style>
+    .nav-transparent .github-corner {
+        display: none !important;
+    }
+
+    .github-corner {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        right: 0;
+        border: 0;
+        transform: scale(1.1);
+    }
+
+    .github-corner svg {
+        color: #0f9d58;
+        fill: #fff;
+        height: 64px;
+        width: 64px;
+    }
+
+    .github-corner:hover .octo-arm {
+        animation: a 0.56s ease-in-out;
+    }
+
+    .github-corner .octo-arm {
+        animation: none;
+    }
+
+    @keyframes a {
+        0%,
+        to {
+            transform: rotate(0);
+        }
+        20%,
+        60% {
+            transform: rotate(-25deg);
+        }
+        40%,
+        80% {
+            transform: rotate(10deg);
+        }
+    }
+</style>
+
+<a href="https://github.com/blinkfox/hexo-theme-matery" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
+   data-tooltip="Fork Me" data-position="left" data-delay="50">
+    <svg viewBox="0 0 250 250" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor" class="octo-body"></path>
+    </svg>
+</a>
+        
+    </nav>
+
+</header>
+
     
-    <div class="content index py4">
-        
-        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
-  <header>
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/6.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">BSides Mumbai CTF 2022</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
     
-    <h1 class="posttitle" itemprop="name headline">
-        BSides Mumbai CTF 2022
-    </h1>
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
 
+    #articleContent :focus {
+        outline: none;
+    }
 
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
 
-    <div class="meta">
-      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
-        <span itemprop="name">MirRoR4s</span>
-      </span>
-      
-    <div class="postdate">
-      
-        <time datetime="2022-12-15T12:56:32.000Z" itemprop="datePublished">2022-12-15</time>
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        padding: 35px 0 15px 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        padding-bottom: 30px;
+        overflow: auto;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+
+        position: absolute;
+        right: 23.5vw;
+        display: block;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/Crypto/">
+                                <span class="chip bg-color">Crypto</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/CTF/" class="post-category">
+                                CTF
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2022-12-15
+                </div>
+                
+
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
+                    2022-12-16
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    3.2k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    18 分
+                </div>
+                
+
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+        </div>
+        <hr class="clearfix">
+
         
-        (Updated: <time datetime="2022-12-16T10:56:01.276Z" itemprop="dateModified">2022-12-16</time>)
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.css">
         
-      
-    </div>
 
+        
 
-      
-    <div class="article-category">
-        <i class="fas fa-archive"></i>
-        <a class="category-link" href="/categories/CTF/">CTF</a>
-    </div>
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <!--toc-->
 
-
-      
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link-link" href="/tags/Crypto/" rel="tag">Crypto</a>
-    </div>
-
-
-    </div>
-  </header>
-  
-
-  <div class="content" itemprop="articleBody">
-    <!--toc-->
 <p>2022年12月10日的国外CTF比赛。</p>
 <span id="more"></span>
-<h2 id="crypto"><a href="#Crypto" class="headerlink" title="Crypto"></a>Crypto<a href="#crypto" class="header-anchor">#</a></h2><h3 id="poet-xor-jian-dan-yi-huo"><a href="#Poet-Xor-简单异或" class="headerlink" title="Poet Xor-简单异或"></a><strong>Poet Xor</strong>-简单异或<a href="#poet-xor-jian-dan-yi-huo" class="header-anchor">#</a></h3><h4 id="ti-mu-miao-shu"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述<a href="#ti-mu-miao-shu" class="header-anchor">#</a></h4><figure class="highlight vbnet"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">XOR</span> was a famous poet <span class="keyword">of</span> <span class="number">1931</span>. Please help him recover his poem. Read his poem <span class="built_in">and</span> you<span class="comment">&#x27;ll get your reward in the the last line.</span></span><br></pre></td></tr></table></figure>
-<h4 id="ti-mu-nei-rong"><a href="#题目内容" class="headerlink" title="题目内容"></a>题目内容<a href="#ti-mu-nei-rong" class="header-anchor">#</a></h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> secrets <span class="keyword">import</span> token_bytes</span><br><span class="line"><span class="keyword">from</span> itertools <span class="keyword">import</span> cycle</span><br><span class="line"></span><br><span class="line">FLAG = <span class="built_in">open</span>(<span class="string">&quot;flag.txt&quot;</span>, <span class="string">&quot;rb&quot;</span>).read().split(<span class="string">b&#x27;\n&#x27;</span>)</span><br><span class="line"></span><br><span class="line">wee = token_bytes(<span class="number">8</span>)</span><br><span class="line">cipher = <span class="string">&#x27;&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> secret <span class="keyword">in</span> FLAG:</span><br><span class="line">	enc = <span class="built_in">bytes</span>([ a ^ b <span class="keyword">for</span> a,b <span class="keyword">in</span> <span class="built_in">zip</span>(secret, cycle(wee)) ])</span><br><span class="line">	cipher += enc.<span class="built_in">hex</span>() + <span class="string">&#x27;\n&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">open</span>(<span class="string">&quot;flag.enc&quot;</span>, <span class="string">&quot;w&quot;</span>).write(cipher)</span><br></pre></td></tr></table></figure>
-<h4 id="jie-ti-fen-xi"><a href="#解题分析" class="headerlink" title="解题分析"></a>解题分析<a href="#jie-ti-fen-xi" class="header-anchor">#</a></h4><p>简单的异或加密，已知明文开头是 <code>BSMumbai</code>，所以利用已知明文攻击恢复出密钥。这里注意恢复密钥的时候要和最后一组密文异或，因为提示告诉我们flag在最后一行。</p>
-<h4 id="jie-ti-jiao-ben"><a href="#解题脚本" class="headerlink" title="解题脚本"></a>解题脚本<a href="#jie-ti-jiao-ben" class="header-anchor">#</a></h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> Crypto.Util.number <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> xor</span><br><span class="line"><span class="keyword">from</span> Crypto.Util <span class="keyword">import</span> strxor</span><br><span class="line">text=  <span class="string">b&quot;BSMumbai&quot;</span></span><br><span class="line">f = <span class="built_in">open</span>(<span class="string">&quot;flag.enc&quot;</span>,<span class="string">&quot;r&quot;</span>).readlines()</span><br><span class="line">c = <span class="built_in">bytes</span>.fromhex(f[-<span class="number">1</span>].strip())</span><br><span class="line"><span class="comment">#print(c)</span></span><br><span class="line">key = xor(text,c[:<span class="built_in">len</span>(text)])</span><br><span class="line">flag = xor(key,c)</span><br><span class="line"><span class="built_in">print</span>(flag)</span><br><span class="line"><span class="comment">#b&#x27;BSMumbai&#123;w0w_1t_1s_4_fl4g_1n_th3_3nd&#125;&#x27;</span></span><br></pre></td></tr></table></figure>
-<h3 id="big-rsa-boneh-durfee-s-attack"><a href="#Big-RSA-Boneh-Durfee’s-attack" class="headerlink" title="Big RSA-Boneh-Durfee’s attack"></a><strong>Big RSA</strong>-Boneh-Durfee’s attack<a href="#big-rsa-boneh-durfee-s-attack" class="header-anchor">#</a></h3><h4 id="ti-mu-miao-shu"><a href="#题目描述-1" class="headerlink" title="题目描述"></a>题目描述<a href="#ti-mu-miao-shu" class="header-anchor">#</a></h4><figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">It<span class="symbol">&#x27;s</span> too cold outside! Maybe, __________ <span class="keyword">is</span> a good idea!</span><br></pre></td></tr></table></figure>
-<h4 id="ti-mu-nei-rong"><a href="#题目内容-1" class="headerlink" title="题目内容"></a>题目内容<a href="#ti-mu-nei-rong" class="header-anchor">#</a></h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> Crypto.Util.number <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> Crypto.PublicKey <span class="keyword">import</span> RSA</span><br><span class="line"><span class="keyword">from</span> Crypto.Cipher <span class="keyword">import</span> PKCS1_v1_5</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">keygen</span>(<span class="params">nbit</span>):</span><br><span class="line">    p, q = [ getPrime(nbit) <span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">2</span>)]</span><br><span class="line">    n = p * q</span><br><span class="line">    phi = (p-<span class="number">1</span>)*(q-<span class="number">1</span>)</span><br><span class="line">    d = getPrime(<span class="number">1</span> &lt;&lt; <span class="number">8</span>)</span><br><span class="line">    e = inverse(d, phi)</span><br><span class="line">    key = RSA.construct((n,e,d))</span><br><span class="line">    <span class="keyword">return</span> key</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">nbit = <span class="number">512</span></span><br><span class="line">key = keygen(nbit)</span><br><span class="line">FLAG = <span class="built_in">open</span>(<span class="string">&#x27;flag.txt&#x27;</span>, <span class="string">&#x27;rb&#x27;</span>).read()</span><br><span class="line"></span><br><span class="line">cipher_rsa = PKCS1_v1_5.new(key)</span><br><span class="line">enc = cipher_rsa.encrypt(FLAG)</span><br><span class="line"></span><br><span class="line"><span class="built_in">open</span>(<span class="string">&#x27;flag.enc&#x27;</span>, <span class="string">&#x27;w&#x27;</span>).write( enc.<span class="built_in">hex</span>() )</span><br><span class="line"><span class="built_in">open</span>(<span class="string">&#x27;pubkey.pem&#x27;</span>, <span class="string">&#x27;wb&#x27;</span>).write( key.public_key().export_key(<span class="string">&#x27;PEM&#x27;</span>) )</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="crypto"><a href="#Crypto" class="headerlink" title="Crypto"></a>Crypto<a href="#crypto" class="header-anchor">#</a></h2><h3 id="poet-xor-jian-dan-yi-huo"><a href="#Poet-Xor-简单异或" class="headerlink" title="Poet Xor-简单异或"></a><strong>Poet Xor</strong>-简单异或<a href="#poet-xor-jian-dan-yi-huo" class="header-anchor">#</a></h3><h4 id="ti-mu-miao-shu"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述<a href="#ti-mu-miao-shu" class="header-anchor">#</a></h4><pre class="line-numbers language-none"><code class="language-none">XOR was a famous poet of 1931. Please help him recover his poem. Read his poem and you&#39;ll get your reward in the the last line.<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h4 id="ti-mu-nei-rong"><a href="#题目内容" class="headerlink" title="题目内容"></a>题目内容<a href="#ti-mu-nei-rong" class="header-anchor">#</a></h4><pre class="line-numbers language-python" data-language="python"><code class="language-python">from secrets import token_bytes
+from itertools import cycle
+
+FLAG &#x3D; open(&quot;flag.txt&quot;, &quot;rb&quot;).read().split(b&#39;\n&#39;)
+
+wee &#x3D; token_bytes(8)
+cipher &#x3D; &#39;&#39;
+
+for secret in FLAG:
+	enc &#x3D; bytes([ a ^ b for a,b in zip(secret, cycle(wee)) ])
+	cipher +&#x3D; enc.hex() + &#39;\n&#39;
+
+open(&quot;flag.enc&quot;, &quot;w&quot;).write(cipher)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h4 id="jie-ti-fen-xi"><a href="#解题分析" class="headerlink" title="解题分析"></a>解题分析<a href="#jie-ti-fen-xi" class="header-anchor">#</a></h4><p>简单的异或加密，已知明文开头是 <code> BSMumbai</code>，所以利用已知明文攻击恢复出密钥。这里注意恢复密钥的时候要和最后一组密文异或，因为提示告诉我们flag在最后一行。</p>
+<h4 id="jie-ti-jiao-ben"><a href="#解题脚本" class="headerlink" title="解题脚本"></a>解题脚本<a href="#jie-ti-jiao-ben" class="header-anchor">#</a></h4><pre class="line-numbers language-python" data-language="python"><code class="language-python">from Crypto.Util.number import *
+from pwn import xor
+from Crypto.Util import strxor
+text&#x3D;  b&quot;BSMumbai&quot;
+f &#x3D; open(&quot;flag.enc&quot;,&quot;r&quot;).readlines()
+c &#x3D; bytes.fromhex(f[-1].strip())
+#print(c)
+key &#x3D; xor(text,c[:len(text)])
+flag &#x3D; xor(key,c)
+print(flag)
+#b&#39;BSMumbai&#123;w0w_1t_1s_4_fl4g_1n_th3_3nd&#125;&#39;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<h3 id="big-rsa-boneh-durfee-s-attack"><a href="#Big-RSA-Boneh-Durfee’s-attack" class="headerlink" title="Big RSA-Boneh-Durfee’s attack"></a><strong>Big RSA</strong>-Boneh-Durfee’s attack<a href="#big-rsa-boneh-durfee-s-attack" class="header-anchor">#</a></h3><h4 id="ti-mu-miao-shu"><a href="#题目描述-1" class="headerlink" title="题目描述"></a>题目描述<a href="#ti-mu-miao-shu" class="header-anchor">#</a></h4><pre class="line-numbers language-none"><code class="language-none">It&#39;s too cold outside! Maybe, __________ is a good idea!<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h4 id="ti-mu-nei-rong"><a href="#题目内容-1" class="headerlink" title="题目内容"></a>题目内容<a href="#ti-mu-nei-rong" class="header-anchor">#</a></h4><pre class="line-numbers language-python" data-language="python"><code class="language-python">from Crypto.Util.number import *
+from Crypto.PublicKey import RSA
+from Crypto.Cipher import PKCS1_v1_5
+
+def keygen(nbit):
+    p, q &#x3D; [ getPrime(nbit) for _ in range(2)]
+    n &#x3D; p * q
+    phi &#x3D; (p-1)*(q-1)
+    d &#x3D; getPrime(1 &lt;&lt; 8)
+    e &#x3D; inverse(d, phi)
+    key &#x3D; RSA.construct((n,e,d))
+    return key
+
+
+nbit &#x3D; 512
+key &#x3D; keygen(nbit)
+FLAG &#x3D; open(&#39;flag.txt&#39;, &#39;rb&#39;).read()
+
+cipher_rsa &#x3D; PKCS1_v1_5.new(key)
+enc &#x3D; cipher_rsa.encrypt(FLAG)
+
+open(&#39;flag.enc&#39;, &#39;w&#39;).write( enc.hex() )
+open(&#39;pubkey.pem&#39;, &#39;wb&#39;).write( key.public_key().export_key(&#39;PEM&#39;) )
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h4 id="jie-ti-fen-xi"><a href="#解题分析-1" class="headerlink" title="解题分析"></a>解题分析<a href="#jie-ti-fen-xi" class="header-anchor">#</a></h4><p>密钥生成过程中的私钥指数太小了，满足</p>
 <p>$d &lt; n^{0.292}$ </p>
 <p>可以使用 Boneh-Durfee’s attack 快速恢复私钥。</p>
-<p><a target="_blank" rel="noopener" href="https://cryptohack.gitbook.io/cryptobook/untitled/low-private-component-attacks/boneh-durfee-attack（看了一下感觉不是很好）">https://cryptohack.gitbook.io/cryptobook/untitled/low-private-component-attacks/boneh-durfee-attack（看了一下感觉不是很好）</a></p>
+<p><a target="_blank" rel="noopener" href="https://cryptohack.gitbook.io/cryptobook/untitled/low-private-component-attacks/boneh-durfee-attack%EF%BC%88%E7%9C%8B%E4%BA%86%E4%B8%80%E4%B8%8B%E6%84%9F%E8%A7%89%E4%B8%8D%E6%98%AF%E5%BE%88%E5%A5%BD%EF%BC%89">https://cryptohack.gitbook.io/cryptobook/untitled/low-private-component-attacks/boneh-durfee-attack（看了一下感觉不是很好）</a></p>
 <p><a target="_blank" rel="noopener" href="https://www.cryptologie.net/article/241/implementation-of-boneh-and-durfee-attack-on-rsas-low-private-exponents/">https://www.cryptologie.net/article/241/implementation-of-boneh-and-durfee-attack-on-rsas-low-private-exponents/</a></p>
-<h4 id="jie-ti-jiao-ben"><a href="#解题脚本-1" class="headerlink" title="解题脚本"></a>解题脚本<a href="#jie-ti-jiao-ben" class="header-anchor">#</a></h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br><span class="line">300</span><br><span class="line">301</span><br><span class="line">302</span><br><span class="line">303</span><br><span class="line">304</span><br><span class="line">305</span><br><span class="line">306</span><br><span class="line">307</span><br><span class="line">308</span><br><span class="line">309</span><br><span class="line">310</span><br><span class="line">311</span><br><span class="line">312</span><br><span class="line">313</span><br><span class="line">314</span><br><span class="line">315</span><br><span class="line">316</span><br><span class="line">317</span><br><span class="line">318</span><br><span class="line">319</span><br><span class="line">320</span><br><span class="line">321</span><br><span class="line">322</span><br><span class="line">323</span><br><span class="line">324</span><br><span class="line">325</span><br><span class="line">326</span><br><span class="line">327</span><br><span class="line">328</span><br><span class="line">329</span><br><span class="line">330</span><br><span class="line">331</span><br><span class="line">332</span><br><span class="line">333</span><br><span class="line">334</span><br><span class="line">335</span><br><span class="line">336</span><br><span class="line">337</span><br><span class="line">338</span><br><span class="line">339</span><br><span class="line">340</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> __future__ <span class="keyword">import</span> print_function</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line"><span class="comment">############################################</span></span><br><span class="line"><span class="comment"># Config</span></span><br><span class="line"><span class="comment">##########################################</span></span><br><span class="line"></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">Setting debug to true will display more informations</span></span><br><span class="line"><span class="string">about the lattice, the bounds, the vectors...</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line">debug = <span class="literal">True</span></span><br><span class="line"></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">Setting strict to true will stop the algorithm (and</span></span><br><span class="line"><span class="string">return (-1, -1)) if we don&#x27;t have a correct</span></span><br><span class="line"><span class="string">upperbound on the determinant. Note that this</span></span><br><span class="line"><span class="string">doesn&#x27;t necesseraly mean that no solutions</span></span><br><span class="line"><span class="string">will be found since the theoretical upperbound is</span></span><br><span class="line"><span class="string">usualy far away from actual results. That is why</span></span><br><span class="line"><span class="string">you should probably use `strict = False`</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line">strict = <span class="literal">False</span></span><br><span class="line"></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">This is experimental, but has provided remarkable results</span></span><br><span class="line"><span class="string">so far. It tries to reduce the lattice as much as it can</span></span><br><span class="line"><span class="string">while keeping its efficiency. I see no reason not to use</span></span><br><span class="line"><span class="string">this option, but if things don&#x27;t work, you should try</span></span><br><span class="line"><span class="string">disabling it</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line">helpful_only = <span class="literal">True</span></span><br><span class="line">dimension_min = <span class="number">7</span> <span class="comment"># stop removing if lattice reaches that dimension</span></span><br><span class="line"></span><br><span class="line"><span class="comment">############################################</span></span><br><span class="line"><span class="comment"># Functions</span></span><br><span class="line"><span class="comment">##########################################</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># display stats on helpful vectors</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">helpful_vectors</span>(<span class="params">BB, modulus</span>):</span><br><span class="line">    nothelpful = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> ii <span class="keyword">in</span> <span class="built_in">range</span>(BB.dimensions()[<span class="number">0</span>]):</span><br><span class="line">        <span class="keyword">if</span> BB[ii,ii] &gt;= modulus:</span><br><span class="line">            nothelpful += <span class="number">1</span></span><br><span class="line"></span><br><span class="line">    <span class="built_in">print</span>(nothelpful, <span class="string">&quot;/&quot;</span>, BB.dimensions()[<span class="number">0</span>], <span class="string">&quot; vectors are not helpful&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># display matrix picture with 0 and X</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">matrix_overview</span>(<span class="params">BB, bound</span>):</span><br><span class="line">    <span class="keyword">for</span> ii <span class="keyword">in</span> <span class="built_in">range</span>(BB.dimensions()[<span class="number">0</span>]):</span><br><span class="line">        a = (<span class="string">&#x27;%02d &#x27;</span> % ii)</span><br><span class="line">        <span class="keyword">for</span> jj <span class="keyword">in</span> <span class="built_in">range</span>(BB.dimensions()[<span class="number">1</span>]):</span><br><span class="line">            a += <span class="string">&#x27;0&#x27;</span> <span class="keyword">if</span> BB[ii,jj] == <span class="number">0</span> <span class="keyword">else</span> <span class="string">&#x27;X&#x27;</span></span><br><span class="line">            <span class="keyword">if</span> BB.dimensions()[<span class="number">0</span>] &lt; <span class="number">60</span>:</span><br><span class="line">                a += <span class="string">&#x27; &#x27;</span></span><br><span class="line">        <span class="keyword">if</span> BB[ii, ii] &gt;= bound:</span><br><span class="line">            a += <span class="string">&#x27;~&#x27;</span></span><br><span class="line">        <span class="built_in">print</span>(a)</span><br><span class="line"></span><br><span class="line"><span class="comment"># tries to remove unhelpful vectors</span></span><br><span class="line"><span class="comment"># we start at current = n-1 (last vector)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">remove_unhelpful</span>(<span class="params">BB, monomials, bound, current</span>):</span><br><span class="line">    <span class="comment"># end of our recursive function</span></span><br><span class="line">    <span class="keyword">if</span> current == -<span class="number">1</span> <span class="keyword">or</span> BB.dimensions()[<span class="number">0</span>] &lt;= dimension_min:</span><br><span class="line">        <span class="keyword">return</span> BB</span><br><span class="line"></span><br><span class="line">    <span class="comment"># we start by checking from the end</span></span><br><span class="line">    <span class="keyword">for</span> ii <span class="keyword">in</span> <span class="built_in">range</span>(current, -<span class="number">1</span>, -<span class="number">1</span>):</span><br><span class="line">        <span class="comment"># if it is unhelpful:</span></span><br><span class="line">        <span class="keyword">if</span> BB[ii, ii] &gt;= bound:</span><br><span class="line">            affected_vectors = <span class="number">0</span></span><br><span class="line">            affected_vector_index = <span class="number">0</span></span><br><span class="line">            <span class="comment"># let&#x27;s check if it affects other vectors</span></span><br><span class="line">            <span class="keyword">for</span> jj <span class="keyword">in</span> <span class="built_in">range</span>(ii + <span class="number">1</span>, BB.dimensions()[<span class="number">0</span>]):</span><br><span class="line">                <span class="comment"># if another vector is affected:</span></span><br><span class="line">                <span class="comment"># we increase the count</span></span><br><span class="line">                <span class="keyword">if</span> BB[jj, ii] != <span class="number">0</span>:</span><br><span class="line">                    affected_vectors += <span class="number">1</span></span><br><span class="line">                    affected_vector_index = jj</span><br><span class="line"></span><br><span class="line">            <span class="comment"># level:0</span></span><br><span class="line">            <span class="comment"># if no other vectors end up affected</span></span><br><span class="line">            <span class="comment"># we remove it</span></span><br><span class="line">            <span class="keyword">if</span> affected_vectors == <span class="number">0</span>:</span><br><span class="line">                <span class="built_in">print</span>(<span class="string">&quot;* removing unhelpful vector&quot;</span>, ii)</span><br><span class="line">                BB = BB.delete_columns([ii])</span><br><span class="line">                BB = BB.delete_rows([ii])</span><br><span class="line">                monomials.pop(ii)</span><br><span class="line">                BB = remove_unhelpful(BB, monomials, bound, ii-<span class="number">1</span>)</span><br><span class="line">                <span class="keyword">return</span> BB</span><br><span class="line"></span><br><span class="line">            <span class="comment"># level:1</span></span><br><span class="line">            <span class="comment"># if just one was affected we check</span></span><br><span class="line">            <span class="comment"># if it is affecting someone else</span></span><br><span class="line">            <span class="keyword">elif</span> affected_vectors == <span class="number">1</span>:</span><br><span class="line">                affected_deeper = <span class="literal">True</span></span><br><span class="line">                <span class="keyword">for</span> kk <span class="keyword">in</span> <span class="built_in">range</span>(affected_vector_index + <span class="number">1</span>, BB.dimensions()[<span class="number">0</span>]):</span><br><span class="line">                    <span class="comment"># if it is affecting even one vector</span></span><br><span class="line">                    <span class="comment"># we give up on this one</span></span><br><span class="line">                    <span class="keyword">if</span> BB[kk, affected_vector_index] != <span class="number">0</span>:</span><br><span class="line">                        affected_deeper = <span class="literal">False</span></span><br><span class="line">                <span class="comment"># remove both it if no other vector was affected and</span></span><br><span class="line">                <span class="comment"># this helpful vector is not helpful enough</span></span><br><span class="line">                <span class="comment"># compared to our unhelpful one</span></span><br><span class="line">                <span class="keyword">if</span> affected_deeper <span class="keyword">and</span> <span class="built_in">abs</span>(bound - BB[affected_vector_index, affected_vector_index]) &lt; <span class="built_in">abs</span>(bound - BB[ii, ii]):</span><br><span class="line">                    <span class="built_in">print</span>(<span class="string">&quot;* removing unhelpful vectors&quot;</span>, ii, <span class="string">&quot;and&quot;</span>, affected_vector_index)</span><br><span class="line">                    BB = BB.delete_columns([affected_vector_index, ii])</span><br><span class="line">                    BB = BB.delete_rows([affected_vector_index, ii])</span><br><span class="line">                    monomials.pop(affected_vector_index)</span><br><span class="line">                    monomials.pop(ii)</span><br><span class="line">                    BB = remove_unhelpful(BB, monomials, bound, ii-<span class="number">1</span>)</span><br><span class="line">                    <span class="keyword">return</span> BB</span><br><span class="line">    <span class="comment"># nothing happened</span></span><br><span class="line">    <span class="keyword">return</span> BB</span><br><span class="line"></span><br><span class="line"><span class="string">&quot;&quot;&quot; </span></span><br><span class="line"><span class="string">Returns:</span></span><br><span class="line"><span class="string">* 0,0   if it fails</span></span><br><span class="line"><span class="string">* -1,-1 if `strict=true`, and determinant doesn&#x27;t bound</span></span><br><span class="line"><span class="string">* x0,y0 the solutions of `pol`</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">boneh_durfee</span>(<span class="params">pol, modulus, mm, tt, XX, YY</span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    Boneh and Durfee revisited by Herrmann and May</span></span><br><span class="line"><span class="string">    </span></span><br><span class="line"><span class="string">    finds a solution if:</span></span><br><span class="line"><span class="string">    * d &lt; N^delta</span></span><br><span class="line"><span class="string">    * |x| &lt; e^delta</span></span><br><span class="line"><span class="string">    * |y| &lt; e^0.5</span></span><br><span class="line"><span class="string">    whenever delta &lt; 1 - sqrt(2)/2 ~ 0.292</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># substitution (Herrman and May)</span></span><br><span class="line">    PR.&lt;u, x, y&gt; = PolynomialRing(ZZ)</span><br><span class="line">    Q = PR.quotient(x*y + <span class="number">1</span> - u) <span class="comment"># u = xy + 1</span></span><br><span class="line">    polZ = Q(pol).lift()</span><br><span class="line"></span><br><span class="line">    UU = XX*YY + <span class="number">1</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># x-shifts</span></span><br><span class="line">    gg = []</span><br><span class="line">    <span class="keyword">for</span> kk <span class="keyword">in</span> <span class="built_in">range</span>(mm + <span class="number">1</span>):</span><br><span class="line">        <span class="keyword">for</span> ii <span class="keyword">in</span> <span class="built_in">range</span>(mm - kk + <span class="number">1</span>):</span><br><span class="line">            xshift = x^ii * modulus^(mm - kk) * polZ(u, x, y)^kk</span><br><span class="line">            gg.append(xshift)</span><br><span class="line">    gg.sort()</span><br><span class="line"></span><br><span class="line">    <span class="comment"># x-shifts list of monomials</span></span><br><span class="line">    monomials = []</span><br><span class="line">    <span class="keyword">for</span> polynomial <span class="keyword">in</span> gg:</span><br><span class="line">        <span class="keyword">for</span> monomial <span class="keyword">in</span> polynomial.monomials():</span><br><span class="line">            <span class="keyword">if</span> monomial <span class="keyword">not</span> <span class="keyword">in</span> monomials:</span><br><span class="line">                monomials.append(monomial)</span><br><span class="line">    monomials.sort()</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># y-shifts (selected by Herrman and May)</span></span><br><span class="line">    <span class="keyword">for</span> jj <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, tt + <span class="number">1</span>):</span><br><span class="line">        <span class="keyword">for</span> kk <span class="keyword">in</span> <span class="built_in">range</span>(floor(mm/tt) * jj, mm + <span class="number">1</span>):</span><br><span class="line">            yshift = y^jj * polZ(u, x, y)^kk * modulus^(mm - kk)</span><br><span class="line">            yshift = Q(yshift).lift()</span><br><span class="line">            gg.append(yshift) <span class="comment"># substitution</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment"># y-shifts list of monomials</span></span><br><span class="line">    <span class="keyword">for</span> jj <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, tt + <span class="number">1</span>):</span><br><span class="line">        <span class="keyword">for</span> kk <span class="keyword">in</span> <span class="built_in">range</span>(floor(mm/tt) * jj, mm + <span class="number">1</span>):</span><br><span class="line">            monomials.append(u^kk * y^jj)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># construct lattice B</span></span><br><span class="line">    nn = <span class="built_in">len</span>(monomials)</span><br><span class="line">    BB = Matrix(ZZ, nn)</span><br><span class="line">    <span class="keyword">for</span> ii <span class="keyword">in</span> <span class="built_in">range</span>(nn):</span><br><span class="line">        BB[ii, <span class="number">0</span>] = gg[ii](<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>)</span><br><span class="line">        <span class="keyword">for</span> jj <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, ii + <span class="number">1</span>):</span><br><span class="line">            <span class="keyword">if</span> monomials[jj] <span class="keyword">in</span> gg[ii].monomials():</span><br><span class="line">                BB[ii, jj] = gg[ii].monomial_coefficient(monomials[jj]) * monomials[jj](UU,XX,YY)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Prototype to reduce the lattice</span></span><br><span class="line">    <span class="keyword">if</span> helpful_only:</span><br><span class="line">        <span class="comment"># automatically remove</span></span><br><span class="line">        BB = remove_unhelpful(BB, monomials, modulus^mm, nn-<span class="number">1</span>)</span><br><span class="line">        <span class="comment"># reset dimension</span></span><br><span class="line">        nn = BB.dimensions()[<span class="number">0</span>]</span><br><span class="line">        <span class="keyword">if</span> nn == <span class="number">0</span>:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;failure&quot;</span>)</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>,<span class="number">0</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># check if vectors are helpful</span></span><br><span class="line">    <span class="keyword">if</span> debug:</span><br><span class="line">        helpful_vectors(BB, modulus^mm)</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># check if determinant is correctly bounded</span></span><br><span class="line">    det = BB.det()</span><br><span class="line">    bound = modulus^(mm*nn)</span><br><span class="line">    <span class="keyword">if</span> det &gt;= bound:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;We do not have det &lt; bound. Solutions might not be found.&quot;</span>)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;Try with highers m and t.&quot;</span>)</span><br><span class="line">        <span class="keyword">if</span> debug:</span><br><span class="line">            diff = (log(det) - log(bound)) / log(<span class="number">2</span>)</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;size det(L) - size e^(m*n) = &quot;</span>, floor(diff))</span><br><span class="line">        <span class="keyword">if</span> strict:</span><br><span class="line">            <span class="keyword">return</span> -<span class="number">1</span>, -<span class="number">1</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;det(L) &lt; e^(m*n) (good! If a solution exists &lt; N^delta, it will be found)&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># display the lattice basis</span></span><br><span class="line">    <span class="keyword">if</span> debug:</span><br><span class="line">        matrix_overview(BB, modulus^mm)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># LLL</span></span><br><span class="line">    <span class="keyword">if</span> debug:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;optimizing basis of the lattice via LLL, this can take a long time&quot;</span>)</span><br><span class="line"></span><br><span class="line">    BB = BB.LLL()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> debug:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;LLL is done!&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># transform vector i &amp; j -&gt; polynomials 1 &amp; 2</span></span><br><span class="line">    <span class="keyword">if</span> debug:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;looking for independent vectors in the lattice&quot;</span>)</span><br><span class="line">    found_polynomials = <span class="literal">False</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span> pol1_idx <span class="keyword">in</span> <span class="built_in">range</span>(nn - <span class="number">1</span>):</span><br><span class="line">        <span class="keyword">for</span> pol2_idx <span class="keyword">in</span> <span class="built_in">range</span>(pol1_idx + <span class="number">1</span>, nn):</span><br><span class="line">            <span class="comment"># for i and j, create the two polynomials</span></span><br><span class="line">            PR.&lt;w,z&gt; = PolynomialRing(ZZ)</span><br><span class="line">            pol1 = pol2 = <span class="number">0</span></span><br><span class="line">            <span class="keyword">for</span> jj <span class="keyword">in</span> <span class="built_in">range</span>(nn):</span><br><span class="line">                pol1 += monomials[jj](w*z+<span class="number">1</span>,w,z) * BB[pol1_idx, jj] / monomials[jj](UU,XX,YY)</span><br><span class="line">                pol2 += monomials[jj](w*z+<span class="number">1</span>,w,z) * BB[pol2_idx, jj] / monomials[jj](UU,XX,YY)</span><br><span class="line"></span><br><span class="line">            <span class="comment"># resultant</span></span><br><span class="line">            PR.&lt;q&gt; = PolynomialRing(ZZ)</span><br><span class="line">            rr = pol1.resultant(pol2)</span><br><span class="line"></span><br><span class="line">            <span class="comment"># are these good polynomials?</span></span><br><span class="line">            <span class="keyword">if</span> rr.is_zero() <span class="keyword">or</span> rr.monomials() == [<span class="number">1</span>]:</span><br><span class="line">                <span class="keyword">continue</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                <span class="built_in">print</span>(<span class="string">&quot;found them, using vectors&quot;</span>, pol1_idx, <span class="string">&quot;and&quot;</span>, pol2_idx)</span><br><span class="line">                found_polynomials = <span class="literal">True</span></span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">        <span class="keyword">if</span> found_polynomials:</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> found_polynomials:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;no independant vectors could be found. This should very rarely happen...&quot;</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>, <span class="number">0</span></span><br><span class="line">    </span><br><span class="line">    rr = rr(q, q)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># solutions</span></span><br><span class="line">    soly = rr.roots()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">len</span>(soly) == <span class="number">0</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;Your prediction (delta) is too small&quot;</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>, <span class="number">0</span></span><br><span class="line"></span><br><span class="line">    soly = soly[<span class="number">0</span>][<span class="number">0</span>]</span><br><span class="line">    ss = pol1(q, soly)</span><br><span class="line">    solx = ss.roots()[<span class="number">0</span>][<span class="number">0</span>]</span><br><span class="line"></span><br><span class="line">    <span class="comment">#</span></span><br><span class="line">    <span class="keyword">return</span> solx, soly</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">example</span>():</span><br><span class="line">    <span class="comment">############################################</span></span><br><span class="line">    <span class="comment"># How To Use This Script</span></span><br><span class="line">    <span class="comment">##########################################</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">#</span></span><br><span class="line">    <span class="comment"># The problem to solve (edit the following values)</span></span><br><span class="line">    <span class="comment">#</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># the modulus</span></span><br><span class="line">    N = <span class="number">83232624828177792595616071377000807648193740704003684702730106564705021966450976897666830287374129971840360282835980341277400234100463758607909646621886048089944598200834251938747443355141622459640087876451827639037621380831740452076690631846801487196146179117278789029593215859339250310335337950643729590909</span></span><br><span class="line">    <span class="comment"># the public exponent</span></span><br><span class="line">    e = <span class="number">61003655186480724454829921788526389077777559461129472887648026991874662662709992005448448263550620427867972157667017181735940414300760008715988220599643364108971958254742287245400224227390343548399494282370609177380155881143231339647767891366270164063486744467395174042825343086650844118593157481789707428603</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># the hypothesis on the private exponent (the theoretical maximum is 0.292)</span></span><br><span class="line">    delta = <span class="number">.18</span> <span class="comment"># this means that d &lt; N^delta</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">#</span></span><br><span class="line">    <span class="comment"># Lattice (tweak those values)</span></span><br><span class="line">    <span class="comment">#</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># you should tweak this (after a first run), (e.g. increment it until a solution is found)</span></span><br><span class="line">    m = <span class="number">4</span> <span class="comment"># size of the lattice (bigger the better/slower)</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># you need to be a lattice master to tweak these</span></span><br><span class="line">    t = <span class="built_in">int</span>((<span class="number">1</span>-<span class="number">2</span>*delta) * m)  <span class="comment"># optimization from Herrmann and May</span></span><br><span class="line">    X = <span class="number">2</span>*floor(N^delta)  <span class="comment"># this _might_ be too much</span></span><br><span class="line">    Y = floor(N^(<span class="number">1</span>/<span class="number">2</span>))    <span class="comment"># correct if p, q are ~ same size</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">#</span></span><br><span class="line">    <span class="comment"># Don&#x27;t touch anything below</span></span><br><span class="line">    <span class="comment">#</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># Problem put in equation</span></span><br><span class="line">    P.&lt;x,y&gt; = PolynomialRing(ZZ)</span><br><span class="line">    A = <span class="built_in">int</span>((N+<span class="number">1</span>)/<span class="number">2</span>)</span><br><span class="line">    pol = <span class="number">1</span> + x * (A + y)</span><br><span class="line"></span><br><span class="line">    <span class="comment">#</span></span><br><span class="line">    <span class="comment"># Find the solutions!</span></span><br><span class="line">    <span class="comment">#</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># Checking bounds</span></span><br><span class="line">    <span class="keyword">if</span> debug:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;=== checking values ===&quot;</span>)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;* delta:&quot;</span>, delta)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;* delta &lt; 0.292&quot;</span>, delta &lt; <span class="number">0.292</span>)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;* size of e:&quot;</span>, <span class="built_in">int</span>(log(e)/log(<span class="number">2</span>)))</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;* size of N:&quot;</span>, <span class="built_in">int</span>(log(N)/log(<span class="number">2</span>)))</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;* m:&quot;</span>, m, <span class="string">&quot;, t:&quot;</span>, t)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># boneh_durfee</span></span><br><span class="line">    <span class="keyword">if</span> debug:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;=== running algorithm ===&quot;</span>)</span><br><span class="line">        start_time = time.time()</span><br><span class="line"></span><br><span class="line">    solx, soly = boneh_durfee(pol, e, m, t, X, Y)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># found a solution?</span></span><br><span class="line">    <span class="keyword">if</span> solx &gt; <span class="number">0</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;=== solution found ===&quot;</span>)</span><br><span class="line">        <span class="keyword">if</span> <span class="literal">False</span>:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;x:&quot;</span>, solx)</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;y:&quot;</span>, soly)</span><br><span class="line"></span><br><span class="line">        d = <span class="built_in">int</span>(pol(solx, soly) / e)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;private key found:&quot;</span>, d)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;=== no solution was found ===&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> debug:</span><br><span class="line">        <span class="built_in">print</span>((<span class="string">&quot;=== %s seconds ===&quot;</span> % (time.time() - start_time)))</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    example()</span><br></pre></td></tr></table></figure>
-<h3 id="egglamal"><a href="#EggLamal" class="headerlink" title="EggLamal"></a><strong>EggLamal</strong><a href="#egglamal" class="header-anchor">#</a></h3><h4 id="ti-mu-miao-shu"><a href="#题目描述-2" class="headerlink" title="题目描述"></a>题目描述<a href="#ti-mu-miao-shu" class="header-anchor">#</a></h4><figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Try this EggLamal (idk how <span class="keyword">does</span> <span class="keyword">it</span> taste)</span><br></pre></td></tr></table></figure>
-<h4 id="ti-mu-nei-rong"><a href="#题目内容-2" class="headerlink" title="题目内容"></a>题目内容<a href="#ti-mu-nei-rong" class="header-anchor">#</a></h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> params <span class="keyword">import</span> a, b, p</span><br><span class="line"></span><br><span class="line">FLAG = <span class="built_in">int</span>(<span class="built_in">open</span>(<span class="string">&#x27;flag.txt&#x27;</span>, <span class="string">&#x27;rb&#x27;</span>).read().<span class="built_in">hex</span>(), <span class="number">16</span>)</span><br><span class="line"></span><br><span class="line">g = <span class="number">2</span></span><br><span class="line">m = FLAG % p</span><br><span class="line"></span><br><span class="line">A = <span class="built_in">pow</span>(g, a, p)</span><br><span class="line">B = <span class="built_in">pow</span>(g, b, p)</span><br><span class="line">s = <span class="built_in">pow</span>(A, b, p)</span><br><span class="line">c = s * m % p</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;p =&#x27;</span>, p)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;A =&#x27;</span>, A)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;B =&#x27;</span>, B)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;c =&#x27;</span>, c)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h4 id="jie-ti-jiao-ben"><a href="#解题脚本-1" class="headerlink" title="解题脚本"></a>解题脚本<a href="#jie-ti-jiao-ben" class="header-anchor">#</a></h4><pre class="line-numbers language-python" data-language="python"><code class="language-python">from __future__ import print_function
+import time
+
+############################################
+# Config
+##########################################
+
+&quot;&quot;&quot;
+Setting debug to true will display more informations
+about the lattice, the bounds, the vectors...
+&quot;&quot;&quot;
+debug &#x3D; True
+
+&quot;&quot;&quot;
+Setting strict to true will stop the algorithm (and
+return (-1, -1)) if we don&#39;t have a correct
+upperbound on the determinant. Note that this
+doesn&#39;t necesseraly mean that no solutions
+will be found since the theoretical upperbound is
+usualy far away from actual results. That is why
+you should probably use &#96;strict &#x3D; False&#96;
+&quot;&quot;&quot;
+strict &#x3D; False
+
+&quot;&quot;&quot;
+This is experimental, but has provided remarkable results
+so far. It tries to reduce the lattice as much as it can
+while keeping its efficiency. I see no reason not to use
+this option, but if things don&#39;t work, you should try
+disabling it
+&quot;&quot;&quot;
+helpful_only &#x3D; True
+dimension_min &#x3D; 7 # stop removing if lattice reaches that dimension
+
+############################################
+# Functions
+##########################################
+
+# display stats on helpful vectors
+def helpful_vectors(BB, modulus):
+    nothelpful &#x3D; 0
+    for ii in range(BB.dimensions()[0]):
+        if BB[ii,ii] &gt;&#x3D; modulus:
+            nothelpful +&#x3D; 1
+
+    print(nothelpful, &quot;&#x2F;&quot;, BB.dimensions()[0], &quot; vectors are not helpful&quot;)
+
+# display matrix picture with 0 and X
+def matrix_overview(BB, bound):
+    for ii in range(BB.dimensions()[0]):
+        a &#x3D; (&#39;%02d &#39; % ii)
+        for jj in range(BB.dimensions()[1]):
+            a +&#x3D; &#39;0&#39; if BB[ii,jj] &#x3D;&#x3D; 0 else &#39;X&#39;
+            if BB.dimensions()[0] &lt; 60:
+                a +&#x3D; &#39; &#39;
+        if BB[ii, ii] &gt;&#x3D; bound:
+            a +&#x3D; &#39;~&#39;
+        print(a)
+
+# tries to remove unhelpful vectors
+# we start at current &#x3D; n-1 (last vector)
+def remove_unhelpful(BB, monomials, bound, current):
+    # end of our recursive function
+    if current &#x3D;&#x3D; -1 or BB.dimensions()[0] &lt;&#x3D; dimension_min:
+        return BB
+
+    # we start by checking from the end
+    for ii in range(current, -1, -1):
+        # if it is unhelpful:
+        if BB[ii, ii] &gt;&#x3D; bound:
+            affected_vectors &#x3D; 0
+            affected_vector_index &#x3D; 0
+            # let&#39;s check if it affects other vectors
+            for jj in range(ii + 1, BB.dimensions()[0]):
+                # if another vector is affected:
+                # we increase the count
+                if BB[jj, ii] !&#x3D; 0:
+                    affected_vectors +&#x3D; 1
+                    affected_vector_index &#x3D; jj
+
+            # level:0
+            # if no other vectors end up affected
+            # we remove it
+            if affected_vectors &#x3D;&#x3D; 0:
+                print(&quot;* removing unhelpful vector&quot;, ii)
+                BB &#x3D; BB.delete_columns([ii])
+                BB &#x3D; BB.delete_rows([ii])
+                monomials.pop(ii)
+                BB &#x3D; remove_unhelpful(BB, monomials, bound, ii-1)
+                return BB
+
+            # level:1
+            # if just one was affected we check
+            # if it is affecting someone else
+            elif affected_vectors &#x3D;&#x3D; 1:
+                affected_deeper &#x3D; True
+                for kk in range(affected_vector_index + 1, BB.dimensions()[0]):
+                    # if it is affecting even one vector
+                    # we give up on this one
+                    if BB[kk, affected_vector_index] !&#x3D; 0:
+                        affected_deeper &#x3D; False
+                # remove both it if no other vector was affected and
+                # this helpful vector is not helpful enough
+                # compared to our unhelpful one
+                if affected_deeper and abs(bound - BB[affected_vector_index, affected_vector_index]) &lt; abs(bound - BB[ii, ii]):
+                    print(&quot;* removing unhelpful vectors&quot;, ii, &quot;and&quot;, affected_vector_index)
+                    BB &#x3D; BB.delete_columns([affected_vector_index, ii])
+                    BB &#x3D; BB.delete_rows([affected_vector_index, ii])
+                    monomials.pop(affected_vector_index)
+                    monomials.pop(ii)
+                    BB &#x3D; remove_unhelpful(BB, monomials, bound, ii-1)
+                    return BB
+    # nothing happened
+    return BB
+
+&quot;&quot;&quot; 
+Returns:
+* 0,0   if it fails
+* -1,-1 if &#96;strict&#x3D;true&#96;, and determinant doesn&#39;t bound
+* x0,y0 the solutions of &#96;pol&#96;
+&quot;&quot;&quot;
+def boneh_durfee(pol, modulus, mm, tt, XX, YY):
+    &quot;&quot;&quot;
+    Boneh and Durfee revisited by Herrmann and May
+    
+    finds a solution if:
+    * d &lt; N^delta
+    * |x| &lt; e^delta
+    * |y| &lt; e^0.5
+    whenever delta &lt; 1 - sqrt(2)&#x2F;2 ~ 0.292
+    &quot;&quot;&quot;
+
+    # substitution (Herrman and May)
+    PR.&lt;u, x, y&gt; &#x3D; PolynomialRing(ZZ)
+    Q &#x3D; PR.quotient(x*y + 1 - u) # u &#x3D; xy + 1
+    polZ &#x3D; Q(pol).lift()
+
+    UU &#x3D; XX*YY + 1
+
+    # x-shifts
+    gg &#x3D; []
+    for kk in range(mm + 1):
+        for ii in range(mm - kk + 1):
+            xshift &#x3D; x^ii * modulus^(mm - kk) * polZ(u, x, y)^kk
+            gg.append(xshift)
+    gg.sort()
+
+    # x-shifts list of monomials
+    monomials &#x3D; []
+    for polynomial in gg:
+        for monomial in polynomial.monomials():
+            if monomial not in monomials:
+                monomials.append(monomial)
+    monomials.sort()
+    
+    # y-shifts (selected by Herrman and May)
+    for jj in range(1, tt + 1):
+        for kk in range(floor(mm&#x2F;tt) * jj, mm + 1):
+            yshift &#x3D; y^jj * polZ(u, x, y)^kk * modulus^(mm - kk)
+            yshift &#x3D; Q(yshift).lift()
+            gg.append(yshift) # substitution
+    
+    # y-shifts list of monomials
+    for jj in range(1, tt + 1):
+        for kk in range(floor(mm&#x2F;tt) * jj, mm + 1):
+            monomials.append(u^kk * y^jj)
+
+    # construct lattice B
+    nn &#x3D; len(monomials)
+    BB &#x3D; Matrix(ZZ, nn)
+    for ii in range(nn):
+        BB[ii, 0] &#x3D; gg[ii](0, 0, 0)
+        for jj in range(1, ii + 1):
+            if monomials[jj] in gg[ii].monomials():
+                BB[ii, jj] &#x3D; gg[ii].monomial_coefficient(monomials[jj]) * monomials[jj](UU,XX,YY)
+
+    # Prototype to reduce the lattice
+    if helpful_only:
+        # automatically remove
+        BB &#x3D; remove_unhelpful(BB, monomials, modulus^mm, nn-1)
+        # reset dimension
+        nn &#x3D; BB.dimensions()[0]
+        if nn &#x3D;&#x3D; 0:
+            print(&quot;failure&quot;)
+            return 0,0
+
+    # check if vectors are helpful
+    if debug:
+        helpful_vectors(BB, modulus^mm)
+    
+    # check if determinant is correctly bounded
+    det &#x3D; BB.det()
+    bound &#x3D; modulus^(mm*nn)
+    if det &gt;&#x3D; bound:
+        print(&quot;We do not have det &lt; bound. Solutions might not be found.&quot;)
+        print(&quot;Try with highers m and t.&quot;)
+        if debug:
+            diff &#x3D; (log(det) - log(bound)) &#x2F; log(2)
+            print(&quot;size det(L) - size e^(m*n) &#x3D; &quot;, floor(diff))
+        if strict:
+            return -1, -1
+    else:
+        print(&quot;det(L) &lt; e^(m*n) (good! If a solution exists &lt; N^delta, it will be found)&quot;)
+
+    # display the lattice basis
+    if debug:
+        matrix_overview(BB, modulus^mm)
+
+    # LLL
+    if debug:
+        print(&quot;optimizing basis of the lattice via LLL, this can take a long time&quot;)
+
+    BB &#x3D; BB.LLL()
+
+    if debug:
+        print(&quot;LLL is done!&quot;)
+
+    # transform vector i &amp; j -&gt; polynomials 1 &amp; 2
+    if debug:
+        print(&quot;looking for independent vectors in the lattice&quot;)
+    found_polynomials &#x3D; False
+    
+    for pol1_idx in range(nn - 1):
+        for pol2_idx in range(pol1_idx + 1, nn):
+            # for i and j, create the two polynomials
+            PR.&lt;w,z&gt; &#x3D; PolynomialRing(ZZ)
+            pol1 &#x3D; pol2 &#x3D; 0
+            for jj in range(nn):
+                pol1 +&#x3D; monomials[jj](w*z+1,w,z) * BB[pol1_idx, jj] &#x2F; monomials[jj](UU,XX,YY)
+                pol2 +&#x3D; monomials[jj](w*z+1,w,z) * BB[pol2_idx, jj] &#x2F; monomials[jj](UU,XX,YY)
+
+            # resultant
+            PR.&lt;q&gt; &#x3D; PolynomialRing(ZZ)
+            rr &#x3D; pol1.resultant(pol2)
+
+            # are these good polynomials?
+            if rr.is_zero() or rr.monomials() &#x3D;&#x3D; [1]:
+                continue
+            else:
+                print(&quot;found them, using vectors&quot;, pol1_idx, &quot;and&quot;, pol2_idx)
+                found_polynomials &#x3D; True
+                break
+        if found_polynomials:
+            break
+
+    if not found_polynomials:
+        print(&quot;no independant vectors could be found. This should very rarely happen...&quot;)
+        return 0, 0
+    
+    rr &#x3D; rr(q, q)
+
+    # solutions
+    soly &#x3D; rr.roots()
+
+    if len(soly) &#x3D;&#x3D; 0:
+        print(&quot;Your prediction (delta) is too small&quot;)
+        return 0, 0
+
+    soly &#x3D; soly[0][0]
+    ss &#x3D; pol1(q, soly)
+    solx &#x3D; ss.roots()[0][0]
+
+    #
+    return solx, soly
+
+def example():
+    ############################################
+    # How To Use This Script
+    ##########################################
+
+    #
+    # The problem to solve (edit the following values)
+    #
+
+    # the modulus
+    N &#x3D; 83232624828177792595616071377000807648193740704003684702730106564705021966450976897666830287374129971840360282835980341277400234100463758607909646621886048089944598200834251938747443355141622459640087876451827639037621380831740452076690631846801487196146179117278789029593215859339250310335337950643729590909
+    # the public exponent
+    e &#x3D; 61003655186480724454829921788526389077777559461129472887648026991874662662709992005448448263550620427867972157667017181735940414300760008715988220599643364108971958254742287245400224227390343548399494282370609177380155881143231339647767891366270164063486744467395174042825343086650844118593157481789707428603
+
+    # the hypothesis on the private exponent (the theoretical maximum is 0.292)
+    delta &#x3D; .18 # this means that d &lt; N^delta
+
+    #
+    # Lattice (tweak those values)
+    #
+
+    # you should tweak this (after a first run), (e.g. increment it until a solution is found)
+    m &#x3D; 4 # size of the lattice (bigger the better&#x2F;slower)
+
+    # you need to be a lattice master to tweak these
+    t &#x3D; int((1-2*delta) * m)  # optimization from Herrmann and May
+    X &#x3D; 2*floor(N^delta)  # this _might_ be too much
+    Y &#x3D; floor(N^(1&#x2F;2))    # correct if p, q are ~ same size
+
+    #
+    # Don&#39;t touch anything below
+    #
+
+    # Problem put in equation
+    P.&lt;x,y&gt; &#x3D; PolynomialRing(ZZ)
+    A &#x3D; int((N+1)&#x2F;2)
+    pol &#x3D; 1 + x * (A + y)
+
+    #
+    # Find the solutions!
+    #
+
+    # Checking bounds
+    if debug:
+        print(&quot;&#x3D;&#x3D;&#x3D; checking values &#x3D;&#x3D;&#x3D;&quot;)
+        print(&quot;* delta:&quot;, delta)
+        print(&quot;* delta &lt; 0.292&quot;, delta &lt; 0.292)
+        print(&quot;* size of e:&quot;, int(log(e)&#x2F;log(2)))
+        print(&quot;* size of N:&quot;, int(log(N)&#x2F;log(2)))
+        print(&quot;* m:&quot;, m, &quot;, t:&quot;, t)
+
+    # boneh_durfee
+    if debug:
+        print(&quot;&#x3D;&#x3D;&#x3D; running algorithm &#x3D;&#x3D;&#x3D;&quot;)
+        start_time &#x3D; time.time()
+
+    solx, soly &#x3D; boneh_durfee(pol, e, m, t, X, Y)
+
+    # found a solution?
+    if solx &gt; 0:
+        print(&quot;&#x3D;&#x3D;&#x3D; solution found &#x3D;&#x3D;&#x3D;&quot;)
+        if False:
+            print(&quot;x:&quot;, solx)
+            print(&quot;y:&quot;, soly)
+
+        d &#x3D; int(pol(solx, soly) &#x2F; e)
+        print(&quot;private key found:&quot;, d)
+    else:
+        print(&quot;&#x3D;&#x3D;&#x3D; no solution was found &#x3D;&#x3D;&#x3D;&quot;)
+
+    if debug:
+        print((&quot;&#x3D;&#x3D;&#x3D; %s seconds &#x3D;&#x3D;&#x3D;&quot; % (time.time() - start_time)))
+
+if __name__ &#x3D;&#x3D; &quot;__main__&quot;:
+    example()<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<h3 id="egglamal"><a href="#EggLamal" class="headerlink" title="EggLamal"></a><strong>EggLamal</strong><a href="#egglamal" class="header-anchor">#</a></h3><h4 id="ti-mu-miao-shu"><a href="#题目描述-2" class="headerlink" title="题目描述"></a>题目描述<a href="#ti-mu-miao-shu" class="header-anchor">#</a></h4><pre class="line-numbers language-none"><code class="language-none">Try this EggLamal (idk how does it taste)<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h4 id="ti-mu-nei-rong"><a href="#题目内容-2" class="headerlink" title="题目内容"></a>题目内容<a href="#ti-mu-nei-rong" class="header-anchor">#</a></h4><pre class="line-numbers language-python" data-language="python"><code class="language-python">from params import a, b, p
+
+FLAG &#x3D; int(open(&#39;flag.txt&#39;, &#39;rb&#39;).read().hex(), 16)
+
+g &#x3D; 2
+m &#x3D; FLAG % p
+
+A &#x3D; pow(g, a, p)
+B &#x3D; pow(g, b, p)
+s &#x3D; pow(A, b, p)
+c &#x3D; s * m % p
+
+print(&#39;p &#x3D;&#39;, p)
+print(&#39;A &#x3D;&#39;, A)
+print(&#39;B &#x3D;&#39;, B)
+print(&#39;c &#x3D;&#39;, c)
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h4 id="jie-ti-fen-xi"><a href="#解题分析-2" class="headerlink" title="解题分析"></a>解题分析<a href="#jie-ti-fen-xi" class="header-anchor">#</a></h4><p>一个经典的 Elgamal 密码体制实现。注意到</p>
-<p>$B = p-1$</p>
-<p>所以 $b$ 可能等于 $(p-1)/2$ 。这一步尚未玩清楚，我的猜测如：</p>
-<p>$2^{p-1}\equiv 1\,\mod \,p$</p>
-<p>$2^{(p-1)/2}*2^{(p-1)/2}\equiv1\,\mod\,p$</p>
+<p>$B &#x3D; p-1$</p>
+<p>所以 $b$ 可能等于 $(p-1)&#x2F;2$ 。这一步尚未玩清楚，我的猜测如：</p>
+<p>$2^{p-1}\equiv 1,\mod ,p$</p>
+<p>$2^{(p-1)&#x2F;2}*2^{(p-1)&#x2F;2}\equiv1,\mod,p$</p>
 <p>所以 </p>
-<p>$2^{(p-1)/2}$ 是自逆的，而在模 p 的乘法群中自逆的元素只有 1 和 p-1 两个，显然这个数字不会是1，那么只能是 p-1。</p>
+<p>$2^{(p-1)&#x2F;2}$ 是自逆的，而在模 p 的乘法群中自逆的元素只有 1 和 p-1 两个，显然这个数字不会是1，那么只能是 p-1。</p>
 <p>所以</p>
-<p>$2^{(p-1)/2}\equiv p-1\mod\,p$</p>
-<p>所以 $b$ 可能等于 $(p-1)/2$</p>
-<p>后续经过验证 $b$ 确实等于 $(p-1)/2$</p>
+<p>$2^{(p-1)&#x2F;2}\equiv p-1\mod,p$</p>
+<p>所以 $b$ 可能等于 $(p-1)&#x2F;2$</p>
+<p>后续经过验证 $b$ 确实等于 $(p-1)&#x2F;2$</p>
 <p>所以 </p>
-<p>$S \equiv g^{ab}\mod\,p$</p>
-<p>$S\equiv (g^{p-1})^{a/2}$</p>
+<p>$S \equiv g^{ab}\mod,p$</p>
+<p>$S\equiv (g^{p-1})^{a&#x2F;2}$</p>
 <p>如果 $a$ 是偶数，那么 $S$ 等于 1，否则 $S$ 等于 $p-1$ 。这是因为</p>
-<p>$S\equiv (g^{p-1})^{(a-1)/2}*(g^{p-1})^{1/2}$</p>
+<p>$S\equiv (g^{p-1})^{(a-1)&#x2F;2}*(g^{p-1})^{1&#x2F;2}$</p>
 <p>上式右端第二个表达式就是 $b$ </p>
-<h4 id="jie-ti-jiao-ben"><a href="#解题脚本-2" class="headerlink" title="解题脚本"></a>解题脚本<a href="#jie-ti-jiao-ben" class="header-anchor">#</a></h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> Crypto.Util.number <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    p = <span class="number">115078219706537820316093419550008778668298868969654363080518222102779290700853879865170620916229166052063746242902440779410550578694707144210633296690382432644415742679112077458888533507037390392699530015820685944880948493006250673913564751534741449674725051026956477952614364976390284943915858542458481633021</span></span><br><span class="line">    A = <span class="number">48890218165207275384445272760319358494993711787764906344148899636830485571816493761890964821064860895870242607424457731879309015681135499755293950202646357931855881875967656082276910385046805408731969845166675695997431519571773494534682366571816880592306777375053888105629800076931253497892185033268394556781</span></span><br><span class="line">    B = <span class="number">115078219706537820316093419550008778668298868969654363080518222102779290700853879865170620916229166052063746242902440779410550578694707144210633296690382432644415742679112077458888533507037390392699530015820685944880948493006250673913564751534741449674725051026956477952614364976390284943915858542458481633020</span></span><br><span class="line">    c = <span class="number">115078219706537820316093419550008778668298868969654363080518222102779290700853879865170620916229166052063746242902440779410550578694707144210633296690382432644415742679112077458888533507037390392699530015820685944327549289896366601363210341233716225794241970836585781027518436156355332169658951220307457142144</span></span><br><span class="line"></span><br><span class="line">    m = c * inverse(p-<span class="number">1</span>,p) %p</span><br><span class="line">    <span class="built_in">print</span>(long_to_bytes(m))</span><br><span class="line">    <span class="comment">#b&#x27;BSMumbai&#123;ElGamal_Publickey_Cryptography&#125;&#x27;</span></span><br></pre></td></tr></table></figure>
-<h3 id="eccsub"><a href="#ECCSub" class="headerlink" title="ECCSub"></a><strong>ECCSub</strong><a href="#eccsub" class="header-anchor">#</a></h3><h4 id="ti-mu-miao-shu"><a href="#题目描述-3" class="headerlink" title="题目描述"></a>题目描述<a href="#ti-mu-miao-shu" class="header-anchor">#</a></h4><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">Try</span> <span class="keyword">this</span> <span class="keyword">new</span> cipher called ECCSub</span><br></pre></td></tr></table></figure>
-<h4 id="ti-mu-nei-rong"><a href="#题目内容-3" class="headerlink" title="题目内容"></a>题目内容<a href="#ti-mu-nei-rong" class="header-anchor">#</a></h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"></span><br><span class="line">FLAG = <span class="built_in">open</span>(<span class="string">&#x27;flag.txt&#x27;</span>, <span class="string">&#x27;rb&#x27;</span>).read().strip()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">ECC_encode</span>(<span class="params">x</span>):</span><br><span class="line">    y2 = (x**<span class="number">3</span> + a*x + b) % p</span><br><span class="line">    <span class="keyword">return</span> y2</span><br><span class="line"></span><br><span class="line">p = <span class="number">0xffffffff00000001000000000000000000000000ffffffffffffffffffffffff</span></span><br><span class="line">a = <span class="number">0xffffffff00000001000000000000000000000000fffffffffffffffffffffffc</span></span><br><span class="line">b = <span class="number">0x5ac635d8aa3a93e7b3ebbd55769886bc651d06b0cc53b0f63bce3c3e27d2604b</span></span><br><span class="line"></span><br><span class="line">C = [ <span class="built_in">hex</span>(ECC_encode(<span class="built_in">int</span>(os.urandom(<span class="number">8</span>).<span class="built_in">hex</span>() + <span class="built_in">hex</span>(k)[<span class="number">2</span>:], <span class="number">16</span>))) <span class="keyword">for</span> k <span class="keyword">in</span> FLAG ]</span><br><span class="line"></span><br><span class="line"><span class="built_in">open</span>(<span class="string">&#x27;flag.enc&#x27;</span>, <span class="string">&#x27;w&#x27;</span>).write(<span class="built_in">str</span>(C))</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h4 id="jie-ti-jiao-ben"><a href="#解题脚本-2" class="headerlink" title="解题脚本"></a>解题脚本<a href="#jie-ti-jiao-ben" class="header-anchor">#</a></h4><pre class="line-numbers language-python" data-language="python"><code class="language-python">from Crypto.Util.number import *
+
+
+
+if __name__ &#x3D;&#x3D; &quot;__main__&quot;:
+    p &#x3D; 115078219706537820316093419550008778668298868969654363080518222102779290700853879865170620916229166052063746242902440779410550578694707144210633296690382432644415742679112077458888533507037390392699530015820685944880948493006250673913564751534741449674725051026956477952614364976390284943915858542458481633021
+    A &#x3D; 48890218165207275384445272760319358494993711787764906344148899636830485571816493761890964821064860895870242607424457731879309015681135499755293950202646357931855881875967656082276910385046805408731969845166675695997431519571773494534682366571816880592306777375053888105629800076931253497892185033268394556781
+    B &#x3D; 115078219706537820316093419550008778668298868969654363080518222102779290700853879865170620916229166052063746242902440779410550578694707144210633296690382432644415742679112077458888533507037390392699530015820685944880948493006250673913564751534741449674725051026956477952614364976390284943915858542458481633020
+    c &#x3D; 115078219706537820316093419550008778668298868969654363080518222102779290700853879865170620916229166052063746242902440779410550578694707144210633296690382432644415742679112077458888533507037390392699530015820685944327549289896366601363210341233716225794241970836585781027518436156355332169658951220307457142144
+
+    m &#x3D; c * inverse(p-1,p) %p
+    print(long_to_bytes(m))
+    #b&#39;BSMumbai&#123;ElGamal_Publickey_Cryptography&#125;&#39;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<h3 id="eccsub"><a href="#ECCSub" class="headerlink" title="ECCSub"></a><strong>ECCSub</strong><a href="#eccsub" class="header-anchor">#</a></h3><h4 id="ti-mu-miao-shu"><a href="#题目描述-3" class="headerlink" title="题目描述"></a>题目描述<a href="#ti-mu-miao-shu" class="header-anchor">#</a></h4><pre class="line-numbers language-none"><code class="language-none">Try this new cipher called ECCSub<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h4 id="ti-mu-nei-rong"><a href="#题目内容-3" class="headerlink" title="题目内容"></a>题目内容<a href="#ti-mu-nei-rong" class="header-anchor">#</a></h4><pre class="line-numbers language-python" data-language="python"><code class="language-python">import os
+
+FLAG &#x3D; open(&#39;flag.txt&#39;, &#39;rb&#39;).read().strip()
+
+
+def ECC_encode(x):
+    y2 &#x3D; (x**3 + a*x + b) % p
+    return y2
+
+p &#x3D; 0xffffffff00000001000000000000000000000000ffffffffffffffffffffffff
+a &#x3D; 0xffffffff00000001000000000000000000000000fffffffffffffffffffffffc
+b &#x3D; 0x5ac635d8aa3a93e7b3ebbd55769886bc651d06b0cc53b0f63bce3c3e27d2604b
+
+C &#x3D; [ hex(ECC_encode(int(os.urandom(8).hex() + hex(k)[2:], 16))) for k in FLAG ]
+
+open(&#39;flag.enc&#39;, &#39;w&#39;).write(str(C))
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h4 id="jie-ti-fen-xi"><a href="#解题分析-3" class="headerlink" title="解题分析"></a>解题分析<a href="#jie-ti-fen-xi" class="header-anchor">#</a></h4><p>在 sage 下求解一个有限域 p 上的模多项式的根</p>
-<p>$f(x) = x^3+ax+b\mod\,p$</p>
+<p>$f(x) &#x3D; x^3+ax+b\mod,p$</p>
 <p>求出根之后转为十六进制，最后的两个十六进制数就是 flag 的某个字节。</p>
-<h4 id="jie-ti-jiao-ben"><a href="#解题脚本-3" class="headerlink" title="解题脚本"></a>解题脚本<a href="#jie-ti-jiao-ben" class="header-anchor">#</a></h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> Crypto.Util.number <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">solve</span>(<span class="params">p,a,b,c</span>):</span><br><span class="line">    flag = <span class="string">&quot;&quot;</span></span><br><span class="line">    R.&lt;x&gt; = PolynomialRing(GF(p))</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> c:</span><br><span class="line">        f =   x ^ <span class="number">3</span> + a * x + b - i</span><br><span class="line">        root = f.roots()[-<span class="number">1</span>][<span class="number">0</span>]</span><br><span class="line">        flag += <span class="built_in">chr</span>(<span class="built_in">int</span>(<span class="built_in">hex</span>(root)[-<span class="number">2</span>:],<span class="number">16</span>))</span><br><span class="line">    <span class="built_in">print</span>(flag)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    p = <span class="number">0xffffffff00000001000000000000000000000000ffffffffffffffffffffffff</span></span><br><span class="line">    a = <span class="number">0xffffffff00000001000000000000000000000000fffffffffffffffffffffffc</span></span><br><span class="line">    b = <span class="number">0x5ac635d8aa3a93e7b3ebbd55769886bc651d06b0cc53b0f63bce3c3e27d2604b</span></span><br><span class="line"></span><br><span class="line">    f = <span class="built_in">open</span>(<span class="string">r&quot;D:\CTF赛题\2022\国外\BSides Mumbai CTF 2022\ECCSub\flag.enc&quot;</span>, <span class="string">&quot;r&quot;</span>)</span><br><span class="line">    data = [<span class="built_in">int</span>(i,base=<span class="number">16</span>) <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">eval</span>(f.read().strip())]</span><br><span class="line">    solve(p,a,b,data)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h3 id="asd-sea"><a href="#ASD-SEA" class="headerlink" title="ASD-SEA"></a><strong>ASD-SEA</strong><a href="#asd-sea" class="header-anchor">#</a></h3><h4 id="ti-mu-miao-shu"><a href="#题目描述-4" class="headerlink" title="题目描述"></a>题目描述<a href="#ti-mu-miao-shu" class="header-anchor">#</a></h4><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Have you ever used the <span class="selector-tag">A</span>,S,D or D,S,<span class="selector-tag">A</span> keys for placeholders? yaaaAES, <span class="selector-tag">I</span> did!</span><br></pre></td></tr></table></figure>
-<h4 id="ti-mu-nei-rong"><a href="#题目内容-4" class="headerlink" title="题目内容"></a>题目内容<a href="#ti-mu-nei-rong" class="header-anchor">#</a></h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> Crypto.Util.Padding <span class="keyword">import</span> pad</span><br><span class="line"><span class="keyword">from</span> Crypto.Util.number <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> Crypto.PublicKey <span class="keyword">import</span> DSA</span><br><span class="line"><span class="keyword">from</span> Crypto.Cipher <span class="keyword">import</span> AES</span><br><span class="line"><span class="keyword">from</span> Crypto.Hash <span class="keyword">import</span> SHA</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">sign</span>(<span class="params">msg</span>):</span><br><span class="line">    h = SHA.new(msg).digest()</span><br><span class="line">    n = bytes_to_long(h + os.urandom(<span class="number">2</span>))</span><br><span class="line"></span><br><span class="line">    <span class="keyword">assert</span> <span class="number">1</span> &lt; n &lt; key.q-<span class="number">1</span></span><br><span class="line"></span><br><span class="line">    r = <span class="built_in">pow</span>(key.g,n,key.p) % key.q</span><br><span class="line">    s = inverse(n, key.q)*(bytes_to_long(h) + key.x*r) % key.q</span><br><span class="line">    <span class="keyword">return</span> s, r</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">verify</span>(<span class="params">msg, s, r</span>):</span><br><span class="line">    h = bytes_to_long(SHA.new(msg).digest())</span><br><span class="line">    w = inverse(s, key.q)</span><br><span class="line">    u1 = h*w % key.q</span><br><span class="line">    u2 = r*w % key.q</span><br><span class="line">    v = (<span class="built_in">pow</span>(key.g,u1,key.p)*<span class="built_in">pow</span>(key.y,u2,key.p) %key.p) % key.q</span><br><span class="line">    <span class="keyword">return</span> v==r</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">FLAG = <span class="built_in">open</span>(<span class="string">&#x27;flag.txt&#x27;</span>, <span class="string">&#x27;rb&#x27;</span>).read()</span><br><span class="line"></span><br><span class="line">key = DSA.generate(<span class="number">2048</span>)</span><br><span class="line"><span class="built_in">open</span>(<span class="string">&quot;pubkey.pem&quot;</span>, <span class="string">&quot;wb&quot;</span>).write(key.publickey().export_key())</span><br><span class="line"></span><br><span class="line">m = <span class="built_in">open</span>(<span class="string">&#x27;msg.txt&#x27;</span>, <span class="string">&#x27;rb&#x27;</span>).read()</span><br><span class="line">s, r = sign(m)</span><br><span class="line">isVerified = verify(m,s,r)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Signature: (&quot;</span>, s, <span class="string">&quot;,&quot;</span>, r, <span class="string">&quot;)&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Verification Status:&quot;</span>, isVerified)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> isVerified:</span><br><span class="line">    aesKey = pad(long_to_bytes(key.x), <span class="number">16</span>)</span><br><span class="line">    cipher = AES.new(aesKey, AES.MODE_ECB).encrypt(pad(FLAG,<span class="number">16</span>)).<span class="built_in">hex</span>()</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;Cipher:&quot;</span>, cipher)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h4 id="jie-ti-jiao-ben"><a href="#解题脚本-3" class="headerlink" title="解题脚本"></a>解题脚本<a href="#jie-ti-jiao-ben" class="header-anchor">#</a></h4><pre class="line-numbers language-python" data-language="python"><code class="language-python">from Crypto.Util.number import *
+
+def solve(p,a,b,c):
+    flag &#x3D; &quot;&quot;
+    R.&lt;x&gt; &#x3D; PolynomialRing(GF(p))
+    for i in c:
+        f &#x3D;   x ^ 3 + a * x + b - i
+        root &#x3D; f.roots()[-1][0]
+        flag +&#x3D; chr(int(hex(root)[-2:],16))
+    print(flag)
+
+if __name__ &#x3D;&#x3D; &quot;__main__&quot;:
+    p &#x3D; 0xffffffff00000001000000000000000000000000ffffffffffffffffffffffff
+    a &#x3D; 0xffffffff00000001000000000000000000000000fffffffffffffffffffffffc
+    b &#x3D; 0x5ac635d8aa3a93e7b3ebbd55769886bc651d06b0cc53b0f63bce3c3e27d2604b
+
+    f &#x3D; open(r&quot;D:\CTF赛题\2022\国外\BSides Mumbai CTF 2022\ECCSub\flag.enc&quot;, &quot;r&quot;)
+    data &#x3D; [int(i,base&#x3D;16) for i in eval(f.read().strip())]
+    solve(p,a,b,data)
+
+
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<h3 id="asd-sea"><a href="#ASD-SEA" class="headerlink" title="ASD-SEA"></a><strong>ASD-SEA</strong><a href="#asd-sea" class="header-anchor">#</a></h3><h4 id="ti-mu-miao-shu"><a href="#题目描述-4" class="headerlink" title="题目描述"></a>题目描述<a href="#ti-mu-miao-shu" class="header-anchor">#</a></h4><pre class="line-numbers language-none"><code class="language-none">Have you ever used the A,S,D or D,S,A keys for placeholders? yaaaAES, I did!<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h4 id="ti-mu-nei-rong"><a href="#题目内容-4" class="headerlink" title="题目内容"></a>题目内容<a href="#ti-mu-nei-rong" class="header-anchor">#</a></h4><pre class="line-numbers language-python" data-language="python"><code class="language-python">from Crypto.Util.Padding import pad
+from Crypto.Util.number import *
+from Crypto.PublicKey import DSA
+from Crypto.Cipher import AES
+from Crypto.Hash import SHA
+import os
+
+
+def sign(msg):
+    h &#x3D; SHA.new(msg).digest()
+    n &#x3D; bytes_to_long(h + os.urandom(2))
+
+    assert 1 &lt; n &lt; key.q-1
+
+    r &#x3D; pow(key.g,n,key.p) % key.q
+    s &#x3D; inverse(n, key.q)*(bytes_to_long(h) + key.x*r) % key.q
+    return s, r
+
+def verify(msg, s, r):
+    h &#x3D; bytes_to_long(SHA.new(msg).digest())
+    w &#x3D; inverse(s, key.q)
+    u1 &#x3D; h*w % key.q
+    u2 &#x3D; r*w % key.q
+    v &#x3D; (pow(key.g,u1,key.p)*pow(key.y,u2,key.p) %key.p) % key.q
+    return v&#x3D;&#x3D;r
+
+
+FLAG &#x3D; open(&#39;flag.txt&#39;, &#39;rb&#39;).read()
+
+key &#x3D; DSA.generate(2048)
+open(&quot;pubkey.pem&quot;, &quot;wb&quot;).write(key.publickey().export_key())
+
+m &#x3D; open(&#39;msg.txt&#39;, &#39;rb&#39;).read()
+s, r &#x3D; sign(m)
+isVerified &#x3D; verify(m,s,r)
+
+print(&quot;Signature: (&quot;, s, &quot;,&quot;, r, &quot;)&quot;)
+print(&quot;Verification Status:&quot;, isVerified)
+
+if isVerified:
+    aesKey &#x3D; pad(long_to_bytes(key.x), 16)
+    cipher &#x3D; AES.new(aesKey, AES.MODE_ECB).encrypt(pad(FLAG,16)).hex()
+    print(&quot;Cipher:&quot;, cipher)
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h4 id="jie-ti-fen-xi"><a href="#解题分析-4" class="headerlink" title="解题分析"></a>解题分析<a href="#jie-ti-fen-xi" class="header-anchor">#</a></h4><p>一个 DSA 签名算法，同时签名的密钥作为AES算法的密钥，我们需要恢复签名密钥。</p>
 <p><img src="/images/BSides-Mumbai-CTF-2022/image-20221216180401342.png" alt="image-20221216180401342"></p>
 <p>观察到在密钥生成过程中使用的 n 由 文件的消息摘要 加上两个字节组成，所以我们可以爆破这两个字节找到 n 。</p>
 <p>n 相当于上图中的 k，所以我们可以通过如下式子恢复 a 。</p>
 <p>$aS_1\equiv S_2*k-D$</p>
-<p>$a\equiv(S_2<em>k-D)</em>S_1^{-1}\mod\,q$</p>
-<h4 id="jie-ti-jiao-ben"><a href="#解题脚本-4" class="headerlink" title="解题脚本"></a>解题脚本<a href="#jie-ti-jiao-ben" class="header-anchor">#</a></h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> Crypto.Util.Padding <span class="keyword">import</span> pad, unpad</span><br><span class="line"><span class="keyword">from</span> Crypto.Util.number <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> Crypto.PublicKey <span class="keyword">import</span> DSA</span><br><span class="line"><span class="keyword">from</span> Crypto.Cipher <span class="keyword">import</span> AES</span><br><span class="line"><span class="keyword">from</span> Crypto.Hash <span class="keyword">import</span> SHA</span><br><span class="line"></span><br><span class="line">s = <span class="number">14183199055240594428827443533180344323710704440445050743687023631136</span></span><br><span class="line">r = <span class="number">5334730754297077906351686352081826499252324846119218024815564201902</span></span><br><span class="line">ct = long_to_bytes(<span class="number">0x5bfb9c359d2986411837be748915ae0f5a4d5646b2740b8c4b712399a984dd60475dc1b72efb703bee0f87c256cde05e</span>)</span><br><span class="line"></span><br><span class="line">key = DSA.import_key(<span class="built_in">open</span>(<span class="string">&quot;pubkey.pem&quot;</span>, <span class="string">&quot;rb&quot;</span>).read())</span><br><span class="line">m = <span class="built_in">open</span>(<span class="string">&quot;msg.txt&quot;</span>, <span class="string">&quot;rb&quot;</span>).read()</span><br><span class="line">h = SHA.new(m).digest()</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">2</span>**<span class="number">16</span>):</span><br><span class="line">    n = bytes_to_long(h + i.to_bytes(<span class="number">2</span>, <span class="string">&quot;big&quot;</span>))</span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">pow</span>(key.g, n, key.p) % key.q == r:</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line"></span><br><span class="line">x = ((s * n - bytes_to_long(h)) * inverse(r, key.q)) % key.q</span><br><span class="line">aes_key = pad(long_to_bytes(x), <span class="number">16</span>)</span><br><span class="line">cipher = AES.new(aes_key, AES.MODE_ECB)</span><br><span class="line">flag = unpad(cipher.decrypt(ct), <span class="number">16</span>).decode()</span><br><span class="line"><span class="built_in">print</span>(flag) <span class="comment"># BSMumbai&#123;DSA_msg_related_nonce_problem&#125;</span></span><br></pre></td></tr></table></figure>
+<p>$a\equiv(S_2*k-D)*S_1^{-1}\mod,q$</p>
+<h4 id="jie-ti-jiao-ben"><a href="#解题脚本-4" class="headerlink" title="解题脚本"></a>解题脚本<a href="#jie-ti-jiao-ben" class="header-anchor">#</a></h4><pre class="line-numbers language-python" data-language="python"><code class="language-python">from Crypto.Util.Padding import pad, unpad
+from Crypto.Util.number import *
+from Crypto.PublicKey import DSA
+from Crypto.Cipher import AES
+from Crypto.Hash import SHA
+
+s &#x3D; 14183199055240594428827443533180344323710704440445050743687023631136
+r &#x3D; 5334730754297077906351686352081826499252324846119218024815564201902
+ct &#x3D; long_to_bytes(0x5bfb9c359d2986411837be748915ae0f5a4d5646b2740b8c4b712399a984dd60475dc1b72efb703bee0f87c256cde05e)
+
+key &#x3D; DSA.import_key(open(&quot;pubkey.pem&quot;, &quot;rb&quot;).read())
+m &#x3D; open(&quot;msg.txt&quot;, &quot;rb&quot;).read()
+h &#x3D; SHA.new(m).digest()
+
+for i in range(2**16):
+    n &#x3D; bytes_to_long(h + i.to_bytes(2, &quot;big&quot;))
+    if pow(key.g, n, key.p) % key.q &#x3D;&#x3D; r:
+        break
+
+x &#x3D; ((s * n - bytes_to_long(h)) * inverse(r, key.q)) % key.q
+aes_key &#x3D; pad(long_to_bytes(x), 16)
+cipher &#x3D; AES.new(aes_key, AES.MODE_ECB)
+flag &#x3D; unpad(cipher.decrypt(ct), 16).decode()
+print(flag) # BSMumbai&#123;DSA_msg_related_nonce_problem&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
 <h3 id="guan-fang-wp"><a href="#官方WP" class="headerlink" title="官方WP"></a>官方WP<a href="#guan-fang-wp" class="header-anchor">#</a></h3><p><a target="_blank" rel="noopener" href="https://b6a.black/posts/2022-12-14-bsides-mumbai/#egglamal">https://b6a.black/posts/2022-12-14-bsides-mumbai/#egglamal</a></p>
 
-  </div>
-</article>
+                
+            </div>
+            <hr/>
 
+            
 
-
+    <div class="reprint" id="reprint-statement">
         
-          <div id="footer-post-container">
-  <div id="footer-post">
-
-    <div id="nav-footer" style="display: none">
-      <ul>
-         
-          <li><a href="/">首页</a></li>
-         
-          <li><a href="/about/">关于</a></li>
-         
-          <li><a href="/archives/">归档</a></li>
-         
-          <li><a target="_blank" rel="noopener" href="https://github.com/MirRoR4s">项目</a></li>
-         
-          <li><a target="_blank" rel="noopener" href="https://github.com/MirRoR4s">MyGithub</a></li>
-         
-          <li><a href="/search/">Search</a></li>
-         
-          <li><a href="/tags/">标签</a></li>
-         
-          <li><a href="/categories/">分类</a></li>
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">MirRoR4s</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://MirRoR4s.github.io/2022/12/15/BSides-Mumbai-CTF-2022/index.html">https://MirRoR4s.github.io/2022/12/15/BSides-Mumbai-CTF-2022/index.html</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/about" target="_blank">MirRoR4s</a>
+                    !
+                </span>
+            </div>
         
-      </ul>
     </div>
 
-    <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#crypto"><span class="toc-number">1.</span> <span class="toc-text">Crypto</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#poet-xor-jian-dan-yi-huo"><span class="toc-number">1.1.</span> <span class="toc-text">Poet Xor-简单异或</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#ti-mu-miao-shu"><span class="toc-number">1.1.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ti-mu-nei-rong"><span class="toc-number">1.1.2.</span> <span class="toc-text">题目内容</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#jie-ti-fen-xi"><span class="toc-number">1.1.3.</span> <span class="toc-text">解题分析</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#jie-ti-jiao-ben"><span class="toc-number">1.1.4.</span> <span class="toc-text">解题脚本</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#big-rsa-boneh-durfee-s-attack"><span class="toc-number">1.2.</span> <span class="toc-text">Big RSA-Boneh-Durfee’s attack</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#ti-mu-miao-shu"><span class="toc-number">1.2.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ti-mu-nei-rong"><span class="toc-number">1.2.2.</span> <span class="toc-text">题目内容</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#jie-ti-fen-xi"><span class="toc-number">1.2.3.</span> <span class="toc-text">解题分析</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#jie-ti-jiao-ben"><span class="toc-number">1.2.4.</span> <span class="toc-text">解题脚本</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#egglamal"><span class="toc-number">1.3.</span> <span class="toc-text">EggLamal</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#ti-mu-miao-shu"><span class="toc-number">1.3.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ti-mu-nei-rong"><span class="toc-number">1.3.2.</span> <span class="toc-text">题目内容</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#jie-ti-fen-xi"><span class="toc-number">1.3.3.</span> <span class="toc-text">解题分析</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#jie-ti-jiao-ben"><span class="toc-number">1.3.4.</span> <span class="toc-text">解题脚本</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#eccsub"><span class="toc-number">1.4.</span> <span class="toc-text">ECCSub</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#ti-mu-miao-shu"><span class="toc-number">1.4.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ti-mu-nei-rong"><span class="toc-number">1.4.2.</span> <span class="toc-text">题目内容</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#jie-ti-fen-xi"><span class="toc-number">1.4.3.</span> <span class="toc-text">解题分析</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#jie-ti-jiao-ben"><span class="toc-number">1.4.4.</span> <span class="toc-text">解题脚本</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#asd-sea"><span class="toc-number">1.5.</span> <span class="toc-text">ASD-SEA</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#ti-mu-miao-shu"><span class="toc-number">1.5.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ti-mu-nei-rong"><span class="toc-number">1.5.2.</span> <span class="toc-text">题目内容</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#jie-ti-fen-xi"><span class="toc-number">1.5.3.</span> <span class="toc-text">解题分析</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#jie-ti-jiao-ben"><span class="toc-number">1.5.4.</span> <span class="toc-text">解题脚本</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#guan-fang-wp"><span class="toc-number">1.6.</span> <span class="toc-text">官方WP</span></a></li></ol></li></ol>
-    </div>
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
 
-    <div id="share-footer" style="display: none">
-      <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://example.com/2022/12/15/BSides-Mumbai-CTF-2022/index.html"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://example.com/2022/12/15/BSides-Mumbai-CTF-2022/index.html&text=BSides Mumbai CTF 2022"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://example.com/2022/12/15/BSides-Mumbai-CTF-2022/index.html&title=BSides Mumbai CTF 2022"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://example.com/2022/12/15/BSides-Mumbai-CTF-2022/index.html&is_video=false&description=BSides Mumbai CTF 2022"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=BSides Mumbai CTF 2022&body=Check out this article: https://example.com/2022/12/15/BSides-Mumbai-CTF-2022/index.html"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://example.com/2022/12/15/BSides-Mumbai-CTF-2022/index.html&title=BSides Mumbai CTF 2022"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://example.com/2022/12/15/BSides-Mumbai-CTF-2022/index.html&title=BSides Mumbai CTF 2022"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://example.com/2022/12/15/BSides-Mumbai-CTF-2022/index.html&title=BSides Mumbai CTF 2022"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://example.com/2022/12/15/BSides-Mumbai-CTF-2022/index.html&title=BSides Mumbai CTF 2022"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://example.com/2022/12/15/BSides-Mumbai-CTF-2022/index.html&name=BSides Mumbai CTF 2022&description=&lt;!--toc--&gt;
-&lt;p&gt;2022年12月10日的国外CTF比赛。&lt;/p&gt;"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://example.com/2022/12/15/BSides-Mumbai-CTF-2022/index.html&t=BSides Mumbai CTF 2022"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
-</ul>
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
 
-    </div>
 
-    <div id="actions-footer">
-        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
-        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
-        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
-        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
-    </div>
 
-  </div>
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/Crypto/">
+                                    <span class="chip bg-color">Crypto</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
 </div>
 
-        
-        <footer id="footer">
-  <div class="footer-left">
-    Copyright &copy;
-    
-    
-    1999-2022
-    MirRoR4s
-  </div>
-  <div class="footer-right">
-    <nav>
-      <ul>
-        <!--
-       --><li><a href="/">首页</a></li><!--
-     --><!--
-       --><li><a href="/about/">关于</a></li><!--
-     --><!--
-       --><li><a href="/archives/">归档</a></li><!--
-     --><!--
-       --><li><a target="_blank" rel="noopener" href="https://github.com/MirRoR4s">项目</a></li><!--
-     --><!--
-       --><li><a target="_blank" rel="noopener" href="https://github.com/MirRoR4s">MyGithub</a></li><!--
-     --><!--
-       --><li><a href="/search/">Search</a></li><!--
-     --><!--
-       --><li><a href="/tags/">标签</a></li><!--
-     --><!--
-       --><li><a href="/categories/">分类</a></li><!--
-     -->
-      </ul>
-    </nav>
-  </div>
-</footer>
+                </div>
+            </div>
+            
+                <style>
+    #reward {
+        margin: 40px 0;
+        text-align: center;
+    }
 
+    #reward .reward-link {
+        font-size: 1.4rem;
+        line-height: 38px;
+    }
+
+    #reward .btn-floating:hover {
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    #rewardModal {
+        width: 320px;
+        height: 350px;
+    }
+
+    #rewardModal .reward-title {
+        margin: 15px auto;
+        padding-bottom: 5px;
+    }
+
+    #rewardModal .modal-content {
+        padding: 10px;
+    }
+
+    #rewardModal .close {
+        position: absolute;
+        right: 15px;
+        top: 15px;
+        color: rgba(0, 0, 0, 0.5);
+        font-size: 1.3rem;
+        line-height: 20px;
+        cursor: pointer;
+    }
+
+    #rewardModal .close:hover {
+        color: #ef5350;
+        transform: scale(1.3);
+        -moz-transform:scale(1.3);
+        -webkit-transform:scale(1.3);
+        -o-transform:scale(1.3);
+    }
+
+    #rewardModal .reward-tabs {
+        margin: 0 auto;
+        width: 210px;
+    }
+
+    .reward-tabs .tabs {
+        height: 38px;
+        margin: 10px auto;
+        padding-left: 0;
+    }
+
+    .reward-content ul {
+        padding-left: 0 !important;
+    }
+
+    .reward-tabs .tabs .tab {
+        height: 38px;
+        line-height: 38px;
+    }
+
+    .reward-tabs .tab a {
+        color: #fff;
+        background-color: #ccc;
+    }
+
+    .reward-tabs .tab a:hover {
+        background-color: #ccc;
+        color: #fff;
+    }
+
+    .reward-tabs .wechat-tab .active {
+        color: #fff !important;
+        background-color: #22AB38 !important;
+    }
+
+    .reward-tabs .alipay-tab .active {
+        color: #fff !important;
+        background-color: #019FE8 !important;
+    }
+
+    .reward-tabs .reward-img {
+        width: 210px;
+        height: 210px;
+    }
+</style>
+
+<div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-medium waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fas fa-times"></i></a>
+            <h4 class="reward-title">你的赏识是我前进的动力</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        <img src="/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
+                    </div>
+                    <div id="wechat">
+                        <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <!-- styles -->
+</div>
 
-
-
-  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
-
-
-    <!-- jquery -->
- 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
-
-
-
-
-<!-- clipboard -->
-
-  
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
-  
-  <script type="text/javascript">
-  $(function() {
-    // copy-btn HTML
-    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板！\">";
-    btn += '<i class="far fa-clone"></i>';
-    btn += '</span>'; 
-    // mount it!
-    $(".highlight table").before(btn);
-    var clip = new ClipboardJS('.btn-copy', {
-      text: function(trigger) {
-        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
-      }
-    });
-    clip.on('success', function(e) {
-      e.trigger.setAttribute('aria-label', "复制成功！");
-      e.clearSelection();
-    })
-  })
-  </script>
-
-
-<script src="/js/main.js"></script>
-
-<!-- search -->
-
-<!-- Google Analytics -->
-
-<!-- Baidu Analytics -->
-
-<!-- Cloudflare Analytics -->
-
-<!-- Umami Analytics -->
-
-<!-- Disqus Comments -->
-
-<!-- utterances Comments -->
-
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
+<script>
+    $(function () {
+        $('.tabs').tabs();
     });
 </script>
-<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2022/12/16/KITCTFCTF-2022/index.html">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="KITCTFCTF 2022">
+                        
+                        <span class="card-title">KITCTFCTF 2022</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+
+2022年12月9日的比赛。
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2022-12-16
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/CTF/" class="post-category">
+                                    CTF
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Crypto/">
+                        <span class="chip bg-color">Crypto</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2022/12/10/Hackappatoi-CTF-2022/index.html">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="Hackappatoi-CTF-2022">
+                        
+                        <span class="card-title">Hackappatoi-CTF-2022</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-12-10
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-user fa-fw"></i>
+                            MirRoR4s
+                            
+                        </span>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget card" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+<script src="https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script>
+    MathJax.Hub.Config({
+        tex2jax: {inlineMath: [['$', '$'], ['\(', '\)']]}
+    });
+</script>
+
+
+
+    <footer class="page-footer bg-color">
+    
+        <link rel="stylesheet" href="/libs/aplayer/APlayer.min.css">
+<style>
+    .aplayer .aplayer-lrc p {
+        
+        display: none;
+        
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 16px !important;
+    }
+
+    .aplayer .aplayer-lrc p.aplayer-lrc-current {
+        
+        display: none;
+        
+        font-size: 15px;
+        color: #42b983;
+    }
+
+    
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body {
+        left: -66px !important;
+    }
+
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body:hover {
+        left: 0px !important;
+    }
+
+    
+</style>
+<div class="">
+    
+    <div class="row">
+        <meting-js class="col l8 offset-l2 m10 offset-m1 s12"
+                   server="netease"
+                   type="playlist"
+                   id="503838841"
+                   fixed='true'
+                   autoplay='false'
+                   theme='#42b983'
+                   loop='all'
+                   order='random'
+                   preload='auto'
+                   volume='0.7'
+                   list-folded='true'
+        >
+        </meting-js>
+    </div>
+</div>
+
+<script src="/libs/aplayer/APlayer.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+
+    
+    <div class="container row center-align" style="margin-bottom: 0px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            
+                <span id="year">2023</span>
+            
+            <span id="year">2023</span>
+            <a href="/about" target="_blank">MirRoR4s</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+            
+            
+            
+            
+            
+            <span id="busuanzi_container_site_pv">
+                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
+                    class="white-color"></span>&nbsp;次
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv">
+                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
+                    class="white-color"></span>&nbsp;人
+            </span>
+            
+            <br>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/MirRoR4s" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:790356373@qq.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=790356373" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 790356373" data-position="top" data-delay="50">
+        <i class="fab fa-qq"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fas fa-rss"></i>
+    </a>
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(function () {
+    var searchFunc = function (path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+            url: path,
+            dataType: "xml",
+            success: function (xmlResponse) {
+                // get the contents from search data
+                var datas = $("entry", xmlResponse).map(function () {
+                    return {
+                        title: $("title", this).text(),
+                        content: $("content", this).text(),
+                        url: $("url", this).text()
+                    };
+                }).get();
+                var $input = document.getElementById(search_id);
+                var $resultContent = document.getElementById(content_id);
+                $input.addEventListener('input', function () {
+                    var str = '<ul class=\"search-result-list\">';
+                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                    $resultContent.innerHTML = "";
+                    if (this.value.trim().length <= 0) {
+                        return;
+                    }
+                    // perform local searching
+                    datas.forEach(function (data) {
+                        var isMatch = true;
+                        var data_title = data.title.trim().toLowerCase();
+                        var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                        var data_url = data.url;
+                        data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
+                        var index_title = -1;
+                        var index_content = -1;
+                        var first_occur = -1;
+                        // only match artiles with not empty titles and contents
+                        if (data_title !== '' && data_content !== '') {
+                            keywords.forEach(function (keyword, i) {
+                                index_title = data_title.indexOf(keyword);
+                                index_content = data_content.indexOf(keyword);
+                                if (index_title < 0 && index_content < 0) {
+                                    isMatch = false;
+                                } else {
+                                    if (index_content < 0) {
+                                        index_content = 0;
+                                    }
+                                    if (i === 0) {
+                                        first_occur = index_content;
+                                    }
+                                }
+                            });
+                        }
+                        // show search results
+                        if (isMatch) {
+                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                            var content = data.content.trim().replace(/<[^>]+>/g, "");
+                            if (first_occur >= 0) {
+                                // cut out 100 characters
+                                var start = first_occur - 20;
+                                var end = first_occur + 80;
+                                if (start < 0) {
+                                    start = 0;
+                                }
+                                if (start === 0) {
+                                    end = 100;
+                                }
+                                if (end > content.length) {
+                                    end = content.length;
+                                }
+                                var match_content = content.substr(start, end);
+                                // highlight all keywords
+                                keywords.forEach(function (keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
+                                });
+
+                                str += "<p class=\"search-result\">" + match_content + "...</p>"
+                            }
+                            str += "</li>";
+                        }
+                    });
+                    str += "</ul>";
+                    $resultContent.innerHTML = str;
+                });
+            }
+        });
+    };
+
+    searchFunc('/search.xml', 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    <script src="/libs/others/clicklove.js" async="async"></script>
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+	
+    
+
+    
+
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
 </body>
+
 </html>

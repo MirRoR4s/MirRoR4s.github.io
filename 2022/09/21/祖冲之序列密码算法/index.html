@@ -1,196 +1,532 @@
-<!DOCTYPE html>
-<html lang=zh>
-<head>
-    <!-- so meta -->
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="HandheldFriendly" content="True">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
-    <meta property="og:type" content="article">
-<meta property="og:title" content="GMT 0001.1-2012 祖冲之序列密码算法">
-<meta property="og:url" content="https://example.com/2022/09/21/%E7%A5%96%E5%86%B2%E4%B9%8B%E5%BA%8F%E5%88%97%E5%AF%86%E7%A0%81%E7%AE%97%E6%B3%95/index.html">
-<meta property="og:site_name" content="学习记录">
-<meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://example.com/2022/09/21/%E7%A5%96%E5%86%B2%E4%B9%8B%E5%BA%8F%E5%88%97%E5%AF%86%E7%A0%81%E7%AE%97%E6%B3%95/images/image-20221019105059240.png">
-<meta property="og:image" content="https://example.com/2022/09/21/%E7%A5%96%E5%86%B2%E4%B9%8B%E5%BA%8F%E5%88%97%E5%AF%86%E7%A0%81%E7%AE%97%E6%B3%95/images/image-20221019102909961.png">
-<meta property="og:image" content="https://example.com/2022/09/21/%E7%A5%96%E5%86%B2%E4%B9%8B%E5%BA%8F%E5%88%97%E5%AF%86%E7%A0%81%E7%AE%97%E6%B3%95/images/image-20221019192754643.png">
-<meta property="og:image" content="https://example.com/2022/09/21/%E7%A5%96%E5%86%B2%E4%B9%8B%E5%BA%8F%E5%88%97%E5%AF%86%E7%A0%81%E7%AE%97%E6%B3%95/images/image-20221019142911310.png">
-<meta property="og:image" content="https://example.com/2022/09/21/%E7%A5%96%E5%86%B2%E4%B9%8B%E5%BA%8F%E5%88%97%E5%AF%86%E7%A0%81%E7%AE%97%E6%B3%95/images/image-20221017170536707.png">
-<meta property="og:image" content="https://example.com/2022/09/21/%E7%A5%96%E5%86%B2%E4%B9%8B%E5%BA%8F%E5%88%97%E5%AF%86%E7%A0%81%E7%AE%97%E6%B3%95/images/image-20221019154226976.png">
-<meta property="og:image" content="https://example.com/2022/09/21/%E7%A5%96%E5%86%B2%E4%B9%8B%E5%BA%8F%E5%88%97%E5%AF%86%E7%A0%81%E7%AE%97%E6%B3%95/images/image-20221018171207331.png">
-<meta property="og:image" content="https://example.com/2022/09/21/%E7%A5%96%E5%86%B2%E4%B9%8B%E5%BA%8F%E5%88%97%E5%AF%86%E7%A0%81%E7%AE%97%E6%B3%95/images/image-20221020123217547.png">
-<meta property="og:image" content="https://example.com/2022/09/21/%E7%A5%96%E5%86%B2%E4%B9%8B%E5%BA%8F%E5%88%97%E5%AF%86%E7%A0%81%E7%AE%97%E6%B3%95/images/image-20221020123228464.png">
-<meta property="og:image" content="https://example.com/2022/09/21/%E7%A5%96%E5%86%B2%E4%B9%8B%E5%BA%8F%E5%88%97%E5%AF%86%E7%A0%81%E7%AE%97%E6%B3%95/images/image-20221020123338283.png">
-<meta property="og:image" content="https://example.com/2022/09/21/%E7%A5%96%E5%86%B2%E4%B9%8B%E5%BA%8F%E5%88%97%E5%AF%86%E7%A0%81%E7%AE%97%E6%B3%95/images/image-20221020123414440.png">
-<meta property="og:image" content="https://example.com/2022/09/21/%E7%A5%96%E5%86%B2%E4%B9%8B%E5%BA%8F%E5%88%97%E5%AF%86%E7%A0%81%E7%AE%97%E6%B3%95/images/image-20221020123404606.png">
-<meta property="article:published_time" content="2022-09-21T14:57:19.000Z">
-<meta property="article:modified_time" content="2022-10-20T08:31:18.268Z">
-<meta property="article:author" content="MirRoR4s">
-<meta property="article:tag" content="Crypto">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://example.com/2022/09/21/%E7%A5%96%E5%86%B2%E4%B9%8B%E5%BA%8F%E5%88%97%E5%AF%86%E7%A0%81%E7%AE%97%E6%B3%95/images/image-20221019105059240.png">
-    
-    
-      
-        
-          <link rel="shortcut icon" href="/images/favicon.ico">
-        
-      
-      
-        
-          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
-        
-      
-      
-        
-          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
-        
-      
-    
-    <!-- title -->
-    <title>GMT 0001.1-2012 祖冲之序列密码算法</title>
-    <!-- styles -->
-    
-<link rel="stylesheet" href="/css/style.css">
+<!DOCTYPE HTML>
+<html lang="zh-CN">
 
-    <!-- persian styles -->
-    
-    <!-- rss -->
-    
-    
-	<!-- mathjax -->
-	
-		<script type="text/x-mathjax-config">
-		  MathJax.Hub.Config({
-			tex2jax: {
-			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
-			  inlineMath: [['$','$']]
-			}
-		  });
-		</script>
-		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
-	
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="GMT 0001.1-2012 祖冲之序列密码算法, 学习记录">
+    <meta name="description" content="欢迎来到我的博客">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>GMT 0001.1-2012 祖冲之序列密码算法 | 学习记录</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+
+    <script src="/libs/jquery/jquery.min.js"></script>
+
 <meta name="generator" content="Hexo 6.1.0"></head>
 
-<body class="max-width mx-auto px3 ltr">    
-      <div id="header-post">
-  <a id="menu-icon" href="#" aria-label="目录"><i class="fas fa-bars fa-lg"></i></a>
-  <a id="menu-icon-tablet" href="#" aria-label="目录"><i class="fas fa-bars fa-lg"></i></a>
-  <a id="top-icon-tablet" href="#" aria-label="顶部" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
-  <span id="menu">
-    <span id="nav">
-      <ul>
-        <!--
-       --><li><a href="/">首页</a></li><!--
-     --><!--
-       --><li><a href="/about/">关于</a></li><!--
-     --><!--
-       --><li><a href="/archives/">归档</a></li><!--
-     --><!--
-       --><li><a target="_blank" rel="noopener" href="https://github.com/MirRoR4s">项目</a></li><!--
-     --><!--
-       --><li><a target="_blank" rel="noopener" href="https://github.com/MirRoR4s">MyGithub</a></li><!--
-     --><!--
-       --><li><a href="/search/">Search</a></li><!--
-     --><!--
-       --><li><a href="/tags/">标签</a></li><!--
-     --><!--
-       --><li><a href="/categories/">分类</a></li><!--
-     -->
-      </ul>
-    </span>
-    <br/>
-    <span id="actions">
-      <ul>
-        
-        <li><a class="icon" aria-label="上一篇" href="/2022/09/25/BalsnCTF-2022/index.html"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
-        
-        
-        <li><a class="icon" aria-label="下一篇" href="/2022/09/20/ctfshow-php%E6%96%B0%E7%89%B9%E6%80%A7/index.html"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
-        
-        <li><a class="icon" aria-label="返回顶部" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
-        <li><a class="icon" aria-label="分享文章" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
-      </ul>
-      <span id="i-prev" class="info" style="display:none;">上一篇</span>
-      <span id="i-next" class="info" style="display:none;">下一篇</span>
-      <span id="i-top" class="info" style="display:none;">返回顶部</span>
-      <span id="i-share" class="info" style="display:none;">分享文章</span>
-    </span>
-    <br/>
-    <div id="share" style="display: none">
-      <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://example.com/2022/09/21/%E7%A5%96%E5%86%B2%E4%B9%8B%E5%BA%8F%E5%88%97%E5%AF%86%E7%A0%81%E7%AE%97%E6%B3%95/index.html"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://example.com/2022/09/21/%E7%A5%96%E5%86%B2%E4%B9%8B%E5%BA%8F%E5%88%97%E5%AF%86%E7%A0%81%E7%AE%97%E6%B3%95/index.html&text=GMT 0001.1-2012 祖冲之序列密码算法"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://example.com/2022/09/21/%E7%A5%96%E5%86%B2%E4%B9%8B%E5%BA%8F%E5%88%97%E5%AF%86%E7%A0%81%E7%AE%97%E6%B3%95/index.html&title=GMT 0001.1-2012 祖冲之序列密码算法"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://example.com/2022/09/21/%E7%A5%96%E5%86%B2%E4%B9%8B%E5%BA%8F%E5%88%97%E5%AF%86%E7%A0%81%E7%AE%97%E6%B3%95/index.html&is_video=false&description=GMT 0001.1-2012 祖冲之序列密码算法"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=GMT 0001.1-2012 祖冲之序列密码算法&body=Check out this article: https://example.com/2022/09/21/%E7%A5%96%E5%86%B2%E4%B9%8B%E5%BA%8F%E5%88%97%E5%AF%86%E7%A0%81%E7%AE%97%E6%B3%95/index.html"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://example.com/2022/09/21/%E7%A5%96%E5%86%B2%E4%B9%8B%E5%BA%8F%E5%88%97%E5%AF%86%E7%A0%81%E7%AE%97%E6%B3%95/index.html&title=GMT 0001.1-2012 祖冲之序列密码算法"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://example.com/2022/09/21/%E7%A5%96%E5%86%B2%E4%B9%8B%E5%BA%8F%E5%88%97%E5%AF%86%E7%A0%81%E7%AE%97%E6%B3%95/index.html&title=GMT 0001.1-2012 祖冲之序列密码算法"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://example.com/2022/09/21/%E7%A5%96%E5%86%B2%E4%B9%8B%E5%BA%8F%E5%88%97%E5%AF%86%E7%A0%81%E7%AE%97%E6%B3%95/index.html&title=GMT 0001.1-2012 祖冲之序列密码算法"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://example.com/2022/09/21/%E7%A5%96%E5%86%B2%E4%B9%8B%E5%BA%8F%E5%88%97%E5%AF%86%E7%A0%81%E7%AE%97%E6%B3%95/index.html&title=GMT 0001.1-2012 祖冲之序列密码算法"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://example.com/2022/09/21/%E7%A5%96%E5%86%B2%E4%B9%8B%E5%BA%8F%E5%88%97%E5%AF%86%E7%A0%81%E7%AE%97%E6%B3%95/index.html&name=GMT 0001.1-2012 祖冲之序列密码算法&description=&lt;!--toc--&gt;"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://example.com/2022/09/21/%E7%A5%96%E5%86%B2%E4%B9%8B%E5%BA%8F%E5%88%97%E5%AF%86%E7%A0%81%E7%AE%97%E6%B3%95/index.html&t=GMT 0001.1-2012 祖冲之序列密码算法"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">学习记录</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/contact" class="waves-effect waves-light">
+      
+      <i class="fas fa-comments" style="zoom: 0.6;"></i>
+      
+      <span>留言板</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/friends" class="waves-effect waves-light">
+      
+      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
+      
+      <span>友情链接</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
 </ul>
 
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">学习记录</div>
+        <div class="logo-desc">
+            
+            欢迎来到我的博客
+            
+        </div>
     </div>
-    <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#zu-chong-zhi-xu-lie-mi-ma-suan-fa-di-1-bu-fen-suan-fa-miao-shu"><span class="toc-number">1.</span> <span class="toc-text">祖冲之序列密码算法 第 1 部分：算法描述</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#lfsr-chu-shi-hua-mo-shi"><span class="toc-number">1.0.1.</span> <span class="toc-text">LFSR初始化模式</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#zuc-de-mo-jia-yun-suan"><span class="toc-number">1.0.1.1.</span> <span class="toc-text">ZUC的模加运算</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#zuc-de-mo-cheng-yun-suan-wei-wan-cheng"><span class="toc-number">1.0.1.2.</span> <span class="toc-text">ZUC的模乘运算（未完成）</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#lfsr-gong-zuo-mo-shi"><span class="toc-number">1.0.2.</span> <span class="toc-text">LFSR工作模式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#bi-te-chong-zu-br"><span class="toc-number">1.0.3.</span> <span class="toc-text">比特重组 BR</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#bi-te-lian-jie-de-shi-xian"><span class="toc-number">1.0.3.1.</span> <span class="toc-text">比特链接的实现：</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#fei-xian-xing-han-shu-f"><span class="toc-number">1.0.4.</span> <span class="toc-text">非线性函数 F</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#l1-l2-xian-xing-bian-huan-de-shi-xian"><span class="toc-number">1.0.4.1.</span> <span class="toc-text">L1、L2线性变换的实现</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#s-han-shu-de-shi-xian"><span class="toc-number">1.0.4.2.</span> <span class="toc-text">S函数的实现</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#wo-de-dai-ma-dai-wan-shan"><span class="toc-number">1.1.</span> <span class="toc-text">我的代码（待完善）</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#quan-0-shu-ru-ce-shi-shi-li"><span class="toc-number">1.1.0.1.</span> <span class="toc-text">全0输入测试示例</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#quan-1-shu-ru-ce-shi-shi-li"><span class="toc-number">1.1.0.2.</span> <span class="toc-text">全1输入测试示例</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#dai-wan-shan-de-di-fang"><span class="toc-number">1.1.1.</span> <span class="toc-text">待完善的地方</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#zong-jie"><span class="toc-number">1.2.</span> <span class="toc-text">总结</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#yin-yong"><span class="toc-number">1.3.</span> <span class="toc-text">引用</span></a></li></ol></li></ol>
-    </div>
-  </span>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/contact" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-comments"></i>
+			
+			留言板
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/friends" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-address-book"></i>
+			
+			友情链接
+		</a>
+          
+        </li>
+        
+        
+        <li><div class="divider"></div></li>
+        <li>
+            <a href="https://github.com/blinkfox/hexo-theme-matery" class="waves-effect waves-light" target="_blank">
+                <i class="fab fa-github-square fa-fw"></i>Fork Me
+            </a>
+        </li>
+        
+    </ul>
 </div>
 
+
+        </div>
+
+        
+            <style>
+    .nav-transparent .github-corner {
+        display: none !important;
+    }
+
+    .github-corner {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        right: 0;
+        border: 0;
+        transform: scale(1.1);
+    }
+
+    .github-corner svg {
+        color: #0f9d58;
+        fill: #fff;
+        height: 64px;
+        width: 64px;
+    }
+
+    .github-corner:hover .octo-arm {
+        animation: a 0.56s ease-in-out;
+    }
+
+    .github-corner .octo-arm {
+        animation: none;
+    }
+
+    @keyframes a {
+        0%,
+        to {
+            transform: rotate(0);
+        }
+        20%,
+        60% {
+            transform: rotate(-25deg);
+        }
+        40%,
+        80% {
+            transform: rotate(10deg);
+        }
+    }
+</style>
+
+<a href="https://github.com/blinkfox/hexo-theme-matery" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
+   data-tooltip="Fork Me" data-position="left" data-delay="50">
+    <svg viewBox="0 0 250 250" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor" class="octo-body"></path>
+    </svg>
+</a>
+        
+    </nav>
+
+</header>
+
     
-    <div class="content index py4">
-        
-        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
-  <header>
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/22.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">GMT 0001.1-2012 祖冲之序列密码算法</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
     
-    <h1 class="posttitle" itemprop="name headline">
-        GMT 0001.1-2012 祖冲之序列密码算法
-    </h1>
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
 
+    #articleContent :focus {
+        outline: none;
+    }
 
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
 
-    <div class="meta">
-      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
-        <span itemprop="name">MirRoR4s</span>
-      </span>
-      
-    <div class="postdate">
-      
-        <time datetime="2022-09-21T14:57:19.000Z" itemprop="datePublished">2022-09-21</time>
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        padding: 35px 0 15px 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        padding-bottom: 30px;
+        overflow: auto;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+
+        position: absolute;
+        right: 23.5vw;
+        display: block;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/Crypto/">
+                                <span class="chip bg-color">Crypto</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2022-09-21
+                </div>
+                
+
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
+                    2022-10-20
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    5.8k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    28 分
+                </div>
+                
+
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+        </div>
+        <hr class="clearfix">
+
         
-        (Updated: <time datetime="2022-10-20T08:31:18.268Z" itemprop="dateModified">2022-10-20</time>)
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.css">
         
-      
-    </div>
+
+        
+
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <!--toc-->
 
 
-      
 
-      
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link-link" href="/tags/Crypto/" rel="tag">Crypto</a>
-    </div>
-
-
-    </div>
-  </header>
-  
-
-  <div class="content" itemprop="articleBody">
-    <!--toc-->
 <span id="more"></span>
+
+
+
 <h2 id="zu-chong-zhi-xu-lie-mi-ma-suan-fa-di-1-bu-fen-suan-fa-miao-shu"><a href="#祖冲之序列密码算法-第-1-部分：算法描述" class="headerlink" title="祖冲之序列密码算法 第 1 部分：算法描述"></a>祖冲之序列密码算法 第 1 部分：算法描述<a href="#zu-chong-zhi-xu-lie-mi-ma-suan-fa-di-1-bu-fen-suan-fa-miao-shu" class="header-anchor">#</a></h2><p>具体的内容在pdf已讲述得很清楚，所以总结主要囊括在一些细节的部分。</p>
 <h4 id="lfsr-chu-shi-hua-mo-shi"><a href="#LFSR初始化模式" class="headerlink" title="LFSR初始化模式"></a>LFSR初始化模式<a href="#lfsr-chu-shi-hua-mo-shi" class="header-anchor">#</a></h4><p>初始化模式接收一个31比特字u。u是由非线性函数F的32比特输出W通过舍弃最低位比特得到。</p>
 <p>1、注意到在初始化模式中反馈函数一共只使用了16个寄存器中的5个，分别是</p>
-<p>$s<em>{15},s</em>{13},s<em>{10},s_4,s</em>{0}$。<strong>但这五个寄存器前面的乘数目前不知道是如何选择的</strong>。$2^{15}s<em>{15}$ 表示$s</em>{15}$ 左移15位，其余同理。（这里pdf没有明确表明是否这个表示乘法）由此可见，祖冲之序列密码算法的LFSR并不是寻常的定义在GF(2)上的LFSR。</p>
+<p>$s_{15},s_{13},s_{10},s_4,s_{0}$。<strong>但这五个寄存器前面的乘数目前不知道是如何选择的</strong>。$2^{15}s_{15}$ 表示$s_{15}$ 左移15位，其余同理。（这里pdf没有明确表明是否这个表示乘法）由此可见，祖冲之序列密码算法的LFSR并不是寻常的定义在GF(2)上的LFSR。</p>
 <p>下方代码是不够优秀的，没有实现文档所给的快速模乘算法。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">LFSRWithInitialisationMode</span>(<span class="params">self, u</span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    初始化模式下，LFSR接收一个31比特字u，u是由非线性函数F的32比特输出W通过舍弃最低比特位得到</span></span><br><span class="line"><span class="string">    :param u: 一个31比特字</span></span><br><span class="line"><span class="string">    :return:</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">    v = ((self.LFSR_S[<span class="number">15</span>] &lt;&lt; <span class="number">15</span>) + (self.LFSR_S[<span class="number">13</span>] &lt;&lt; <span class="number">17</span>) + (self.LFSR_S[<span class="number">10</span>] &lt;&lt; <span class="number">21</span>) + (self.LFSR_S[<span class="number">4</span>] &lt;&lt; <span class="number">20</span>) + (</span><br><span class="line">                self.LFSR_S[<span class="number">0</span>] + (self.LFSR_S[<span class="number">0</span>] &lt;&lt; <span class="number">8</span>))) % ((<span class="number">2</span> ** <span class="number">31</span>) - <span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">    s16 = (u + v) % ((<span class="number">2</span> ** <span class="number">31</span>) - <span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> s16 == <span class="number">0</span>:</span><br><span class="line">        s16 = <span class="number">2</span> ** <span class="number">31</span> - <span class="number">1</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, <span class="number">16</span>):</span><br><span class="line">        self.LFSR_S[i - <span class="number">1</span>] = self.LFSR_S[i]</span><br><span class="line">    self.LFSR_S[<span class="number">15</span>] = s16</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">def LFSRWithInitialisationMode(self, u):
+    &quot;&quot;&quot;
+    初始化模式下，LFSR接收一个31比特字u，u是由非线性函数F的32比特输出W通过舍弃最低比特位得到
+    :param u: 一个31比特字
+    :return:
+    &quot;&quot;&quot;
+
+    v &#x3D; ((self.LFSR_S[15] &lt;&lt; 15) + (self.LFSR_S[13] &lt;&lt; 17) + (self.LFSR_S[10] &lt;&lt; 21) + (self.LFSR_S[4] &lt;&lt; 20) + (
+                self.LFSR_S[0] + (self.LFSR_S[0] &lt;&lt; 8))) % ((2 ** 31) - 1)
+
+    s16 &#x3D; (u + v) % ((2 ** 31) - 1)
+
+    if s16 &#x3D;&#x3D; 0:
+        s16 &#x3D; 2 ** 31 - 1
+    for i in range(1, 16):
+        self.LFSR_S[i - 1] &#x3D; self.LFSR_S[i]
+    self.LFSR_S[15] &#x3D; s16<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
 <h5 id="zuc-de-mo-jia-yun-suan"><a href="#ZUC的模加运算" class="headerlink" title="ZUC的模加运算"></a>ZUC的模加运算<a href="#zuc-de-mo-jia-yun-suan" class="header-anchor">#</a></h5><p>由于模乘涉及到了模加，所以先分析一下模加：</p>
-<p><img src="images/image-20221019105059240.png" alt="image-20221019105059240"></p>
-<p>从这里其实也能看出为什么祖冲之序列密码算法要使用31比特的字，应该是考虑到了计算机的实际应用实现。因为现有平台大多都是基于32位/64位处理的，所以使用两个31比特字的加法计算机能够直接存储结果。</p>
+<p><img src="/../images/image-20221019105059240.png" alt="image-20221019105059240"></p>
+<p>从这里其实也能看出为什么祖冲之序列密码算法要使用31比特的字，应该是考虑到了计算机的实际应用实现。因为现有平台大多都是基于32位&#x2F;64位处理的，所以使用两个31比特字的加法计算机能够直接存储结果。</p>
 <p>这是因为两个31比特字相加，其结果不会超过32比特，不会超过以32位作为字长的计算机的存储范围。</p>
 <p>当然，即使某数超过了计算机字长使得计算机无法直接存储，我们也可以在这台计算机上面存储这个整数，只不过不能使用一个计算机字来存储就是了。如果学习过数论及其应用的话，就知道可以使用中国剩余定理来帮助我们解决这类问题。</p>
 <p>现在回到算法分析上来，第一步是直接计算a+b的和并赋值给c，这没什么好说的。</p>
@@ -199,272 +535,1292 @@
 <p><code>c=(c&amp;0x7fffffff+(c&gt;&gt;31))</code></p>
 <p>那么第二步实际上所做的操作就是将c循环左移一位。</p>
 <p>其实从这里文档也教会我们如何进行循环移位的操作，我在模乘的时候用python实现了这个循环移位。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">ModularAddition</span>(<span class="params">self,a,b</span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    :param a:</span></span><br><span class="line"><span class="string">    :param b:</span></span><br><span class="line"><span class="string">    :return:</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    c = a + b</span><br><span class="line">    c = (c&amp;<span class="number">0x7fffffff</span>) + (c &gt;&gt; <span class="number">31</span>)</span><br><span class="line">    <span class="keyword">return</span> c</span><br></pre></td></tr></table></figure>
-<h5 id="zuc-de-mo-cheng-yun-suan-wei-wan-cheng"><a href="#ZUC的模乘运算（未完成）" class="headerlink" title="ZUC的模乘运算（未完成）"></a>ZUC的模乘运算（未完成）<a href="#zuc-de-mo-cheng-yun-suan-wei-wan-cheng" class="header-anchor">#</a></h5><p>在后续我阅读到pdf的末尾的时候，我大概明白乘数的选择原理了。当我们想要计算两个31比特字 $ab\,mod(2^{31}-1)$ 的时候，如果b具有<strong>较低的汉明重量</strong>，那么我们就可以通过31比特的循环移位运算和模 $2^{31}-1$的加法运算快速实现两个31比特字模 $2^{31}-1$ 的乘法。而当b可以被写为2的幂次和的时候，其就具有较低的汉明权重，所以我们可以看到初始化模式中乘数都是2的幂次（$1+2^8=2^0+2^8$）</p>
-<p><img src="images/image-20221019102909961.png" alt="image-20221019102909961"></p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">def ModularAddition(self,a,b):
+    &quot;&quot;&quot;
+
+    :param a:
+    :param b:
+    :return:
+    &quot;&quot;&quot;
+    c &#x3D; a + b
+    c &#x3D; (c&amp;0x7fffffff) + (c &gt;&gt; 31)
+    return c<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<h5 id="zuc-de-mo-cheng-yun-suan-wei-wan-cheng"><a href="#ZUC的模乘运算（未完成）" class="headerlink" title="ZUC的模乘运算（未完成）"></a>ZUC的模乘运算（未完成）<a href="#zuc-de-mo-cheng-yun-suan-wei-wan-cheng" class="header-anchor">#</a></h5><p>在后续我阅读到pdf的末尾的时候，我大概明白乘数的选择原理了。当我们想要计算两个31比特字 $ab,mod(2^{31}-1)$ 的时候，如果b具有<strong>较低的汉明重量</strong>，那么我们就可以通过31比特的循环移位运算和模 $2^{31}-1$的加法运算快速实现两个31比特字模 $2^{31}-1$ 的乘法。而当b可以被写为2的幂次和的时候，其就具有较低的汉明权重，所以我们可以看到初始化模式中乘数都是2的幂次（$1+2^8&#x3D;2^0+2^8$）</p>
+<p><img src="/../images/image-20221019102909961.png" alt="image-20221019102909961"></p>
 <p>由于我的数学水平还不够，没有办法从理论上证明上式，但无论如何还是记录一下分析的过程</p>
-<p>为了表达方便，令 $2^{31}-1=m$</p>
-<script type="math/tex; mode=display">
-\begin{aligned}
-ab\,mod(2^{31}-1) &= a(2^{i}+2^{j}+2^k)\,mod\,m\\
-&=(2^ia+2^ja+2^ka)\,mod\,m\\
-&=(2^ia\mod m) + (2^ja\mod m) + (2^ka \mod m ) \mod m\\
-
-\end{aligned}</script><p>先分析 $2^ia \mod m$ 是什么情况</p>
-<p>首先我们根据带余除法可以知道</p>
-<script type="math/tex; mode=display">
-\begin{aligned}
-2^i\mod m = 2^i\mod (2^{31}-1) &= 2^{i-31}&&if\ i>=31\\
-&=2^i&&if\,i<31
-\end{aligned}</script><p>令 $2^ia$ = $(a<em>k,a</em>{k-1},a<em>{k-2},….a_0)_2=a_k2^k+ a</em>{k-1}2^{k-1}+….+a0$</p>
-<p>我们假设 $k&gt;=31$ 否则 $2^i \mod m =2^i$，而且假设 $k-j &gt; j$</p>
-<p>令 $k = j+31,k-j=31$，这就是说k和31的差值是j，那么前 $j+1$ 项在模 $m$ 后等价于其对应指数减去31,剩余的项则保持不变。我用5个省略号来区分这两种不同的项</p>
-<p>则</p>
-<script type="math/tex; mode=display">
-\begin{aligned}
-
-2^ia\mod m &=a_k2^k+a_{k-1}2^{k-1}+...+a_{k-j}2^{k-j}+.....+a_j2^j+...+a_0 \\
-&=a_k2^{k-31}+a_{k-1}2^{k-32}+...+a_{k-j}2^{k-j-31}\\
-&+.....+a_j2^j+a_{j-1}2^{j-1}+.....+a_0\\
-&=a_k2^{k-31}+a_{k-1}2^{k-32}+....+a_{k-j}2^{k-j-31}\\
-&+....+a_j2^{k-31}+a_{j-1}2^{k-32}+.....+a_0\\
-&=(a_k+a_j)2^{k-31}+(a_{k-1}+a_{j-1})2^{k-32}+...+(a_{k-j}+a_0)2^{k-31-j}\\
-&+a_{k-j-1}2^{k-j-1}+a_{k-j-2}2^{k-j-2}+....+a_{j+1}2^{j+1}
-\end{aligned}</script><p>其中 $k-31-j&gt;=0$</p>
-<p>原来系数有$k+1$ 项的，现在变为 $k+1-(j+1)= k-j-1+1=31$ 项了。</p>
+<p>为了表达方便，令 $2^{31}-1&#x3D;m$</p>
+<p>$$<br>\begin{aligned}<br>ab,mod(2^{31}-1) &amp;&#x3D; a(2^{i}+2^{j}+2^k),mod,m\<br>&amp;&#x3D;(2^ia+2^ja+2^ka),mod,m\<br>&amp;&#x3D;(2^ia\mod m) + (2^ja\mod m) + (2^ka \mod m ) \mod m\</p>
+<p>\end{aligned}<br>$$</p>
+<p>先分析 $2^ia \mod m$ 是什么情况</p>
+<p>首先我们根据带余除法可以知道<br>$$<br>\begin{aligned}<br>2^i\mod m &#x3D; 2^i\mod (2^{31}-1) &amp;&#x3D; 2^{i-31}&amp;&amp;if\ i&gt;&#x3D;31\<br>&amp;&#x3D;2^i&amp;&amp;if,i&lt;31<br>\end{aligned}<br>$$<br>令 $2^ia$ &#x3D; $(a_k,a_{k-1},a_{k-2},….a_0)<em>2&#x3D;a_k2^k+ a</em>{k-1}2^{k-1}+….+a0$</p>
+<p>我们假设 $k&gt;&#x3D;31$ 否则 $2^i \mod m &#x3D;2^i$，而且假设 $k-j &gt; j$</p>
+<p>令 $k &#x3D; j+31,k-j&#x3D;31$，这就是说k和31的差值是j，那么前 $j+1$ 项在模 $m$ 后等价于其对应指数减去31,剩余的项则保持不变。我用5个省略号来区分这两种不同的项</p>
+<p>则<br>$$<br>\begin{aligned}</p>
+<p>2^ia\mod m &amp;&#x3D;a_k2^k+a_{k-1}2^{k-1}+…+a_{k-j}2^{k-j}+…..+a_j2^j+…+a_0 \<br>&amp;&#x3D;a_k2^{k-31}+a_{k-1}2^{k-32}+…+a_{k-j}2^{k-j-31}\<br>&amp;+…..+a_j2^j+a_{j-1}2^{j-1}+…..+a_0\<br>&amp;&#x3D;a_k2^{k-31}+a_{k-1}2^{k-32}+….+a_{k-j}2^{k-j-31}\<br>&amp;+….+a_j2^{k-31}+a_{j-1}2^{k-32}+…..+a_0\<br>&amp;&#x3D;(a_k+a_j)2^{k-31}+(a_{k-1}+a_{j-1})2^{k-32}+…+(a_{k-j}+a_0)2^{k-31-j}\<br>&amp;+a_{k-j-1}2^{k-j-1}+a_{k-j-2}2^{k-j-2}+….+a_{j+1}2^{j+1}<br>\end{aligned}<br>$$<br>其中 $k-31-j&gt;&#x3D;0$</p>
+<p>原来系数有$k+1$ 项的，现在变为 $k+1-(j+1)&#x3D; k-j-1+1&#x3D;31$ 项了。</p>
 <p>我的目标原来是想分析出 $2^ia \mod m$ 等价于 下图等号右边第一个式子的：</p>
-<p><img src="images/image-20221019192754643.png" alt="image-20221019192754643"></p>
+<p><img src="/../images/image-20221019192754643.png" alt="image-20221019192754643"></p>
 <p>很显然，我没有成功。</p>
-<p>现在假设我们要计算 $2^{31}+1\mod m = 2$</p>
-<p>根据上式可以知道 $k=31,j=0$</p>
-<p>所以$2^{31}+1 \mod m = (a<em>{31}+a_0)2^{0}+a</em>{30}2^{30}+…+a_12^1$ 一共31项</p>
+<p>现在假设我们要计算 $2^{31}+1\mod m &#x3D; 2$</p>
+<p>根据上式可以知道 $k&#x3D;31,j&#x3D;0$</p>
+<p>所以$2^{31}+1 \mod m &#x3D; (a_{31}+a_0)2^{0}+a_{30}2^{30}+…+a_12^1$ 一共31项</p>
 <p>这等价于 $2^{31}+1$ 去除掉最高最低项之后的数（在这里是0）再 加上 （最高项和最低项）的和。</p>
-<p>写成二进制即是：</p>
-<script type="math/tex; mode=display">
-\begin{aligned}
-2^{31}+1&=10000000000000000000000000000001_2\\
-&=(a_{31}+a_0)2^0\\
-&=2
-
-\end{aligned}</script><p>如果是 $2^{31}+5\mod m $的话就等价于</p>
-<script type="math/tex; mode=display">
-\begin{aligned}
-2^{31}+5&=10000000000000000000000000000101_2\\
-&=(1+1)2^0+1*2^2=6
-\end{aligned}</script><p> 分析到这就懒得继续了，有空再看看吧…</p>
+<p>写成二进制即是：<br>$$<br>\begin{aligned}<br>2^{31}+1&amp;&#x3D;10000000000000000000000000000001_2\<br>&amp;&#x3D;(a_{31}+a_0)2^0\<br>&amp;&#x3D;2</p>
+<p>\end{aligned}<br>$$<br>如果是 $2^{31}+5\mod m $的话就等价于<br>$$<br>\begin{aligned}<br>2^{31}+5&amp;&#x3D;10000000000000000000000000000101_2\<br>&amp;&#x3D;(1+1)2^0+1*2^2&#x3D;6<br>\end{aligned}<br>$$<br> 分析到这就懒得继续了，有空再看看吧…</p>
 <p>现在假设我们要用python实现上式，我们该如何编写我们的代码？</p>
 <p>首先我们选择一个31比特的整数a</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> random</span><br><span class="line">a = random.getrandbits(<span class="number">31</span>)</span><br><span class="line"><span class="keyword">assert</span> a.bit_length() == <span class="number">31</span></span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">import random
+a &#x3D; random.getrandbits(31)
+assert a.bit_length() &#x3D;&#x3D; 31<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
 <p>注意到断言不一定每次都成功，我猜测是因为python会自动省略高位的0，从而使得整数的比特位数变小了。</p>
-<p>然后我们选择一个具有较低汉明权重的整数b，这里就选 $b=2^{15}$</p>
-<p>因为 $2^{15} = 2^{15}+2^{0}+2^{0}$</p>
-<p>所以 $i=15,j=0,k=0$</p>
-<figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">b</span><span class="operator">=</span><span class="number">2</span>**<span class="number">15</span></span><br></pre></td></tr></table></figure>
+<p>然后我们选择一个具有较低汉明权重的整数b，这里就选 $b&#x3D;2^{15}$</p>
+<p>因为 $2^{15} &#x3D; 2^{15}+2^{0}+2^{0}$</p>
+<p>所以 $i&#x3D;15,j&#x3D;0,k&#x3D;0$</p>
+<pre class="line-numbers language-none"><code class="language-none">b&#x3D;2**15<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <p>根据pdf中的式子，我们需要先实现循环移位运算。下面是我自己书写的一个代码，目前没有发现错误。</p>
-<p>后续继续测试还是发现了不少问题，比如循环移位0位需要特判一下。然后由于python会自动省略高位的0，在循环移位的时候可能会出现移位数为负数的情况，这也需要特别处理。从这我发现以后还是用c/c++来写更契合。</p>
-<p>注：在后续测试发现当j=k=0的时候，不可以加上这两项，否则答案是不对的。</p>
-<p><img src="images/image-20221019142911310.png" alt="image-20221019142911310"></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">CyclicShift</span>:</span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    循环移位类，负责对传入的整数进行循环移位</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, num: <span class="built_in">int</span>,bit_length:<span class="built_in">int</span></span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">        :param num: 待循环移位的整数</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        self.num = num</span><br><span class="line">        self.length = bit_length</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">rotateLeft</span>(<span class="params">self, bit</span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        循环左移方法</span></span><br><span class="line"><span class="string">        思路是先将num左移bit位 = n1，在将num右移(n-bit)位 = n2，n是传入的的比特位数。最后移位的结果 res = n1 + n2</span></span><br><span class="line"><span class="string">        :param bit: 左移的bit数量</span></span><br><span class="line"><span class="string">        :return: 左移后的值，整数</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        bit = bit % self.length</span><br><span class="line">        n1 = (self.num &lt;&lt; bit) &amp; ((<span class="number">2</span> ** self.length) - <span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">        n2 = (self.num &gt;&gt; (self.length - bit))</span><br><span class="line">        <span class="keyword">return</span> (n1 + n2) &amp; ((<span class="number">2</span> ** self.length) - <span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># def rotateRight(self,bit) -&gt; int :</span></span><br></pre></td></tr></table></figure>
+<p>后续继续测试还是发现了不少问题，比如循环移位0位需要特判一下。然后由于python会自动省略高位的0，在循环移位的时候可能会出现移位数为负数的情况，这也需要特别处理。从这我发现以后还是用c&#x2F;c++来写更契合。</p>
+<p>注：在后续测试发现当j&#x3D;k&#x3D;0的时候，不可以加上这两项，否则答案是不对的。</p>
+<p><img src="/../images/image-20221019142911310.png" alt="image-20221019142911310"></p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">class CyclicShift:
+    &quot;&quot;&quot;
+    循环移位类，负责对传入的整数进行循环移位
+    &quot;&quot;&quot;
+
+    def __init__(self, num: int,bit_length:int):
+        &quot;&quot;&quot;
+
+        :param num: 待循环移位的整数
+        &quot;&quot;&quot;
+        self.num &#x3D; num
+        self.length &#x3D; bit_length
+
+    def rotateLeft(self, bit) -&gt; int:
+        &quot;&quot;&quot;
+        循环左移方法
+        思路是先将num左移bit位 &#x3D; n1，在将num右移(n-bit)位 &#x3D; n2，n是传入的的比特位数。最后移位的结果 res &#x3D; n1 + n2
+        :param bit: 左移的bit数量
+        :return: 左移后的值，整数
+        &quot;&quot;&quot;
+        bit &#x3D; bit % self.length
+        n1 &#x3D; (self.num &lt;&lt; bit) &amp; ((2 ** self.length) - 1)
+
+        n2 &#x3D; (self.num &gt;&gt; (self.length - bit))
+        return (n1 + n2) &amp; ((2 ** self.length) - 1)
+
+    # def rotateRight(self,bit) -&gt; int :<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
 <p>所以现在我们就将a循环左移15位加上a循环左移0位再加上a循环左移0位，注意加法是模 $2^{31}-1$</p>
 <p>但是悲哀的是模乘算法不正确，我检查了一下我的循环移位应该没有出问题，我觉得我可能误会了pdf给出的算法的意思。</p>
-<h4 id="lfsr-gong-zuo-mo-shi"><a href="#LFSR工作模式" class="headerlink" title="LFSR工作模式"></a>LFSR工作模式<a href="#lfsr-gong-zuo-mo-shi" class="header-anchor">#</a></h4><p><img src="images/image-20221017170536707.png" alt="image-20221017170536707"></p>
+<h4 id="lfsr-gong-zuo-mo-shi"><a href="#LFSR工作模式" class="headerlink" title="LFSR工作模式"></a>LFSR工作模式<a href="#lfsr-gong-zuo-mo-shi" class="header-anchor">#</a></h4><p><img src="/../images/image-20221017170536707.png" alt="image-20221017170536707"></p>
 <p>工作模式的反馈函数和初始化模式的是一样的</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">LFSRWithWorkMode</span>(<span class="params">self</span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    工作模式下LFSR不接收任何输入</span></span><br><span class="line"><span class="string">    :return:</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    s16 = ((self.LFSR_S[<span class="number">15</span>] &lt;&lt; <span class="number">15</span>) + (self.LFSR_S[<span class="number">13</span>] &lt;&lt; <span class="number">17</span>) + (self.LFSR_S[<span class="number">10</span>] &lt;&lt; <span class="number">21</span>) + (self.LFSR_S[<span class="number">4</span>] &lt;&lt; <span class="number">20</span>) + (</span><br><span class="line">                self.LFSR_S[<span class="number">0</span>] + (self.LFSR_S[<span class="number">0</span>] &lt;&lt; <span class="number">8</span>))) % ((<span class="number">2</span> ** <span class="number">31</span>) - <span class="number">1</span>)</span><br><span class="line">    <span class="keyword">if</span> s16 == <span class="number">0</span>:</span><br><span class="line">        s16 = <span class="number">2</span> ** <span class="number">31</span> - <span class="number">1</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, <span class="number">16</span>):</span><br><span class="line">        self.LFSR_S[i - <span class="number">1</span>] = self.LFSR_S[i]</span><br><span class="line">    self.LFSR_S[<span class="number">15</span>] = s16</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">def LFSRWithWorkMode(self):
+    &quot;&quot;&quot;
+    工作模式下LFSR不接收任何输入
+    :return:
+    &quot;&quot;&quot;
+    s16 &#x3D; ((self.LFSR_S[15] &lt;&lt; 15) + (self.LFSR_S[13] &lt;&lt; 17) + (self.LFSR_S[10] &lt;&lt; 21) + (self.LFSR_S[4] &lt;&lt; 20) + (
+                self.LFSR_S[0] + (self.LFSR_S[0] &lt;&lt; 8))) % ((2 ** 31) - 1)
+    if s16 &#x3D;&#x3D; 0:
+        s16 &#x3D; 2 ** 31 - 1
+    for i in range(1, 16):
+        self.LFSR_S[i - 1] &#x3D; self.LFSR_S[i]
+    self.LFSR_S[15] &#x3D; s16<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
 <h4 id="bi-te-chong-zu-br"><a href="#比特重组-BR" class="headerlink" title="比特重组 BR"></a>比特重组 BR<a href="#bi-te-chong-zu-br" class="header-anchor">#</a></h4><p>比特重组就是从LFSR的寄存器单元抽取128比特组成4个32比特的字。即BR函数输出4个32比特的字 $X_0,X_1,X_2,X_3$</p>
-<p><img src="images/image-20221019154226976.png" alt="image-20221019154226976"></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">BitReconstruction</span>(<span class="params">self</span>):</span><br><span class="line">       <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">       比特重组从LFSR的寄存器单元抽取128比特组成4个32比特字X0,X1,X2,X3</span></span><br><span class="line"><span class="string">       :return:</span></span><br><span class="line"><span class="string">       &quot;&quot;&quot;</span></span><br><span class="line">       X0 = self.BitLink_H(<span class="number">31</span>, self.LFSR_S[<span class="number">15</span>], self.LFSR_S[<span class="number">14</span>])</span><br><span class="line">     </span><br><span class="line"></span><br><span class="line">       X1 = self.BitLink_L(<span class="number">31</span>, self.LFSR_S[<span class="number">11</span>], self.LFSR_S[<span class="number">9</span>])</span><br><span class="line"></span><br><span class="line">       X2 = self.BitLink_L(<span class="number">31</span>, self.LFSR_S[<span class="number">7</span>], self.LFSR_S[<span class="number">5</span>])</span><br><span class="line">       X3 = self.BitLink_L(<span class="number">31</span>, self.LFSR_S[<span class="number">2</span>], self.LFSR_S[<span class="number">0</span>])</span><br><span class="line"></span><br><span class="line">       <span class="keyword">return</span> [X0, X1, X2, X3]</span><br></pre></td></tr></table></figure>
-<h5 id="bi-te-lian-jie-de-shi-xian"><a href="#比特链接的实现：" class="headerlink" title="比特链接的实现："></a>比特链接的实现：<a href="#bi-te-lian-jie-de-shi-xian" class="header-anchor">#</a></h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">BitLink_H</span>(<span class="params">self,n,a, b</span>):</span><br><span class="line">    <span class="comment"># assert a.bit_length()&lt;=31</span></span><br><span class="line">    ans = ((a &gt;&gt; (n - <span class="number">16</span>)) &amp; (<span class="number">2</span> ** <span class="number">16</span> - <span class="number">1</span>)) &lt;&lt; <span class="number">16</span> ^ (b &amp; <span class="number">0x0000ffff</span>)</span><br><span class="line">    <span class="keyword">return</span> ans</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">BitLink_L</span>(<span class="params">self,n,a,b</span>):</span><br><span class="line">    ans = ((a &amp; <span class="number">0x0000ffff</span>) &lt;&lt; <span class="number">16</span>) ^ ((b &gt;&gt; (n-<span class="number">16</span>)) &amp; <span class="number">0x0000ffff</span>)</span><br><span class="line">    <span class="keyword">return</span> ans</span><br></pre></td></tr></table></figure>
+<p><img src="/../images/image-20221019154226976.png" alt="image-20221019154226976"></p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">def BitReconstruction(self):
+       &quot;&quot;&quot;
+       比特重组从LFSR的寄存器单元抽取128比特组成4个32比特字X0,X1,X2,X3
+       :return:
+       &quot;&quot;&quot;
+       X0 &#x3D; self.BitLink_H(31, self.LFSR_S[15], self.LFSR_S[14])
+     
+
+       X1 &#x3D; self.BitLink_L(31, self.LFSR_S[11], self.LFSR_S[9])
+
+       X2 &#x3D; self.BitLink_L(31, self.LFSR_S[7], self.LFSR_S[5])
+       X3 &#x3D; self.BitLink_L(31, self.LFSR_S[2], self.LFSR_S[0])
+
+       return [X0, X1, X2, X3]<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<h5 id="bi-te-lian-jie-de-shi-xian"><a href="#比特链接的实现：" class="headerlink" title="比特链接的实现："></a>比特链接的实现：<a href="#bi-te-lian-jie-de-shi-xian" class="header-anchor">#</a></h5><pre class="line-numbers language-python" data-language="python"><code class="language-python">def BitLink_H(self,n,a, b):
+    # assert a.bit_length()&lt;&#x3D;31
+    ans &#x3D; ((a &gt;&gt; (n - 16)) &amp; (2 ** 16 - 1)) &lt;&lt; 16 ^ (b &amp; 0x0000ffff)
+    return ans
+
+
+def BitLink_L(self,n,a,b):
+    ans &#x3D; ((a &amp; 0x0000ffff) &lt;&lt; 16) ^ ((b &gt;&gt; (n-16)) &amp; 0x0000ffff)
+    return ans<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>在实践中的例子：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">BitLink</span>(<span class="params">a,b</span>):</span><br><span class="line">    <span class="comment">#assert a.bit_length()&lt;=31</span></span><br><span class="line">    l1 = <span class="number">31</span></span><br><span class="line">    l2 = <span class="number">31</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="built_in">bin</span>(a)[<span class="number">2</span>:].zfill(<span class="number">31</span>)[:<span class="number">16</span>])</span><br><span class="line">    <span class="built_in">print</span>(<span class="built_in">bin</span>((a &gt;&gt; (l1-<span class="number">16</span>)) &amp; (<span class="number">2</span>**<span class="number">16</span>-<span class="number">1</span>))[<span class="number">2</span>:].zfill(<span class="number">16</span>))</span><br><span class="line">    <span class="built_in">print</span>(<span class="built_in">bin</span>(b)[<span class="number">2</span>:].zfill(<span class="number">31</span>)[-<span class="number">16</span>:])</span><br><span class="line">    <span class="built_in">print</span>(<span class="built_in">bin</span>(b&amp;<span class="number">0x0000ffff</span>)[<span class="number">2</span>:].zfill(<span class="number">16</span>))</span><br><span class="line">    ans = ((a &gt;&gt; (l1-<span class="number">16</span>)) &amp; (<span class="number">2</span>**<span class="number">16</span>-<span class="number">1</span>))&lt;&lt;<span class="number">16</span> ^ (b&amp;<span class="number">0x0000ffff</span>)</span><br><span class="line">    <span class="keyword">return</span> ans</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">t1 = <span class="built_in">bin</span>(a)[<span class="number">2</span>:].zfill(<span class="number">31</span>)</span><br><span class="line">t2 = <span class="built_in">bin</span>(b)[<span class="number">2</span>:].zfill(<span class="number">31</span>)</span><br><span class="line"><span class="built_in">print</span>(t1[:<span class="number">16</span>]+t2[-<span class="number">16</span>:])</span><br><span class="line"></span><br><span class="line"><span class="comment">#1011100100000001</span></span><br><span class="line">ans = BitLink(a,b)</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">bin</span>(ans)[<span class="number">2</span>:].zfill(<span class="number">32</span>))</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">def BitLink(a,b):
+    #assert a.bit_length()&lt;&#x3D;31
+    l1 &#x3D; 31
+    l2 &#x3D; 31
+    print(bin(a)[2:].zfill(31)[:16])
+    print(bin((a &gt;&gt; (l1-16)) &amp; (2**16-1))[2:].zfill(16))
+    print(bin(b)[2:].zfill(31)[-16:])
+    print(bin(b&amp;0x0000ffff)[2:].zfill(16))
+    ans &#x3D; ((a &gt;&gt; (l1-16)) &amp; (2**16-1))&lt;&lt;16 ^ (b&amp;0x0000ffff)
+    return ans
+
+
+t1 &#x3D; bin(a)[2:].zfill(31)
+t2 &#x3D; bin(b)[2:].zfill(31)
+print(t1[:16]+t2[-16:])
+
+#1011100100000001
+ans &#x3D; BitLink(a,b)
+print(bin(ans)[2:].zfill(32))
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
 <h4 id="fei-xian-xing-han-shu-f"><a href="#非线性函数-F" class="headerlink" title="非线性函数 F"></a>非线性函数 F<a href="#fei-xian-xing-han-shu-f" class="header-anchor">#</a></h4><p>该函数包含两个32比特的记忆单元变量R1和R2，这应该是一个全局变量。函数真正的输入是3个32比特字$X_0,X_1,X_2$，输出也是一个32比特的字W。</p>
-<p><img src="images/image-20221018171207331.png" alt="image-20221018171207331"></p>
+<p><img src="/../images/image-20221018171207331.png" alt="image-20221018171207331"></p>
 <p>发现该函数实际上第一行就生成完毕了 $W$ ，后续的操作都是在更新 $R_1$ 和 $R_2$ 这两个全局变量的值。如果我们将其用python语言的形式来表示的话，在我看来应是如下的样子：</p>
 <p>实际在实现循环移位的时候如果将整数转为字符串的形式说实话会很简单，但是在我的印象中似乎很多密码实现还是采用位运算的形式。我不知道整数转字符串计算机底层是如何实现的，但是相比应该没有位运算快速。当然，我的循环移位函数虽然是以位运算为基础，但是不见得就比直接使用字符串来的快。还是要取决于函数的具体实现。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">F</span>(<span class="params">self,X0, X1, X2</span>):</span><br><span class="line"></span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    :param X0: 32比特字X0</span></span><br><span class="line"><span class="string">    :param X1: 32比特子X1</span></span><br><span class="line"><span class="string">    :param X2: 32比特子X2</span></span><br><span class="line"><span class="string">    :return: 一个32比特字W</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    m = <span class="number">2</span>**<span class="number">32</span></span><br><span class="line">    W = ((X0 ^ self.R1) + self.R2) % m</span><br><span class="line">    W1 = (self.R1 + X1) % m</span><br><span class="line">    W2 = self.R2 ^ X2</span><br><span class="line">    t1 = self.BitLink_L(<span class="number">32</span>,W1,W2)</span><br><span class="line">    <span class="keyword">assert</span> <span class="built_in">bin</span>(W1)[<span class="number">2</span>:].zfill(<span class="number">32</span>)[-<span class="number">16</span>:] + <span class="built_in">bin</span>(W2)[<span class="number">2</span>:].zfill(<span class="number">32</span>)[:<span class="number">16</span>] == <span class="built_in">bin</span>(t1)[<span class="number">2</span>:].zfill(<span class="number">32</span>)</span><br><span class="line">    t2 = self.BitLink_L(<span class="number">32</span>,W2,W1)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    self.R1 = self.S(self.L1(t1))</span><br><span class="line">    <span class="keyword">assert</span> <span class="built_in">bin</span>(CyclicShift(t1).rotateLeft(<span class="number">32</span>))[<span class="number">2</span>:].zfill(<span class="number">32</span>) == check(t1,<span class="number">32</span>).zfill(<span class="number">32</span>)</span><br><span class="line"></span><br><span class="line">    self.R2 = self.S(self.L2(t2))</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;r1=&#x27;</span>,<span class="built_in">hex</span>(self.R1))</span><br><span class="line">    <span class="built_in">print</span>(<span class="built_in">hex</span>(self.R2))</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> W</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">def F(self,X0, X1, X2):
+
+    &quot;&quot;&quot;
+
+    :param X0: 32比特字X0
+    :param X1: 32比特子X1
+    :param X2: 32比特子X2
+    :return: 一个32比特字W
+    &quot;&quot;&quot;
+    m &#x3D; 2**32
+    W &#x3D; ((X0 ^ self.R1) + self.R2) % m
+    W1 &#x3D; (self.R1 + X1) % m
+    W2 &#x3D; self.R2 ^ X2
+    t1 &#x3D; self.BitLink_L(32,W1,W2)
+    assert bin(W1)[2:].zfill(32)[-16:] + bin(W2)[2:].zfill(32)[:16] &#x3D;&#x3D; bin(t1)[2:].zfill(32)
+    t2 &#x3D; self.BitLink_L(32,W2,W1)
+
+
+
+    self.R1 &#x3D; self.S(self.L1(t1))
+    assert bin(CyclicShift(t1).rotateLeft(32))[2:].zfill(32) &#x3D;&#x3D; check(t1,32).zfill(32)
+
+    self.R2 &#x3D; self.S(self.L2(t2))
+    print(&#39;r1&#x3D;&#39;,hex(self.R1))
+    print(hex(self.R2))
+
+    return W<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h5 id="l1-l2-xian-xing-bian-huan-de-shi-xian"><a href="#L1、L2线性变换的实现" class="headerlink" title="L1、L2线性变换的实现"></a>L1、L2线性变换的实现<a href="#l1-l2-xian-xing-bian-huan-de-shi-xian" class="header-anchor">#</a></h5><p>这里真是卡住我很久，最后发现是循环左移出了问题导致线性变换结果有误。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">L1</span>(<span class="params">self, X: <span class="built_in">int</span></span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    :param X: 一个32比特的整数</span></span><br><span class="line"><span class="string">    :return: X进行线性变换后的值</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    x = CyclicShift(X,<span class="number">32</span>)</span><br><span class="line">    <span class="keyword">return</span> X ^ (x.rotateLeft(<span class="number">2</span>)) ^ (x.rotateLeft(<span class="number">10</span>)) ^ (x.rotateLeft(<span class="number">18</span>)) ^ (x.rotateLeft(<span class="number">24</span>))</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">L2</span>(<span class="params">self, X: <span class="built_in">int</span></span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    同L1，但所作的线性变换不同</span></span><br><span class="line"><span class="string">    :param X:</span></span><br><span class="line"><span class="string">    :return:</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    x = CyclicShift(X,<span class="number">32</span>)</span><br><span class="line">    <span class="keyword">return</span> X ^ (x.rotateLeft(<span class="number">8</span>)) ^ (x.rotateLeft(<span class="number">14</span>)) ^ (x.rotateLeft(<span class="number">22</span>)) ^ (x.rotateLeft(<span class="number">30</span>))</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">def L1(self, X: int) -&gt; int:
+    &quot;&quot;&quot;
+
+    :param X: 一个32比特的整数
+    :return: X进行线性变换后的值
+    &quot;&quot;&quot;
+    x &#x3D; CyclicShift(X,32)
+    return X ^ (x.rotateLeft(2)) ^ (x.rotateLeft(10)) ^ (x.rotateLeft(18)) ^ (x.rotateLeft(24))
+
+def L2(self, X: int) -&gt; int:
+    &quot;&quot;&quot;
+    同L1，但所作的线性变换不同
+    :param X:
+    :return:
+    &quot;&quot;&quot;
+    x &#x3D; CyclicShift(X,32)
+    return X ^ (x.rotateLeft(8)) ^ (x.rotateLeft(14)) ^ (x.rotateLeft(22)) ^ (x.rotateLeft(30))<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h5 id="s-han-shu-de-shi-xian"><a href="#S函数的实现" class="headerlink" title="S函数的实现"></a>S函数的实现<a href="#s-han-shu-de-shi-xian" class="header-anchor">#</a></h5><p>这一部分也相当不完美，我应该以整数的形式来操作各种参数的，而不是下方的二进制字符串拼接。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">S</span>(<span class="params">self, X</span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    :return:</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">    x = <span class="built_in">bin</span>(X)[<span class="number">2</span>:].zfill(<span class="number">32</span>)</span><br><span class="line">    x0, x1, x2, x3 = x[:<span class="number">8</span>], x[<span class="number">8</span>:<span class="number">16</span>], x[<span class="number">16</span>:<span class="number">24</span>], x[<span class="number">24</span>:<span class="number">32</span>]</span><br><span class="line"></span><br><span class="line">    y0 = self.ZUC_S0[(<span class="number">16</span> * <span class="built_in">int</span>(x0[:<span class="number">4</span>], <span class="number">2</span>)) + <span class="built_in">int</span>(x0[<span class="number">4</span>:], <span class="number">2</span>)]</span><br><span class="line"></span><br><span class="line">    y1 = self.ZUC_S1[(<span class="number">16</span> * <span class="built_in">int</span>(x1[:<span class="number">4</span>], <span class="number">2</span>)) + <span class="built_in">int</span>(x1[<span class="number">4</span>:], <span class="number">2</span>)]</span><br><span class="line"></span><br><span class="line">    y2 = self.ZUC_S0[(<span class="number">16</span> * <span class="built_in">int</span>(x2[:<span class="number">4</span>], <span class="number">2</span>)) + <span class="built_in">int</span>(x2[<span class="number">4</span>:], <span class="number">2</span>)]</span><br><span class="line"></span><br><span class="line">    y3 = self.ZUC_S1[(<span class="number">16</span> * <span class="built_in">int</span>(x3[:<span class="number">4</span>], <span class="number">2</span>)) + <span class="built_in">int</span>(x3[<span class="number">4</span>:], <span class="number">2</span>)]</span><br><span class="line"></span><br><span class="line">    Y = (((y0 &lt;&lt; <span class="number">24</span>)) ^ (y1 &lt;&lt; <span class="number">16</span>) ^ (y2 &lt;&lt; <span class="number">8</span>) ^ y3) &amp; <span class="number">0xffffffff</span></span><br><span class="line">    <span class="keyword">assert</span> (<span class="built_in">bin</span>(y0)[<span class="number">2</span>:].zfill(<span class="number">8</span>) + <span class="built_in">bin</span>(y1)[<span class="number">2</span>:].zfill(<span class="number">8</span>) + <span class="built_in">bin</span>(y2)[<span class="number">2</span>:].zfill(<span class="number">8</span>) + <span class="built_in">bin</span>(y3)[<span class="number">2</span>:].zfill(<span class="number">8</span>)) == <span class="built_in">bin</span>(Y)[<span class="number">2</span>:].zfill( <span class="number">32</span>)</span><br><span class="line">    <span class="keyword">return</span> Y</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">def S(self, X) -&gt; int:
+    &quot;&quot;&quot;
+
+    :return:
+    &quot;&quot;&quot;
+
+    x &#x3D; bin(X)[2:].zfill(32)
+    x0, x1, x2, x3 &#x3D; x[:8], x[8:16], x[16:24], x[24:32]
+
+    y0 &#x3D; self.ZUC_S0[(16 * int(x0[:4], 2)) + int(x0[4:], 2)]
+
+    y1 &#x3D; self.ZUC_S1[(16 * int(x1[:4], 2)) + int(x1[4:], 2)]
+
+    y2 &#x3D; self.ZUC_S0[(16 * int(x2[:4], 2)) + int(x2[4:], 2)]
+
+    y3 &#x3D; self.ZUC_S1[(16 * int(x3[:4], 2)) + int(x3[4:], 2)]
+
+    Y &#x3D; (((y0 &lt;&lt; 24)) ^ (y1 &lt;&lt; 16) ^ (y2 &lt;&lt; 8) ^ y3) &amp; 0xffffffff
+    assert (bin(y0)[2:].zfill(8) + bin(y1)[2:].zfill(8) + bin(y2)[2:].zfill(8) + bin(y3)[2:].zfill(8)) &#x3D;&#x3D; bin(Y)[2:].zfill( 32)
+    return Y<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
 <h3 id="wo-de-dai-ma-dai-wan-shan"><a href="#我的代码（待完善）" class="headerlink" title="我的代码（待完善）"></a>我的代码（待完善）<a href="#wo-de-dai-ma-dai-wan-shan" class="header-anchor">#</a></h3><p>F函数还没有写好，应该是查询S盒的时候有点问题。经过我漫长的排查，终于发现是循环移位的问题，我改来改去还是没有改好。我后面发现当我进行循环移位的时候，我必须要手动指明这个整数的比特位数，因为python会自动省略高比特的0，这一点真的引起很大的麻烦。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br><span class="line">300</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">祖冲之序列密码算法</span></span><br><span class="line"><span class="string">加法是模2的32次方加法</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">check</span>(<span class="params">n, b</span>):</span><br><span class="line">    b = b % n.bit_length()</span><br><span class="line">    t = <span class="built_in">bin</span>(n)[<span class="number">2</span>:]</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">int</span>(t[b:] + t[:b],<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">CyclicShift</span>:</span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    循环移位类，负责对传入的整数进行循环移位</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, num: <span class="built_in">int</span>,bit_length:<span class="built_in">int</span></span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">        :param num: 待循环移位的整数</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        self.num = num</span><br><span class="line">        self.length = bit_length</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">rotateLeft</span>(<span class="params">self, bit</span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        循环左移方法</span></span><br><span class="line"><span class="string">        思路是先将num左移bit位 = n1，在将num右移(n-bit)位 = n2，n是num的比特位数。最后移位的结果 res = n1 + n2</span></span><br><span class="line"><span class="string">        :param bit: 左移的bit数量</span></span><br><span class="line"><span class="string">        :return: 左移后的值，整数</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        bit = bit % self.length</span><br><span class="line">        n1 = (self.num &lt;&lt; bit) &amp; ((<span class="number">2</span> ** self.length) - <span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">        n2 = (self.num &gt;&gt; (self.length - bit))</span><br><span class="line">        <span class="keyword">return</span> (n1 + n2) &amp; ((<span class="number">2</span> ** self.length) - <span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># def rotateRight(self,bit) -&gt; int :</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">ZUC</span>:</span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    S列表是16个移位寄存器</span></span><br><span class="line"><span class="string">    S0和S1分别是两个S盒的子盒</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    LFSR_S = [<span class="number">0</span>] * <span class="number">16</span></span><br><span class="line">    ZUC_S0 = [</span><br><span class="line">        <span class="number">0x3E</span>, <span class="number">0x72</span>, <span class="number">0x5B</span>, <span class="number">0x47</span>, <span class="number">0xCA</span>, <span class="number">0xE0</span>, <span class="number">0x00</span>, <span class="number">0x33</span>, <span class="number">0x04</span>, <span class="number">0xD1</span>, <span class="number">0x54</span>, <span class="number">0x98</span>, <span class="number">0x09</span>, <span class="number">0xB9</span>, <span class="number">0x6D</span>, <span class="number">0xCB</span>,</span><br><span class="line">        <span class="number">0x7B</span>, <span class="number">0x1B</span>, <span class="number">0xF9</span>, <span class="number">0x32</span>, <span class="number">0xAF</span>, <span class="number">0x9D</span>, <span class="number">0x6A</span>, <span class="number">0xA5</span>, <span class="number">0xB8</span>, <span class="number">0x2D</span>, <span class="number">0xFC</span>, <span class="number">0x1D</span>, <span class="number">0x08</span>, <span class="number">0x53</span>, <span class="number">0x03</span>, <span class="number">0x90</span>,</span><br><span class="line">        <span class="number">0x4D</span>, <span class="number">0x4E</span>, <span class="number">0x84</span>, <span class="number">0x99</span>, <span class="number">0xE4</span>, <span class="number">0xCE</span>, <span class="number">0xD9</span>, <span class="number">0x91</span>, <span class="number">0xDD</span>, <span class="number">0xB6</span>, <span class="number">0x85</span>, <span class="number">0x48</span>, <span class="number">0x8B</span>, <span class="number">0x29</span>, <span class="number">0x6E</span>, <span class="number">0xAC</span>,</span><br><span class="line">        <span class="number">0xCD</span>, <span class="number">0xC1</span>, <span class="number">0xF8</span>, <span class="number">0x1E</span>, <span class="number">0x73</span>, <span class="number">0x43</span>, <span class="number">0x69</span>, <span class="number">0xC6</span>, <span class="number">0xB5</span>, <span class="number">0xBD</span>, <span class="number">0xFD</span>, <span class="number">0x39</span>, <span class="number">0x63</span>, <span class="number">0x20</span>, <span class="number">0xD4</span>, <span class="number">0x38</span>,</span><br><span class="line">        <span class="number">0x76</span>, <span class="number">0x7D</span>, <span class="number">0xB2</span>, <span class="number">0xA7</span>, <span class="number">0xCF</span>, <span class="number">0xED</span>, <span class="number">0x57</span>, <span class="number">0xC5</span>, <span class="number">0xF3</span>, <span class="number">0x2C</span>, <span class="number">0xBB</span>, <span class="number">0x14</span>, <span class="number">0x21</span>, <span class="number">0x06</span>, <span class="number">0x55</span>, <span class="number">0x9B</span>,</span><br><span class="line">        <span class="number">0xE3</span>, <span class="number">0xEF</span>, <span class="number">0x5E</span>, <span class="number">0x31</span>, <span class="number">0x4F</span>, <span class="number">0x7F</span>, <span class="number">0x5A</span>, <span class="number">0xA4</span>, <span class="number">0x0D</span>, <span class="number">0x82</span>, <span class="number">0x51</span>, <span class="number">0x49</span>, <span class="number">0x5F</span>, <span class="number">0xBA</span>, <span class="number">0x58</span>, <span class="number">0x1C</span>,</span><br><span class="line">        <span class="number">0x4A</span>, <span class="number">0x16</span>, <span class="number">0xD5</span>, <span class="number">0x17</span>, <span class="number">0xA8</span>, <span class="number">0x92</span>, <span class="number">0x24</span>, <span class="number">0x1F</span>, <span class="number">0x8C</span>, <span class="number">0xFF</span>, <span class="number">0xD8</span>, <span class="number">0xAE</span>, <span class="number">0x2E</span>, <span class="number">0x01</span>, <span class="number">0xD3</span>, <span class="number">0xAD</span>,</span><br><span class="line">        <span class="number">0x3B</span>, <span class="number">0x4B</span>, <span class="number">0xDA</span>, <span class="number">0x46</span>, <span class="number">0xEB</span>, <span class="number">0xC9</span>, <span class="number">0xDE</span>, <span class="number">0x9A</span>, <span class="number">0x8F</span>, <span class="number">0x87</span>, <span class="number">0xD7</span>, <span class="number">0x3A</span>, <span class="number">0x80</span>, <span class="number">0x6F</span>, <span class="number">0x2F</span>, <span class="number">0xC8</span>,</span><br><span class="line">        <span class="number">0xB1</span>, <span class="number">0xB4</span>, <span class="number">0x37</span>, <span class="number">0xF7</span>, <span class="number">0x0A</span>, <span class="number">0x22</span>, <span class="number">0x13</span>, <span class="number">0x28</span>, <span class="number">0x7C</span>, <span class="number">0xCC</span>, <span class="number">0x3C</span>, <span class="number">0x89</span>, <span class="number">0xC7</span>, <span class="number">0xC3</span>, <span class="number">0x96</span>, <span class="number">0x56</span>,</span><br><span class="line">        <span class="number">0x07</span>, <span class="number">0xBF</span>, <span class="number">0x7E</span>, <span class="number">0xF0</span>, <span class="number">0x0B</span>, <span class="number">0x2B</span>, <span class="number">0x97</span>, <span class="number">0x52</span>, <span class="number">0x35</span>, <span class="number">0x41</span>, <span class="number">0x79</span>, <span class="number">0x61</span>, <span class="number">0xA6</span>, <span class="number">0x4C</span>, <span class="number">0x10</span>, <span class="number">0xFE</span>,</span><br><span class="line">        <span class="number">0xBC</span>, <span class="number">0x26</span>, <span class="number">0x95</span>, <span class="number">0x88</span>, <span class="number">0x8A</span>, <span class="number">0xB0</span>, <span class="number">0xA3</span>, <span class="number">0xFB</span>, <span class="number">0xC0</span>, <span class="number">0x18</span>, <span class="number">0x94</span>, <span class="number">0xF2</span>, <span class="number">0xE1</span>, <span class="number">0xE5</span>, <span class="number">0xE9</span>, <span class="number">0x5D</span>,</span><br><span class="line">        <span class="number">0xD0</span>, <span class="number">0xDC</span>, <span class="number">0x11</span>, <span class="number">0x66</span>, <span class="number">0x64</span>, <span class="number">0x5C</span>, <span class="number">0xEC</span>, <span class="number">0x59</span>, <span class="number">0x42</span>, <span class="number">0x75</span>, <span class="number">0x12</span>, <span class="number">0xF5</span>, <span class="number">0x74</span>, <span class="number">0x9C</span>, <span class="number">0xAA</span>, <span class="number">0x23</span>,</span><br><span class="line">        <span class="number">0x0E</span>, <span class="number">0x86</span>, <span class="number">0xAB</span>, <span class="number">0xBE</span>, <span class="number">0x2A</span>, <span class="number">0x02</span>, <span class="number">0xE7</span>, <span class="number">0x67</span>, <span class="number">0xE6</span>, <span class="number">0x44</span>, <span class="number">0xA2</span>, <span class="number">0x6C</span>, <span class="number">0xC2</span>, <span class="number">0x93</span>, <span class="number">0x9F</span>, <span class="number">0xF1</span>,</span><br><span class="line">        <span class="number">0xF6</span>, <span class="number">0xFA</span>, <span class="number">0x36</span>, <span class="number">0xD2</span>, <span class="number">0x50</span>, <span class="number">0x68</span>, <span class="number">0x9E</span>, <span class="number">0x62</span>, <span class="number">0x71</span>, <span class="number">0x15</span>, <span class="number">0x3D</span>, <span class="number">0xD6</span>, <span class="number">0x40</span>, <span class="number">0xC4</span>, <span class="number">0xE2</span>, <span class="number">0x0F</span>,</span><br><span class="line">        <span class="number">0x8E</span>, <span class="number">0x83</span>, <span class="number">0x77</span>, <span class="number">0x6B</span>, <span class="number">0x25</span>, <span class="number">0x05</span>, <span class="number">0x3F</span>, <span class="number">0x0C</span>, <span class="number">0x30</span>, <span class="number">0xEA</span>, <span class="number">0x70</span>, <span class="number">0xB7</span>, <span class="number">0xA1</span>, <span class="number">0xE8</span>, <span class="number">0xA9</span>, <span class="number">0x65</span>,</span><br><span class="line">        <span class="number">0x8D</span>, <span class="number">0x27</span>, <span class="number">0x1A</span>, <span class="number">0xDB</span>, <span class="number">0x81</span>, <span class="number">0xB3</span>, <span class="number">0xA0</span>, <span class="number">0xF4</span>, <span class="number">0x45</span>, <span class="number">0x7A</span>, <span class="number">0x19</span>, <span class="number">0xDF</span>, <span class="number">0xEE</span>, <span class="number">0x78</span>, <span class="number">0x34</span>, <span class="number">0x60</span>]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    ZUC_S1 = [</span><br><span class="line">        <span class="number">0x55</span>, <span class="number">0xC2</span>, <span class="number">0x63</span>, <span class="number">0x71</span>, <span class="number">0x3B</span>, <span class="number">0xC8</span>, <span class="number">0x47</span>, <span class="number">0x86</span>, <span class="number">0x9F</span>, <span class="number">0x3C</span>, <span class="number">0xDA</span>, <span class="number">0x5B</span>, <span class="number">0x29</span>, <span class="number">0xAA</span>, <span class="number">0xFD</span>, <span class="number">0x77</span>,</span><br><span class="line">        <span class="number">0x8C</span>, <span class="number">0xC5</span>, <span class="number">0x94</span>, <span class="number">0x0C</span>, <span class="number">0xA6</span>, <span class="number">0x1A</span>, <span class="number">0x13</span>, <span class="number">0x00</span>, <span class="number">0xE3</span>, <span class="number">0xA8</span>, <span class="number">0x16</span>, <span class="number">0x72</span>, <span class="number">0x40</span>, <span class="number">0xF9</span>, <span class="number">0xF8</span>, <span class="number">0x42</span>,</span><br><span class="line">        <span class="number">0x44</span>, <span class="number">0x26</span>, <span class="number">0x68</span>, <span class="number">0x96</span>, <span class="number">0x81</span>, <span class="number">0xD9</span>, <span class="number">0x45</span>, <span class="number">0x3E</span>, <span class="number">0x10</span>, <span class="number">0x76</span>, <span class="number">0xC6</span>, <span class="number">0xA7</span>, <span class="number">0x8B</span>, <span class="number">0x39</span>, <span class="number">0x43</span>, <span class="number">0xE1</span>,</span><br><span class="line">        <span class="number">0x3A</span>, <span class="number">0xB5</span>, <span class="number">0x56</span>, <span class="number">0x2A</span>, <span class="number">0xC0</span>, <span class="number">0x6D</span>, <span class="number">0xB3</span>, <span class="number">0x05</span>, <span class="number">0x22</span>, <span class="number">0x66</span>, <span class="number">0xBF</span>, <span class="number">0xDC</span>, <span class="number">0x0B</span>, <span class="number">0xFA</span>, <span class="number">0x62</span>, <span class="number">0x48</span>,</span><br><span class="line">        <span class="number">0xDD</span>, <span class="number">0x20</span>, <span class="number">0x11</span>, <span class="number">0x06</span>, <span class="number">0x36</span>, <span class="number">0xC9</span>, <span class="number">0xC1</span>, <span class="number">0xCF</span>, <span class="number">0xF6</span>, <span class="number">0x27</span>, <span class="number">0x52</span>, <span class="number">0xBB</span>, <span class="number">0x69</span>, <span class="number">0xF5</span>, <span class="number">0xD4</span>, <span class="number">0x87</span>,</span><br><span class="line">        <span class="number">0x7F</span>, <span class="number">0x84</span>, <span class="number">0x4C</span>, <span class="number">0xD2</span>, <span class="number">0x9C</span>, <span class="number">0x57</span>, <span class="number">0xA4</span>, <span class="number">0xBC</span>, <span class="number">0x4F</span>, <span class="number">0x9A</span>, <span class="number">0xDF</span>, <span class="number">0xFE</span>, <span class="number">0xD6</span>, <span class="number">0x8D</span>, <span class="number">0x7A</span>, <span class="number">0xEB</span>,</span><br><span class="line">        <span class="number">0x2B</span>, <span class="number">0x53</span>, <span class="number">0xD8</span>, <span class="number">0x5C</span>, <span class="number">0xA1</span>, <span class="number">0x14</span>, <span class="number">0x17</span>, <span class="number">0xFB</span>, <span class="number">0x23</span>, <span class="number">0xD5</span>, <span class="number">0x7D</span>, <span class="number">0x30</span>, <span class="number">0x67</span>, <span class="number">0x73</span>, <span class="number">0x08</span>, <span class="number">0x09</span>,</span><br><span class="line">        <span class="number">0xEE</span>, <span class="number">0xB7</span>, <span class="number">0x70</span>, <span class="number">0x3F</span>, <span class="number">0x61</span>, <span class="number">0xB2</span>, <span class="number">0x19</span>, <span class="number">0x8E</span>, <span class="number">0x4E</span>, <span class="number">0xE5</span>, <span class="number">0x4B</span>, <span class="number">0x93</span>, <span class="number">0x8F</span>, <span class="number">0x5D</span>, <span class="number">0xDB</span>, <span class="number">0xA9</span>,</span><br><span class="line">        <span class="number">0xAD</span>, <span class="number">0xF1</span>, <span class="number">0xAE</span>, <span class="number">0x2E</span>, <span class="number">0xCB</span>, <span class="number">0x0D</span>, <span class="number">0xFC</span>, <span class="number">0xF4</span>, <span class="number">0x2D</span>, <span class="number">0x46</span>, <span class="number">0x6E</span>, <span class="number">0x1D</span>, <span class="number">0x97</span>, <span class="number">0xE8</span>, <span class="number">0xD1</span>, <span class="number">0xE9</span>,</span><br><span class="line">        <span class="number">0x4D</span>, <span class="number">0x37</span>, <span class="number">0xA5</span>, <span class="number">0x75</span>, <span class="number">0x5E</span>, <span class="number">0x83</span>, <span class="number">0x9E</span>, <span class="number">0xAB</span>, <span class="number">0x82</span>, <span class="number">0x9D</span>, <span class="number">0xB9</span>, <span class="number">0x1C</span>, <span class="number">0xE0</span>, <span class="number">0xCD</span>, <span class="number">0x49</span>, <span class="number">0x89</span>,</span><br><span class="line">        <span class="number">0x01</span>, <span class="number">0xB6</span>, <span class="number">0xBD</span>, <span class="number">0x58</span>, <span class="number">0x24</span>, <span class="number">0xA2</span>, <span class="number">0x5F</span>, <span class="number">0x38</span>, <span class="number">0x78</span>, <span class="number">0x99</span>, <span class="number">0x15</span>, <span class="number">0x90</span>, <span class="number">0x50</span>, <span class="number">0xB8</span>, <span class="number">0x95</span>, <span class="number">0xE4</span>,</span><br><span class="line">        <span class="number">0xD0</span>, <span class="number">0x91</span>, <span class="number">0xC7</span>, <span class="number">0xCE</span>, <span class="number">0xED</span>, <span class="number">0x0F</span>, <span class="number">0xB4</span>, <span class="number">0x6F</span>, <span class="number">0xA0</span>, <span class="number">0xCC</span>, <span class="number">0xF0</span>, <span class="number">0x02</span>, <span class="number">0x4A</span>, <span class="number">0x79</span>, <span class="number">0xC3</span>, <span class="number">0xDE</span>,</span><br><span class="line">        <span class="number">0xA3</span>, <span class="number">0xEF</span>, <span class="number">0xEA</span>, <span class="number">0x51</span>, <span class="number">0xE6</span>, <span class="number">0x6B</span>, <span class="number">0x18</span>, <span class="number">0xEC</span>, <span class="number">0x1B</span>, <span class="number">0x2C</span>, <span class="number">0x80</span>, <span class="number">0xF7</span>, <span class="number">0x74</span>, <span class="number">0xE7</span>, <span class="number">0xFF</span>, <span class="number">0x21</span>,</span><br><span class="line">        <span class="number">0x5A</span>, <span class="number">0x6A</span>, <span class="number">0x54</span>, <span class="number">0x1E</span>, <span class="number">0x41</span>, <span class="number">0x31</span>, <span class="number">0x92</span>, <span class="number">0x35</span>, <span class="number">0xC4</span>, <span class="number">0x33</span>, <span class="number">0x07</span>, <span class="number">0x0A</span>, <span class="number">0xBA</span>, <span class="number">0x7E</span>, <span class="number">0x0E</span>, <span class="number">0x34</span>,</span><br><span class="line">        <span class="number">0x88</span>, <span class="number">0xB1</span>, <span class="number">0x98</span>, <span class="number">0x7C</span>, <span class="number">0xF3</span>, <span class="number">0x3D</span>, <span class="number">0x60</span>, <span class="number">0x6C</span>, <span class="number">0x7B</span>, <span class="number">0xCA</span>, <span class="number">0xD3</span>, <span class="number">0x1F</span>, <span class="number">0x32</span>, <span class="number">0x65</span>, <span class="number">0x04</span>, <span class="number">0x28</span>,</span><br><span class="line">        <span class="number">0x64</span>, <span class="number">0xBE</span>, <span class="number">0x85</span>, <span class="number">0x9B</span>, <span class="number">0x2F</span>, <span class="number">0x59</span>, <span class="number">0x8A</span>, <span class="number">0xD7</span>, <span class="number">0xB0</span>, <span class="number">0x25</span>, <span class="number">0xAC</span>, <span class="number">0xAF</span>, <span class="number">0x12</span>, <span class="number">0x03</span>, <span class="number">0xE2</span>, <span class="number">0xF2</span>]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    D = [<span class="string">&#x27;100010011010111&#x27;</span>, <span class="string">&#x27;010011010111100&#x27;</span>, <span class="string">&#x27;110001001101011&#x27;</span>, <span class="string">&#x27;001001101011110&#x27;</span>, <span class="string">&#x27;101011110001001&#x27;</span>,</span><br><span class="line">         <span class="string">&#x27;011010111100010&#x27;</span>, <span class="string">&#x27;111000100110101&#x27;</span>, <span class="string">&#x27;000100110101111&#x27;</span>,</span><br><span class="line">         <span class="string">&#x27;100110101111000&#x27;</span>, <span class="string">&#x27;010111100010011&#x27;</span>, <span class="string">&#x27;110101111000100&#x27;</span>, <span class="string">&#x27;001101011110001&#x27;</span>, <span class="string">&#x27;101111000100110&#x27;</span>,</span><br><span class="line">         <span class="string">&#x27;011110001001101&#x27;</span>, <span class="string">&#x27;111100010011010&#x27;</span>, <span class="string">&#x27;100011110101100&#x27;</span>]</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, key: <span class="built_in">str</span>, iv: <span class="built_in">str</span></span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        构造函数实现密钥装入过程，将k和iv扩展为16个31比特字作为LFSR寄存器单元变量的初始状态</span></span><br><span class="line"><span class="string">        :param key: 128比特的二进制字符串</span></span><br><span class="line"><span class="string">        :param iv:  128比特的二进制字符串</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        <span class="keyword">assert</span> <span class="built_in">len</span>(key) == <span class="number">128</span> <span class="keyword">and</span> <span class="built_in">len</span>(iv) == <span class="number">128</span></span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        初始化阶段</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">16</span>):</span><br><span class="line">            self.LFSR_S[i] = <span class="built_in">int</span>(key[<span class="number">8</span> * i:<span class="number">8</span> * (i + <span class="number">1</span>)] + self.D[i] + iv[<span class="number">8</span> * i:<span class="number">8</span> * (i + <span class="number">1</span>)], <span class="number">2</span>)</span><br><span class="line">        self.R1, self.R2 = <span class="number">0</span>, <span class="number">0</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;LFSR初始状态如下：&#x27;</span>)</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">16</span>):</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;S&#123;&#125;=&quot;</span>.<span class="built_in">format</span>(i), <span class="built_in">hex</span>(self.LFSR_S[i])[<span class="number">2</span>:])</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">32</span>):</span><br><span class="line">            X = self.BitReconstruction()</span><br><span class="line">            <span class="comment"># print(X)</span></span><br><span class="line">            X0, X1, X2 = X[<span class="number">0</span>], X[<span class="number">1</span>], X[<span class="number">2</span>]</span><br><span class="line"></span><br><span class="line">            W = self.F(X0, X1, X2)</span><br><span class="line">            self.LFSRWithInitialisationMode((W &gt;&gt; <span class="number">1</span>))</span><br><span class="line"></span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        工作阶段</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;-----------------------&#x27;</span>)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;初始化之后的LFSR状态如下：&#x27;</span>)</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">16</span>):</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;S&#123;&#125;=&quot;</span>.<span class="built_in">format</span>(i),<span class="built_in">hex</span>(self.LFSR_S[i])[<span class="number">2</span>:])</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;-&#x27;</span>*<span class="number">20</span>)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;初始化之后有限状态机内部状态：&#x27;</span>,<span class="built_in">hex</span>(self.R1)[<span class="number">2</span>:],<span class="built_in">hex</span>(self.R2)[<span class="number">2</span>:])</span><br><span class="line">        X = self.BitReconstruction()</span><br><span class="line">        X0, X1, X2 = X[<span class="number">0</span>], X[<span class="number">1</span>], X[<span class="number">2</span>]</span><br><span class="line">        self.F(X0, X1, X2)  <span class="comment"># 舍弃F的输出W</span></span><br><span class="line">        self.LFSRWithWorkMode()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">BitLink_H</span>(<span class="params">self, n, a, b</span>):</span><br><span class="line">        <span class="comment"># assert a.bit_length()&lt;=31</span></span><br><span class="line">        ans = ((a &gt;&gt; (n - <span class="number">16</span>)) &amp; (<span class="number">2</span> ** <span class="number">16</span> - <span class="number">1</span>)) &lt;&lt; <span class="number">16</span> ^ (b &amp; <span class="number">0x0000ffff</span>)</span><br><span class="line">        <span class="keyword">return</span> ans</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">BitLink_L</span>(<span class="params">self, n, a, b</span>):</span><br><span class="line">        ans = ((a &amp; <span class="number">0x0000ffff</span>) &lt;&lt; <span class="number">16</span>) ^ ((b &gt;&gt; (n - <span class="number">16</span>)) &amp; <span class="number">0x0000ffff</span>)</span><br><span class="line">        <span class="keyword">return</span> ans</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">ModularAddition</span>(<span class="params">self, a, b</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">        :param a:</span></span><br><span class="line"><span class="string">        :param b:</span></span><br><span class="line"><span class="string">        :return:</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        c = a + b</span><br><span class="line">        c = (c &amp; <span class="number">0x7fffffff</span>) + (c &gt;&gt; <span class="number">31</span>)</span><br><span class="line">        <span class="keyword">return</span> c</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">ModularMultiplication</span>(<span class="params">self, a, b</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">        :param a:</span></span><br><span class="line"><span class="string">        :param b:</span></span><br><span class="line"><span class="string">        :return:</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        tmp = <span class="built_in">bin</span>(b)[<span class="number">2</span>:][::-<span class="number">1</span>]</span><br><span class="line">        tmp = [i <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(tmp)) <span class="keyword">if</span> <span class="built_in">int</span>(tmp[i]) == <span class="number">1</span>]</span><br><span class="line">        <span class="built_in">print</span>(tmp)</span><br><span class="line">        ans = <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> tmp:</span><br><span class="line">            ans = self.ModularAddition(ans, CyclicShift(a).rotateLeft(i))</span><br><span class="line">        <span class="keyword">return</span> ans</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">OutputKey</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        该函数负责输出一个32比特的密钥字Z</span></span><br><span class="line"><span class="string">        :return:</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        X = self.BitReconstruction()</span><br><span class="line">        X0, X1, X2, X3 = X[<span class="number">0</span>], X[<span class="number">1</span>], X[<span class="number">2</span>], X[<span class="number">3</span>]</span><br><span class="line">        Z = self.F(X0, X1, X2) ^ X3</span><br><span class="line">        self.LFSRWithWorkMode()</span><br><span class="line">        <span class="keyword">return</span> Z</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">LFSRWithInitialisationMode</span>(<span class="params">self, u</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        初始化模式下，LFSR接收一个31比特字u，u是由非线性函数F的32比特输出W通过舍弃最低比特位得到</span></span><br><span class="line"><span class="string">        :param u: 一个31比特字</span></span><br><span class="line"><span class="string">        :return:</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">        v = ((self.LFSR_S[<span class="number">15</span>] &lt;&lt; <span class="number">15</span>) + (self.LFSR_S[<span class="number">13</span>] &lt;&lt; <span class="number">17</span>) + (self.LFSR_S[<span class="number">10</span>] &lt;&lt; <span class="number">21</span>) + (self.LFSR_S[<span class="number">4</span>] &lt;&lt; <span class="number">20</span>) + (</span><br><span class="line">                    self.LFSR_S[<span class="number">0</span>] + (self.LFSR_S[<span class="number">0</span>] &lt;&lt; <span class="number">8</span>))) % ((<span class="number">2</span> ** <span class="number">31</span>) - <span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">        s16 = (u + v) % ((<span class="number">2</span> ** <span class="number">31</span>) - <span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> s16 == <span class="number">0</span>:</span><br><span class="line">            s16 = <span class="number">2</span> ** <span class="number">31</span> - <span class="number">1</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, <span class="number">16</span>):</span><br><span class="line">            self.LFSR_S[i - <span class="number">1</span>] = self.LFSR_S[i]</span><br><span class="line">        self.LFSR_S[<span class="number">15</span>] = s16</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">LFSRWithWorkMode</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        工作模式下LFSR不接收任何输入</span></span><br><span class="line"><span class="string">        :return:</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        s16 = ((self.LFSR_S[<span class="number">15</span>] &lt;&lt; <span class="number">15</span>) + (self.LFSR_S[<span class="number">13</span>] &lt;&lt; <span class="number">17</span>) + (self.LFSR_S[<span class="number">10</span>] &lt;&lt; <span class="number">21</span>) + (self.LFSR_S[<span class="number">4</span>] &lt;&lt; <span class="number">20</span>) + (</span><br><span class="line">                    self.LFSR_S[<span class="number">0</span>] + (self.LFSR_S[<span class="number">0</span>] &lt;&lt; <span class="number">8</span>))) % ((<span class="number">2</span> ** <span class="number">31</span>) - <span class="number">1</span>)</span><br><span class="line">        <span class="keyword">if</span> s16 == <span class="number">0</span>:</span><br><span class="line">            s16 = <span class="number">2</span> ** <span class="number">31</span> - <span class="number">1</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, <span class="number">16</span>):</span><br><span class="line">            self.LFSR_S[i - <span class="number">1</span>] = self.LFSR_S[i]</span><br><span class="line">        self.LFSR_S[<span class="number">15</span>] = s16</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">BitReconstruction</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        比特重组从LFSR的寄存器单元抽取128比特组成4个32比特字X0,X1,X2,X3</span></span><br><span class="line"><span class="string">        :return:</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        X0 = self.BitLink_H(<span class="number">31</span>, self.LFSR_S[<span class="number">15</span>], self.LFSR_S[<span class="number">14</span>])</span><br><span class="line">        verify = (<span class="built_in">bin</span>(self.LFSR_S[<span class="number">15</span>])[<span class="number">2</span>:].zfill(<span class="number">31</span>))[:<span class="number">16</span>] + (<span class="built_in">bin</span>(self.LFSR_S[<span class="number">14</span>])[<span class="number">2</span>:].zfill(<span class="number">31</span>))[-<span class="number">16</span>:]</span><br><span class="line">        <span class="keyword">assert</span> <span class="built_in">bin</span>(X0)[<span class="number">2</span>:].zfill(<span class="number">32</span>) == verify</span><br><span class="line"></span><br><span class="line">        X1 = self.BitLink_L(<span class="number">31</span>, self.LFSR_S[<span class="number">11</span>], self.LFSR_S[<span class="number">9</span>])</span><br><span class="line">        verify1 = (<span class="built_in">bin</span>(self.LFSR_S[<span class="number">11</span>])[<span class="number">2</span>:].zfill(<span class="number">31</span>))[-<span class="number">16</span>:] + (<span class="built_in">bin</span>(self.LFSR_S[<span class="number">9</span>])[<span class="number">2</span>:].zfill(<span class="number">31</span>))[:<span class="number">16</span>]</span><br><span class="line">        <span class="keyword">assert</span> <span class="built_in">len</span>(verify1) == <span class="number">32</span></span><br><span class="line">        <span class="keyword">assert</span> <span class="built_in">bin</span>(X1)[<span class="number">2</span>:].zfill(<span class="number">32</span>) == verify1</span><br><span class="line">        X2 = self.BitLink_L(<span class="number">31</span>, self.LFSR_S[<span class="number">7</span>], self.LFSR_S[<span class="number">5</span>])</span><br><span class="line">        X3 = self.BitLink_L(<span class="number">31</span>, self.LFSR_S[<span class="number">2</span>], self.LFSR_S[<span class="number">0</span>])</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> [X0, X1, X2, X3]</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">L1</span>(<span class="params">self, X: <span class="built_in">int</span></span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">        :param X: 一个32比特的整数</span></span><br><span class="line"><span class="string">        :return: X进行线性变换后的值</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        x = CyclicShift(X,<span class="number">32</span>)</span><br><span class="line">        <span class="keyword">return</span> X ^ (x.rotateLeft(<span class="number">2</span>)) ^ (x.rotateLeft(<span class="number">10</span>)) ^ (x.rotateLeft(<span class="number">18</span>)) ^ (x.rotateLeft(<span class="number">24</span>))</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">L2</span>(<span class="params">self, X: <span class="built_in">int</span></span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        同L1，但所作的线性变换不同</span></span><br><span class="line"><span class="string">        :param X:</span></span><br><span class="line"><span class="string">        :return:</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        x = CyclicShift(X,<span class="number">32</span>)</span><br><span class="line">        <span class="keyword">return</span> X ^ (x.rotateLeft(<span class="number">8</span>)) ^ (x.rotateLeft(<span class="number">14</span>)) ^ (x.rotateLeft(<span class="number">22</span>)) ^ (x.rotateLeft(<span class="number">30</span>))</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">S</span>(<span class="params">self, X</span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">        :return:</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">        x = <span class="built_in">bin</span>(X)[<span class="number">2</span>:].zfill(<span class="number">32</span>)</span><br><span class="line">        x0, x1, x2, x3 = x[:<span class="number">8</span>], x[<span class="number">8</span>:<span class="number">16</span>], x[<span class="number">16</span>:<span class="number">24</span>], x[<span class="number">24</span>:<span class="number">32</span>]</span><br><span class="line"></span><br><span class="line">        y0 = self.ZUC_S0[(<span class="number">16</span> * <span class="built_in">int</span>(x0[:<span class="number">4</span>], <span class="number">2</span>)) + <span class="built_in">int</span>(x0[<span class="number">4</span>:], <span class="number">2</span>)]</span><br><span class="line"></span><br><span class="line">        y1 = self.ZUC_S1[(<span class="number">16</span> * <span class="built_in">int</span>(x1[:<span class="number">4</span>], <span class="number">2</span>)) + <span class="built_in">int</span>(x1[<span class="number">4</span>:], <span class="number">2</span>)]</span><br><span class="line"></span><br><span class="line">        y2 = self.ZUC_S0[(<span class="number">16</span> * <span class="built_in">int</span>(x2[:<span class="number">4</span>], <span class="number">2</span>)) + <span class="built_in">int</span>(x2[<span class="number">4</span>:], <span class="number">2</span>)]</span><br><span class="line"></span><br><span class="line">        y3 = self.ZUC_S1[(<span class="number">16</span> * <span class="built_in">int</span>(x3[:<span class="number">4</span>], <span class="number">2</span>)) + <span class="built_in">int</span>(x3[<span class="number">4</span>:], <span class="number">2</span>)]</span><br><span class="line"></span><br><span class="line">        Y = (((y0 &lt;&lt; <span class="number">24</span>)) ^ (y1 &lt;&lt; <span class="number">16</span>) ^ (y2 &lt;&lt; <span class="number">8</span>) ^ y3) &amp; <span class="number">0xffffffff</span></span><br><span class="line">        <span class="keyword">assert</span> (<span class="built_in">bin</span>(y0)[<span class="number">2</span>:].zfill(<span class="number">8</span>) + <span class="built_in">bin</span>(y1)[<span class="number">2</span>:].zfill(<span class="number">8</span>) + <span class="built_in">bin</span>(y2)[<span class="number">2</span>:].zfill(<span class="number">8</span>) + <span class="built_in">bin</span>(y3)[<span class="number">2</span>:].zfill(<span class="number">8</span>)) == <span class="built_in">bin</span>(Y)[<span class="number">2</span>:].zfill( <span class="number">32</span>)</span><br><span class="line">        <span class="keyword">return</span> Y</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">F</span>(<span class="params">self, X0, X1, X2</span>):</span><br><span class="line"></span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">        :param X0: 32比特字X0</span></span><br><span class="line"><span class="string">        :param X1: 32比特子X1</span></span><br><span class="line"><span class="string">        :param X2: 32比特子X2</span></span><br><span class="line"><span class="string">        :return: 一个32比特字W</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">        m = <span class="number">2</span>**<span class="number">32</span></span><br><span class="line">        W = ((X0 ^ self.R1) + self.R2) % m</span><br><span class="line">        W1 = (self.R1 + X1) % m</span><br><span class="line">        W2 = self.R2 ^ X2</span><br><span class="line">        t1 = self.BitLink_L(<span class="number">32</span>, W1, W2)</span><br><span class="line">        <span class="keyword">assert</span> <span class="built_in">bin</span>(W1)[<span class="number">2</span>:].zfill(<span class="number">32</span>)[-<span class="number">16</span>:] + <span class="built_in">bin</span>(W2)[<span class="number">2</span>:].zfill(<span class="number">32</span>)[:<span class="number">16</span>] == <span class="built_in">bin</span>(t1)[<span class="number">2</span>:].zfill(<span class="number">32</span>)</span><br><span class="line">        t2 = self.BitLink_L(<span class="number">32</span>, W2, W1)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        self.R1 = self.S(self.L1(t1))</span><br><span class="line"></span><br><span class="line">        self.R2 = self.S(self.L2(t2))</span><br><span class="line"></span><br><span class="line">        <span class="comment"># print(hex(self.R2))</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> W</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">k = <span class="string">&#x27;0&#x27;</span> * <span class="number">128</span></span><br><span class="line">iv = <span class="string">&#x27;0&#x27;</span> * <span class="number">128</span></span><br><span class="line">test = ZUC(k, iv)</span><br><span class="line">z1 = test.OutputKey()</span><br><span class="line">z2 = test.OutputKey()</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">hex</span>(z1)[<span class="number">2</span>:].zfill(<span class="number">8</span>))</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">hex</span>(z2)[<span class="number">2</span>:].zfill(<span class="number">8</span>))</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h5 id="quan-0-shu-ru-ce-shi-shi-li"><a href="#全0输入测试示例" class="headerlink" title="全0输入测试示例"></a>全0输入测试示例<a href="#quan-0-shu-ru-ce-shi-shi-li" class="header-anchor">#</a></h5><p><img src="images/image-20221020123217547.png" alt="image-20221020123217547"></p>
-<p><img src="images/image-20221020123228464.png" alt="image-20221020123228464"></p>
-<h5 id="quan-1-shu-ru-ce-shi-shi-li"><a href="#全1输入测试示例" class="headerlink" title="全1输入测试示例"></a>全1输入测试示例<a href="#quan-1-shu-ru-ce-shi-shi-li" class="header-anchor">#</a></h5><p><img src="images/image-20221020123338283.png" alt="image-20221020123338283"></p>
-<p><img src="images/image-20221020123414440.png" alt="image-20221020123414440"></p>
-<p><img src="images/image-20221020123404606.png" alt="image-20221020123404606"></p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">&quot;&quot;&quot;
+祖冲之序列密码算法
+加法是模2的32次方加法
+
+&quot;&quot;&quot;
+
+
+def check(n, b):
+    b &#x3D; b % n.bit_length()
+    t &#x3D; bin(n)[2:]
+    return int(t[b:] + t[:b],2)
+
+
+class CyclicShift:
+    &quot;&quot;&quot;
+    循环移位类，负责对传入的整数进行循环移位
+    &quot;&quot;&quot;
+
+    def __init__(self, num: int,bit_length:int):
+        &quot;&quot;&quot;
+
+        :param num: 待循环移位的整数
+        &quot;&quot;&quot;
+        self.num &#x3D; num
+        self.length &#x3D; bit_length
+
+    def rotateLeft(self, bit) -&gt; int:
+        &quot;&quot;&quot;
+        循环左移方法
+        思路是先将num左移bit位 &#x3D; n1，在将num右移(n-bit)位 &#x3D; n2，n是num的比特位数。最后移位的结果 res &#x3D; n1 + n2
+        :param bit: 左移的bit数量
+        :return: 左移后的值，整数
+        &quot;&quot;&quot;
+        bit &#x3D; bit % self.length
+        n1 &#x3D; (self.num &lt;&lt; bit) &amp; ((2 ** self.length) - 1)
+
+        n2 &#x3D; (self.num &gt;&gt; (self.length - bit))
+        return (n1 + n2) &amp; ((2 ** self.length) - 1)
+
+    # def rotateRight(self,bit) -&gt; int :
+
+
+class ZUC:
+    &quot;&quot;&quot;
+    S列表是16个移位寄存器
+    S0和S1分别是两个S盒的子盒
+    &quot;&quot;&quot;
+    LFSR_S &#x3D; [0] * 16
+    ZUC_S0 &#x3D; [
+        0x3E, 0x72, 0x5B, 0x47, 0xCA, 0xE0, 0x00, 0x33, 0x04, 0xD1, 0x54, 0x98, 0x09, 0xB9, 0x6D, 0xCB,
+        0x7B, 0x1B, 0xF9, 0x32, 0xAF, 0x9D, 0x6A, 0xA5, 0xB8, 0x2D, 0xFC, 0x1D, 0x08, 0x53, 0x03, 0x90,
+        0x4D, 0x4E, 0x84, 0x99, 0xE4, 0xCE, 0xD9, 0x91, 0xDD, 0xB6, 0x85, 0x48, 0x8B, 0x29, 0x6E, 0xAC,
+        0xCD, 0xC1, 0xF8, 0x1E, 0x73, 0x43, 0x69, 0xC6, 0xB5, 0xBD, 0xFD, 0x39, 0x63, 0x20, 0xD4, 0x38,
+        0x76, 0x7D, 0xB2, 0xA7, 0xCF, 0xED, 0x57, 0xC5, 0xF3, 0x2C, 0xBB, 0x14, 0x21, 0x06, 0x55, 0x9B,
+        0xE3, 0xEF, 0x5E, 0x31, 0x4F, 0x7F, 0x5A, 0xA4, 0x0D, 0x82, 0x51, 0x49, 0x5F, 0xBA, 0x58, 0x1C,
+        0x4A, 0x16, 0xD5, 0x17, 0xA8, 0x92, 0x24, 0x1F, 0x8C, 0xFF, 0xD8, 0xAE, 0x2E, 0x01, 0xD3, 0xAD,
+        0x3B, 0x4B, 0xDA, 0x46, 0xEB, 0xC9, 0xDE, 0x9A, 0x8F, 0x87, 0xD7, 0x3A, 0x80, 0x6F, 0x2F, 0xC8,
+        0xB1, 0xB4, 0x37, 0xF7, 0x0A, 0x22, 0x13, 0x28, 0x7C, 0xCC, 0x3C, 0x89, 0xC7, 0xC3, 0x96, 0x56,
+        0x07, 0xBF, 0x7E, 0xF0, 0x0B, 0x2B, 0x97, 0x52, 0x35, 0x41, 0x79, 0x61, 0xA6, 0x4C, 0x10, 0xFE,
+        0xBC, 0x26, 0x95, 0x88, 0x8A, 0xB0, 0xA3, 0xFB, 0xC0, 0x18, 0x94, 0xF2, 0xE1, 0xE5, 0xE9, 0x5D,
+        0xD0, 0xDC, 0x11, 0x66, 0x64, 0x5C, 0xEC, 0x59, 0x42, 0x75, 0x12, 0xF5, 0x74, 0x9C, 0xAA, 0x23,
+        0x0E, 0x86, 0xAB, 0xBE, 0x2A, 0x02, 0xE7, 0x67, 0xE6, 0x44, 0xA2, 0x6C, 0xC2, 0x93, 0x9F, 0xF1,
+        0xF6, 0xFA, 0x36, 0xD2, 0x50, 0x68, 0x9E, 0x62, 0x71, 0x15, 0x3D, 0xD6, 0x40, 0xC4, 0xE2, 0x0F,
+        0x8E, 0x83, 0x77, 0x6B, 0x25, 0x05, 0x3F, 0x0C, 0x30, 0xEA, 0x70, 0xB7, 0xA1, 0xE8, 0xA9, 0x65,
+        0x8D, 0x27, 0x1A, 0xDB, 0x81, 0xB3, 0xA0, 0xF4, 0x45, 0x7A, 0x19, 0xDF, 0xEE, 0x78, 0x34, 0x60]
+
+
+    ZUC_S1 &#x3D; [
+        0x55, 0xC2, 0x63, 0x71, 0x3B, 0xC8, 0x47, 0x86, 0x9F, 0x3C, 0xDA, 0x5B, 0x29, 0xAA, 0xFD, 0x77,
+        0x8C, 0xC5, 0x94, 0x0C, 0xA6, 0x1A, 0x13, 0x00, 0xE3, 0xA8, 0x16, 0x72, 0x40, 0xF9, 0xF8, 0x42,
+        0x44, 0x26, 0x68, 0x96, 0x81, 0xD9, 0x45, 0x3E, 0x10, 0x76, 0xC6, 0xA7, 0x8B, 0x39, 0x43, 0xE1,
+        0x3A, 0xB5, 0x56, 0x2A, 0xC0, 0x6D, 0xB3, 0x05, 0x22, 0x66, 0xBF, 0xDC, 0x0B, 0xFA, 0x62, 0x48,
+        0xDD, 0x20, 0x11, 0x06, 0x36, 0xC9, 0xC1, 0xCF, 0xF6, 0x27, 0x52, 0xBB, 0x69, 0xF5, 0xD4, 0x87,
+        0x7F, 0x84, 0x4C, 0xD2, 0x9C, 0x57, 0xA4, 0xBC, 0x4F, 0x9A, 0xDF, 0xFE, 0xD6, 0x8D, 0x7A, 0xEB,
+        0x2B, 0x53, 0xD8, 0x5C, 0xA1, 0x14, 0x17, 0xFB, 0x23, 0xD5, 0x7D, 0x30, 0x67, 0x73, 0x08, 0x09,
+        0xEE, 0xB7, 0x70, 0x3F, 0x61, 0xB2, 0x19, 0x8E, 0x4E, 0xE5, 0x4B, 0x93, 0x8F, 0x5D, 0xDB, 0xA9,
+        0xAD, 0xF1, 0xAE, 0x2E, 0xCB, 0x0D, 0xFC, 0xF4, 0x2D, 0x46, 0x6E, 0x1D, 0x97, 0xE8, 0xD1, 0xE9,
+        0x4D, 0x37, 0xA5, 0x75, 0x5E, 0x83, 0x9E, 0xAB, 0x82, 0x9D, 0xB9, 0x1C, 0xE0, 0xCD, 0x49, 0x89,
+        0x01, 0xB6, 0xBD, 0x58, 0x24, 0xA2, 0x5F, 0x38, 0x78, 0x99, 0x15, 0x90, 0x50, 0xB8, 0x95, 0xE4,
+        0xD0, 0x91, 0xC7, 0xCE, 0xED, 0x0F, 0xB4, 0x6F, 0xA0, 0xCC, 0xF0, 0x02, 0x4A, 0x79, 0xC3, 0xDE,
+        0xA3, 0xEF, 0xEA, 0x51, 0xE6, 0x6B, 0x18, 0xEC, 0x1B, 0x2C, 0x80, 0xF7, 0x74, 0xE7, 0xFF, 0x21,
+        0x5A, 0x6A, 0x54, 0x1E, 0x41, 0x31, 0x92, 0x35, 0xC4, 0x33, 0x07, 0x0A, 0xBA, 0x7E, 0x0E, 0x34,
+        0x88, 0xB1, 0x98, 0x7C, 0xF3, 0x3D, 0x60, 0x6C, 0x7B, 0xCA, 0xD3, 0x1F, 0x32, 0x65, 0x04, 0x28,
+        0x64, 0xBE, 0x85, 0x9B, 0x2F, 0x59, 0x8A, 0xD7, 0xB0, 0x25, 0xAC, 0xAF, 0x12, 0x03, 0xE2, 0xF2]
+
+
+    D &#x3D; [&#39;100010011010111&#39;, &#39;010011010111100&#39;, &#39;110001001101011&#39;, &#39;001001101011110&#39;, &#39;101011110001001&#39;,
+         &#39;011010111100010&#39;, &#39;111000100110101&#39;, &#39;000100110101111&#39;,
+         &#39;100110101111000&#39;, &#39;010111100010011&#39;, &#39;110101111000100&#39;, &#39;001101011110001&#39;, &#39;101111000100110&#39;,
+         &#39;011110001001101&#39;, &#39;111100010011010&#39;, &#39;100011110101100&#39;]
+
+    def __init__(self, key: str, iv: str):
+        &quot;&quot;&quot;
+        构造函数实现密钥装入过程，将k和iv扩展为16个31比特字作为LFSR寄存器单元变量的初始状态
+        :param key: 128比特的二进制字符串
+        :param iv:  128比特的二进制字符串
+        &quot;&quot;&quot;
+        assert len(key) &#x3D;&#x3D; 128 and len(iv) &#x3D;&#x3D; 128
+        &quot;&quot;&quot;
+        初始化阶段
+        &quot;&quot;&quot;
+        for i in range(16):
+            self.LFSR_S[i] &#x3D; int(key[8 * i:8 * (i + 1)] + self.D[i] + iv[8 * i:8 * (i + 1)], 2)
+        self.R1, self.R2 &#x3D; 0, 0
+        print(&#39;LFSR初始状态如下：&#39;)
+        for i in range(16):
+            print(&quot;S&#123;&#125;&#x3D;&quot;.format(i), hex(self.LFSR_S[i])[2:])
+
+        for i in range(32):
+            X &#x3D; self.BitReconstruction()
+            # print(X)
+            X0, X1, X2 &#x3D; X[0], X[1], X[2]
+
+            W &#x3D; self.F(X0, X1, X2)
+            self.LFSRWithInitialisationMode((W &gt;&gt; 1))
+
+        &quot;&quot;&quot;
+        工作阶段
+        &quot;&quot;&quot;
+        print(&#39;-----------------------&#39;)
+        print(&#39;初始化之后的LFSR状态如下：&#39;)
+        for i in range(16):
+            print(&quot;S&#123;&#125;&#x3D;&quot;.format(i),hex(self.LFSR_S[i])[2:])
+        print(&#39;-&#39;*20)
+        print(&#39;初始化之后有限状态机内部状态：&#39;,hex(self.R1)[2:],hex(self.R2)[2:])
+        X &#x3D; self.BitReconstruction()
+        X0, X1, X2 &#x3D; X[0], X[1], X[2]
+        self.F(X0, X1, X2)  # 舍弃F的输出W
+        self.LFSRWithWorkMode()
+
+    def BitLink_H(self, n, a, b):
+        # assert a.bit_length()&lt;&#x3D;31
+        ans &#x3D; ((a &gt;&gt; (n - 16)) &amp; (2 ** 16 - 1)) &lt;&lt; 16 ^ (b &amp; 0x0000ffff)
+        return ans
+
+    def BitLink_L(self, n, a, b):
+        ans &#x3D; ((a &amp; 0x0000ffff) &lt;&lt; 16) ^ ((b &gt;&gt; (n - 16)) &amp; 0x0000ffff)
+        return ans
+
+    def ModularAddition(self, a, b):
+        &quot;&quot;&quot;
+
+        :param a:
+        :param b:
+        :return:
+        &quot;&quot;&quot;
+        c &#x3D; a + b
+        c &#x3D; (c &amp; 0x7fffffff) + (c &gt;&gt; 31)
+        return c
+
+    def ModularMultiplication(self, a, b):
+        &quot;&quot;&quot;
+
+        :param a:
+        :param b:
+        :return:
+        &quot;&quot;&quot;
+        tmp &#x3D; bin(b)[2:][::-1]
+        tmp &#x3D; [i for i in range(len(tmp)) if int(tmp[i]) &#x3D;&#x3D; 1]
+        print(tmp)
+        ans &#x3D; 0
+        for i in tmp:
+            ans &#x3D; self.ModularAddition(ans, CyclicShift(a).rotateLeft(i))
+        return ans
+
+    def OutputKey(self):
+        &quot;&quot;&quot;
+        该函数负责输出一个32比特的密钥字Z
+        :return:
+        &quot;&quot;&quot;
+        X &#x3D; self.BitReconstruction()
+        X0, X1, X2, X3 &#x3D; X[0], X[1], X[2], X[3]
+        Z &#x3D; self.F(X0, X1, X2) ^ X3
+        self.LFSRWithWorkMode()
+        return Z
+
+    def LFSRWithInitialisationMode(self, u):
+        &quot;&quot;&quot;
+        初始化模式下，LFSR接收一个31比特字u，u是由非线性函数F的32比特输出W通过舍弃最低比特位得到
+        :param u: 一个31比特字
+        :return:
+        &quot;&quot;&quot;
+
+        v &#x3D; ((self.LFSR_S[15] &lt;&lt; 15) + (self.LFSR_S[13] &lt;&lt; 17) + (self.LFSR_S[10] &lt;&lt; 21) + (self.LFSR_S[4] &lt;&lt; 20) + (
+                    self.LFSR_S[0] + (self.LFSR_S[0] &lt;&lt; 8))) % ((2 ** 31) - 1)
+
+        s16 &#x3D; (u + v) % ((2 ** 31) - 1)
+
+        if s16 &#x3D;&#x3D; 0:
+            s16 &#x3D; 2 ** 31 - 1
+        for i in range(1, 16):
+            self.LFSR_S[i - 1] &#x3D; self.LFSR_S[i]
+        self.LFSR_S[15] &#x3D; s16
+
+    def LFSRWithWorkMode(self):
+        &quot;&quot;&quot;
+        工作模式下LFSR不接收任何输入
+        :return:
+        &quot;&quot;&quot;
+        s16 &#x3D; ((self.LFSR_S[15] &lt;&lt; 15) + (self.LFSR_S[13] &lt;&lt; 17) + (self.LFSR_S[10] &lt;&lt; 21) + (self.LFSR_S[4] &lt;&lt; 20) + (
+                    self.LFSR_S[0] + (self.LFSR_S[0] &lt;&lt; 8))) % ((2 ** 31) - 1)
+        if s16 &#x3D;&#x3D; 0:
+            s16 &#x3D; 2 ** 31 - 1
+        for i in range(1, 16):
+            self.LFSR_S[i - 1] &#x3D; self.LFSR_S[i]
+        self.LFSR_S[15] &#x3D; s16
+
+    def BitReconstruction(self):
+        &quot;&quot;&quot;
+        比特重组从LFSR的寄存器单元抽取128比特组成4个32比特字X0,X1,X2,X3
+        :return:
+        &quot;&quot;&quot;
+        X0 &#x3D; self.BitLink_H(31, self.LFSR_S[15], self.LFSR_S[14])
+        verify &#x3D; (bin(self.LFSR_S[15])[2:].zfill(31))[:16] + (bin(self.LFSR_S[14])[2:].zfill(31))[-16:]
+        assert bin(X0)[2:].zfill(32) &#x3D;&#x3D; verify
+
+        X1 &#x3D; self.BitLink_L(31, self.LFSR_S[11], self.LFSR_S[9])
+        verify1 &#x3D; (bin(self.LFSR_S[11])[2:].zfill(31))[-16:] + (bin(self.LFSR_S[9])[2:].zfill(31))[:16]
+        assert len(verify1) &#x3D;&#x3D; 32
+        assert bin(X1)[2:].zfill(32) &#x3D;&#x3D; verify1
+        X2 &#x3D; self.BitLink_L(31, self.LFSR_S[7], self.LFSR_S[5])
+        X3 &#x3D; self.BitLink_L(31, self.LFSR_S[2], self.LFSR_S[0])
+
+        return [X0, X1, X2, X3]
+
+    def L1(self, X: int) -&gt; int:
+        &quot;&quot;&quot;
+
+        :param X: 一个32比特的整数
+        :return: X进行线性变换后的值
+        &quot;&quot;&quot;
+        x &#x3D; CyclicShift(X,32)
+        return X ^ (x.rotateLeft(2)) ^ (x.rotateLeft(10)) ^ (x.rotateLeft(18)) ^ (x.rotateLeft(24))
+
+    def L2(self, X: int) -&gt; int:
+        &quot;&quot;&quot;
+        同L1，但所作的线性变换不同
+        :param X:
+        :return:
+        &quot;&quot;&quot;
+        x &#x3D; CyclicShift(X,32)
+        return X ^ (x.rotateLeft(8)) ^ (x.rotateLeft(14)) ^ (x.rotateLeft(22)) ^ (x.rotateLeft(30))
+
+    def S(self, X) -&gt; int:
+        &quot;&quot;&quot;
+
+        :return:
+        &quot;&quot;&quot;
+
+        x &#x3D; bin(X)[2:].zfill(32)
+        x0, x1, x2, x3 &#x3D; x[:8], x[8:16], x[16:24], x[24:32]
+
+        y0 &#x3D; self.ZUC_S0[(16 * int(x0[:4], 2)) + int(x0[4:], 2)]
+
+        y1 &#x3D; self.ZUC_S1[(16 * int(x1[:4], 2)) + int(x1[4:], 2)]
+
+        y2 &#x3D; self.ZUC_S0[(16 * int(x2[:4], 2)) + int(x2[4:], 2)]
+
+        y3 &#x3D; self.ZUC_S1[(16 * int(x3[:4], 2)) + int(x3[4:], 2)]
+
+        Y &#x3D; (((y0 &lt;&lt; 24)) ^ (y1 &lt;&lt; 16) ^ (y2 &lt;&lt; 8) ^ y3) &amp; 0xffffffff
+        assert (bin(y0)[2:].zfill(8) + bin(y1)[2:].zfill(8) + bin(y2)[2:].zfill(8) + bin(y3)[2:].zfill(8)) &#x3D;&#x3D; bin(Y)[2:].zfill( 32)
+        return Y
+
+    def F(self, X0, X1, X2):
+
+        &quot;&quot;&quot;
+
+        :param X0: 32比特字X0
+        :param X1: 32比特子X1
+        :param X2: 32比特子X2
+        :return: 一个32比特字W
+        &quot;&quot;&quot;
+
+        m &#x3D; 2**32
+        W &#x3D; ((X0 ^ self.R1) + self.R2) % m
+        W1 &#x3D; (self.R1 + X1) % m
+        W2 &#x3D; self.R2 ^ X2
+        t1 &#x3D; self.BitLink_L(32, W1, W2)
+        assert bin(W1)[2:].zfill(32)[-16:] + bin(W2)[2:].zfill(32)[:16] &#x3D;&#x3D; bin(t1)[2:].zfill(32)
+        t2 &#x3D; self.BitLink_L(32, W2, W1)
+
+
+        self.R1 &#x3D; self.S(self.L1(t1))
+
+        self.R2 &#x3D; self.S(self.L2(t2))
+
+        # print(hex(self.R2))
+
+        return W
+
+
+k &#x3D; &#39;0&#39; * 128
+iv &#x3D; &#39;0&#39; * 128
+test &#x3D; ZUC(k, iv)
+z1 &#x3D; test.OutputKey()
+z2 &#x3D; test.OutputKey()
+print(hex(z1)[2:].zfill(8))
+print(hex(z2)[2:].zfill(8))
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h5 id="quan-0-shu-ru-ce-shi-shi-li"><a href="#全0输入测试示例" class="headerlink" title="全0输入测试示例"></a>全0输入测试示例<a href="#quan-0-shu-ru-ce-shi-shi-li" class="header-anchor">#</a></h5><p><img src="/../images/image-20221020123217547.png" alt="image-20221020123217547"></p>
+<p><img src="/../images/image-20221020123228464.png" alt="image-20221020123228464"></p>
+<h5 id="quan-1-shu-ru-ce-shi-shi-li"><a href="#全1输入测试示例" class="headerlink" title="全1输入测试示例"></a>全1输入测试示例<a href="#quan-1-shu-ru-ce-shi-shi-li" class="header-anchor">#</a></h5><p><img src="/../images/image-20221020123338283.png" alt="image-20221020123338283"></p>
+<p><img src="/../images/image-20221020123414440.png" alt="image-20221020123414440"></p>
+<p><img src="/../images/image-20221020123404606.png" alt="image-20221020123404606"></p>
 <h4 id="dai-wan-shan-de-di-fang"><a href="#待完善的地方" class="headerlink" title="待完善的地方"></a>待完善的地方<a href="#dai-wan-shan-de-di-fang" class="header-anchor">#</a></h4><p>1、没有使用pdf给出的快速模乘算法</p>
 <p>2、查询S盒的时候要进行一个32比特的分组，每一组8比特。我是转成二进制字符串进行处理了，应该要使用位运算。</p>
 <h3 id="zong-jie"><a href="#总结" class="headerlink" title="总结"></a>总结<a href="#zong-jie" class="header-anchor">#</a></h3><p>祖冲之是一个典型的序列（流）密码，重点关注其密钥流生成算法即可。通过python基本实现了该密码算法，同时再编写代码的过程中都尽量使用位运算，而不是将整数转为字符串进行处理。同时要注重细节，很多密码算法具有雪崩效应，这使得我们在编程中出现的错误也会被放大，只要有一个比特或者字节因为编程错误发生了误差，那么就得不到加密的结果。我就是在L1函数的实现上出现了问题导致卡了1天的时间。</p>
-<h3 id="yin-yong"><a href="#引用" class="headerlink" title="引用"></a>引用<a href="#yin-yong" class="header-anchor">#</a></h3><p>本文依据来源于中华人民共和国密码行业标准(GM/T)文本：<a target="_blank" rel="noopener" href="http://www.gmbz.org.cn/main/bzlb.html">http://www.gmbz.org.cn/main/bzlb.html</a></p>
+<h3 id="yin-yong"><a href="#引用" class="headerlink" title="引用"></a>引用<a href="#yin-yong" class="header-anchor">#</a></h3><p>本文依据来源于中华人民共和国密码行业标准(GM&#x2F;T)文本：<a target="_blank" rel="noopener" href="http://www.gmbz.org.cn/main/bzlb.html">http://www.gmbz.org.cn/main/bzlb.html</a></p>
 <p>相关pdf下载链接：<a target="_blank" rel="noopener" href="https://github.com/guanzhi/GM-Standards">https://github.com/guanzhi/GM-Standards</a></p>
 
-  </div>
-</article>
+                
+            </div>
+            <hr/>
 
+            
 
-
+    <div class="reprint" id="reprint-statement">
         
-          <div id="footer-post-container">
-  <div id="footer-post">
-
-    <div id="nav-footer" style="display: none">
-      <ul>
-         
-          <li><a href="/">首页</a></li>
-         
-          <li><a href="/about/">关于</a></li>
-         
-          <li><a href="/archives/">归档</a></li>
-         
-          <li><a target="_blank" rel="noopener" href="https://github.com/MirRoR4s">项目</a></li>
-         
-          <li><a target="_blank" rel="noopener" href="https://github.com/MirRoR4s">MyGithub</a></li>
-         
-          <li><a href="/search/">Search</a></li>
-         
-          <li><a href="/tags/">标签</a></li>
-         
-          <li><a href="/categories/">分类</a></li>
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">MirRoR4s</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://MirRoR4s.github.io/2022/09/21/%E7%A5%96%E5%86%B2%E4%B9%8B%E5%BA%8F%E5%88%97%E5%AF%86%E7%A0%81%E7%AE%97%E6%B3%95/index.html">https://MirRoR4s.github.io/2022/09/21/%E7%A5%96%E5%86%B2%E4%B9%8B%E5%BA%8F%E5%88%97%E5%AF%86%E7%A0%81%E7%AE%97%E6%B3%95/index.html</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/about" target="_blank">MirRoR4s</a>
+                    !
+                </span>
+            </div>
         
-      </ul>
     </div>
 
-    <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#zu-chong-zhi-xu-lie-mi-ma-suan-fa-di-1-bu-fen-suan-fa-miao-shu"><span class="toc-number">1.</span> <span class="toc-text">祖冲之序列密码算法 第 1 部分：算法描述</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#lfsr-chu-shi-hua-mo-shi"><span class="toc-number">1.0.1.</span> <span class="toc-text">LFSR初始化模式</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#zuc-de-mo-jia-yun-suan"><span class="toc-number">1.0.1.1.</span> <span class="toc-text">ZUC的模加运算</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#zuc-de-mo-cheng-yun-suan-wei-wan-cheng"><span class="toc-number">1.0.1.2.</span> <span class="toc-text">ZUC的模乘运算（未完成）</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#lfsr-gong-zuo-mo-shi"><span class="toc-number">1.0.2.</span> <span class="toc-text">LFSR工作模式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#bi-te-chong-zu-br"><span class="toc-number">1.0.3.</span> <span class="toc-text">比特重组 BR</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#bi-te-lian-jie-de-shi-xian"><span class="toc-number">1.0.3.1.</span> <span class="toc-text">比特链接的实现：</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#fei-xian-xing-han-shu-f"><span class="toc-number">1.0.4.</span> <span class="toc-text">非线性函数 F</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#l1-l2-xian-xing-bian-huan-de-shi-xian"><span class="toc-number">1.0.4.1.</span> <span class="toc-text">L1、L2线性变换的实现</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#s-han-shu-de-shi-xian"><span class="toc-number">1.0.4.2.</span> <span class="toc-text">S函数的实现</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#wo-de-dai-ma-dai-wan-shan"><span class="toc-number">1.1.</span> <span class="toc-text">我的代码（待完善）</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#quan-0-shu-ru-ce-shi-shi-li"><span class="toc-number">1.1.0.1.</span> <span class="toc-text">全0输入测试示例</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#quan-1-shu-ru-ce-shi-shi-li"><span class="toc-number">1.1.0.2.</span> <span class="toc-text">全1输入测试示例</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#dai-wan-shan-de-di-fang"><span class="toc-number">1.1.1.</span> <span class="toc-text">待完善的地方</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#zong-jie"><span class="toc-number">1.2.</span> <span class="toc-text">总结</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#yin-yong"><span class="toc-number">1.3.</span> <span class="toc-text">引用</span></a></li></ol></li></ol>
-    </div>
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
 
-    <div id="share-footer" style="display: none">
-      <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://example.com/2022/09/21/%E7%A5%96%E5%86%B2%E4%B9%8B%E5%BA%8F%E5%88%97%E5%AF%86%E7%A0%81%E7%AE%97%E6%B3%95/index.html"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://example.com/2022/09/21/%E7%A5%96%E5%86%B2%E4%B9%8B%E5%BA%8F%E5%88%97%E5%AF%86%E7%A0%81%E7%AE%97%E6%B3%95/index.html&text=GMT 0001.1-2012 祖冲之序列密码算法"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://example.com/2022/09/21/%E7%A5%96%E5%86%B2%E4%B9%8B%E5%BA%8F%E5%88%97%E5%AF%86%E7%A0%81%E7%AE%97%E6%B3%95/index.html&title=GMT 0001.1-2012 祖冲之序列密码算法"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://example.com/2022/09/21/%E7%A5%96%E5%86%B2%E4%B9%8B%E5%BA%8F%E5%88%97%E5%AF%86%E7%A0%81%E7%AE%97%E6%B3%95/index.html&is_video=false&description=GMT 0001.1-2012 祖冲之序列密码算法"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=GMT 0001.1-2012 祖冲之序列密码算法&body=Check out this article: https://example.com/2022/09/21/%E7%A5%96%E5%86%B2%E4%B9%8B%E5%BA%8F%E5%88%97%E5%AF%86%E7%A0%81%E7%AE%97%E6%B3%95/index.html"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://example.com/2022/09/21/%E7%A5%96%E5%86%B2%E4%B9%8B%E5%BA%8F%E5%88%97%E5%AF%86%E7%A0%81%E7%AE%97%E6%B3%95/index.html&title=GMT 0001.1-2012 祖冲之序列密码算法"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://example.com/2022/09/21/%E7%A5%96%E5%86%B2%E4%B9%8B%E5%BA%8F%E5%88%97%E5%AF%86%E7%A0%81%E7%AE%97%E6%B3%95/index.html&title=GMT 0001.1-2012 祖冲之序列密码算法"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://example.com/2022/09/21/%E7%A5%96%E5%86%B2%E4%B9%8B%E5%BA%8F%E5%88%97%E5%AF%86%E7%A0%81%E7%AE%97%E6%B3%95/index.html&title=GMT 0001.1-2012 祖冲之序列密码算法"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://example.com/2022/09/21/%E7%A5%96%E5%86%B2%E4%B9%8B%E5%BA%8F%E5%88%97%E5%AF%86%E7%A0%81%E7%AE%97%E6%B3%95/index.html&title=GMT 0001.1-2012 祖冲之序列密码算法"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://example.com/2022/09/21/%E7%A5%96%E5%86%B2%E4%B9%8B%E5%BA%8F%E5%88%97%E5%AF%86%E7%A0%81%E7%AE%97%E6%B3%95/index.html&name=GMT 0001.1-2012 祖冲之序列密码算法&description=&lt;!--toc--&gt;"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://example.com/2022/09/21/%E7%A5%96%E5%86%B2%E4%B9%8B%E5%BA%8F%E5%88%97%E5%AF%86%E7%A0%81%E7%AE%97%E6%B3%95/index.html&t=GMT 0001.1-2012 祖冲之序列密码算法"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
-</ul>
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
 
-    </div>
 
-    <div id="actions-footer">
-        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
-        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
-        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
-        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
-    </div>
 
-  </div>
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/Crypto/">
+                                    <span class="chip bg-color">Crypto</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
 </div>
 
-        
-        <footer id="footer">
-  <div class="footer-left">
-    Copyright &copy;
-    
-    
-    1999-2022
-    MirRoR4s
-  </div>
-  <div class="footer-right">
-    <nav>
-      <ul>
-        <!--
-       --><li><a href="/">首页</a></li><!--
-     --><!--
-       --><li><a href="/about/">关于</a></li><!--
-     --><!--
-       --><li><a href="/archives/">归档</a></li><!--
-     --><!--
-       --><li><a target="_blank" rel="noopener" href="https://github.com/MirRoR4s">项目</a></li><!--
-     --><!--
-       --><li><a target="_blank" rel="noopener" href="https://github.com/MirRoR4s">MyGithub</a></li><!--
-     --><!--
-       --><li><a href="/search/">Search</a></li><!--
-     --><!--
-       --><li><a href="/tags/">标签</a></li><!--
-     --><!--
-       --><li><a href="/categories/">分类</a></li><!--
-     -->
-      </ul>
-    </nav>
-  </div>
-</footer>
+                </div>
+            </div>
+            
+                <style>
+    #reward {
+        margin: 40px 0;
+        text-align: center;
+    }
 
+    #reward .reward-link {
+        font-size: 1.4rem;
+        line-height: 38px;
+    }
+
+    #reward .btn-floating:hover {
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    #rewardModal {
+        width: 320px;
+        height: 350px;
+    }
+
+    #rewardModal .reward-title {
+        margin: 15px auto;
+        padding-bottom: 5px;
+    }
+
+    #rewardModal .modal-content {
+        padding: 10px;
+    }
+
+    #rewardModal .close {
+        position: absolute;
+        right: 15px;
+        top: 15px;
+        color: rgba(0, 0, 0, 0.5);
+        font-size: 1.3rem;
+        line-height: 20px;
+        cursor: pointer;
+    }
+
+    #rewardModal .close:hover {
+        color: #ef5350;
+        transform: scale(1.3);
+        -moz-transform:scale(1.3);
+        -webkit-transform:scale(1.3);
+        -o-transform:scale(1.3);
+    }
+
+    #rewardModal .reward-tabs {
+        margin: 0 auto;
+        width: 210px;
+    }
+
+    .reward-tabs .tabs {
+        height: 38px;
+        margin: 10px auto;
+        padding-left: 0;
+    }
+
+    .reward-content ul {
+        padding-left: 0 !important;
+    }
+
+    .reward-tabs .tabs .tab {
+        height: 38px;
+        line-height: 38px;
+    }
+
+    .reward-tabs .tab a {
+        color: #fff;
+        background-color: #ccc;
+    }
+
+    .reward-tabs .tab a:hover {
+        background-color: #ccc;
+        color: #fff;
+    }
+
+    .reward-tabs .wechat-tab .active {
+        color: #fff !important;
+        background-color: #22AB38 !important;
+    }
+
+    .reward-tabs .alipay-tab .active {
+        color: #fff !important;
+        background-color: #019FE8 !important;
+    }
+
+    .reward-tabs .reward-img {
+        width: 210px;
+        height: 210px;
+    }
+</style>
+
+<div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-medium waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fas fa-times"></i></a>
+            <h4 class="reward-title">你的赏识是我前进的动力</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        <img src="/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
+                    </div>
+                    <div id="wechat">
+                        <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <!-- styles -->
+</div>
 
-
-
-  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
-
-
-    <!-- jquery -->
- 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
-
-
-
-
-<!-- clipboard -->
-
-  
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
-  
-  <script type="text/javascript">
-  $(function() {
-    // copy-btn HTML
-    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板！\">";
-    btn += '<i class="far fa-clone"></i>';
-    btn += '</span>'; 
-    // mount it!
-    $(".highlight table").before(btn);
-    var clip = new ClipboardJS('.btn-copy', {
-      text: function(trigger) {
-        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
-      }
-    });
-    clip.on('success', function(e) {
-      e.trigger.setAttribute('aria-label', "复制成功！");
-      e.clearSelection();
-    })
-  })
-  </script>
-
-
-<script src="/js/main.js"></script>
-
-<!-- search -->
-
-<!-- Google Analytics -->
-
-<!-- Baidu Analytics -->
-
-<!-- Cloudflare Analytics -->
-
-<!-- Umami Analytics -->
-
-<!-- Disqus Comments -->
-
-<!-- utterances Comments -->
-
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
+<script>
+    $(function () {
+        $('.tabs').tabs();
     });
 </script>
-<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2022/09/25/BalsnCTF-2022/index.html">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/10.jpg" class="responsive-img" alt="BalsnCTF-2022">
+                        
+                        <span class="card-title">BalsnCTF-2022</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+
+以中有足乐者，不知口体之奉不若人也。
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2022-09-25
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-user fa-fw"></i>
+                            MirRoR4s
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Crypto/">
+                        <span class="chip bg-color">Crypto</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2022/09/20/ctfshow-php%E6%96%B0%E7%89%B9%E6%80%A7/index.html">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/17.jpg" class="responsive-img" alt="ctfshow-php新特性">
+                        
+                        <span class="card-title">ctfshow-php新特性</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+
+我要刷完ctfshow
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-09-20
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-user fa-fw"></i>
+                            MirRoR4s
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Web/">
+                        <span class="chip bg-color">Web</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget card" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+<script src="https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script>
+    MathJax.Hub.Config({
+        tex2jax: {inlineMath: [['$', '$'], ['\(', '\)']]}
+    });
+</script>
+
+
+
+    <footer class="page-footer bg-color">
+    
+        <link rel="stylesheet" href="/libs/aplayer/APlayer.min.css">
+<style>
+    .aplayer .aplayer-lrc p {
+        
+        display: none;
+        
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 16px !important;
+    }
+
+    .aplayer .aplayer-lrc p.aplayer-lrc-current {
+        
+        display: none;
+        
+        font-size: 15px;
+        color: #42b983;
+    }
+
+    
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body {
+        left: -66px !important;
+    }
+
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body:hover {
+        left: 0px !important;
+    }
+
+    
+</style>
+<div class="">
+    
+    <div class="row">
+        <meting-js class="col l8 offset-l2 m10 offset-m1 s12"
+                   server="netease"
+                   type="playlist"
+                   id="503838841"
+                   fixed='true'
+                   autoplay='false'
+                   theme='#42b983'
+                   loop='all'
+                   order='random'
+                   preload='auto'
+                   volume='0.7'
+                   list-folded='true'
+        >
+        </meting-js>
+    </div>
+</div>
+
+<script src="/libs/aplayer/APlayer.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+
+    
+    <div class="container row center-align" style="margin-bottom: 0px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            
+                <span id="year">2023</span>
+            
+            <span id="year">2023</span>
+            <a href="/about" target="_blank">MirRoR4s</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+            
+            
+            
+            
+            
+            <span id="busuanzi_container_site_pv">
+                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
+                    class="white-color"></span>&nbsp;次
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv">
+                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
+                    class="white-color"></span>&nbsp;人
+            </span>
+            
+            <br>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/MirRoR4s" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:790356373@qq.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=790356373" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 790356373" data-position="top" data-delay="50">
+        <i class="fab fa-qq"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fas fa-rss"></i>
+    </a>
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(function () {
+    var searchFunc = function (path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+            url: path,
+            dataType: "xml",
+            success: function (xmlResponse) {
+                // get the contents from search data
+                var datas = $("entry", xmlResponse).map(function () {
+                    return {
+                        title: $("title", this).text(),
+                        content: $("content", this).text(),
+                        url: $("url", this).text()
+                    };
+                }).get();
+                var $input = document.getElementById(search_id);
+                var $resultContent = document.getElementById(content_id);
+                $input.addEventListener('input', function () {
+                    var str = '<ul class=\"search-result-list\">';
+                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                    $resultContent.innerHTML = "";
+                    if (this.value.trim().length <= 0) {
+                        return;
+                    }
+                    // perform local searching
+                    datas.forEach(function (data) {
+                        var isMatch = true;
+                        var data_title = data.title.trim().toLowerCase();
+                        var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                        var data_url = data.url;
+                        data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
+                        var index_title = -1;
+                        var index_content = -1;
+                        var first_occur = -1;
+                        // only match artiles with not empty titles and contents
+                        if (data_title !== '' && data_content !== '') {
+                            keywords.forEach(function (keyword, i) {
+                                index_title = data_title.indexOf(keyword);
+                                index_content = data_content.indexOf(keyword);
+                                if (index_title < 0 && index_content < 0) {
+                                    isMatch = false;
+                                } else {
+                                    if (index_content < 0) {
+                                        index_content = 0;
+                                    }
+                                    if (i === 0) {
+                                        first_occur = index_content;
+                                    }
+                                }
+                            });
+                        }
+                        // show search results
+                        if (isMatch) {
+                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                            var content = data.content.trim().replace(/<[^>]+>/g, "");
+                            if (first_occur >= 0) {
+                                // cut out 100 characters
+                                var start = first_occur - 20;
+                                var end = first_occur + 80;
+                                if (start < 0) {
+                                    start = 0;
+                                }
+                                if (start === 0) {
+                                    end = 100;
+                                }
+                                if (end > content.length) {
+                                    end = content.length;
+                                }
+                                var match_content = content.substr(start, end);
+                                // highlight all keywords
+                                keywords.forEach(function (keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
+                                });
+
+                                str += "<p class=\"search-result\">" + match_content + "...</p>"
+                            }
+                            str += "</li>";
+                        }
+                    });
+                    str += "</ul>";
+                    $resultContent.innerHTML = str;
+                });
+            }
+        });
+    };
+
+    searchFunc('/search.xml', 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    <script src="/libs/others/clicklove.js" async="async"></script>
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+	
+    
+
+    
+
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
 </body>
+
 </html>

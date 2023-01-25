@@ -1,178 +1,500 @@
-<!DOCTYPE html>
-<html lang=zh>
-<head>
-    <!-- so meta -->
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="HandheldFriendly" content="True">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
-    <meta name="description" content="密码编码学与网络安全-原理与实践(第七版)#[TOC] 第一章习题#第二章习题#第三章习题#第四章习题#思考题#4.1#目前使用的很多对称分组加密算法都是基于Feistel分组密码结构。因此，对Feistel结构的研究揭示了这些最新密码背后的原理。 4.2#流密码是对数字数据流一次加密一个比特或一个字节的密码。分组密码是将一个明文块作为一个整体来处理，并用它来产生一个长度相等的密文块。 4.3#如">
-<meta property="og:type" content="article">
-<meta property="og:title" content="密码编码学与网络安全-原理与实践(第七版)">
-<meta property="og:url" content="https://example.com/2022/06/13/%E5%AF%86%E7%A0%81%E7%BC%96%E7%A0%81%E5%AD%A6%E4%B8%8E%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8-%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E8%B7%B5-%E7%AC%AC%E4%B8%83%E7%89%88/index.html">
-<meta property="og:site_name" content="学习记录">
-<meta property="og:description" content="密码编码学与网络安全-原理与实践(第七版)#[TOC] 第一章习题#第二章习题#第三章习题#第四章习题#思考题#4.1#目前使用的很多对称分组加密算法都是基于Feistel分组密码结构。因此，对Feistel结构的研究揭示了这些最新密码背后的原理。 4.2#流密码是对数字数据流一次加密一个比特或一个字节的密码。分组密码是将一个明文块作为一个整体来处理，并用它来产生一个长度相等的密文块。 4.3#如">
-<meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2022-06-13T01:35:10.000Z">
-<meta property="article:modified_time" content="2022-09-02T08:53:26.481Z">
-<meta property="article:author" content="MirRoR4s">
-<meta property="article:tag" content="Crypto">
-<meta name="twitter:card" content="summary">
-    
-    
-      
-        
-          <link rel="shortcut icon" href="/images/favicon.ico">
-        
-      
-      
-        
-          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
-        
-      
-      
-        
-          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
-        
-      
-    
-    <!-- title -->
-    <title>密码编码学与网络安全-原理与实践(第七版)</title>
-    <!-- styles -->
-    
-<link rel="stylesheet" href="/css/style.css">
+<!DOCTYPE HTML>
+<html lang="zh-CN">
 
-    <!-- persian styles -->
-    
-    <!-- rss -->
-    
-    
-	<!-- mathjax -->
-	
-		<script type="text/x-mathjax-config">
-		  MathJax.Hub.Config({
-			tex2jax: {
-			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
-			  inlineMath: [['$','$']]
-			}
-		  });
-		</script>
-		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
-	
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="密码编码学与网络安全-原理与实践(第七版), 学习记录">
+    <meta name="description" content="欢迎来到我的博客">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>密码编码学与网络安全-原理与实践(第七版) | 学习记录</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+
+    <script src="/libs/jquery/jquery.min.js"></script>
+
 <meta name="generator" content="Hexo 6.1.0"></head>
 
-<body class="max-width mx-auto px3 ltr">    
-      <div id="header-post">
-  <a id="menu-icon" href="#" aria-label="目录"><i class="fas fa-bars fa-lg"></i></a>
-  <a id="menu-icon-tablet" href="#" aria-label="目录"><i class="fas fa-bars fa-lg"></i></a>
-  <a id="top-icon-tablet" href="#" aria-label="顶部" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
-  <span id="menu">
-    <span id="nav">
-      <ul>
-        <!--
-       --><li><a href="/">首页</a></li><!--
-     --><!--
-       --><li><a href="/about/">关于</a></li><!--
-     --><!--
-       --><li><a href="/archives/">归档</a></li><!--
-     --><!--
-       --><li><a target="_blank" rel="noopener" href="https://github.com/MirRoR4s">项目</a></li><!--
-     --><!--
-       --><li><a target="_blank" rel="noopener" href="https://github.com/MirRoR4s">MyGithub</a></li><!--
-     --><!--
-       --><li><a href="/search/">Search</a></li><!--
-     --><!--
-       --><li><a href="/tags/">标签</a></li><!--
-     --><!--
-       --><li><a href="/categories/">分类</a></li><!--
-     -->
-      </ul>
-    </span>
-    <br/>
-    <span id="actions">
-      <ul>
-        
-        <li><a class="icon" aria-label="上一篇" href="/2022/06/14/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/index.html"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
-        
-        
-        <li><a class="icon" aria-label="下一篇" href="/2022/06/12/SEETF-2022/index.html"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
-        
-        <li><a class="icon" aria-label="返回顶部" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
-        <li><a class="icon" aria-label="分享文章" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
-      </ul>
-      <span id="i-prev" class="info" style="display:none;">上一篇</span>
-      <span id="i-next" class="info" style="display:none;">下一篇</span>
-      <span id="i-top" class="info" style="display:none;">返回顶部</span>
-      <span id="i-share" class="info" style="display:none;">分享文章</span>
-    </span>
-    <br/>
-    <div id="share" style="display: none">
-      <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://example.com/2022/06/13/%E5%AF%86%E7%A0%81%E7%BC%96%E7%A0%81%E5%AD%A6%E4%B8%8E%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8-%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E8%B7%B5-%E7%AC%AC%E4%B8%83%E7%89%88/index.html"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://example.com/2022/06/13/%E5%AF%86%E7%A0%81%E7%BC%96%E7%A0%81%E5%AD%A6%E4%B8%8E%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8-%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E8%B7%B5-%E7%AC%AC%E4%B8%83%E7%89%88/index.html&text=密码编码学与网络安全-原理与实践(第七版)"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://example.com/2022/06/13/%E5%AF%86%E7%A0%81%E7%BC%96%E7%A0%81%E5%AD%A6%E4%B8%8E%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8-%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E8%B7%B5-%E7%AC%AC%E4%B8%83%E7%89%88/index.html&title=密码编码学与网络安全-原理与实践(第七版)"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://example.com/2022/06/13/%E5%AF%86%E7%A0%81%E7%BC%96%E7%A0%81%E5%AD%A6%E4%B8%8E%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8-%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E8%B7%B5-%E7%AC%AC%E4%B8%83%E7%89%88/index.html&is_video=false&description=密码编码学与网络安全-原理与实践(第七版)"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=密码编码学与网络安全-原理与实践(第七版)&body=Check out this article: https://example.com/2022/06/13/%E5%AF%86%E7%A0%81%E7%BC%96%E7%A0%81%E5%AD%A6%E4%B8%8E%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8-%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E8%B7%B5-%E7%AC%AC%E4%B8%83%E7%89%88/index.html"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://example.com/2022/06/13/%E5%AF%86%E7%A0%81%E7%BC%96%E7%A0%81%E5%AD%A6%E4%B8%8E%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8-%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E8%B7%B5-%E7%AC%AC%E4%B8%83%E7%89%88/index.html&title=密码编码学与网络安全-原理与实践(第七版)"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://example.com/2022/06/13/%E5%AF%86%E7%A0%81%E7%BC%96%E7%A0%81%E5%AD%A6%E4%B8%8E%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8-%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E8%B7%B5-%E7%AC%AC%E4%B8%83%E7%89%88/index.html&title=密码编码学与网络安全-原理与实践(第七版)"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://example.com/2022/06/13/%E5%AF%86%E7%A0%81%E7%BC%96%E7%A0%81%E5%AD%A6%E4%B8%8E%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8-%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E8%B7%B5-%E7%AC%AC%E4%B8%83%E7%89%88/index.html&title=密码编码学与网络安全-原理与实践(第七版)"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://example.com/2022/06/13/%E5%AF%86%E7%A0%81%E7%BC%96%E7%A0%81%E5%AD%A6%E4%B8%8E%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8-%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E8%B7%B5-%E7%AC%AC%E4%B8%83%E7%89%88/index.html&title=密码编码学与网络安全-原理与实践(第七版)"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://example.com/2022/06/13/%E5%AF%86%E7%A0%81%E7%BC%96%E7%A0%81%E5%AD%A6%E4%B8%8E%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8-%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E8%B7%B5-%E7%AC%AC%E4%B8%83%E7%89%88/index.html&name=密码编码学与网络安全-原理与实践(第七版)&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://example.com/2022/06/13/%E5%AF%86%E7%A0%81%E7%BC%96%E7%A0%81%E5%AD%A6%E4%B8%8E%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8-%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E8%B7%B5-%E7%AC%AC%E4%B8%83%E7%89%88/index.html&t=密码编码学与网络安全-原理与实践(第七版)"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">学习记录</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/contact" class="waves-effect waves-light">
+      
+      <i class="fas fa-comments" style="zoom: 0.6;"></i>
+      
+      <span>留言板</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/friends" class="waves-effect waves-light">
+      
+      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
+      
+      <span>友情链接</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
 </ul>
 
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">学习记录</div>
+        <div class="logo-desc">
+            
+            欢迎来到我的博客
+            
+        </div>
     </div>
-    <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#mi-ma-bian-ma-xue-yu-wang-luo-an-quan-yuan-li-yu-shi-jian-di-qi-ban"><span class="toc-number">1.</span> <span class="toc-text">密码编码学与网络安全-原理与实践(第七版)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#di-yi-zhang-xi-ti"><span class="toc-number">1.1.</span> <span class="toc-text">第一章习题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#di-er-zhang-xi-ti"><span class="toc-number">1.2.</span> <span class="toc-text">第二章习题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#di-san-zhang-xi-ti"><span class="toc-number">1.3.</span> <span class="toc-text">第三章习题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#di-si-zhang-xi-ti"><span class="toc-number">1.4.</span> <span class="toc-text">第四章习题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#si-kao-ti"><span class="toc-number">1.4.1.</span> <span class="toc-text">思考题</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#4-1"><span class="toc-number">1.4.1.1.</span> <span class="toc-text">4.1</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-2"><span class="toc-number">1.4.1.2.</span> <span class="toc-text">4.2</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-3"><span class="toc-number">1.4.1.3.</span> <span class="toc-text">4.3</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-4"><span class="toc-number">1.4.1.4.</span> <span class="toc-text">4.4</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-5"><span class="toc-number">1.4.1.5.</span> <span class="toc-text">4.5</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-6"><span class="toc-number">1.4.1.6.</span> <span class="toc-text">4.6</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-7"><span class="toc-number">1.4.1.7.</span> <span class="toc-text">4.7</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#xi-ti"><span class="toc-number">1.4.2.</span> <span class="toc-text">习题</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#4-1"><span class="toc-number">1.4.2.1.</span> <span class="toc-text">4.1</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-2"><span class="toc-number">1.4.2.2.</span> <span class="toc-text">4.2</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-3"><span class="toc-number">1.4.2.3.</span> <span class="toc-text">4.3</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-4"><span class="toc-number">1.4.2.4.</span> <span class="toc-text">4.4</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-5"><span class="toc-number">1.4.2.5.</span> <span class="toc-text">4.5</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-6"><span class="toc-number">1.4.2.6.</span> <span class="toc-text">4.6</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-7"><span class="toc-number">1.4.2.7.</span> <span class="toc-text">4.7</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-8"><span class="toc-number">1.4.2.8.</span> <span class="toc-text">4.8</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#di-wu-zhang-xi-ti"><span class="toc-number">1.5.</span> <span class="toc-text">第五章习题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#di-liu-zhang-xi-ti"><span class="toc-number">1.6.</span> <span class="toc-text">第六章习题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#si-kao-ti"><span class="toc-number">1.6.1.</span> <span class="toc-text">思考题</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#6-1"><span class="toc-number">1.6.1.1.</span> <span class="toc-text">6.1</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-2"><span class="toc-number">1.6.1.2.</span> <span class="toc-text">6.2</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-3"><span class="toc-number">1.6.1.3.</span> <span class="toc-text">6.3</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-4"><span class="toc-number">1.6.1.4.</span> <span class="toc-text">6.4</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-5"><span class="toc-number">1.6.1.5.</span> <span class="toc-text">6.5</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-6"><span class="toc-number">1.6.1.6.</span> <span class="toc-text">6.6</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-7"><span class="toc-number">1.6.1.7.</span> <span class="toc-text">6.7</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-8"><span class="toc-number">1.6.1.8.</span> <span class="toc-text">6.8</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-9"><span class="toc-number">1.6.1.9.</span> <span class="toc-text">6.9</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-10"><span class="toc-number">1.6.1.10.</span> <span class="toc-text">6.10</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-11"><span class="toc-number">1.6.1.11.</span> <span class="toc-text">6.11</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-12"><span class="toc-number">1.6.1.12.</span> <span class="toc-text">6.12</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-13"><span class="toc-number">1.6.1.13.</span> <span class="toc-text">6.13</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-14"><span class="toc-number">1.6.1.14.</span> <span class="toc-text">6.14</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#di-qi-zhang-xi-ti"><span class="toc-number">1.7.</span> <span class="toc-text">第七章习题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#di-ba-zhang-xi-ti"><span class="toc-number">1.8.</span> <span class="toc-text">第八章习题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#di-jiu-zhang-xi-ti"><span class="toc-number">1.9.</span> <span class="toc-text">第九章习题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#si-kao-ti"><span class="toc-number">1.9.1.</span> <span class="toc-text">思考题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#xi-ti"><span class="toc-number">1.9.2.</span> <span class="toc-text">习题</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#9-1"><span class="toc-number">1.9.2.1.</span> <span class="toc-text">9.1</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#9-5"><span class="toc-number">1.9.2.2.</span> <span class="toc-text">9.5</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#9-6"><span class="toc-number">1.9.2.3.</span> <span class="toc-text">9.6</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#9-7"><span class="toc-number">1.9.2.4.</span> <span class="toc-text">9.7</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#9-8"><span class="toc-number">1.9.2.5.</span> <span class="toc-text">9.8</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#9-9"><span class="toc-number">1.9.2.6.</span> <span class="toc-text">9.9</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#9-10"><span class="toc-number">1.9.2.7.</span> <span class="toc-text">9.10</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#9-11"><span class="toc-number">1.9.2.8.</span> <span class="toc-text">9.11</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#9-12"><span class="toc-number">1.9.2.9.</span> <span class="toc-text">9.12</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#9-13"><span class="toc-number">1.9.2.10.</span> <span class="toc-text">9.13</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#9-14"><span class="toc-number">1.9.2.11.</span> <span class="toc-text">9.14</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#9-15"><span class="toc-number">1.9.2.12.</span> <span class="toc-text">9.15</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#9-16"><span class="toc-number">1.9.2.13.</span> <span class="toc-text">9.16</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#9-17"><span class="toc-number">1.9.2.14.</span> <span class="toc-text">9.17</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#9-18"><span class="toc-number">1.9.2.15.</span> <span class="toc-text">9.18</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#9-19"><span class="toc-number">1.9.2.16.</span> <span class="toc-text">9.19</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#di-shi-zhang"><span class="toc-number">1.10.</span> <span class="toc-text">第十章</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#si-kao-ti"><span class="toc-number">1.10.1.</span> <span class="toc-text">思考题</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#10-1"><span class="toc-number">1.10.1.1.</span> <span class="toc-text">10.1</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#10-2"><span class="toc-number">1.10.1.2.</span> <span class="toc-text">10.2</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#10-3"><span class="toc-number">1.10.1.3.</span> <span class="toc-text">10.3</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#10-4"><span class="toc-number">1.10.1.4.</span> <span class="toc-text">10.4</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#xi-ti"><span class="toc-number">1.10.2.</span> <span class="toc-text">习题</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#10-1"><span class="toc-number">1.10.2.1.</span> <span class="toc-text">10.1</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#10-2"><span class="toc-number">1.10.2.2.</span> <span class="toc-text">10.2</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#10-3"><span class="toc-number">1.10.2.3.</span> <span class="toc-text">10.3</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#10-4"><span class="toc-number">1.10.2.4.</span> <span class="toc-text">10.4</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#10-5"><span class="toc-number">1.10.2.5.</span> <span class="toc-text">10.5</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#10-6"><span class="toc-number">1.10.2.6.</span> <span class="toc-text">10.6</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#10-7"><span class="toc-number">1.10.2.7.</span> <span class="toc-text">10.7</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#10-8"><span class="toc-number">1.10.2.8.</span> <span class="toc-text">10.8</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#10-9"><span class="toc-number">1.10.2.9.</span> <span class="toc-text">10.9</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#10-10"><span class="toc-number">1.10.2.10.</span> <span class="toc-text">10.10</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#10-11"><span class="toc-number">1.10.2.11.</span> <span class="toc-text">10.11</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#10-12"><span class="toc-number">1.10.2.12.</span> <span class="toc-text">10.12</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#10-13"><span class="toc-number">1.10.2.13.</span> <span class="toc-text">10.13</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#10-14"><span class="toc-number">1.10.2.14.</span> <span class="toc-text">10.14</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#10-15"><span class="toc-number">1.10.2.15.</span> <span class="toc-text">10.15</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#10-16"><span class="toc-number">1.10.2.16.</span> <span class="toc-text">10.16</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#10-17"><span class="toc-number">1.10.2.17.</span> <span class="toc-text">10.17</span></a></li></ol></li></ol></li></ol></li></ol>
-    </div>
-  </span>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/contact" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-comments"></i>
+			
+			留言板
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/friends" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-address-book"></i>
+			
+			友情链接
+		</a>
+          
+        </li>
+        
+        
+        <li><div class="divider"></div></li>
+        <li>
+            <a href="https://github.com/blinkfox/hexo-theme-matery" class="waves-effect waves-light" target="_blank">
+                <i class="fab fa-github-square fa-fw"></i>Fork Me
+            </a>
+        </li>
+        
+    </ul>
 </div>
 
+
+        </div>
+
+        
+            <style>
+    .nav-transparent .github-corner {
+        display: none !important;
+    }
+
+    .github-corner {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        right: 0;
+        border: 0;
+        transform: scale(1.1);
+    }
+
+    .github-corner svg {
+        color: #0f9d58;
+        fill: #fff;
+        height: 64px;
+        width: 64px;
+    }
+
+    .github-corner:hover .octo-arm {
+        animation: a 0.56s ease-in-out;
+    }
+
+    .github-corner .octo-arm {
+        animation: none;
+    }
+
+    @keyframes a {
+        0%,
+        to {
+            transform: rotate(0);
+        }
+        20%,
+        60% {
+            transform: rotate(-25deg);
+        }
+        40%,
+        80% {
+            transform: rotate(10deg);
+        }
+    }
+</style>
+
+<a href="https://github.com/blinkfox/hexo-theme-matery" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
+   data-tooltip="Fork Me" data-position="left" data-delay="50">
+    <svg viewBox="0 0 250 250" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor" class="octo-body"></path>
+    </svg>
+</a>
+        
+    </nav>
+
+</header>
+
     
-    <div class="content index py4">
-        
-        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
-  <header>
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/7.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">密码编码学与网络安全-原理与实践(第七版)</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
     
-    <h1 class="posttitle" itemprop="name headline">
-        密码编码学与网络安全-原理与实践(第七版)
-    </h1>
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
 
+    #articleContent :focus {
+        outline: none;
+    }
 
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
 
-    <div class="meta">
-      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
-        <span itemprop="name">MirRoR4s</span>
-      </span>
-      
-    <div class="postdate">
-      
-        <time datetime="2022-06-13T01:35:10.000Z" itemprop="datePublished">2022-06-13</time>
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        padding: 35px 0 15px 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        padding-bottom: 30px;
+        overflow: auto;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+
+        position: absolute;
+        right: 23.5vw;
+        display: block;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/Crypto/">
+                                <span class="chip bg-color">Crypto</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2022-06-13
+                </div>
+                
+
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
+                    2022-09-02
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    6k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    25 分
+                </div>
+                
+
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+        </div>
+        <hr class="clearfix">
+
         
-        (Updated: <time datetime="2022-09-02T08:53:26.481Z" itemprop="dateModified">2022-09-02</time>)
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.css">
         
-      
-    </div>
 
+        
 
-      
-
-      
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link-link" href="/tags/Crypto/" rel="tag">Crypto</a>
-    </div>
-
-
-    </div>
-  </header>
-  
-
-  <div class="content" itemprop="articleBody">
-    <h1 id="mi-ma-bian-ma-xue-yu-wang-luo-an-quan-yuan-li-yu-shi-jian-di-qi-ban"><a href="#密码编码学与网络安全-原理与实践-第七版" class="headerlink" title="密码编码学与网络安全-原理与实践(第七版)"></a>密码编码学与网络安全-原理与实践(第七版)<a href="#mi-ma-bian-ma-xue-yu-wang-luo-an-quan-yuan-li-yu-shi-jian-di-qi-ban" class="header-anchor">#</a></h1><p>[TOC]</p>
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h1 id="mi-ma-bian-ma-xue-yu-wang-luo-an-quan-yuan-li-yu-shi-jian-di-qi-ban"><a href="#密码编码学与网络安全-原理与实践-第七版" class="headerlink" title="密码编码学与网络安全-原理与实践(第七版)"></a>密码编码学与网络安全-原理与实践(第七版)<a href="#mi-ma-bian-ma-xue-yu-wang-luo-an-quan-yuan-li-yu-shi-jian-di-qi-ban" class="header-anchor">#</a></h1><p>[TOC]</p>
 <h2 id="di-yi-zhang-xi-ti"><a href="#第一章习题" class="headerlink" title="第一章习题"></a>第一章习题<a href="#di-yi-zhang-xi-ti" class="header-anchor">#</a></h2><h2 id="di-er-zhang-xi-ti"><a href="#第二章习题" class="headerlink" title="第二章习题"></a>第二章习题<a href="#di-er-zhang-xi-ti" class="header-anchor">#</a></h2><h2 id="di-san-zhang-xi-ti"><a href="#第三章习题" class="headerlink" title="第三章习题"></a>第三章习题<a href="#di-san-zhang-xi-ti" class="header-anchor">#</a></h2><h2 id="di-si-zhang-xi-ti"><a href="#第四章习题" class="headerlink" title="第四章习题"></a>第四章习题<a href="#di-si-zhang-xi-ti" class="header-anchor">#</a></h2><h3 id="si-kao-ti"><a href="#思考题" class="headerlink" title="思考题"></a>思考题<a href="#si-kao-ti" class="header-anchor">#</a></h3><h4 id="4-1"><a href="#4-1" class="headerlink" title="4.1"></a>4.1<a href="#4-1" class="header-anchor">#</a></h4><p>目前使用的很多对称分组加密算法都是基于Feistel分组密码结构。因此，对Feistel结构的研究揭示了这些最新密码背后的原理。</p>
 <h4 id="4-2"><a href="#4-2" class="headerlink" title="4.2"></a>4.2<a href="#4-2" class="header-anchor">#</a></h4><p>流密码是对数字数据流一次加密一个比特或一个字节的密码。分组密码是将一个明文块作为一个整体来处理，并用它来产生一个长度相等的密文块。</p>
-<h4 id="4-3"><a href="#4-3" class="headerlink" title="4.3"></a>4.3<a href="#4-3" class="header-anchor">#</a></h4><p>如果使用一个较小的块大小，例如n = 4，那么该系统相当于一个经典的替换密码。对于小的分组块，这样的系统很容易对明文进行统计分析。对于较大的块，密钥的大小是$n * 2^n$的量级，这使得系统不切实际。</p>
+<h4 id="4-3"><a href="#4-3" class="headerlink" title="4.3"></a>4.3<a href="#4-3" class="header-anchor">#</a></h4><p>如果使用一个较小的块大小，例如n &#x3D; 4，那么该系统相当于一个经典的替换密码。对于小的分组块，这样的系统很容易对明文进行统计分析。对于较大的块，密钥的大小是$n * 2^n$的量级，这使得系统不切实际。</p>
 <h4 id="4-4"><a href="#4-4" class="headerlink" title="4.4"></a>4.4<a href="#4-4" class="header-anchor">#</a></h4><p>乘积密码是依次使用两个或两个以上基本密码，所得结果的密码强度将强于所有单个密码的强度。</p>
 <h4 id="4-5"><a href="#4-5" class="headerlink" title="4.5"></a>4.5<a href="#4-5" class="header-anchor">#</a></h4><p>扩散的方法是尽可能地使明文和密文间的统计关系变得复杂，以挫败推导出密钥的企图。混淆则是尽可能使密文和加密密钥间的统计关系更加复杂，以阻止攻击者发现密钥。</p>
 <p>在扩散过程中，明文的统计结构被消散到密文当中去。这是通过让每个明文数字影响许多密文数字的值来实现的，这相当于说每个密文数字受许多明文数字的影响。混淆试图使密文的统计数据和加密密钥的值之间的关系尽可能复杂，以再次阻止发现密钥的尝试。因此，即使攻击者能够在一定程度上掌握密文的统计信息，但使用密钥生成密文的方式是如此复杂，以至于很难推断出密钥。这是通过使用复杂的替换算法实现的。</p>
@@ -181,7 +503,7 @@
 <p>迭代轮数：Feistel密码的本质是一个简单的单轮迭代只能提供不充分的安全性，但是多轮迭代可以增加安全性</p>
 <p>子密钥产生算法：这个算法的复杂度越高，应该导致密码分析越困难。</p>
 <p>轮函数：同样地，更复杂的轮函数通常意味着抵抗密码分析的能力越强。</p>
-<p>快速的软件加密/解密：在许多案例中，加密被嵌入到应用或应用程序的函数当中去，以此替代硬件实现加密/解密的方式。因此，算法执行的速度就成为了一个问题。</p>
+<p>快速的软件加密&#x2F;解密：在许多案例中，加密被嵌入到应用或应用程序的函数当中去，以此替代硬件实现加密&#x2F;解密的方式。因此，算法执行的速度就成为了一个问题。</p>
 <p>易于分析：尽管我们想要我们的算法在密码分析上尽可能地困难，但是使算法易于分析也有许多的好处。例如，如果算法可以被简洁清晰地解释，那么就更容易对算法进行密码漏洞分析，因此对其强度的保证程度更高。</p>
 <h4 id="4-7"><a href="#4-7" class="headerlink" title="4.7"></a>4.7<a href="#4-7" class="header-anchor">#</a></h4><p> 雪崩效应是任何加密算法的一种特性，明文或密钥的微小变化都会导致密文的显著变化 </p>
 <h3 id="xi-ti"><a href="#习题" class="headerlink" title="习题"></a>习题<a href="#xi-ti" class="header-anchor">#</a></h3><h4 id="4-1"><a href="#4-1-1" class="headerlink" title="4.1"></a>4.1<a href="#4-1" class="header-anchor">#</a></h4><p>  a.$n$比特的明文分组长度，共有$2^n$个可能的不同明文分组以及$2^n$个不同的密文分组；理想分组密码中明文到密文的映射是可逆映射即密文可以被解密为明文。所以这个映射至少应该是单射，否则密文不能唯一对应一个明文。同时理想分组密码的密文长度跟明文长度相等，所以密文也有$2^n$个可能的分组。</p>
@@ -192,42 +514,124 @@
 <h4 id="4-3"><a href="#4-3-1" class="headerlink" title="4.3"></a>4.3<a href="#4-3" class="header-anchor">#</a></h4><h4 id="4-4"><a href="#4-4-1" class="headerlink" title="4.4"></a>4.4<a href="#4-4" class="header-anchor">#</a></h4><p>$E(K,.)，E(K’,.)$有$2^n$种映射可能性。</p>
 <h4 id="4-5"><a href="#4-5-1" class="headerlink" title="4.5"></a>4.5<a href="#4-5" class="header-anchor">#</a></h4><p>我们有128次选择密文攻击的机会，题目问如何解密任意的密文。</p>
 <p>这个问题比较简单，根据题目给的等式</p>
-<p>$EL(k,[m_1\oplus m_2])=EL(k,m_1) \oplus EL(k,m2）等式一$</p>
+<p>$EL(k,[m_1\oplus m_2])&#x3D;EL(k,m_1) \oplus EL(k,m2）等式一$</p>
 <p>假设m1是我们要解密的任意密文所对应的明文，下面来说明如何解密m1。</p>
 <p>首先我们选择$EL(k,m_2)$作为密文，并发动选择密文攻击得到$m_2$</p>
-<p>所以现在我们拥有了等式一右半部分的值，我们将这两个值异或，就可以得到等式左边的值，我们设为M，现在将M进行选择密文攻击即可得到$m = m_1 \oplus m_2$，由于我们已知$m_2和m$，所以$m_1=m\oplus m_2$，由此我们成功解密了$m_1$</p>
+<p>所以现在我们拥有了等式一右半部分的值，我们将这两个值异或，就可以得到等式左边的值，我们设为M，现在将M进行选择密文攻击即可得到$m &#x3D; m_1 \oplus m_2$，由于我们已知$m_2和m$，所以$m_1&#x3D;m\oplus m_2$，由此我们成功解密了$m_1$</p>
 <h4 id="4-6"><a href="#4-6-1" class="headerlink" title="4.6"></a>4.6<a href="#4-6" class="header-anchor">#</a></h4><p>(a)直接借助计算机，修改一下DES算法的F函数，将加密结果的二进制打印出来。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">明文：123456AB CD132536</span><br><span class="line">Encryption</span><br><span class="line">After initial permutation 14A7D678 18CA18AD <span class="comment">#This！</span></span><br><span class="line">Round  <span class="number">1</span>   18CA18AD   EB582987</span><br><span class="line">Round  <span class="number">2</span>   EB582987   E735E752</span><br><span class="line">Round  <span class="number">3</span>   E735E752   14A7D678</span><br><span class="line">Round  <span class="number">4</span>   14A7D678   18CA18AD</span><br><span class="line">Round  <span class="number">5</span>   18CA18AD   EB582987</span><br><span class="line">Round  <span class="number">6</span>   EB582987   E735E752</span><br><span class="line">Round  <span class="number">7</span>   E735E752   14A7D678</span><br><span class="line">Round  <span class="number">8</span>   14A7D678   18CA18AD</span><br><span class="line">Round  <span class="number">9</span>   18CA18AD   EB582987</span><br><span class="line">Round  <span class="number">10</span>   EB582987   E735E752</span><br><span class="line">Round  <span class="number">11</span>   E735E752   14A7D678</span><br><span class="line">Round  <span class="number">12</span>   14A7D678   18CA18AD</span><br><span class="line">Round  <span class="number">13</span>   18CA18AD   EB582987</span><br><span class="line">Round  <span class="number">14</span>   EB582987   E735E752</span><br><span class="line">Round  <span class="number">15</span>   E735E752   14A7D678</span><br><span class="line">Round  <span class="number">16</span>   18CA18AD   14A7D678 <span class="comment">#This！</span></span><br><span class="line">Cipher Text :  2138A957CE231A39</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">明文：123456AB CD132536
+Encryption
+After initial permutation 14A7D678 18CA18AD #This！
+Round  1   18CA18AD   EB582987
+Round  2   EB582987   E735E752
+Round  3   E735E752   14A7D678
+Round  4   14A7D678   18CA18AD
+Round  5   18CA18AD   EB582987
+Round  6   EB582987   E735E752
+Round  7   E735E752   14A7D678
+Round  8   14A7D678   18CA18AD
+Round  9   18CA18AD   EB582987
+Round  10   EB582987   E735E752
+Round  11   E735E752   14A7D678
+Round  12   14A7D678   18CA18AD
+Round  13   18CA18AD   EB582987
+Round  14   EB582987   E735E752
+Round  15   E735E752   14A7D678
+Round  16   18CA18AD   14A7D678 #This！
+Cipher Text :  2138A957CE231A39
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>(1)从表可以看到，明文经过初始置换的结果是十六轮迭代过后输出的交换。所以DES算法此时的作用就是简单的将明文进行一个置换，随后左右交换这个置换，然后再经过一个置换得到密文。注意第二个置换是第一个置换的逆置换。所以此时DES的F函数对明文没有作用。</p>
 <p>(2)打印解密的表如下</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">Cipher Text :  2138A957CE231A39</span><br><span class="line">Decryption</span><br><span class="line">After initial permutation 18CA18AD 14A7D678 <span class="comment">#注意这里</span></span><br><span class="line">Round  <span class="number">1</span>   14A7D678   E735E752</span><br><span class="line">Round  <span class="number">2</span>   E735E752   EB582987</span><br><span class="line">Round  <span class="number">3</span>   EB582987   18CA18AD</span><br><span class="line">Round  <span class="number">4</span>   18CA18AD   14A7D678</span><br><span class="line">Round  <span class="number">5</span>   14A7D678   E735E752</span><br><span class="line">Round  <span class="number">6</span>   E735E752   EB582987</span><br><span class="line">Round  <span class="number">7</span>   EB582987   18CA18AD</span><br><span class="line">Round  <span class="number">8</span>   18CA18AD   14A7D678</span><br><span class="line">Round  <span class="number">9</span>   14A7D678   E735E752</span><br><span class="line">Round  <span class="number">10</span>   E735E752   EB582987</span><br><span class="line">Round  <span class="number">11</span>   EB582987   18CA18AD</span><br><span class="line">Round  <span class="number">12</span>   18CA18AD   14A7D678</span><br><span class="line">Round  <span class="number">13</span>   14A7D678   E735E752</span><br><span class="line">Round  <span class="number">14</span>   E735E752   EB582987</span><br><span class="line">Round  <span class="number">15</span>   EB582987   18CA18AD</span><br><span class="line">Round  <span class="number">16</span>   14A7D678   18CA18AD</span><br><span class="line">Plain Text :  123456AB CD132536</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">Cipher Text :  2138A957CE231A39
+Decryption
+After initial permutation 18CA18AD 14A7D678 #注意这里
+Round  1   14A7D678   E735E752
+Round  2   E735E752   EB582987
+Round  3   EB582987   18CA18AD
+Round  4   18CA18AD   14A7D678
+Round  5   14A7D678   E735E752
+Round  6   E735E752   EB582987
+Round  7   EB582987   18CA18AD
+Round  8   18CA18AD   14A7D678
+Round  9   14A7D678   E735E752
+Round  10   E735E752   EB582987
+Round  11   EB582987   18CA18AD
+Round  12   18CA18AD   14A7D678
+Round  13   14A7D678   E735E752
+Round  14   E735E752   EB582987
+Round  15   EB582987   18CA18AD
+Round  16   14A7D678   18CA18AD
+Plain Text :  123456AB CD132536
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>观察上表可以发现跟加密过程中数据的变化是类似的，密文经过置换后再经过十六轮迭代的结果是初始密文的左右交换值。而这个交换值其实就是初始明文经过初始置换后的结果</p>
 <p>(b)同(a)一样的做法</p>
 <p>(1)</p>
-<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">Encryption</span></span><br><span class="line"><span class="attribute">After</span> initial permutation <span class="number">14</span>A7D678 <span class="number">18</span>CA18AD</span><br><span class="line"><span class="attribute">Round</span>  <span class="number">1</span>   <span class="number">18</span>CA18AD   F392312A</span><br><span class="line"><span class="attribute">Round</span>  <span class="number">2</span>   F392312A   <span class="number">14</span>A7D678</span><br><span class="line"><span class="attribute">Round</span>  <span class="number">3</span>   <span class="number">14</span>A7D678   <span class="number">18</span>CA18AD</span><br><span class="line"><span class="attribute">Round</span>  <span class="number">4</span>   <span class="number">18</span>CA18AD   F392312A</span><br><span class="line"><span class="attribute">Round</span>  <span class="number">5</span>   F392312A   <span class="number">14</span>A7D678</span><br><span class="line"><span class="attribute">Round</span>  <span class="number">6</span>   <span class="number">14</span>A7D678   <span class="number">18</span>CA18AD</span><br><span class="line"><span class="attribute">Round</span>  <span class="number">7</span>   <span class="number">18</span>CA18AD   F392312A</span><br><span class="line"><span class="attribute">Round</span>  <span class="number">8</span>   F392312A   <span class="number">14</span>A7D678</span><br><span class="line"><span class="attribute">Round</span>  <span class="number">9</span>   <span class="number">14</span>A7D678   <span class="number">18</span>CA18AD</span><br><span class="line"><span class="attribute">Round</span>  <span class="number">10</span>   <span class="number">18</span>CA18AD   F392312A</span><br><span class="line"><span class="attribute">Round</span>  <span class="number">11</span>   F392312A   <span class="number">14</span>A7D678</span><br><span class="line"><span class="attribute">Round</span>  <span class="number">12</span>   <span class="number">14</span>A7D678   <span class="number">18</span>CA18AD</span><br><span class="line"><span class="attribute">Round</span>  <span class="number">13</span>   <span class="number">18</span>CA18AD   F392312A</span><br><span class="line"><span class="attribute">Round</span>  <span class="number">14</span>   F392312A   <span class="number">14</span>A7D678</span><br><span class="line"><span class="attribute">Round</span>  <span class="number">15</span>   <span class="number">14</span>A7D678   <span class="number">18</span>CA18AD</span><br><span class="line"><span class="attribute">Round</span>  <span class="number">16</span>   F392312A   <span class="number">18</span>CA18AD</span><br><span class="line"><span class="attribute">Cipher</span> Text :  <span class="number">467102</span>ABDC476072</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-none"><code class="language-none">Encryption
+After initial permutation 14A7D678 18CA18AD
+Round  1   18CA18AD   F392312A
+Round  2   F392312A   14A7D678
+Round  3   14A7D678   18CA18AD
+Round  4   18CA18AD   F392312A
+Round  5   F392312A   14A7D678
+Round  6   14A7D678   18CA18AD
+Round  7   18CA18AD   F392312A
+Round  8   F392312A   14A7D678
+Round  9   14A7D678   18CA18AD
+Round  10   18CA18AD   F392312A
+Round  11   F392312A   14A7D678
+Round  12   14A7D678   18CA18AD
+Round  13   18CA18AD   F392312A
+Round  14   F392312A   14A7D678
+Round  15   14A7D678   18CA18AD
+Round  16   F392312A   18CA18AD
+Cipher Text :  467102ABDC476072
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>从上表可以看到轮函数的输出是输入的左右交换值，换言之轮函数只起到交换数据的作用。总体上来说，这个DES算法的作用就是对明文进行第一次初始置换，随后交换然后再经过一个第二次置换得到密文</p>
 <p>(2)</p>
-<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">Cipher</span> Text :  <span class="number">467102</span>ABDC476072</span><br><span class="line"><span class="attribute">Decryption</span></span><br><span class="line"><span class="attribute">After</span> initial permutation F392312A18CA18AD</span><br><span class="line"><span class="attribute">Round</span>  <span class="number">1</span>   <span class="number">18</span>CA18AD   <span class="number">14</span>A7D678</span><br><span class="line"><span class="attribute">Round</span>  <span class="number">2</span>   <span class="number">14</span>A7D678   F392312A</span><br><span class="line"><span class="attribute">Round</span>  <span class="number">3</span>   F392312A   <span class="number">18</span>CA18AD</span><br><span class="line"><span class="attribute">Round</span>  <span class="number">4</span>   <span class="number">18</span>CA18AD   <span class="number">14</span>A7D678</span><br><span class="line"><span class="attribute">Round</span>  <span class="number">5</span>   <span class="number">14</span>A7D678   F392312A</span><br><span class="line"><span class="attribute">Round</span>  <span class="number">6</span>   F392312A   <span class="number">18</span>CA18AD</span><br><span class="line"><span class="attribute">Round</span>  <span class="number">7</span>   <span class="number">18</span>CA18AD   <span class="number">14</span>A7D678</span><br><span class="line"><span class="attribute">Round</span>  <span class="number">8</span>   <span class="number">14</span>A7D678   F392312A</span><br><span class="line"><span class="attribute">Round</span>  <span class="number">9</span>   F392312A   <span class="number">18</span>CA18AD</span><br><span class="line"><span class="attribute">Round</span>  <span class="number">10</span>   <span class="number">18</span>CA18AD   <span class="number">14</span>A7D678</span><br><span class="line"><span class="attribute">Round</span>  <span class="number">11</span>   <span class="number">14</span>A7D678   F392312A</span><br><span class="line"><span class="attribute">Round</span>  <span class="number">12</span>   F392312A   <span class="number">18</span>CA18AD</span><br><span class="line"><span class="attribute">Round</span>  <span class="number">13</span>   <span class="number">18</span>CA18AD   <span class="number">14</span>A7D678</span><br><span class="line"><span class="attribute">Round</span>  <span class="number">14</span>   <span class="number">14</span>A7D678   F392312A</span><br><span class="line"><span class="attribute">Round</span>  <span class="number">15</span>   F392312A   <span class="number">18</span>CA18AD</span><br><span class="line"><span class="attribute">Round</span>  <span class="number">16</span>   <span class="number">14</span>A7D678   <span class="number">18</span>CA18AD</span><br><span class="line"><span class="attribute">Plain</span> Text :  <span class="number">123456</span>ABCD132536</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-none"><code class="language-none">Cipher Text :  467102ABDC476072
+Decryption
+After initial permutation F392312A18CA18AD
+Round  1   18CA18AD   14A7D678
+Round  2   14A7D678   F392312A
+Round  3   F392312A   18CA18AD
+Round  4   18CA18AD   14A7D678
+Round  5   14A7D678   F392312A
+Round  6   F392312A   18CA18AD
+Round  7   18CA18AD   14A7D678
+Round  8   14A7D678   F392312A
+Round  9   F392312A   18CA18AD
+Round  10   18CA18AD   14A7D678
+Round  11   14A7D678   F392312A
+Round  12   F392312A   18CA18AD
+Round  13   18CA18AD   14A7D678
+Round  14   14A7D678   F392312A
+Round  15   F392312A   18CA18AD
+Round  16   14A7D678   18CA18AD
+Plain Text :  123456ABCD132536<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>除了密钥使用顺序，解密过程跟加密过程从是一样的，这也是Feistel密码结构的优点。</p>
 <p>总结一下：DES的F函数很重要，该函数主要起混淆作用</p>
 <h4 id="4-7"><a href="#4-7-1" class="headerlink" title="4.7"></a>4.7<a href="#4-7" class="header-anchor">#</a></h4><p>定义如下两个变换</p>
-<p>$\sigma(L,R) = (R,L)$和$\tau_K(L,R)=(L\oplus F(R,K),R)$</p>
-<p>F是DES加密算法的轮函数，容易验证$\sigma^{-1}=\sigma,\tau_k^{-1}=\tau_K$</p>
-<p>即$\sigma$和$\tau_K$是对合变换。所以DES加密算法的第i轮变换$(L_i,R_i)=$</p>
+<p>$\sigma(L,R) &#x3D; (R,L)$和$\tau_K(L,R)&#x3D;(L\oplus F(R,K),R)$</p>
+<p>F是DES加密算法的轮函数，容易验证$\sigma^{-1}&#x3D;\sigma,\tau_k^{-1}&#x3D;\tau_K$</p>
+<p>即$\sigma$和$\tau_K$是对合变换。所以DES加密算法的第i轮变换$(L_i,R_i)&#x3D;$</p>
 <p>$(R_{i-1},F(R{i-1},K_i)\oplus L{i-1})$可表示为</p>
-<p>$(L<em>i,R_i)=\sigma \circ \tau</em>{K<em>i}(L</em>{i-1},R{i-1})$，从而完整的16轮加密过程可以表示如下：</p>
-<p>$Y=E<em>K(X)=IP^{-1}\circ\tau</em>{K<em>{16}}\circ\sigma\space\circ\tau</em>{K<em>{15}}\circ…\circ\sigma\circ\tau</em>{K<em>{2}}\circ\sigma\circ\tau</em>{K_{1}}\circ IP(X)$</p>
+<p>$(L_i,R_i)&#x3D;\sigma \circ \tau_{K_i}(L_{i-1},R{i-1})$，从而完整的16轮加密过程可以表示如下：</p>
+<p>$Y&#x3D;E_K(X)&#x3D;IP^{-1}\circ\tau_{K_{16}}\circ\sigma\space\circ\tau_{K_{15}}\circ…\circ\sigma\circ\tau_{K_{2}}\circ\sigma\circ\tau_{K_{1}}\circ IP(X)$</p>
 <p>故解密算法为</p>
-<p>$X=E_K^{-1}(Y)$</p>
-<p>   $=(IP^{-1}\circ\tau<em>{K</em>{16}}\circ\sigma\space\circ\tau<em>{K</em>{15}}\circ…\circ\sigma\circ\tau<em>{K</em>{2}}\circ\sigma\circ\tau<em>{K</em>{1}}\circ IP)^{-1}(Y)$</p>
-<p>   $=IP^{-1}\circ \tau<em>{K_1}^{-1}\circ \sigma^{-1}\circ \tau</em>{K<em>2}^{-1}\circ…\circ\sigma^{-1}\circ\tau</em>{K<em>{15}}^{-1}\circ\sigma^{-1}\circ \tau</em>{K_{16}}^{-1}\circ(IP^{-1})^{-1}(Y)$</p>
-<p>   $=IP^{-1}\circ \tau<em>{K_1}\circ \sigma\circ\tau</em>{K<em>2}\circ…\circ\sigma\circ\tau</em>{K<em>{15}}\circ\sigma\circ\tau</em>{K_{16}}\circ IP(Y)$</p>
+<p>$X&#x3D;E_K^{-1}(Y)$</p>
+<p>   $&#x3D;(IP^{-1}\circ\tau_{K_{16}}\circ\sigma\space\circ\tau_{K_{15}}\circ…\circ\sigma\circ\tau_{K_{2}}\circ\sigma\circ\tau_{K_{1}}\circ IP)^{-1}(Y)$</p>
+<p>   $&#x3D;IP^{-1}\circ \tau_{K_1}^{-1}\circ \sigma^{-1}\circ \tau_{K_2}^{-1}\circ…\circ\sigma^{-1}\circ\tau_{K_{15}}^{-1}\circ\sigma^{-1}\circ \tau_{K_{16}}^{-1}\circ(IP^{-1})^{-1}(Y)$</p>
+<p>   $&#x3D;IP^{-1}\circ \tau_{K_1}\circ \sigma\circ\tau_{K_2}\circ…\circ\sigma\circ\tau_{K_{15}}\circ\sigma\circ\tau_{K_{16}}\circ IP(Y)$</p>
 <p>所以解密算法是加密算法的逆。</p>
 <h4 id="4-8"><a href="#4-8" class="headerlink" title="4.8"></a>4.8<a href="#4-8" class="header-anchor">#</a></h4><p>（a）这是一个复合的变换，先运用结合律将$IP$跟$IP^{-1}$消去，则原式等于如下等式</p>
-<p>$TD<em>1(T</em>{17}(T<em>{16}(L</em>{15}||R<em>{15})))=TD_1(T</em>{17}(L<em>{16},R</em>{16}))=TD<em>1(R</em>{16},L<em>{16})=R</em>{15}||L_{15}$</p>
+<p>$TD_1(T_{17}(T_{16}(L_{15}||R_{15})))&#x3D;TD_1(T_{17}(L_{16},R_{16}))&#x3D;TD_1(R_{16},L_{16})&#x3D;R_{15}||L_{15}$</p>
 <p>所以等式a成立</p>
-<p>（b）如果去掉了加密算法最后的32位的交换，则$T<em>{16}(L</em>{15}||R<em>{15})=L</em>{16}||R_{16}$</p>
-<p>$TD<em>1(L</em>{16}||R<em>{16})=L</em>{15}||L<em>{15}\oplus F(L</em>{16},K_{16})$</p>
+<p>（b）如果去掉了加密算法最后的32位的交换，则$T_{16}(L_{15}||R_{15})&#x3D;L_{16}||R_{16}$</p>
+<p>$TD_1(L_{16}||R_{16})&#x3D;L_{15}||L_{15}\oplus F(L_{16},K_{16})$</p>
 <p>异或右边不等于$R_{15}$，等式不成立。</p>
 <h2 id="di-wu-zhang-xi-ti"><a href="#第五章习题" class="headerlink" title="第五章习题"></a>第五章习题<a href="#di-wu-zhang-xi-ti" class="header-anchor">#</a></h2><h2 id="di-liu-zhang-xi-ti"><a href="#第六章习题" class="headerlink" title="第六章习题"></a>第六章习题<a href="#di-liu-zhang-xi-ti" class="header-anchor">#</a></h2><h3 id="si-kao-ti"><a href="#思考题-1" class="headerlink" title="思考题"></a>思考题<a href="#si-kao-ti" class="header-anchor">#</a></h3><h4 id="6-1"><a href="#6-1" class="headerlink" title="6.1"></a>6.1<a href="#6-1" class="header-anchor">#</a></h4><p>安全性：实际的安全性；不可预测性；可靠性；其他的安全因素。</p>
 <p>成本：许可要求；计算的效率；存储空间的要求。</p>
@@ -238,7 +642,7 @@
 <h4 id="6-5"><a href="#6-5" class="headerlink" title="6.5"></a>6.5<a href="#6-5" class="header-anchor">#</a></h4><p>1.按字节值的升序逐行初始化S盒。第一行是{00}，{01}，…..，{0F}；第二行是{10}，{11}，…….，{1F}等。因此在行y列x的字节值是{yx}</p>
 <p>2.把S盒中的每个字节映射为它在有限域$GF(2^8)$中的逆；{00}被映射为它自身{00}.</p>
 <p>3.把S盒中的每个字节的8个构成位 记为$(b_7,b_6,b_5,b_4,b_3,b_2,b_1,b_0)$。对S盒的每个字节的每个位做如下的变换：</p>
-<p>$b<em>i’=b_i\oplus b</em>{(i+4)\mod8}\oplus b<em>{(i+5)\mod8}\oplus b</em>{(i+6)\mod8}\oplus b_{(i+7) \mod 8}\oplus c_i$，这里的$c_i$是指值为{63}的字节c的第i位。即$(c_7 c_6 c_5 c_4 c_3 c_2 c_1 c_0)=(01100011)$。符号$(‘)$表示变量的值要被等式右边的值更新。</p>
+<p>$b_i’&#x3D;b_i\oplus b_{(i+4)\mod8}\oplus b_{(i+5)\mod8}\oplus b_{(i+6)\mod8}\oplus b_{(i+7) \mod 8}\oplus c_i$，这里的$c_i$是指值为{63}的字节c的第i位。即$(c_7 c_6 c_5 c_4 c_3 c_2 c_1 c_0)&#x3D;(01100011)$。符号$(‘)$表示变量的值要被等式右边的值更新。</p>
 <h4 id="6-6"><a href="#6-6" class="headerlink" title="6.6"></a>6.6<a href="#6-6" class="header-anchor">#</a></h4><p>状态中每个字节按照如下方式映射为一个新的字节：把该字节的高4位作为行值，低4为作为列值，以这些行列值作为索引从S盒的对应位置取出8比特元素作为输出。</p>
 <h4 id="6-7"><a href="#6-7" class="headerlink" title="6.7"></a>6.7<a href="#6-7" class="header-anchor">#</a></h4><p>状态的第一行保持不变。对第二行来说，循环左移1个字节。对第三行来说，循环左移2个字节。对第四行来说，循环左移3个字节。</p>
 <h4 id="6-8"><a href="#6-8" class="headerlink" title="6.8"></a>6.8<a href="#6-8" class="header-anchor">#</a></h4><p>12个字节。</p>
@@ -248,316 +652,895 @@
 <h4 id="6-12"><a href="#6-12" class="headerlink" title="6.12"></a>6.12<a href="#6-12" class="header-anchor">#</a></h4><p>字节代替对状态数组进行操作，使用S盒将每一个字节映射为一个新的字节。字代替对一个字进行操作，使用S盒将每一个字节映射为一个新的字节</p>
 <h4 id="6-13"><a href="#6-13" class="headerlink" title="6.13"></a>6.13<a href="#6-13" class="header-anchor">#</a></h4><p>行移位在问题6.8中被描述。字循环的功能是使一个字中的四个字节循环左移一个字节。等价于行移位对状态数组的第二行的操作。</p>
 <h4 id="6-14"><a href="#6-14" class="headerlink" title="6.14"></a>6.14<a href="#6-14" class="header-anchor">#</a></h4><p>AES的解密算法和加密算法不同。尽管在加密和解密中密钥扩展的形式一样，但在解密中变换的顺序与加密中变换的顺序不同。解密算法的一个等价版本与加密算法有同样的结构。这个版本与加密算法的变换顺序相同（用逆变换取代正向变换）。为了到达这个目标，需要对密钥扩展进行改进。</p>
-<h2 id="di-qi-zhang-xi-ti"><a href="#第七章习题" class="headerlink" title="第七章习题"></a>第七章习题<a href="#di-qi-zhang-xi-ti" class="header-anchor">#</a></h2><h2 id="di-ba-zhang-xi-ti"><a href="#第八章习题" class="headerlink" title="第八章习题"></a>第八章习题<a href="#di-ba-zhang-xi-ti" class="header-anchor">#</a></h2><h2 id="di-jiu-zhang-xi-ti"><a href="#第九章习题" class="headerlink" title="第九章习题"></a>第九章习题<a href="#di-jiu-zhang-xi-ti" class="header-anchor">#</a></h2><h3 id="si-kao-ti"><a href="#思考题-2" class="headerlink" title="思考题"></a>思考题<a href="#si-kao-ti" class="header-anchor">#</a></h3><h3 id="xi-ti"><a href="#习题-1" class="headerlink" title="习题"></a>习题<a href="#xi-ti" class="header-anchor">#</a></h3><h4 id="9-1"><a href="#9-1" class="headerlink" title="9.1"></a>9.1<a href="#9-1" class="header-anchor">#</a></h4><h4 id="9-5"><a href="#9-5" class="headerlink" title="9.5"></a>9.5<a href="#9-5" class="header-anchor">#</a></h4><p>假设公钥是$n=pq,e$ 。 e在模$\phi(n)$下的阶相对于$\phi(n)$可能比较小，也就是使得$e^x \equiv 1 \mod \phi(n)$成立的x较小。在最坏的情况下，e的阶数是2，此时e在模$\phi(n)$下的逆元d等于e本身。例如如果$p=7,q=5$从而$phi(n)=24$，如果$e=5$，则$e^2\equiv 1 \mod \phi(5*7)$。</p>
-<h4 id="9-6"><a href="#9-6" class="headerlink" title="9.6"></a>9.6<a href="#9-6" class="header-anchor">#</a></h4><p>有。如果明文块在模n下与n有公因子，那么密文块在模n下也与n有公因子。因为密文块小于$pq$，所以公因子一定是$p$或者$q$，同时明文块一定是$p$或者$p$的倍数。我们可以测试每一个密文块和n的公因子，查看是否是素数。如果是素数，那么这个公因数是$p$或者$q$，如果是$p$，则可以通过$n/p$得到$q$。如果不是素数，我们尝试分解这个公因子并继续检查分解之后的数是否是素数，然后操作同上。</p>
+<h2 id="di-qi-zhang-xi-ti"><a href="#第七章习题" class="headerlink" title="第七章习题"></a>第七章习题<a href="#di-qi-zhang-xi-ti" class="header-anchor">#</a></h2><h2 id="di-ba-zhang-xi-ti"><a href="#第八章习题" class="headerlink" title="第八章习题"></a>第八章习题<a href="#di-ba-zhang-xi-ti" class="header-anchor">#</a></h2><h2 id="di-jiu-zhang-xi-ti"><a href="#第九章习题" class="headerlink" title="第九章习题"></a>第九章习题<a href="#di-jiu-zhang-xi-ti" class="header-anchor">#</a></h2><h3 id="si-kao-ti"><a href="#思考题-2" class="headerlink" title="思考题"></a>思考题<a href="#si-kao-ti" class="header-anchor">#</a></h3><h3 id="xi-ti"><a href="#习题-1" class="headerlink" title="习题"></a>习题<a href="#xi-ti" class="header-anchor">#</a></h3><h4 id="9-1"><a href="#9-1" class="headerlink" title="9.1"></a>9.1<a href="#9-1" class="header-anchor">#</a></h4><h4 id="9-5"><a href="#9-5" class="headerlink" title="9.5"></a>9.5<a href="#9-5" class="header-anchor">#</a></h4><p>假设公钥是$n&#x3D;pq,e$ 。 e在模$\phi(n)$下的阶相对于$\phi(n)$可能比较小，也就是使得$e^x \equiv 1 \mod \phi(n)$成立的x较小。在最坏的情况下，e的阶数是2，此时e在模$\phi(n)$下的逆元d等于e本身。例如如果$p&#x3D;7,q&#x3D;5$从而$phi(n)&#x3D;24$，如果$e&#x3D;5$，则$e^2\equiv 1 \mod \phi(5*7)$。</p>
+<h4 id="9-6"><a href="#9-6" class="headerlink" title="9.6"></a>9.6<a href="#9-6" class="header-anchor">#</a></h4><p>有。如果明文块在模n下与n有公因子，那么密文块在模n下也与n有公因子。因为密文块小于$pq$，所以公因子一定是$p$或者$q$，同时明文块一定是$p$或者$p$的倍数。我们可以测试每一个密文块和n的公因子，查看是否是素数。如果是素数，那么这个公因数是$p$或者$q$，如果是$p$，则可以通过$n&#x2F;p$得到$q$。如果不是素数，我们尝试分解这个公因子并继续检查分解之后的数是否是素数，然后操作同上。</p>
 <h4 id="9-7"><a href="#9-7" class="headerlink" title="9.7"></a>9.7<a href="#9-7" class="header-anchor">#</a></h4><p>不安全。一旦Bob泄露了他的私钥，Alice可以使用Bob的私钥去分解模数N。随后Alice就可以解密Bob发送的任何信息。</p>
 <p>以下是分解模数N的方法：</p>
-<p>令$k=ed-1$，则$k \equiv 0\mod \phi(N)$</p>
+<p>令$k&#x3D;ed-1$，则$k \equiv 0\mod \phi(N)$</p>
 <p>在乘法群$Z(N)$上随机选择一个数$x$，则$x^k \equiv 1 \mod N$</p>
-<p>则$(x^{k/2})^2 \equiv 1 \mod N &lt;=&gt;(x^{k/2})^2 -1\equiv 0 \mod N$</p>
-<p>1有百分之50的可能性是模N的二次剩余，即上述同余式有解$x^{k/2}$，而且已知$N| (x^{k/2})^2 -1 $，则我们求出同余式的解之后在求一下解和N的最大公因子即可分解N。</p>
-<p>所以$gcd(x^{k/2}-1,N)$会得到一个N的质因子</p>
-<p>如果解太大不是很好求，可以将$x^{k/2}$继续转变成$x^{k/4},x^{k/8}$</p>
-<p>但是这个方法在$x^{k/2^i}\equiv -1 \mod N$时会失败，这个时候我们在随机选择一个新的X即可。运用这个方法可以在多项式时间内分解N。</p>
-<h4 id="9-8"><a href="#9-8" class="headerlink" title="9.8"></a>9.8<a href="#9-8" class="header-anchor">#</a></h4><p>首先将字母集合${A,B,…..,Z}$根据题目规则映射为明文数字集合，$SM={0,1,…..,25}$，那么对应的密文数字集合为${0^e \mod N,1^e\mod N,……25^e\mod N}$</p>
+<p>则$(x^{k&#x2F;2})^2 \equiv 1 \mod N &lt;&#x3D;&gt;(x^{k&#x2F;2})^2 -1\equiv 0 \mod N$</p>
+<p>1有百分之50的可能性是模N的二次剩余，即上述同余式有解$x^{k&#x2F;2}$，而且已知$N| (x^{k&#x2F;2})^2 -1 $，则我们求出同余式的解之后在求一下解和N的最大公因子即可分解N。</p>
+<p>所以$gcd(x^{k&#x2F;2}-1,N)$会得到一个N的质因子</p>
+<p>如果解太大不是很好求，可以将$x^{k&#x2F;2}$继续转变成$x^{k&#x2F;4},x^{k&#x2F;8}$</p>
+<p>但是这个方法在$x^{k&#x2F;2^i}\equiv -1 \mod N$时会失败，这个时候我们在随机选择一个新的X即可。运用这个方法可以在多项式时间内分解N。</p>
+<h4 id="9-8"><a href="#9-8" class="headerlink" title="9.8"></a>9.8<a href="#9-8" class="header-anchor">#</a></h4><p>首先将字母集合${A,B,…..,Z}$根据题目规则映射为明文数字集合，$SM&#x3D;{0,1,…..,25}$，那么对应的密文数字集合为${0^e \mod N,1^e\mod N,……25^e\mod N}$</p>
 <p>密文数字集合可以被每一个知道Bob公钥的人计算。因此对这个加密方案最有效的攻击方法就是枚举所有的明文数字，计算其对应的密文数字。随后建立一个对照表，以密文为关键字，明文为值。</p>
 <h4 id="9-9"><a href="#9-9" class="headerlink" title="9.9"></a>9.9<a href="#9-9" class="header-anchor">#</a></h4><p>a.</p>
-<p>b. $M=2,e=23,n=233\times 241=56,153$，所以$p=233,q=241,e=23=(10111)_2$</p>
-<p>运用快速模幂算法得到$C=21,811$</p>
-<p>c. $\phi(n) = (p-1)\times(q-1)=55,680$，使用扩展欧几里得算法得到$d=23^{-1}\mod 55680 = 19,367$</p>
+<p>b. $M&#x3D;2,e&#x3D;23,n&#x3D;233\times 241&#x3D;56,153$，所以$p&#x3D;233,q&#x3D;241,e&#x3D;23&#x3D;(10111)_2$</p>
+<p>运用快速模幂算法得到$C&#x3D;21,811$</p>
+<p>c. $\phi(n) &#x3D; (p-1)\times(q-1)&#x3D;55,680$，使用扩展欧几里得算法得到$d&#x3D;23^{-1}\mod 55680 &#x3D; 19,367$</p>
 <p>d. </p>
-<h4 id="9-10"><a href="#9-10" class="headerlink" title="9.10"></a>9.10<a href="#9-10" class="header-anchor">#</a></h4><p>$C=(M^{d_S} \mod NS)^{e_R} \mod NR=S^{e_R}\mod NR$，其中$S=M^{d_S}\mod NS$，$M’ = (C^{d_R}\mod NR)^{e_S} \mod NS = S’^{e_S} \mod NS$，其中$S’ = C^{d_R} \mod NR$</p>
+<h4 id="9-10"><a href="#9-10" class="headerlink" title="9.10"></a>9.10<a href="#9-10" class="header-anchor">#</a></h4><p>$C&#x3D;(M^{d_S} \mod NS)^{e_R} \mod NR&#x3D;S^{e_R}\mod NR$，其中$S&#x3D;M^{d_S}\mod NS$，$M’ &#x3D; (C^{d_R}\mod NR)^{e_S} \mod NS &#x3D; S’^{e_S} \mod NS$，其中$S’ &#x3D; C^{d_R} \mod NR$</p>
 <p>如果$S\neq S’$，则这个方案不能正确工作。</p>
-<p>这种情况可能发生在$N_S &gt; N_R$时，如果此时 $ N_R&lt;=S&lt;N_S$，那么根据定义$S’&lt;N_R$，所以此时$S\neq S’$，进而$M’ \neq M$。</p>
-<p>但是对于其他$N_S$和$N_R$的大小关系，这个方案能够正确工作，尽管出于安全原因不建议$N_S=N_R$</p>
-<p>所以为了解决上述问题，收发双方可以使用两对密钥，一对用来加密，一对用来签名。并且要使得所有的签名密钥$N<em>{SGN}$都比加密密钥$N</em>{ENC}$小</p>
+<p>这种情况可能发生在$N_S &gt; N_R$时，如果此时 $ N_R&lt;&#x3D;S&lt;N_S$，那么根据定义$S’&lt;N_R$，所以此时$S\neq S’$，进而$M’ \neq M$。</p>
+<p>但是对于其他$N_S$和$N_R$的大小关系，这个方案能够正确工作，尽管出于安全原因不建议$N_S&#x3D;N_R$</p>
+<p>所以为了解决上述问题，收发双方可以使用两对密钥，一对用来加密，一对用来签名。并且要使得所有的签名密钥$N_{SGN}$都比加密密钥$N_{ENC}$小</p>
 <h4 id="9-11"><a href="#9-11" class="headerlink" title="9.11"></a>9.11<a href="#9-11" class="header-anchor">#</a></h4><p>第三个元素是第一个元素的平方</p>
 <p>第五个元素是第一个元素和第二个元素的乘积</p>
 <p>第七个元素是第一个元素的立方</p>
 <h4 id="9-12"><a href="#9-12" class="headerlink" title="9.12"></a>9.12<a href="#9-12" class="header-anchor">#</a></h4><p>参考图9.5，M1的输入K是RSA中的私钥{d,n}。M2的输入x是RSA中的公钥{e,n}。M2的输入p对应RSA中的明文M；然后M3的输入z对应RSA中的密文C。</p>
-<p>所以M1由$d=e^{-1}\mod \phi(n)$组成</p>
+<p>所以M1由$d&#x3D;e^{-1}\mod \phi(n)$组成</p>
 <p>M2由$M^e \mod n$ 组成</p>
 <p>M3由$C^d\mod n$组成</p>
 <h4 id="9-13"><a href="#9-13" class="headerlink" title="9.13"></a>9.13<a href="#9-13" class="header-anchor">#</a></h4><p>是的</p>
 <h4 id="9-14"><a href="#9-14" class="headerlink" title="9.14"></a>9.14<a href="#9-14" class="header-anchor">#</a></h4><p>此算法名为Cocks algorithm</p>
 <p>a.  Cocks利用了中国剩余定理，该定理说，可以用整数的余数对一组相对素数模取模，重构一定范围内的整数。特别是对于质数相对较多的P和Q, 0 &lt; M &lt; N范围内的任何整数M都可以是M mod P和M mod Q的一对数字，并且在给定M mod P和M mod的情况下，有可能恢复M.安全性在于很难找到N的质因数。</p>
 <p>b. 在RSA中，用户构造一对整数d和e，使得$d\times e \equiv 1 \mod ((P-1)(Q-1))$，然后公布e和N作为公钥。</p>
-<p>Cocks是一种特殊情况，其中e=N。</p>
+<p>Cocks是一种特殊情况，其中e&#x3D;N。</p>
 <p>c.  RSA算法具有对称的优点;加密和解密都使用相同的过程，这简化了所需的软件。此外，还可以任意选择e，以便使用特别简单的版本进行公钥加密。</p>
 <p>d. 私钥k是P和Q；公钥x是N；明文p是M；密文z是C。M1由k的两部分相乘得到。M2是由M的N次幂模N组成。M3由本题描述中的过程组成</p>
 <h4 id="9-15"><a href="#9-15" class="headerlink" title="9.15"></a>9.15<a href="#9-15" class="header-anchor">#</a></h4><p>1)对手X拦截了A发送给B的消息，即$[A, E(PU_b, M)， B]$</p>
-<p>2) X向B发送消息 $[X, E(PU_b, M)， B]$</p>
-<p>3) B通过向X发送$[B, E(PU_X, M)， X]$确认收到信息</p>
-<p>4) X用自己的秘密解密密钥对$E(PU_X, M)$进行解密，得到M</p>
-<h4 id="9-16"><a href="#9-16" class="headerlink" title="9.16"></a>9.16<a href="#9-16" class="header-anchor">#</a></h4><div class="table-container">
-<table>
+<ol start="2">
+<li><p>X向B发送消息 $[X, E(PU_b, M)， B]$</p>
+</li>
+<li><p>B通过向X发送$[B, E(PU_X, M)， X]$确认收到信息</p>
+</li>
+<li><p>X用自己的秘密解密密钥对$E(PU_X, M)$进行解密，得到M</p>
+</li>
+</ol>
+<h4 id="9-16"><a href="#9-16" class="headerlink" title="9.16"></a>9.16<a href="#9-16" class="header-anchor">#</a></h4><table>
 <thead>
 <tr>
-<th style="text-align:center">i</th>
-<th style="text-align:center">9</th>
-<th style="text-align:center">8</th>
-<th style="text-align:center">7</th>
-<th style="text-align:center">6</th>
-<th style="text-align:center">5</th>
-<th style="text-align:center">4</th>
-<th style="text-align:center">3</th>
-<th style="text-align:center">2</th>
-<th style="text-align:center">1</th>
-<th style="text-align:center">0</th>
+<th align="center">i</th>
+<th align="center">9</th>
+<th align="center">8</th>
+<th align="center">7</th>
+<th align="center">6</th>
+<th align="center">5</th>
+<th align="center">4</th>
+<th align="center">3</th>
+<th align="center">2</th>
+<th align="center">1</th>
+<th align="center">0</th>
 </tr>
 </thead>
-<tbody>
-<tr>
-<td style="text-align:center">$B_i$</td>
-<td style="text-align:center">1</td>
-<td style="text-align:center">0</td>
-<td style="text-align:center">0</td>
-<td style="text-align:center">1</td>
-<td style="text-align:center">0</td>
-<td style="text-align:center">1</td>
-<td style="text-align:center">0</td>
-<td style="text-align:center">1</td>
-<td style="text-align:center">0</td>
-<td style="text-align:center">0</td>
+<tbody><tr>
+<td align="center">$B_i$</td>
+<td align="center">1</td>
+<td align="center">0</td>
+<td align="center">0</td>
+<td align="center">1</td>
+<td align="center">0</td>
+<td align="center">1</td>
+<td align="center">0</td>
+<td align="center">1</td>
+<td align="center">0</td>
+<td align="center">0</td>
 </tr>
 <tr>
-<td style="text-align:center">C</td>
-<td style="text-align:center">1</td>
-<td style="text-align:center">2</td>
-<td style="text-align:center">4</td>
-<td style="text-align:center">5</td>
-<td style="text-align:center">11</td>
-<td style="text-align:center">23</td>
-<td style="text-align:center">46</td>
-<td style="text-align:center">93</td>
-<td style="text-align:center">186</td>
-<td style="text-align:center">372</td>
+<td align="center">C</td>
+<td align="center">1</td>
+<td align="center">2</td>
+<td align="center">4</td>
+<td align="center">5</td>
+<td align="center">11</td>
+<td align="center">23</td>
+<td align="center">46</td>
+<td align="center">93</td>
+<td align="center">186</td>
+<td align="center">372</td>
 </tr>
 <tr>
-<td style="text-align:center">F</td>
-<td style="text-align:center">5</td>
-<td style="text-align:center">25</td>
-<td style="text-align:center">625</td>
-<td style="text-align:center">937</td>
-<td style="text-align:center">595</td>
-<td style="text-align:center">569</td>
-<td style="text-align:center">453</td>
-<td style="text-align:center">591</td>
-<td style="text-align:center">59</td>
-<td style="text-align:center">1013</td>
+<td align="center">F</td>
+<td align="center">5</td>
+<td align="center">25</td>
+<td align="center">625</td>
+<td align="center">937</td>
+<td align="center">595</td>
+<td align="center">569</td>
+<td align="center">453</td>
+<td align="center">591</td>
+<td align="center">59</td>
+<td align="center">1013</td>
 </tr>
-</tbody>
-</table>
-</div>
+</tbody></table>
 <h4 id="9-17"><a href="#9-17" class="headerlink" title="9.17"></a>9.17<a href="#9-17" class="header-anchor">#</a></h4><p>首先，让我们考虑图9.8中的算法。b的二进制表示从左到右读取(从最高位到最低位)，以控制执行哪些操作。本质上，如果c是处理完一些位后指数的当前值，那么如果下一位是O，指数将翻倍(简单地说就是左移1位)或者翻倍并加1。每次循环迭代都使用一个恒等式:</p>
-<p>$a^{2c}\mod n = (a^c)^2 \mod n ,if \space b_i =0$</p>
-<p>$a^{2c+1}\mod n = a \times (a^c)^2 \mod n ,if \space b_i = 1$</p>
-<p>该算法保持不变，即$d = a^c mod n$，当c增加2倍和递增时，直至$c = b$。现在让我们考虑问题中的算法，它改编自[KNUT98, 462页]中的算法。该算法从右到左(最低位到最高位)处理b的二进制表示。在这种情况下，算法保持不变，$a^n=d\times  T^E$。最后，$E = 0$，剩下$a^n = d$。</p>
-<h4 id="9-18"><a href="#9-18" class="headerlink" title="9.18"></a>9.18<a href="#9-18" class="header-anchor">#</a></h4><p>注意到因为$Z=r^e \mod n$，所以$r=Z^d \mod n $。Bob计算</p>
-<p>$tY \mod n = r^{-1}X^d \mod n =r^{-1}Z^dC^d \mod n =C^d\mod n = M$</p>
-<h4 id="9-19"><a href="#9-19" class="headerlink" title="9.19"></a>9.19<a href="#9-19" class="header-anchor">#</a></h4><h2 id="di-shi-zhang"><a href="#第十章" class="headerlink" title="第十章"></a>第十章<a href="#di-shi-zhang" class="header-anchor">#</a></h2><h3 id="si-kao-ti"><a href="#思考题-3" class="headerlink" title="思考题"></a>思考题<a href="#si-kao-ti" class="header-anchor">#</a></h3><h4 id="10-1"><a href="#10-1" class="headerlink" title="10.1"></a>10.1<a href="#10-1" class="header-anchor">#</a></h4><h4 id="10-2"><a href="#10-2" class="headerlink" title="10.2"></a>10.2<a href="#10-2" class="header-anchor">#</a></h4><h4 id="10-3"><a href="#10-3" class="headerlink" title="10.3"></a>10.3<a href="#10-3" class="header-anchor">#</a></h4><h4 id="10-4"><a href="#10-4" class="headerlink" title="10.4"></a>10.4<a href="#10-4" class="header-anchor">#</a></h4><h3 id="xi-ti"><a href="#习题-2" class="headerlink" title="习题"></a>习题<a href="#xi-ti" class="header-anchor">#</a></h3><h4 id="10-1"><a href="#10-1-1" class="headerlink" title="10.1"></a>10.1<a href="#10-1" class="header-anchor">#</a></h4><p>a.A的公钥$Y_A=7^5\mod71=51$</p>
-<p>b.B的公钥$Y_B=7^{12}\mod71=4$</p>
-<p>c.共享的密钥$K=4^5\mod 71=30$</p>
-<h4 id="10-2"><a href="#10-2-1" class="headerlink" title="10.2"></a>10.2<a href="#10-2" class="header-anchor">#</a></h4><h4 id="10-3"><a href="#10-3-1" class="headerlink" title="10.3"></a>10.3<a href="#10-3" class="header-anchor">#</a></h4><p>For example,the key could be $X_A^gX_B^g=(X_AX_B)^g$. Of course, Eve can find that trivially just by multiplying the public information. In fact, no such system could be secure anyway, because Eve can find the secret numbers $X_A$ and $X_B$ by using Fermat’s Little Theorem to take g-th roots.</p>
+<p>$a^{2c}\mod n &#x3D; (a^c)^2 \mod n ,if \space b_i &#x3D;0$</p>
+<p>$a^{2c+1}\mod n &#x3D; a \times (a^c)^2 \mod n ,if \space b_i &#x3D; 1$</p>
+<p>该算法保持不变，即$d &#x3D; a^c mod n$，当c增加2倍和递增时，直至$c &#x3D; b$。现在让我们考虑问题中的算法，它改编自[KNUT98, 462页]中的算法。该算法从右到左(最低位到最高位)处理b的二进制表示。在这种情况下，算法保持不变，$a^n&#x3D;d\times  T^E$。最后，$E &#x3D; 0$，剩下$a^n &#x3D; d$。</p>
+<h4 id="9-18"><a href="#9-18" class="headerlink" title="9.18"></a>9.18<a href="#9-18" class="header-anchor">#</a></h4><p>注意到因为$Z&#x3D;r^e \mod n$，所以$r&#x3D;Z^d \mod n $。Bob计算</p>
+<p>$tY \mod n &#x3D; r^{-1}X^d \mod n &#x3D;r^{-1}Z^dC^d \mod n &#x3D;C^d\mod n &#x3D; M$</p>
+<h4 id="9-19"><a href="#9-19" class="headerlink" title="9.19"></a>9.19<a href="#9-19" class="header-anchor">#</a></h4><h2 id="di-shi-zhang"><a href="#第十章" class="headerlink" title="第十章"></a>第十章<a href="#di-shi-zhang" class="header-anchor">#</a></h2><h3 id="si-kao-ti"><a href="#思考题-3" class="headerlink" title="思考题"></a>思考题<a href="#si-kao-ti" class="header-anchor">#</a></h3><h4 id="10-1"><a href="#10-1" class="headerlink" title="10.1"></a>10.1<a href="#10-1" class="header-anchor">#</a></h4><h4 id="10-2"><a href="#10-2" class="headerlink" title="10.2"></a>10.2<a href="#10-2" class="header-anchor">#</a></h4><h4 id="10-3"><a href="#10-3" class="headerlink" title="10.3"></a>10.3<a href="#10-3" class="header-anchor">#</a></h4><h4 id="10-4"><a href="#10-4" class="headerlink" title="10.4"></a>10.4<a href="#10-4" class="header-anchor">#</a></h4><h3 id="xi-ti"><a href="#习题-2" class="headerlink" title="习题"></a>习题<a href="#xi-ti" class="header-anchor">#</a></h3><h4 id="10-1"><a href="#10-1-1" class="headerlink" title="10.1"></a>10.1<a href="#10-1" class="header-anchor">#</a></h4><p>a.A的公钥$Y_A&#x3D;7^5\mod71&#x3D;51$</p>
+<p>b.B的公钥$Y_B&#x3D;7^{12}\mod71&#x3D;4$</p>
+<p>c.共享的密钥$K&#x3D;4^5\mod 71&#x3D;30$</p>
+<h4 id="10-2"><a href="#10-2-1" class="headerlink" title="10.2"></a>10.2<a href="#10-2" class="header-anchor">#</a></h4><h4 id="10-3"><a href="#10-3-1" class="headerlink" title="10.3"></a>10.3<a href="#10-3" class="header-anchor">#</a></h4><p>For example,the key could be $X_A^gX_B^g&#x3D;(X_AX_B)^g$. Of course, Eve can find that trivially just by multiplying the public information. In fact, no such system could be secure anyway, because Eve can find the secret numbers $X_A$ and $X_B$ by using Fermat’s Little Theorem to take g-th roots.</p>
 <p> 随机选择一个与q互素的数a，利用费马小定理：</p>
-<p>$a^{q-1}\equiv 1 \mod q =&gt; ka^{q-1}\equiv k \mod q$，其中k是Eve观察系统得到的密钥。所以$ka^{q-1}\equiv (X_AX_B)^g\mod q$</p>
+<p>$a^{q-1}\equiv 1 \mod q &#x3D;&gt; ka^{q-1}\equiv k \mod q$，其中k是Eve观察系统得到的密钥。所以$ka^{q-1}\equiv (X_AX_B)^g\mod q$</p>
 <p>对同余号左边开g次方根即可得到$X_AX_B$</p>
 <h4 id="10-4"><a href="#10-4-1" class="headerlink" title="10.4"></a>10.4<a href="#10-4" class="header-anchor">#</a></h4><h4 id="10-5"><a href="#10-5" class="headerlink" title="10.5"></a>10.5<a href="#10-5" class="header-anchor">#</a></h4><ol>
 <li><p>Darth prepares for the attack by generating a random private key $X_D$ and then computing the corresponding public key $Y_D$.</p>
 </li>
 <li><p>Alice transmits $Y_A$ to Bob.</p>
 </li>
-<li><p>Darth intercepts $Y_A$ and transmits $Y_D$ to Bob. Darth also calculates $K_2=(Y_A)^X_D\mod q$</p>
+<li><p>Darth intercepts $Y_A$ and transmits $Y_D$ to Bob. Darth also calculates $K_2&#x3D;(Y_A)^X_D\mod q$</p>
 </li>
-<li><p>Bob receives $Y_D$ and calculates $K1=(Y_D)^{X_B} \mod q $</p>
+<li><p>Bob receives $Y_D$ and calculates $K1&#x3D;(Y_D)^{X_B} \mod q $</p>
 </li>
 <li><p>Bob transmits $Y_B$ to Alice.</p>
 </li>
-<li><p>Darth intercepts $Y_B$ and transmits $Y_D$ to Alice. Darth calculates $K1=(Y_B)^{X_D}\mod q $</p>
+<li><p>Darth intercepts $Y_B$ and transmits $Y_D$ to Alice. Darth calculates $K1&#x3D;(Y_B)^{X_D}\mod q $</p>
 </li>
-<li><p>Alice receives $Y_D$ and calculates $K2=(Y_D)^{X_A} \mod q $</p>
+<li><p>Alice receives $Y_D$ and calculates $K2&#x3D;(Y_D)^{X_A} \mod q $</p>
 </li>
 </ol>
-<h4 id="10-6"><a href="#10-6" class="headerlink" title="10.6"></a>10.6<a href="#10-6" class="header-anchor">#</a></h4><h4 id="10-7"><a href="#10-7" class="headerlink" title="10.7"></a>10.7<a href="#10-7" class="header-anchor">#</a></h4><p>a. For a vertical tangent line, the point of intersection is infinity. Therefore $2Q=O$.</p>
-<p>b. $3Q=2Q+Q=O+Q=Q$</p>
-<h4 id="10-8"><a href="#10-8" class="headerlink" title="10.8"></a>10.8<a href="#10-8" class="header-anchor">#</a></h4><p>We use Equation(10.1), which defines the form of the elliptic curve as $y^2=x^3 + ax + b$, and Equation(10.2), which says that an elliptic curve over the real numbers defines a group if $4a^3+27b^2\neq0$.</p>
-<p>a. For $y^2=x^3-x$, we have $4(-1)^3+27(0)=-4\neq0$</p>
-<p>b. For $y^2=x^3+x+1$, we have $4(1)^3+27(1)=31\neq0$</p>
+<h4 id="10-6"><a href="#10-6" class="headerlink" title="10.6"></a>10.6<a href="#10-6" class="header-anchor">#</a></h4><h4 id="10-7"><a href="#10-7" class="headerlink" title="10.7"></a>10.7<a href="#10-7" class="header-anchor">#</a></h4><p>a. For a vertical tangent line, the point of intersection is infinity. Therefore $2Q&#x3D;O$.</p>
+<p>b. $3Q&#x3D;2Q+Q&#x3D;O+Q&#x3D;Q$</p>
+<h4 id="10-8"><a href="#10-8" class="headerlink" title="10.8"></a>10.8<a href="#10-8" class="header-anchor">#</a></h4><p>We use Equation(10.1), which defines the form of the elliptic curve as $y^2&#x3D;x^3 + ax + b$, and Equation(10.2), which says that an elliptic curve over the real numbers defines a group if $4a^3+27b^2\neq0$.</p>
+<p>a. For $y^2&#x3D;x^3-x$, we have $4(-1)^3+27(0)&#x3D;-4\neq0$</p>
+<p>b. For $y^2&#x3D;x^3+x+1$, we have $4(1)^3+27(1)&#x3D;31\neq0$</p>
 <h4 id="10-9"><a href="#10-9" class="headerlink" title="10.9"></a>10.9<a href="#10-9" class="header-anchor">#</a></h4><h4 id="10-10"><a href="#10-10" class="headerlink" title="10.10"></a>10.10<a href="#10-10" class="header-anchor">#</a></h4><p>这题的答案有一个错误。</p>
 <h4 id="10-11"><a href="#10-11" class="headerlink" title="10.11"></a>10.11<a href="#10-11" class="header-anchor">#</a></h4><h4 id="10-12"><a href="#10-12" class="headerlink" title="10.12"></a>10.12<a href="#10-12" class="header-anchor">#</a></h4><p>这题枚举x的值去计算方程的结果，如果某数的平方模p的等于方程结果，那么此数的平方根就是y；从而（x,y）在椭圆曲线上。</p>
-<h4 id="10-13"><a href="#10-13" class="headerlink" title="10.13"></a>10.13<a href="#10-13" class="header-anchor">#</a></h4><h4 id="10-14"><a href="#10-14" class="headerlink" title="10.14"></a>10.14<a href="#10-14" class="header-anchor">#</a></h4><h4 id="10-15"><a href="#10-15" class="headerlink" title="10.15"></a>10.15<a href="#10-15" class="header-anchor">#</a></h4><h4 id="10-16"><a href="#10-16" class="headerlink" title="10.16"></a>10.16<a href="#10-16" class="header-anchor">#</a></h4><p>a. $S + kY_A = M - kX_AG + kX_AG = M.$</p>
-<p>b. The imposter gets Alice’s public verifying key $Y_A$ and sends Bob $M$,$k$, and $S=M-kY_A$  </p>
-<h4 id="10-17"><a href="#10-17" class="headerlink" title="10.17"></a>10.17<a href="#10-17" class="header-anchor">#</a></h4><p>a.$S+kY_A=M-X_AC_1+kY_A=M-X_AkG+kX_AG=M$.</p>
+<h4 id="10-13"><a href="#10-13" class="headerlink" title="10.13"></a>10.13<a href="#10-13" class="header-anchor">#</a></h4><h4 id="10-14"><a href="#10-14" class="headerlink" title="10.14"></a>10.14<a href="#10-14" class="header-anchor">#</a></h4><h4 id="10-15"><a href="#10-15" class="headerlink" title="10.15"></a>10.15<a href="#10-15" class="header-anchor">#</a></h4><h4 id="10-16"><a href="#10-16" class="headerlink" title="10.16"></a>10.16<a href="#10-16" class="header-anchor">#</a></h4><p>a. $S + kY_A &#x3D; M - kX_AG + kX_AG &#x3D; M.$</p>
+<p>b. The imposter gets Alice’s public verifying key $Y_A$ and sends Bob $M$,$k$, and $S&#x3D;M-kY_A$  </p>
+<h4 id="10-17"><a href="#10-17" class="headerlink" title="10.17"></a>10.17<a href="#10-17" class="header-anchor">#</a></h4><p>a.$S+kY_A&#x3D;M-X_AC_1+kY_A&#x3D;M-X_AkG+kX_AG&#x3D;M$.</p>
 <p>b. </p>
 <p>c. Speed, likelihood of unintentional error, opportunity for denial of service or traffic analysis.</p>
 
-  </div>
-</article>
+                
+            </div>
+            <hr/>
 
+            
 
-
+    <div class="reprint" id="reprint-statement">
         
-          <div id="footer-post-container">
-  <div id="footer-post">
-
-    <div id="nav-footer" style="display: none">
-      <ul>
-         
-          <li><a href="/">首页</a></li>
-         
-          <li><a href="/about/">关于</a></li>
-         
-          <li><a href="/archives/">归档</a></li>
-         
-          <li><a target="_blank" rel="noopener" href="https://github.com/MirRoR4s">项目</a></li>
-         
-          <li><a target="_blank" rel="noopener" href="https://github.com/MirRoR4s">MyGithub</a></li>
-         
-          <li><a href="/search/">Search</a></li>
-         
-          <li><a href="/tags/">标签</a></li>
-         
-          <li><a href="/categories/">分类</a></li>
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">MirRoR4s</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://MirRoR4s.github.io/2022/06/13/%E5%AF%86%E7%A0%81%E7%BC%96%E7%A0%81%E5%AD%A6%E4%B8%8E%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8-%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E8%B7%B5-%E7%AC%AC%E4%B8%83%E7%89%88/index.html">https://MirRoR4s.github.io/2022/06/13/%E5%AF%86%E7%A0%81%E7%BC%96%E7%A0%81%E5%AD%A6%E4%B8%8E%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8-%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E8%B7%B5-%E7%AC%AC%E4%B8%83%E7%89%88/index.html</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/about" target="_blank">MirRoR4s</a>
+                    !
+                </span>
+            </div>
         
-      </ul>
     </div>
 
-    <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#mi-ma-bian-ma-xue-yu-wang-luo-an-quan-yuan-li-yu-shi-jian-di-qi-ban"><span class="toc-number">1.</span> <span class="toc-text">密码编码学与网络安全-原理与实践(第七版)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#di-yi-zhang-xi-ti"><span class="toc-number">1.1.</span> <span class="toc-text">第一章习题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#di-er-zhang-xi-ti"><span class="toc-number">1.2.</span> <span class="toc-text">第二章习题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#di-san-zhang-xi-ti"><span class="toc-number">1.3.</span> <span class="toc-text">第三章习题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#di-si-zhang-xi-ti"><span class="toc-number">1.4.</span> <span class="toc-text">第四章习题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#si-kao-ti"><span class="toc-number">1.4.1.</span> <span class="toc-text">思考题</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#4-1"><span class="toc-number">1.4.1.1.</span> <span class="toc-text">4.1</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-2"><span class="toc-number">1.4.1.2.</span> <span class="toc-text">4.2</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-3"><span class="toc-number">1.4.1.3.</span> <span class="toc-text">4.3</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-4"><span class="toc-number">1.4.1.4.</span> <span class="toc-text">4.4</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-5"><span class="toc-number">1.4.1.5.</span> <span class="toc-text">4.5</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-6"><span class="toc-number">1.4.1.6.</span> <span class="toc-text">4.6</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-7"><span class="toc-number">1.4.1.7.</span> <span class="toc-text">4.7</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#xi-ti"><span class="toc-number">1.4.2.</span> <span class="toc-text">习题</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#4-1"><span class="toc-number">1.4.2.1.</span> <span class="toc-text">4.1</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-2"><span class="toc-number">1.4.2.2.</span> <span class="toc-text">4.2</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-3"><span class="toc-number">1.4.2.3.</span> <span class="toc-text">4.3</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-4"><span class="toc-number">1.4.2.4.</span> <span class="toc-text">4.4</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-5"><span class="toc-number">1.4.2.5.</span> <span class="toc-text">4.5</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-6"><span class="toc-number">1.4.2.6.</span> <span class="toc-text">4.6</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-7"><span class="toc-number">1.4.2.7.</span> <span class="toc-text">4.7</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-8"><span class="toc-number">1.4.2.8.</span> <span class="toc-text">4.8</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#di-wu-zhang-xi-ti"><span class="toc-number">1.5.</span> <span class="toc-text">第五章习题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#di-liu-zhang-xi-ti"><span class="toc-number">1.6.</span> <span class="toc-text">第六章习题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#si-kao-ti"><span class="toc-number">1.6.1.</span> <span class="toc-text">思考题</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#6-1"><span class="toc-number">1.6.1.1.</span> <span class="toc-text">6.1</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-2"><span class="toc-number">1.6.1.2.</span> <span class="toc-text">6.2</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-3"><span class="toc-number">1.6.1.3.</span> <span class="toc-text">6.3</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-4"><span class="toc-number">1.6.1.4.</span> <span class="toc-text">6.4</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-5"><span class="toc-number">1.6.1.5.</span> <span class="toc-text">6.5</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-6"><span class="toc-number">1.6.1.6.</span> <span class="toc-text">6.6</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-7"><span class="toc-number">1.6.1.7.</span> <span class="toc-text">6.7</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-8"><span class="toc-number">1.6.1.8.</span> <span class="toc-text">6.8</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-9"><span class="toc-number">1.6.1.9.</span> <span class="toc-text">6.9</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-10"><span class="toc-number">1.6.1.10.</span> <span class="toc-text">6.10</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-11"><span class="toc-number">1.6.1.11.</span> <span class="toc-text">6.11</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-12"><span class="toc-number">1.6.1.12.</span> <span class="toc-text">6.12</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-13"><span class="toc-number">1.6.1.13.</span> <span class="toc-text">6.13</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-14"><span class="toc-number">1.6.1.14.</span> <span class="toc-text">6.14</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#di-qi-zhang-xi-ti"><span class="toc-number">1.7.</span> <span class="toc-text">第七章习题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#di-ba-zhang-xi-ti"><span class="toc-number">1.8.</span> <span class="toc-text">第八章习题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#di-jiu-zhang-xi-ti"><span class="toc-number">1.9.</span> <span class="toc-text">第九章习题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#si-kao-ti"><span class="toc-number">1.9.1.</span> <span class="toc-text">思考题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#xi-ti"><span class="toc-number">1.9.2.</span> <span class="toc-text">习题</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#9-1"><span class="toc-number">1.9.2.1.</span> <span class="toc-text">9.1</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#9-5"><span class="toc-number">1.9.2.2.</span> <span class="toc-text">9.5</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#9-6"><span class="toc-number">1.9.2.3.</span> <span class="toc-text">9.6</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#9-7"><span class="toc-number">1.9.2.4.</span> <span class="toc-text">9.7</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#9-8"><span class="toc-number">1.9.2.5.</span> <span class="toc-text">9.8</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#9-9"><span class="toc-number">1.9.2.6.</span> <span class="toc-text">9.9</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#9-10"><span class="toc-number">1.9.2.7.</span> <span class="toc-text">9.10</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#9-11"><span class="toc-number">1.9.2.8.</span> <span class="toc-text">9.11</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#9-12"><span class="toc-number">1.9.2.9.</span> <span class="toc-text">9.12</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#9-13"><span class="toc-number">1.9.2.10.</span> <span class="toc-text">9.13</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#9-14"><span class="toc-number">1.9.2.11.</span> <span class="toc-text">9.14</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#9-15"><span class="toc-number">1.9.2.12.</span> <span class="toc-text">9.15</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#9-16"><span class="toc-number">1.9.2.13.</span> <span class="toc-text">9.16</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#9-17"><span class="toc-number">1.9.2.14.</span> <span class="toc-text">9.17</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#9-18"><span class="toc-number">1.9.2.15.</span> <span class="toc-text">9.18</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#9-19"><span class="toc-number">1.9.2.16.</span> <span class="toc-text">9.19</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#di-shi-zhang"><span class="toc-number">1.10.</span> <span class="toc-text">第十章</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#si-kao-ti"><span class="toc-number">1.10.1.</span> <span class="toc-text">思考题</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#10-1"><span class="toc-number">1.10.1.1.</span> <span class="toc-text">10.1</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#10-2"><span class="toc-number">1.10.1.2.</span> <span class="toc-text">10.2</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#10-3"><span class="toc-number">1.10.1.3.</span> <span class="toc-text">10.3</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#10-4"><span class="toc-number">1.10.1.4.</span> <span class="toc-text">10.4</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#xi-ti"><span class="toc-number">1.10.2.</span> <span class="toc-text">习题</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#10-1"><span class="toc-number">1.10.2.1.</span> <span class="toc-text">10.1</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#10-2"><span class="toc-number">1.10.2.2.</span> <span class="toc-text">10.2</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#10-3"><span class="toc-number">1.10.2.3.</span> <span class="toc-text">10.3</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#10-4"><span class="toc-number">1.10.2.4.</span> <span class="toc-text">10.4</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#10-5"><span class="toc-number">1.10.2.5.</span> <span class="toc-text">10.5</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#10-6"><span class="toc-number">1.10.2.6.</span> <span class="toc-text">10.6</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#10-7"><span class="toc-number">1.10.2.7.</span> <span class="toc-text">10.7</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#10-8"><span class="toc-number">1.10.2.8.</span> <span class="toc-text">10.8</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#10-9"><span class="toc-number">1.10.2.9.</span> <span class="toc-text">10.9</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#10-10"><span class="toc-number">1.10.2.10.</span> <span class="toc-text">10.10</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#10-11"><span class="toc-number">1.10.2.11.</span> <span class="toc-text">10.11</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#10-12"><span class="toc-number">1.10.2.12.</span> <span class="toc-text">10.12</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#10-13"><span class="toc-number">1.10.2.13.</span> <span class="toc-text">10.13</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#10-14"><span class="toc-number">1.10.2.14.</span> <span class="toc-text">10.14</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#10-15"><span class="toc-number">1.10.2.15.</span> <span class="toc-text">10.15</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#10-16"><span class="toc-number">1.10.2.16.</span> <span class="toc-text">10.16</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#10-17"><span class="toc-number">1.10.2.17.</span> <span class="toc-text">10.17</span></a></li></ol></li></ol></li></ol></li></ol>
-    </div>
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
 
-    <div id="share-footer" style="display: none">
-      <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://example.com/2022/06/13/%E5%AF%86%E7%A0%81%E7%BC%96%E7%A0%81%E5%AD%A6%E4%B8%8E%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8-%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E8%B7%B5-%E7%AC%AC%E4%B8%83%E7%89%88/index.html"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://example.com/2022/06/13/%E5%AF%86%E7%A0%81%E7%BC%96%E7%A0%81%E5%AD%A6%E4%B8%8E%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8-%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E8%B7%B5-%E7%AC%AC%E4%B8%83%E7%89%88/index.html&text=密码编码学与网络安全-原理与实践(第七版)"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://example.com/2022/06/13/%E5%AF%86%E7%A0%81%E7%BC%96%E7%A0%81%E5%AD%A6%E4%B8%8E%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8-%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E8%B7%B5-%E7%AC%AC%E4%B8%83%E7%89%88/index.html&title=密码编码学与网络安全-原理与实践(第七版)"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://example.com/2022/06/13/%E5%AF%86%E7%A0%81%E7%BC%96%E7%A0%81%E5%AD%A6%E4%B8%8E%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8-%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E8%B7%B5-%E7%AC%AC%E4%B8%83%E7%89%88/index.html&is_video=false&description=密码编码学与网络安全-原理与实践(第七版)"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=密码编码学与网络安全-原理与实践(第七版)&body=Check out this article: https://example.com/2022/06/13/%E5%AF%86%E7%A0%81%E7%BC%96%E7%A0%81%E5%AD%A6%E4%B8%8E%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8-%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E8%B7%B5-%E7%AC%AC%E4%B8%83%E7%89%88/index.html"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://example.com/2022/06/13/%E5%AF%86%E7%A0%81%E7%BC%96%E7%A0%81%E5%AD%A6%E4%B8%8E%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8-%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E8%B7%B5-%E7%AC%AC%E4%B8%83%E7%89%88/index.html&title=密码编码学与网络安全-原理与实践(第七版)"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://example.com/2022/06/13/%E5%AF%86%E7%A0%81%E7%BC%96%E7%A0%81%E5%AD%A6%E4%B8%8E%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8-%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E8%B7%B5-%E7%AC%AC%E4%B8%83%E7%89%88/index.html&title=密码编码学与网络安全-原理与实践(第七版)"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://example.com/2022/06/13/%E5%AF%86%E7%A0%81%E7%BC%96%E7%A0%81%E5%AD%A6%E4%B8%8E%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8-%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E8%B7%B5-%E7%AC%AC%E4%B8%83%E7%89%88/index.html&title=密码编码学与网络安全-原理与实践(第七版)"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://example.com/2022/06/13/%E5%AF%86%E7%A0%81%E7%BC%96%E7%A0%81%E5%AD%A6%E4%B8%8E%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8-%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E8%B7%B5-%E7%AC%AC%E4%B8%83%E7%89%88/index.html&title=密码编码学与网络安全-原理与实践(第七版)"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://example.com/2022/06/13/%E5%AF%86%E7%A0%81%E7%BC%96%E7%A0%81%E5%AD%A6%E4%B8%8E%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8-%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E8%B7%B5-%E7%AC%AC%E4%B8%83%E7%89%88/index.html&name=密码编码学与网络安全-原理与实践(第七版)&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://example.com/2022/06/13/%E5%AF%86%E7%A0%81%E7%BC%96%E7%A0%81%E5%AD%A6%E4%B8%8E%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8-%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E8%B7%B5-%E7%AC%AC%E4%B8%83%E7%89%88/index.html&t=密码编码学与网络安全-原理与实践(第七版)"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
-</ul>
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
 
-    </div>
 
-    <div id="actions-footer">
-        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
-        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
-        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
-        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
-    </div>
 
-  </div>
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/Crypto/">
+                                    <span class="chip bg-color">Crypto</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
 </div>
 
-        
-        <footer id="footer">
-  <div class="footer-left">
-    Copyright &copy;
-    
-    
-    1999-2022
-    MirRoR4s
-  </div>
-  <div class="footer-right">
-    <nav>
-      <ul>
-        <!--
-       --><li><a href="/">首页</a></li><!--
-     --><!--
-       --><li><a href="/about/">关于</a></li><!--
-     --><!--
-       --><li><a href="/archives/">归档</a></li><!--
-     --><!--
-       --><li><a target="_blank" rel="noopener" href="https://github.com/MirRoR4s">项目</a></li><!--
-     --><!--
-       --><li><a target="_blank" rel="noopener" href="https://github.com/MirRoR4s">MyGithub</a></li><!--
-     --><!--
-       --><li><a href="/search/">Search</a></li><!--
-     --><!--
-       --><li><a href="/tags/">标签</a></li><!--
-     --><!--
-       --><li><a href="/categories/">分类</a></li><!--
-     -->
-      </ul>
-    </nav>
-  </div>
-</footer>
+                </div>
+            </div>
+            
+                <style>
+    #reward {
+        margin: 40px 0;
+        text-align: center;
+    }
 
+    #reward .reward-link {
+        font-size: 1.4rem;
+        line-height: 38px;
+    }
+
+    #reward .btn-floating:hover {
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    #rewardModal {
+        width: 320px;
+        height: 350px;
+    }
+
+    #rewardModal .reward-title {
+        margin: 15px auto;
+        padding-bottom: 5px;
+    }
+
+    #rewardModal .modal-content {
+        padding: 10px;
+    }
+
+    #rewardModal .close {
+        position: absolute;
+        right: 15px;
+        top: 15px;
+        color: rgba(0, 0, 0, 0.5);
+        font-size: 1.3rem;
+        line-height: 20px;
+        cursor: pointer;
+    }
+
+    #rewardModal .close:hover {
+        color: #ef5350;
+        transform: scale(1.3);
+        -moz-transform:scale(1.3);
+        -webkit-transform:scale(1.3);
+        -o-transform:scale(1.3);
+    }
+
+    #rewardModal .reward-tabs {
+        margin: 0 auto;
+        width: 210px;
+    }
+
+    .reward-tabs .tabs {
+        height: 38px;
+        margin: 10px auto;
+        padding-left: 0;
+    }
+
+    .reward-content ul {
+        padding-left: 0 !important;
+    }
+
+    .reward-tabs .tabs .tab {
+        height: 38px;
+        line-height: 38px;
+    }
+
+    .reward-tabs .tab a {
+        color: #fff;
+        background-color: #ccc;
+    }
+
+    .reward-tabs .tab a:hover {
+        background-color: #ccc;
+        color: #fff;
+    }
+
+    .reward-tabs .wechat-tab .active {
+        color: #fff !important;
+        background-color: #22AB38 !important;
+    }
+
+    .reward-tabs .alipay-tab .active {
+        color: #fff !important;
+        background-color: #019FE8 !important;
+    }
+
+    .reward-tabs .reward-img {
+        width: 210px;
+        height: 210px;
+    }
+</style>
+
+<div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-medium waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fas fa-times"></i></a>
+            <h4 class="reward-title">你的赏识是我前进的动力</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        <img src="/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
+                    </div>
+                    <div id="wechat">
+                        <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <!-- styles -->
+</div>
 
-
-
-  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
-
-
-    <!-- jquery -->
- 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
-
-
-
-
-<!-- clipboard -->
-
-  
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
-  
-  <script type="text/javascript">
-  $(function() {
-    // copy-btn HTML
-    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板！\">";
-    btn += '<i class="far fa-clone"></i>';
-    btn += '</span>'; 
-    // mount it!
-    $(".highlight table").before(btn);
-    var clip = new ClipboardJS('.btn-copy', {
-      text: function(trigger) {
-        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
-      }
-    });
-    clip.on('success', function(e) {
-      e.trigger.setAttribute('aria-label', "复制成功！");
-      e.clearSelection();
-    })
-  })
-  </script>
-
-
-<script src="/js/main.js"></script>
-
-<!-- search -->
-
-<!-- Google Analytics -->
-
-<!-- Baidu Analytics -->
-
-<!-- Cloudflare Analytics -->
-
-<!-- Umami Analytics -->
-
-<!-- Disqus Comments -->
-
-<!-- utterances Comments -->
-
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
+<script>
+    $(function () {
+        $('.tabs').tabs();
     });
 </script>
-<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2022/06/14/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/index.html">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/20.jpg" class="responsive-img" alt="文件上传漏洞总结">
+                        
+                        <span class="card-title">文件上传漏洞总结</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            文件上传漏洞总结
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2022-06-14
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/WEB%E5%AE%89%E5%85%A8/" class="post-category">
+                                    WEB安全
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/">
+                        <span class="chip bg-color">文件上传</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2022/06/12/SEETF-2022/index.html">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/23.jpg" class="responsive-img" alt="SEETF 2022">
+                        
+                        <span class="card-title">SEETF 2022</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-06-12
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-user fa-fw"></i>
+                            MirRoR4s
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Crypto/">
+                        <span class="chip bg-color">Crypto</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget card" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+<script src="https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script>
+    MathJax.Hub.Config({
+        tex2jax: {inlineMath: [['$', '$'], ['\(', '\)']]}
+    });
+</script>
+
+
+
+    <footer class="page-footer bg-color">
+    
+        <link rel="stylesheet" href="/libs/aplayer/APlayer.min.css">
+<style>
+    .aplayer .aplayer-lrc p {
+        
+        display: none;
+        
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 16px !important;
+    }
+
+    .aplayer .aplayer-lrc p.aplayer-lrc-current {
+        
+        display: none;
+        
+        font-size: 15px;
+        color: #42b983;
+    }
+
+    
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body {
+        left: -66px !important;
+    }
+
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body:hover {
+        left: 0px !important;
+    }
+
+    
+</style>
+<div class="">
+    
+    <div class="row">
+        <meting-js class="col l8 offset-l2 m10 offset-m1 s12"
+                   server="netease"
+                   type="playlist"
+                   id="503838841"
+                   fixed='true'
+                   autoplay='false'
+                   theme='#42b983'
+                   loop='all'
+                   order='random'
+                   preload='auto'
+                   volume='0.7'
+                   list-folded='true'
+        >
+        </meting-js>
+    </div>
+</div>
+
+<script src="/libs/aplayer/APlayer.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+
+    
+    <div class="container row center-align" style="margin-bottom: 0px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            
+                <span id="year">2023</span>
+            
+            <span id="year">2023</span>
+            <a href="/about" target="_blank">MirRoR4s</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+            
+            
+            
+            
+            
+            <span id="busuanzi_container_site_pv">
+                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
+                    class="white-color"></span>&nbsp;次
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv">
+                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
+                    class="white-color"></span>&nbsp;人
+            </span>
+            
+            <br>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/MirRoR4s" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:790356373@qq.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=790356373" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 790356373" data-position="top" data-delay="50">
+        <i class="fab fa-qq"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fas fa-rss"></i>
+    </a>
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(function () {
+    var searchFunc = function (path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+            url: path,
+            dataType: "xml",
+            success: function (xmlResponse) {
+                // get the contents from search data
+                var datas = $("entry", xmlResponse).map(function () {
+                    return {
+                        title: $("title", this).text(),
+                        content: $("content", this).text(),
+                        url: $("url", this).text()
+                    };
+                }).get();
+                var $input = document.getElementById(search_id);
+                var $resultContent = document.getElementById(content_id);
+                $input.addEventListener('input', function () {
+                    var str = '<ul class=\"search-result-list\">';
+                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                    $resultContent.innerHTML = "";
+                    if (this.value.trim().length <= 0) {
+                        return;
+                    }
+                    // perform local searching
+                    datas.forEach(function (data) {
+                        var isMatch = true;
+                        var data_title = data.title.trim().toLowerCase();
+                        var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                        var data_url = data.url;
+                        data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
+                        var index_title = -1;
+                        var index_content = -1;
+                        var first_occur = -1;
+                        // only match artiles with not empty titles and contents
+                        if (data_title !== '' && data_content !== '') {
+                            keywords.forEach(function (keyword, i) {
+                                index_title = data_title.indexOf(keyword);
+                                index_content = data_content.indexOf(keyword);
+                                if (index_title < 0 && index_content < 0) {
+                                    isMatch = false;
+                                } else {
+                                    if (index_content < 0) {
+                                        index_content = 0;
+                                    }
+                                    if (i === 0) {
+                                        first_occur = index_content;
+                                    }
+                                }
+                            });
+                        }
+                        // show search results
+                        if (isMatch) {
+                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                            var content = data.content.trim().replace(/<[^>]+>/g, "");
+                            if (first_occur >= 0) {
+                                // cut out 100 characters
+                                var start = first_occur - 20;
+                                var end = first_occur + 80;
+                                if (start < 0) {
+                                    start = 0;
+                                }
+                                if (start === 0) {
+                                    end = 100;
+                                }
+                                if (end > content.length) {
+                                    end = content.length;
+                                }
+                                var match_content = content.substr(start, end);
+                                // highlight all keywords
+                                keywords.forEach(function (keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
+                                });
+
+                                str += "<p class=\"search-result\">" + match_content + "...</p>"
+                            }
+                            str += "</li>";
+                        }
+                    });
+                    str += "</ul>";
+                    $resultContent.innerHTML = str;
+                });
+            }
+        });
+    };
+
+    searchFunc('/search.xml', 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    <script src="/libs/others/clicklove.js" async="async"></script>
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+	
+    
+
+    
+
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
 </body>
+
 </html>
