@@ -29,7 +29,7 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 6.1.0"></head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 
 
@@ -504,8 +504,8 @@
 
 <span id="more"></span>
 
-<h4 id="python-yu-yan-li-yong-tcp-xie-yi-shi-xian-shu-ju-tong-xun"><a href="#python-语言-利用-TCP-协议实现数据通讯" class="headerlink" title="python 语言 利用 TCP 协议实现数据通讯"></a>python 语言 利用 TCP 协议实现数据通讯<a href="#python-yu-yan-li-yong-tcp-xie-yi-shi-xian-shu-ju-tong-xun" class="header-anchor">#</a></h4><p>在python中有一个模块 socketserver（python2中是 SockerServer） 提供了 TCP、UDP 等协议的具体实现，下面来看看如何使用该模块。</p>
-<h4 id="tcp-fu-wu-qi-duan-dai-ma"><a href="#TCP-服务器端-代码" class="headerlink" title="TCP 服务器端 代码"></a>TCP 服务器端 代码<a href="#tcp-fu-wu-qi-duan-dai-ma" class="header-anchor">#</a></h4><p>利用该模块创建一个 TCP 服务器需要以下几个步骤：</p>
+<h4 id="python-语言-利用-tcp-协议实现数据通讯"><a href="#python-语言-利用-TCP-协议实现数据通讯" class="headerlink" title="python 语言 利用 TCP 协议实现数据通讯"></a>python 语言 利用 TCP 协议实现数据通讯</h4><p>在python中有一个模块 socketserver（python2中是 SockerServer） 提供了 TCP、UDP 等协议的具体实现，下面来看看如何使用该模块。</p>
+<h4 id="tcp-服务器端-代码"><a href="#TCP-服务器端-代码" class="headerlink" title="TCP 服务器端 代码"></a>TCP 服务器端 代码</h4><p>利用该模块创建一个 TCP 服务器需要以下几个步骤：</p>
 <p>1、我们必须通过继承 BaseRequestHandler 类来创建一个请求处理程序类</p>
 <pre class="line-numbers language-python" data-language="python"><code class="language-python">class MyTCPSocketHandler(SocketServer.BaseRequestHandler):<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
@@ -557,7 +557,7 @@ if __name__ &#x3D;&#x3D; &quot;__main__&quot;:
     # this will keep running until Ctrl-C
     server.serve_forever()<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h4 id="tcp-ke-hu-duan-dai-ma"><a href="#TCP-客户端代码" class="headerlink" title="TCP 客户端代码"></a>TCP 客户端代码<a href="#tcp-ke-hu-duan-dai-ma" class="header-anchor">#</a></h4><p>客户端没什么好说的，大体和服务器端相同，整体代码如下：</p>
+<h4 id="tcp-客户端代码"><a href="#TCP-客户端代码" class="headerlink" title="TCP 客户端代码"></a>TCP 客户端代码</h4><p>客户端没什么好说的，大体和服务器端相同，整体代码如下：</p>
 <pre class="line-numbers language-python" data-language="python"><code class="language-python"># echo_client.py
 
 import socket, sys
@@ -587,8 +587,8 @@ print(&quot;Received: &#123;&#125;&quot;.format(received))<span aria-hidden="tru
 
 
 
-<h4 id="yun-xing-shi-li"><a href="#运行示例" class="headerlink" title="运行示例"></a>运行示例<a href="#yun-xing-shi-li" class="header-anchor">#</a></h4><p><img src="/../images/image-20221111112740844.png" alt="image-20221111112740844"></p>
-<h4 id="kuo-zhan-xue-xi-ke-hu-duan-fa-song-ming-ling-zi-fu-chuan-dao-fu-wu-qi-duan-zhi-xing"><a href="#扩展学习-客户端发送命令字符串到服务器端执行" class="headerlink" title="扩展学习-客户端发送命令字符串到服务器端执行"></a>扩展学习-客户端发送命令字符串到服务器端执行<a href="#kuo-zhan-xue-xi-ke-hu-duan-fa-song-ming-ling-zi-fu-chuan-dao-fu-wu-qi-duan-zhi-xing" class="header-anchor">#</a></h4><p>需要修改一下服务器端代码的处理逻辑</p>
+<h4 id="运行示例"><a href="#运行示例" class="headerlink" title="运行示例"></a>运行示例</h4><p><img src="/../images/image-20221111112740844.png" alt="image-20221111112740844"></p>
+<h4 id="扩展学习-客户端发送命令字符串到服务器端执行"><a href="#扩展学习-客户端发送命令字符串到服务器端执行" class="headerlink" title="扩展学习-客户端发送命令字符串到服务器端执行"></a>扩展学习-客户端发送命令字符串到服务器端执行</h4><p>需要修改一下服务器端代码的处理逻辑</p>
 <pre class="line-numbers language-python" data-language="python"><code class="language-python"># echo_server.py
 
 import socketserver
@@ -628,7 +628,7 @@ if __name__ &#x3D;&#x3D; &quot;__main__&quot;:
 
 
 <p><img src="/../images/image-20221111113056516.png" alt="image-20221111113056516"></p>
-<h3 id="yin-yong"><a href="#引用" class="headerlink" title="引用"></a>引用<a href="#yin-yong" class="header-anchor">#</a></h3><p><a target="_blank" rel="noopener" href="https://www.bogotobogo.com/python/python_network_programming_socketserver_framework_for_network_servers.php">https://www.bogotobogo.com/python/python_network_programming_socketserver_framework_for_network_servers.php</a></p>
+<h3 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h3><p><a target="_blank" rel="noopener" href="https://www.bogotobogo.com/python/python_network_programming_socketserver_framework_for_network_servers.php">https://www.bogotobogo.com/python/python_network_programming_socketserver_framework_for_network_servers.php</a></p>
 
                 
             </div>

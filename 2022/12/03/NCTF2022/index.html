@@ -29,7 +29,7 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 6.1.0"></head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 
 
@@ -505,7 +505,7 @@
 <p>继续加油</p>
 <span id="more"></span>
 
-<h2 id="crypto"><a href="#Crypto" class="headerlink" title="Crypto"></a>Crypto<a href="#crypto" class="header-anchor">#</a></h2><h3 id="signin-many-time-pad-gong-ji"><a href="#SignIn-Many-Time-Pad攻击" class="headerlink" title="SignIn-Many-Time-Pad攻击"></a><strong>SignIn</strong>-Many-Time-Pad攻击<a href="#signin-many-time-pad-gong-ji" class="header-anchor">#</a></h3><h4 id="ti-mu-miao-shu"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述<a href="#ti-mu-miao-shu" class="header-anchor">#</a></h4><pre class="line-numbers language-python" data-language="python"><code class="language-python">import socketserver
+<h2 id="crypto"><a href="#Crypto" class="headerlink" title="Crypto"></a>Crypto</h2><h3 id="signin-many-time-pad攻击"><a href="#SignIn-Many-Time-Pad攻击" class="headerlink" title="SignIn-Many-Time-Pad攻击"></a><strong>SignIn</strong>-Many-Time-Pad攻击</h3><h4 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h4><pre class="line-numbers language-python" data-language="python"><code class="language-python">import socketserver
 from Crypto.Util.number import *
 from Crypto.Cipher import AES
 import os
@@ -583,7 +583,7 @@ if __name__ &#x3D;&#x3D; &quot;__main__&quot;:
         except:
             PORT &#x3D; PORT+1 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h4 id="jie-ti-bu-zou"><a href="#解题步骤" class="headerlink" title="解题步骤"></a>解题步骤<a href="#jie-ti-bu-zou" class="header-anchor">#</a></h4><p>题目是将明文分成很多组，每一组的长度是32，然后用OFB模式进行加密。可以发现每一个分组的加密都使用了相同的密钥和IV。根据OFB模式的工作原理，这相当于明文每次都与一串固定的密钥流进行异或。我们可以将本题看作是一个 Many-Time-Pad 题目，对Many-Time-Pad的攻击可以参考这篇文章 Many-Time-Pad 攻击 (ruanx.net)：<a target="_blank" rel="noopener" href="https://www.ruanx.net/many-time-pad/">https://www.ruanx.net/many-time-pad/</a></p>
+<h4 id="解题步骤"><a href="#解题步骤" class="headerlink" title="解题步骤"></a>解题步骤</h4><p>题目是将明文分成很多组，每一组的长度是32，然后用OFB模式进行加密。可以发现每一个分组的加密都使用了相同的密钥和IV。根据OFB模式的工作原理，这相当于明文每次都与一串固定的密钥流进行异或。我们可以将本题看作是一个 Many-Time-Pad 题目，对Many-Time-Pad的攻击可以参考这篇文章 Many-Time-Pad 攻击 (ruanx.net)：<a target="_blank" rel="noopener" href="https://www.ruanx.net/many-time-pad/">https://www.ruanx.net/many-time-pad/</a></p>
 <p>基本思想是很简单的，利用异或的性质可以知道两个密文的异或等于这两个密文对应的两个明文的异或。写成式子就是：</p>
 <p>$c1\oplus,c2&#x3D;m1\oplus,m2$</p>
 <p>然后我们就要利用小写字母异或空格等于对应的大写字母，大写字母异或空格等于对应的小写字母这一特性。具体的说就是我们可以选择一个密文组比如是 $c1$ ，然后将 $c1$ 和其它不同的密文组进行异或，这样我们会得到多组 $c1$ 和其它密文组异或而来的新的分组。对于这些分组中的某个位置，比如是 $col$ ，如果在这个位置出现了很多字母，我们就可以较大概率地认为 $m1[col]$ 是一个空格。</p>
@@ -658,7 +658,7 @@ if __name__&#x3D;&#x3D;&quot;__main__&quot;:
 
 
 
-<h3 id="coloratura-python-random-mo-kuai-wei-sui-ji-shu-yu-ce"><a href="#Coloratura-python-random模块伪随机数预测" class="headerlink" title="Coloratura-python-random模块伪随机数预测"></a>Coloratura-python-random模块伪随机数预测<a href="#coloratura-python-random-mo-kuai-wei-sui-ji-shu-yu-ce" class="header-anchor">#</a></h3><h4 id="ti-mu-miao-shu"><a href="#题目描述-1" class="headerlink" title="题目描述"></a>题目描述<a href="#ti-mu-miao-shu" class="header-anchor">#</a></h4><p>Coloratura</p>
+<h3 id="coloratura-python-random模块伪随机数预测"><a href="#Coloratura-python-random模块伪随机数预测" class="headerlink" title="Coloratura-python-random模块伪随机数预测"></a>Coloratura-python-random模块伪随机数预测</h3><h4 id="题目描述"><a href="#题目描述-1" class="headerlink" title="题目描述"></a>题目描述</h4><p>Coloratura</p>
 <p>We fell in through the clouds</p>
 <p>And everyone before us</p>
 <p>Is there welcoming us now</p>
@@ -703,9 +703,9 @@ if __name__ &#x3D;&#x3D; &#39;__main__&#39;:
 <p>有些陌生的模块，给出文档地址：<a target="_blank" rel="noopener" href="https://www.osgeo.cn/pillow/reference/ImageDraw.html">ImageDraw 模块 — Pillow (PIL Fork) 8.4.0 文档 (osgeo.cn)</a></p>
 <p><img src="/images/NCTF2022/image-20221203181912060.png" alt="image-20221203181912060"></p>
 <p><img src="/images/NCTF2022/image-20221203181847525.png" alt="image-20221203181847525"></p>
-<h4 id="jie-ti-bu-zou"><a href="#解题步骤-1" class="headerlink" title="解题步骤"></a>解题步骤<a href="#jie-ti-bu-zou" class="header-anchor">#</a></h4><p>前四行因为是随机数和全黑像素随机，所以是已知的，可以恢复随机数生成器状态。</p>
+<h4 id="解题步骤"><a href="#解题步骤-1" class="headerlink" title="解题步骤"></a>解题步骤</h4><p>前四行因为是随机数和全黑像素随机，所以是已知的，可以恢复随机数生成器状态。</p>
 <p><img src="/images/NCTF2022/image-20221211231808100.png" alt="image-20221211231808100"></p>
-<h4 id="guan-fang-de-wp"><a href="#官方的wp" class="headerlink" title="官方的wp"></a>官方的wp<a href="#guan-fang-de-wp" class="header-anchor">#</a></h4><pre class="line-numbers language-python" data-language="python"><code class="language-python">from PIL import Image
+<h4 id="官方的wp"><a href="#官方的wp" class="headerlink" title="官方的wp"></a>官方的wp</h4><pre class="line-numbers language-python" data-language="python"><code class="language-python">from PIL import Image
 import random
 from Crypto.Util.number import *
 
@@ -795,14 +795,14 @@ img3.save(&#39;flag.png&#39;)<span aria-hidden="true" class="line-numbers-rows">
 
 
 
-<h3 id="superecc"><a href="#superecc" class="headerlink" title="superecc"></a><strong>superecc</strong><a href="#superecc" class="header-anchor">#</a></h3><h4 id="ti-mu-miao-shu"><a href="#题目描述-2" class="headerlink" title="题目描述"></a>题目描述<a href="#ti-mu-miao-shu" class="header-anchor">#</a></h4><h4 id="jie-ti-bu-zou"><a href="#解题步骤-2" class="headerlink" title="解题步骤"></a>解题步骤<a href="#jie-ti-bu-zou" class="header-anchor">#</a></h4><p>考察点是扭曲爱德华曲线方程到 Weierstrass 曲线的转换。</p>
+<h3 id="superecc"><a href="#superecc" class="headerlink" title="superecc"></a><strong>superecc</strong></h3><h4 id="题目描述"><a href="#题目描述-2" class="headerlink" title="题目描述"></a>题目描述</h4><h4 id="解题步骤"><a href="#解题步骤-2" class="headerlink" title="解题步骤"></a>解题步骤</h4><p>考察点是扭曲爱德华曲线方程到 Weierstrass 曲线的转换。</p>
 <p>本题使用的曲线方程为</p>
 <p><img src="/images/NCTF2022/640.png" alt="图片"></p>
 <p>这是一个一般性的扭曲爱德华曲线方程，我们对其变形，让其成为我们熟知的扭曲爱德华曲线形式</p>
 <p><img src="/images/NCTF2022/640-16705646320993.png" alt="图片"></p>
 <p>接下来，我们需要把扭曲爱德华曲线映射为蒙哥马利曲线，再用蒙哥马利曲线映射到 Weierstrass 曲线。映射方式如下（截图来自wiki百科）：</p>
 <p><img src="/images/NCTF2022/640-16705647016086.png" alt="图片"></p>
-<h4 id="wp-lai-yuan"><a href="#WP来源" class="headerlink" title="WP来源"></a>WP来源<a href="#wp-lai-yuan" class="header-anchor">#</a></h4><p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=Mzg3NDUzMTU5NQ==&amp;mid=2247484331&amp;idx=1&amp;sn=7d960989354197022ca1c5006a937a2b&amp;chksm=cece1dcff9b994d9cabc40305f0bb261df60239c234fac186d63ee8767f693d4a7a4fe9f2f9a&amp;mpshare=1&amp;scene=23&amp;srcid=1209PTGQkKs3cfkzGOJpMsjY&amp;sharer_sharetime=1670549940656&amp;sharer_shareid=56e3df2d7478aae332459a596f527010#rd">https://mp.weixin.qq.com/s?__biz=Mzg3NDUzMTU5NQ==&amp;mid=2247484331&amp;idx=1&amp;sn=7d960989354197022ca1c5006a937a2b&amp;chksm=cece1dcff9b994d9cabc40305f0bb261df60239c234fac186d63ee8767f693d4a7a4fe9f2f9a&amp;mpshare=1&amp;scene=23&amp;srcid=1209PTGQkKs3cfkzGOJpMsjY&amp;sharer_sharetime=1670549940656&amp;sharer_shareid=56e3df2d7478aae332459a596f527010#rd</a></p>
+<h4 id="wp来源"><a href="#WP来源" class="headerlink" title="WP来源"></a>WP来源</h4><p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=Mzg3NDUzMTU5NQ==&amp;mid=2247484331&amp;idx=1&amp;sn=7d960989354197022ca1c5006a937a2b&amp;chksm=cece1dcff9b994d9cabc40305f0bb261df60239c234fac186d63ee8767f693d4a7a4fe9f2f9a&amp;mpshare=1&amp;scene=23&amp;srcid=1209PTGQkKs3cfkzGOJpMsjY&amp;sharer_sharetime=1670549940656&amp;sharer_shareid=56e3df2d7478aae332459a596f527010#rd">https://mp.weixin.qq.com/s?__biz=Mzg3NDUzMTU5NQ==&amp;mid=2247484331&amp;idx=1&amp;sn=7d960989354197022ca1c5006a937a2b&amp;chksm=cece1dcff9b994d9cabc40305f0bb261df60239c234fac186d63ee8767f693d4a7a4fe9f2f9a&amp;mpshare=1&amp;scene=23&amp;srcid=1209PTGQkKs3cfkzGOJpMsjY&amp;sharer_sharetime=1670549940656&amp;sharer_shareid=56e3df2d7478aae332459a596f527010#rd</a></p>
 
                 
             </div>

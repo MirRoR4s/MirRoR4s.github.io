@@ -29,7 +29,7 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 6.1.0"></head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 
 
@@ -470,7 +470,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    481
+                    480
                 </div>
                 
 
@@ -505,9 +505,9 @@
 <p>p4 CTF 2022 赛后复盘</p>
 <span id="more"></span>
 
-<h2 id="crypto"><a href="#Crypto" class="headerlink" title="Crypto"></a>Crypto<a href="#crypto" class="header-anchor">#</a></h2><h3 id="hello-crypto"><a href="#Hello-crypto" class="headerlink" title="Hello-crypto"></a>Hello-crypto<a href="#hello-crypto" class="header-anchor">#</a></h3><h4 id="ti-mu-miao-shu"><a href="#题目描述：" class="headerlink" title="题目描述："></a>题目描述：<a href="#ti-mu-miao-shu" class="header-anchor">#</a></h4><p>Go check out my NIST submission for incredibly secure post quantum AES replacement</p>
+<h2 id="crypto"><a href="#Crypto" class="headerlink" title="Crypto"></a>Crypto</h2><h3 id="hello-crypto"><a href="#Hello-crypto" class="headerlink" title="Hello-crypto"></a>Hello-crypto</h3><h4 id="题目描述"><a href="#题目描述：" class="headerlink" title="题目描述："></a>题目描述：</h4><p>Go check out my NIST submission for incredibly secure post quantum AES replacement</p>
 <p>The flag format is: <code>p4&#123;letters_digits_and_special_characters&#125;</code>.<br>If you have any questions, you can find our team-members at the <a target="_blank" rel="noopener" href="https://discord.gg/mXMKzCh5Zu"><strong>p4 discord server</strong></a></p>
-<h4 id="ti-mu-dai-ma"><a href="#题目代码：" class="headerlink" title="题目代码："></a>题目代码：<a href="#ti-mu-dai-ma" class="header-anchor">#</a></h4><pre class="line-numbers language-python" data-language="python"><code class="language-python">import os
+<h4 id="题目代码"><a href="#题目代码：" class="headerlink" title="题目代码："></a>题目代码：</h4><pre class="line-numbers language-python" data-language="python"><code class="language-python">import os
 import sys
 from flag import FLAG
 
@@ -533,7 +533,7 @@ for i in range(8833):
 print(pt.hex())
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h4 id="fen-xi"><a href="#分析：" class="headerlink" title="分析："></a>分析：<a href="#fen-xi" class="header-anchor">#</a></h4><p>看上去是把 flag 进行了 8833次轮函数迭代，看看轮函数具体做了那些操作：</p>
+<h4 id="分析"><a href="#分析：" class="headerlink" title="分析："></a>分析：</h4><p>看上去是把 flag 进行了 8833次轮函数迭代，看看轮函数具体做了那些操作：</p>
 <p>将 key 和 pt 逐字节地异或，并将异或的结果 和 异或的结果去掉第一个字节并在末尾加上 <code>0xaa</code> 在异或，最后将结果赋值给 pt，重复以上过程 8833 次。乍一看这个抽象的过程好像没什么可以利用的点，不过好在善良的出题人给出了以下提示：</p>
 <p><img src="/../images/image-20221111233822292.png" alt="image-20221111233822292"></p>
 <p>在本地测试发现：</p>

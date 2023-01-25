@@ -29,7 +29,7 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 6.1.0"></head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 
 
@@ -461,7 +461,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    904
+                    903
                 </div>
                 
 
@@ -500,11 +500,11 @@
 
 
 
-<h3 id="que-ding-ba-ji-ip-qing-kuang"><a href="#确定靶机IP情况" class="headerlink" title="确定靶机IP情况"></a>确定靶机IP情况<a href="#que-ding-ba-ji-ip-qing-kuang" class="header-anchor">#</a></h3><p>由于不能登进实验机器，所以不知道其ip、端口的相关情况，由于我的kali攻击机跟这个实验靶机在同一个网段下，所以先用arpscan命令找出当前局域网内的所有主机。</p>
+<h3 id="确定靶机ip情况"><a href="#确定靶机IP情况" class="headerlink" title="确定靶机IP情况"></a>确定靶机IP情况</h3><p>由于不能登进实验机器，所以不知道其ip、端口的相关情况，由于我的kali攻击机跟这个实验靶机在同一个网段下，所以先用arpscan命令找出当前局域网内的所有主机。</p>
 <pre class="line-numbers language-none"><code class="language-none">arp-scan -l #对本地局域网进行arp广播请求，这个命令需要root权限<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p><img src="Users\mirror\Desktop\write-up\blog\source\images\image-20220817085720326.png" alt="image-20220817085720326"></p>
-<h3 id="que-ding-ba-ji-duan-kou-kai-fang-qing-kuang"><a href="#确定靶机端口开放情况" class="headerlink" title="确定靶机端口开放情况"></a>确定靶机端口开放情况<a href="#que-ding-ba-ji-duan-kou-kai-fang-qing-kuang" class="header-anchor">#</a></h3><p>从上一个步骤可以看到当前局域网内一共扫描出三个ip地址，我们分别ping一下发现只有<code>.2</code>和<code>.130</code> 会回复。所以我们的靶机ip地址一定就在这两个ip之间。我们用Nmap扫描一下这两个ip地址的端口开放情况。</p>
+<h3 id="确定靶机端口开放情况"><a href="#确定靶机端口开放情况" class="headerlink" title="确定靶机端口开放情况"></a>确定靶机端口开放情况</h3><p>从上一个步骤可以看到当前局域网内一共扫描出三个ip地址，我们分别ping一下发现只有<code>.2</code>和<code>.130</code> 会回复。所以我们的靶机ip地址一定就在这两个ip之间。我们用Nmap扫描一下这两个ip地址的端口开放情况。</p>
 <pre class="line-numbers language-none"><code class="language-none">nmap -sS -V 192.168.163.2 192.168.163.130<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>扫描到只有130开放了相关端口，而2没有反应，所以我们的靶机地址应该就是<code>192.168.163.130</code></p>
@@ -517,7 +517,7 @@
 <pre class="line-numbers language-none"><code class="language-none">sqlmap -r &#x2F;home&#x2F;kali&#x2F;Desktop&#x2F;tar.txt #-r表示从文件中读取sqlmap目标<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>经过一番扫描sqlmap没有探测出SQL注入漏洞，</p>
-<h3 id="dirsearch-sao-miao-web-mu-lu"><a href="#dirsearch扫描web目录" class="headerlink" title="dirsearch扫描web目录"></a>dirsearch扫描web目录<a href="#dirsearch-sao-miao-web-mu-lu" class="header-anchor">#</a></h3><pre class="line-numbers language-none"><code class="language-none">dirsearch.py -u 192.168.163.130 <span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h3 id="dirsearch扫描web目录"><a href="#dirsearch扫描web目录" class="headerlink" title="dirsearch扫描web目录"></a>dirsearch扫描web目录</h3><pre class="line-numbers language-none"><code class="language-none">dirsearch.py -u 192.168.163.130 <span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p><img src="Users\mirror\Desktop\write-up\blog\source\images\image-20220817094521749.png" alt="image-20220817094521749"></p>
 <p>add.php是一个文件上传点，但是不知道上传路径，暂时放过。</p>

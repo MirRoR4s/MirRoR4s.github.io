@@ -29,7 +29,7 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 6.1.0"></head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 
 
@@ -498,7 +498,7 @@
 
 
 
-<h2 id="web"><a href="#Web" class="headerlink" title="Web"></a>Web<a href="#web" class="header-anchor">#</a></h2><h3 id="markdown-plus-plus-css-zhu-ru"><a href="#markdown-plus-plus-CSS注入" class="headerlink" title="markdown-plus-plus-CSS注入"></a>markdown-plus-plus-CSS注入<a href="#markdown-plus-plus-css-zhu-ru" class="header-anchor">#</a></h3><p>先弄清楚题目的业务流程，之后找漏洞点。打开题目环境进入网站页面如下：</p>
+<h2 id="web"><a href="#Web" class="headerlink" title="Web"></a>Web</h2><h3 id="markdown-plus-plus-css注入"><a href="#markdown-plus-plus-CSS注入" class="headerlink" title="markdown-plus-plus-CSS注入"></a>markdown-plus-plus-CSS注入</h3><p>先弄清楚题目的业务流程，之后找漏洞点。打开题目环境进入网站页面如下：</p>
 <p><img src="https://i.imgur.com/p1Fn8kx.png"></p>
 <p>题目源代码如下：</p>
 <pre class="line-numbers language-python" data-language="python"><code class="language-python">import os
@@ -694,7 +694,7 @@ payload_url &#x3D; base_url + &quot;#&quot; + b64encode(payload.encode()).decode
 post_url &#x3D; &quot;http:&#x2F;&#x2F;web1.hsctf.com:8000&#x2F;markdown-plus-plus&quot;
 r &#x3D; requests.post(post_url, data&#x3D;&#123;&quot;url&quot;: payload_url&#125;, headers&#x3D;&#123;&quot;Content-Type&quot;: &quot;application&#x2F;x-www-form-urlencoded&quot;&#125;)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h3 id="h3-png-wizard-os-ming-ling-zhu-ru"><a href="#h3-png-wizard-OS命令注入" class="headerlink" title="h3 png-wizard-OS命令注入"></a>h3 png-wizard-OS命令注入<a href="#h3-png-wizard-os-ming-ling-zhu-ru" class="header-anchor">#</a></h3><p>源码如下：</p>
+<h3 id="h3-png-wizard-os命令注入"><a href="#h3-png-wizard-OS命令注入" class="headerlink" title="h3 png-wizard-OS命令注入"></a>h3 png-wizard-OS命令注入</h3><p>源码如下：</p>
 <pre class="line-numbers language-python" data-language="python"><code class="language-python">#!&#x2F;usr&#x2F;bin&#x2F;env python3
 import itertools
 import os
@@ -837,7 +837,7 @@ print(re.search(r&quot;flag&#123;.*?&#125;&quot;, resp.text).group(0))<span aria
 <p><img src="https://i.imgur.com/Jqgr9f4.png"></p>
 <p>同时为了让bahs报错，显式地输入exit 1，否则bash正常退出啦我们就不能在报错信息里看到flag。</p>
 <p><img src="https://i.imgur.com/e9uJByU.png"></p>
-<h3 id="png-wizard-v2-cve-2016-3717-du-qu-ren-yi-ben-di-wen-jian"><a href="#png-wizard-v2-cve-2016-3717-读取任意本地文件" class="headerlink" title="png-wizard-v2-cve-2016-3717-读取任意本地文件"></a>png-wizard-v2-cve-2016-3717-读取任意本地文件<a href="#png-wizard-v2-cve-2016-3717-du-qu-ren-yi-ben-di-wen-jian" class="header-anchor">#</a></h3><pre class="line-numbers language-python" data-language="python"><code class="language-python">import requests
+<h3 id="png-wizard-v2-cve-2016-3717-读取任意本地文件"><a href="#png-wizard-v2-cve-2016-3717-读取任意本地文件" class="headerlink" title="png-wizard-v2-cve-2016-3717-读取任意本地文件"></a>png-wizard-v2-cve-2016-3717-读取任意本地文件</h3><pre class="line-numbers language-python" data-language="python"><code class="language-python">import requests
 #URL &#x3D; &quot;http:&#x2F;&#x2F;localhost:8005&quot;
 URL &#x3D; &quot;http:&#x2F;&#x2F;web1.hsctf.com:8005&quot;
 resp &#x3D; requests.post(URL, files&#x3D;&#123;&quot;file&quot;: (&quot;solve.png&quot;, open(&quot;solve.png&quot;))&#125;)
@@ -854,7 +854,7 @@ pop graphic-context<span aria-hidden="true" class="line-numbers-rows"><span></sp
 <p>最后是将有问题的步骤先从dockerfile里面删除，最后成功建立镜像。随后运行对应的容器，在容器里面继续安装这个有问题的步骤，最后就弄好了！</p>
 <p>然后运行我们上面的py3脚本，然后就可以打开out.png查看flag。</p>
 <p><img src="/images/image-20220926213057108.png" alt="flag"></p>
-<h3 id="gallery-jian-dan-de-luo-ji-ti"><a href="#gallery-简单的逻辑题" class="headerlink" title="gallery-简单的逻辑题"></a>gallery-简单的逻辑题<a href="#gallery-jian-dan-de-luo-ji-ti" class="header-anchor">#</a></h3><pre class="line-numbers language-python" data-language="python"><code class="language-python">import os
+<h3 id="gallery-简单的逻辑题"><a href="#gallery-简单的逻辑题" class="headerlink" title="gallery-简单的逻辑题"></a>gallery-简单的逻辑题</h3><pre class="line-numbers language-python" data-language="python"><code class="language-python">import os
 import re
 from pathlib import Path
 from flask import Flask, render_template, request, send_file
@@ -903,7 +903,7 @@ print(requests.get(&quot;http:&#x2F;&#x2F;localhost:8000&#x2F;image?image&#x3D;.
 
 
 
-<h3 id="hsgtf-ji-yu-id-shu-xing-de-gong-ji"><a href="#hsgtf-基于id属性的攻击" class="headerlink" title="hsgtf-基于id属性的攻击"></a>hsgtf-基于id属性的攻击<a href="#hsgtf-ji-yu-id-shu-xing-de-gong-ji" class="header-anchor">#</a></h3><pre class="line-numbers language-python" data-language="python"><code class="language-python">import os
+<h3 id="hsgtf-基于id属性的攻击"><a href="#hsgtf-基于id属性的攻击" class="headerlink" title="hsgtf-基于id属性的攻击"></a>hsgtf-基于id属性的攻击</h3><pre class="line-numbers language-python" data-language="python"><code class="language-python">import os
 import re
 from flask import Flask, render_template, request
 
@@ -943,7 +943,7 @@ if __name__ &#x3D;&#x3D; &quot;__main__&quot;:
 <p><img src="/images/image-20220927114132272.png" alt="image-20220927114132272"></p>
 <p><img src="/images/image-20220927114201951.png" alt="image-20220927114201951"></p>
 <p>猜对和猜错页面的id标识是不一样的，根据以上的漏洞，当我们访问<code>http://猜测的flag#continue</code>的时候会页面会自动滚动(只有猜对了才会有continue这个id)，此时如果我们在页面中写入一个<code>blur</code>事件，那么该事件就会触发，我们要做的就是让事件的内容访问我们的远程服务器即可。</p>
-<pre class="line-numbers language-html" data-language="html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>html</span><span class="token punctuation">></span></span>
+<pre class="line-numbers language-markup" data-language="markup"><code class="language-markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>html</span><span class="token punctuation">></span></span>
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>head</span><span class="token punctuation">></span></span>
         <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>title</span><span class="token punctuation">></span></span>GET PWNED FOR REALZ<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>title</span><span class="token punctuation">></span></span>
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>head</span><span class="token punctuation">></span></span>
@@ -1027,7 +1027,7 @@ if __name__ &#x3D;&#x3D; &quot;__main__&quot;:
 
 
 
-<h3 id="squeal-sql-zhu-ru-dan-yin-hao-bi-he-wan-neng-mi-ma-deng-lu"><a href="#squeal-sql注入-单引号闭合-万能密码登录" class="headerlink" title="squeal-sql注入-单引号闭合+万能密码登录"></a>squeal-sql注入-单引号闭合+万能密码登录<a href="#squeal-sql-zhu-ru-dan-yin-hao-bi-he-wan-neng-mi-ma-deng-lu" class="header-anchor">#</a></h3><pre class="line-numbers language-python" data-language="python"><code class="language-python">const express &#x3D; require(&quot;express&quot;);
+<h3 id="squeal-sql注入-单引号闭合万能密码登录"><a href="#squeal-sql注入-单引号闭合-万能密码登录" class="headerlink" title="squeal-sql注入-单引号闭合+万能密码登录"></a>squeal-sql注入-单引号闭合+万能密码登录</h3><pre class="line-numbers language-python" data-language="python"><code class="language-python">const express &#x3D; require(&quot;express&quot;);
 const db &#x3D; require(&quot;better-sqlite3&quot;)(&quot;db.sqlite3&quot;);
 const app &#x3D; express();
 
@@ -1099,7 +1099,7 @@ print(r.text)<span aria-hidden="true" class="line-numbers-rows"><span></span><sp
 
 
 <p><a target="_blank" rel="noopener" href="https://github.com/satoki/ctf_writeups/tree/master/HSCTF_9/squeal">https://github.com/satoki/ctf_writeups/tree/master/HSCTF_9/squeal</a></p>
-<h2 id="crypto"><a href="#Crypto" class="headerlink" title="Crypto"></a>Crypto<a href="#crypto" class="header-anchor">#</a></h2><h3 id="baby-baby-rsa"><a href="#baby-baby-rsa" class="headerlink" title="baby-baby-rsa"></a>baby-baby-rsa<a href="#baby-baby-rsa" class="header-anchor">#</a></h3><pre class="line-numbers language-python" data-language="python"><code class="language-python">from Crypto.Util.number import *
+<h2 id="crypto"><a href="#Crypto" class="headerlink" title="Crypto"></a>Crypto</h2><h3 id="baby-baby-rsa"><a href="#baby-baby-rsa" class="headerlink" title="baby-baby-rsa"></a>baby-baby-rsa</h3><pre class="line-numbers language-python" data-language="python"><code class="language-python">from Crypto.Util.number import *
 import random
 flag &#x3D; open(&#39;flag.txt&#39;,&#39;rb&#39;).read()
 pt &#x3D; bytes_to_long(flag)
@@ -1115,7 +1115,7 @@ random.shuffle(parts)
 print(parts)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>题目很简单，将p、q各自的二进制比特位分成三半随后打乱顺序。从组合上看这就是一个3个元素的全排列，利用itertools模块可以轻松枚举所有的p、q的二进制比特位的排列顺序。</p>
-<h3 id="baby-rsa"><a href="#baby-rsa" class="headerlink" title="baby-rsa"></a>baby-rsa<a href="#baby-rsa" class="header-anchor">#</a></h3><pre class="line-numbers language-python" data-language="python"><code class="language-python">from Crypto.Util.number import *
+<h3 id="baby-rsa"><a href="#baby-rsa" class="headerlink" title="baby-rsa"></a>baby-rsa</h3><pre class="line-numbers language-python" data-language="python"><code class="language-python">from Crypto.Util.number import *
 import random
 import itertools
 flag &#x3D; open(&#39;flag.txt&#39;,&#39;rb&#39;).read()
@@ -1169,7 +1169,7 @@ for i in itertools.combinations(num,3):
 
 
 
-<h3 id="bucephala-albeola-the-second"><a href="#bucephala-albeola-the-second" class="headerlink" title="bucephala-albeola-the-second"></a>bucephala-albeola-the-second<a href="#bucephala-albeola-the-second" class="header-anchor">#</a></h3><h3 id="homophones"><a href="#homophones" class="headerlink" title="homophones"></a>homophones<a href="#homophones" class="header-anchor">#</a></h3><pre class="line-numbers language-none"><code class="language-none">SDFBE1X38 ILNVP 6RTC HXYUKLM 82ZH NVL JBE4CG 9A D5HE
+<h3 id="bucephala-albeola-the-second"><a href="#bucephala-albeola-the-second" class="headerlink" title="bucephala-albeola-the-second"></a>bucephala-albeola-the-second</h3><h3 id="homophones"><a href="#homophones" class="headerlink" title="homophones"></a>homophones</h3><pre class="line-numbers language-none"><code class="language-none">SDFBE1X38 ILNVP 6RTC HXYUKLM 82ZH NVL JBE4CG 9A D5HE
 7WJZH5. QZAC U2GI T6 0F! ORWH5 97 T1AXYZ6FUE L2 VT8
 8XZ VKUY 15 T1UF CN JHTJI 6R9P JK4R5B.<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 
@@ -1192,7 +1192,7 @@ you will be able to crack this cipher.
 
 
 
-<h3 id="otp"><a href="#otp" class="headerlink" title="otp"></a>otp<a href="#otp" class="header-anchor">#</a></h3><pre class="line-numbers language-python" data-language="python"><code class="language-python">import random
+<h3 id="otp"><a href="#otp" class="headerlink" title="otp"></a>otp</h3><pre class="line-numbers language-python" data-language="python"><code class="language-python">import random
 from Crypto.Util.number import bytes_to_long
 
 def secure_seed():
@@ -1233,7 +1233,7 @@ for i in range(-1000000,1000000):
 
 
 
-<h3 id="lcvc"><a href="#lcvc" class="headerlink" title="lcvc"></a>lcvc<a href="#lcvc" class="header-anchor">#</a></h3><pre class="line-numbers language-python" data-language="python"><code class="language-python">state &#x3D; 1
+<h3 id="lcvc"><a href="#lcvc" class="headerlink" title="lcvc"></a>lcvc</h3><pre class="line-numbers language-python" data-language="python"><code class="language-python">state &#x3D; 1
 flag &#x3D; &quot;[REDACTED]&quot;
 alphabet &#x3D; &quot;abcdefghijklmnopqrstuvwxyz&quot;
 assert(flag[0:5]+flag[-1]&#x3D;&#x3D;&quot;flag&#123;&#125;&quot;)
@@ -1262,7 +1262,7 @@ print(flag)
 
 
 
-<h3 id="the-vault"><a href="#the-vault" class="headerlink" title="the-vault"></a>the-vault<a href="#the-vault" class="header-anchor">#</a></h3><p>最后一题是压轴，对我来说挺困难的。</p>
+<h3 id="the-vault"><a href="#the-vault" class="headerlink" title="the-vault"></a>the-vault</h3><p>最后一题是压轴，对我来说挺困难的。</p>
 <pre class="line-numbers language-python" data-language="python"><code class="language-python">import sympy 
 flag &#x3D; open(&#39;flag&#39;,&#39;r&#39;).read()
 admin &#x3D; False
@@ -1291,7 +1291,7 @@ else:
 <p>经过一通操作可以变成求解$(p&#x2F;8)Y^2&#x3D;X^3-X$这个方程，其中两个解$X,Y$都是有理数。</p>
 <p>观察一下这个方程就会发现跟椭圆曲线很相似,利用sage的函数将其变成Weierstrass form形式。</p>
 <p><a target="_blank" rel="noopener" href="https://math.stackexchange.com/questions/880419/a-general-equation-for-pythagorean-triples-of-rational-numbers">https://math.stackexchange.com/questions/880419/a-general-equation-for-pythagorean-triples-of-rational-numbers</a></p>
-<h2 id="yin-yong"><a href="#引用" class="headerlink" title="引用"></a>引用<a href="#yin-yong" class="header-anchor">#</a></h2><p><a target="_blank" rel="noopener" href="https://hackmd.io/@aplet123/r1TIzZbYq#vending-machine-v2">https://hackmd.io/@aplet123/r1TIzZbYq#vending-machine-v2</a></p>
+<h2 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h2><p><a target="_blank" rel="noopener" href="https://hackmd.io/@aplet123/r1TIzZbYq#vending-machine-v2">https://hackmd.io/@aplet123/r1TIzZbYq#vending-machine-v2</a></p>
 <p><a target="_blank" rel="noopener" href="https://blog.y011d4.com/20220611-hsctf-writeup#homophones">HSCTF 9 Writeup | y011d4.log</a></p>
 <p><a target="_blank" rel="noopener" href="https://github.com/MirRoR4s/hsctf-9-challenges">MirRoR4s&#x2F;hsctf-9-challenges (github.com)</a></p>
 

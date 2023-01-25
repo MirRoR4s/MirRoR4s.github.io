@@ -29,7 +29,7 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 6.1.0"></head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 
 
@@ -495,8 +495,8 @@
 
 <span id="more"></span>
 
-<h2 id="mathematics"><a href="#MATHEMATICS" class="headerlink" title="MATHEMATICS"></a>MATHEMATICS<a href="#mathematics" class="header-anchor">#</a></h2><p>本章节涵盖了更多的高级的关于密码数学知识。在我们移动到 Block Cipher and RSA之前不需要解决这些问题。然而，第一个挑战将会扩展你的模算数技能，之后的挑战据报道是 CryptoHack 上最令人满意的谜题之一</p>
-<h3 id="modular-math"><a href="#MODULAR-MATH" class="headerlink" title="MODULAR MATH"></a>MODULAR MATH<a href="#modular-math" class="header-anchor">#</a></h3><h4 id="quadratic-residues"><a href="#Quadratic-Residues" class="headerlink" title="Quadratic Residues"></a>Quadratic Residues<a href="#quadratic-residues" class="header-anchor">#</a></h4><p>我们已在之前见过了模算数的乘法和除法，但是在模一个整数下的平方根意味着什么呢？</p>
+<h2 id="mathematics"><a href="#MATHEMATICS" class="headerlink" title="MATHEMATICS"></a>MATHEMATICS</h2><p>本章节涵盖了更多的高级的关于密码数学知识。在我们移动到 Block Cipher and RSA之前不需要解决这些问题。然而，第一个挑战将会扩展你的模算数技能，之后的挑战据报道是 CryptoHack 上最令人满意的谜题之一</p>
+<h3 id="modular-math"><a href="#MODULAR-MATH" class="headerlink" title="MODULAR MATH"></a>MODULAR MATH</h3><h4 id="quadratic-residues"><a href="#Quadratic-Residues" class="headerlink" title="Quadratic Residues"></a>Quadratic Residues</h4><p>我们已在之前见过了模算数的乘法和除法，但是在模一个整数下的平方根意味着什么呢？</p>
 <p>对以下的讨论，让我们以模 <code>p=29</code> 为例，我们可以让整数 <code>a=11</code> 并计算  $a^2&#x3D;5\mod,29$ </p>
 <p>因为 $a&#x3D;11,a^2&#x3D;5$ 我们说 5 的平方根是 11。这感觉很好，但是现在让我们考虑一下 18 的平方根，从以上的分析我们知道我们需要找到一个整数 $a$ 使得 $a^2&#x3D;18$</p>
 <p>你的首要想法也许是 从 $a&#x3D;1$ 开始一直迭代到 $a&#x3D;p-1$。在这个讨论中的p不是很大，所以我们可以快速地找到a</p>
@@ -512,7 +512,7 @@ ints &#x3D; [14, 6, 11]<span aria-hidden="true" class="line-numbers-rows"><span>
 
 
 
-<h4 id="legendre-symbol"><a href="#Legendre-Symbol" class="headerlink" title="Legendre Symbol"></a>Legendre Symbol<a href="#legendre-symbol" class="header-anchor">#</a></h4><p>在二次剩余中我们学习了求模一个整数的平方根是什么意思，同样我们也看到根并不是一直都存在的。</p>
+<h4 id="legendre-symbol"><a href="#Legendre-Symbol" class="headerlink" title="Legendre Symbol"></a>Legendre Symbol</h4><p>在二次剩余中我们学习了求模一个整数的平方根是什么意思，同样我们也看到根并不是一直都存在的。</p>
 <p>在之前的案例中 $p&#x3D;29$ ，即使计算平方根的最简单的方法足够快，但是随着p的增大，该方法变得非常不合理。</p>
 <p>幸运地是，我们有一个方法可以验证一个整数是否是二次剩余，该方法由 Legendre发明，只需要采用一个简单的计算即可。在以下我们将假设我们正在对素数p求模。</p>
 <p>在思考 Legendre’s 符号之前，让我们先来简短地看看二次剩余和二次非剩余的有趣的性质。</p>
@@ -533,7 +533,7 @@ ints &#x3D; [14, 6, 11]<span aria-hidden="true" class="line-numbers-rows"><span>
 <pre class="line-numbers language-none"><code class="language-none">因此 Legendre&#39;s symbol 告诉我们整数是一个二次剩余，但是现在我们怎样找到平方根呢？遵循p &#x3D; 3 mod 4 的素数p 允许我们简单地计算平方根。答案在网络上，但是你可以尝试运用费马小定理自己找出答案吗？<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>推理：<br>$$<br>\because,p\equiv3\mod,4\<br>\therefore,p&#x3D;4k+3\<br>\therefore,a^{p+1&#x2F;4}\equiv,x<br>$$</p>
-<h4 id="modular-square-root"><a href="#Modular-Square-Root" class="headerlink" title="Modular Square Root"></a>Modular Square Root<a href="#modular-square-root" class="header-anchor">#</a></h4><p>在 Legendre Symbol 中我们介绍了一个快速决定一个整数是否是模素数的二次剩余的方法，我们可以更进一步：存在算法可以高效地计算二次剩余的平方根。在实践中最好的一个方法被称为 <code>Tonelli-Shanks</code> 。</p>
+<h4 id="modular-square-root"><a href="#Modular-Square-Root" class="headerlink" title="Modular Square Root"></a>Modular Square Root</h4><p>在 Legendre Symbol 中我们介绍了一个快速决定一个整数是否是模素数的二次剩余的方法，我们可以更进一步：存在算法可以高效地计算二次剩余的平方根。在实践中最好的一个方法被称为 <code>Tonelli-Shanks</code> 。</p>
 <p>除了2以外，所有的素数p都满足以下两个同余式之一： $p\equiv1,\mod4$ 或者 $p\equiv3,\mod,4$ ，因为所有的奇数都满足这两个同余式之一。正如之前的挑战所提示的，在 $p\equiv3,\mod4$ 的情况下，我们可以由费马小定理直接导出一个计算平方根的非常简单的公式。</p>
 <p>更具体的推到可以看这篇文章：<a target="_blank" rel="noopener" href="https://crypto.stackexchange.com/questions/20993/significance-of-3mod4-in-squares-and-square-roots-mod-n/20994#20994">文章</a></p>
 <p>但是 $p\equiv1,\mod,4$ 的情况还没有解决，我们需要一个更加通用的算法。</p>
@@ -552,7 +552,7 @@ print(f.roots())<span aria-hidden="true" class="line-numbers-rows"><span></span>
 
 
 
-<h4 id="chinese-remainder-theorem"><a href="#Chinese-Remainder-Theorem" class="headerlink" title="Chinese Remainder Theorem"></a>Chinese Remainder Theorem<a href="#chinese-remainder-theorem" class="header-anchor">#</a></h4><p>中国剩余定理能够给出一个线性同余方程组的唯一解，如果这些模数之间是互素的话。这就意味着，给定一组任意的整数 $a_i$ 以及成对的互素整数 $n_i$，使得以下线性同余式成立：</p>
+<h4 id="chinese-remainder-theorem"><a href="#Chinese-Remainder-Theorem" class="headerlink" title="Chinese Remainder Theorem"></a>Chinese Remainder Theorem</h4><p>中国剩余定理能够给出一个线性同余方程组的唯一解，如果这些模数之间是互素的话。这就意味着，给定一组任意的整数 $a_i$ 以及成对的互素整数 $n_i$，使得以下线性同余式成立：</p>
 <p>（成对的互素整数意味着如果我们有一个整数集合 ${n_1,n_2,…,n_i}$，那么从集合中任意选择两个整数其最大公因子都为1）</p>
 <pre class="line-numbers language-none"><code class="language-none">x ≡ a1 mod n1
 x ≡ a2 mod n2
@@ -560,8 +560,8 @@ x ≡ a2 mod n2
 x ≡ an mod nn<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>那么存在在模 $N$ 下存在一个唯一解 $x$， <code>x ≡ a mod N</code>，<code>N = n1 * n2 * ... * nn</code></p>
-<h3 id="lattices"><a href="#LATTICES" class="headerlink" title="LATTICES"></a>LATTICES<a href="#lattices" class="header-anchor">#</a></h3><h4 id="vectors"><a href="#Vectors" class="headerlink" title="Vectors"></a>Vectors<a href="#vectors" class="header-anchor">#</a></h4><p>在定义一个格以及讨论格是怎样用于密码学之前，让我们回顾一下线性代数的基础知识。如果相关内容你未曾接触过，那么你也许需要做大量的背景知识的阅读。通常情况下，我们建议阅读 “An Introduction to Mathematical Cryptography”  by Hoffstein, Pipher, Silverman，同样也可以阅读这本优秀的 <a target="_blank" rel="noopener" href="https://www.cryptool.org/download/ctb/CTB-Chapter_Lattice-Introduction_en.pdf">introduction to lattices</a> 。</p>
-<h2 id="general"><a href="#General" class="headerlink" title="General"></a>General<a href="#general" class="header-anchor">#</a></h2><pre class="line-numbers language-python" data-language="python"><code class="language-python">import base64
+<h3 id="lattices"><a href="#LATTICES" class="headerlink" title="LATTICES"></a>LATTICES</h3><h4 id="vectors"><a href="#Vectors" class="headerlink" title="Vectors"></a>Vectors</h4><p>在定义一个格以及讨论格是怎样用于密码学之前，让我们回顾一下线性代数的基础知识。如果相关内容你未曾接触过，那么你也许需要做大量的背景知识的阅读。通常情况下，我们建议阅读 “An Introduction to Mathematical Cryptography”  by Hoffstein, Pipher, Silverman，同样也可以阅读这本优秀的 <a target="_blank" rel="noopener" href="https://www.cryptool.org/download/ctb/CTB-Chapter_Lattice-Introduction_en.pdf">introduction to lattices</a> 。</p>
+<h2 id="general"><a href="#General" class="headerlink" title="General"></a>General</h2><pre class="line-numbers language-python" data-language="python"><code class="language-python">import base64
 import string
 
 from Crypto.Util.number import *
@@ -611,11 +611,11 @@ print(r.recv())
 
 
 
-<h2 id="elliptic-curves"><a href="#ELLIPTIC-CURVES" class="headerlink" title="ELLIPTIC CURVES"></a>ELLIPTIC CURVES<a href="#elliptic-curves" class="header-anchor">#</a></h2><h3 id="montgomery-s-ladder"><a href="#Montgomery’s-Ladder" class="headerlink" title="Montgomery’s Ladder"></a>Montgomery’s Ladder<a href="#montgomery-s-ladder" class="header-anchor">#</a></h3><p>这一章节充满了椭圆曲线密码学的不安全实现。选择坏的曲线会导致协议崩坏以及一些有趣的问题，但是即使选择了安全的曲线，私钥也可以从设备中提取出来。</p>
+<h2 id="elliptic-curves"><a href="#ELLIPTIC-CURVES" class="headerlink" title="ELLIPTIC CURVES"></a>ELLIPTIC CURVES</h2><h3 id="montgomerys-ladder"><a href="#Montgomery’s-Ladder" class="headerlink" title="Montgomery’s Ladder"></a>Montgomery’s Ladder</h3><p>这一章节充满了椭圆曲线密码学的不安全实现。选择坏的曲线会导致协议崩坏以及一些有趣的问题，但是即使选择了安全的曲线，私钥也可以从设备中提取出来。</p>
 <p>获取私密信息的一个技术就是通过测信道分析。</p>
-<h3 id="smooth-criminal"><a href="#Smooth-Criminal" class="headerlink" title="Smooth Criminal"></a>Smooth Criminal<a href="#smooth-criminal" class="header-anchor">#</a></h3><h5 id="ti-mu-miao-shu"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述<a href="#ti-mu-miao-shu" class="header-anchor">#</a></h5><p>​	Spent my morning reading up on ECC and now I’m ready to start encrypting my messages. Sent a flag to Bob today, but you’ll never read it.</p>
+<h3 id="smooth-criminal"><a href="#Smooth-Criminal" class="headerlink" title="Smooth Criminal"></a>Smooth Criminal</h3><h5 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h5><p>​	Spent my morning reading up on ECC and now I’m ready to start encrypting my messages. Sent a flag to Bob today, but you’ll never read it.</p>
 <p><strong>Challenge files:</strong><br> - <a target="_blank" rel="noopener" href="https://cryptohack.org/static/challenges/source_ba064d03b53a5fd7321dd0007b72906b.py">source.py</a><br> - <a target="_blank" rel="noopener" href="https://cryptohack.org/static/challenges/output_6cf0cf5ca7ab93bb829e557dd77e08ff.txt">output.txt</a></p>
-<h5 id="ti-mu-nei-rong"><a href="#题目内容" class="headerlink" title="题目内容"></a>题目内容<a href="#ti-mu-nei-rong" class="header-anchor">#</a></h5><pre class="line-numbers language-none"><code class="language-none">from Crypto.Cipher import AES
+<h5 id="题目内容"><a href="#题目内容" class="headerlink" title="题目内容"></a>题目内容</h5><pre class="line-numbers language-none"><code class="language-none">from Crypto.Cipher import AES
 from Crypto.Util.number import inverse
 from Crypto.Util.Padding import pad, unpad
 from collections import namedtuple
@@ -735,7 +735,7 @@ print(ciphertext)<span aria-hidden="true" class="line-numbers-rows"><span></span
 
 &#123;&#39;iv&#39;: &#39;07e2628b590095a5e332d397b8a59aa7&#39;, &#39;encrypted_flag&#39;: &#39;8220b7c47b36777a737f5ef9caa2814cf20c1c1ef496ec21a9b4833da24a008d0870d3ac3a6ad80065c138a2ed6136af&#39;&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 
-<h5 id="jie-ti-guo-cheng"><a href="#解题过程" class="headerlink" title="解题过程"></a>解题过程<a href="#jie-ti-guo-cheng" class="header-anchor">#</a></h5><p>面向搜索引擎做题，最后找到了这个答案：<a target="_blank" rel="noopener" href="https://github.com/onealmond/hacking-lab/blob/master/cryptohack/smooth-criminal/decrypt.sage">https://github.com/onealmond/hacking-lab/blob/master/cryptohack/smooth-criminal/decrypt.sage</a></p>
+<h5 id="解题过程"><a href="#解题过程" class="headerlink" title="解题过程"></a>解题过程</h5><p>面向搜索引擎做题，最后找到了这个答案：<a target="_blank" rel="noopener" href="https://github.com/onealmond/hacking-lab/blob/master/cryptohack/smooth-criminal/decrypt.sage">https://github.com/onealmond/hacking-lab/blob/master/cryptohack/smooth-criminal/decrypt.sage</a></p>
 <p>在答案中发现了来源链接 <a target="_blank" rel="noopener" href="https://hgarrereyn.gitbooks.io/th3g3ntl3man-ctf-writeups/content/2017/picoCTF_2017/problems/cryptography/ECC2/ECC2.html%EF%BC%8C%E6%AF%94%E8%BE%83%E8%AF%A6%E7%BB%86%E7%9A%84%E8%AE%B2%E6%8E%88%E4%BA%86%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8">https://hgarrereyn.gitbooks.io/th3g3ntl3man-ctf-writeups/content/2017/picoCTF_2017/problems/cryptography/ECC2/ECC2.html，比较详细的讲授了如何使用</a> Pohlig-Hellman 算法来找到 P&#x3D;nG 的 n</p>
 
                 

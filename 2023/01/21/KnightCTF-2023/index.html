@@ -29,7 +29,7 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 6.1.0"></head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 
 
@@ -504,7 +504,7 @@
 <p>过年前的最后一个 CTF</p>
 <span id="more"></span>
 
-<h2 id="web"><a href="#Web" class="headerlink" title="Web"></a>Web<a href="#web" class="header-anchor">#</a></h2><h3 id="knight-search"><a href="#Knight-Search" class="headerlink" title="Knight Search"></a>Knight Search<a href="#knight-search" class="header-anchor">#</a></h3><p>随便看了下发现 post &#x2F;home 的时候会弹出一个 keyerror，说是缺少 filename 这个key。题目描述已经说了这是一个文件搜索题，所以猜测应该是传入文件名然后回显文件内容，并且测试 post 了 filename 确实不报错了，尽管没有内容。</p>
+<h2 id="web"><a href="#Web" class="headerlink" title="Web"></a>Web</h2><h3 id="knight-search"><a href="#Knight-Search" class="headerlink" title="Knight Search"></a>Knight Search</h3><p>随便看了下发现 post &#x2F;home 的时候会弹出一个 keyerror，说是缺少 filename 这个key。题目描述已经说了这是一个文件搜索题，所以猜测应该是传入文件名然后回显文件内容，并且测试 post 了 filename 确实不报错了，尽管没有内容。</p>
 <p>但是在报错信息中找到了当前的 python 文件名 app.py，post 这个文件名成功回显了文件的内容。</p>
 <p><img src="/images/KnightCTF-2023/image-20230121220233779.png" alt="image-20230121220233779"></p>
 <pre class="line-numbers language-python" data-language="python"><code class="language-python">from flask import Flask, request, render_template, current_app
@@ -686,11 +686,11 @@ if __name__ &#x3D;&#x3D; &quot;__main__&quot;:
 <p>生成完 PIN 码之后就去登录到控制台然后执行系统命令获得 flag</p>
 <p>值得注意的是 system 命令拿不到命令执行的结果，还是要借助 popen</p>
 <p><img src="/images/KnightCTF-2023/image-20230122105653818.png" alt="image-20230122105653818"></p>
-<h2 id="crtoto"><a href="#Crtoto" class="headerlink" title="Crtoto"></a>Crtoto<a href="#crtoto" class="header-anchor">#</a></h2><h3 id="i-love-pi"><a href="#I-Love-Pi" class="headerlink" title="I Love Pi"></a>I Love Pi<a href="#i-love-pi" class="header-anchor">#</a></h3><h4 id="ti-mu-miao-shu"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述<a href="#ti-mu-miao-shu" class="header-anchor">#</a></h4><p>Isaac Newton left me this piece of code and a message. Can you help me decode this…</p>
+<h2 id="crtoto"><a href="#Crtoto" class="headerlink" title="Crtoto"></a>Crtoto</h2><h3 id="i-love-pi"><a href="#I-Love-Pi" class="headerlink" title="I Love Pi"></a>I Love Pi</h3><h4 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h4><p>Isaac Newton left me this piece of code and a message. Can you help me decode this…</p>
 <p>Demo Flag : KCTF{FL4G_H3R3}</p>
 <p>Attachments: <a target="_blank" rel="noopener" href="https://drive.google.com/file/d/19u0nKhoBRlB7_LVChloN0rlP-NJj8Mpy/view?usp=sharing">Link</a></p>
 <p>Author: sweet_dreams</p>
-<h4 id="ti-mu-nei-rong"><a href="#题目内容" class="headerlink" title="题目内容"></a>题目内容<a href="#ti-mu-nei-rong" class="header-anchor">#</a></h4><pre class="line-numbers language-python" data-language="python"><code class="language-python">import base64
+<h4 id="题目内容"><a href="#题目内容" class="headerlink" title="题目内容"></a>题目内容</h4><pre class="line-numbers language-python" data-language="python"><code class="language-python">import base64
 
 lengths &#x3D; [--REDACTED - -]
 flag &#x3D; &quot;KCTF&#123;*******************************&#125;&quot;
@@ -709,8 +709,8 @@ for l in lengths:
 
 print(encoded_flag)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h4 id="ti-mu-fen-xi"><a href="#题目分析" class="headerlink" title="题目分析"></a>题目分析<a href="#ti-mu-fen-xi" class="header-anchor">#</a></h4><p>可以看到题目每次从一个长度为10的列表中取出某个数a，然后从flag中取出长度为a的字串，并进行a次编码。解码很容易，但是题目没有将这个列表告诉我们，这就使得我们不知道每一轮被编码的字串的长度。</p>
-<h3 id="can-kao-lian-jie"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接<a href="#can-kao-lian-jie" class="header-anchor">#</a></h3><p><a target="_blank" rel="noopener" href="https://siunam321.github.io/ctf/KnightCTF-2023/Web-API/Knight-Search/">https://siunam321.github.io/ctf/KnightCTF-2023/Web-API/Knight-Search/</a></p>
+<h4 id="题目分析"><a href="#题目分析" class="headerlink" title="题目分析"></a>题目分析</h4><p>可以看到题目每次从一个长度为10的列表中取出某个数a，然后从flag中取出长度为a的字串，并进行a次编码。解码很容易，但是题目没有将这个列表告诉我们，这就使得我们不知道每一轮被编码的字串的长度。</p>
+<h3 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h3><p><a target="_blank" rel="noopener" href="https://siunam321.github.io/ctf/KnightCTF-2023/Web-API/Knight-Search/">https://siunam321.github.io/ctf/KnightCTF-2023/Web-API/Knight-Search/</a></p>
 
                 
             </div>

@@ -29,7 +29,7 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 6.1.0"></head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 
 
@@ -505,14 +505,14 @@
 <p>Java 安全可以从反序列化说起，而反序列化可以从反射说起。</p>
 <span id="more"></span>
 
-<h2 id="qian-yan"><a href="#前言" class="headerlink" title="前言"></a>前言<a href="#qian-yan" class="header-anchor">#</a></h2><p>学习 Java 反序列化前最好先把 Java 基础看一遍，这样后续读 Java 代码就会舒服很多。</p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>学习 Java 反序列化前最好先把 Java 基础看一遍，这样后续读 Java 代码就会舒服很多。</p>
 <p><a target="_blank" rel="noopener" href="https://www.runoob.com/java/java-loop.html">菜鸟教程</a></p>
-<h3 id="zheng-she"><a href="#正射" class="headerlink" title="正射"></a>正射<a href="#zheng-she" class="header-anchor">#</a></h3><p>说反射之前先说正射是什么。</p>
-<h4 id="zheng-she-ding-yi"><a href="#正射定义" class="headerlink" title="正射定义"></a>正射定义<a href="#zheng-she-ding-yi" class="header-anchor">#</a></h4><p>我们在编写代码时，当需要使用到某一个类的时候，都会先了解这个类是做什么的，然后实例化这个类，接着用实例化好的对象进行操作，这就是正射。</p>
+<h3 id="正射"><a href="#正射" class="headerlink" title="正射"></a>正射</h3><p>说反射之前先说正射是什么。</p>
+<h4 id="正射定义"><a href="#正射定义" class="headerlink" title="正射定义"></a>正射定义</h4><p>我们在编写代码时，当需要使用到某一个类的时候，都会先了解这个类是做什么的，然后实例化这个类，接着用实例化好的对象进行操作，这就是正射。</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java">Student student &#x3D; new Student();
 student.doHomework(&quot;数学&quot;);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
-<h3 id="fan-she"><a href="#反射" class="headerlink" title="反射"></a>反射<a href="#fan-she" class="header-anchor">#</a></h3><h4 id="fan-she-ding-yi"><a href="#反射定义" class="headerlink" title="反射定义"></a>反射定义<a href="#fan-she-ding-yi" class="header-anchor">#</a></h4><p>Java 的反射机制是指在运行状态中，对于任意一个类都能够知道这个类所有的属性和方法；并且对于任意一个对象，都能够调用它的任意一个方法；这种动态获取信息以及动态调用对象方法的功能称为 Java 语言的反射机制。</p>
+<h3 id="反射"><a href="#反射" class="headerlink" title="反射"></a>反射</h3><h4 id="反射定义"><a href="#反射定义" class="headerlink" title="反射定义"></a>反射定义</h4><p>Java 的反射机制是指在运行状态中，对于任意一个类都能够知道这个类所有的属性和方法；并且对于任意一个对象，都能够调用它的任意一个方法；这种动态获取信息以及动态调用对象方法的功能称为 Java 语言的反射机制。</p>
 <p>简单地说，反射就是一开始我们并不知道我们要初始化的类对象是什么，所以自然也无法使用 new 关键字来创建对象了。下面是一个经典的反射代码</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java">Class clazz &#x3D; Class.forName(&quot;reflection.Student&quot;);
 Method method &#x3D; clazz.getMethod(&quot;doHomework&quot;, String.class);
@@ -522,22 +522,22 @@ method.invoke(object, &quot;语文&quot;);<span aria-hidden="true" class="line-n
 
 
 
-<h4 id="fan-she-de-zuo-yong"><a href="#反射的作用" class="headerlink" title="反射的作用"></a>反射的作用<a href="#fan-she-de-zuo-yong" class="header-anchor">#</a></h4><p>反射让 Java 具有动态性。</p>
-<h3 id="zheng-fan-she-dui-bi"><a href="#正反射对比" class="headerlink" title="正反射对比"></a>正反射对比<a href="#zheng-fan-she-dui-bi" class="header-anchor">#</a></h3><p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9601/image-20230104184013667.png" alt="image-20230104184013667"></p>
+<h4 id="反射的作用"><a href="#反射的作用" class="headerlink" title="反射的作用"></a>反射的作用</h4><p>反射让 Java 具有动态性。</p>
+<h3 id="正反射对比"><a href="#正反射对比" class="headerlink" title="正反射对比"></a>正反射对比</h3><p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9601/image-20230104184013667.png" alt="image-20230104184013667"></p>
 <p>但是，其实现的过程还是有很大的差别的：</p>
 <ul>
 <li>第一段代码在未运行前就已经知道了要运行的类是 <code>Student</code></li>
 <li>第二段代码则是到整个程序运行的时候，从字符串 <code>reflection.Student</code>，才知道要操作的类是 <code>Student</code>。</li>
 </ul>
 <p>所以反射就是在运行的时候才知道要操作的类是什么，并且可以在运行时获取类的完整构造，并调用对应的方法。</p>
-<h3 id="fan-she-zhong-yong-dao-de-class-dui-xiang-li-jie"><a href="#反射中用到的-Class-对象理解" class="headerlink" title="反射中用到的 Class 对象理解"></a>反射中用到的 Class 对象理解<a href="#fan-she-zhong-yong-dao-de-class-dui-xiang-li-jie" class="header-anchor">#</a></h3><p>要了解 Class 对象，需要先了解 RTTI（Run-Time Type Identification） 运行时类型识别，其作用是在运行时识别一个对象的类型和类的信息。</p>
+<h3 id="反射中用到的-class-对象理解"><a href="#反射中用到的-Class-对象理解" class="headerlink" title="反射中用到的 Class 对象理解"></a>反射中用到的 Class 对象理解</h3><p>要了解 Class 对象，需要先了解 RTTI（Run-Time Type Identification） 运行时类型识别，其作用是在运行时识别一个对象的类型和类的信息。</p>
 <p>Java 是如何让我们在运行时识别对象和类的信息的呢？主要有两种方式：一种是传统的 RRTI，它假定我们在编译期就已经知道了所有类型。<strong>另一种则是反射机制，它允许我们在运行时发现和使用类的信息。</strong></p>
 <p><strong>每个类都有一个 Class 对象</strong>，每新编译一个类就会产生一个 Class 对象，该对象会被保存在一个同名的 .class 文件中。比如创建一个 Student 类，那么 JVM 就会创建一个 Student 类对应 的 Class 类的 Class 对象，该 Class 对象保存了 Student 类相关的类型信息。</p>
 <p>值得注意的是，对于某个类的不同实例对象来说，其对应的 Class 对象都是相同的</p>
 <p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9601/image-20230104184641467.png" alt="image-20230104184641467"></p>
 <p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9601/image-20230105212528699.png" alt="image-20230105212528699"></p>
-<h4 id="class-lei-dui-xiang-de-zuo-yong"><a href="#Class-类对象的作用" class="headerlink" title="Class 类对象的作用"></a>Class 类对象的作用<a href="#class-lei-dui-xiang-de-zuo-yong" class="header-anchor">#</a></h4><p>Class 类对象的作用是运行时提供或获得某个对象的类型信息。</p>
-<h3 id="fan-she-shi-yong"><a href="#反射使用" class="headerlink" title="反射使用"></a>反射使用<a href="#fan-she-shi-yong" class="header-anchor">#</a></h3><h4 id="ru-he-tong-guo-fan-she-huo-qu-class-lei-dui-xiang"><a href="#如何通过反射-获取-Class-类对象？" class="headerlink" title="如何通过反射 获取 Class 类对象？"></a>如何通过反射 获取 Class 类对象？<a href="#ru-he-tong-guo-fan-she-huo-qu-class-lei-dui-xiang" class="header-anchor">#</a></h4><p>获取反射中的 Class 对象有三种方法。</p>
+<h4 id="class-类对象的作用"><a href="#Class-类对象的作用" class="headerlink" title="Class 类对象的作用"></a>Class 类对象的作用</h4><p>Class 类对象的作用是运行时提供或获得某个对象的类型信息。</p>
+<h3 id="反射使用"><a href="#反射使用" class="headerlink" title="反射使用"></a>反射使用</h3><h4 id="如何通过反射-获取-class-类对象"><a href="#如何通过反射-获取-Class-类对象？" class="headerlink" title="如何通过反射 获取 Class 类对象？"></a>如何通过反射 获取 Class 类对象？</h4><p>获取反射中的 Class 对象有三种方法。</p>
 <ul>
 <li>Class.forName 静态方法</li>
 </ul>
@@ -555,7 +555,7 @@ method.invoke(object, &quot;语文&quot;);<span aria-hidden="true" class="line-n
 Class class3 &#x3D; testReflection.getClass();<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
 <p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9601/image-20230104184951137.png" alt="image-20230104184951137"></p>
-<h4 id="ru-he-tong-guo-fan-she-chuang-jian-dui-xiang"><a href="#如何通过反射创建对象？" class="headerlink" title="如何通过反射创建对象？"></a>如何通过反射创建对象？<a href="#ru-he-tong-guo-fan-she-chuang-jian-dui-xiang" class="header-anchor">#</a></h4><p>通过反射创建类对象主要有两种方式：</p>
+<h4 id="如何通过反射创建对象"><a href="#如何通过反射创建对象？" class="headerlink" title="如何通过反射创建对象？"></a>如何通过反射创建对象？</h4><p>通过反射创建类对象主要有两种方式：</p>
 <p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9601/image-20230104185030886.png" alt="image-20230104185030886"></p>
 <ul>
 <li>使用 Class 类对象的 newInstance() 方法来创建对象</li>
@@ -574,7 +574,7 @@ System.out.println(student1);
 
 <p><code>getConstructor</code> 方法会返回一个 Constructor 对象，该对象反映了由当前的 Class 对象所表示的 class 的特定的公开的 constructor。Constructor 类位于 <strong>java.lang.reflect.Constructor</strong>，使用时要 import ！</p>
 <p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9601/image-20230104192419784.png" alt="image-20230104192419784"></p>
-<h4 id="ru-he-tong-guo-fan-she-huo-qu-lei-de-fang-fa"><a href="#如何通过反射获取类的方法？" class="headerlink" title="如何通过反射获取类的方法？"></a>如何通过反射获取类的方法？<a href="#ru-he-tong-guo-fan-she-huo-qu-lei-de-fang-fa" class="header-anchor">#</a></h4><p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9601/image-20230105214301287.png" alt="image-20230105214301287"></p>
+<h4 id="如何通过反射获取类的方法"><a href="#如何通过反射获取类的方法？" class="headerlink" title="如何通过反射获取类的方法？"></a>如何通过反射获取类的方法？</h4><p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9601/image-20230105214301287.png" alt="image-20230105214301287"></p>
 <p>从图中也可以看到通过反射获取类的方法有三种方式。</p>
 <ul>
 <li>通过 class 对象 的 getMethods 方法获取某类的方法</li>
@@ -630,7 +630,7 @@ public class RuntimeExec &#123;
 
 
 
-<h4 id="ru-he-tong-guo-fan-she-zhi-xing-mou-ge-lei-de-fang-fa"><a href="#如何通过反射执行某个类的方法？" class="headerlink" title="如何通过反射执行某个类的方法？"></a>如何通过反射执行某个类的方法？<a href="#ru-he-tong-guo-fan-she-zhi-xing-mou-ge-lei-de-fang-fa" class="header-anchor">#</a></h4><p>在前面获取到某个类的方法之后，我们肯定是想执行它，那么该如何做呢？需要用到 <code>java.lang.reflect.Method</code> 类中的  <strong>invoke</strong> 方法，该方法用于执行某个对象的目标方法，一般会和 getMethod 方法配合进行调用。</p>
+<h4 id="如何通过反射执行某个类的方法"><a href="#如何通过反射执行某个类的方法？" class="headerlink" title="如何通过反射执行某个类的方法？"></a>如何通过反射执行某个类的方法？</h4><p>在前面获取到某个类的方法之后，我们肯定是想执行它，那么该如何做呢？需要用到 <code>java.lang.reflect.Method</code> 类中的  <strong>invoke</strong> 方法，该方法用于执行某个对象的目标方法，一般会和 getMethod 方法配合进行调用。</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java">public Object invoke(Object obj, Object... args)<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>第一个参数为类的实例，第二个参数为要执行的方法的参数</p>
@@ -652,7 +652,7 @@ public class ReflectionTest04 &#123;
  &#125;  
 &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h4 id="ru-he-li-yong-fan-she-dan-ji-suan-qi"><a href="#如何利用反射弹计算器" class="headerlink" title="如何利用反射弹计算器"></a>如何利用反射弹计算器<a href="#ru-he-li-yong-fan-she-dan-ji-suan-qi" class="header-anchor">#</a></h4><p>思路：用我们的 <code>forName</code> 和 <code>newInstance()</code> 实例化对象后，再获取方法并执行。</p>
+<h4 id="如何利用反射弹计算器"><a href="#如何利用反射弹计算器" class="headerlink" title="如何利用反射弹计算器"></a>如何利用反射弹计算器</h4><p>思路：用我们的 <code>forName</code> 和 <code>newInstance()</code> 实例化对象后，再获取方法并执行。</p>
 <p>关于 java 执行系统命令，可以查看这篇文章 <a target="_blank" rel="noopener" href="https://blog.csdn.net/qsort_/article/details/104821283">java命令执行的三种方式</a></p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java">package src.ReflectDemo;  
   
@@ -668,7 +668,7 @@ public class FinalReflectionCalc &#123;
 
 
 
-<h3 id="shi-me-shi-dong-tai-yu-yan-he-jing-tai-yu-yan"><a href="#什么是动态语言和静态语言？" class="headerlink" title="什么是动态语言和静态语言？"></a>什么是动态语言和静态语言？<a href="#shi-me-shi-dong-tai-yu-yan-he-jing-tai-yu-yan" class="header-anchor">#</a></h3><h3 id="can-kao-lian-jie"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接<a href="#can-kao-lian-jie" class="header-anchor">#</a></h3><p><a target="_blank" rel="noopener" href="https://drun1baby.github.io/2022/05/20/Java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%9F%BA%E7%A1%80%E7%AF%87-02-Java%E5%8F%8D%E5%B0%84%E4%B8%8EURLDNS%E9%93%BE%E5%88%86%E6%9E%90/">Java反射与URLDNS链分析</a></p>
+<h3 id="什么是动态语言和静态语言"><a href="#什么是动态语言和静态语言？" class="headerlink" title="什么是动态语言和静态语言？"></a>什么是动态语言和静态语言？</h3><h3 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h3><p><a target="_blank" rel="noopener" href="https://drun1baby.github.io/2022/05/20/Java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%9F%BA%E7%A1%80%E7%AF%87-02-Java%E5%8F%8D%E5%B0%84%E4%B8%8EURLDNS%E9%93%BE%E5%88%86%E6%9E%90/">Java反射与URLDNS链分析</a></p>
 <p><a target="_blank" rel="noopener" href="https://juejin.cn/post/6844904025607897096">谈谈Java反射：从入门到实践，再到原理</a></p>
 
                 

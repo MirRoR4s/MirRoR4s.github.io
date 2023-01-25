@@ -29,7 +29,7 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 6.1.0"></head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 
 
@@ -505,8 +505,8 @@
 <p>每日图一乐之php代码审计</p>
 <span id="more"></span>
 
-<h3 id="qian-yan"><a href="#前言" class="headerlink" title="前言"></a>前言<a href="#qian-yan" class="header-anchor">#</a></h3><p>不得不说红日安全写的是真的好，让人看的很舒服，也学到了很多东西。这一篇文章是在看完Day1后针对留下的习题而写的，in_array函数的漏洞分析直接看原文就可以了。</p>
-<h3 id="ti-mu-lou-dong-dai-ma"><a href="#题目漏洞代码" class="headerlink" title="题目漏洞代码"></a>题目漏洞代码<a href="#ti-mu-lou-dong-dai-ma" class="header-anchor">#</a></h3><pre class="line-numbers language-php" data-language="php"><code class="language-php">&#x2F;&#x2F;index.php
+<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>不得不说红日安全写的是真的好，让人看的很舒服，也学到了很多东西。这一篇文章是在看完Day1后针对留下的习题而写的，in_array函数的漏洞分析直接看原文就可以了。</p>
+<h3 id="题目漏洞代码"><a href="#题目漏洞代码" class="headerlink" title="题目漏洞代码"></a>题目漏洞代码</h3><pre class="line-numbers language-php" data-language="php"><code class="language-php">&#x2F;&#x2F;index.php
 &lt;?php
 include &#39;config.php&#39;;
 $conn &#x3D; new mysqli($servername, $username, $password, $dbname);
@@ -585,7 +585,7 @@ INSERT INTO flag VALUES(&#39;HRCTF&#123;1n0rrY_i3_Vu1n3rab13&#125;&#39;);<span a
 
 
 
-<h3 id="ti-mu-lou-dong-fen-xi"><a href="#题目漏洞分析" class="headerlink" title="题目漏洞分析"></a>题目漏洞分析<a href="#ti-mu-lou-dong-fen-xi" class="header-anchor">#</a></h3><p>题目会接收一个名字为 id 的参数，然后进行SQL查询，注意到这里是有一个黑名单的过滤的。</p>
+<h3 id="题目漏洞分析"><a href="#题目漏洞分析" class="headerlink" title="题目漏洞分析"></a>题目漏洞分析</h3><p>题目会接收一个名字为 id 的参数，然后进行SQL查询，注意到这里是有一个黑名单的过滤的。</p>
 <pre class="line-numbers language-php" data-language="php"><code class="language-php">$id &#x3D; stop_hack($_GET[&#39;id&#39;]);
 $sql &#x3D; &quot;SELECT * FROM users WHERE id&#x3D;$id&quot;;
 function stop_hack($value)&#123;
@@ -614,7 +614,7 @@ function stop_hack($value)&#123;
 <p>本地测试的时候 phpstorm 可能会说接收到未授权请求然后阻止了我们脚本的访问，这种情况按照下图设置一下就好了</p>
 </blockquote>
 <p><img src="/images/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1Day1-in-array%E5%87%BD%E6%95%B0%E7%BC%BA%E9%99%B7/image-20230124104642539.png" alt="image-20230124104642539"></p>
-<h3 id="can-kao-lian-jie"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接<a href="#can-kao-lian-jie" class="header-anchor">#</a></h3><p>[<a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/2491">红日安全]PHP-Audit-Labs题解之Day1-4 - 先知社区 (aliyun.com)</a></p>
+<h3 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h3><p>[<a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/2491">红日安全]PHP-Audit-Labs题解之Day1-4 - 先知社区 (aliyun.com)</a></p>
 <p><a target="_blank" rel="noopener" href="https://github.com/hongriSec/PHP-Audit-Labs/blob/master/Part1/Day1/files/README.md">红日安全-七月火</a></p>
 
                 

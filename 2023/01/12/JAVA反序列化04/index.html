@@ -29,7 +29,7 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 6.1.0"></head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 
 
@@ -505,9 +505,9 @@
 <p>这一篇分析 Java 反序列化 CommonsCollections 的 CC1 链。</p>
 <span id="more"></span>
 
-<h2 id="common-collections-xiang-guan-jie-shao"><a href="#Common-Collections-相关介绍" class="headerlink" title="Common-Collections 相关介绍"></a>Common-Collections 相关介绍<a href="#common-collections-xiang-guan-jie-shao" class="header-anchor">#</a></h2><p>直接看<a target="_blank" rel="noopener" href="https://blinkfox.github.io/2018/09/13/hou-duan/java/commons/commons-collections-bao-he-jian-jie/">闪烁之狐</a>大佬的即可。</p>
+<h2 id="common-collections-相关介绍"><a href="#Common-Collections-相关介绍" class="headerlink" title="Common-Collections 相关介绍"></a>Common-Collections 相关介绍</h2><p>直接看<a target="_blank" rel="noopener" href="https://blinkfox.github.io/2018/09/13/hou-duan/java/commons/commons-collections-bao-he-jian-jie/">闪烁之狐</a>大佬的即可。</p>
 <p>也可以看看这篇 <a target="_blank" rel="noopener" href="https://foxglovesecurity.com/2015/11/06/what-do-weblogic-websphere-jboss-jenkins-opennms-and-your-application-have-in-common-this-vulnerability/">foxlovesecurity</a></p>
-<h3 id="qian-yan"><a href="#前言" class="headerlink" title="前言"></a>前言<a href="#qian-yan" class="header-anchor">#</a></h3><h3 id="huan-jing-da-jian"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建<a href="#huan-jing-da-jian" class="header-anchor">#</a></h3><ul>
+<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><h3 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建</h3><ul>
 <li><a target="_blank" rel="noopener" href="https://www.oracle.com/cn/java/technologies/javase/javase8-archive-downloads.html">JDK8u65</a></li>
 <li><a target="_blank" rel="noopener" href="http://hg.openjdk.java.net/jdk8u/jdk8u/jdk/rev/af660750b2f4">openJDK 8u65</a></li>
 <li>Maven 3.6.3(其余版本可以先试试，不行再降版本)</li>
@@ -520,10 +520,10 @@
 <p>一番查找发现下载网站 <a target="_blank" rel="noopener" href="https://blog.lupf.cn/articles/2022/02/19/1645283454543.html">Oracle JDK 8u65 全平台安装包下载 - 码霸霸 (lupf.cn)</a></p>
 </blockquote>
 <p>我新建了一个名为 <strong>jdk8u65</strong> 的文件作为我的安装目录</p>
-<h4 id="pom-xml-tian-jia-yi-lai"><a href="#pom-xml-添加依赖" class="headerlink" title="pom.xml 添加依赖"></a>pom.xml 添加依赖<a href="#pom-xml-tian-jia-yi-lai" class="header-anchor">#</a></h4><p>再接着，创建一个 IDEA 项目，选中 maven，并使用 jdk8u65。创建完毕之后在 pom.xml 中添加如下依赖</p>
+<h4 id="pomxml-添加依赖"><a href="#pom-xml-添加依赖" class="headerlink" title="pom.xml 添加依赖"></a>pom.xml 添加依赖</h4><p>再接着，创建一个 IDEA 项目，选中 maven，并使用 jdk8u65。创建完毕之后在 pom.xml 中添加如下依赖</p>
 <p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/image-20230113103415079.png" alt="image-20230113103415079"></p>
 <p>添加依赖之后右上角如果出现 pom 的图标，点击一下就好了。</p>
-<pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token prolog">&lt;?xml version="1.0" encoding="UTF-8"?></span>
+<pre class="line-numbers language-markup" data-language="markup"><code class="language-markup"><span class="token prolog">&lt;?xml version="1.0" encoding="UTF-8"?></span>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>project</span> <span class="token attr-name">xmlns</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>http://maven.apache.org/POM/4.0.0<span class="token punctuation">"</span></span>
          <span class="token attr-name"><span class="token namespace">xmlns:</span>xsi</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>http://www.w3.org/2001/XMLSchema-instance<span class="token punctuation">"</span></span>
          <span class="token attr-name"><span class="token namespace">xsi:</span>schemaLocation</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
@@ -555,7 +555,7 @@
 <pre class="line-numbers language-java" data-language="java"><code class="language-java">import org.apache.commons.collections.functors.InvokerTransformer;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>如果成功说明安装成功了。之后点进去 <code>InvokerTransformer</code> 包，然后如果右上角出现了 pom 的下载源，那就下载。</p>
-<h4 id="xiu-gai-sun-bao"><a href="#修改-sun-包" class="headerlink" title="修改 sun 包"></a>修改 sun 包<a href="#xiu-gai-sun-bao" class="header-anchor">#</a></h4><p>首先在我们的 jdk8u65 文件夹有一个 src.zip</p>
+<h4 id="修改-sun-包"><a href="#修改-sun-包" class="headerlink" title="修改 sun 包"></a>修改 sun 包</h4><p>首先在我们的 jdk8u65 文件夹有一个 src.zip</p>
 <p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/image-20230113103810638.png" alt="image-20230113103810638"></p>
 <p>我们在这个目录新建一个文件夹 src，并将 src.zip 的内容解压到 src，之后去下面的链接下载 sun 包。</p>
 <p><a target="_blank" rel="noopener" href="http://hg.openjdk.java.net/jdk8u/jdk8u/jdk/rev/af660750b2f4">openJDK 8u65</a>————去到这个下载链接并点击 zip 下载</p>
@@ -565,14 +565,14 @@
 <p>之后进入 idea，打开项目结构，将我们的 sun 目录添加到源路径</p>
 <p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/image-20230113104721285.png" alt="image-20230113104721285"></p>
 <p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/image-20230113104700713.png" alt="image-20230113104700713"></p>
-<h2 id="transformmap-ban-cc1-gong-ji-lian-fen-xi"><a href="#TransformMap-版-CC1-攻击链分析" class="headerlink" title="TransformMap 版 CC1 攻击链分析"></a>TransformMap 版 CC1 攻击链分析<a href="#transformmap-ban-cc1-gong-ji-lian-fen-xi" class="header-anchor">#</a></h2><h3 id="fan-xu-lie-hua-gong-ji-si-lu"><a href="#反序列化攻击思路" class="headerlink" title="反序列化攻击思路"></a>反序列化攻击思路<a href="#fan-xu-lie-hua-gong-ji-si-lu" class="header-anchor">#</a></h3><p>首先我们再次明确一下反序列化的攻击思路</p>
+<h2 id="transformmap-版-cc1-攻击链分析"><a href="#TransformMap-版-CC1-攻击链分析" class="headerlink" title="TransformMap 版 CC1 攻击链分析"></a>TransformMap 版 CC1 攻击链分析</h2><h3 id="反序列化攻击思路"><a href="#反序列化攻击思路" class="headerlink" title="反序列化攻击思路"></a>反序列化攻击思路</h3><p>首先我们再次明确一下反序列化的攻击思路</p>
 <ul>
 <li>入口类需要一个 <code>readObject</code> 方法</li>
 <li>结尾需要一个能够命令执行的方法</li>
 <li>从入口类出发通过链子引导到结尾命令执行，故我们的攻击应从尾部出发去寻找头部。</li>
 </ul>
 <p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/AttackRoad.png" alt="img"></p>
-<h3 id="1-xun-zhao-wei-bu-de-exec-fang-fa"><a href="#1-寻找尾部的-exec-方法" class="headerlink" title="1.寻找尾部的 exec 方法"></a>1.寻找尾部的 exec 方法<a href="#1-xun-zhao-wei-bu-de-exec-fang-fa" class="header-anchor">#</a></h3><p>接下来就正式开始复现 CC1 的链。</p>
+<h3 id="1寻找尾部的-exec-方法"><a href="#1-寻找尾部的-exec-方法" class="headerlink" title="1.寻找尾部的 exec 方法"></a>1.寻找尾部的 exec 方法</h3><p>接下来就正式开始复现 CC1 的链。</p>
 <p>首先在 idea 左侧项目找到 commons-collections-3.2.1，然后在集合模块找到 <code>Transformer.java</code> 文件。</p>
 <p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/image-20230114163028342.png" alt="image-20230114163028342"></p>
 <p>具体是在 org.apache.commons.collections 包下</p>
@@ -601,7 +601,7 @@ invokerTransformer.transform(runtime);<span aria-hidden="true" class="line-numbe
 
 <p>运行之后就可以弹出计算器，具体为什么可以弹计算器就不写了，可以自行分析一下。</p>
 <p>注意到我们最后一句代码是 <code>invokerTransformer.transform(runtime)</code> ，所以我们下一步的目标就是去找调用 <code>transform</code> 方法的不同名函数</p>
-<h3 id="2-chu-bu-xun-zhao-lian-zi-checksetvalue"><a href="#2-初步寻找链子-checksetValue" class="headerlink" title="2.初步寻找链子 checksetValue"></a>2.初步寻找链子 checksetValue<a href="#2-chu-bu-xun-zhao-lian-zi-checksetvalue" class="header-anchor">#</a></h3><p>如上所述，现在回到 <code>transform</code> 方法并寻找调用了这个方法的不同名的函数。IDEA 可以帮我们快速做到这一点，只需要将光标停留在这个方法上并右键点击 find usages 即可。如果 find usages 有问题的话，可以先 <code>Ctrl+Alt+Shift+F7</code>，选择 <code>All place</code> 查询。最后的结果应如下图</p>
+<h3 id="2初步寻找链子-checksetvalue"><a href="#2-初步寻找链子-checksetValue" class="headerlink" title="2.初步寻找链子 checksetValue"></a>2.初步寻找链子 checksetValue</h3><p>如上所述，现在回到 <code>transform</code> 方法并寻找调用了这个方法的不同名的函数。IDEA 可以帮我们快速做到这一点，只需要将光标停留在这个方法上并右键点击 find usages 即可。如果 find usages 有问题的话，可以先 <code>Ctrl+Alt+Shift+F7</code>，选择 <code>All place</code> 查询。最后的结果应如下图</p>
 <p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/image-20230114165818223.png" alt="image-20230114165818223"></p>
 <blockquote>
 <p>这里同样有一个逐个翻看调用了 transform 方法的那些类的操作，目的是为了找到可行的链子。我节省时间故直接给出答案。</p>
@@ -648,7 +648,7 @@ invokerTransformer.transform(runtime);<span aria-hidden="true" class="line-numbe
 <li>在执行 <code>.decorate</code> 方法的时候，会新建 <code>TransformedMap</code> 对象，我们调用对象的 <code>checkSetValue</code> 方法（因为我们无法直接获取 <code>TransformedMap</code> 对象，它的作用域是 <code>protected</code>）。</li>
 <li>在 <code>checkSetValue</code> 方法当中，会执行 <code>.transform</code> 的方法。这也就是我们链子的尾部 ———— <code>.transform</code></li>
 </ul>
-<h3 id="3-wan-zheng-lian-zi"><a href="#3-完整链子" class="headerlink" title="3.完整链子"></a>3.完整链子<a href="#3-wan-zheng-lian-zi" class="header-anchor">#</a></h3><ul>
+<h3 id="3完整链子"><a href="#3-完整链子" class="headerlink" title="3.完整链子"></a>3.完整链子</h3><ul>
 <li>目前找到的链子位于 <code>checkSetValue</code> 当中，去找 <code>.decorate</code> 的链子，发现无法进一步前进了，所以我们回到 <code>checkSetValue</code> 重新找链子。</li>
 </ul>
 <p>继续 <code>find usages</code>，找到了 <code>parent.checkSetValue(value);</code> 调用了 <code>checkSetValue</code></p>
@@ -690,7 +690,7 @@ invokerTransformer.transform(runtime);<span aria-hidden="true" class="line-numbe
 </blockquote>
 <p>运行完之后就可以弹计算器出来！</p>
 <p>到这一步我们的 POC 马上就要出来了，就差一个 <code>readObject</code> 了。接下来要做的事情就是找到一个 <code>readObject</code> 并且里面调用了 <code>setValue()</code> 方法</p>
-<h3 id="4-xun-zhao-readobject-lian-shou"><a href="#4-寻找-readObject-链首" class="headerlink" title="4.寻找 readObject() 链首"></a>4.寻找 readObject() 链首<a href="#4-xun-zhao-readobject-lian-shou" class="header-anchor">#</a></h3><ul>
+<h3 id="4寻找-readobject-链首"><a href="#4-寻找-readObject-链首" class="headerlink" title="4.寻找 readObject() 链首"></a>4.寻找 readObject() 链首</h3><ul>
 <li>之前链子是到 <code>setValue</code> 的，所以我们在 <code>setValue</code> 处，find usages</li>
 </ul>
 <p>不多说，下图直接给出我们 readObject 的入口类</p>
@@ -703,7 +703,7 @@ invokerTransformer.transform(runtime);<span aria-hidden="true" class="line-numbe
 <p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/image-20230115153904226.png" alt="image-20230115153904226"></p>
 <p>但是阅读一下 readObject 的代码就会发现有两个 if 判断会阻拦我们进入 setValue 方法</p>
 <p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/image-20230115190839986.png" alt="image-20230115190839986"></p>
-<h5 id="ru-he-tong-guo-di-yi-ge-if"><a href="#如何通过第一个-if" class="headerlink" title="如何通过第一个 if"></a>如何通过第一个 if<a href="#ru-he-tong-guo-di-yi-ge-if" class="header-anchor">#</a></h5><p>接下来说说如何过第一个 if，以下是和第一个 if 有关联的语句。</p>
+<h5 id="如何通过第一个-if"><a href="#如何通过第一个-if" class="headerlink" title="如何通过第一个 if"></a>如何通过第一个 if</h5><p>接下来说说如何过第一个 if，以下是和第一个 if 有关联的语句。</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java">AnnotationType annotationType &#x3D; null;
         try &#123;
             annotationType &#x3D; AnnotationType.getInstance(type);
@@ -794,7 +794,7 @@ Class c &#x3D; Class.forName(&quot;sun.reflect.annotation.AnnotationInvocationHa
 
 <p>运行之后打断点示例如下，明显此时可以过第一个 if</p>
 <p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/image-20230116101359073.png" alt="image-20230116101359073"></p>
-<h5 id="di-er-ge-if"><a href="#第二个-if" class="headerlink" title="第二个 if"></a>第二个 if<a href="#di-er-ge-if" class="header-anchor">#</a></h5><p>我们过第一个 if 的代码同时也能过第二个 if!</p>
+<h5 id="第二个-if"><a href="#第二个-if" class="headerlink" title="第二个 if"></a>第二个 if</h5><p>我们过第一个 if 的代码同时也能过第二个 if!</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java">Object value &#x3D; memberValue.getValue();
 if (!(memberType.isInstance(value) ||
                       value instanceof ExceptionProxy)) &#123;&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
@@ -806,7 +806,7 @@ if (!(memberType.isInstance(value) ||
 <p>所以我们随便写一个字符串进去就可以让 isInstance返回假,这样外层再取反直接为真通过第二个 if!</p>
 <p>如下图我们显然已经调用到了 setValue 函数</p>
 <p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/image-20230116101531106.png" alt="image-20230116101531106"></p>
-<h5 id="setvalue-chuan-ru-de-can-shu-zhi"><a href="#setValue-传入的参数值" class="headerlink" title="setValue 传入的参数值"></a>setValue 传入的参数值<a href="#setvalue-chuan-ru-de-can-shu-zhi" class="header-anchor">#</a></h5><p>过了这两个 if 还是不能弹出计算器，因为进去两个 if之后的setValue参数值不对</p>
+<h5 id="setvalue-传入的参数值"><a href="#setValue-传入的参数值" class="headerlink" title="setValue 传入的参数值"></a>setValue 传入的参数值</h5><p>过了这两个 if 还是不能弹出计算器，因为进去两个 if之后的setValue参数值不对</p>
 <p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/image-20230116102151138.png" alt="image-20230116102151138"></p>
 <p>用上面的断点代码跟进一下看看 AbstractInputCheckedMapDecorator 类的 setValue 方法的参数值是什么</p>
 <p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/image-20230116101647272.png" alt="image-20230116101647272"></p>
@@ -966,7 +966,7 @@ public static Object unserialize(String Filename) throws IOException, ClassNotFo
 <blockquote>
 <p>完结撒花！！第一次分析 Java 经典反序列化链子，还有很多不成熟的地方，但是我已经进步良多。</p>
 </blockquote>
-<h3 id="can-kao-lian-jie"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接<a href="#can-kao-lian-jie" class="header-anchor">#</a></h3><p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1no4y1U7E1/?spm_id_from=333.1007.top_right_bar_window_default_collection.content.click&vd_source=ed636173e6c328be468a244d33ee03e1">白日梦组长大佬</a></p>
+<h3 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h3><p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1no4y1U7E1/?spm_id_from=333.1007.top_right_bar_window_default_collection.content.click&vd_source=ed636173e6c328be468a244d33ee03e1">白日梦组长大佬</a></p>
 <p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/h0cksr/p/16189755.html">java反序列化(三)CommonsCollections篇 – CC1</a></p>
 <p><a target="_blank" rel="noopener" href="https://paper.seebug.org/1242/#commons-collections">Java安全之反序列化篇-URLDNS&amp;Commons Collections 1-7反序列化链分析</a></p>
 

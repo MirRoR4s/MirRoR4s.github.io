@@ -29,7 +29,7 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 6.1.0"></head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 
 
@@ -470,7 +470,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    753
+                    751
                 </div>
                 
 
@@ -505,7 +505,7 @@
 <p>复盘复盘</p>
 <span id="more"></span>
 
-<h2 id="crypto"><a href="#crypto" class="headerlink" title="crypto"></a>crypto<a href="#crypto" class="header-anchor">#</a></h2><h3 id="asr"><a href="#ASR" class="headerlink" title="ASR"></a>ASR<a href="#asr" class="header-anchor">#</a></h3><h4 id="ti-mu-nei-rong"><a href="#题目内容" class="headerlink" title="题目内容"></a>题目内容<a href="#ti-mu-nei-rong" class="header-anchor">#</a></h4><pre class="line-numbers language-python" data-language="python"><code class="language-python">from gmpy2 import *
+<h2 id="crypto"><a href="#crypto" class="headerlink" title="crypto"></a>crypto</h2><h3 id="asr"><a href="#ASR" class="headerlink" title="ASR"></a>ASR</h3><h4 id="题目内容"><a href="#题目内容" class="headerlink" title="题目内容"></a>题目内容</h4><pre class="line-numbers language-python" data-language="python"><code class="language-python">from gmpy2 import *
 from Crypto.Util.number import *
 from secret import flag
 m &#x3D; bytes_to_long(flag)
@@ -529,12 +529,12 @@ print(&#39;N&#39;,hex(N))
 # c 0x2f62fb7e7e8e27823193119f8412050ade9084ade25261a5875da23a07d5d5145e72d460697984d8aa668a25822009a4fdc85df2b208941cd3219b312f21c3c7bc4ef7aa8c18b4f91a0e815fe1892fca0f72406e571fbd0fea2c4710c601165ccd7e8a5a828721a5e2c956b732223d683d1413ef393b5f80a431c52bf9099e22b8e27daafb9d3e055242b89b5419b8925744ccf348e1bea519225af8efe7dbcc202425251039cbfe6b892a7fcf7e9d72224ea9381e3fb32ab837139af4b4112a3c7a6571c88e7d6c5db4c3f91e25edd15eb5544ef2f29a9e1bb1062ec86f1902
 # N 0x58a7ff25292651e1a8d82656d64fe3b458d6e688405e85aa6c02e0c33469ad3dbaef6c6eaf8faf22f2d15e80856ab7b90a40fd50c36f7b59932bc94e6fb4fabefa87b11bf4ef74df4ccf8d254f0c6812628df3c5b3786af35e3dde9c87b462d1a565af6f100750718ccb7235174947f00cec5836765150f1680d0c58a5f9ea2473a6033c218c75664dc53377dde9386f37e1a89d77e61a716129d290c5a41f81cd3490bab6fe51f232ab27cb1ac9c8eb88e908c12109a125b7439c25b6879283a17a3467823fbb089709eb836cfd03386cc4bf186eb45401472ab0bdec605fd7<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h4 id="ti-mu-fen-xi"><a href="#题目分析" class="headerlink" title="题目分析"></a>题目分析<a href="#ti-mu-fen-xi" class="header-anchor">#</a></h4><ul>
+<h4 id="题目分析"><a href="#题目分析" class="headerlink" title="题目分析"></a>题目分析</h4><ul>
 <li>先求出 S</li>
 <li>利用 S 足够大的事实，直接在模 S 下进行 RSA 解密</li>
 </ul>
 <p>题目告知了 <code>RA | S</code> 的值，而 <code>RA</code> 只有 256 位，但 <code>S</code> 有 512位，这说明 <code>RA | S</code> 的高 256 位是 <code>S</code> 的高 256位，那么这就是一个已知 <code>S</code> 的高位的问题，所以我们建立一个模多项式用 sage 求解出 S 即可。<a target="_blank" rel="noopener" href="https://doc.sagemath.org/html/en/reference/polynomial_rings/sage/rings/polynomial/polynomial_modn_dense_ntl.html#sage.rings.polynomial.polynomial_modn_dense_ntl.small_roots">关于 sage 的 small_roots 方法</a>：</p>
-<h4 id="jie-ti-jiao-ben"><a href="#解题脚本" class="headerlink" title="解题脚本"></a>解题脚本<a href="#jie-ti-jiao-ben" class="header-anchor">#</a></h4><pre class="line-numbers language-python" data-language="python"><code class="language-python">RSA1 &#x3D; 0x97be543979cb98c109103fa118c1c930ff13a6b2562166417021afd6e46cb0837a5cc5f4094fcea5fcc33efdfa495050e0fb8269922b3ee2d403210ed1ba339af2dc3d4e8952f0c784fcc655436cf255b98cdaf8080df47f6c28bc0bae68c713
+<h4 id="解题脚本"><a href="#解题脚本" class="headerlink" title="解题脚本"></a>解题脚本</h4><pre class="line-numbers language-python" data-language="python"><code class="language-python">RSA1 &#x3D; 0x97be543979cb98c109103fa118c1c930ff13a6b2562166417021afd6e46cb0837a5cc5f4094fcea5fcc33efdfa495050e0fb8269922b3ee2d403210ed1ba339af2dc3d4e8952f0c784fcc655436cf255b98cdaf8080df47f6c28bc0bae68c713
 RSA2 &#x3D; 0xa887aa84f3a0bd8b79ed59a7bb98d8e58a85414f85cf2ddf53ff4bd9294bfdadf7d6d6adfe7fbed55fc71b5a6bfcfe79ced27e2f41e7546a8679daf5b63dda37
 c &#x3D; 0x2f62fb7e7e8e27823193119f8412050ade9084ade25261a5875da23a07d5d5145e72d460697984d8aa668a25822009a4fdc85df2b208941cd3219b312f21c3c7bc4ef7aa8c18b4f91a0e815fe1892fca0f72406e571fbd0fea2c4710c601165ccd7e8a5a828721a5e2c956b732223d683d1413ef393b5f80a431c52bf9099e22b8e27daafb9d3e055242b89b5419b8925744ccf348e1bea519225af8efe7dbcc202425251039cbfe6b892a7fcf7e9d72224ea9381e3fb32ab837139af4b4112a3c7a6571c88e7d6c5db4c3f91e25edd15eb5544ef2f29a9e1bb1062ec86f1902
 N &#x3D; 0x58a7ff25292651e1a8d82656d64fe3b458d6e688405e85aa6c02e0c33469ad3dbaef6c6eaf8faf22f2d15e80856ab7b90a40fd50c36f7b59932bc94e6fb4fabefa87b11bf4ef74df4ccf8d254f0c6812628df3c5b3786af35e3dde9c87b462d1a565af6f100750718ccb7235174947f00cec5836765150f1680d0c58a5f9ea2473a6033c218c75664dc53377dde9386f37e1a89d77e61a716129d290c5a41f81cd3490bab6fe51f232ab27cb1ac9c8eb88e908c12109a125b7439c25b6879283a17a3467823fbb089709eb836cfd03386cc4bf186eb45401472ab0bdec605fd7
@@ -569,7 +569,7 @@ long_to_bytes(flag)
 
 
 
-<h3 id="da-za-hui"><a href="#大杂烩" class="headerlink" title="大杂烩"></a>大杂烩<a href="#da-za-hui" class="header-anchor">#</a></h3><h4 id="ti-mu-nei-rong"><a href="#题目内容-1" class="headerlink" title="题目内容"></a>题目内容<a href="#ti-mu-nei-rong" class="header-anchor">#</a></h4><pre class="line-numbers language-python" data-language="python"><code class="language-python"># sage
+<h3 id="大杂烩"><a href="#大杂烩" class="headerlink" title="大杂烩"></a>大杂烩</h3><h4 id="题目内容"><a href="#题目内容-1" class="headerlink" title="题目内容"></a>题目内容</h4><pre class="line-numbers language-python" data-language="python"><code class="language-python"># sage
 from Crypto.Util.number import *
 from gmpy2 import *
 from random import *
@@ -626,7 +626,7 @@ print(&#39;NN &#x3D;&#39;, NN)
 
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h4 id="ti-mu-fen-xi"><a href="#题目分析-1" class="headerlink" title="题目分析"></a>题目分析<a href="#ti-mu-fen-xi" class="header-anchor">#</a></h4><ul>
+<h4 id="题目分析"><a href="#题目分析-1" class="headerlink" title="题目分析"></a>题目分析</h4><ul>
 <li>先出求 e （利用 ECC 方程）</li>
 </ul>
 <p>先把 b 求出来，根据</p>

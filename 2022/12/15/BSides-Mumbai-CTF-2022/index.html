@@ -29,7 +29,7 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 6.1.0"></head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 
 
@@ -505,9 +505,9 @@
 <p>2022年12月10日的国外CTF比赛。</p>
 <span id="more"></span>
 
-<h2 id="crypto"><a href="#Crypto" class="headerlink" title="Crypto"></a>Crypto<a href="#crypto" class="header-anchor">#</a></h2><h3 id="poet-xor-jian-dan-yi-huo"><a href="#Poet-Xor-简单异或" class="headerlink" title="Poet Xor-简单异或"></a><strong>Poet Xor</strong>-简单异或<a href="#poet-xor-jian-dan-yi-huo" class="header-anchor">#</a></h3><h4 id="ti-mu-miao-shu"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述<a href="#ti-mu-miao-shu" class="header-anchor">#</a></h4><pre class="line-numbers language-none"><code class="language-none">XOR was a famous poet of 1931. Please help him recover his poem. Read his poem and you&#39;ll get your reward in the the last line.<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h2 id="crypto"><a href="#Crypto" class="headerlink" title="Crypto"></a>Crypto</h2><h3 id="poet-xor-简单异或"><a href="#Poet-Xor-简单异或" class="headerlink" title="Poet Xor-简单异或"></a><strong>Poet Xor</strong>-简单异或</h3><h4 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h4><pre class="line-numbers language-none"><code class="language-none">XOR was a famous poet of 1931. Please help him recover his poem. Read his poem and you&#39;ll get your reward in the the last line.<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<h4 id="ti-mu-nei-rong"><a href="#题目内容" class="headerlink" title="题目内容"></a>题目内容<a href="#ti-mu-nei-rong" class="header-anchor">#</a></h4><pre class="line-numbers language-python" data-language="python"><code class="language-python">from secrets import token_bytes
+<h4 id="题目内容"><a href="#题目内容" class="headerlink" title="题目内容"></a>题目内容</h4><pre class="line-numbers language-python" data-language="python"><code class="language-python">from secrets import token_bytes
 from itertools import cycle
 
 FLAG &#x3D; open(&quot;flag.txt&quot;, &quot;rb&quot;).read().split(b&#39;\n&#39;)
@@ -521,8 +521,8 @@ for secret in FLAG:
 
 open(&quot;flag.enc&quot;, &quot;w&quot;).write(cipher)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h4 id="jie-ti-fen-xi"><a href="#解题分析" class="headerlink" title="解题分析"></a>解题分析<a href="#jie-ti-fen-xi" class="header-anchor">#</a></h4><p>简单的异或加密，已知明文开头是 <code> BSMumbai</code>，所以利用已知明文攻击恢复出密钥。这里注意恢复密钥的时候要和最后一组密文异或，因为提示告诉我们flag在最后一行。</p>
-<h4 id="jie-ti-jiao-ben"><a href="#解题脚本" class="headerlink" title="解题脚本"></a>解题脚本<a href="#jie-ti-jiao-ben" class="header-anchor">#</a></h4><pre class="line-numbers language-python" data-language="python"><code class="language-python">from Crypto.Util.number import *
+<h4 id="解题分析"><a href="#解题分析" class="headerlink" title="解题分析"></a>解题分析</h4><p>简单的异或加密，已知明文开头是 <code> BSMumbai</code>，所以利用已知明文攻击恢复出密钥。这里注意恢复密钥的时候要和最后一组密文异或，因为提示告诉我们flag在最后一行。</p>
+<h4 id="解题脚本"><a href="#解题脚本" class="headerlink" title="解题脚本"></a>解题脚本</h4><pre class="line-numbers language-python" data-language="python"><code class="language-python">from Crypto.Util.number import *
 from pwn import xor
 from Crypto.Util import strxor
 text&#x3D;  b&quot;BSMumbai&quot;
@@ -536,9 +536,9 @@ print(flag)
 
 
 
-<h3 id="big-rsa-boneh-durfee-s-attack"><a href="#Big-RSA-Boneh-Durfee’s-attack" class="headerlink" title="Big RSA-Boneh-Durfee’s attack"></a><strong>Big RSA</strong>-Boneh-Durfee’s attack<a href="#big-rsa-boneh-durfee-s-attack" class="header-anchor">#</a></h3><h4 id="ti-mu-miao-shu"><a href="#题目描述-1" class="headerlink" title="题目描述"></a>题目描述<a href="#ti-mu-miao-shu" class="header-anchor">#</a></h4><pre class="line-numbers language-none"><code class="language-none">It&#39;s too cold outside! Maybe, __________ is a good idea!<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h3 id="big-rsa-boneh-durfees-attack"><a href="#Big-RSA-Boneh-Durfee’s-attack" class="headerlink" title="Big RSA-Boneh-Durfee’s attack"></a><strong>Big RSA</strong>-Boneh-Durfee’s attack</h3><h4 id="题目描述"><a href="#题目描述-1" class="headerlink" title="题目描述"></a>题目描述</h4><pre class="line-numbers language-none"><code class="language-none">It&#39;s too cold outside! Maybe, __________ is a good idea!<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<h4 id="ti-mu-nei-rong"><a href="#题目内容-1" class="headerlink" title="题目内容"></a>题目内容<a href="#ti-mu-nei-rong" class="header-anchor">#</a></h4><pre class="line-numbers language-python" data-language="python"><code class="language-python">from Crypto.Util.number import *
+<h4 id="题目内容"><a href="#题目内容-1" class="headerlink" title="题目内容"></a>题目内容</h4><pre class="line-numbers language-python" data-language="python"><code class="language-python">from Crypto.Util.number import *
 from Crypto.PublicKey import RSA
 from Crypto.Cipher import PKCS1_v1_5
 
@@ -563,12 +563,12 @@ open(&#39;flag.enc&#39;, &#39;w&#39;).write( enc.hex() )
 open(&#39;pubkey.pem&#39;, &#39;wb&#39;).write( key.public_key().export_key(&#39;PEM&#39;) )
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h4 id="jie-ti-fen-xi"><a href="#解题分析-1" class="headerlink" title="解题分析"></a>解题分析<a href="#jie-ti-fen-xi" class="header-anchor">#</a></h4><p>密钥生成过程中的私钥指数太小了，满足</p>
+<h4 id="解题分析"><a href="#解题分析-1" class="headerlink" title="解题分析"></a>解题分析</h4><p>密钥生成过程中的私钥指数太小了，满足</p>
 <p>$d &lt; n^{0.292}$ </p>
 <p>可以使用 Boneh-Durfee’s attack 快速恢复私钥。</p>
 <p><a target="_blank" rel="noopener" href="https://cryptohack.gitbook.io/cryptobook/untitled/low-private-component-attacks/boneh-durfee-attack%EF%BC%88%E7%9C%8B%E4%BA%86%E4%B8%80%E4%B8%8B%E6%84%9F%E8%A7%89%E4%B8%8D%E6%98%AF%E5%BE%88%E5%A5%BD%EF%BC%89">https://cryptohack.gitbook.io/cryptobook/untitled/low-private-component-attacks/boneh-durfee-attack（看了一下感觉不是很好）</a></p>
 <p><a target="_blank" rel="noopener" href="https://www.cryptologie.net/article/241/implementation-of-boneh-and-durfee-attack-on-rsas-low-private-exponents/">https://www.cryptologie.net/article/241/implementation-of-boneh-and-durfee-attack-on-rsas-low-private-exponents/</a></p>
-<h4 id="jie-ti-jiao-ben"><a href="#解题脚本-1" class="headerlink" title="解题脚本"></a>解题脚本<a href="#jie-ti-jiao-ben" class="header-anchor">#</a></h4><pre class="line-numbers language-python" data-language="python"><code class="language-python">from __future__ import print_function
+<h4 id="解题脚本"><a href="#解题脚本-1" class="headerlink" title="解题脚本"></a>解题脚本</h4><pre class="line-numbers language-python" data-language="python"><code class="language-python">from __future__ import print_function
 import time
 
 ############################################
@@ -911,9 +911,9 @@ if __name__ &#x3D;&#x3D; &quot;__main__&quot;:
 
 
 
-<h3 id="egglamal"><a href="#EggLamal" class="headerlink" title="EggLamal"></a><strong>EggLamal</strong><a href="#egglamal" class="header-anchor">#</a></h3><h4 id="ti-mu-miao-shu"><a href="#题目描述-2" class="headerlink" title="题目描述"></a>题目描述<a href="#ti-mu-miao-shu" class="header-anchor">#</a></h4><pre class="line-numbers language-none"><code class="language-none">Try this EggLamal (idk how does it taste)<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h3 id="egglamal"><a href="#EggLamal" class="headerlink" title="EggLamal"></a><strong>EggLamal</strong></h3><h4 id="题目描述"><a href="#题目描述-2" class="headerlink" title="题目描述"></a>题目描述</h4><pre class="line-numbers language-none"><code class="language-none">Try this EggLamal (idk how does it taste)<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<h4 id="ti-mu-nei-rong"><a href="#题目内容-2" class="headerlink" title="题目内容"></a>题目内容<a href="#ti-mu-nei-rong" class="header-anchor">#</a></h4><pre class="line-numbers language-python" data-language="python"><code class="language-python">from params import a, b, p
+<h4 id="题目内容"><a href="#题目内容-2" class="headerlink" title="题目内容"></a>题目内容</h4><pre class="line-numbers language-python" data-language="python"><code class="language-python">from params import a, b, p
 
 FLAG &#x3D; int(open(&#39;flag.txt&#39;, &#39;rb&#39;).read().hex(), 16)
 
@@ -931,7 +931,7 @@ print(&#39;B &#x3D;&#39;, B)
 print(&#39;c &#x3D;&#39;, c)
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h4 id="jie-ti-fen-xi"><a href="#解题分析-2" class="headerlink" title="解题分析"></a>解题分析<a href="#jie-ti-fen-xi" class="header-anchor">#</a></h4><p>一个经典的 Elgamal 密码体制实现。注意到</p>
+<h4 id="解题分析"><a href="#解题分析-2" class="headerlink" title="解题分析"></a>解题分析</h4><p>一个经典的 Elgamal 密码体制实现。注意到</p>
 <p>$B &#x3D; p-1$</p>
 <p>所以 $b$ 可能等于 $(p-1)&#x2F;2$ 。这一步尚未玩清楚，我的猜测如：</p>
 <p>$2^{p-1}\equiv 1,\mod ,p$</p>
@@ -948,7 +948,7 @@ print(&#39;c &#x3D;&#39;, c)
 <p>如果 $a$ 是偶数，那么 $S$ 等于 1，否则 $S$ 等于 $p-1$ 。这是因为</p>
 <p>$S\equiv (g^{p-1})^{(a-1)&#x2F;2}*(g^{p-1})^{1&#x2F;2}$</p>
 <p>上式右端第二个表达式就是 $b$ </p>
-<h4 id="jie-ti-jiao-ben"><a href="#解题脚本-2" class="headerlink" title="解题脚本"></a>解题脚本<a href="#jie-ti-jiao-ben" class="header-anchor">#</a></h4><pre class="line-numbers language-python" data-language="python"><code class="language-python">from Crypto.Util.number import *
+<h4 id="解题脚本"><a href="#解题脚本-2" class="headerlink" title="解题脚本"></a>解题脚本</h4><pre class="line-numbers language-python" data-language="python"><code class="language-python">from Crypto.Util.number import *
 
 
 
@@ -964,9 +964,9 @@ if __name__ &#x3D;&#x3D; &quot;__main__&quot;:
 
 
 
-<h3 id="eccsub"><a href="#ECCSub" class="headerlink" title="ECCSub"></a><strong>ECCSub</strong><a href="#eccsub" class="header-anchor">#</a></h3><h4 id="ti-mu-miao-shu"><a href="#题目描述-3" class="headerlink" title="题目描述"></a>题目描述<a href="#ti-mu-miao-shu" class="header-anchor">#</a></h4><pre class="line-numbers language-none"><code class="language-none">Try this new cipher called ECCSub<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h3 id="eccsub"><a href="#ECCSub" class="headerlink" title="ECCSub"></a><strong>ECCSub</strong></h3><h4 id="题目描述"><a href="#题目描述-3" class="headerlink" title="题目描述"></a>题目描述</h4><pre class="line-numbers language-none"><code class="language-none">Try this new cipher called ECCSub<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<h4 id="ti-mu-nei-rong"><a href="#题目内容-3" class="headerlink" title="题目内容"></a>题目内容<a href="#ti-mu-nei-rong" class="header-anchor">#</a></h4><pre class="line-numbers language-python" data-language="python"><code class="language-python">import os
+<h4 id="题目内容"><a href="#题目内容-3" class="headerlink" title="题目内容"></a>题目内容</h4><pre class="line-numbers language-python" data-language="python"><code class="language-python">import os
 
 FLAG &#x3D; open(&#39;flag.txt&#39;, &#39;rb&#39;).read().strip()
 
@@ -984,10 +984,10 @@ C &#x3D; [ hex(ECC_encode(int(os.urandom(8).hex() + hex(k)[2:], 16))) for k in F
 open(&#39;flag.enc&#39;, &#39;w&#39;).write(str(C))
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h4 id="jie-ti-fen-xi"><a href="#解题分析-3" class="headerlink" title="解题分析"></a>解题分析<a href="#jie-ti-fen-xi" class="header-anchor">#</a></h4><p>在 sage 下求解一个有限域 p 上的模多项式的根</p>
+<h4 id="解题分析"><a href="#解题分析-3" class="headerlink" title="解题分析"></a>解题分析</h4><p>在 sage 下求解一个有限域 p 上的模多项式的根</p>
 <p>$f(x) &#x3D; x^3+ax+b\mod,p$</p>
 <p>求出根之后转为十六进制，最后的两个十六进制数就是 flag 的某个字节。</p>
-<h4 id="jie-ti-jiao-ben"><a href="#解题脚本-3" class="headerlink" title="解题脚本"></a>解题脚本<a href="#jie-ti-jiao-ben" class="header-anchor">#</a></h4><pre class="line-numbers language-python" data-language="python"><code class="language-python">from Crypto.Util.number import *
+<h4 id="解题脚本"><a href="#解题脚本-3" class="headerlink" title="解题脚本"></a>解题脚本</h4><pre class="line-numbers language-python" data-language="python"><code class="language-python">from Crypto.Util.number import *
 
 def solve(p,a,b,c):
     flag &#x3D; &quot;&quot;
@@ -1012,9 +1012,9 @@ if __name__ &#x3D;&#x3D; &quot;__main__&quot;:
 
 
 
-<h3 id="asd-sea"><a href="#ASD-SEA" class="headerlink" title="ASD-SEA"></a><strong>ASD-SEA</strong><a href="#asd-sea" class="header-anchor">#</a></h3><h4 id="ti-mu-miao-shu"><a href="#题目描述-4" class="headerlink" title="题目描述"></a>题目描述<a href="#ti-mu-miao-shu" class="header-anchor">#</a></h4><pre class="line-numbers language-none"><code class="language-none">Have you ever used the A,S,D or D,S,A keys for placeholders? yaaaAES, I did!<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h3 id="asd-sea"><a href="#ASD-SEA" class="headerlink" title="ASD-SEA"></a><strong>ASD-SEA</strong></h3><h4 id="题目描述"><a href="#题目描述-4" class="headerlink" title="题目描述"></a>题目描述</h4><pre class="line-numbers language-none"><code class="language-none">Have you ever used the A,S,D or D,S,A keys for placeholders? yaaaAES, I did!<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<h4 id="ti-mu-nei-rong"><a href="#题目内容-4" class="headerlink" title="题目内容"></a>题目内容<a href="#ti-mu-nei-rong" class="header-anchor">#</a></h4><pre class="line-numbers language-python" data-language="python"><code class="language-python">from Crypto.Util.Padding import pad
+<h4 id="题目内容"><a href="#题目内容-4" class="headerlink" title="题目内容"></a>题目内容</h4><pre class="line-numbers language-python" data-language="python"><code class="language-python">from Crypto.Util.Padding import pad
 from Crypto.Util.number import *
 from Crypto.PublicKey import DSA
 from Crypto.Cipher import AES
@@ -1059,13 +1059,13 @@ if isVerified:
     print(&quot;Cipher:&quot;, cipher)
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h4 id="jie-ti-fen-xi"><a href="#解题分析-4" class="headerlink" title="解题分析"></a>解题分析<a href="#jie-ti-fen-xi" class="header-anchor">#</a></h4><p>一个 DSA 签名算法，同时签名的密钥作为AES算法的密钥，我们需要恢复签名密钥。</p>
+<h4 id="解题分析"><a href="#解题分析-4" class="headerlink" title="解题分析"></a>解题分析</h4><p>一个 DSA 签名算法，同时签名的密钥作为AES算法的密钥，我们需要恢复签名密钥。</p>
 <p><img src="/images/BSides-Mumbai-CTF-2022/image-20221216180401342.png" alt="image-20221216180401342"></p>
 <p>观察到在密钥生成过程中使用的 n 由 文件的消息摘要 加上两个字节组成，所以我们可以爆破这两个字节找到 n 。</p>
 <p>n 相当于上图中的 k，所以我们可以通过如下式子恢复 a 。</p>
 <p>$aS_1\equiv S_2*k-D$</p>
 <p>$a\equiv(S_2*k-D)*S_1^{-1}\mod,q$</p>
-<h4 id="jie-ti-jiao-ben"><a href="#解题脚本-4" class="headerlink" title="解题脚本"></a>解题脚本<a href="#jie-ti-jiao-ben" class="header-anchor">#</a></h4><pre class="line-numbers language-python" data-language="python"><code class="language-python">from Crypto.Util.Padding import pad, unpad
+<h4 id="解题脚本"><a href="#解题脚本-4" class="headerlink" title="解题脚本"></a>解题脚本</h4><pre class="line-numbers language-python" data-language="python"><code class="language-python">from Crypto.Util.Padding import pad, unpad
 from Crypto.Util.number import *
 from Crypto.PublicKey import DSA
 from Crypto.Cipher import AES
@@ -1092,7 +1092,7 @@ print(flag) # BSMumbai&#123;DSA_msg_related_nonce_problem&#125;<span aria-hidden
 
 
 
-<h3 id="guan-fang-wp"><a href="#官方WP" class="headerlink" title="官方WP"></a>官方WP<a href="#guan-fang-wp" class="header-anchor">#</a></h3><p><a target="_blank" rel="noopener" href="https://b6a.black/posts/2022-12-14-bsides-mumbai/#egglamal">https://b6a.black/posts/2022-12-14-bsides-mumbai/#egglamal</a></p>
+<h3 id="官方wp"><a href="#官方WP" class="headerlink" title="官方WP"></a>官方WP</h3><p><a target="_blank" rel="noopener" href="https://b6a.black/posts/2022-12-14-bsides-mumbai/#egglamal">https://b6a.black/posts/2022-12-14-bsides-mumbai/#egglamal</a></p>
 
                 
             </div>

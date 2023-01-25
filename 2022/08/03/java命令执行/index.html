@@ -29,7 +29,7 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 6.1.0"></head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 
 
@@ -505,12 +505,12 @@
 <p>今天开始学java的web安全相关内容，冲！</p>
 <span id="more"></span>
 
-<h3 id="java-ben-di-ming-ling-zhi-xing-lou-dong"><a href="#Java本地命令执行漏洞" class="headerlink" title="Java本地命令执行漏洞"></a>Java本地命令执行漏洞<a href="#java-ben-di-ming-ling-zhi-xing-lou-dong" class="header-anchor">#</a></h3><h4 id="bei-jing"><a href="#背景" class="headerlink" title="背景"></a>背景<a href="#bei-jing" class="header-anchor">#</a></h4><p>类似于php，java也提供了本地系统命令执行的函数，攻击者可以通过这些函数在目标服务器中执行任意系统命令，在java中可用于执行系统命令的API有：</p>
+<h3 id="java本地命令执行漏洞"><a href="#Java本地命令执行漏洞" class="headerlink" title="Java本地命令执行漏洞"></a>Java本地命令执行漏洞</h3><h4 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h4><p>类似于php，java也提供了本地系统命令执行的函数，攻击者可以通过这些函数在目标服务器中执行任意系统命令，在java中可用于执行系统命令的API有：</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java">java.lang.Runtime
 java.lang.ProcessBuilder
 java.lang.UNIXProcess &#x2F; ProcessImpl<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 
-<h4 id="runtime-ming-ling-zhi-xing"><a href="#Runtime命令执行" class="headerlink" title="Runtime命令执行"></a>Runtime命令执行<a href="#runtime-ming-ling-zhi-xing" class="header-anchor">#</a></h4><h5 id="exec-string-command"><a href="#exec-String-command" class="headerlink" title="exec(String command)"></a>exec(String command)<a href="#exec-string-command" class="header-anchor">#</a></h5><p>在java中通常会使用<code>java.lang.Runtime</code>类的<code>exec</code>方法来执行本地系统命令。</p>
+<h4 id="runtime命令执行"><a href="#Runtime命令执行" class="headerlink" title="Runtime命令执行"></a>Runtime命令执行</h4><h5 id="execstring-command"><a href="#exec-String-command" class="headerlink" title="exec(String command)"></a>exec(String command)</h5><p>在java中通常会使用<code>java.lang.Runtime</code>类的<code>exec</code>方法来执行本地系统命令。</p>
 <p>以如下程序执行命令为例：</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java">import java.io.IOException;
 
@@ -547,7 +547,7 @@ public class linux_cmd &#123;
 <p><img src="Users\mirror\Desktop\write-up\blog\source\images\t011fd5fe5e71a5b892.png" alt="img"></p>
 <p>此时 prog 是要执行的命令 <code>ping</code> , argBlock 都是传给 ping 的参数 <code>127.0.0.1\x00;echo\x001\x00&gt;\x001.txt</code></p>
 <p>经过 StringTokenizer 对字符串的处理，命令执行的语义发生了改变，并不是最初设定的想法。</p>
-<h5 id="exec-string-cmdarray"><a href="#exec-String-cmdarray" class="headerlink" title="exec(String cmdarray[])"></a>exec(String cmdarray[])<a href="#exec-string-cmdarray" class="header-anchor">#</a></h5><p>这个函数是上一个函数的重载函数，也是在Java Runtime包中。其参数类型为字符串数组。</p>
+<h5 id="execstring-cmdarray"><a href="#exec-String-cmdarray" class="headerlink" title="exec(String cmdarray[])"></a>exec(String cmdarray[])</h5><p>这个函数是上一个函数的重载函数，也是在Java Runtime包中。其参数类型为字符串数组。</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java">package com.geekby;
 
 import java.io.BufferedReader;
@@ -577,7 +577,7 @@ public class Main &#123;
 <p>prog是要执行的命令，后面的数组其实是<code>/bin/sh</code>的ascii码值。</p>
 <p>argBlock都是传给ping的参数：<code>-c\x00&quot;ping 127.0.0.1;pwd&quot;</code></p>
 <p>综上可以看到这个Runtime下的exec方法不能采用命令分割的形式进行命令注入。</p>
-<h5 id="load"><a href="#load" class="headerlink" title="load()"></a>load()<a href="#load" class="header-anchor">#</a></h5><p>在Java Runtime包中，还有另一种加载外部库的形式去命令执行。通过加载动态链接库，如linux下的so文件，windows下的dll文件。</p>
+<h5 id="load"><a href="#load" class="headerlink" title="load()"></a>load()</h5><p>在Java Runtime包中，还有另一种加载外部库的形式去命令执行。通过加载动态链接库，如linux下的so文件，windows下的dll文件。</p>
 <pre class="line-numbers language-none"><code class="language-none">public class RCE &#123;
     public static void main(String[] args) &#123;
         Runtime rt &#x3D; Runtime.getRuntime();
@@ -586,7 +586,7 @@ public class Main &#123;
 &#125;
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h4 id="processbuilder"><a href="#ProcessBuilder" class="headerlink" title="ProcessBuilder"></a>ProcessBuilder<a href="#processbuilder" class="header-anchor">#</a></h4><p>使用ProcessBuilder类创建一个进程，创建ProcessBuilder实例，指定该进程的名称和所需参数。</p>
+<h4 id="processbuilder"><a href="#ProcessBuilder" class="headerlink" title="ProcessBuilder"></a>ProcessBuilder</h4><p>使用ProcessBuilder类创建一个进程，创建ProcessBuilder实例，指定该进程的名称和所需参数。</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java">package com.geekby;
 
 import java.io.IOException;
@@ -617,8 +617,8 @@ public class Main &#123;
 <p>所以上述代码实现的功能就是创建子进程执行ping命令，然后输出命令执行的结果。通过分析调用栈可以发现，ProcessBuilder 在底层调用的逻辑与 Runtime.getRuntime.exec 逻辑相似，在此不做赘述。</p>
 <p>忽然发现自己不明白什么是java反射，网上搜到一篇文章</p>
 <p><a target="_blank" rel="noopener" href="https://blog.csdn.net/pzjtian/article/details/107852022?spm=1001.2101.3001.6661.1&amp;utm_medium=distribute.pc_relevant_t0.none-task-blog-2~default~CTRLIST~default-1-107852022-blog-125000051.pc_relevant_multi_platform_featuressortv2removedup&amp;depth_1-utm_source=distribute.pc_relevant_t0.none-task-blog-2~default~CTRLIST~default-1-107852022-blog-125000051.pc_relevant_multi_platform_featuressortv2removedup&amp;utm_relevant_index=1">https://blog.csdn.net/pzjtian/article/details/107852022?spm=1001.2101.3001.6661.1&amp;utm_medium=distribute.pc_relevant_t0.none-task-blog-2%7Edefault%7ECTRLIST%7Edefault-1-107852022-blog-125000051.pc_relevant_multi_platform_featuressortv2removedup&amp;depth_1-utm_source=distribute.pc_relevant_t0.none-task-blog-2%7Edefault%7ECTRLIST%7Edefault-1-107852022-blog-125000051.pc_relevant_multi_platform_featuressortv2removedup&amp;utm_relevant_index=1</a></p>
-<h3 id="runtime-exec-zhi-xing-ming-ling-he-fan-dan-shell"><a href="#Runtime-exec-执行命令和反弹shell" class="headerlink" title="Runtime.exec() 执行命令和反弹shell"></a>Runtime.exec() 执行命令和反弹shell<a href="#runtime-exec-zhi-xing-ming-ling-he-fan-dan-shell" class="header-anchor">#</a></h3><p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/eb41a0291123">https://www.jianshu.com/p/eb41a0291123</a></p>
-<h3 id="can-kao-lian-jie"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接<a href="#can-kao-lian-jie" class="header-anchor">#</a></h3><p>vscode：<a target="_blank" rel="noopener" href="https://blog.csdn.net/cheng_xu_yuan_yy/article/details/109015442%EF%BC%8C%E7%84%B6%E5%90%8E%E6%88%90%E5%8A%9F%E5%8F%91%E8%BD%A6%E3%80%82">https://blog.csdn.net/cheng_xu_yuan_yy/article/details/109015442，然后成功发车。</a></p>
+<h3 id="runtimeexec-执行命令和反弹shell"><a href="#Runtime-exec-执行命令和反弹shell" class="headerlink" title="Runtime.exec() 执行命令和反弹shell"></a>Runtime.exec() 执行命令和反弹shell</h3><p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/eb41a0291123">https://www.jianshu.com/p/eb41a0291123</a></p>
+<h3 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h3><p>vscode：<a target="_blank" rel="noopener" href="https://blog.csdn.net/cheng_xu_yuan_yy/article/details/109015442%EF%BC%8C%E7%84%B6%E5%90%8E%E6%88%90%E5%8A%9F%E5%8F%91%E8%BD%A6%E3%80%82">https://blog.csdn.net/cheng_xu_yuan_yy/article/details/109015442，然后成功发车。</a></p>
 <p>IDEA：<a target="_blank" rel="noopener" href="https://blog.csdn.net/oschina_41790905/article/details/79475187">https://blog.csdn.net/oschina_41790905/article/details/79475187</a></p>
 <p>学习博客：</p>
 <p><a target="_blank" rel="noopener" href="https://www.geekby.site/2022/02/java%E6%9C%AC%E5%9C%B0%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E/">https://www.geekby.site/2022/02/java%E6%9C%AC%E5%9C%B0%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E/</a></p>

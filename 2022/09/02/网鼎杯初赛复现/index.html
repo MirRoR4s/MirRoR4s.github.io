@@ -29,7 +29,7 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 6.1.0"></head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 
 
@@ -498,7 +498,7 @@
 
 
 
-<h3 id="crypto"><a href="#CRYPTO" class="headerlink" title="CRYPTO"></a>CRYPTO<a href="#crypto" class="header-anchor">#</a></h3><h3 id="crypto092"><a href="#crypto092" class="headerlink" title="crypto092"></a>crypto092<a href="#crypto092" class="header-anchor">#</a></h3><p>题目说了是170号段首批放号的联通号码，百度查到相关信息，然后咱们国家代码是86，未知的哈希值是13位的纯数字，根据已有信息直接爆破。</p>
+<h3 id="crypto"><a href="#CRYPTO" class="headerlink" title="CRYPTO"></a>CRYPTO</h3><h3 id="crypto092"><a href="#crypto092" class="headerlink" title="crypto092"></a>crypto092</h3><p>题目说了是170号段首批放号的联通号码，百度查到相关信息，然后咱们国家代码是86，未知的哈希值是13位的纯数字，根据已有信息直接爆破。</p>
 <pre class="line-numbers language-python" data-language="python"><code class="language-python">import hashlib
 import string
 import itertools
@@ -516,7 +516,7 @@ for k in range(7,20):
             print(num)
             break<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h3 id="crypto405"><a href="#crypto405" class="headerlink" title="crypto405"></a>crypto405<a href="#crypto405" class="header-anchor">#</a></h3><p>根据flag的格式，很容易猜出flag的开头前五个是flag{。随后我们不妨从每一组密文间的关系入手，根据题目的加密过程，我们首先通过如下代码剖析一下每组密文间的关系，注意这里先不考虑模素数p。</p>
+<h3 id="crypto405"><a href="#crypto405" class="headerlink" title="crypto405"></a>crypto405</h3><p>根据flag的格式，很容易猜出flag的开头前五个是flag{。随后我们不妨从每一组密文间的关系入手，根据题目的加密过程，我们首先通过如下代码剖析一下每组密文间的关系，注意这里先不考虑模素数p。</p>
 <pre class="line-numbers language-python" data-language="python"><code class="language-python">flag &#x3D; b&#39;flag&#123;&#39;
 K &#x3D; var(&#39;k0 k1 k2 k3 k4&#39;)
 G &#x3D; [int(i) for i in flag]
@@ -595,7 +595,7 @@ for i in range(2**15,2**16):
     except:
         pass<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h3 id="crypto162"><a href="#crypto162" class="headerlink" title="crypto162"></a>crypto162<a href="#crypto162" class="header-anchor">#</a></h3><p>密钥是多个递归函数之和，由于递归太多次了，显然我们不能直接运行源代码求出这个和。阅读cal函数具体实现就不难发现存在一个递推方程</p>
+<h3 id="crypto162"><a href="#crypto162" class="headerlink" title="crypto162"></a>crypto162</h3><p>密钥是多个递归函数之和，由于递归太多次了，显然我们不能直接运行源代码求出这个和。阅读cal函数具体实现就不难发现存在一个递推方程</p>
 <p><code>cal(i,cof) = cof[2]*cal(i-3,cof)+cof[1]*cal(i-2,cof)+cof[0]*cal(i-1,cof)，其中初始状态是1,2,3</code></p>
 <p>所以我们直接把递归求和变为递推方程求和即可求出密钥。为了加快运算速度，注意到密钥最后只取了这个大数的倒数两千位和倒数一千位之间的一千位，所以求和的时候可以进行一个取模操作；值得注意的是这个加密代码应该是用py2写的，解密我们最好也用py2。</p>
 <pre class="line-numbers language-python" data-language="python"><code class="language-python">#python2.7

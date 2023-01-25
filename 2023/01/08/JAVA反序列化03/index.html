@@ -29,7 +29,7 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 6.1.0"></head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 
 
@@ -505,8 +505,8 @@
 <p>JDK 动态代理</p>
 <span id="more"></span>
 
-<h2 id="java-fan-xu-lie-hua-ji-chu-pian-zhi-jdk-dong-tai-dai-li"><a href="#Java-反序列化基础篇之-JDK-动态代理" class="headerlink" title="Java 反序列化基础篇之 JDK 动态代理"></a>Java 反序列化基础篇之 JDK 动态代理<a href="#java-fan-xu-lie-hua-ji-chu-pian-zhi-jdk-dong-tai-dai-li" class="header-anchor">#</a></h2><h3 id="qian-yan"><a href="#前言" class="headerlink" title="前言"></a>前言<a href="#qian-yan" class="header-anchor">#</a></h3><p>Java 的动态代理在实践中有着广泛的使用场景，比如 Spring AOP、Java 注解的获取、日志、用户鉴权等。由于 Java 动态代理与 Java 反射机制关系紧密，故在学习动态代理前需要了解 Java 反射机制。</p>
-<h3 id="dai-li-mo-shi"><a href="#代理模式" class="headerlink" title="代理模式"></a>代理模式<a href="#dai-li-mo-shi" class="header-anchor">#</a></h3><p>无论学习静态代理还是动态代理，我们都要先了解一下代理模式。</p>
+<h2 id="java-反序列化基础篇之-jdk-动态代理"><a href="#Java-反序列化基础篇之-JDK-动态代理" class="headerlink" title="Java 反序列化基础篇之 JDK 动态代理"></a>Java 反序列化基础篇之 JDK 动态代理</h2><h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>Java 的动态代理在实践中有着广泛的使用场景，比如 Spring AOP、Java 注解的获取、日志、用户鉴权等。由于 Java 动态代理与 Java 反射机制关系紧密，故在学习动态代理前需要了解 Java 反射机制。</p>
+<h3 id="代理模式"><a href="#代理模式" class="headerlink" title="代理模式"></a>代理模式</h3><p>无论学习静态代理还是动态代理，我们都要先了解一下代理模式。</p>
 <p>先看百度百科的定义</p>
 <p><code>代理模式的定义：给某个对象提供一种代理以控制这个对象的访问。在某些情况下，一个对象不适合或者不能直接引用另一个对象，而代理对象可以在客户端和被代理对象（目标对象）之间起到中介的作用。</code></p>
 <p>直接看定义可能有些难以理解，我们就以生活中具体的实例来说明一下。</p>
@@ -518,7 +518,7 @@
 <li>隐藏被代理类（委托类）的具体实现。</li>
 <li>实现客户与被代理类（委托类）的解耦，在不改变被代理类代码的情况下添加一些额外的功能（日志、权限）等。</li>
 </ol>
-<h3 id="dai-li-mo-shi-jiao-se-ding-yi"><a href="#代理模式角色定义" class="headerlink" title="代理模式角色定义"></a>代理模式角色定义<a href="#dai-li-mo-shi-jiao-se-ding-yi" class="header-anchor">#</a></h3><p>代理模式角色分为 3 种：</p>
+<h3 id="代理模式角色定义"><a href="#代理模式角色定义" class="headerlink" title="代理模式角色定义"></a>代理模式角色定义</h3><p>代理模式角色分为 3 种：</p>
 <ol>
 <li><code>Subject（抽象主题角色）</code>：定义代理类和真实主题的公共对外方法，也是代理类代理真实主题的方法，比如广告、出售等。</li>
 <li><code>RealSubject（真实主题角色）</code>：真正实现业务逻辑的类。比如实现了广告、出售等方法的厂家（Vendor）</li>
@@ -526,7 +526,7 @@
 </ol>
 <p>代理模式的结构比较简单，其核心是代理类，为了让客户端能够一致性地对待真实对象和代理对象，在代理模式中引入了抽象层。</p>
 <p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9603/image-20230112095306189.png" alt="image-20230112095306189"></p>
-<h3 id="jing-tai-dai-li-shi-li"><a href="#静态代理实例" class="headerlink" title="静态代理实例"></a>静态代理实例<a href="#jing-tai-dai-li-shi-li" class="header-anchor">#</a></h3><p>静态代理是指<code>代理类</code>在程序运行前就已经存在，这种情况下的代理类通常都是我们在 Java 代码中定义的。</p>
+<h3 id="静态代理实例"><a href="#静态代理实例" class="headerlink" title="静态代理实例"></a>静态代理实例</h3><p>静态代理是指<code>代理类</code>在程序运行前就已经存在，这种情况下的代理类通常都是我们在 Java 代码中定义的。</p>
 <p>下面我们就以具体的实例来演示一下静态代理。</p>
 <p>首先定义一组接口 Sell，用来提供广告和销售等功能。然后提供 Vendor 类（厂商，被代理类）和 Shop（超市，代理类），它们分别实现了 Sell 接口。</p>
 <p>Sell 接口定义如下：</p>
@@ -598,12 +598,12 @@ public class StaticProxy &#123;
 &#125;
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h3 id="jing-tai-dai-li-de-you-dian"><a href="#静态代理的优点" class="headerlink" title="静态代理的优点"></a>静态代理的优点<a href="#jing-tai-dai-li-de-you-dian" class="header-anchor">#</a></h3><ul>
+<h3 id="静态代理的优点"><a href="#静态代理的优点" class="headerlink" title="静态代理的优点"></a>静态代理的优点</h3><ul>
 <li>可以使得我们的真实角色更加纯粹，不再去关注一些公共的事情。</li>
 <li>公共业务由代理来完成，实现了业务的分工。</li>
 <li>公共业务发生扩展时变得更加集中和方便。</li>
 </ul>
-<h3 id="jing-tai-dai-li-de-que-dian"><a href="#静态代理的缺点" class="headerlink" title="静态代理的缺点"></a>静态代理的缺点<a href="#jing-tai-dai-li-de-que-dian" class="header-anchor">#</a></h3><p>静态代理实现简单且不入侵源代码，但当场景复杂时，静态代理会有以下缺点：</p>
+<h3 id="静态代理的缺点"><a href="#静态代理的缺点" class="headerlink" title="静态代理的缺点"></a>静态代理的缺点</h3><p>静态代理实现简单且不入侵源代码，但当场景复杂时，静态代理会有以下缺点：</p>
 <ol>
 <li>当需要代理多个类的时候，由于代理对象要实现与被代理对象（目标对象）一致的接口，有两种方式：<ul>
 <li>只维护一个代理类，由这个代理类实现多个接口，但是这样就会导致代理类过于庞大</li>
@@ -613,12 +613,12 @@ public class StaticProxy &#123;
 <li>当接口需要增加、删除、修改方法的时候，（被代理类）目标对象与代理类都要同时修改，<code>不易维护</code>。</li>
 </ol>
 <p>如果我们想要静态代理的优点而又不想要其缺点，那么就需要使用动态代理！</p>
-<h3 id="dong-tai-dai-li"><a href="#动态代理" class="headerlink" title="动态代理"></a>动态代理<a href="#dong-tai-dai-li" class="header-anchor">#</a></h3><p>动态代理是指代理类在程序运行时进行创建的代理方式。这种情况下，代理类并不是在 Java 代码中定义的，而是在运行时根据 Java 代码中的指示动态生成的。</p>
+<h3 id="动态代理"><a href="#动态代理" class="headerlink" title="动态代理"></a>动态代理</h3><p>动态代理是指代理类在程序运行时进行创建的代理方式。这种情况下，代理类并不是在 Java 代码中定义的，而是在运行时根据 Java 代码中的指示动态生成的。</p>
 <p>相比于静态代理，动态代理的优势在于可以很方便的对代理类的函数进行统一的处理，而不用修改每个代理类的函数。</p>
-<h3 id="ji-yu-jdk-yuan-sheng-dong-tai-dai-li-shi-xian"><a href="#基于-JDK-原生动态代理实现" class="headerlink" title="基于 JDK 原生动态代理实现"></a>基于 JDK 原生动态代理实现<a href="#ji-yu-jdk-yuan-sheng-dong-tai-dai-li-shi-xian" class="header-anchor">#</a></h3><p>实现动态代理通常有两种方式: JDK 原生动态代理和 CGLIB 动态代理。这里，我们以 JDK 原生动态代理为例来进行讲解。</p>
-<h4 id="java-dong-tai-dai-li-xu-yao-liao-jie-de-liang-ge-lei"><a href="#Java-动态代理需要了解的两个类" class="headerlink" title="Java 动态代理需要了解的两个类"></a>Java 动态代理需要了解的两个类<a href="#java-dong-tai-dai-li-xu-yao-liao-jie-de-liang-ge-lei" class="header-anchor">#</a></h4><p>JDK 动态代理主要涉及两个类：</p>
+<h3 id="基于-jdk-原生动态代理实现"><a href="#基于-JDK-原生动态代理实现" class="headerlink" title="基于 JDK 原生动态代理实现"></a>基于 JDK 原生动态代理实现</h3><p>实现动态代理通常有两种方式: JDK 原生动态代理和 CGLIB 动态代理。这里，我们以 JDK 原生动态代理为例来进行讲解。</p>
+<h4 id="java-动态代理需要了解的两个类"><a href="#Java-动态代理需要了解的两个类" class="headerlink" title="Java 动态代理需要了解的两个类"></a>Java 动态代理需要了解的两个类</h4><p>JDK 动态代理主要涉及两个类：</p>
 <p><code>java.lang.reflect.Proxy</code> 和 <code>java.lang.reflect.InvocationHandler</code>。</p>
-<h5 id="invocationhandler-diao-yong-chu-li-qi"><a href="#InvocationHandler：调用处理器" class="headerlink" title="InvocationHandler：调用处理器"></a>InvocationHandler：调用处理器<a href="#invocationhandler-diao-yong-chu-li-qi" class="header-anchor">#</a></h5><p><code>InvocationHandler</code> 是由一个代理实例的 invocation handler 所实现的接口。</p>
+<h5 id="invocationhandler调用处理器"><a href="#InvocationHandler：调用处理器" class="headerlink" title="InvocationHandler：调用处理器"></a>InvocationHandler：调用处理器</h5><p><code>InvocationHandler</code> 是由一个代理实例的 invocation handler 所实现的接口。</p>
 <p>每个代理实例都有一个相关联的 invocation handler。当在代理实例上调用方法时，会将方法调用进行编码并将它传送到和其相关联的 invocation handler 的 invoke 方法上。</p>
 <p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9603/image-20230112151730536.png" alt="image-20230112151730536"></p>
 <p><code>InvocationHandler</code> 接口定义了如下方法：</p>
@@ -653,7 +653,7 @@ public class StaticProxy &#123;
 <p>当调用 <code>真实主题角色（被代理对象）</code>的方法时，这个方法调用会传送到 InvocationHandler 接口的 <code>invoke</code> 方法中，代理类对象作为 proxy 参数传入，参数 <code>method</code> 表示了具体调用的是真实主题角色（被代理对象） 的哪个方法， args 为该方法的参数。</p>
 <p>对真实主题角色（被代理对象）中的所有方法调用都会变为对 <code>invoke</code> 的调用，可以在 invoke 方法中添加统一的处理逻辑（也可以根据 method 参数对不同的代理类方法做不同的处理）。</p>
 <p>note：关于为什么会自动调用 invoke 函数，我目前还不知道。</p>
-<h5 id="proxy-dong-tai-sheng-cheng-dai-li-lei"><a href="#Proxy-动态生成代理类" class="headerlink" title="Proxy-动态生成代理类"></a>Proxy-动态生成代理类<a href="#proxy-dong-tai-sheng-cheng-dai-li-lei" class="header-anchor">#</a></h5><blockquote>
+<h5 id="proxy-动态生成代理类"><a href="#Proxy-动态生成代理类" class="headerlink" title="Proxy-动态生成代理类"></a>Proxy-动态生成代理类</h5><blockquote>
 <p>为了不和前面说的代理类弄混，不把 Proxy 类翻译成代理类，直接称呼其为 Proxy 类。</p>
 <p>亦或者说 Proxy 类是代理类，但这个代理类的意思是说 Proxy 类可以生成真正的代理类。</p>
 </blockquote>
@@ -681,7 +681,7 @@ public class StaticProxy &#123;
 <p>返回值：具有 proxy 类的指定调用处理程序的<code>代理实例</code>，该代理类由指定的类加载器定义并实现了指定的接口</p>
 </li>
 </ul>
-<h4 id="dong-tai-dai-li-de-dai-ma-shi-xian"><a href="#动态代理的代码实现" class="headerlink" title="动态代理的代码实现"></a>动态代理的代码实现<a href="#dong-tai-dai-li-de-dai-ma-shi-xian" class="header-anchor">#</a></h4><p>要编写动态代理的代码，需要抓牢两个要点</p>
+<h4 id="动态代理的代码实现"><a href="#动态代理的代码实现" class="headerlink" title="动态代理的代码实现"></a>动态代理的代码实现</h4><p>要编写动态代理的代码，需要抓牢两个要点</p>
 <ul>
 <li>我们代理的是接口，而不是单个用户。</li>
 <li>代理类是动态生成的，而非静态定死。</li>
@@ -788,7 +788,7 @@ public class Client &#123;
 &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9603/DynamicProxySuccess.png" alt="img"></p>
-<h4 id="dong-tai-dai-li-chuang-jian-bu-zou"><a href="#动态代理创建步骤" class="headerlink" title="动态代理创建步骤"></a>动态代理创建步骤<a href="#dong-tai-dai-li-chuang-jian-bu-zou" class="header-anchor">#</a></h4><p>在运行期间动态创建一个 <code>interface</code> 实例的方法如下：</p>
+<h4 id="动态代理创建步骤"><a href="#动态代理创建步骤" class="headerlink" title="动态代理创建步骤"></a>动态代理创建步骤</h4><p>在运行期间动态创建一个 <code>interface</code> 实例的方法如下：</p>
 <ol>
 <li>定义一个 <code>InvocationHandler</code> 实例，它负责实现接口的方法调用；</li>
 <li>通过 <code>Proxy.newProxyInstance()</code> 创建 <code>interface</code> 接口实例(实际上是接口的代理类的实例)，它需要3个参数：</li>
@@ -799,7 +799,7 @@ public class Client &#123;
 <li>用来处理接口方法调用的 <code>InvocationHandler</code> 实例。</li>
 <li>将返回的 <code>Object</code> 强制类型转换为接口。</li>
 </ul>
-<h3 id="zai-fan-xu-lie-hua-zhong-dong-tai-dai-li-de-zuo-yong-dai-geng-xin"><a href="#在反序列化中动态代理的作用（待更新）" class="headerlink" title="在反序列化中动态代理的作用（待更新）"></a>在反序列化中动态代理的作用（待更新）<a href="#zai-fan-xu-lie-hua-zhong-dong-tai-dai-li-de-zuo-yong-dai-geng-xin" class="header-anchor">#</a></h3><h3 id="can-kao-lian-jie"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接<a href="#can-kao-lian-jie" class="header-anchor">#</a></h3><p><a target="_blank" rel="noopener" href="https://drun1baby.github.io/2022/06/01/Java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%9F%BA%E7%A1%80%E7%AF%87-04-JDK%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86/#toc-heading-5">https://drun1baby.github.io/2022/06/01/Java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%9F%BA%E7%A1%80%E7%AF%87-04-JDK%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86/#toc-heading-5</a></p>
+<h3 id="在反序列化中动态代理的作用待更新"><a href="#在反序列化中动态代理的作用（待更新）" class="headerlink" title="在反序列化中动态代理的作用（待更新）"></a>在反序列化中动态代理的作用（待更新）</h3><h3 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h3><p><a target="_blank" rel="noopener" href="https://drun1baby.github.io/2022/06/01/Java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%9F%BA%E7%A1%80%E7%AF%87-04-JDK%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86/#toc-heading-5">https://drun1baby.github.io/2022/06/01/Java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%9F%BA%E7%A1%80%E7%AF%87-04-JDK%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86/#toc-heading-5</a></p>
 <p><a target="_blank" rel="noopener" href="https://www.liaoxuefeng.com/wiki/1252599548343744/1264804593397984">https://www.liaoxuefeng.com/wiki/1252599548343744/1264804593397984</a></p>
 <p><a target="_blank" rel="noopener" href="https://juejin.cn/post/6844904098580398088#heading-3">https://juejin.cn/post/6844904098580398088#heading-3</a></p>
 

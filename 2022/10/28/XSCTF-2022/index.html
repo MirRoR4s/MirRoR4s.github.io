@@ -29,7 +29,7 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 6.1.0"></head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 
 
@@ -505,7 +505,7 @@
 <p>记录对XSCTF比赛的思考过程。</p>
 <span id="more"></span>
 
-<h2 id="crypto"><a href="#Crypto" class="headerlink" title="Crypto"></a>Crypto<a href="#crypto" class="header-anchor">#</a></h2><h3 id="chu-shi-rsa"><a href="#初识RSA" class="headerlink" title="初识RSA"></a>初识RSA<a href="#chu-shi-rsa" class="header-anchor">#</a></h3><pre class="line-numbers language-python" data-language="python"><code class="language-python">from Crypto.Util.number import bytes_to_long,inverse,getPrime
+<h2 id="crypto"><a href="#Crypto" class="headerlink" title="Crypto"></a>Crypto</h2><h3 id="初识rsa"><a href="#初识RSA" class="headerlink" title="初识RSA"></a>初识RSA</h3><pre class="line-numbers language-python" data-language="python"><code class="language-python">from Crypto.Util.number import bytes_to_long,inverse,getPrime
 from flag import flag
 
 m &#x3D; bytes_to_long(flag)
@@ -535,8 +535,8 @@ qp&#x3D; 10466186506773626671397261081802640650185744558208505628349249045496105
 
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h4 id="fen-xi"><a href="#分析" class="headerlink" title="分析"></a>分析<a href="#fen-xi" class="header-anchor">#</a></h4><p>pq和qp的乘积为n和phi(n)的乘积，所以除以n即可得到phi(n)。之后的步骤正常解密即可。</p>
-<h3 id="jian-dan-de-lfsr"><a href="#简单的LFSR" class="headerlink" title="简单的LFSR"></a>简单的LFSR<a href="#jian-dan-de-lfsr" class="header-anchor">#</a></h3><pre class="line-numbers language-python" data-language="python"><code class="language-python">from secret import secret
+<h4 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h4><p>pq和qp的乘积为n和phi(n)的乘积，所以除以n即可得到phi(n)。之后的步骤正常解密即可。</p>
+<h3 id="简单的lfsr"><a href="#简单的LFSR" class="headerlink" title="简单的LFSR"></a>简单的LFSR</h3><pre class="line-numbers language-python" data-language="python"><code class="language-python">from secret import secret
 for b in secret: assert(b &#x3D;&#x3D; &#39;0&#39; or b &#x3D;&#x3D; &#39;1&#39;)
 assert(len(secret) &#x3D;&#x3D; 128)
 # a 01 string with length 128
@@ -572,7 +572,7 @@ if __name__ &#x3D;&#x3D; &#39;__main__&#39;:
 
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h4 id="fen-xi"><a href="#分析-1" class="headerlink" title="分析"></a>分析<a href="#fen-xi" class="header-anchor">#</a></h4><p>先来看看题目都做了什么。其定义了一个列表InitState，这个是作为线性反馈移位寄存器的初始状态，也就说State列表每一个元素就对应一个寄存器。而mask是一个由0、1整数构成的列表，这个是我们要求的值。</p>
+<h4 id="分析"><a href="#分析-1" class="headerlink" title="分析"></a>分析</h4><p>先来看看题目都做了什么。其定义了一个列表InitState，这个是作为线性反馈移位寄存器的初始状态，也就说State列表每一个元素就对应一个寄存器。而mask是一个由0、1整数构成的列表，这个是我们要求的值。</p>
 <p>lfsr函数每轮都会返回一个output，并且每一轮线性反馈移位寄存器都会右移，这表现在State列表每一轮都会从当前寄存器（第一轮就从第一个寄存器开始）开始：</p>
 <p><img src="/images/image-20221028215042388.png" alt="image-20221028215042388"></p>
 <p>那么output是怎么来的呢？</p>
@@ -581,7 +581,7 @@ if __name__ &#x3D;&#x3D; &#39;__main__&#39;:
 <p>最后我们再来看看题目告诉了我们什么：</p>
 <p><img src="/images/image-20221028215911925.png" alt="image-20221028215911925"></p>
 <p>在经过256轮for循环后，题目将State列表的后256个元素（初始状态是128个元素，每一轮循环在列表末尾增加一个元素，这个元素就是output）告诉了我们。稍加思考我们就发现，outputState 列表的 outputState[0:128] 和 mask&#x3D;M 生成了 outputState[128]，outputState 列表的 outputState[1:129]  和 mask 生成了State[129]，继续这个过程我们知道 outputState[127:255] 和 mask生成了 outputState[255]。我们可以将上述过程抽象为一个128行128列的方阵和一个行向量 mask 的乘积，其结果就是 outputState[128:] 即一个128行1列的行向量。</p>
-<h3 id="xian-xing-fan-kui-yi-wei-ji-cun-qi"><a href="#线性反馈移位寄存器" class="headerlink" title="线性反馈移位寄存器"></a>线性反馈移位寄存器<a href="#xian-xing-fan-kui-yi-wei-ji-cun-qi" class="header-anchor">#</a></h3><pre class="line-numbers language-python" data-language="python"><code class="language-python">from secret import secret
+<h3 id="线性反馈移位寄存器"><a href="#线性反馈移位寄存器" class="headerlink" title="线性反馈移位寄存器"></a>线性反馈移位寄存器</h3><pre class="line-numbers language-python" data-language="python"><code class="language-python">from secret import secret
 for b in secret: assert(b &#x3D;&#x3D; &#39;0&#39; or b &#x3D;&#x3D; &#39;1&#39;)
 assert(len(secret) &#x3D;&#x3D; 128)
 # a 01 string with length 128
@@ -623,9 +623,9 @@ if __name__ &#x3D;&#x3D; &#39;__main__&#39;:
 
 
 
-<h4 id="fen-xi"><a href="#分析-2" class="headerlink" title="分析"></a>分析<a href="#fen-xi" class="header-anchor">#</a></h4><p>阅读代码我们发现和上一题几乎没有差别，只不过将加法运算换成了异或运算，将乘法运算换成了与运算。只需要知道异或运算就是模2的加法，与运算就是模2的乘法即可。所以我们完全可以用上一题的做法来作出本题，但是我们需要将定义的矩阵更换到GF(2)上！</p>
+<h4 id="分析"><a href="#分析-2" class="headerlink" title="分析"></a>分析</h4><p>阅读代码我们发现和上一题几乎没有差别，只不过将加法运算换成了异或运算，将乘法运算换成了与运算。只需要知道异或运算就是模2的加法，与运算就是模2的乘法即可。所以我们完全可以用上一题的做法来作出本题，但是我们需要将定义的矩阵更换到GF(2)上！</p>
 <p><img src="/images/image-20221029151642260.png" alt="image-20221029151642260"></p>
-<h3 id="babyrsa"><a href="#babyrsa" class="headerlink" title="babyrsa"></a>babyrsa<a href="#babyrsa" class="header-anchor">#</a></h3><pre class="line-numbers language-python" data-language="python"><code class="language-python">#!&#x2F;usr&#x2F;bin&#x2F;env python3
+<h3 id="babyrsa"><a href="#babyrsa" class="headerlink" title="babyrsa"></a>babyrsa</h3><pre class="line-numbers language-python" data-language="python"><code class="language-python">#!&#x2F;usr&#x2F;bin&#x2F;env python3
 
 import random
 import signal
@@ -731,9 +731,9 @@ if __name__ &#x3D;&#x3D; &quot;__main__&quot;:
 
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h4 id="fen-xi"><a href="#分析-3" class="headerlink" title="分析"></a>分析<a href="#fen-xi" class="header-anchor">#</a></h4><p>本题主要考察编写交互式脚本的能力，借助pwntools模块可以轻松完成。难度最高的是在gam3这里，我们利用p、q过于相近的弱点，尝试对接收到的n开二次方根，并在其周边区间内搜索p即可。具体实现可以看 <a target="_blank" rel="noopener" href="https://www.cnblogs.com/organic/p/6240167.html">费马因子分解算法</a></p>
+<h4 id="分析"><a href="#分析-3" class="headerlink" title="分析"></a>分析</h4><p>本题主要考察编写交互式脚本的能力，借助pwntools模块可以轻松完成。难度最高的是在gam3这里，我们利用p、q过于相近的弱点，尝试对接收到的n开二次方根，并在其周边区间内搜索p即可。具体实现可以看 <a target="_blank" rel="noopener" href="https://www.cnblogs.com/organic/p/6240167.html">费马因子分解算法</a></p>
 <p><img src="/images/image-20221028233856011.png" alt="image-20221028233856011"></p>
-<h3 id="babyblock"><a href="#babyblock" class="headerlink" title="babyblock"></a>babyblock<a href="#babyblock" class="header-anchor">#</a></h3><pre class="line-numbers language-python" data-language="python"><code class="language-python">#!&#x2F;usr&#x2F;bin&#x2F;env python3
+<h3 id="babyblock"><a href="#babyblock" class="headerlink" title="babyblock"></a>babyblock</h3><pre class="line-numbers language-python" data-language="python"><code class="language-python">#!&#x2F;usr&#x2F;bin&#x2F;env python3
 
 import random
 import signal
@@ -872,7 +872,7 @@ if __name__ &#x3D;&#x3D; &quot;__main__&quot;:
 
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h4 id="fen-xi"><a href="#分析-4" class="headerlink" title="分析"></a>分析<a href="#fen-xi" class="header-anchor">#</a></h4><p>阅读完代码就会发现我们的目标是获取 IV 的值，如果熟悉CBC的操作模式的话，就可以轻松作出本题。</p>
+<h4 id="分析"><a href="#分析-4" class="headerlink" title="分析"></a>分析</h4><p>阅读完代码就会发现我们的目标是获取 IV 的值，如果熟悉CBC的操作模式的话，就可以轻松作出本题。</p>
 <p><img src="/../images/image-20221101145107385.png" alt="image-20221101145107385"></p>
 <p>在这里直接贴出官方的wp操作手法：</p>
 <p>1、思路一</p>
@@ -881,7 +881,7 @@ if __name__ &#x3D;&#x3D; &quot;__main__&quot;:
 <p>$$m\ c_1  &#x3D;Enc_{k}(IV \oplus m) \ c_2 &#x3D; mc_1 \ m’ &#x3D; Dec_{k}(c_1) \oplus m\ \Rightarrow IV &#x3D; m’ $$</p>
 <p>构造 16 字节的 $$m $$ 扔进加密机得到 $$c_1 $$，再把 $$m $$ 和 $$c_1 $$ 拼接起来扔进解密机出来就是 IV。</p>
 <p>这个式子推导看不懂的话，就把每一块代进上面的图，check 1 下你就会了。</p>
-<h3 id="red-alert-2"><a href="#Red-Alert-2" class="headerlink" title="Red Alert 2"></a>Red Alert 2<a href="#red-alert-2" class="header-anchor">#</a></h3><h4 id="fen-xi"><a href="#分析-5" class="headerlink" title="分析"></a>分析<a href="#fen-xi" class="header-anchor">#</a></h4><p>看上去很像摩斯电码，去网站解码一下。很过分的是题目的摩斯电码是中文的，要找一个支持中文扩展的在线 morse！</p>
+<h3 id="red-alert-2"><a href="#Red-Alert-2" class="headerlink" title="Red Alert 2"></a>Red Alert 2</h3><h4 id="分析"><a href="#分析-5" class="headerlink" title="分析"></a>分析</h4><p>看上去很像摩斯电码，去网站解码一下。很过分的是题目的摩斯电码是中文的，要找一个支持中文扩展的在线 morse！</p>
 <p><a target="_blank" rel="noopener" href="http://www.all-tool.cn/Tools/morse/">http://www.all-tool.cn/Tools/morse/</a></p>
 <p><a target="_blank" rel="noopener" href="http://www.hiencode.com/morse.html">http://www.hiencode.com/morse.html</a></p>
 <p><img src="/../images/image-20221101145647792.png" alt="image-20221101145647792"></p>

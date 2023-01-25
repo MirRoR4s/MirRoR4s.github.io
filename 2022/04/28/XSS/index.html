@@ -29,7 +29,7 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 6.1.0"></head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 
 
@@ -470,7 +470,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    930
+                    929
                 </div>
                 
 
@@ -505,11 +505,11 @@
 <p>对 XSS 作一个总结</p>
 <span id="more"></span>
 
-<h3 id="qian-yan"><a href="#前言" class="headerlink" title="前言"></a>前言<a href="#qian-yan" class="header-anchor">#</a></h3><p>可以看这篇文章：<a target="_blank" rel="noopener" href="https://www.freebuf.com/articles/web/289263.html">xss漏洞学习小结 - FreeBuf网络安全行业门户</a></p>
-<h3 id="xss-ding-yi"><a href="#XSS定义" class="headerlink" title="XSS定义"></a>XSS定义<a href="#xss-ding-yi" class="header-anchor">#</a></h3><p>跨站脚本攻击是一种注入，其中恶意脚本被注入到其他良性和受信任的网站中。XSS攻击发生在攻击者使用WEB应用程序发送恶意代码时，通常是以浏览器端脚本的形式发送给别人。XSS常发生在没有对用户的输入进行验证或者编码就对用户的输入进行了输出的地方。</p>
+<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>可以看这篇文章：<a target="_blank" rel="noopener" href="https://www.freebuf.com/articles/web/289263.html">xss漏洞学习小结 - FreeBuf网络安全行业门户</a></p>
+<h3 id="xss定义"><a href="#XSS定义" class="headerlink" title="XSS定义"></a>XSS定义</h3><p>跨站脚本攻击是一种注入，其中恶意脚本被注入到其他良性和受信任的网站中。XSS攻击发生在攻击者使用WEB应用程序发送恶意代码时，通常是以浏览器端脚本的形式发送给别人。XSS常发生在没有对用户的输入进行验证或者编码就对用户的输入进行了输出的地方。</p>
 <p>一个攻击者可以使用XSS发送一个恶意脚本给用户，但是用户的浏览器无法分辨此脚本是否是值得信任的，从而会执行攻击者发送的恶意脚本。因为浏览器认为脚本来自于一个受信任的源，从而恶意脚本可以访问任何cookies,session tokens 或者是其他保存在浏览器当前网站中的敏感信息。这些脚本甚至可以修改网页的内容。</p>
-<h3 id="xss-lou-dong-chan-sheng-de-yuan-yin"><a href="#XSS-漏洞产生的原因" class="headerlink" title="XSS 漏洞产生的原因"></a>XSS 漏洞产生的原因<a href="#xss-lou-dong-chan-sheng-de-yuan-yin" class="header-anchor">#</a></h3><p>形成XSS漏洞的主要原因是<strong>程序对输入和输出的控制不够严格，导致“精心构造”的脚本输入后，在输到前端时被浏览器当作有效代码解析执行从而产生危害。</strong></p>
-<h3 id="xss-hui-zao-cheng-na-xie-wei-hai"><a href="#XSS-会造成哪些危害" class="headerlink" title="XSS 会造成哪些危害"></a>XSS 会造成哪些危害<a href="#xss-hui-zao-cheng-na-xie-wei-hai" class="header-anchor">#</a></h3><p>攻击者通过Web应用程序发送恶意代码，一般以浏览器脚本的形式发送给不同的终端用户。当一个Web程序的用户输入点没有进行校验和编码，将很容易的导致XSS。</p>
+<h3 id="xss-漏洞产生的原因"><a href="#XSS-漏洞产生的原因" class="headerlink" title="XSS 漏洞产生的原因"></a>XSS 漏洞产生的原因</h3><p>形成XSS漏洞的主要原因是<strong>程序对输入和输出的控制不够严格，导致“精心构造”的脚本输入后，在输到前端时被浏览器当作有效代码解析执行从而产生危害。</strong></p>
+<h3 id="xss-会造成哪些危害"><a href="#XSS-会造成哪些危害" class="headerlink" title="XSS 会造成哪些危害"></a>XSS 会造成哪些危害</h3><p>攻击者通过Web应用程序发送恶意代码，一般以浏览器脚本的形式发送给不同的终端用户。当一个Web程序的用户输入点没有进行校验和编码，将很容易的导致XSS。</p>
 <pre class="line-numbers language-none"><code class="language-none">1、网络钓鱼，包括获取各类用户账号
 2、窃取用户cookies资料，从而获取用户隐私信息，或利用用户身份进一步对网站执行操作；
 3、劫持用户（浏览器）会话，从而执行任意操作，例如非法转账、强制发表日志、电子邮件等
@@ -523,7 +523,7 @@
 11、提升用户权限，包括进一步渗透网站
 12、传播跨站脚本蠕虫等<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h3 id="ru-he-bi-mian-kua-zhan-jiao-ben-lou-dong"><a href="#如何避免跨站脚本漏洞" class="headerlink" title="如何避免跨站脚本漏洞"></a>如何避免跨站脚本漏洞<a href="#ru-he-bi-mian-kua-zhan-jiao-ben-lou-dong" class="header-anchor">#</a></h3><h3 id="xss-de-chang-yong-payload"><a href="#XSS的常用payload" class="headerlink" title="XSS的常用payload"></a>XSS的常用payload<a href="#xss-de-chang-yong-payload" class="header-anchor">#</a></h3><h4 id="img-biao-qian"><a href="#img标签" class="headerlink" title="img标签"></a>img标签<a href="#img-biao-qian" class="header-anchor">#</a></h4><pre class="line-numbers language-none"><code class="language-none">&lt;img src &#x3D;javascript:alert(&quot;xss&quot;)&gt;
+<h3 id="如何避免跨站脚本漏洞"><a href="#如何避免跨站脚本漏洞" class="headerlink" title="如何避免跨站脚本漏洞"></a>如何避免跨站脚本漏洞</h3><h3 id="xss的常用payload"><a href="#XSS的常用payload" class="headerlink" title="XSS的常用payload"></a>XSS的常用payload</h3><h4 id="img标签"><a href="#img标签" class="headerlink" title="img标签"></a>img标签</h4><pre class="line-numbers language-none"><code class="language-none">&lt;img src &#x3D;javascript:alert(&quot;xss&quot;)&gt;
 &lt;IMG SRC&#x3D;javascript:alert(String.formCharCode(88,83,83))&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
 
@@ -547,8 +547,8 @@
 
 
 
-<h3 id="xss-guo-lu-rao-guo"><a href="#XSS-过滤绕过" class="headerlink" title="XSS 过滤绕过"></a>XSS 过滤绕过<a href="#xss-guo-lu-rao-guo" class="header-anchor">#</a></h3><h4 id="guo-lu-liao-kong-ge"><a href="#过滤了空格" class="headerlink" title="过滤了空格"></a>过滤了空格<a href="#guo-lu-liao-kong-ge" class="header-anchor">#</a></h4><p>可以使用斜杠 &#x2F; 来绕过</p>
-<h3 id="can-kao-lian-jie"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接<a href="#can-kao-lian-jie" class="header-anchor">#</a></h3><p><a target="_blank" rel="noopener" href="https://www.freebuf.com/articles/web/289263.html">freebuf</a></p>
+<h3 id="xss-过滤绕过"><a href="#XSS-过滤绕过" class="headerlink" title="XSS 过滤绕过"></a>XSS 过滤绕过</h3><h4 id="过滤了空格"><a href="#过滤了空格" class="headerlink" title="过滤了空格"></a>过滤了空格</h4><p>可以使用斜杠 &#x2F; 来绕过</p>
+<h3 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h3><p><a target="_blank" rel="noopener" href="https://www.freebuf.com/articles/web/289263.html">freebuf</a></p>
 <p><a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/9424">浅谈XSS</a></p>
 <p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_50464560/article/details/114782337">dvwa的XSS详解</a></p>
 <p><a target="_blank" rel="noopener" href="https://owasp.org/www-community/attacks/xss/">OWASP</a></p>

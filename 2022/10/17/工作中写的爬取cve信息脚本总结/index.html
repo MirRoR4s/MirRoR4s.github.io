@@ -29,7 +29,7 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 6.1.0"></head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 
 
@@ -505,10 +505,10 @@
 <p>这是一个关于书写爬取cve信息脚本的总结</p>
 <span id="more"></span>
 
-<h4 id="si-kao"><a href="#思考" class="headerlink" title="思考"></a>思考<a href="#si-kao" class="header-anchor">#</a></h4><p>初始编写的时候以为只是一个临时所用脚本，没有想到后续要求越来越多。以至于在我改动的时候总是牵一发而动全身，代码之间的耦合太强了，所以要想办法使得各个模块之间变得独立一些。</p>
+<h4 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h4><p>初始编写的时候以为只是一个临时所用脚本，没有想到后续要求越来越多。以至于在我改动的时候总是牵一发而动全身，代码之间的耦合太强了，所以要想办法使得各个模块之间变得独立一些。</p>
 <p>经过我的思考，打算先将get_cve_10这个得到10月份cve信息的大函数抽象成一个类，大函数里面各种子函数为该类的方法。</p>
-<h4 id="ji-lu"><a href="#记录" class="headerlink" title="记录"></a>记录<a href="#ji-lu" class="header-anchor">#</a></h4><p>改造完毕之后有四个py文件</p>
-<h5 id="main"><a href="#main" class="headerlink" title="main"></a>main<a href="#main" class="header-anchor">#</a></h5><pre class="line-numbers language-python" data-language="python"><code class="language-python">from spinder import *
+<h4 id="记录"><a href="#记录" class="headerlink" title="记录"></a>记录</h4><p>改造完毕之后有四个py文件</p>
+<h5 id="main"><a href="#main" class="headerlink" title="main"></a>main</h5><pre class="line-numbers language-python" data-language="python"><code class="language-python">from spinder import *
 
 if __name__ &#x3D;&#x3D; &quot;__main__&quot;:
     print(&#39;请您稍等，正在抓取相关信息..........&#39;)
@@ -560,7 +560,7 @@ if __name__ &#x3D;&#x3D; &quot;__main__&quot;:
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>该脚本是程序的入口点，从这里开始执行。使用方法已在脚本中给出。</p>
-<h5 id="spinder"><a href="#spinder" class="headerlink" title="spinder"></a>spinder<a href="#spinder" class="header-anchor">#</a></h5><pre class="line-numbers language-python" data-language="python"><code class="language-python">import xlsxwriter
+<h5 id="spinder"><a href="#spinder" class="headerlink" title="spinder"></a>spinder</h5><pre class="line-numbers language-python" data-language="python"><code class="language-python">import xlsxwriter
 from bs4 import BeautifulSoup
 from tqdm import tqdm
 from solve import *
@@ -694,7 +694,7 @@ class Spider:
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>该脚本主要负责设置xlsx文档的格式，以及调用solve脚本中的各种类方法进行爬虫。</p>
-<h5 id="solve"><a href="#solve" class="headerlink" title="solve"></a>solve<a href="#solve" class="header-anchor">#</a></h5><pre class="line-numbers language-python" data-language="python"><code class="language-python">import requests
+<h5 id="solve"><a href="#solve" class="headerlink" title="solve"></a>solve</h5><pre class="line-numbers language-python" data-language="python"><code class="language-python">import requests
 import json
 import datetime
 import html
@@ -880,7 +880,7 @@ class ControlOutputFormat:
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>该脚本由Req、parse、ControlOutputFormat类组成。Req负责发起爬虫请求。parse负责对请求之后的数据进行解析，最后由ControlOutputFormat对解析之后的数据进行输出的判断（匹配公司组件才输出）</p>
-<h5 id="send-email"><a href="#send-email" class="headerlink" title="send_email"></a>send_email<a href="#send-email" class="header-anchor">#</a></h5><pre class="line-numbers language-python" data-language="python"><code class="language-python">import smtplib
+<h5 id="send_email"><a href="#send-email" class="headerlink" title="send_email"></a>send_email</h5><pre class="line-numbers language-python" data-language="python"><code class="language-python">import smtplib
 from email.mime.text import MIMEText
 from email.header import Header
 from email.mime.application import MIMEApplication

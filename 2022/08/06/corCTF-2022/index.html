@@ -29,7 +29,7 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 6.1.0"></head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 
 
@@ -499,7 +499,7 @@
 <p>[TOC]</p>
 <p>太折磨了，最终只做出来一个签到题，第二个题不会之后再也没看其他的。</p>
 <p><img src="Users\mirror\Desktop\write-up\blog\source\images\image-20220808202154675.png" alt="image-20220808202154675"></p>
-<h3 id="tadpole-jian-dan-de-tong-yu-ding-yi"><a href="#tadpole-简单的同余定义" class="headerlink" title="tadpole-简单的同余定义"></a>tadpole-简单的同余定义<a href="#tadpole-jian-dan-de-tong-yu-ding-yi" class="header-anchor">#</a></h3><p>根据同余的定义，将两个同余方程转化为p的倍数，然后求一下他们的公因数应该就是p</p>
+<h3 id="tadpole-简单的同余定义"><a href="#tadpole-简单的同余定义" class="headerlink" title="tadpole-简单的同余定义"></a>tadpole-简单的同余定义</h3><p>根据同余的定义，将两个同余方程转化为p的倍数，然后求一下他们的公因数应该就是p</p>
 <pre class="line-numbers language-python" data-language="python"><code class="language-python">a &#x3D;  7904681699700731398014734140051852539595806699214201704996640156917030632322659247608208994194840235514587046537148300460058962186080655943804500265088604049870276334033409850015651340974377752209566343260236095126079946537115705967909011471361527517536608234561184232228641232031445095605905800675590040729
 b &#x3D;  16276123569406561065481657801212560821090379741833362117064628294630146690975007397274564762071994252430611109538448562330994891595998956302505598671868738461167036849263008183930906881997588494441620076078667417828837239330797541019054284027314592321358909551790371565447129285494856611848340083448507929914
 c1 &#x3D;  52926479498929750044944450970022719277159248911867759992013481774911823190312079157541825423250020665153531167070545276398175787563829542933394906173782217836783565154742242903537987641141610732290449825336292689379131350316072955262065808081711030055841841406454441280215520187695501682433223390854051207100
@@ -515,7 +515,7 @@ print(long_to_bytes(p))
 
 
 
-<h3 id="luckyguess-jian-dan-de-tong-yu-qiu-ni-yun-suan"><a href="#luckyguess-简单的同余求逆运算" class="headerlink" title="luckyguess-简单的同余求逆运算"></a>luckyguess-简单的同余求逆运算<a href="#luckyguess-jian-dan-de-tong-yu-qiu-ni-yun-suan" class="header-anchor">#</a></h3><pre class="line-numbers language-python" data-language="python"><code class="language-python">#!&#x2F;usr&#x2F;local&#x2F;bin&#x2F;python
+<h3 id="luckyguess-简单的同余求逆运算"><a href="#luckyguess-简单的同余求逆运算" class="headerlink" title="luckyguess-简单的同余求逆运算"></a>luckyguess-简单的同余求逆运算</h3><pre class="line-numbers language-python" data-language="python"><code class="language-python">#!&#x2F;usr&#x2F;local&#x2F;bin&#x2F;python
 from random import getrandbits
 
 p &#x3D; 2**521 - 1
@@ -549,7 +549,7 @@ else:
 <p>因为 $p$ 是素数，所以$(1-a)$ 在模 $p$ 下的逆元大概率存在，所以我们可以得到</p>
 <p>$x\equiv b\ (1-a)^{-1} \mod p$</p>
 <p>而 $a$ 、 $b$ 是固定的值，所以 $x$ 就这么求出来了。</p>
-<h3 id="exchanged-gong-shi-tui-dao-pohlig-hellman-jie-chi-san-dui-shu"><a href="#exchanged-公式推导-pohlig-hellman解离散对数" class="headerlink" title="exchanged-公式推导+pohlig-hellman解离散对数"></a>exchanged-公式推导+pohlig-hellman解离散对数<a href="#exchanged-gong-shi-tui-dao-pohlig-hellman-jie-chi-san-dui-shu" class="header-anchor">#</a></h3><pre class="line-numbers language-python" data-language="python"><code class="language-python">from Crypto.Util.number import *
+<h3 id="exchanged-公式推导pohlig-hellman解离散对数"><a href="#exchanged-公式推导-pohlig-hellman解离散对数" class="headerlink" title="exchanged-公式推导+pohlig-hellman解离散对数"></a>exchanged-公式推导+pohlig-hellman解离散对数</h3><pre class="line-numbers language-python" data-language="python"><code class="language-python">from Crypto.Util.number import *
 from Crypto.Cipher import AES
 from Crypto.Util.Padding import pad
 from hashlib import sha256
@@ -649,7 +649,7 @@ print(cipher.decrypt(pad(enc, 16)))
 
 <p>解法2：</p>
 <p><img src="/../../../../../AppData/Roaming/Typora/typora-user-images/image-20220916231300684.png" alt="image-20220916231300684"></p>
-<h3 id="hide-gong-mo-gong-ji"><a href="#hidE-共模攻击" class="headerlink" title="hidE-共模攻击"></a>hidE-共模攻击<a href="#hide-gong-mo-gong-ji" class="header-anchor">#</a></h3><pre class="line-numbers language-python" data-language="python"><code class="language-python">#!&#x2F;usr&#x2F;local&#x2F;bin&#x2F;python
+<h3 id="hide-共模攻击"><a href="#hidE-共模攻击" class="headerlink" title="hidE-共模攻击"></a>hidE-共模攻击</h3><pre class="line-numbers language-python" data-language="python"><code class="language-python">#!&#x2F;usr&#x2F;local&#x2F;bin&#x2F;python
 import random
 import time
 import math
@@ -815,7 +815,7 @@ for t in range(start - 20, start + 20):
 
 
 
-<h3 id="generous-okamoto-uchiyama-cryptosystem"><a href="#generous-Okamoto-Uchiyama-cryptosystem" class="headerlink" title="generous-Okamoto-Uchiyama cryptosystem"></a>generous-Okamoto-Uchiyama cryptosystem<a href="#generous-okamoto-uchiyama-cryptosystem" class="header-anchor">#</a></h3><pre class="line-numbers language-python" data-language="python"><code class="language-python">#!&#x2F;usr&#x2F;local&#x2F;bin&#x2F;python
+<h3 id="generous-okamoto-uchiyama-cryptosystem"><a href="#generous-Okamoto-Uchiyama-cryptosystem" class="headerlink" title="generous-Okamoto-Uchiyama cryptosystem"></a>generous-Okamoto-Uchiyama cryptosystem</h3><pre class="line-numbers language-python" data-language="python"><code class="language-python">#!&#x2F;usr&#x2F;local&#x2F;bin&#x2F;python
 from Crypto.Util.number import getPrime, inverse, bytes_to_long
 from random import randrange
 
@@ -859,7 +859,7 @@ while True:
 
 
 
-<h4 id="jie-ti-fang-fa-yi-er-fen-cha-zhao-po-jin-p"><a href="#解题方法一：二分查找迫近p" class="headerlink" title="解题方法一：二分查找迫近p"></a>解题方法一：二分查找迫近p<a href="#jie-ti-fang-fa-yi-er-fen-cha-zhao-po-jin-p" class="header-anchor">#</a></h4><p>本题实现了 <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Okamoto%E2%80%93Uchiyama_cryptosystem">Okamoto-Uchiyama cryptosystem</a> ，这也是一个公钥密码体制。现在我们拥有加密后的flag，并且我们可以解密任意密文并得到解密结果的最低位，很自然的就可以想到RSA的<a target="_blank" rel="noopener" href="https://ctf-wiki.org/crypto/asymmetric/rsa/rsa_chosen_plain_cipher/">LSB oracle</a>，使用类似的思想，看看能否从这个oracle中恢复出私钥的信息。</p>
+<h4 id="解题方法一二分查找迫近p"><a href="#解题方法一：二分查找迫近p" class="headerlink" title="解题方法一：二分查找迫近p"></a>解题方法一：二分查找迫近p</h4><p>本题实现了 <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Okamoto%E2%80%93Uchiyama_cryptosystem">Okamoto-Uchiyama cryptosystem</a> ，这也是一个公钥密码体制。现在我们拥有加密后的flag，并且我们可以解密任意密文并得到解密结果的最低位，很自然的就可以想到RSA的<a target="_blank" rel="noopener" href="https://ctf-wiki.org/crypto/asymmetric/rsa/rsa_chosen_plain_cipher/">LSB oracle</a>，使用类似的思想，看看能否从这个oracle中恢复出私钥的信息。</p>
 <p>注意到解密的信息会进行模 $p$ 的操作（在本题的密码体制中，公开模数 $n&#x3D;p^2q$ ， $p$ 和 $q$ 组成了私钥。），这对我们很有用，因为我们可以从已知明文的解密结果收集到 $p$ 的信息。</p>
 <p>我们用 $\mathcal{O}$ 表示本题的oracle，于是我们有：</p>
 <p>$\left{ \begin{array}{rcl}1,&amp; if\ decrypt(c)\ is\ odd \ 0,&amp; otherwise\end{array}\right.$</p>
@@ -923,7 +923,7 @@ print(long_to_bytes(flag).decode())
 # corctf&#123;see?1_bit_is_very_generous_of_me&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>原链接：<a target="_blank" rel="noopener" href="https://jsur.in/posts/2022-08-08-corctf-2022-crypto-writeups#generous">https://jsur.in/posts/2022-08-08-corctf-2022-crypto-writeups#generous</a></p>
-<h4 id="jie-ti-fang-fa-er-yuan-li-wei-zhi-yi-si-li-yong-tong-tai-xing-zhi"><a href="#解题方法二-原理未知-疑似利用同态性质：" class="headerlink" title="解题方法二-原理未知-疑似利用同态性质："></a>解题方法二-原理未知-疑似利用同态性质：<a href="#jie-ti-fang-fa-er-yuan-li-wei-zhi-yi-si-li-yong-tong-tai-xing-zhi" class="header-anchor">#</a></h4><p><img src="/../../../../../AppData/Roaming/Typora/typora-user-images/image-20220918181504139.png" alt="image-20220918181504139"></p>
+<h4 id="解题方法二-原理未知-疑似利用同态性质"><a href="#解题方法二-原理未知-疑似利用同态性质：" class="headerlink" title="解题方法二-原理未知-疑似利用同态性质："></a>解题方法二-原理未知-疑似利用同态性质：</h4><p><img src="/../../../../../AppData/Roaming/Typora/typora-user-images/image-20220918181504139.png" alt="image-20220918181504139"></p>
 <pre class="line-numbers language-python" data-language="python"><code class="language-python">from pwn import *
 from random import randrange
 from Crypto.Util.number import *
@@ -962,7 +962,7 @@ while True:
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>引用：<a target="_blank" rel="noopener" href="https://blog.maple3142.net/2022/08/07/corctf-2022-writeups/#generous">https://blog.maple3142.net/2022/08/07/corctf-2022-writeups/#generous</a></p>
-<h4 id="jie-ti-fang-fa-san-tong-tai-lian-fen-shu"><a href="#解题方法三-同态-连分数：" class="headerlink" title="解题方法三-同态-连分数："></a>解题方法三-同态-连分数：<a href="#jie-ti-fang-fa-san-tong-tai-lian-fen-shu" class="header-anchor">#</a></h4><p>正如方法一所说，这是一个典型的LSB oracle，这里有一个例子：<a target="_blank" rel="noopener" href="https://crypto.stackexchange.com/questions/11053/rsa-least-significant-bit-oracle-attack">https://crypto.stackexchange.com/questions/11053/rsa-least-significant-bit-oracle-attack</a></p>
+<h4 id="解题方法三-同态-连分数"><a href="#解题方法三-同态-连分数：" class="headerlink" title="解题方法三-同态-连分数："></a>解题方法三-同态-连分数：</h4><p>正如方法一所说，这是一个典型的LSB oracle，这里有一个例子：<a target="_blank" rel="noopener" href="https://crypto.stackexchange.com/questions/11053/rsa-least-significant-bit-oracle-attack">https://crypto.stackexchange.com/questions/11053/rsa-least-significant-bit-oracle-attack</a></p>
 <pre class="line-numbers language-python" data-language="python"><code class="language-python">from telnetlib import Telnet
 from sage.all import Integer, continued_fraction, QQ
 from tqdm import tqdm

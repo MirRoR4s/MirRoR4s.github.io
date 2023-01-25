@@ -29,7 +29,7 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 6.1.0"></head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 
 
@@ -461,7 +461,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    704
+                    703
                 </div>
                 
 
@@ -494,13 +494,13 @@
                 <p>d</p>
 <p>官方WP：<a target="_blank" rel="noopener" href="https://www.wolai.com/nepnep/g2DTj6mRtBk2mikVuCyaE6">https://www.wolai.com/nepnep/g2DTj6mRtBk2mikVuCyaE6</a></p>
 <p>灰暗的天空。</p>
-<h2 id="1-signin"><a href="#1-signin" class="headerlink" title="1.signin"></a>1.signin<a href="#1-signin" class="header-anchor">#</a></h2><p>一个简单的签到题，知道中国剩余定理和RSA基本原理就能做出来。</p>
-<h3 id="jie-ti-si-lu"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路<a href="#jie-ti-si-lu" class="header-anchor">#</a></h3><ol>
+<h2 id="1signin"><a href="#1-signin" class="headerlink" title="1.signin"></a>1.signin</h2><p>一个简单的签到题，知道中国剩余定理和RSA基本原理就能做出来。</p>
+<h3 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h3><ol>
 <li>注意到q是p的下一个素数，因此p和q相差过小可以轻松分解。可以用yafu，也可以手动计算。</li>
 <li>之后使用中国剩余定理，用<code>c_mod_p</code>和<code>c_mod_q</code>算出c</li>
 <li>计算$\phi(n),d$ 即可用 $d$ 解密恢复明文 $m$</li>
 </ol>
-<h3 id="jie-ti-jiao-ben"><a href="#解题脚本" class="headerlink" title="解题脚本"></a>解题脚本<a href="#jie-ti-jiao-ben" class="header-anchor">#</a></h3><pre class="line-numbers language-python" data-language="python"><code class="language-python"># sagemath
+<h3 id="解题脚本"><a href="#解题脚本" class="headerlink" title="解题脚本"></a>解题脚本</h3><pre class="line-numbers language-python" data-language="python"><code class="language-python"># sagemath
 
 from Crypto.Util.number import long_to_bytes
 from gmpy2 import powmod,invert,isqrt,next_prime
@@ -564,10 +564,10 @@ if __name__ &#x3D;&#x3D; &#39;__main__&#39;:
 
 
 
-<h2 id="2-p-or-s"><a href="#2-P-or-S" class="headerlink" title="2.P or S"></a>2.P or S<a href="#2-p-or-s" class="header-anchor">#</a></h2><p>Pbox可以对应一个binary矩阵P，所以加密过程可以写成：<br>$c&#x3D;P(P(P(P(P(P(pm+k0)+k1)+k2)+k3)+k4)+k5&#x3D;p^6m+\sum p^ik_{5-i}$</p>
+<h2 id="2p-or-s"><a href="#2-P-or-S" class="headerlink" title="2.P or S"></a>2.P or S</h2><p>Pbox可以对应一个binary矩阵P，所以加密过程可以写成：<br>$c&#x3D;P(P(P(P(P(P(pm+k0)+k1)+k2)+k3)+k4)+k5&#x3D;p^6m+\sum p^ik_{5-i}$</p>
 <p>已知一组明密文即可计算出$\sum P^ik_{5-i}$，对应求解即可。</p>
 <p>本题考察的是已知明文攻击和语意安全模型。</p>
-<h2 id="3-zhong-xue-shu-xue"><a href="#3-中学数学" class="headerlink" title="3.中学数学"></a>3.中学数学<a href="#3-zhong-xue-shu-xue" class="header-anchor">#</a></h2><p>已知 q&#x3D;next_prime(p+(p&gt;&gt;500))，则</p>
+<h2 id="3中学数学"><a href="#3-中学数学" class="headerlink" title="3.中学数学"></a>3.中学数学</h2><p>已知 q&#x3D;next_prime(p+(p&gt;&gt;500))，则</p>
 <p>$q &#x3D; [(1+ \frac{1}{2^{500}})p]+r$ ，其中r是满足q为素数的最小整数。</p>
 <p>所以 $n&#x3D;pq&#x3D;[(1+\frac{1}{2^{500}})p^2]+rp$</p>
 <p>于是</p>

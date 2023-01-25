@@ -29,7 +29,7 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 6.1.0"></head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 
 
@@ -509,9 +509,9 @@
 
 
 
-<h2 id="crypto"><a href="#Crypto" class="headerlink" title="Crypto"></a>Crypto<a href="#crypto" class="header-anchor">#</a></h2><h3 id="megaxord-1-jian-dan-yi-huo-jia-mi"><a href="#megaxord-1-简单异或加密" class="headerlink" title="megaxord 1-简单异或加密"></a>megaxord 1-简单异或加密<a href="#megaxord-1-jian-dan-yi-huo-jia-mi" class="header-anchor">#</a></h3><h4 id="ti-mu-miao-shu"><a href="#题目描述：" class="headerlink" title="题目描述："></a>题目描述：<a href="#ti-mu-miao-shu" class="header-anchor">#</a></h4><p>Some pesky wizard stole the article I was writing. I got it back, but it’s all messed up now :(</p>
+<h2 id="crypto"><a href="#Crypto" class="headerlink" title="Crypto"></a>Crypto</h2><h3 id="megaxord-1-简单异或加密"><a href="#megaxord-1-简单异或加密" class="headerlink" title="megaxord 1-简单异或加密"></a>megaxord 1-简单异或加密</h3><h4 id="题目描述"><a href="#题目描述：" class="headerlink" title="题目描述："></a>题目描述：</h4><p>Some pesky wizard stole the article I was writing. I got it back, but it’s all messed up now :(</p>
 <p>Hint: the wizard used the same magic on every character…</p>
-<h4 id="fen-xi"><a href="#分析：" class="headerlink" title="分析："></a>分析：<a href="#fen-xi" class="header-anchor">#</a></h4><p>据提示猜测是异或加密，密钥可能只有一个字节。尝试一下</p>
+<h4 id="分析"><a href="#分析：" class="headerlink" title="分析："></a>分析：</h4><p>据提示猜测是异或加密，密钥可能只有一个字节。尝试一下</p>
 <pre class="line-numbers language-python" data-language="python"><code class="language-python">from tqdm import tqdm
 f &#x3D; open(&#39;megaxord.txt&#39;,&#39;rb&#39;,).read()
 def xor(a,b):
@@ -530,8 +530,8 @@ for i in range(256):
 
 <p>也可以借助工具</p>
 <p><img src="/images/BuckeyeCTF-2022/image-20221112123606227.png" alt="image-20221112123606227"></p>
-<h3 id="twin-prime-rsa-2-luan-sheng-su-shu-rsa"><a href="#Twin-prime-RSA-2-孪生素数RSA" class="headerlink" title="Twin prime RSA 2-孪生素数RSA"></a>Twin prime RSA 2-孪生素数RSA<a href="#twin-prime-rsa-2-luan-sheng-su-shu-rsa" class="header-anchor">#</a></h3><h4 id="ti-mu-miao-shu"><a href="#题目描述：-1" class="headerlink" title="题目描述："></a>题目描述：<a href="#ti-mu-miao-shu" class="header-anchor">#</a></h4><p>Real winners use twin primes</p>
-<h4 id="ti-mu-dai-ma"><a href="#题目代码：" class="headerlink" title="题目代码："></a>题目代码：<a href="#ti-mu-dai-ma" class="header-anchor">#</a></h4><pre class="line-numbers language-python" data-language="python"><code class="language-python">import Crypto.Util.number as cun
+<h3 id="twin-prime-rsa-2-孪生素数rsa"><a href="#Twin-prime-RSA-2-孪生素数RSA" class="headerlink" title="Twin prime RSA 2-孪生素数RSA"></a>Twin prime RSA 2-孪生素数RSA</h3><h4 id="题目描述"><a href="#题目描述：-1" class="headerlink" title="题目描述："></a>题目描述：</h4><p>Real winners use twin primes</p>
+<h4 id="题目代码"><a href="#题目代码：" class="headerlink" title="题目代码："></a>题目代码：</h4><pre class="line-numbers language-python" data-language="python"><code class="language-python">import Crypto.Util.number as cun
 
 while True:
     p &#x3D; cun.getPrime(1024)
@@ -559,7 +559,7 @@ c &#x3D; 78612369435021761342031340729413712127395398117565882488288868728315173
 &quot;&quot;&quot;
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h4 id="fen-xi"><a href="#分析：-1" class="headerlink" title="分析："></a>分析：<a href="#fen-xi" class="header-anchor">#</a></h4><p>孪生素数构成的RSA（所谓孪生素数指的是形如 p 和 p+2 的素数），你或许会想到费马因子分解、开根号在附近寻找p等做法，但是当 p 和p+2 是巨大的孪生素数的时候，上述做法可能是不可行的。</p>
+<h4 id="分析"><a href="#分析：-1" class="headerlink" title="分析："></a>分析：</h4><p>孪生素数构成的RSA（所谓孪生素数指的是形如 p 和 p+2 的素数），你或许会想到费马因子分解、开根号在附近寻找p等做法，但是当 p 和p+2 是巨大的孪生素数的时候，上述做法可能是不可行的。</p>
 <p>以下是我从一篇文章中看到的最合适的解法：<br>$$<br>\begin{aligned}<br>p(p+2)&amp;&#x3D;n\<br>p^2+2p-n&amp;&#x3D;0\<br>\end{aligned}<br>$$</p>
 <p>这是一个二次方程，并且其 $\Delta$ 大于 0，所以我们可以用求根公式来求解<br>$$<br>\begin{aligned}<br>s_1&amp;&#x3D;\frac{-b+\sqrt{\Delta}}{2a}&#x3D;\frac{-2+2\sqrt{1+n}}{2}&#x3D;\sqrt{n+1}-1\<br>s_2&amp;&#x3D;\frac{-b-\sqrt{\Delta}}{2a}&#x3D;\frac{-2-2\sqrt{1+n}}{2}&#x3D;-\sqrt{n+1}-1<br>\end{aligned}<br>$$<br>很明显，大于零的那个根就是 p 了！</p>
 <pre class="line-numbers language-python" data-language="python"><code class="language-python">import Crypto.Util.number
@@ -581,9 +581,9 @@ print(Crypto.Util.number.long_to_bytes(m))
 
 
 
-<h3 id="fastor-3-fu-li-xie-bian-huan-zai-tu-pian-shang-de-jian-dan-ying-yong"><a href="#fastor-3-傅里叶变换在图片上的简单应用" class="headerlink" title="fastor 3-傅里叶变换在图片上的简单应用"></a>fastor 3-傅里叶变换在图片上的简单应用<a href="#fastor-3-fu-li-xie-bian-huan-zai-tu-pian-shang-de-jian-dan-ying-yong" class="header-anchor">#</a></h3><h4 id="ti-mu-miao-shu"><a href="#题目描述：-2" class="headerlink" title="题目描述："></a>题目描述：<a href="#ti-mu-miao-shu" class="header-anchor">#</a></h4><p>Make the image different yet same!</p>
+<h3 id="fastor-3-傅里叶变换在图片上的简单应用"><a href="#fastor-3-傅里叶变换在图片上的简单应用" class="headerlink" title="fastor 3-傅里叶变换在图片上的简单应用"></a>fastor 3-傅里叶变换在图片上的简单应用</h3><h4 id="题目描述"><a href="#题目描述：-2" class="headerlink" title="题目描述："></a>题目描述：</h4><p>Make the image different yet same!</p>
 <p><a target="_blank" rel="noopener" href="https://fastfor.chall.pwnoh.io/">https://fastfor.chall.pwnoh.io</a></p>
-<h4 id="ti-mu-dai-ma"><a href="#题目代码：-1" class="headerlink" title="题目代码："></a>题目代码：<a href="#ti-mu-dai-ma" class="header-anchor">#</a></h4><pre class="line-numbers language-python" data-language="python"><code class="language-python">from PIL import Image
+<h4 id="题目代码"><a href="#题目代码：-1" class="headerlink" title="题目代码："></a>题目代码：</h4><pre class="line-numbers language-python" data-language="python"><code class="language-python">from PIL import Image
 import numpy
 
 def check_hash(fi):
@@ -603,16 +603,16 @@ def check_hash(fi):
     return False
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h4 id="fen-xi"><a href="#分析：-2" class="headerlink" title="分析："></a>分析：<a href="#fen-xi" class="header-anchor">#</a></h4><p>有一些陌生的函数</p>
-<h5 id="shape"><a href="#shape" class="headerlink" title="shape"></a>shape<a href="#shape" class="header-anchor">#</a></h5><p>该函数返回的是一个 数组维度的元组</p>
+<h4 id="分析"><a href="#分析：-2" class="headerlink" title="分析："></a>分析：</h4><p>有一些陌生的函数</p>
+<h5 id="shape"><a href="#shape" class="headerlink" title="shape"></a>shape</h5><p>该函数返回的是一个 数组维度的元组</p>
 <p><img src="/images/BuckeyeCTF-2022/image-20221112160010789.png" alt="image-20221112160010789"></p>
-<h5 id="bitwise-xor"><a href="#bitwise-xor" class="headerlink" title="bitwise_xor"></a>bitwise_xor<a href="#bitwise-xor" class="header-anchor">#</a></h5><p>将两个数组中的元素取出并按位异或，返回结果是一个新数组或者是一个标量，在本题显然是一个数组。</p>
+<h5 id="bitwise_xor"><a href="#bitwise-xor" class="headerlink" title="bitwise_xor"></a>bitwise_xor</h5><p>将两个数组中的元素取出并按位异或，返回结果是一个新数组或者是一个标量，在本题显然是一个数组。</p>
 <p><img src="/images/BuckeyeCTF-2022/image-20221112160231397.png" alt="image-20221112160231397"></p>
-<h5 id="sum"><a href="#sum" class="headerlink" title="sum"></a>sum<a href="#sum" class="header-anchor">#</a></h5><p>在给定轴上的数组元素之和</p>
+<h5 id="sum"><a href="#sum" class="headerlink" title="sum"></a>sum</h5><p>在给定轴上的数组元素之和</p>
 <p><img src="/images/BuckeyeCTF-2022/image-20221112160456649.png" alt="image-20221112160456649"></p>
-<h5 id="fft"><a href="#fft" class="headerlink" title="fft"></a>fft<a href="#fft" class="header-anchor">#</a></h5><p>离散的傅里叶变换。fftn是进行n维的离散傅里叶变换。根据下文的std函数的参数该函数应该返回了一个</p>
+<h5 id="fft"><a href="#fft" class="headerlink" title="fft"></a>fft</h5><p>离散的傅里叶变换。fftn是进行n维的离散傅里叶变换。根据下文的std函数的参数该函数应该返回了一个</p>
 <p><img src="/images/BuckeyeCTF-2022/image-20221112160706073.png" alt="image-20221112160706073"></p>
-<h5 id="std"><a href="#std" class="headerlink" title="std"></a>std<a href="#std" class="header-anchor">#</a></h5><p>计算沿指定轴的标准偏差。</p>
+<h5 id="std"><a href="#std" class="headerlink" title="std"></a>std</h5><p>计算沿指定轴的标准偏差。</p>
 <p><img src="/images/BuckeyeCTF-2022/image-20221112160838661.png" alt="image-20221112160838661"></p>
 <p><img src="/images/BuckeyeCTF-2022/image-20221112161018821.png" alt="image-20221112161018821"></p>
 <p><img src="/images/BuckeyeCTF-2022/image-20221112161028692.png" alt="image-20221112161028692"></p>
@@ -670,7 +670,7 @@ print(check_hash(&quot;test.png&quot;))<span aria-hidden="true" class="line-numb
 
 
 
-<h4 id="bie-de-zuo-fa"><a href="#别的做法" class="headerlink" title="别的做法"></a>别的做法<a href="#bie-de-zuo-fa" class="header-anchor">#</a></h4><p><img src="/images/BuckeyeCTF-2022/Screen_Shot_2022-11-06_at_22.59.49-16682455327023.png" alt="图片"></p>
+<h4 id="别的做法"><a href="#别的做法" class="headerlink" title="别的做法"></a>别的做法</h4><p><img src="/images/BuckeyeCTF-2022/Screen_Shot_2022-11-06_at_22.59.49-16682455327023.png" alt="图片"></p>
 <pre class="line-numbers language-python" data-language="python"><code class="language-python">import numpy
 from PIL import Image
 def check_hash(fi):
@@ -706,11 +706,11 @@ generate_hash()<span aria-hidden="true" class="line-numbers-rows"><span></span><
 
 
 
-<h4 id="chi-san-fu-li-xie-bian-huan"><a href="#离散傅里叶变换" class="headerlink" title="离散傅里叶变换"></a>离散傅里叶变换<a href="#chi-san-fu-li-xie-bian-huan" class="header-anchor">#</a></h4><p>作为一只小菜鸡，当然不需要知道其傅里叶变换背后的原理是什么，直接用维基百科的公式就好啦。</p>
+<h4 id="离散傅里叶变换"><a href="#离散傅里叶变换" class="headerlink" title="离散傅里叶变换"></a>离散傅里叶变换</h4><p>作为一只小菜鸡，当然不需要知道其傅里叶变换背后的原理是什么，直接用维基百科的公式就好啦。</p>
 <p><img src="/images/BuckeyeCTF-2022/image-20221112164834657.png" alt="image-20221112164834657"></p>
 <p><img src="/images/BuckeyeCTF-2022/image-20221112165338305.png" alt="image-20221112165338305"></p>
-<h3 id="bonce-4-jian-dan-ni-tui"><a href="#bonce-4-简单逆推" class="headerlink" title="bonce 4-简单逆推"></a>bonce 4-简单逆推<a href="#bonce-4-jian-dan-ni-tui" class="header-anchor">#</a></h3><h4 id="ti-mu-miao-shu"><a href="#题目描述：-3" class="headerlink" title="题目描述："></a>题目描述：<a href="#ti-mu-miao-shu" class="header-anchor">#</a></h4><p>nonce without a cipher</p>
-<h4 id="ti-mu-yuan-ma"><a href="#题目源码：" class="headerlink" title="题目源码："></a>题目源码：<a href="#ti-mu-yuan-ma" class="header-anchor">#</a></h4><pre class="line-numbers language-python" data-language="python"><code class="language-python">import random
+<h3 id="bonce-4-简单逆推"><a href="#bonce-4-简单逆推" class="headerlink" title="bonce 4-简单逆推"></a>bonce 4-简单逆推</h3><h4 id="题目描述"><a href="#题目描述：-3" class="headerlink" title="题目描述："></a>题目描述：</h4><p>nonce without a cipher</p>
+<h4 id="题目源码"><a href="#题目源码：" class="headerlink" title="题目源码："></a>题目源码：</h4><pre class="line-numbers language-python" data-language="python"><code class="language-python">import random
 
 with open(&#39;sample.txt&#39;) as file:
     line &#x3D; file.read()
@@ -744,7 +744,7 @@ with open(&#39;output.txt&#39;, &#39;w&#39;) as file:
         file.write(&#39;\ninput: ???\n&#39; + &#39;output: &#39; + encrypted[i])
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h4 id="fen-xi"><a href="#分析：-3" class="headerlink" title="分析："></a>分析：<a href="#fen-xi" class="header-anchor">#</a></h4><p>flag 就在 sample当中，尝试恢复样文。观察到每一轮的密文都和一个已知的 nonce 进行了异或加密，我们直接反向异或回去就可以恢复 samples。</p>
+<h4 id="分析"><a href="#分析：-3" class="headerlink" title="分析："></a>分析：</h4><p>flag 就在 sample当中，尝试恢复样文。观察到每一轮的密文都和一个已知的 nonce 进行了异或加密，我们直接反向异或回去就可以恢复 samples。</p>
 <pre class="line-numbers language-python" data-language="python"><code class="language-python">#!&#x2F;usr&#x2F;bin&#x2F;python3
 from pwn import xor
 
@@ -778,9 +778,9 @@ print(plaintext_lines[0:4])<span aria-hidden="true" class="line-numbers-rows"><s
 
 
 
-<h3 id="5-powerball-5-yu-ce-xian-xing-tong-yu-js-yuan-dai-ma"><a href="#5-powerball-5-预测线性同余（JS源代码）" class="headerlink" title="5. powerball 5-预测线性同余（JS源代码）"></a>5. powerball 5-预测线性同余（JS源代码）<a href="#5-powerball-5-yu-ce-xian-xing-tong-yu-js-yuan-dai-ma" class="header-anchor">#</a></h3><h4 id="ti-mu-miao-shu"><a href="#题目描述：-4" class="headerlink" title="题目描述："></a>题目描述：<a href="#ti-mu-miao-shu" class="header-anchor">#</a></h4><p>What could go wrong using a Linear Congruential Generator to get some random numbers?</p>
+<h3 id="5-powerball-5-预测线性同余js源代码"><a href="#5-powerball-5-预测线性同余（JS源代码）" class="headerlink" title="5. powerball 5-预测线性同余（JS源代码）"></a>5. powerball 5-预测线性同余（JS源代码）</h3><h4 id="题目描述"><a href="#题目描述：-4" class="headerlink" title="题目描述："></a>题目描述：</h4><p>What could go wrong using a Linear Congruential Generator to get some random numbers?</p>
 <p><a target="_blank" rel="noopener" href="https://powerball.chall.pwnoh.io/">https://powerball.chall.pwnoh.io</a></p>
-<h4 id="ti-mu-yuan-ma"><a href="#题目源码：-1" class="headerlink" title="题目源码："></a>题目源码：<a href="#ti-mu-yuan-ma" class="header-anchor">#</a></h4><h5 id="main-js"><a href="#main-js" class="headerlink" title="main.js"></a>main.js<a href="#main-js" class="header-anchor">#</a></h5><pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token keyword">const</span> socket <span class="token operator">=</span> <span class="token function">io</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment">// eslint-disable-line no-undef</span>
+<h4 id="题目源码"><a href="#题目源码：-1" class="headerlink" title="题目源码："></a>题目源码：</h4><h5 id="mainjs"><a href="#main-js" class="headerlink" title="main.js"></a>main.js</h5><pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token keyword">const</span> socket <span class="token operator">=</span> <span class="token function">io</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment">// eslint-disable-line no-undef</span>
 <span class="token keyword">let</span> seenFlag <span class="token operator">=</span> <span class="token boolean">false</span>
 
 <span class="token keyword">function</span> <span class="token function">seedToBalls</span> <span class="token punctuation">(</span><span class="token parameter">n</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
@@ -846,7 +846,7 @@ print(plaintext_lines[0:4])<span aria-hidden="true" class="line-numbers-rows"><s
 <span class="token function">initInput</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h5 id="app-js"><a href="#app-js" class="headerlink" title="app.js"></a>app.js<a href="#app-js" class="header-anchor">#</a></h5><pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token keyword">import</span> express <span class="token keyword">from</span> <span class="token string">'express'</span>
+<h5 id="appjs"><a href="#app-js" class="headerlink" title="app.js"></a>app.js</h5><pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token keyword">import</span> express <span class="token keyword">from</span> <span class="token string">'express'</span>
 <span class="token keyword">import</span> http <span class="token keyword">from</span> <span class="token string">'http'</span>
 <span class="token keyword">import</span> <span class="token punctuation">&#123;</span> Server <span class="token punctuation">&#125;</span> <span class="token keyword">from</span> <span class="token string">'socket.io'</span>
 <span class="token keyword">import</span> crypto <span class="token keyword">from</span> <span class="token string">'crypto'</span>
@@ -929,7 +929,7 @@ server<span class="token punctuation">.</span><span class="token function">liste
 
 
 
-<h4 id="fen-xi"><a href="#分析：-4" class="headerlink" title="分析："></a>分析：<a href="#fen-xi" class="header-anchor">#</a></h4><p>本题应是一个较简单的题，对于我来说最大的难点反而是在读懂代码上，又遇见了许多陌生的函数。</p>
+<h4 id="分析"><a href="#分析：-4" class="headerlink" title="分析："></a>分析：</h4><p>本题应是一个较简单的题，对于我来说最大的难点反而是在读懂代码上，又遇见了许多陌生的函数。</p>
 <p>在我的一番查证之下，要想读懂本题源码，需要先观看一下这篇文章：<a target="_blank" rel="noopener" href="https://www.runoob.com/nodejs/nodejs-event.html">https://www.runoob.com/nodejs/nodejs-event.html</a></p>
 <p><code>socker.io</code> 官方文档：<a target="_blank" rel="noopener" href="https://socket.io/">https://socket.io/</a></p>
 <p><img src="/images/BuckeyeCTF-2022/image-20221112205407412.png" alt="image-20221112205407412"></p>
@@ -985,10 +985,10 @@ socket<span class="token punctuation">.</span><span class="token function">on</s
 
 
 
-<h3 id="6-ssshit"><a href="#6-SSSHIT" class="headerlink" title="6. SSSHIT"></a>6. SSSHIT<a href="#6-ssshit" class="header-anchor">#</a></h3><h4 id="ti-mu-miao-shu"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述<a href="#ti-mu-miao-shu" class="header-anchor">#</a></h4><p>SSS is so cool!</p>
+<h3 id="6-ssshit"><a href="#6-SSSHIT" class="headerlink" title="6. SSSHIT"></a>6. SSSHIT</h3><h4 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h4><p>SSS is so cool!</p>
 <pre class="line-numbers language-none"><code class="language-none">nc pwn.chall.pwnoh.io 13382<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<h4 id="ti-mu-nei-rong"><a href="#题目内容" class="headerlink" title="题目内容"></a>题目内容<a href="#ti-mu-nei-rong" class="header-anchor">#</a></h4><pre class="line-numbers language-python" data-language="python"><code class="language-python">import Crypto.Util.number as cun
+<h4 id="题目内容"><a href="#题目内容" class="headerlink" title="题目内容"></a>题目内容</h4><pre class="line-numbers language-python" data-language="python"><code class="language-python">import Crypto.Util.number as cun
 import random
 import ast
 
@@ -1062,8 +1062,8 @@ main()
 
 
 
-<h3 id="7-quad-prime-rsa-lian-fen-shu-rsa"><a href="#7-Quad-prime-RSA-连分数RSA" class="headerlink" title="7. Quad prime RSA -连分数RSA"></a>7. <strong>Quad prime RSA</strong> -连分数RSA<a href="#7-quad-prime-rsa-lian-fen-shu-rsa" class="header-anchor">#</a></h3><h4 id="ti-mu-miao-shu"><a href="#题目描述-1" class="headerlink" title="题目描述"></a>题目描述<a href="#ti-mu-miao-shu" class="header-anchor">#</a></h4><p>Ok I learned from my mistake! I’ll just put my twin primes into separate RSA keys…</p>
-<h4 id="ti-mu-nei-rong"><a href="#题目内容-1" class="headerlink" title="题目内容"></a>题目内容<a href="#ti-mu-nei-rong" class="header-anchor">#</a></h4><pre class="line-numbers language-python" data-language="python"><code class="language-python">import Crypto.Util.number as cun
+<h3 id="7-quad-prime-rsa-连分数rsa"><a href="#7-Quad-prime-RSA-连分数RSA" class="headerlink" title="7. Quad prime RSA -连分数RSA"></a>7. <strong>Quad prime RSA</strong> -连分数RSA</h3><h4 id="题目描述"><a href="#题目描述-1" class="headerlink" title="题目描述"></a>题目描述</h4><p>Ok I learned from my mistake! I’ll just put my twin primes into separate RSA keys…</p>
+<h4 id="题目内容"><a href="#题目内容-1" class="headerlink" title="题目内容"></a>题目内容</h4><pre class="line-numbers language-python" data-language="python"><code class="language-python">import Crypto.Util.number as cun
 
 p &#x3D; cun.getPrime(500)
 
@@ -1103,13 +1103,13 @@ c_2 &#x3D; 111865944388540159344684580970835443272640009631057414995719169861041
 &quot;&quot;&quot;
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h4 id="fen-xi"><a href="#分析：-5" class="headerlink" title="分析："></a>分析：<a href="#fen-xi" class="header-anchor">#</a></h4><p>So if  $\left|\frac{n_1}{n_2} - \frac{p}{s}\right| &lt; \frac{1}{2s^2}$, then we can definitely find $\frac{p}{s}$ as a convergent of $\frac{n_1}{n_2}$</p>
+<h4 id="分析"><a href="#分析：-5" class="headerlink" title="分析："></a>分析：</h4><p>So if  $\left|\frac{n_1}{n_2} - \frac{p}{s}\right| &lt; \frac{1}{2s^2}$, then we can definitely find $\frac{p}{s}$ as a convergent of $\frac{n_1}{n_2}$</p>
 <p>You can do some algebra to find that $\left|\frac{n_1}{n_2} - \frac{p}{s}\right| &#x3D; \left|\frac{-2p}{(q + 2) s} \right| &lt; \frac{4s}{2^{23} s^3} &lt; \frac{1}{2s^2}$ </p>
 <p>Using the fact that $q + 2 &gt; 2^{23} s^2$ and $p &lt; 2s$ for the first inequality</p>
 <p>关于 sage 的连分数函数的文档地址：</p>
 <p><a target="_blank" rel="noopener" href="https://doc.sagemath.org/html/en/reference/diophantine_approximation/sage/rings/continued_fraction.html">https://doc.sagemath.org/html/en/reference/diophantine_approximation/sage/rings/continued_fraction.html</a></p>
 <p><a target="_blank" rel="noopener" href="https://doc.sagemath.org/html/en/reference/diophantine_approximation/sage/rings/continued_fraction.html#sage.rings.continued_fraction.continued_fraction">https://doc.sagemath.org/html/en/reference/diophantine_approximation/sage/rings/continued_fraction.html#sage.rings.continued_fraction.continued_fraction</a></p>
-<h4 id="jie-ti-jiao-ben"><a href="#解题脚本" class="headerlink" title="解题脚本"></a>解题脚本<a href="#jie-ti-jiao-ben" class="header-anchor">#</a></h4><pre class="line-numbers language-python" data-language="python"><code class="language-python">import Crypto.Util.number as cun
+<h4 id="解题脚本"><a href="#解题脚本" class="headerlink" title="解题脚本"></a>解题脚本</h4><pre class="line-numbers language-python" data-language="python"><code class="language-python">import Crypto.Util.number as cun
 
 e &#x3D; 0x10001 
 
@@ -1161,7 +1161,7 @@ p &#x3D; int(f.monic().small_roots(X &#x3D; 2**500, beta &#x3D; 0.4)[0])<span ar
 
 
 <p><img src="/images/BuckeyeCTF-2022/image-20221202211822949.png" alt="image-20221202211822949"></p>
-<h3 id="yin-yong"><a href="#引用" class="headerlink" title="引用"></a>引用<a href="#yin-yong" class="header-anchor">#</a></h3><p>官方题解：<a target="_blank" rel="noopener" href="https://github.com/cscosu/buckeyectf-2022-public">https://github.com/cscosu/buckeyectf-2022-public</a></p>
+<h3 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h3><p>官方题解：<a target="_blank" rel="noopener" href="https://github.com/cscosu/buckeyectf-2022-public">https://github.com/cscosu/buckeyectf-2022-public</a></p>
 <p><a target="_blank" rel="noopener" href="https://bitsdeep.com/posts/attacking-rsa-for-fun-and-ctf-points-part-4/">https://bitsdeep.com/posts/attacking-rsa-for-fun-and-ctf-points-part-4/</a></p>
 <p><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Discrete_Fourier_transform">https://en.wikipedia.org/wiki/Discrete_Fourier_transform</a></p>
 <p><a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E6%A8%99%E6%BA%96%E5%B7%AE">https://zh.wikipedia.org/wiki/%E6%A8%99%E6%BA%96%E5%B7%AE</a></p>

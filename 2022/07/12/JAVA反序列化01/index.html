@@ -29,7 +29,7 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 6.1.0"></head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 
 
@@ -505,16 +505,16 @@
 <span id="more"></span>
 
 <p>学习完反射就可以正式开始学习 Java 反序列化。</p>
-<h3 id="ding-yi"><a href="#定义" class="headerlink" title="定义"></a>定义<a href="#ding-yi" class="header-anchor">#</a></h3><h4 id="shi-me-shi-java-xu-lie-hua-he-fan-xu-lie-hua"><a href="#什么是-java-序列化和反序列化？" class="headerlink" title="什么是 java 序列化和反序列化？"></a>什么是 java 序列化和反序列化？<a href="#shi-me-shi-java-xu-lie-hua-he-fan-xu-lie-hua" class="header-anchor">#</a></h4><p>Java 序列化是指把 Java 对象转换为字节序列的过程，而 Java 反序列化是指把字节序列恢复为 Java 对象的过程。</p>
+<h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><h4 id="什么是-java-序列化和反序列化"><a href="#什么是-java-序列化和反序列化？" class="headerlink" title="什么是 java 序列化和反序列化？"></a>什么是 java 序列化和反序列化？</h4><p>Java 序列化是指把 Java 对象转换为字节序列的过程，而 Java 反序列化是指把字节序列恢复为 Java 对象的过程。</p>
 <p>序列化分为两大部分：序列化和反序列化。序列化是这个过程的第一部分，将数据分解成字节流，以便存储在文件中或在网络上传输。反序列化就是打开字节流并重构对象。对象序列化不仅要将基本数据类型转换成字节表示，有时还要恢复数据。恢复数据要求数据的对象实例。</p>
-<h3 id="gong-neng-he-yong-chu"><a href="#功能和用处" class="headerlink" title="功能和用处"></a>功能和用处<a href="#gong-neng-he-yong-chu" class="header-anchor">#</a></h3><h4 id="java-xu-lie-hua-he-fan-xu-lie-hua-you-shi-me-gong-neng-he-yong-chu"><a href="#java-序列化和反序列化有什么功能和用处？" class="headerlink" title="java 序列化和反序列化有什么功能和用处？"></a>java 序列化和反序列化有什么功能和用处？<a href="#java-xu-lie-hua-he-fan-xu-lie-hua-you-shi-me-gong-neng-he-yong-chu" class="header-anchor">#</a></h4><p> 我们知道，当两个进程进行远程通信时，可以相互发送各种类型的数据，包括文本、图片、音频、视频等， 而这些数据都会以二进制序列的形式在网络上传送。那么当两个Java进程进行通信时，能否实现进程间的对象传送呢？答案是可以的。如何做到呢？这就需要Java序列化与反序列化了。换句话说，一方面，发送方需要把这个Java对象转换为字节序列，然后在网络上传送；另一方面，接收方需要从字节序列中恢复出Java对象。</p>
+<h3 id="功能和用处"><a href="#功能和用处" class="headerlink" title="功能和用处"></a>功能和用处</h3><h4 id="java-序列化和反序列化有什么功能和用处"><a href="#java-序列化和反序列化有什么功能和用处？" class="headerlink" title="java 序列化和反序列化有什么功能和用处？"></a>java 序列化和反序列化有什么功能和用处？</h4><p> 我们知道，当两个进程进行远程通信时，可以相互发送各种类型的数据，包括文本、图片、音频、视频等， 而这些数据都会以二进制序列的形式在网络上传送。那么当两个Java进程进行通信时，能否实现进程间的对象传送呢？答案是可以的。如何做到呢？这就需要Java序列化与反序列化了。换句话说，一方面，发送方需要把这个Java对象转换为字节序列，然后在网络上传送；另一方面，接收方需要从字节序列中恢复出Java对象。</p>
 <p> 当我们明晰了为什么需要Java序列化和反序列化后，我们很自然地会想Java序列化的好处。其好处一是实现了数据的持久化，通过序列化可以把数据永久地保存到硬盘上（通常存放在文件里），二是，利用序列化实现远程通信，即在网络上传送对象的字节序列。</p>
-<h4 id="shi-me-shi-hou-hui-yong-dao-java-xu-lie-hua-he-fan-xu-lie-hua"><a href="#什么时候会用到-Java-序列化和反序列化？" class="headerlink" title="什么时候会用到 Java 序列化和反序列化？"></a>什么时候会用到 Java 序列化和反序列化？<a href="#shi-me-shi-hou-hui-yong-dao-java-xu-lie-hua-he-fan-xu-lie-hua" class="header-anchor">#</a></h4><ul>
+<h4 id="什么时候会用到-java-序列化和反序列化"><a href="#什么时候会用到-Java-序列化和反序列化？" class="headerlink" title="什么时候会用到 Java 序列化和反序列化？"></a>什么时候会用到 Java 序列化和反序列化？</h4><ul>
 <li>想把内存中的对象保存到一个文件中或者数据库中时候；</li>
 <li>想用套接字在网络上传送对象的时候；</li>
 <li>想通过RMI传输对象的时候</li>
 </ul>
-<h3 id="ru-he-jin-xing-java-xu-lie-hua-he-fan-xu-lie-hua"><a href="#如何进行-Java-序列化和反序列化" class="headerlink" title="如何进行 Java 序列化和反序列化"></a>如何进行 Java 序列化和反序列化<a href="#ru-he-jin-xing-java-xu-lie-hua-he-fan-xu-lie-hua" class="header-anchor">#</a></h3><p>假设我们定义了如下的 Employee 类，该类实现了 Serializable 接口。</p>
+<h3 id="如何进行-java-序列化和反序列化"><a href="#如何进行-Java-序列化和反序列化" class="headerlink" title="如何进行 Java 序列化和反序列化"></a>如何进行 Java 序列化和反序列化</h3><p>假设我们定义了如下的 Employee 类，该类实现了 Serializable 接口。</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java">public class Employee implements java.io.Serializable
 &#123;
    public String name;
@@ -528,7 +528,7 @@
    &#125;
 &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h4 id="xu-lie-hua-dui-xiang"><a href="#序列化对象" class="headerlink" title="序列化对象"></a>序列化对象<a href="#xu-lie-hua-dui-xiang" class="header-anchor">#</a></h4><h5 id="yong-dao-de-fu-zhu-lei"><a href="#用到的辅助类" class="headerlink" title="用到的辅助类"></a>用到的辅助类<a href="#yong-dao-de-fu-zhu-lei" class="header-anchor">#</a></h5><p><code>ObjectOutputStream</code> 类用来序列化一个对象，如下的 <code>SerializeDemo</code> 例子实例化了一个 <code>Employee</code> 对象，并将该对象序列化到一个文件中。</p>
+<h4 id="序列化对象"><a href="#序列化对象" class="headerlink" title="序列化对象"></a>序列化对象</h4><h5 id="用到的辅助类"><a href="#用到的辅助类" class="headerlink" title="用到的辅助类"></a>用到的辅助类</h5><p><code>ObjectOutputStream</code> 类用来序列化一个对象，如下的 <code>SerializeDemo</code> 例子实例化了一个 <code>Employee</code> 对象，并将该对象序列化到一个文件中。</p>
 <p>如果你对 Java IO 流不甚理解，那么可以看一下这篇文章：<a target="_blank" rel="noopener" href="http://www.51gjie.com/java/686.html">Java IO流详解</a>、<a target="_blank" rel="noopener" href="https://juejin.cn/post/6844903632207347725">深入学习JAVA -IO流详解</a></p>
 <p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/image-20221222234312961.png" alt="image-20221222234312961"></p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java">public class Demo01ObjectOutputStream &#123;
@@ -543,7 +543,7 @@
     &#125;
 &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h4 id="fan-xu-lie-hua-dui-xiang"><a href="#反序列化对象" class="headerlink" title="反序列化对象"></a>反序列化对象<a href="#fan-xu-lie-hua-dui-xiang" class="header-anchor">#</a></h4><h5 id="yong-dao-de-fu-zhu-lei"><a href="#用到的辅助类-1" class="headerlink" title="用到的辅助类"></a>用到的辅助类<a href="#yong-dao-de-fu-zhu-lei" class="header-anchor">#</a></h5><p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/image-20221222234423608.png" alt="image-20221222234423608"></p>
+<h4 id="反序列化对象"><a href="#反序列化对象" class="headerlink" title="反序列化对象"></a>反序列化对象</h4><h5 id="用到的辅助类"><a href="#用到的辅助类-1" class="headerlink" title="用到的辅助类"></a>用到的辅助类</h5><p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/image-20221222234423608.png" alt="image-20221222234423608"></p>
 <p><strong>特殊情况:</strong></p>
 <p>被 static 修饰的成员变量无法序列化，无法写到文件。</p>
 <p>如果不希望某个成员变量写到文件，同时又不希望使用 static 关键字， 那么可以使用 transient。transient 关键字表示瞬态，被 transient 修饰的成员变量无法被序列化。</p>
@@ -560,7 +560,7 @@
 
 
 
-<h5 id="xu-lie-hua-dai-ma-shi-li"><a href="#序列化代码示例" class="headerlink" title="序列化代码示例"></a>序列化代码示例<a href="#xu-lie-hua-dai-ma-shi-li" class="header-anchor">#</a></h5><pre class="line-numbers language-java" data-language="java"><code class="language-java">import Demo1.Employee;
+<h5 id="序列化代码示例"><a href="#序列化代码示例" class="headerlink" title="序列化代码示例"></a>序列化代码示例</h5><pre class="line-numbers language-java" data-language="java"><code class="language-java">import Demo1.Employee;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -599,7 +599,7 @@ public class SerializeDemo &#123;
     &#125;
 &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h5 id="fan-xu-lie-hua-dai-ma-shi-li"><a href="#反序列化代码示例" class="headerlink" title="反序列化代码示例"></a>反序列化代码示例<a href="#fan-xu-lie-hua-dai-ma-shi-li" class="header-anchor">#</a></h5><pre class="line-numbers language-java" data-language="java"><code class="language-java">package Demo2;
+<h5 id="反序列化代码示例"><a href="#反序列化代码示例" class="headerlink" title="反序列化代码示例"></a>反序列化代码示例</h5><pre class="line-numbers language-java" data-language="java"><code class="language-java">package Demo2;
 import java.io.*;
 import Demo1.Employee;
 
@@ -633,13 +633,13 @@ public class DeserializeDemo &#123;
 <p>这里要注意以下要点：</p>
 <p><code>readObject()</code> 方法中的 try&#x2F;catch 代码块尝试捕获 <code>ClassNotFoundException</code> 异常。对于 JVM 可以的反序列化对象，它必须是能够找到字节码的类。如果 JVM 在反序列化对象的过程中找不到该类，则抛出一个 <code>ClassNotFoundException</code> 异常。注意，<code>readObject()</code> 方法的返回值被转化成 Employee 引用。</p>
 <p>当对象被序列化时，属性 SSN 的值为 111222333，但是因为该属性是短暂的，该值没有被发送到输出流。所以反序列化后 Employee 对象的 SSN 属性为 0。</p>
-<h3 id="xu-lie-hua-guo-cheng-zhong-de-zhu-yi-shi-xiang"><a href="#序列化过程中的注意事项" class="headerlink" title="序列化过程中的注意事项"></a>序列化过程中的注意事项<a href="#xu-lie-hua-guo-cheng-zhong-de-zhu-yi-shi-xiang" class="header-anchor">#</a></h3><p>一个类的对象要想序列化成功，必须满足两个条件：</p>
+<h3 id="序列化过程中的注意事项"><a href="#序列化过程中的注意事项" class="headerlink" title="序列化过程中的注意事项"></a>序列化过程中的注意事项</h3><p>一个类的对象要想序列化成功，必须满足两个条件：</p>
 <ul>
 <li>该类必须实现 <code>java.io.Serializable</code> 接口。</li>
 <li>该类的所有属性必须是可序列化的。如果有一个属性不是可序列化的，则该属性必须注明是短暂的。</li>
 </ul>
 <p>如果你想知道一个 Java 标准类是否是可序列化的，请查看该类的文档。检验一个类的实例是否能序列化十分简单，只需要查看该类有没有实现 <code>java.io.Serializable</code> 接口。</p>
-<h3 id="wei-shi-me-hui-chan-sheng-xu-lie-hua-de-an-quan-wen-ti"><a href="#为什么会产生序列化的安全问题" class="headerlink" title="为什么会产生序列化的安全问题"></a>为什么会产生序列化的安全问题<a href="#wei-shi-me-hui-chan-sheng-xu-lie-hua-de-an-quan-wen-ti" class="header-anchor">#</a></h3><h4 id="fu-wu-duan-fan-xu-lie-hua-zi-dong-zhi-xing-readobject-fang-fa"><a href="#服务端反序列化自动执行-readObject-方法" class="headerlink" title="服务端反序列化自动执行 readObject 方法"></a>服务端反序列化自动执行 readObject 方法<a href="#fu-wu-duan-fan-xu-lie-hua-zi-dong-zhi-xing-readobject-fang-fa" class="header-anchor">#</a></h4><p>序列化和反序列化中有两个特别重要的方法：</p>
+<h3 id="为什么会产生序列化的安全问题"><a href="#为什么会产生序列化的安全问题" class="headerlink" title="为什么会产生序列化的安全问题"></a>为什么会产生序列化的安全问题</h3><h4 id="服务端反序列化自动执行-readobject-方法"><a href="#服务端反序列化自动执行-readObject-方法" class="headerlink" title="服务端反序列化自动执行 readObject 方法"></a>服务端反序列化自动执行 readObject 方法</h4><p>序列化和反序列化中有两个特别重要的方法：</p>
 <ul>
 <li>writeObject</li>
 <li>readObject</li>
@@ -650,7 +650,7 @@ public class DeserializeDemo &#123;
 private void readObject(java.io.ObjectInputStream s)throws java.io.IOException, ClassNotFoundException<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
 <p>只要服务端反序列化数据，客户端传递类的 <code>readObject</code> 中的代码就会自动执行，给予攻击者在服务器上运行代码的能力。所以从根本上来说，java 反序列化的漏洞与 <code>readObject</code> 有关。</p>
-<h4 id="ke-neng-cun-zai-an-quan-lou-dong-de-xing-shi"><a href="#可能存在安全漏洞的形式" class="headerlink" title="可能存在安全漏洞的形式"></a>可能存在安全漏洞的形式<a href="#ke-neng-cun-zai-an-quan-lou-dong-de-xing-shi" class="header-anchor">#</a></h4><h5 id="ru-kou-lei-de-readobject-zhi-jie-diao-yong-wei-xian-fang-fa"><a href="#入口类的-readObject-直接调用危险方法" class="headerlink" title="入口类的 readObject 直接调用危险方法"></a>入口类的 <code>readObject</code> 直接调用危险方法<a href="#ru-kou-lei-de-readobject-zhi-jie-diao-yong-wei-xian-fang-fa" class="header-anchor">#</a></h5><p>这种情况在实际开发场景比较少见，仅作为一个示例演示一下。以下展示了一个弹计算器的代码，思路就是在我们要反序列化的类里面写一个 readObject 方法，这样服务端反序列化时就会自动调用我们写的这个 readObject 方法！</p>
+<h4 id="可能存在安全漏洞的形式"><a href="#可能存在安全漏洞的形式" class="headerlink" title="可能存在安全漏洞的形式"></a>可能存在安全漏洞的形式</h4><h5 id="入口类的-readobject-直接调用危险方法"><a href="#入口类的-readObject-直接调用危险方法" class="headerlink" title="入口类的 readObject 直接调用危险方法"></a>入口类的 <code>readObject</code> 直接调用危险方法</h5><p>这种情况在实际开发场景比较少见，仅作为一个示例演示一下。以下展示了一个弹计算器的代码，思路就是在我们要反序列化的类里面写一个 readObject 方法，这样服务端反序列化时就会自动调用我们写的这个 readObject 方法！</p>
 <p><strong>SerializatinTest.java</strong> 内容如下：</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java">package com.kuang.reflection;
 
@@ -699,7 +699,7 @@ public class UnserializeTest &#123;
 <p><strong>Person.java</strong> 内容如下：</p>
 <p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9600/ReadObjectOneScene.png" alt="img"></p>
 <p>先运行序列化程序，再运行反序列化程序就会自动弹出计算器！入口类的 readObject直接调用危险方法是攻击最理想的情况，但是这种情况几乎不会出现。</p>
-<h4 id="ru-kou-can-shu-zhong-bao-han-ke-kong-lei-gai-lei-you-wei-xian-fang-fa-readobject-shi-diao-yong"><a href="#入口参数中包含可控类，该类有危险方法，-readObject-时调用" class="headerlink" title="入口参数中包含可控类，该类有危险方法， readObject 时调用"></a>入口参数中包含可控类，该类有危险方法， <code>readObject</code> 时调用<a href="#ru-kou-can-shu-zhong-bao-han-ke-kong-lei-gai-lei-you-wei-xian-fang-fa-readobject-shi-diao-yong" class="header-anchor">#</a></h4><h4 id="ru-kou-lei-can-shu-zhong-bao-han-ke-kong-lei-gai-lei-you-diao-yong-qi-ta-you-wei-xian-fang-fa-de-lei-readobject-shi-diao-yong"><a href="#入口类参数中包含可控类，该类又调用其他有危险方法的类，readObject-时调用" class="headerlink" title="入口类参数中包含可控类，该类又调用其他有危险方法的类，readObject 时调用"></a>入口类参数中包含可控类，该类又调用其他有危险方法的类，<code>readObject</code> 时调用<a href="#ru-kou-lei-can-shu-zhong-bao-han-ke-kong-lei-gai-lei-you-diao-yong-qi-ta-you-wei-xian-fang-fa-de-lei-readobject-shi-diao-yong" class="header-anchor">#</a></h4><h4 id="gou-zao-han-shu-x2f-jing-tai-dai-ma-kuai-deng-lei-jia-zai-shi-yin-shi-zhi-xing"><a href="#构造函数-x2F-静态代码块等类加载时隐式执行" class="headerlink" title="构造函数&#x2F;静态代码块等类加载时隐式执行"></a>构造函数&#x2F;静态代码块等类加载时隐式执行<a href="#gou-zao-han-shu-x2f-jing-tai-dai-ma-kuai-deng-lei-jia-zai-shi-yin-shi-zhi-xing" class="header-anchor">#</a></h4><h3 id="chan-sheng-lou-dong-de-gong-ji-lu-xian"><a href="#产生漏洞的攻击路线" class="headerlink" title="产生漏洞的攻击路线"></a>产生漏洞的攻击路线<a href="#chan-sheng-lou-dong-de-gong-ji-lu-xian" class="header-anchor">#</a></h3><ul>
+<h4 id="入口参数中包含可控类该类有危险方法-readobject-时调用"><a href="#入口参数中包含可控类，该类有危险方法，-readObject-时调用" class="headerlink" title="入口参数中包含可控类，该类有危险方法， readObject 时调用"></a>入口参数中包含可控类，该类有危险方法， <code>readObject</code> 时调用</h4><h4 id="入口类参数中包含可控类该类又调用其他有危险方法的类readobject-时调用"><a href="#入口类参数中包含可控类，该类又调用其他有危险方法的类，readObject-时调用" class="headerlink" title="入口类参数中包含可控类，该类又调用其他有危险方法的类，readObject 时调用"></a>入口类参数中包含可控类，该类又调用其他有危险方法的类，<code>readObject</code> 时调用</h4><h4 id="构造函数x2f静态代码块等类加载时隐式执行"><a href="#构造函数-x2F-静态代码块等类加载时隐式执行" class="headerlink" title="构造函数&#x2F;静态代码块等类加载时隐式执行"></a>构造函数&#x2F;静态代码块等类加载时隐式执行</h4><h3 id="产生漏洞的攻击路线"><a href="#产生漏洞的攻击路线" class="headerlink" title="产生漏洞的攻击路线"></a>产生漏洞的攻击路线</h3><ul>
 <li><p>首先攻击的前提是继承了 <code>Serializable</code> 接口</p>
 </li>
 <li><p>入口类：source （重写 readObject 调用常见的函数；参数类型宽泛，比如可以传入一个类作为参数；最好 jdk 自带）</p>
@@ -709,7 +709,7 @@ public class UnserializeTest &#123;
 <li><p>执行类 sink（RCE SSRF 写文件等等） 比如 <code>exec</code> 这种函数</p>
 </li>
 </ul>
-<h3 id="shi-zhan-urldns-shi-yong-java-fan-xu-lie-hua-fa-qi-yi-ge-dns-qing-qiu"><a href="#实战——-URLDNS-使用-Java-反序列化发起一个-DNS-请求" class="headerlink" title="实战—— URLDNS-使用 Java 反序列化发起一个 DNS 请求"></a>实战—— URLDNS-使用 Java 反序列化发起一个 DNS 请求<a href="#shi-zhan-urldns-shi-yong-java-fan-xu-lie-hua-fa-qi-yi-ge-dns-qing-qiu" class="header-anchor">#</a></h3><ul>
+<h3 id="实战-urldns-使用-java-反序列化发起一个-dns-请求"><a href="#实战——-URLDNS-使用-Java-反序列化发起一个-DNS-请求" class="headerlink" title="实战—— URLDNS-使用 Java 反序列化发起一个 DNS 请求"></a>实战—— URLDNS-使用 Java 反序列化发起一个 DNS 请求</h3><ul>
 <li>出发点：URLDNS 在 JAVA 复杂的反序列化漏洞中足够简单；URLDNS 就是 ysoserial 中一个利用链的名字，虽然准确来说这个不能称作 “利用链”。因为其参数不是一个可以利用的命令，而仅为一个 URL，其能触发的结果也不是命令执行，而是一次 DNS 请求。</li>
 <li>虽然这个利用链实际上不能利用，但因为其如下的优点，非常适合我们在检测反序列化漏洞时使用。如 使用 Java 内置的类构造，对第三方库没有依赖。在目标没有回显的时候，能够通过 DNS 请求得知是否存在反序列化漏洞 URL 类。</li>
 </ul>
@@ -719,9 +719,9 @@ public class UnserializeTest &#123;
 <p><a target="_blank" rel="noopener" href="https://blog.paranoidsoftware.com/triggering-a-dns-lookup-using-java-deserialization/">Triggering a DNS lookup using Java Deserialization</a></p>
 <p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9600/ysoserial.png" alt="img"></p>
 <p>现在开始正式复现 URLDNS 利用链！</p>
-<h4 id="qian-yan"><a href="#前言" class="headerlink" title="前言"></a>前言<a href="#qian-yan" class="header-anchor">#</a></h4><p>Java URL 类在其 <code>equals</code> 和 <code>hashCode</code> 方法中有一个有趣的性质，那就是在调用这两个方法时 URL 类会发起一个 DNS 查询请求（准确地说在这两个方法中有一个比较操作，在这个比较操作期间会触发 dns 查询 ）。根据 javadocs，两个 hosts 被认为是等价的，如果这两个 hosts 的主机名被解析为同一个 IP 地址。</p>
+<h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>Java URL 类在其 <code>equals</code> 和 <code>hashCode</code> 方法中有一个有趣的性质，那就是在调用这两个方法时 URL 类会发起一个 DNS 查询请求（准确地说在这两个方法中有一个比较操作，在这个比较操作期间会触发 dns 查询 ）。根据 javadocs，两个 hosts 被认为是等价的，如果这两个 hosts 的主机名被解析为同一个 IP 地址。</p>
 <p>所以，如果我们能得到一个 在URL 对象上调用 <code>equals</code> 或 <code>hashCode</code> 方法的 gadget，那么我们就可以发起一个 DNS 查询。我们可以通过追踪这个 DNS 查询来验证反序列化是否发生以及在我们控制下的代码是否被执行。常见的 DNS 追踪工具有 DNSChef、Burp Collaborator、<a target="_blank" rel="noopener" href="http://dnslog.cn/">DNSLOG</a> 等</p>
-<h4 id="fan-xu-lie-hua-guo-cheng-zhong-shi-ru-he-fa-qi-dns-cha-xun-qing-qiu-de"><a href="#反序列化过程中是如何发起-DNS-查询请求的？" class="headerlink" title="反序列化过程中是如何发起 DNS 查询请求的？"></a>反序列化过程中是如何发起 DNS 查询请求的？<a href="#fan-xu-lie-hua-guo-cheng-zhong-shi-ru-he-fa-qi-dns-cha-xun-qing-qiu-de" class="header-anchor">#</a></h4><p>在 HashMap 的 <code>readObject</code> 方法中，其通过读取 HashMap 的结构状态开始，然后对其包含的所有项进行一个循环。在循环过程中，该方法会从流中读取 key 和 value。然后 HashMap 会以 key 的哈希值、key、value 为参数调用 <code>putVal</code> 方法。</p>
+<h4 id="反序列化过程中是如何发起-dns-查询请求的"><a href="#反序列化过程中是如何发起-DNS-查询请求的？" class="headerlink" title="反序列化过程中是如何发起 DNS 查询请求的？"></a>反序列化过程中是如何发起 DNS 查询请求的？</h4><p>在 HashMap 的 <code>readObject</code> 方法中，其通过读取 HashMap 的结构状态开始，然后对其包含的所有项进行一个循环。在循环过程中，该方法会从流中读取 key 和 value。然后 HashMap 会以 key 的哈希值、key、value 为参数调用 <code>putVal</code> 方法。</p>
 <p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9601/image-20230107165219513.png" alt="image-20230107165219513"></p>
 <p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9601/image-20230107165412584.png" alt="image-20230107165412584"></p>
 <p>这就是我们所需要的东西，我们有一个调用了 <code>readObject</code> 方法的对象，同时这个 <code>readObject</code> 方法将会在一个我们提供的对象（可控）上调用 hashCode方法。实际上，对于 hashCode 方法的调用发生在 <code>HashMap.hash function</code> 内部。继续跟进上图的 hash 方法，该方法内部调用了 <code>key.hashCode()</code> 方法</p>
@@ -745,7 +745,7 @@ public class UnserializeTest &#123;
 
 
 
-<h4 id="zhu-yi-shi-xiang"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项<a href="#zhu-yi-shi-xiang" class="header-anchor">#</a></h4><p>当 URL 对象刚开始放置在一个 HashMap 中时，通过调用 <code>put</code> 方法，<code>HashMap.hash</code> 方法将会被调用。这个方法实际上会调用 URl 对象的 hashCode 方法</p>
+<h4 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h4><p>当 URL 对象刚开始放置在一个 HashMap 中时，通过调用 <code>put</code> 方法，<code>HashMap.hash</code> 方法将会被调用。这个方法实际上会调用 URl 对象的 hashCode 方法</p>
 <p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9601/image-20230107171339409.png" alt="image-20230107171339409"></p>
 <p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9601/image-20230107171319093.png" alt="image-20230107171319093"></p>
 <p>我们传入的 key 是一个 URL 类的对象，所以调用的实际上是 URL 类的 <code>hashCode()</code> 方法</p>
@@ -781,7 +781,7 @@ public class UnserializeTest &#123;
 &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>代码中有一个有趣的地方，那就是将 URL 类对象 url 的 hashCode 改回 -1 时是直接调用前面得到的 Field 对象实例来进行的，而不是通过 HashMap 的实例对象 hashmap。根据直觉，我们都已经通过 hashmap 的 put 方法将 url 放入进去，那么再修改 url 的值似乎不应该影响到 hashmap。。</p>
-<h3 id="can-kao-lian-jie"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接<a href="#can-kao-lian-jie" class="header-anchor">#</a></h3><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/mocas_wang/article/details/107621010">CSDN</a></p>
+<h3 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h3><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/mocas_wang/article/details/107621010">CSDN</a></p>
 <p><a target="_blank" rel="noopener" href="https://www.runoob.com/java/java-serialization.html">菜鸟教程</a></p>
 <p><a target="_blank" rel="noopener" href="https://drun1baby.github.io/2022/05/17/Java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%9F%BA%E7%A1%80%E7%AF%87-01-%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%A6%82%E5%BF%B5%E4%B8%8E%E5%88%A9%E7%94%A8/#toc-heading-14">芜风师傅</a></p>
 

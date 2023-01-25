@@ -29,7 +29,7 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 6.1.0"></head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 
 
@@ -503,7 +503,7 @@
                 <p>记录一下CTF中的命令执行常见绕过姿势</p>
 <span id="more"></span>
 
-<h2 id="0x00-yi-xie-rao-guo-zi-shi"><a href="#0x00-一些绕过姿势" class="headerlink" title="0x00:一些绕过姿势"></a>0x00:一些绕过姿势<a href="#0x00-yi-xie-rao-guo-zi-shi" class="header-anchor">#</a></h2><p>在遇到的一些web题中，会经常遇见如下过滤或限制</p>
+<h2 id="0x00一些绕过姿势"><a href="#0x00-一些绕过姿势" class="headerlink" title="0x00:一些绕过姿势"></a>0x00:一些绕过姿势</h2><p>在遇到的一些web题中，会经常遇见如下过滤或限制</p>
 <ol>
 <li>空格</li>
 <li>命令<a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=%E5%88%86%E9%9A%94%E7%AC%A6&spm=1001.2101.3001.7020">分隔符</a></li>
@@ -511,7 +511,7 @@
 <li>限制长度</li>
 <li>限制回显</li>
 </ol>
-<h3 id="1-kong-ge-rao-guo"><a href="#1-空格绕过" class="headerlink" title="1.空格绕过"></a>1.空格绕过<a href="#1-kong-ge-rao-guo" class="header-anchor">#</a></h3><pre class="line-numbers language-none"><code class="language-none">常见的绕过符号有：
+<h3 id="1空格绕过"><a href="#1-空格绕过" class="headerlink" title="1.空格绕过"></a>1.空格绕过</h3><pre class="line-numbers language-none"><code class="language-none">常见的绕过符号有：
 $IFS$9
 $&#123;IFS&#125;
 %09(php环境下)
@@ -522,7 +522,7 @@ $&#123;IFS&#125;
 
 
 
-<h3 id="2-ming-ling-fen-ge-fu"><a href="#2-命令分隔符" class="headerlink" title="2.命令分隔符"></a>2.命令分隔符<a href="#2-ming-ling-fen-ge-fu" class="header-anchor">#</a></h3><pre class="line-numbers language-none"><code class="language-none">%0a --换行符，需要php环境
+<h3 id="2命令分隔符"><a href="#2-命令分隔符" class="headerlink" title="2.命令分隔符"></a>2.命令分隔符</h3><pre class="line-numbers language-none"><code class="language-none">%0a --换行符，需要php环境
 %0d --回车符，需要php环境
 ; --在shell中，是连续指令
 &amp; --不管第一条命令成功与否，都会执行第二条命令
@@ -532,7 +532,7 @@ $&#123;IFS&#125;
 
 
 
-<h3 id="guan-jian-zi-guo-lu"><a href="#关键字过滤" class="headerlink" title="关键字过滤"></a>关键字过滤<a href="#guan-jian-zi-guo-lu" class="header-anchor">#</a></h3><p>假如过滤了关键字cat flag ,该如何绕过？</p>
+<h3 id="关键字过滤"><a href="#关键字过滤" class="headerlink" title="关键字过滤"></a>关键字过滤</h3><p>假如过滤了关键字cat flag ,该如何绕过？</p>
 <p>1.拼接绕过法：<br>#执行ls命令：<br>a&#x3D;l;b&#x3D;s;$a$b</p>
 <p>#cat flag文件内容：<br>a&#x3D;c;b&#x3D;at;c&#x3D;f;d&#x3D;lag;$a$b ${c}${d}</p>
 <p>#cat test文件内容</p>
@@ -565,8 +565,8 @@ cat、tac、more、less、head、tail、nl、sed、sort、uniq<span aria-hidden=
 
 
 <p>内联执行：将反引号内命令的输出作为输入执行。</p>
-<h3 id="1-x2f-dev-x2f-null-2-amp-1-de-han-yi"><a href="#【1＞-x2F-dev-x2F-null-2＞-amp-1-】的含义" class="headerlink" title="【1＞&#x2F;dev&#x2F;null 2＞&amp;1 】的含义"></a>【1＞&#x2F;dev&#x2F;null 2＞&amp;1 】的含义<a href="#1-x2f-dev-x2f-null-2-amp-1-de-han-yi" class="header-anchor">#</a></h3><p> 1&gt;&#x2F;dev&#x2F;null 首先表示标准输出重定向到空设备文件，也就是不输出任何信息到终端，说白了就是不显示任何信息。<br>2&gt;&amp;1 接着，标准错误输出重定向等同于 标准输出，因为之前标准输出已经重定向到了空设备文件，所以标准错误输出也重定向到空设备文件。 </p>
-<h3 id="can-kao-wen-zhang"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章<a href="#can-kao-wen-zhang" class="header-anchor">#</a></h3><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_39877898/article/details/112198269">ctf下的命令执行</a></p>
+<h3 id="1x2fdevx2fnull-2amp1-的含义"><a href="#【1＞-x2F-dev-x2F-null-2＞-amp-1-】的含义" class="headerlink" title="【1＞&#x2F;dev&#x2F;null 2＞&amp;1 】的含义"></a>【1＞&#x2F;dev&#x2F;null 2＞&amp;1 】的含义</h3><p> 1&gt;&#x2F;dev&#x2F;null 首先表示标准输出重定向到空设备文件，也就是不输出任何信息到终端，说白了就是不显示任何信息。<br>2&gt;&amp;1 接着，标准错误输出重定向等同于 标准输出，因为之前标准输出已经重定向到了空设备文件，所以标准错误输出也重定向到空设备文件。 </p>
+<h3 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h3><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_39877898/article/details/112198269">ctf下的命令执行</a></p>
 <p><a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/8107#toc-11">无字母数字 Webshell</a></p>
 <p><a target="_blank" rel="noopener" href="https://www.leavesongs.com/PENETRATION/webshell-without-alphanum-advanced.html">无字母数字Webshell提高篇</a></p>
 

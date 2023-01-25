@@ -29,7 +29,7 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 6.1.0"></head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 
 
@@ -505,7 +505,7 @@
 <p>复现 Mysql LOAD DATA INFILE 读取客户端任意文件漏洞</p>
 <span id="more"></span>
 
-<h3 id="qian-yan"><a href="#前言" class="headerlink" title="前言"></a>前言<a href="#qian-yan" class="header-anchor">#</a></h3><p>MySQL 客户端和服务端通信过程中是通过对话的形式来实现的，客户端发送一个操作请求，然后服务端根据客户端发送的请求来响应客户端，在这个过程中客户端如果一个操作需要两步才能完成，那么当它发送完第一个请求过后并不会存储这个请求，而是直接丢弃，所以第二步就是根据服务端的响应来继续进行，这里服务端就可以欺骗客户端做一些事情。</p>
+<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>MySQL 客户端和服务端通信过程中是通过对话的形式来实现的，客户端发送一个操作请求，然后服务端根据客户端发送的请求来响应客户端，在这个过程中客户端如果一个操作需要两步才能完成，那么当它发送完第一个请求过后并不会存储这个请求，而是直接丢弃，所以第二步就是根据服务端的响应来继续进行，这里服务端就可以欺骗客户端做一些事情。</p>
 <p>但是一般的通信都是客户端发送一个 MySQL 语句然后服务器端根据这条语句查询后返回结果，也没什么可以利用的。但是 MySQL 有个语法 <a target="_blank" rel="noopener" href="https://dev.mysql.com/doc/refman/8.0/en/load-data.html">LOAD DATA INFILE</a> 可以用来读取一个文件的内容并插入到表中。</p>
 <p><img src="/images/Mysql-LOAD-DATA-%E8%AF%BB%E5%8F%96%E5%AE%A2%E6%88%B7%E7%AB%AF%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6/image-20230110095201653.png" alt="image-20230110095201653"></p>
 <p>从上图的官方文档说明可以看到，该命令既可以读取服务端的文件，也可以读取客户端的文件，这取决于 <code>LOCAL</code> modifier 是否给定。</p>
@@ -531,7 +531,7 @@
 <li>服务端：成功偷取文件内容</li>
 </ol>
 <p>这样服务端就非法拿到了 <code>/etc/passwd</code> 的文件内容！接下来开始进行这个实验，做一个恶意服务端来欺骗客户端。为了编写出伪造恶意 MySQL 服务器的 POC，必须对 MySQL 协议有足够的了解，所以接下来尝试分析一下 MySQL 协议的数据包。</p>
-<h3 id="mysql-xie-yi-shu-ju-bao-fen-xi"><a href="#MySQL-协议数据包分析" class="headerlink" title="MySQL 协议数据包分析"></a>MySQL 协议数据包分析<a href="#mysql-xie-yi-shu-ju-bao-fen-xi" class="header-anchor">#</a></h3><p>为了非法读取客户端文件，我们需要实现一个假的 MySQL 服务器。那如何实现呢？这需要我们对 MySQL 协议展开详细的分析才能做到，好在借助 Wireshark 结合 MySQL 官方文档可以帮助我们轻松分析 MySQL 协议的数据包。</p>
+<h3 id="mysql-协议数据包分析"><a href="#MySQL-协议数据包分析" class="headerlink" title="MySQL 协议数据包分析"></a>MySQL 协议数据包分析</h3><p>为了非法读取客户端文件，我们需要实现一个假的 MySQL 服务器。那如何实现呢？这需要我们对 MySQL 协议展开详细的分析才能做到，好在借助 Wireshark 结合 MySQL 官方文档可以帮助我们轻松分析 MySQL 协议的数据包。</p>
 <p>我以 ubuntu 虚拟机为客户端，windows物理机为服务端，借助 Wireshark 工具捕捉两者间的 mysql 通信数据包。</p>
 <p>客户端ip：192.168.239.129</p>
 <p>服务端ip：192.168.1.3</p>
@@ -550,13 +550,13 @@ load data local infile &quot;&#x2F;etc&#x2F;passwd&quot; into table users;<span 
 </blockquote>
 <p>官方文档告诉我们 MySQL 协议也支持通过 TLS 进行加密和身份验证。<a target="_blank" rel="noopener" href="https://dev.mysql.com/doc/dev/mysql-server/latest/page_protocol_basic_tls.html">MYSQL_TLS</a></p>
 <p>那我们捕获的数据包是否进行了加密呢？稍加分析一下这些捕获的数据包就可以判断其确实使用了 TLS 进行了加密。接下来我们根据文档结合 Wireshark 捕获的数据包来进行实践论证！</p>
-<h4 id="lian-jie-guo-cheng-shu-ju-bao"><a href="#连接过程数据包" class="headerlink" title="连接过程数据包"></a>连接过程数据包<a href="#lian-jie-guo-cheng-shu-ju-bao" class="header-anchor">#</a></h4><p>运行连接命令时捕获到的数据包</p>
+<h4 id="连接过程数据包"><a href="#连接过程数据包" class="headerlink" title="连接过程数据包"></a>连接过程数据包</h4><p>运行连接命令时捕获到的数据包</p>
 <pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">mysql -h 192.168.1.3 -P 3306 -u root -p<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p><img src="/images/Mysql-LOAD-DATA-%E8%AF%BB%E5%8F%96%E5%AE%A2%E6%88%B7%E7%AB%AF%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6/image-20230110183743582.png" alt="image-20230110183743582"></p>
 <p>不打算全部都细说，就以前两个数据包为例子，和官方文档对照来学习其结构。</p>
 <ul>
-<li><h6 id="di-yi-ge-shu-ju-bao-protocol-handshakev10-fu-wu-duan-dao-ke-hu-duan"><a href="#第一个数据包-Protocol-HandshakeV10-服务端到客户端" class="headerlink" title="第一个数据包 Protocol::HandshakeV10 服务端到客户端"></a>第一个数据包 Protocol::HandshakeV10 服务端到客户端<a href="#di-yi-ge-shu-ju-bao-protocol-handshakev10-fu-wu-duan-dao-ke-hu-duan" class="header-anchor">#</a></h6></li>
+<li><h6 id="第一个数据包-protocolhandshakev10-服务端到客户端"><a href="#第一个数据包-Protocol-HandshakeV10-服务端到客户端" class="headerlink" title="第一个数据包 Protocol::HandshakeV10 服务端到客户端"></a>第一个数据包 Protocol::HandshakeV10 服务端到客户端</h6></li>
 </ul>
 <p>当客户端通过 MySQL 协议连接到 服务端会发生什么呢？官方文档 <a target="_blank" rel="noopener" href="https://dev.mysql.com/doc/dev/mysql-server/latest/page_protocol_connection_phase_packets_protocol_handshake.html">Protocol::Handshake </a>告诉我们当客户端连接到服务端时，服务端会发送一个初始的握手数据包（Initial Handshake Packet）给客户端。根据服务端的版本和配置选项，服务端会发送不同的初始数据包。</p>
 <p>为了服务端可以支持新的协议，Initial Handshake Packet 初始的握手数据包的第一个字节被定义为协议的版本号。从 MySQL 3.21.0 版本开始，发送的是 <a target="_blank" rel="noopener" href="https://dev.mysql.com/doc/dev/mysql-server/latest/page_protocol_connection_phase_packets_protocol_handshake_v10.html">Protocol::HandshakeV10</a></p>
@@ -581,7 +581,7 @@ load data local infile &quot;&#x2F;etc&#x2F;passwd&quot; into table users;<span 
 <p>其余的字段就不再分析了，大同小异。紧接着简单看看客户端给服务端的回应吧。官方文档告诉我们，如果客户端支持 SSL(<a target="_blank" rel="noopener" href="https://dev.mysql.com/doc/dev/mysql-server/latest/group__group__cs__capabilities__flags.html">Capabilities Flags</a> &amp; CLIENT_SSL is on and the <a target="_blank" rel="noopener" href="https://dev.mysql.com/doc/dev/mysql-server/latest/mysql_8h.html#ae246c1906ffb10491c3876ce39bb1d7b">mysql_ssl_mode</a> of the client is not SSL_MODE_DISABLED) ，那么一个短的被称为 <a target="_blank" rel="noopener" href="https://dev.mysql.com/doc/dev/mysql-server/latest/page_protocol_connection_phase_packets_protocol_ssl_request.html">Protocol::SSLRequest:</a> 的数据包会被发送，使得服务端建立一个 SSL layer 并等待来自客户端的下一个数据包。（这里你可能会感到混乱，前面不是说 TLS 吗，怎么现在变成了 SSL？其实 TLS 是升级版的 SSL，但是由于 SSL 这一术语更加常用，所以人们经常互换使用者两个术语。<a target="_blank" rel="noopener" href="https://www.websecurity.digicert.com/zh/cn/security-topics/what-is-ssl-tls-https">什么是 SSL、TLS、HTTPS</a>）</p>
 <p>如果不支持，那么客户端会返回 <a target="_blank" rel="noopener" href="https://dev.mysql.com/doc/dev/mysql-server/latest/page_protocol_connection_phase_packets_protocol_handshake_response.html">Protocol::HandshakeResponse:</a> 。同时在任何时候，发生任何错误，客户端都会断开连接。</p>
 <ul>
-<li><h6 id="di-er-ge-shu-ju-bao-protocol-handshakeresponse41-ke-hu-duan-dao-fu-wu-duan"><a href="#第二个数据包-Protocol-HandshakeResponse41-客户端到服务端" class="headerlink" title="第二个数据包 Protocol::HandshakeResponse41 客户端到服务端"></a>第二个数据包 Protocol::HandshakeResponse41 客户端到服务端<a href="#di-er-ge-shu-ju-bao-protocol-handshakeresponse41-ke-hu-duan-dao-fu-wu-duan" class="header-anchor">#</a></h6></li>
+<li><h6 id="第二个数据包-protocolhandshakeresponse41-客户端到服务端"><a href="#第二个数据包-Protocol-HandshakeResponse41-客户端到服务端" class="headerlink" title="第二个数据包 Protocol::HandshakeResponse41 客户端到服务端"></a>第二个数据包 Protocol::HandshakeResponse41 客户端到服务端</h6></li>
 </ul>
 <p>根据前面的分析，这里客户端如果支持 SSL，那么会发送 <code>Protocol::SSLRequest</code> 数据包，否则就是<code>Protocol::HandshakeResponse:</code>。根据我的验证，应该发送的是 <a target="_blank" rel="noopener" href="https://dev.mysql.com/doc/dev/mysql-server/latest/page_protocol_connection_phase_packets_protocol_handshake_response.html#sect_protocol_connection_phase_packets_protocol_handshake_response41">Protocol::HandshakeResponse41</a></p>
 <blockquote>
@@ -612,24 +612,24 @@ load data local infile &quot;&#x2F;etc&#x2F;passwd&quot; into table users;<span 
 <p><img src="/images/Mysql-LOAD-DATA-%E8%AF%BB%E5%8F%96%E5%AE%A2%E6%88%B7%E7%AB%AF%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6/image-20230110152116352.png" alt="image-20230110152116352"></p>
 <p><img src="/images/Mysql-LOAD-DATA-%E8%AF%BB%E5%8F%96%E5%AE%A2%E6%88%B7%E7%AB%AF%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6/image-20230110152515536.png" alt="image-20230110152515536"></p>
 <ul>
-<li><h6 id="di-san-ge-shu-ju-bao-ok-packet-fu-wu-duan-dao-ke-hu-duan"><a href="#第三个数据包-Ok-Packet-服务端到客户端" class="headerlink" title="第三个数据包 Ok_Packet 服务端到客户端"></a>第三个数据包 Ok_Packet 服务端到客户端<a href="#di-san-ge-shu-ju-bao-ok-packet-fu-wu-duan-dao-ke-hu-duan" class="header-anchor">#</a></h6></li>
+<li><h6 id="第三个数据包-ok_packet-服务端到客户端"><a href="#第三个数据包-Ok-Packet-服务端到客户端" class="headerlink" title="第三个数据包 Ok_Packet 服务端到客户端"></a>第三个数据包 Ok_Packet 服务端到客户端</h6></li>
 </ul>
 <p>这个数据包一看就是 <a target="_blank" rel="noopener" href="https://dev.mysql.com/doc/dev/mysql-server/latest/page_protocol_basic_ok_packet.html">Ok_Packet</a></p>
 <p><img src="/images/Mysql-LOAD-DATA-%E8%AF%BB%E5%8F%96%E5%AE%A2%E6%88%B7%E7%AB%AF%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6/image-20230110174934214.png" alt="image-20230110174934214"></p>
 <ul>
-<li><h6 id="di-si-ge-shu-ju-bao-com-query-ke-hu-duan-dao-fu-wu-duan"><a href="#第四个数据包-COM-QUERY-客户端到服务端" class="headerlink" title="第四个数据包 COM_QUERY 客户端到服务端"></a>第四个数据包 COM_QUERY 客户端到服务端<a href="#di-si-ge-shu-ju-bao-com-query-ke-hu-duan-dao-fu-wu-duan" class="header-anchor">#</a></h6></li>
+<li><h6 id="第四个数据包-com_query-客户端到服务端"><a href="#第四个数据包-COM-QUERY-客户端到服务端" class="headerlink" title="第四个数据包 COM_QUERY 客户端到服务端"></a>第四个数据包 COM_QUERY 客户端到服务端</h6></li>
 </ul>
 <p>这个数据包是 <a href>COM_QUERY</a></p>
 <p><img src="/images/Mysql-LOAD-DATA-%E8%AF%BB%E5%8F%96%E5%AE%A2%E6%88%B7%E7%AB%AF%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6/image-20230110175643451.png" alt="image-20230110175643451"></p>
 <ul>
-<li><h6 id="di-wu-ge-shu-ju-bao-text-resultset-fu-wu-duan-dao-ke-hu-duan"><a href="#第五个数据包-Text-Resultset-服务端到客户端" class="headerlink" title="第五个数据包 Text Resultset 服务端到客户端"></a>第五个数据包 Text Resultset 服务端到客户端<a href="#di-wu-ge-shu-ju-bao-text-resultset-fu-wu-duan-dao-ke-hu-duan" class="header-anchor">#</a></h6></li>
+<li><h6 id="第五个数据包-text-resultset-服务端到客户端"><a href="#第五个数据包-Text-Resultset-服务端到客户端" class="headerlink" title="第五个数据包 Text Resultset 服务端到客户端"></a>第五个数据包 Text Resultset 服务端到客户端</h6></li>
 </ul>
 <p>这个数据包是 <a target="_blank" rel="noopener" href="https://dev.mysql.com/doc/dev/mysql-server/latest/page_protocol_com_query_response_text_resultset.html">Text Resultset</a></p>
 <p><img src="/images/Mysql-LOAD-DATA-%E8%AF%BB%E5%8F%96%E5%AE%A2%E6%88%B7%E7%AB%AF%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6/image-20230110180602484.png" alt="image-20230110180602484"></p>
 <p><img src="/images/Mysql-LOAD-DATA-%E8%AF%BB%E5%8F%96%E5%AE%A2%E6%88%B7%E7%AB%AF%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6/image-20230110180306697.png" alt="image-20230110180306697"></p>
-<h4 id="xuan-ze-security-shu-ju-ku-bu-huo-de-shu-ju-bao"><a href="#选择-security-数据库捕获的数据包" class="headerlink" title="选择 security 数据库捕获的数据包"></a>选择 security 数据库捕获的数据包<a href="#xuan-ze-security-shu-ju-ku-bu-huo-de-shu-ju-bao" class="header-anchor">#</a></h4><p>当客户端向服务端发送 <code>use security</code> 命令选择数据库时捕获到的数据包。特别多，下图并没有截完整。这一步不重要</p>
+<h4 id="选择-security-数据库捕获的数据包"><a href="#选择-security-数据库捕获的数据包" class="headerlink" title="选择 security 数据库捕获的数据包"></a>选择 security 数据库捕获的数据包</h4><p>当客户端向服务端发送 <code>use security</code> 命令选择数据库时捕获到的数据包。特别多，下图并没有截完整。这一步不重要</p>
 <p><img src="/images/Mysql-LOAD-DATA-%E8%AF%BB%E5%8F%96%E5%AE%A2%E6%88%B7%E7%AB%AF%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6/image-20230110184931513.png" alt="image-20230110184931513"></p>
-<h4 id="du-qu-ke-hu-duan-wen-jian-bu-huo-de-shu-ju-bao"><a href="#读取客户端文件捕获的数据包" class="headerlink" title="读取客户端文件捕获的数据包"></a>读取客户端文件捕获的数据包<a href="#du-qu-ke-hu-duan-wen-jian-bu-huo-de-shu-ju-bao" class="header-anchor">#</a></h4><p>在客户端上执行如下命令将 <code>/etc/passwd</code> 文件内容写入到 users 表时捕获到的数据包。</p>
+<h4 id="读取客户端文件捕获的数据包"><a href="#读取客户端文件捕获的数据包" class="headerlink" title="读取客户端文件捕获的数据包"></a>读取客户端文件捕获的数据包</h4><p>在客户端上执行如下命令将 <code>/etc/passwd</code> 文件内容写入到 users 表时捕获到的数据包。</p>
 <pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">load data local infile &quot;&#x2F;etc&#x2F;passwd&quot; into table users;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p><img src="/images/Mysql-LOAD-DATA-%E8%AF%BB%E5%8F%96%E5%AE%A2%E6%88%B7%E7%AB%AF%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6/image-20230110185609391.png" alt="image-20230110185609391"></p>
@@ -648,11 +648,11 @@ load data local infile &quot;&#x2F;etc&#x2F;passwd&quot; into table users;<span 
 <p>重新抓一遍包！！</p>
 <p><img src="/images/Mysql-LOAD-DATA-%E8%AF%BB%E5%8F%96%E5%AE%A2%E6%88%B7%E7%AB%AF%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6/image-20230110193600096.png" alt="image-20230110193600096"></p>
 <ul>
-<li><h6 id="di-yi-ge-shu-ju-bao-ke-hu-duan-dao-fu-wu-duan-com-query"><a href="#第一个数据包-客户端到服务端-COM-QUERY" class="headerlink" title="第一个数据包 客户端到服务端 COM_QUERY"></a>第一个数据包 客户端到服务端 COM_QUERY<a href="#di-yi-ge-shu-ju-bao-ke-hu-duan-dao-fu-wu-duan-com-query" class="header-anchor">#</a></h6></li>
+<li><h6 id="第一个数据包-客户端到服务端-com_query"><a href="#第一个数据包-客户端到服务端-COM-QUERY" class="headerlink" title="第一个数据包 客户端到服务端 COM_QUERY"></a>第一个数据包 客户端到服务端 COM_QUERY</h6></li>
 </ul>
 <p><img src="/images/Mysql-LOAD-DATA-%E8%AF%BB%E5%8F%96%E5%AE%A2%E6%88%B7%E7%AB%AF%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6/image-20230110195556005.png" alt="image-20230110195556005"></p>
 <ul>
-<li><h6 id="di-er-ge-shu-ju-bao-fu-wu-duan-dao-ke-hu-duan-local-infile-request"><a href="#第二个数据包-服务端到客户端-LOCAL-INFILE-Request" class="headerlink" title="第二个数据包 服务端到客户端 LOCAL INFILE Request"></a>第二个数据包 服务端到客户端 <a target="_blank" rel="noopener" href="https://dev.mysql.com/doc/dev/mysql-server/latest/page_protocol_com_query_response_local_infile_request.html">LOCAL INFILE Request</a><a href="#di-er-ge-shu-ju-bao-fu-wu-duan-dao-ke-hu-duan-local-infile-request" class="header-anchor">#</a></h6></li>
+<li><h6 id="第二个数据包-服务端到客户端-local-infile-request"><a href="#第二个数据包-服务端到客户端-LOCAL-INFILE-Request" class="headerlink" title="第二个数据包 服务端到客户端 LOCAL INFILE Request"></a>第二个数据包 服务端到客户端 <a target="_blank" rel="noopener" href="https://dev.mysql.com/doc/dev/mysql-server/latest/page_protocol_com_query_response_local_infile_request.html">LOCAL INFILE Request</a></h6></li>
 </ul>
 <p><img src="/images/Mysql-LOAD-DATA-%E8%AF%BB%E5%8F%96%E5%AE%A2%E6%88%B7%E7%AB%AF%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6/image-20230110195626110.png" alt="image-20230110195626110"></p>
 <p>这个数据包很重要，是构造恶意 MySQL 服务器的重点，我们需要根据这个数据包的结构书写 payload。具体地说，需要伪造的部分是 MySQL 数据包的首部和 payload 部分。还记得前面的 MySQL 数据包的结构图吗？</p>
@@ -662,17 +662,17 @@ load data local infile &quot;&#x2F;etc&#x2F;passwd&quot; into table users;<span 
 <p>对应的 payload（不是 wireshark 的那个 Payload） 是</p>
 <p><code>fb 2f 65 74 63 2f 70 61 73 73 77 64</code></p>
 <ul>
-<li><h6 id="di-san-ge-shu-ju-bao-ke-hu-duan-dao-fu-wu-duan-com-query"><a href="#第三个数据包-客户端到服务端-COM-QUERY" class="headerlink" title="第三个数据包 客户端到服务端 COM_QUERY"></a>第三个数据包 客户端到服务端 <a target="_blank" rel="noopener" href="https://dev.mysql.com/doc/dev/mysql-server/latest/page_protocol_com_query.html">COM_QUERY</a><a href="#di-san-ge-shu-ju-bao-ke-hu-duan-dao-fu-wu-duan-com-query" class="header-anchor">#</a></h6></li>
+<li><h6 id="第三个数据包-客户端到服务端-com_query"><a href="#第三个数据包-客户端到服务端-COM-QUERY" class="headerlink" title="第三个数据包 客户端到服务端 COM_QUERY"></a>第三个数据包 客户端到服务端 <a target="_blank" rel="noopener" href="https://dev.mysql.com/doc/dev/mysql-server/latest/page_protocol_com_query.html">COM_QUERY</a></h6></li>
 </ul>
 <p>上一个数据包服务端给客户端发送<code>LOAL INFILE Request</code> 的响应后，客户端发给服务端的这一个数据就包含了 <code>/etc/passwd</code> 文件的内容。</p>
 <p><img src="/images/Mysql-LOAD-DATA-%E8%AF%BB%E5%8F%96%E5%AE%A2%E6%88%B7%E7%AB%AF%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6/image-20230110200915868.png" alt="image-20230110200915868"></p>
 <ul>
-<li><h6 id="di-si-ge-shu-ju-bao-fu-wu-duan-dao-ke-hu-duan-ok-packet"><a href="#第四个数据包-服务端到客户端-Ok-Packet" class="headerlink" title="第四个数据包 服务端到客户端 Ok_Packet"></a>第四个数据包 服务端到客户端 <a target="_blank" rel="noopener" href="https://dev.mysql.com/doc/dev/mysql-server/latest/page_protocol_basic_ok_packet.html">Ok_Packet</a><a href="#di-si-ge-shu-ju-bao-fu-wu-duan-dao-ke-hu-duan-ok-packet" class="header-anchor">#</a></h6></li>
+<li><h6 id="第四个数据包-服务端到客户端-ok_packet"><a href="#第四个数据包-服务端到客户端-Ok-Packet" class="headerlink" title="第四个数据包 服务端到客户端 Ok_Packet"></a>第四个数据包 服务端到客户端 <a target="_blank" rel="noopener" href="https://dev.mysql.com/doc/dev/mysql-server/latest/page_protocol_basic_ok_packet.html">Ok_Packet</a></h6></li>
 </ul>
 <p><img src="/images/Mysql-LOAD-DATA-%E8%AF%BB%E5%8F%96%E5%AE%A2%E6%88%B7%E7%AB%AF%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6/image-20230110201644039.png" alt="image-20230110201644039"></p>
 <p>客户端经过两个请求，成功的将自己的 <code>/etc/passwd</code> 文件插入到表 users 中，</p>
 <p>根据我们前面所说，客户端在发送完第一个请求之后并不会存储这个请求，而是直接丢弃。所以第二步是根据服务端的响应来进行，这里服务器就可以欺骗客户端做一些事情（改变第二个数据包的响应内容）。有了以上的铺垫，POC 的编写并不困难。只需要完成连接过程，然后修改第二个数据包的响应内容就好。</p>
-<h4 id="poc"><a href="#POC" class="headerlink" title="POC"></a>POC<a href="#poc" class="header-anchor">#</a></h4><p>我懒得完整编写 POC 了，所以从网上抄了一个。值得一提的是这个 POC 并不标准，在连接建立过程中发送的数据并没有包含数据包首部，而发送 payload 的时候又包含了首部。（同时从编写的代码来看好像编写者并没有对数据包的构成有一个准确的认识 hhh，当然也有可能是我错了）</p>
+<h4 id="poc"><a href="#POC" class="headerlink" title="POC"></a>POC</h4><p>我懒得完整编写 POC 了，所以从网上抄了一个。值得一提的是这个 POC 并不标准，在连接建立过程中发送的数据并没有包含数据包首部，而发送 payload 的时候又包含了首部。（同时从编写的代码来看好像编写者并没有对数据包的构成有一个准确的认识 hhh，当然也有可能是我错了）</p>
 <ol>
 <li><code>客户端发送请求数据包</code></li>
 <li><code>服务端发送 Mysql 的 Greet 与 banner 信息</code></li>
@@ -725,7 +725,7 @@ while True:
 <p><img src="/images/Mysql-LOAD-DATA-%E8%AF%BB%E5%8F%96%E5%AE%A2%E6%88%B7%E7%AB%AF%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6/image-20230110204759923.png" alt="image-20230110204759923"></p>
 <p>收到 <code>/etc/passwd</code> 文件内容</p>
 <p><img src="/images/Mysql-LOAD-DATA-%E8%AF%BB%E5%8F%96%E5%AE%A2%E6%88%B7%E7%AB%AF%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6/image-20230110204817226.png" alt="image-20230110204817226"></p>
-<h4 id="du-qu-x2f-flag"><a href="#读取-x2F-flag" class="headerlink" title="读取 &#x2F;flag"></a>读取 &#x2F;flag<a href="#du-qu-x2f-flag" class="header-anchor">#</a></h4><p>如果想要读取 <code>/flag</code> 如何修改 payload 呢？这是一个很简单的问题，因为已知了这是一个 <a target="_blank" rel="noopener" href="https://dev.mysql.com/doc/dev/mysql-server/latest/page_protocol_com_query_response_local_infile_request.html">LOCAL INFILE Request</a> 数据包，所以只需要构造一下数据包首部和 payload 部分即可（保持 POC 中其余字段不变）。</p>
+<h4 id="读取-x2fflag"><a href="#读取-x2F-flag" class="headerlink" title="读取 &#x2F;flag"></a>读取 &#x2F;flag</h4><p>如果想要读取 <code>/flag</code> 如何修改 payload 呢？这是一个很简单的问题，因为已知了这是一个 <a target="_blank" rel="noopener" href="https://dev.mysql.com/doc/dev/mysql-server/latest/page_protocol_com_query_response_local_infile_request.html">LOCAL INFILE Request</a> 数据包，所以只需要构造一下数据包首部和 payload 部分即可（保持 POC 中其余字段不变）。</p>
 <p>首部包括三个字节长的长度字段，一个字节长的序列号。</p>
 <p>payload 部分是一个字节长的包类型 0xFB 和 xx 字节长的文件名</p>
 <p><img src="/images/Mysql-LOAD-DATA-%E8%AF%BB%E5%8F%96%E5%AE%A2%E6%88%B7%E7%AB%AF%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6/image-20230110210326807.png" alt="image-20230110210326807"></p>
@@ -733,8 +733,8 @@ while True:
 <p><img src="/images/Mysql-LOAD-DATA-%E8%AF%BB%E5%8F%96%E5%AE%A2%E6%88%B7%E7%AB%AF%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6/image-20230110211445078.png" alt="image-20230110211445078"></p>
 <p><img src="/images/Mysql-LOAD-DATA-%E8%AF%BB%E5%8F%96%E5%AE%A2%E6%88%B7%E7%AB%AF%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6/image-20230110211413598.png" alt="image-20230110211413598"></p>
 <p><img src="/images/Mysql-LOAD-DATA-%E8%AF%BB%E5%8F%96%E5%AE%A2%E6%88%B7%E7%AB%AF%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6/image-20230110211420481.png" alt="image-20230110211420481"></p>
-<h4 id="hao-yong-de-zi-dong-hua-gong-ju"><a href="#好用的自动化工具" class="headerlink" title="好用的自动化工具"></a>好用的自动化工具<a href="#hao-yong-de-zi-dong-hua-gong-ju" class="header-anchor">#</a></h4><p><a target="_blank" rel="noopener" href="https://github.com/fnmsd/MySQL_Fake_Server">https://github.com/fnmsd/MySQL_Fake_Server</a></p>
-<h3 id="can-kao-lian-jie"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接<a href="#can-kao-lian-jie" class="header-anchor">#</a></h3><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/BOHB-yunying/p/10820453.html">MySQL服务端恶意读取客户端文件漏洞分析并使用Golang编写简易蜜罐</a></p>
+<h4 id="好用的自动化工具"><a href="#好用的自动化工具" class="headerlink" title="好用的自动化工具"></a>好用的自动化工具</h4><p><a target="_blank" rel="noopener" href="https://github.com/fnmsd/MySQL_Fake_Server">https://github.com/fnmsd/MySQL_Fake_Server</a></p>
+<h3 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h3><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/BOHB-yunying/p/10820453.html">MySQL服务端恶意读取客户端文件漏洞分析并使用Golang编写简易蜜罐</a></p>
 <p><a target="_blank" rel="noopener" href="https://www.shuzhiduo.com/A/GBJrPoYRd0/">Mysql LOAD DATA读取客户端任意文件漏洞复现(原理分析)</a></p>
 <p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_53755216/article/details/118223185">https://blog.csdn.net/qq_53755216/article/details/118223185</a></p>
 

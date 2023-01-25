@@ -29,7 +29,7 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 6.1.0"></head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 
 
@@ -505,15 +505,15 @@
 <p>在NSS平台上看到了这个SDCTF，所以做了SDCTF的Crypto赛题的总结记录，除了最后两题其他题目都不难。</p>
 <span id="more"></span>
 
-<h2 id="crypto"><a href="#Crypto" class="headerlink" title="Crypto"></a>Crypto<a href="#crypto" class="header-anchor">#</a></h2><h3 id="six-bites"><a href="#Six-Bites" class="headerlink" title="Six Bites"></a>Six Bites<a href="#six-bites" class="header-anchor">#</a></h3><h6 id><a href="#" class="headerlink" title></a><a href="#" class="header-anchor">#</a></h6><h5 id="fen-xi"><a href="#分析：" class="headerlink" title="分析："></a>分析：<a href="#fen-xi" class="header-anchor">#</a></h5><p>根据提示的信息，six bites 音同 six bytes，猜测这是指密钥的长度。题目没有对加密方式进行提示，这时候一般都是猜测异或加密。我们知道flag的格式是 “sdctf{“，这是6个我们已知的字节。通过运用已知明文攻击，将已知的前六字节的明文和已知的前六字节密文相异或，我们就可以恢复出6个字节的密钥，最终解密整个密文获得flag。</p>
-<h3 id="vinegar"><a href="#Vinegar" class="headerlink" title="Vinegar"></a>Vinegar<a href="#vinegar" class="header-anchor">#</a></h3><h5 id="ti-mu-miao-shu"><a href="#题目描述：" class="headerlink" title="题目描述："></a>题目描述：<a href="#ti-mu-miao-shu" class="header-anchor">#</a></h5><p>My friend gave me another encrypted flag…I think they hate me! I heard them yell something about “Vinegar”, but I still don’t know what they’re talking about! Ciphertext: <code>&#123;wbeyrjgewcfroggpesremvxgvefyrcmnnymxhdacgnnrwprhxpuyyaupbmskjrxfopr&#125;</code> 得到的flag使用NSSCTF{}格式提交。</p>
-<h6 id="fen-xi"><a href="#分析：-1" class="headerlink" title="分析："></a>分析：<a href="#fen-xi" class="header-anchor">#</a></h6><p>题目名Vinegar让人想起维吉尼亚密码，我们不妨送去网站一试：<a target="_blank" rel="noopener" href="https://www.guballa.de/vigenere-solver">https://www.guballa.de/vigenere-solver</a></p>
+<h2 id="crypto"><a href="#Crypto" class="headerlink" title="Crypto"></a>Crypto</h2><h3 id="six-bites"><a href="#Six-Bites" class="headerlink" title="Six Bites"></a>Six Bites</h3><h6 id><a href="#" class="headerlink" title></a></h6><h5 id="分析"><a href="#分析：" class="headerlink" title="分析："></a>分析：</h5><p>根据提示的信息，six bites 音同 six bytes，猜测这是指密钥的长度。题目没有对加密方式进行提示，这时候一般都是猜测异或加密。我们知道flag的格式是 “sdctf{“，这是6个我们已知的字节。通过运用已知明文攻击，将已知的前六字节的明文和已知的前六字节密文相异或，我们就可以恢复出6个字节的密钥，最终解密整个密文获得flag。</p>
+<h3 id="vinegar"><a href="#Vinegar" class="headerlink" title="Vinegar"></a>Vinegar</h3><h5 id="题目描述"><a href="#题目描述：" class="headerlink" title="题目描述："></a>题目描述：</h5><p>My friend gave me another encrypted flag…I think they hate me! I heard them yell something about “Vinegar”, but I still don’t know what they’re talking about! Ciphertext: <code>&#123;wbeyrjgewcfroggpesremvxgvefyrcmnnymxhdacgnnrwprhxpuyyaupbmskjrxfopr&#125;</code> 得到的flag使用NSSCTF{}格式提交。</p>
+<h6 id="分析"><a href="#分析：-1" class="headerlink" title="分析："></a>分析：</h6><p>题目名Vinegar让人想起维吉尼亚密码，我们不妨送去网站一试：<a target="_blank" rel="noopener" href="https://www.guballa.de/vigenere-solver">https://www.guballa.de/vigenere-solver</a></p>
 <p><img src="/images/image-20221028161136255.png" alt="image-20221028161136255"></p>
-<h3 id="case64ar-qi-te-de-base64-zi-mu-biao"><a href="#Case64AR-奇特的base64字母表" class="headerlink" title="Case64AR-奇特的base64字母表"></a>Case64AR-奇特的base64字母表<a href="#case64ar-qi-te-de-base64-zi-mu-biao" class="header-anchor">#</a></h3><h5 id="ti-mu-miao-shu"><a href="#题目描述：-1" class="headerlink" title="题目描述："></a>题目描述：<a href="#ti-mu-miao-shu" class="header-anchor">#</a></h5><p>Someone script kiddie just invented a new encryption scheme. It is described as a blend of modern and ancient cryptographic techniques. Can you prove that the encryption scheme is insecure by decoding the ciphertext below? Ciphertext: OoDVP4LtFm7lKnHk+JDrJo2jNZDROl&#x2F;1HH77H5Xv 得到的flag使用NSSCTF{}格式提交。</p>
-<h6 id="fen-xi"><a href="#分析：-2" class="headerlink" title="分析："></a>分析：<a href="#fen-xi" class="header-anchor">#</a></h6><p>出题人让我们通过解码上述密文证明脚本小子的加密方案是不安全的，那我们就要考虑密文的编码方式是什么。</p>
+<h3 id="case64ar-奇特的base64字母表"><a href="#Case64AR-奇特的base64字母表" class="headerlink" title="Case64AR-奇特的base64字母表"></a>Case64AR-奇特的base64字母表</h3><h5 id="题目描述"><a href="#题目描述：-1" class="headerlink" title="题目描述："></a>题目描述：</h5><p>Someone script kiddie just invented a new encryption scheme. It is described as a blend of modern and ancient cryptographic techniques. Can you prove that the encryption scheme is insecure by decoding the ciphertext below? Ciphertext: OoDVP4LtFm7lKnHk+JDrJo2jNZDROl&#x2F;1HH77H5Xv 得到的flag使用NSSCTF{}格式提交。</p>
+<h6 id="分析"><a href="#分析：-2" class="headerlink" title="分析："></a>分析：</h6><p>出题人让我们通过解码上述密文证明脚本小子的加密方案是不安全的，那我们就要考虑密文的编码方式是什么。</p>
 <p>密文看上去像是一个base64编码后的数据，但是我们直接解码发现是一串混乱的东西。这个时候阅读题目名不免想起了凯撒密码，难道是要做某种移位？但是这一串混乱的东西无论怎么移位都没有用。这个时候不妨尝试对base64所用的字母表做移位，因为题目的base64字母表并不一定就是寻常的base64字母表</p>
-<h3 id="tasty-crypto-roll"><a href="#Tasty-Crypto-Roll" class="headerlink" title="Tasty Crypto Roll"></a>Tasty Crypto Roll<a href="#tasty-crypto-roll" class="header-anchor">#</a></h3><h4 id="ti-mu-miao-shu"><a href="#题目描述：-2" class="headerlink" title="题目描述："></a>题目描述：<a href="#ti-mu-miao-shu" class="header-anchor">#</a></h4><p>Bob, the genius intern at our company, invented AES-improved. It is based on AES but with layers after layers of proprietary encryption techniques on top of it. The end result is an encryption scheme that achieves both confusion and diffusion. The more layers of crypto you add, the better the security, right? 得到的flag使用NSSCTF{}格式提交</p>
-<h4 id="ti-mu-fu-jian"><a href="#题目附件：" class="headerlink" title="题目附件："></a>题目附件：<a href="#ti-mu-fu-jian" class="header-anchor">#</a></h4><pre class="line-numbers language-Python" data-language="Python"><code class="language-Python">import os
+<h3 id="tasty-crypto-roll"><a href="#Tasty-Crypto-Roll" class="headerlink" title="Tasty Crypto Roll"></a>Tasty Crypto Roll</h3><h4 id="题目描述"><a href="#题目描述：-2" class="headerlink" title="题目描述："></a>题目描述：</h4><p>Bob, the genius intern at our company, invented AES-improved. It is based on AES but with layers after layers of proprietary encryption techniques on top of it. The end result is an encryption scheme that achieves both confusion and diffusion. The more layers of crypto you add, the better the security, right? 得到的flag使用NSSCTF{}格式提交</p>
+<h4 id="题目附件"><a href="#题目附件：" class="headerlink" title="题目附件："></a>题目附件：</h4><pre class="line-numbers language-Python" data-language="Python"><code class="language-Python">import os
 import random
 import secrets
 import sys
@@ -574,7 +574,7 @@ print(f&#39;Encrypted: &#123;ciphertext.hex()&#125;&#39;)
 with open(&#39;enc.bin&#39;, &#39;wb&#39;) as ef:
     ef.write(ciphertext)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h6 id="fen-xi"><a href="#分析：-3" class="headerlink" title="分析："></a>分析：<a href="#fen-xi" class="header-anchor">#</a></h6><p>本题难度属于hard级别，具有一定的劝退属性，但是无数学要求！</p>
+<h6 id="分析"><a href="#分析：-3" class="headerlink" title="分析："></a>分析：</h6><p>本题难度属于hard级别，具有一定的劝退属性，但是无数学要求！</p>
 <p>代码比较长，我用汉语复述一遍题目在干什么。</p>
 <p>1、初始的时候题目会生成两个密钥key1和key2，一个是当前进程的id号，一个是16字节的未知值，随后它将这两个密钥打印输出。在我的机器上key1是一个5位的十进制数，而key2是一个16长度的bytes。</p>
 <p>2、调用get_flag函数要求输入要加密的数据，并且必须以 ‘sdctf{‘ 开头和 ‘}’ 结尾以及一定要是ascii字符，最后plaintext是输入的数据去除掉了开头的 “sdctf{’ 以及末尾的 ‘}’ 。这一步应该是出题人来输入flag的，之后data由plaintext进行UTF-8编码而来，所以data现在也是bytes啦！</p>
@@ -587,9 +587,9 @@ with open(&#39;enc.bin&#39;, &#39;wb&#39;) as ef:
 <p>6、再次以key1为种子调用random.seed模块，并随机生成一个16字节的密钥key_final。</p>
 <p>7、将data转为二进制比特串（每一个byte都要转成8位），随后将该二进制串每个字符都分割开加入到data_bits列表，所以这个列表每一个元素对应着data的二进制的每一个比特！之后调用random.shuffle打乱data_bits的顺序。最终的data被重新拼接成一个二进制比特字符串并被转化为bytes对象，随后就被送去encrypt函数进行了AES的ECB模式加密，加密的密钥是key_final。</p>
 <p>8、将上一步的加密结果写入到enc.bin文件，随便将加密结果的十六进制告诉了我们</p>
-<h3 id="key-recovery-xiu-fu-te-ding-ge-shi-de-ssh-si-yao"><a href="#Key-Recovery-修复特定格式的SSH私钥" class="headerlink" title="Key Recovery-修复特定格式的SSH私钥"></a>Key Recovery-修复特定格式的SSH私钥<a href="#key-recovery-xiu-fu-te-ding-ge-shi-de-ssh-si-yao" class="header-anchor">#</a></h3><p>最近在浏览国外的 CTF比赛题目的时候发现了这一题，考察点是 OpenSSH自带的私钥格式，由于之前从来没有见过这类题目，所以写了这篇文章作了一个总结。由于本人也是第一次遇见本类题目，所以文章中难免会出现纰漏或者错误，请读者大大们多多包涵。</p>
-<h5 id="ti-mu-miao-shu"><a href="#题目描述：-3" class="headerlink" title="题目描述："></a>题目描述：<a href="#ti-mu-miao-shu" class="header-anchor">#</a></h5><p>Oh no, I can’t log into my SSH server anymore. My RSA private key is corrupted by ransomware and I need your help recovering it. Please submit the flag as sdctf{<sha256_hash>}, where <sha256_hash> is the SHA-256 hash of the original SSH private key file as 64 lowercase hex digits. As an unrealistic hypothetical example, if the original SSH private key is the 0 byte empty file, the flag would be <code>sdctf&#123;e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855&#125;</code> </sha256_hash></sha256_hash></p>
-<h5 id="ti-mu-dai-ma"><a href="#题目代码：" class="headerlink" title="题目代码："></a>题目代码：<a href="#ti-mu-dai-ma" class="header-anchor">#</a></h5><pre class="line-numbers language-Python" data-language="Python"><code class="language-Python">#! &#x2F;usr&#x2F;bin&#x2F;env python3
+<h3 id="key-recovery-修复特定格式的ssh私钥"><a href="#Key-Recovery-修复特定格式的SSH私钥" class="headerlink" title="Key Recovery-修复特定格式的SSH私钥"></a>Key Recovery-修复特定格式的SSH私钥</h3><p>最近在浏览国外的 CTF比赛题目的时候发现了这一题，考察点是 OpenSSH自带的私钥格式，由于之前从来没有见过这类题目，所以写了这篇文章作了一个总结。由于本人也是第一次遇见本类题目，所以文章中难免会出现纰漏或者错误，请读者大大们多多包涵。</p>
+<h5 id="题目描述"><a href="#题目描述：-3" class="headerlink" title="题目描述："></a>题目描述：</h5><p>Oh no, I can’t log into my SSH server anymore. My RSA private key is corrupted by ransomware and I need your help recovering it. Please submit the flag as sdctf{<sha256_hash>}, where <sha256_hash> is the SHA-256 hash of the original SSH private key file as 64 lowercase hex digits. As an unrealistic hypothetical example, if the original SSH private key is the 0 byte empty file, the flag would be <code>sdctf&#123;e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855&#125;</code> </sha256_hash></sha256_hash></p>
+<h5 id="题目代码"><a href="#题目代码：" class="headerlink" title="题目代码："></a>题目代码：</h5><pre class="line-numbers language-Python" data-language="Python"><code class="language-Python">#! &#x2F;usr&#x2F;bin&#x2F;env python3
 
 import base64
 
@@ -628,7 +628,7 @@ with open(COR, &#39;w&#39;) as pk:
 print(f&#39;***** WARNING: YOUR SSH PRIVATE KEY HAS BEEN CORRUPTED *****&#39;)
 print(f&#39;Pay me 1000 BTC to recover your corrupted private key at &#123;COR&#125;&#39;)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h6 id="fen-xi"><a href="#分析：-4" class="headerlink" title="分析："></a>分析：<a href="#fen-xi" class="header-anchor">#</a></h6><p>原本合法的SSH私钥文件被勒索软件通过代码中的算法破环了，我们需要修复它！</p>
+<h6 id="分析"><a href="#分析：-4" class="headerlink" title="分析："></a>分析：</h6><p>原本合法的SSH私钥文件被勒索软件通过代码中的算法破环了，我们需要修复它！</p>
 <p>阅读完代码就会发现正常的私钥的某一部分被修改了：</p>
 <p><img src="/images/image-20221111180203921.png" alt="image-20221111180203921"></p>
 <p>所以我们要做的就是从剩余的正常数据恢复出完整的私钥来！</p>
@@ -669,54 +669,54 @@ print(f&#39;Pay me 1000 BTC to recover your corrupted private key at &#123;COR&#
 <p><strong>openssh-key-v1 0x00</strong></p>
 <p><img src="/images/image-20221111180505179.png" alt="image-20221111180505179"></p>
 <p>开头的15字节 对应openssh-key-v1 0x00 </p>
-<h5 id="32-bit-length"><a href="#32-bit-length" class="headerlink" title="32-bit length"></a>32-bit length<a href="#32-bit-length" class="header-anchor">#</a></h5><p><img src="/images/image-20221111180521575.png" alt="image-20221111180521575"></p>
+<h5 id="32-bit-length"><a href="#32-bit-length" class="headerlink" title="32-bit length"></a>32-bit length</h5><p><img src="/images/image-20221111180521575.png" alt="image-20221111180521575"></p>
 <p>后续四个字节 00 00 00 04 是32比特的长度字段</p>
-<h5 id="none"><a href="#none" class="headerlink" title="none"></a>none<a href="#none" class="header-anchor">#</a></h5><p><img src="/images/image-20221111180531358.png" alt="image-20221111180531358"></p>
+<h5 id="none"><a href="#none" class="headerlink" title="none"></a>none</h5><p><img src="/images/image-20221111180531358.png" alt="image-20221111180531358"></p>
 <p>6e 6f 6e 65 对应着 none</p>
-<h5 id="32-bit-length"><a href="#32-bit-length-1" class="headerlink" title="32-bit length"></a>32-bit length<a href="#32-bit-length" class="header-anchor">#</a></h5><p><img src="/images/image-20221111180539580.png" alt="image-20221111180539580"></p>
+<h5 id="32-bit-length"><a href="#32-bit-length-1" class="headerlink" title="32-bit length"></a>32-bit length</h5><p><img src="/images/image-20221111180539580.png" alt="image-20221111180539580"></p>
 <p>接下来的四个字节 00 00 00 04 依旧是32比特的长度字段</p>
-<h5 id="none"><a href="#none-1" class="headerlink" title="none"></a>none<a href="#none" class="header-anchor">#</a></h5><p><img src="/images/image-20221111180547955.png" alt="image-20221111180547955"></p>
+<h5 id="none"><a href="#none-1" class="headerlink" title="none"></a>none</h5><p><img src="/images/image-20221111180547955.png" alt="image-20221111180547955"></p>
 <p>6e 6f 6e 65 对应着 none</p>
-<h5 id="32-bit-length-nil"><a href="#32-bit-length-nil" class="headerlink" title="32-bit length nil"></a>32-bit length nil<a href="#32-bit-length-nil" class="header-anchor">#</a></h5><p><img src="/images/image-20221111180555477.png" alt="image-20221111180555477"></p>
+<h5 id="32-bit-length-nil"><a href="#32-bit-length-nil" class="headerlink" title="32-bit length nil"></a>32-bit length nil</h5><p><img src="/images/image-20221111180555477.png" alt="image-20221111180555477"></p>
 <p>接下来是4个空字节 00 00 00 00 对应着私钥图中的kdf，这里表示没有kdf</p>
-<h5 id="32-bit-0x01"><a href="#32-bit-0x01" class="headerlink" title="32-bit 0x01"></a>32-bit 0x01<a href="#32-bit-0x01" class="header-anchor">#</a></h5><p><img src="/images/image-20221111180606561.png" alt="image-20221111180606561"></p>
+<h5 id="32-bit-0x01"><a href="#32-bit-0x01" class="headerlink" title="32-bit 0x01"></a>32-bit 0x01</h5><p><img src="/images/image-20221111180606561.png" alt="image-20221111180606561"></p>
 <p>接下来是 4个字节 00 00 00 01 应该对应着私钥图中的nil</p>
-<h5 id="32-bit-length-sshpub-biao-ming-gong-yao-zong-chang-du"><a href="#32-bit-length-sshpub-表明公钥总长度" class="headerlink" title="32-bit length sshpub 表明公钥总长度"></a>32-bit length sshpub 表明公钥总长度<a href="#32-bit-length-sshpub-biao-ming-gong-yao-zong-chang-du" class="header-anchor">#</a></h5><p><img src="/images/image-20221111180617702.png" alt="image-20221111180617702"></p>
+<h5 id="32-bit-length-sshpub-表明公钥总长度"><a href="#32-bit-length-sshpub-表明公钥总长度" class="headerlink" title="32-bit length sshpub 表明公钥总长度"></a>32-bit length sshpub 表明公钥总长度</h5><p><img src="/images/image-20221111180617702.png" alt="image-20221111180617702"></p>
 <p>此处表明整个sshpub公钥的总长度</p>
-<h5 id="32-bit-length"><a href="#32-bit-length-2" class="headerlink" title="32-bit length"></a>32-bit length<a href="#32-bit-length" class="header-anchor">#</a></h5><p><img src="/images/image-20221111180627565.png" alt="image-20221111180627565"></p>
+<h5 id="32-bit-length"><a href="#32-bit-length-2" class="headerlink" title="32-bit length"></a>32-bit length</h5><p><img src="/images/image-20221111180627565.png" alt="image-20221111180627565"></p>
 <p>从这里开始好理解一些了，因为这一部分是SSH的公钥格式，具体的可以看前面的链接。</p>
-<h5 id="keytype"><a href="#keytype" class="headerlink" title="keytype"></a>keytype<a href="#keytype" class="header-anchor">#</a></h5><p><img src="/images/image-20221111180649088.png" alt="image-20221111180649088"></p>
+<h5 id="keytype"><a href="#keytype" class="headerlink" title="keytype"></a>keytype</h5><p><img src="/images/image-20221111180649088.png" alt="image-20221111180649088"></p>
 <p>(00 00 00 07) 说明了接下来的数据块是7个字节长，接下来的7个字节的内容就是73 73 68 2d 72 73 61, 正是字符串 “ssh-rsa” 的ASCII编码；</p>
-<h5 id="32-bit-length-pub0-jia-mi-zhi-shu-e"><a href="#32-bit-length-pub0-加密指数e" class="headerlink" title="32-bit length-pub0-加密指数e"></a>32-bit length-pub0-加密指数e<a href="#32-bit-length-pub0-jia-mi-zhi-shu-e" class="header-anchor">#</a></h5><p><img src="/images/image-20221111180659706.png" alt="image-20221111180659706"></p>
+<h5 id="32-bit-length-pub0-加密指数e"><a href="#32-bit-length-pub0-加密指数e" class="headerlink" title="32-bit length-pub0-加密指数e"></a>32-bit length-pub0-加密指数e</h5><p><img src="/images/image-20221111180659706.png" alt="image-20221111180659706"></p>
 <p>再接下来4个字节（00 00 00 03）说明了接下来的数据块是3个字节长，</p>
-<h5 id="pub0-jia-mi-zhi-shu-e"><a href="#pub0-加密指数e" class="headerlink" title="pub0-加密指数e"></a>pub0-加密指数e<a href="#pub0-jia-mi-zhi-shu-e" class="header-anchor">#</a></h5><p><img src="/images/image-20221111180707432.png" alt="image-20221111180707432"></p>
+<h5 id="pub0-加密指数e"><a href="#pub0-加密指数e" class="headerlink" title="pub0-加密指数e"></a>pub0-加密指数e</h5><p><img src="/images/image-20221111180707432.png" alt="image-20221111180707432"></p>
 <p>接下来的3个字节的内容就是01 00 01，换算成十进制是 65537 ，这个数字就是加密指数 e 。一般来说，e 都会选择 65537 ；</p>
-<h5 id="32-bit-length-pub1-mo-shu-n"><a href="#32-bit-length-pub1-模数n" class="headerlink" title="32-bit length-pub1 模数n"></a>32-bit length-pub1 模数n<a href="#32-bit-length-pub1-mo-shu-n" class="header-anchor">#</a></h5><p><img src="/images/image-20221111180718928.png" alt="image-20221111180718928"></p>
+<h5 id="32-bit-length-pub1-模数n"><a href="#32-bit-length-pub1-模数n" class="headerlink" title="32-bit length-pub1 模数n"></a>32-bit length-pub1 模数n</h5><p><img src="/images/image-20221111180718928.png" alt="image-20221111180718928"></p>
 <p>接下来是 00 00 01 81说明了接下来的数据块是 385 字节长</p>
-<h5 id="pub1-mo-shu-n"><a href="#pub1-模数n" class="headerlink" title="pub1-模数n"></a>pub1-模数n<a href="#pub1-mo-shu-n" class="header-anchor">#</a></h5><p><img src="/images/image-20221111180733891.png" alt="image-20221111180733891"></p>
+<h5 id="pub1-模数n"><a href="#pub1-模数n" class="headerlink" title="pub1-模数n"></a>pub1-模数n</h5><p><img src="/images/image-20221111180733891.png" alt="image-20221111180733891"></p>
 <p>这个大数字正是 modulus N）。因为它是个有符号的数据，所以开头的00表示它是正整数，余下的384个字节说明了这个 modulus N 的长度有3072位，来自两个大质数 p 和 q 的乘积。这里的信息对应着私钥图中的pub1！</p>
-<h5 id="32-bit-length-rnd-prv-comment-pad"><a href="#32-bit-length-rnd-prv-comment-pad" class="headerlink" title="32-bit length -rnd+prv+comment+pad"></a>32-bit length -rnd+prv+comment+pad<a href="#32-bit-length-rnd-prv-comment-pad" class="header-anchor">#</a></h5><p><img src="/images/image-20221111180747397.png" alt="image-20221111180747397"></p>
+<h5 id="32-bit-length-rndprvcommentpad"><a href="#32-bit-length-rnd-prv-comment-pad" class="headerlink" title="32-bit length -rnd+prv+comment+pad"></a>32-bit length -rnd+prv+comment+pad</h5><p><img src="/images/image-20221111180747397.png" alt="image-20221111180747397"></p>
 <p>32比特的rnd+prv+comment+pad</p>
-<h5 id="64-bit-dummy-checksum"><a href="#64-bit-dummy-checksum" class="headerlink" title="64-bit dummy checksum"></a>64-bit dummy checksum<a href="#64-bit-dummy-checksum" class="header-anchor">#</a></h5><p><img src="/images/image-20221111180757056.png" alt="image-20221111180757056"></p>
+<h5 id="64-bit-dummy-checksum"><a href="#64-bit-dummy-checksum" class="headerlink" title="64-bit dummy checksum"></a>64-bit dummy checksum</h5><p><img src="/images/image-20221111180757056.png" alt="image-20221111180757056"></p>
 <p>8字节的校验和</p>
-<h5 id="32-bit-length"><a href="#32-bit-length-3" class="headerlink" title="32-bit length"></a>32-bit length<a href="#32-bit-length" class="header-anchor">#</a></h5><p><img src="/images/image-20221111180805362.png" alt="image-20221111180805362"></p>
+<h5 id="32-bit-length"><a href="#32-bit-length-3" class="headerlink" title="32-bit length"></a>32-bit length</h5><p><img src="/images/image-20221111180805362.png" alt="image-20221111180805362"></p>
 <p>一个新的公钥格式的开头</p>
-<h5 id="keytype"><a href="#keytype-1" class="headerlink" title="keytype"></a>keytype<a href="#keytype" class="header-anchor">#</a></h5><p><img src="/images/image-20221111180812524.png" alt="image-20221111180812524"></p>
-<h5 id="32-bit-length"><a href="#32-bit-length-4" class="headerlink" title="32-bit length"></a>32-bit length<a href="#32-bit-length" class="header-anchor">#</a></h5><p><img src="/images/image-20221111180823928.png" alt="image-20221111180823928"></p>
+<h5 id="keytype"><a href="#keytype-1" class="headerlink" title="keytype"></a>keytype</h5><p><img src="/images/image-20221111180812524.png" alt="image-20221111180812524"></p>
+<h5 id="32-bit-length"><a href="#32-bit-length-4" class="headerlink" title="32-bit length"></a>32-bit length</h5><p><img src="/images/image-20221111180823928.png" alt="image-20221111180823928"></p>
 <p>说明了接下来的数据块是385字节长</p>
-<h5 id="pub0-mo-shu-n"><a href="#pub0-模数n" class="headerlink" title="pub0-模数n"></a>pub0-模数n<a href="#pub0-mo-shu-n" class="header-anchor">#</a></h5><p><img src="/images/image-20221111180838450.png" alt="image-20221111180838450"></p>
+<h5 id="pub0-模数n"><a href="#pub0-模数n" class="headerlink" title="pub0-模数n"></a>pub0-模数n</h5><p><img src="/images/image-20221111180838450.png" alt="image-20221111180838450"></p>
 <p>公钥中的模数，看起来和第一个公钥格式具有相反的声明公钥的顺序。</p>
-<h5 id="32-bit-length-jia-mi-zhi-shu-e"><a href="#32-bit-length-加密指数e" class="headerlink" title="32-bit length -加密指数e"></a>32-bit length -加密指数e<a href="#32-bit-length-jia-mi-zhi-shu-e" class="header-anchor">#</a></h5><p><img src="/images/image-20221111180848562.png" alt="image-20221111180848562"></p>
+<h5 id="32-bit-length-加密指数e"><a href="#32-bit-length-加密指数e" class="headerlink" title="32-bit length -加密指数e"></a>32-bit length -加密指数e</h5><p><img src="/images/image-20221111180848562.png" alt="image-20221111180848562"></p>
 <p>说明了接下来的数据是3个字节长</p>
-<h5 id="pub1-jia-mi-zhi-shu-e"><a href="#pub1-加密指数e" class="headerlink" title="pub1-加密指数e"></a>pub1-加密指数e<a href="#pub1-jia-mi-zhi-shu-e" class="header-anchor">#</a></h5><p><img src="/images/image-20221111180859379.png" alt="image-20221111180859379"></p>
+<h5 id="pub1-加密指数e"><a href="#pub1-加密指数e" class="headerlink" title="pub1-加密指数e"></a>pub1-加密指数e</h5><p><img src="/images/image-20221111180859379.png" alt="image-20221111180859379"></p>
 <p>表示加密指数e为65537</p>
-<h5 id="32-bit-length-prv0"><a href="#32-bit-length-prv0" class="headerlink" title="32-bit length-prv0"></a>32-bit length-prv0<a href="#32-bit-length-prv0" class="header-anchor">#</a></h5><p><img src="/images/image-20221111180906925.png" alt="image-20221111180906925"></p>
+<h5 id="32-bit-length-prv0"><a href="#32-bit-length-prv0" class="headerlink" title="32-bit length-prv0"></a>32-bit length-prv0</h5><p><img src="/images/image-20221111180906925.png" alt="image-20221111180906925"></p>
 <p>00 00 01 81表示接下来的数据是385字节长。</p>
-<h5 id="prv0"><a href="#prv0" class="headerlink" title="prv0"></a>prv0<a href="#prv0" class="header-anchor">#</a></h5><p><img src="/images/image-20221111180918267.png" alt="image-20221111180918267"></p>
+<h5 id="prv0"><a href="#prv0" class="headerlink" title="prv0"></a>prv0</h5><p><img src="/images/image-20221111180918267.png" alt="image-20221111180918267"></p>
 <p>之后的数据大都是空字节，应该就是篡改的那一部分数据了，但我们已经知道公钥和一个prv0的值。</p>
-<h5 id="32-bit-length-biao-shi-prv1-de-chang-du"><a href="#32-bit-length-表示prv1的长度" class="headerlink" title="32-bit length-表示prv1的长度"></a>32-bit length-表示prv1的长度<a href="#32-bit-length-biao-shi-prv1-de-chang-du" class="header-anchor">#</a></h5><p><img src="/images/image-20221111180927217.png" alt="image-20221111180927217"></p>
+<h5 id="32-bit-length-表示prv1的长度"><a href="#32-bit-length-表示prv1的长度" class="headerlink" title="32-bit length-表示prv1的长度"></a>32-bit length-表示prv1的长度</h5><p><img src="/images/image-20221111180927217.png" alt="image-20221111180927217"></p>
 <p>共192个字节</p>
-<h5 id="prv1"><a href="#prv1" class="headerlink" title="prv1"></a>prv1<a href="#prv1" class="header-anchor">#</a></h5><p><img src="/images/image-20221111180942942.png" alt="image-20221111180942942"></p>
+<h5 id="prv1"><a href="#prv1" class="headerlink" title="prv1"></a>prv1</h5><p><img src="/images/image-20221111180942942.png" alt="image-20221111180942942"></p>
 <p>遭受了篡改，除了最后两个字节其余全零！</p>
 <p><img src="/images/image-20221111181029216.png" alt="image-20221111181029216"></p>
 <p>这和题目的篡改代码是对的上的！唯一和私钥图对不上的是pub0和pub1的顺序颠倒了一下，不过这不要紧。接下来我们的任务就是利用我们已知的prv0恢复出完整的私钥！剩余的部分就不继续解析了，意义不大。那么当下我们的问题就是需要弄清楚这个prv0对应着私钥的什么部分？其代表什么含义？</p>
@@ -783,7 +783,7 @@ while True:
 
 <p>之后使用 prv1 的最后2个字节确定 p 和 q 中的哪个应该是 prv2 和 prv3 。（因为 prv1是 q 在模 p 下的逆元，所以 $q*priv1\equiv1\mod p $ ，我们可以根据 p 和 q 的值求出 q 在模 p 下的逆元，并将其最后两个字节和 prv1 最后两个字节进行比对来确定 prv2 和 prv3 哪一个存储着 p 的值）注意到没有用零填充，我们将得到的值放入到 OepnSSH 私钥格式数据中。</p>
 <p>最后使用 CyberChef <a target="_blank" rel="noopener" href="https://gchq.github.io/CyberChef/#recipe=To_Base64('A-Za-z0-9%2B/%3D')Find_/_Replace({'option':'Regex','string':'(.{70})'},'$1\n',true,false,true,false)">To Base64, Find &#x2F; Replace - CyberChef</a> 对得到的 bin 文件进行 base64 编码，随后计算编码后的文件的 sha256 哈希值作为flag的内容提交。</p>
-<h2 id="yin-yong"><a href="#引用" class="headerlink" title="引用"></a>引用<a href="#yin-yong" class="header-anchor">#</a></h2><p><a target="_blank" rel="noopener" href="https://mikecat.github.io/ctf-writeups/2022/20220507_San_Diego_CTF_2022/CRYPTO/Key_Recovery/#en">https://mikecat.github.io/ctf-writeups/2022/20220507_San_Diego_CTF_2022/CRYPTO/Key_Recovery/#en</a></p>
+<h2 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h2><p><a target="_blank" rel="noopener" href="https://mikecat.github.io/ctf-writeups/2022/20220507_San_Diego_CTF_2022/CRYPTO/Key_Recovery/#en">https://mikecat.github.io/ctf-writeups/2022/20220507_San_Diego_CTF_2022/CRYPTO/Key_Recovery/#en</a></p>
 <p>[<a target="_blank" rel="noopener" href="https://github.com/acmucsd/sdctf-2022]">https://github.com/acmucsd/sdctf-2022]</a>(</p>
 
                 

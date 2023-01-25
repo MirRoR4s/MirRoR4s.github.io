@@ -29,7 +29,7 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 6.1.0"></head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 
 
@@ -505,11 +505,11 @@
 <p>这一篇还是记录一下 ysoserial 的正版 CC1</p>
 <span id="more"></span>
 
-<h3 id="qian-yan"><a href="#前言" class="headerlink" title="前言"></a>前言<a href="#qian-yan" class="header-anchor">#</a></h3><ul>
+<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><ul>
 <li>书说上回，我们分析了一下 CC1 链当中的 TransformMap 的反序列化攻击，今天来补充一下正版 CC1 链的攻击分析。以下是 ysoserial 的调用链图</li>
 <li><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9605/image-20230122131346181.png" alt="image-20230122131346181"></li>
 </ul>
-<h3 id="zheng-ban-cc1-lian-fen-xi"><a href="#正版-CC1-链分析" class="headerlink" title="正版 CC1 链分析"></a>正版 CC1 链分析<a href="#zheng-ban-cc1-lian-fen-xi" class="header-anchor">#</a></h3><h4 id="1-xun-zhao-lian-wei-de-exec-fang-fa"><a href="#1-寻找链尾的-exec-方法" class="headerlink" title="1.寻找链尾的 exec 方法"></a>1.寻找链尾的 exec 方法<a href="#1-xun-zhao-lian-wei-de-exec-fang-fa" class="header-anchor">#</a></h4><ul>
+<h3 id="正版-cc1-链分析"><a href="#正版-CC1-链分析" class="headerlink" title="正版 CC1 链分析"></a>正版 CC1 链分析</h3><h4 id="1寻找链尾的-exec-方法"><a href="#1-寻找链尾的-exec-方法" class="headerlink" title="1.寻找链尾的 exec 方法"></a>1.寻找链尾的 exec 方法</h4><ul>
 <li>漏洞点还是 <code>InvokerTransformer</code></li>
 </ul>
 <p>在 <code>InvokerTransformer</code> 下的 <code>transform</code> 方法，进行 find usages 操作。</p>
@@ -518,7 +518,7 @@
 </blockquote>
 <p>然后发现 LazyMap 的 get（公有的） 方法调用了 <code>.transform</code> 方法</p>
 <p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9605/image-20230122141102900.png" alt="image-20230122141102900"></p>
-<h4 id="2-xun-zhao-lian-zi"><a href="#2-寻找链子" class="headerlink" title="2.寻找链子"></a>2.寻找链子<a href="#2-xun-zhao-lian-zi" class="header-anchor">#</a></h4><ul>
+<h4 id="2寻找链子"><a href="#2-寻找链子" class="headerlink" title="2.寻找链子"></a>2.寻找链子</h4><ul>
 <li>从上图也可以看到是 <code>factory</code> 调用了 transform 方法，所以现在就要去找 <code>factory</code> 是什么</li>
 </ul>
 <p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9605/decorate.png" alt="img"></p>
@@ -563,7 +563,7 @@ public class Main &#123;
 <ul>
 <li>现在的关键点是在于如何触发 <code>AnnotationInvocationHandler.invoke()</code></li>
 </ul>
-<h4 id="3-bian-xie-exp"><a href="#3-编写-EXP" class="headerlink" title="3.编写 EXP"></a>3.编写 EXP<a href="#3-bian-xie-exp" class="header-anchor">#</a></h4><p>需要触发 <code>invoke()</code> 方法，马上想到动态代理，一个类被动态代理了之后，想要通过代理调用这个类的方法，就一定会调用 <code>invoke()</code> 方法。我们去找一找能利用的地方</p>
+<h4 id="3编写-exp"><a href="#3-编写-EXP" class="headerlink" title="3.编写 EXP"></a>3.编写 EXP</h4><p>需要触发 <code>invoke()</code> 方法，马上想到动态代理，一个类被动态代理了之后，想要通过代理调用这个类的方法，就一定会调用 <code>invoke()</code> 方法。我们去找一找能利用的地方</p>
 <p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9605/ReadObjectMember.png" alt="img"></p>
 <p>在 readObject 反序列化里面调用了 <code>entrySet()</code> 方法，也就是说，如果我们将 <code>memberValues</code> 的值改为被代理对象，当调用被代理对象的方法，那么就会跳到执行 <code>invoke()</code> 方法，最终完成整条链子的调用。</p>
 <p>直接上我们的 EXP</p>
@@ -649,7 +649,7 @@ public class Main &#123;
 <p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9605/image-20230122153621578.png" alt="image-20230122153621578"></p>
 <p>i &#x3D; 3</p>
 <p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9605/image-20230122153652820.png" alt="image-20230122153652820"></p>
-<h3 id="can-kao-lian-jie"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接<a href="#can-kao-lian-jie" class="header-anchor">#</a></h3><p><a target="_blank" rel="noopener" href="https://drun1baby.github.io/2022/06/10/Java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96Commons-Collections%E7%AF%8702-CC1%E9%93%BE%E8%A1%A5%E5%85%85/">芜风师傅</a></p>
+<h3 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h3><p><a target="_blank" rel="noopener" href="https://drun1baby.github.io/2022/06/10/Java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96Commons-Collections%E7%AF%8702-CC1%E9%93%BE%E8%A1%A5%E5%85%85/">芜风师傅</a></p>
 <p><a target="_blank" rel="noopener" href="https://github.com/frohoff/ysoserial/blob/master/src/main/java/ysoserial/payloads/CommonsCollections1.java">ysoserial-CommonsCollections</a></p>
 
                 

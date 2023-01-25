@@ -29,7 +29,7 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 6.1.0"></head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 
 
@@ -503,8 +503,8 @@
                 <p>文件上传漏洞总结</p>
  <span id="more"></span>
 
-<h3 id="wen-jian-shang-chuan"><a href="#文件上传" class="headerlink" title="文件上传"></a>文件上传<a href="#wen-jian-shang-chuan" class="header-anchor">#</a></h3><p>“文件上传”功能已经成为现在Web应用的一种常见需求，它不但有助于提供业务效率(例如：企业内部文件共享)，更有助于优化用户的体验（例如：上传视频、图片、头像等各种其他类型的文件）。”文件上传”功能一方面带来了良好的体验，另一方面也带来了“安全问题”。目前文件上传漏洞已经成为web安全中经常利用到的一种漏洞形式，<strong>对于缺少安全防护的web应用，攻击者可以利用提供的文件上传功能将恶意代码植入到服务器中</strong>，之后再通过url去访问以执行代码达到攻击的目的。</p>
-<h3 id="wen-jian-shang-chuan-lou-dong-de-cheng-yin"><a href="#文件上传漏洞的成因" class="headerlink" title="文件上传漏洞的成因"></a>文件上传漏洞的成因<a href="#wen-jian-shang-chuan-lou-dong-de-cheng-yin" class="header-anchor">#</a></h3><p>造成文件上传漏洞的原因有：</p>
+<h3 id="文件上传"><a href="#文件上传" class="headerlink" title="文件上传"></a>文件上传</h3><p>“文件上传”功能已经成为现在Web应用的一种常见需求，它不但有助于提供业务效率(例如：企业内部文件共享)，更有助于优化用户的体验（例如：上传视频、图片、头像等各种其他类型的文件）。”文件上传”功能一方面带来了良好的体验，另一方面也带来了“安全问题”。目前文件上传漏洞已经成为web安全中经常利用到的一种漏洞形式，<strong>对于缺少安全防护的web应用，攻击者可以利用提供的文件上传功能将恶意代码植入到服务器中</strong>，之后再通过url去访问以执行代码达到攻击的目的。</p>
+<h3 id="文件上传漏洞的成因"><a href="#文件上传漏洞的成因" class="headerlink" title="文件上传漏洞的成因"></a>文件上传漏洞的成因</h3><p>造成文件上传漏洞的原因有：</p>
 <ul>
 <li>开源编辑器的上传漏洞</li>
 <li>服务器配置不当</li>
@@ -513,12 +513,12 @@
 <li>文件解析漏洞导致文件执行</li>
 <li>文件路径截断</li>
 </ul>
-<h3 id="wen-jian-shang-chuan-lou-dong-xu-yao-man-zu-de-tiao-jian-tong-shi-man-zu"><a href="#文件上传漏洞需要满足的条件（同时满足）" class="headerlink" title="文件上传漏洞需要满足的条件（同时满足）"></a>文件上传漏洞需要满足的条件（同时满足）<a href="#wen-jian-shang-chuan-lou-dong-xu-yao-man-zu-de-tiao-jian-tong-shi-man-zu" class="header-anchor">#</a></h3><ul>
+<h3 id="文件上传漏洞需要满足的条件同时满足"><a href="#文件上传漏洞需要满足的条件（同时满足）" class="headerlink" title="文件上传漏洞需要满足的条件（同时满足）"></a>文件上传漏洞需要满足的条件（同时满足）</h3><ul>
 <li>恶意文件可以成功上传</li>
 <li>知道恶意文件上传后的路径</li>
 <li>恶意文件可以被访问或执行</li>
 </ul>
-<h3 id="wen-jian-shang-chuan-guo-cheng-zhong-de-jian-ce"><a href="#文件上传过程中的检测" class="headerlink" title="文件上传过程中的检测"></a>文件上传过程中的检测<a href="#wen-jian-shang-chuan-guo-cheng-zhong-de-jian-ce" class="header-anchor">#</a></h3><p><img src="/images/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/1.png" alt="文件上传漏洞总结"></p>
+<h3 id="文件上传过程中的检测"><a href="#文件上传过程中的检测" class="headerlink" title="文件上传过程中的检测"></a>文件上传过程中的检测</h3><p><img src="/images/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/1.png" alt="文件上传漏洞总结"></p>
 <p>文件上传漏洞危害极大，所以我们必须对用户上传的文件做好检测，防止恶意用户对我们的服务器进行攻击。那为了防范文件上传漏洞，我们都可以做那些检测呢？</p>
 <p>从上图可以看到，服务器端的检测主要就是查后缀、查内容。</p>
 <p>一般一个文件上传过程中的检测分为如下几个部分：</p>
@@ -529,14 +529,14 @@
 <li>服务端文件扩展名检测（检测跟文件 extension 相关的内容）</li>
 <li>服务端文件内容检测（检测内容是否合法或含有恶意代码）</li>
 </ul>
-<h3 id="jian-ce-rao-guo"><a href="#检测绕过" class="headerlink" title="检测绕过"></a>检测绕过<a href="#jian-ce-rao-guo" class="header-anchor">#</a></h3><h4 id="ru-he-fen-bian-wen-jian-shang-chuan-shi-ke-hu-duan-jian-ce-huan-shi-fu-wu-qi-duan-jian-ce"><a href="#如何分辨文件上传是客户端检测还是服务器端检测？" class="headerlink" title="如何分辨文件上传是客户端检测还是服务器端检测？"></a>如何分辨文件上传是客户端检测还是服务器端检测？<a href="#ru-he-fen-bian-wen-jian-shang-chuan-shi-ke-hu-duan-jian-ce-huan-shi-fu-wu-qi-duan-jian-ce" class="header-anchor">#</a></h4><p>在常规的渗透测试过程中，我们根本无法获取到目标网站对于上传文件校验的源代码设计，那么如何判断文件是客户端校验还是服务器端校验呢？我们可以通过 <strong>burpsuite</strong> 来进行简易判断，具体流程如下：</p>
+<h3 id="检测绕过"><a href="#检测绕过" class="headerlink" title="检测绕过"></a>检测绕过</h3><h4 id="如何分辨文件上传是客户端检测还是服务器端检测"><a href="#如何分辨文件上传是客户端检测还是服务器端检测？" class="headerlink" title="如何分辨文件上传是客户端检测还是服务器端检测？"></a>如何分辨文件上传是客户端检测还是服务器端检测？</h4><p>在常规的渗透测试过程中，我们根本无法获取到目标网站对于上传文件校验的源代码设计，那么如何判断文件是客户端校验还是服务器端校验呢？我们可以通过 <strong>burpsuite</strong> 来进行简易判断，具体流程如下：</p>
 <ol>
 <li>首先打开 burpsuite 的代理模式，捕捉本机所有 http 请求。</li>
 <li>在本地创建一个 shell.php 文件或是其他的木马文件并在网页上传（注意这里必须要是非法的后缀名，否则就通过上传了，这样我们就会捕捉到数据包）。</li>
 <li>如果 burpsuite 未捕获到通信数据包且浏览器端已完成对该文件的校验，那么这种方式就属于客户端校验。</li>
 </ol>
 <p>当然，真实环境中肯定是前端和后端同时进行检测，毕竟前端检测根本不安全。</p>
-<h4 id="ke-hu-duan-javascript-rao-guo"><a href="#客户端-JavaScript-绕过" class="headerlink" title="客户端 JavaScript 绕过"></a>客户端 JavaScript 绕过<a href="#ke-hu-duan-javascript-rao-guo" class="header-anchor">#</a></h4><p>这类检测通常在上传页面里含有专门检测文件上传的javascript代码，最常见的就是检测扩展名是否合法，以下面的代码为例来说说如何绕过前端的 js 检测。</p>
+<h4 id="客户端-javascript-绕过"><a href="#客户端-JavaScript-绕过" class="headerlink" title="客户端 JavaScript 绕过"></a>客户端 JavaScript 绕过</h4><p>这类检测通常在上传页面里含有专门检测文件上传的javascript代码，最常见的就是检测扩展名是否合法，以下面的代码为例来说说如何绕过前端的 js 检测。</p>
 <pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token operator">&lt;</span>script type<span class="token operator">=</span><span class="token string">"text/javascript"</span><span class="token operator">></span>
     <span class="token keyword">function</span> <span class="token function">checkFile</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
         <span class="token keyword">var</span> file <span class="token operator">=</span> document<span class="token punctuation">.</span><span class="token function">getElementsByName</span><span class="token punctuation">(</span><span class="token string">'upload_file'</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span>value<span class="token punctuation">;</span>
@@ -558,29 +558,29 @@
 <span class="token operator">&lt;</span><span class="token operator">/</span>script<span class="token operator">></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>以上代码只允许我们上传 jpg、png、gif 后缀名的图片，但我们现在想要上传一个 shell.php，那么该如何绕过呢？</p>
-<h5 id="tong-guo-jin-yong-qian-duan-js-rao-guo-qian-duan-javascript-jian-ce"><a href="#通过禁用前端-JS-绕过前端-JavaScript-检测" class="headerlink" title="通过禁用前端 JS 绕过前端 JavaScript 检测"></a>通过禁用前端 JS 绕过前端 JavaScript 检测<a href="#tong-guo-jin-yong-qian-duan-js-rao-guo-qian-duan-javascript-jian-ce" class="header-anchor">#</a></h5><p>以火狐浏览器为例说说如何关闭浏览器的 JS 功能：</p>
+<h5 id="通过禁用前端-js-绕过前端-javascript-检测"><a href="#通过禁用前端-JS-绕过前端-JavaScript-检测" class="headerlink" title="通过禁用前端 JS 绕过前端 JavaScript 检测"></a>通过禁用前端 JS 绕过前端 JavaScript 检测</h5><p>以火狐浏览器为例说说如何关闭浏览器的 JS 功能：</p>
 <ul>
 <li>在 Firefox 地址栏里输入 <code>about:config</code></li>
 <li>在搜索栏输入 <code>javascript.enabled</code> 查找到首选项</li>
 <li>点击鼠标右键选择 <code>切换</code> ，把 <code>javascript.enabled</code> 键值改为 <code>false</code></li>
 </ul>
 <p>我们可以安装一个名为 <code>disable javascript</code> 的浏览器插件来帮助我们禁用当前页面的 JavaScript 进而绕过前端的 JavaScript 检测。</p>
-<h5 id="tong-guo-burpsuite-zhua-bao-bing-xiu-gai-shu-ju-bao-de-fang-fa-rao-guo-qian-duan-js-jian-ce"><a href="#通过-burpsuite-抓包并修改数据包的方法绕过前端-JS-检测" class="headerlink" title="通过 burpsuite 抓包并修改数据包的方法绕过前端 JS 检测"></a>通过 burpsuite 抓包并修改数据包的方法绕过前端 JS 检测<a href="#tong-guo-burpsuite-zhua-bao-bing-xiu-gai-shu-ju-bao-de-fang-fa-rao-guo-qian-duan-js-jian-ce" class="header-anchor">#</a></h5><p>利用 burpsuite 可以轻松绕过前端检测，具体的做法如下：</p>
+<h5 id="通过-burpsuite-抓包并修改数据包的方法绕过前端-js-检测"><a href="#通过-burpsuite-抓包并修改数据包的方法绕过前端-JS-检测" class="headerlink" title="通过 burpsuite 抓包并修改数据包的方法绕过前端 JS 检测"></a>通过 burpsuite 抓包并修改数据包的方法绕过前端 JS 检测</h5><p>利用 burpsuite 可以轻松绕过前端检测，具体的做法如下：</p>
 <ol>
 <li>打开 burpsuite 代理模式，捕获本机的 http 请求。</li>
 <li>将要上传的恶意文件后缀名改为合法的后缀名并上传。（这样我们就可以通过前端的校验）</li>
 <li>burpsuite 会捕获到上传的 http 请求包，此时我们在请求包中将我们的文件后缀名改回原本的形式。</li>
 </ol>
-<h4 id="fu-wu-qi-duan-mime-lei-xing-jian-ce-rao-guo"><a href="#服务器端-MIME-类型检测绕过" class="headerlink" title="服务器端 MIME 类型检测绕过"></a>服务器端 MIME 类型检测绕过<a href="#fu-wu-qi-duan-mime-lei-xing-jian-ce-rao-guo" class="header-anchor">#</a></h4><p>MIME 类型检测属于白名单检测的一种，在服务器端完成，它会对上传文件请求包中的 <code>Content-Type</code> 字段值进行校验，判断是否属于白名单，如果不属于则不允许上传。<a target="_blank" rel="noopener" href="https://www.runoob.com/http/mime-types.html">MIME 详细定义</a></p>
+<h4 id="服务器端-mime-类型检测绕过"><a href="#服务器端-MIME-类型检测绕过" class="headerlink" title="服务器端 MIME 类型检测绕过"></a>服务器端 MIME 类型检测绕过</h4><p>MIME 类型检测属于白名单检测的一种，在服务器端完成，它会对上传文件请求包中的 <code>Content-Type</code> 字段值进行校验，判断是否属于白名单，如果不属于则不允许上传。<a target="_blank" rel="noopener" href="https://www.runoob.com/http/mime-types.html">MIME 详细定义</a></p>
 <p><img src="/images/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/image-20230106104021410.png" alt="image-20230106104021410"></p>
-<h5 id="mime-lei-xing-jian-ce-shi-li-dai-ma"><a href="#MIME-类型检测示例代码" class="headerlink" title="MIME 类型检测示例代码"></a>MIME 类型检测示例代码<a href="#mime-lei-xing-jian-ce-shi-li-dai-ma" class="header-anchor">#</a></h5><pre class="line-numbers language-php" data-language="php"><code class="language-php">if (isset($_POST[&#39;submit&#39;])) &#123;
+<h5 id="mime-类型检测示例代码"><a href="#MIME-类型检测示例代码" class="headerlink" title="MIME 类型检测示例代码"></a>MIME 类型检测示例代码</h5><pre class="line-numbers language-php" data-language="php"><code class="language-php">if (isset($_POST[&#39;submit&#39;])) &#123;
     if (file_exists(UPLOAD_PATH)) &#123;
         if (($_FILES[&#39;upload_file&#39;][&#39;type&#39;] &#x3D;&#x3D; &#39;image&#x2F;jpeg&#39;) || ($_FILES[&#39;upload_file&#39;][&#39;type&#39;] &#x3D;&#x3D; &#39;image&#x2F;png&#39;) || ($_FILES[&#39;upload_file&#39;][&#39;type&#39;] &#x3D;&#x3D; &#39;image&#x2F;gif&#39;)) &#123;
             
 &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>从以上代码中可以看到，此处对文件的Type进行了检查，只允许：image&#x2F;jpeg、image&#x2F;png、image&#x2F;gif三种格式，而且直接为服务器端校验，对于服务端的这种校验方式，我们可以<strong>通过 burpsuite 抓包来更改 Content-Type 为其允许的类型即可！</strong></p>
-<h4 id="wen-jian-nei-rong-tou-xiao-yan-rao-guo"><a href="#文件内容头校验绕过" class="headerlink" title="文件内容头校验绕过"></a>文件内容头校验绕过<a href="#wen-jian-nei-rong-tou-xiao-yan-rao-guo" class="header-anchor">#</a></h4><p>前面已经说到，服务器端可能会对上传文件的内容进行检测，其中就包括文件内容开始处的<strong>文件幻数检测</strong>。</p>
+<h4 id="文件内容头校验绕过"><a href="#文件内容头校验绕过" class="headerlink" title="文件内容头校验绕过"></a>文件内容头校验绕过</h4><p>前面已经说到，服务器端可能会对上传文件的内容进行检测，其中就包括文件内容开始处的<strong>文件幻数检测</strong>。</p>
 <p><a target="_blank" rel="noopener" href="https://blog.csdn.net/just_h/article/details/126789044">文件幻术详解</a></p>
 <p>这个时候我们就需要在上传的木马文件前加上一些文件头信息。如果检测的是 gif 图片的文件幻数，那么应添加 <code>GIF89a</code>。</p>
 <pre class="line-numbers language-none"><code class="language-none">GIF89a&lt;?php phpinfo(); ?&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
@@ -591,20 +591,20 @@
 （3） .zip，”Zip Compressed”
 （4） .doc;.xls;.xlt;.ppt;.apr，”MS Compound Document v1 or Lotus Approach APRfile”<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h4 id="wen-jian-hou-zhui-ming-rao-guo"><a href="#文件后缀名绕过" class="headerlink" title="文件后缀名绕过"></a>文件后缀名绕过<a href="#wen-jian-hou-zhui-ming-rao-guo" class="header-anchor">#</a></h4><p>为了能在服务器上执行代码，我们上传的木马文件肯定不可以是图片的后缀名，如果此时服务器端采用的是白名单检测后缀名，我们如何在保持木马文件后缀名的情况下成功上传呢？</p>
-<h5 id="00-jie-duan-rao-guo-bai-ming-dan-hou-zhui-ming-jian-ce-zhen-dui-php"><a href="#00截断绕过白名单后缀名检测（针对PHP）" class="headerlink" title="00截断绕过白名单后缀名检测（针对PHP）"></a>00截断绕过白名单后缀名检测（针对PHP）<a href="#00-jie-duan-rao-guo-bai-ming-dan-hou-zhui-ming-jian-ce-zhen-dui-php" class="header-anchor">#</a></h5><p>00截断是很常见的截断方法，原理是有些函数处理时会将00这个空字符当作结束符，从而提前结束对相关数据的处理。</p>
+<h4 id="文件后缀名绕过"><a href="#文件后缀名绕过" class="headerlink" title="文件后缀名绕过"></a>文件后缀名绕过</h4><p>为了能在服务器上执行代码，我们上传的木马文件肯定不可以是图片的后缀名，如果此时服务器端采用的是白名单检测后缀名，我们如何在保持木马文件后缀名的情况下成功上传呢？</p>
+<h5 id="00截断绕过白名单后缀名检测针对php"><a href="#00截断绕过白名单后缀名检测（针对PHP）" class="headerlink" title="00截断绕过白名单后缀名检测（针对PHP）"></a>00截断绕过白名单后缀名检测（针对PHP）</h5><p>00截断是很常见的截断方法，原理是有些函数处理时会将00这个空字符当作结束符，从而提前结束对相关数据的处理。</p>
 <p>截断条件：php 版本小于 5.3.4，php 的 magic_quotes_gpc 为 OFF 状态。</p>
 <p>示例：test.php%00.jpg,test.php0xoo.jpg</p>
 <p>值得注意的是，在 GET 型 00 截断中，我们要使用 <code>%00</code> 来截断，因为 GET 型提交的内容会被自动进行 URL 解码；而在 POST 型 00 截断中，<code>%00</code> 是不会被自动解码的，我们需要在 16 进制中对其进行修改，将其改为 00 即可截断。</p>
-<h5 id="li-yong-windows-te-xing-rao-guo-hei-ming-dan-hou-zhui-ming-jian-ce"><a href="#利用-windows-特性绕过黑名单后缀名检测" class="headerlink" title="利用 windows 特性绕过黑名单后缀名检测"></a>利用 windows 特性绕过黑名单后缀名检测<a href="#li-yong-windows-te-xing-rao-guo-hei-ming-dan-hou-zhui-ming-jian-ce" class="header-anchor">#</a></h5><h6 id="data-rao-guo"><a href="#DATA-绕过" class="headerlink" title="::$DATA 绕过"></a>::$DATA 绕过<a href="#data-rao-guo" class="header-anchor">#</a></h6><p><img src="/images/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/image-20230106180228070.png" alt="image-20230106180228070"></p>
+<h5 id="利用-windows-特性绕过黑名单后缀名检测"><a href="#利用-windows-特性绕过黑名单后缀名检测" class="headerlink" title="利用 windows 特性绕过黑名单后缀名检测"></a>利用 windows 特性绕过黑名单后缀名检测</h5><h6 id="data-绕过"><a href="#DATA-绕过" class="headerlink" title="::$DATA 绕过"></a>::$DATA 绕过</h6><p><img src="/images/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/image-20230106180228070.png" alt="image-20230106180228070"></p>
 <p>针对这个绕过手法，我们的操作方式是使用 burpsuite 抓包在文件后缀中加 <code>::$DATA</code> ！</p>
-<h6 id="dian-rao-guo"><a href="#点绕过" class="headerlink" title="点绕过"></a>点绕过<a href="#dian-rao-guo" class="header-anchor">#</a></h6><p>在 windows 系统下，后缀名的最后一个点会被自动删除掉，所以可以通过在结尾加一个点的方式绕过黑名单。</p>
-<h3 id="xue-xi-lian-jie"><a href="#学习链接" class="headerlink" title="学习链接"></a>学习链接<a href="#xue-xi-lian-jie" class="header-anchor">#</a></h3><p><a target="_blank" rel="noopener" href="https://yinwc.github.io/2020/04/21/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E%E6%80%BB%E7%BB%93/">文件上传漏洞总结</a></p>
+<h6 id="点绕过"><a href="#点绕过" class="headerlink" title="点绕过"></a>点绕过</h6><p>在 windows 系统下，后缀名的最后一个点会被自动删除掉，所以可以通过在结尾加一个点的方式绕过黑名单。</p>
+<h3 id="学习链接"><a href="#学习链接" class="headerlink" title="学习链接"></a>学习链接</h3><p><a target="_blank" rel="noopener" href="https://yinwc.github.io/2020/04/21/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E%E6%80%BB%E7%BB%93/">文件上传漏洞总结</a></p>
 <p><a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/7365">先知社区</a></p>
 <p><a target="_blank" rel="noopener" href="https://jiulin.space/2021/01/02/php2/">https://jiulin.space/2021/01/02/php2/</a></p>
-<h4 id="user-ini-wen-jian-de-miao-yong"><a href="#user-ini-文件的妙用：" class="headerlink" title="user.ini 文件的妙用："></a>user.ini 文件的妙用：<a href="#user-ini-wen-jian-de-miao-yong" class="header-anchor">#</a></h4><p><a target="_blank" rel="noopener" href="https://www.leavesongs.com/PENETRATION/php-user-ini-backdoor.html">https://www.leavesongs.com/PENETRATION/php-user-ini-backdoor.html</a></p>
+<h4 id="userini-文件的妙用"><a href="#user-ini-文件的妙用：" class="headerlink" title="user.ini 文件的妙用："></a>user.ini 文件的妙用：</h4><p><a target="_blank" rel="noopener" href="https://www.leavesongs.com/PENETRATION/php-user-ini-backdoor.html">https://www.leavesongs.com/PENETRATION/php-user-ini-backdoor.html</a></p>
 <p><a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/6091">https://xz.aliyun.com/t/6091</a></p>
-<h4 id="upload-labs-ti-jie-lian-jie"><a href="#Upload-Labs-题解链接" class="headerlink" title="Upload-Labs 题解链接"></a>Upload-Labs 题解链接<a href="#upload-labs-ti-jie-lian-jie" class="header-anchor">#</a></h4><p><a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/2435">https://xz.aliyun.com/t/2435</a></p>
+<h4 id="upload-labs-题解链接"><a href="#Upload-Labs-题解链接" class="headerlink" title="Upload-Labs 题解链接"></a>Upload-Labs 题解链接</h4><p><a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/2435">https://xz.aliyun.com/t/2435</a></p>
 <p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/amazingman113/p/16074544.html">ctfshow-文件上传总结</a></p>
 
                 

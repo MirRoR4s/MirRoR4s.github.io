@@ -29,7 +29,7 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 6.1.0"></head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 
 
@@ -505,8 +505,8 @@
 <p>力争在过年之前复现完今年所有我参加过的Crypto题目</p>
 <span id="more"></span>
 
-<h2 id="web"><a href="#Web" class="headerlink" title="Web"></a>Web<a href="#web" class="header-anchor">#</a></h2><h3 id="knock-knock-mi-ma-xue-han-shu-shi-yong-bu-dang"><a href="#knock-knock-密码学函数使用不当" class="headerlink" title="knock-knock-密码学函数使用不当"></a><strong>knock-knock</strong>-密码学函数使用不当<a href="#knock-knock-mi-ma-xue-han-shu-shi-yong-bu-dang" class="header-anchor">#</a></h3><h4 id="ti-mu-miao-shu"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述<a href="#ti-mu-miao-shu" class="header-anchor">#</a></h4><p>Knock knock? Who’s there? Another pastebin!!</p>
-<h4 id="ti-mu-nei-rong"><a href="#题目内容" class="headerlink" title="题目内容"></a>题目内容<a href="#ti-mu-nei-rong" class="header-anchor">#</a></h4><pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token keyword">const</span> crypto <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'crypto'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<h2 id="web"><a href="#Web" class="headerlink" title="Web"></a>Web</h2><h3 id="knock-knock-密码学函数使用不当"><a href="#knock-knock-密码学函数使用不当" class="headerlink" title="knock-knock-密码学函数使用不当"></a><strong>knock-knock</strong>-密码学函数使用不当</h3><h4 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h4><p>Knock knock? Who’s there? Another pastebin!!</p>
+<h4 id="题目内容"><a href="#题目内容" class="headerlink" title="题目内容"></a>题目内容</h4><pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token keyword">const</span> crypto <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'crypto'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
 <span class="token keyword">class</span> <span class="token class-name">Database</span> <span class="token punctuation">&#123;</span>
   <span class="token function">constructor</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
@@ -574,7 +574,7 @@ app<span class="token punctuation">.</span><span class="token function">listen</
 <p>如果你足够细心，会发现 <code>Crypto.randomUUID</code> 在调用的时候没有带括号，<code>randomUUID</code>是一个函数（我不知道为什么JS允许这种代码书写方法而不报错），不加括号地调用它是一个未定义的行为。</p>
 <p><img src="/images/DiceCTF-2022/image-20221126095046003.png" alt="image-20221126095046003"></p>
 <p>所以我们在本地用id&#x3D;0运行一遍就可以得到和flag相同的token了，如果node版本一致的话。题目的node版本是FROM node:17.4.0-buster-slim</p>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">const</span> crypto <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'crypto'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token keyword">const</span> crypto <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'crypto'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
 <span class="token keyword">function</span> <span class="token function">generateToken</span><span class="token punctuation">(</span><span class="token parameter">id<span class="token punctuation">,</span>secret</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> 
     <span class="token keyword">return</span> crypto
@@ -589,9 +589,9 @@ app<span class="token punctuation">.</span><span class="token function">listen</
 console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>secret<span class="token punctuation">)</span><span class="token punctuation">;</span>
 console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token function">generateToken</span><span class="token punctuation">(</span>id<span class="token punctuation">,</span>secret<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h4 id="yin-yong"><a href="#引用" class="headerlink" title="引用"></a>引用<a href="#yin-yong" class="header-anchor">#</a></h4><p><a target="_blank" rel="noopener" href="https://blog.bitwarriors.net/blog/dice-ctf-knock-knock-web/">BitWarriors Blog - BitWarriors Blog</a></p>
-<h3 id="blazingfast-xss"><a href="#blazingfast-XSS" class="headerlink" title="blazingfast-XSS"></a><strong>blazingfast</strong>-XSS<a href="#blazingfast-xss" class="header-anchor">#</a></h3><h4 id="ti-mu-miao-shu"><a href="#题目描述-1" class="headerlink" title="题目描述"></a>题目描述<a href="#ti-mu-miao-shu" class="header-anchor">#</a></h4><p><img src="/images/DiceCTF-2022/image-20221129201952585.png" alt="image-20221129201952585"></p>
-<h4 id="ti-mu-nei-rong"><a href="#题目内容-1" class="headerlink" title="题目内容"></a>题目内容<a href="#ti-mu-nei-rong" class="header-anchor">#</a></h4><pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token comment">//admin-bot.js</span>
+<h4 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h4><p><a target="_blank" rel="noopener" href="https://blog.bitwarriors.net/blog/dice-ctf-knock-knock-web/">BitWarriors Blog - BitWarriors Blog</a></p>
+<h3 id="blazingfast-xss"><a href="#blazingfast-XSS" class="headerlink" title="blazingfast-XSS"></a><strong>blazingfast</strong>-XSS</h3><h4 id="题目描述"><a href="#题目描述-1" class="headerlink" title="题目描述"></a>题目描述</h4><p><img src="/images/DiceCTF-2022/image-20221129201952585.png" alt="image-20221129201952585"></p>
+<h4 id="题目内容"><a href="#题目内容-1" class="headerlink" title="题目内容"></a>题目内容</h4><pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token comment">//admin-bot.js</span>
 <span class="token keyword">import</span> flag <span class="token keyword">from</span> <span class="token string">'./flag.txt'</span>
 
 <span class="token keyword">function</span> <span class="token function">sleep</span><span class="token punctuation">(</span><span class="token parameter">time</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
@@ -617,7 +617,7 @@ console<span class="token punctuation">.</span><span class="token function">log<
 
 
 
-<h4 id="jie-ti-fen-xi"><a href="#解题分析" class="headerlink" title="解题分析"></a>解题分析<a href="#jie-ti-fen-xi" class="header-anchor">#</a></h4><p>进入题目页面：</p>
+<h4 id="解题分析"><a href="#解题分析" class="headerlink" title="解题分析"></a>解题分析</h4><p>进入题目页面：</p>
 <p><img src="/images/DiceCTF-2022/website.png" alt="website.png"></p>
 <p>习惯性查看源码发现</p>
 <pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token comment">//index.html中的脚本</span>
@@ -781,11 +781,11 @@ int mock() &#123;
 
 
 
-<h4 id="yin-yong"><a href="#引用-1" class="headerlink" title="引用"></a>引用<a href="#yin-yong" class="header-anchor">#</a></h4><p><a target="_blank" rel="noopener" href="https://sekai.team/blog/dice-ctf-2022/blazingfast/">https://sekai.team/blog/dice-ctf-2022/blazingfast/</a></p>
-<h3 id="no-cookies"><a href="#no-cookies" class="headerlink" title="no-cookies"></a>no-cookies<a href="#no-cookies" class="header-anchor">#</a></h3><h4 id="ti-mu-miao-shu"><a href="#题目描述-2" class="headerlink" title="题目描述"></a>题目描述<a href="#ti-mu-miao-shu" class="header-anchor">#</a></h4><p>I found a more secure way to authenticate users. No cookies, no problems!</p>
-<h4 id="jie-ti-fen-xi"><a href="#解题分析-1" class="headerlink" title="解题分析"></a>解题分析<a href="#jie-ti-fen-xi" class="header-anchor">#</a></h4><p>先审计 <code>adminbot.js</code> ，发现又有我看不懂的代码段。比如 <code>export</code> 语句是干啥的？我在这一篇文章找到了答案：<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/541256d8abb3">export、export default和import用法详解，这一篇就够了 - 简书 (jianshu.com)</a></p>
-<h4 id="yin-yong"><a href="#引用-2" class="headerlink" title="引用"></a>引用<a href="#yin-yong" class="header-anchor">#</a></h4><p><strong><a target="_blank" rel="noopener" href="https://blog.bawolff.net/2022/02/write-up-for-dicectf-2022-nocookies.html">https://blog.bawolff.net/2022/02/write-up-for-dicectf-2022-nocookies.html</a></strong></p>
-<h2 id="crypto"><a href="#Crypto" class="headerlink" title="Crypto"></a>Crypto<a href="#crypto" class="header-anchor">#</a></h2><h3 id="baby-rsa"><a href="#baby-rsa" class="headerlink" title="baby-rsa"></a>baby-rsa<a href="#baby-rsa" class="header-anchor">#</a></h3><h4 id="ti-mu-miao-shu"><a href="#题目描述-3" class="headerlink" title="题目描述"></a>题目描述<a href="#ti-mu-miao-shu" class="header-anchor">#</a></h4><h4 id="ti-mu-nei-rong"><a href="#题目内容-2" class="headerlink" title="题目内容"></a>题目内容<a href="#ti-mu-nei-rong" class="header-anchor">#</a></h4><pre class="line-numbers language-python" data-language="python"><code class="language-python">from Crypto.Util.number import getPrime, bytes_to_long, long_to_bytes
+<h4 id="引用"><a href="#引用-1" class="headerlink" title="引用"></a>引用</h4><p><a target="_blank" rel="noopener" href="https://sekai.team/blog/dice-ctf-2022/blazingfast/">https://sekai.team/blog/dice-ctf-2022/blazingfast/</a></p>
+<h3 id="no-cookies"><a href="#no-cookies" class="headerlink" title="no-cookies"></a>no-cookies</h3><h4 id="题目描述"><a href="#题目描述-2" class="headerlink" title="题目描述"></a>题目描述</h4><p>I found a more secure way to authenticate users. No cookies, no problems!</p>
+<h4 id="解题分析"><a href="#解题分析-1" class="headerlink" title="解题分析"></a>解题分析</h4><p>先审计 <code>adminbot.js</code> ，发现又有我看不懂的代码段。比如 <code>export</code> 语句是干啥的？我在这一篇文章找到了答案：<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/541256d8abb3">export、export default和import用法详解，这一篇就够了 - 简书 (jianshu.com)</a></p>
+<h4 id="引用"><a href="#引用-2" class="headerlink" title="引用"></a>引用</h4><p><strong><a target="_blank" rel="noopener" href="https://blog.bawolff.net/2022/02/write-up-for-dicectf-2022-nocookies.html">https://blog.bawolff.net/2022/02/write-up-for-dicectf-2022-nocookies.html</a></strong></p>
+<h2 id="crypto"><a href="#Crypto" class="headerlink" title="Crypto"></a>Crypto</h2><h3 id="baby-rsa"><a href="#baby-rsa" class="headerlink" title="baby-rsa"></a>baby-rsa</h3><h4 id="题目描述"><a href="#题目描述-3" class="headerlink" title="题目描述"></a>题目描述</h4><h4 id="题目内容"><a href="#题目内容-2" class="headerlink" title="题目内容"></a>题目内容</h4><pre class="line-numbers language-python" data-language="python"><code class="language-python">from Crypto.Util.number import getPrime, bytes_to_long, long_to_bytes
 
 def getAnnoyingPrime(nbits, e):
 	while True:
@@ -813,10 +813,10 @@ print(f&quot;cipher &#x3D; &#123;cipher&#125;&quot;)
 e &#x3D; 17
 cipher &#x3D; 19441066986971115501070184268860318480501957407683654861466353590162062492971<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 
-<h4 id="jie-ti-fen-xi"><a href="#解题分析-2" class="headerlink" title="解题分析"></a>解题分析<a href="#jie-ti-fen-xi" class="header-anchor">#</a></h4><h4 id="yin-yong"><a href="#引用-3" class="headerlink" title="引用"></a>引用<a href="#yin-yong" class="header-anchor">#</a></h4><p><a target="_blank" rel="noopener" href="https://crypto.stackexchange.com/questions/81949/how-to-compute-m-value-from-rsa-if-phin-is-not-relative-prime-with-the-e/81966#81966">https://crypto.stackexchange.com/questions/81949/how-to-compute-m-value-from-rsa-if-phin-is-not-relative-prime-with-the-e/81966#81966</a></p>
+<h4 id="解题分析"><a href="#解题分析-2" class="headerlink" title="解题分析"></a>解题分析</h4><h4 id="引用"><a href="#引用-3" class="headerlink" title="引用"></a>引用</h4><p><a target="_blank" rel="noopener" href="https://crypto.stackexchange.com/questions/81949/how-to-compute-m-value-from-rsa-if-phin-is-not-relative-prime-with-the-e/81966#81966">https://crypto.stackexchange.com/questions/81949/how-to-compute-m-value-from-rsa-if-phin-is-not-relative-prime-with-the-e/81966#81966</a></p>
 <p><a target="_blank" rel="noopener" href="https://eprint.iacr.org/2020/1059.pdf">https://eprint.iacr.org/2020/1059.pdf</a></p>
-<h3 id="commitment-issues"><a href="#Commitment-Issues" class="headerlink" title="Commitment Issues"></a>Commitment Issues<a href="#commitment-issues" class="header-anchor">#</a></h3><h4 id="ti-mu-miao-shu"><a href="#题目描述-4" class="headerlink" title="题目描述"></a>题目描述<a href="#ti-mu-miao-shu" class="header-anchor">#</a></h4><p>I created a new commitment scheme, but commitment is scary so I threw away the key.</p>
-<h4 id="ti-mu-nei-rong"><a href="#题目内容-3" class="headerlink" title="题目内容"></a>题目内容<a href="#ti-mu-nei-rong" class="header-anchor">#</a></h4><pre class="line-numbers language-python" data-language="python"><code class="language-python">from random import randrange
+<h3 id="commitment-issues"><a href="#Commitment-Issues" class="headerlink" title="Commitment Issues"></a>Commitment Issues</h3><h4 id="题目描述"><a href="#题目描述-4" class="headerlink" title="题目描述"></a>题目描述</h4><p>I created a new commitment scheme, but commitment is scary so I threw away the key.</p>
+<h4 id="题目内容"><a href="#题目内容-3" class="headerlink" title="题目内容"></a>题目内容</h4><pre class="line-numbers language-python" data-language="python"><code class="language-python">from random import randrange
 from Crypto.Util.number import getPrime, inverse, bytes_to_long, GCD
 
 flag &#x3D; b&#39;dice&#123;?????????????????????????&#125;&#39;
@@ -855,9 +855,9 @@ print(f&#39;N &#x3D; &#123;hex(N)&#125;&#39;)
 print(f&#39;c1 &#x3D; &#123;hex(c1)&#125;&#39;)
 print(f&#39;c2 &#x3D; &#123;hex(c2)&#125;&#39;)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h4 id="jie-ti-fen-xi"><a href="#解题分析-3" class="headerlink" title="解题分析"></a>解题分析<a href="#jie-ti-fen-xi" class="header-anchor">#</a></h4><p>该挑战基于一个传统的 RSA 签名承诺方案（commitment scheme）。在求解该问题之前，</p>
-<h4 id="yin-yong"><a href="#引用-4" class="headerlink" title="引用"></a>引用<a href="#yin-yong" class="header-anchor">#</a></h4><p><a target="_blank" rel="noopener" href="https://org.anize.rs/dicectf-2022/crypto/commitment_issues%EF%BC%88%E5%BE%88%E8%AF%A6%E7%BB%86%E7%9A%84%E4%B8%80%E4%B8%AA%E8%AE%B2%E8%A7%A3%EF%BC%8C%E8%87%B4%E6%95%AC%EF%BC%81%EF%BC%89">https://org.anize.rs/dicectf-2022/crypto/commitment_issues（很详细的一个讲解，致敬！）</a></p>
-<h3 id="guan-fang-cang-ku-di-zhi"><a href="#官方仓库地址" class="headerlink" title="官方仓库地址"></a>官方仓库地址<a href="#guan-fang-cang-ku-di-zhi" class="header-anchor">#</a></h3><p><a target="_blank" rel="noopener" href="https://github.com/dicegang/dicectf-2022-challenges">https://github.com/dicegang/dicectf-2022-challenges</a></p>
+<h4 id="解题分析"><a href="#解题分析-3" class="headerlink" title="解题分析"></a>解题分析</h4><p>该挑战基于一个传统的 RSA 签名承诺方案（commitment scheme）。在求解该问题之前，</p>
+<h4 id="引用"><a href="#引用-4" class="headerlink" title="引用"></a>引用</h4><p><a target="_blank" rel="noopener" href="https://org.anize.rs/dicectf-2022/crypto/commitment_issues%EF%BC%88%E5%BE%88%E8%AF%A6%E7%BB%86%E7%9A%84%E4%B8%80%E4%B8%AA%E8%AE%B2%E8%A7%A3%EF%BC%8C%E8%87%B4%E6%95%AC%EF%BC%81%EF%BC%89">https://org.anize.rs/dicectf-2022/crypto/commitment_issues（很详细的一个讲解，致敬！）</a></p>
+<h3 id="官方仓库地址"><a href="#官方仓库地址" class="headerlink" title="官方仓库地址"></a>官方仓库地址</h3><p><a target="_blank" rel="noopener" href="https://github.com/dicegang/dicectf-2022-challenges">https://github.com/dicegang/dicectf-2022-challenges</a></p>
 
                 
             </div>

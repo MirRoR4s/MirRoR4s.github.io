@@ -29,7 +29,7 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 6.1.0"></head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 
 
@@ -477,7 +477,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    6 分
+                    5 分
                 </div>
                 
 
@@ -505,8 +505,8 @@
 <p>闲来无事参加的小比赛</p>
 <span id="more"></span>
 
-<h2 id="crypto"><a href="#Crypto" class="headerlink" title="Crypto"></a>Crypto<a href="#crypto" class="header-anchor">#</a></h2><h2 id="a-sheep-jumps-over-fence"><a href="#A-Sheep-Jumps-Over-Fence" class="headerlink" title="A Sheep Jumps Over Fence"></a>A Sheep Jumps Over Fence<a href="#a-sheep-jumps-over-fence" class="header-anchor">#</a></h2><h4 id="ti-mu-miao-shu"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述<a href="#ti-mu-miao-shu" class="header-anchor">#</a></h4><p>I designed an algorithm to encrypt a message. No one can decrypt it without any information about my algorithm.</p>
-<h4 id="jie-ti-bu-zou"><a href="#解题步骤" class="headerlink" title="解题步骤"></a>解题步骤<a href="#jie-ti-bu-zou" class="header-anchor">#</a></h4><pre class="line-numbers language-python" data-language="python"><code class="language-python">from Crypto.Util.number import *
+<h2 id="crypto"><a href="#Crypto" class="headerlink" title="Crypto"></a>Crypto</h2><h2 id="a-sheep-jumps-over-fence"><a href="#A-Sheep-Jumps-Over-Fence" class="headerlink" title="A Sheep Jumps Over Fence"></a>A Sheep Jumps Over Fence</h2><h4 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h4><p>I designed an algorithm to encrypt a message. No one can decrypt it without any information about my algorithm.</p>
+<h4 id="解题步骤"><a href="#解题步骤" class="headerlink" title="解题步骤"></a>解题步骤</h4><pre class="line-numbers language-python" data-language="python"><code class="language-python">from Crypto.Util.number import *
 cipher &#x3D; &#39;56455a7059574e7459584a685a576c756557646f59565637633364765a57647664474e305a48427965584e4464476c6c62584e6c6257463165574e3059574e7a5647687a6247567a5a6d527a636d46796233427366513d3d&#39;
 c &#x3D; bytes.fromhex(cipher)
 print(c)
@@ -515,12 +515,12 @@ print(base64.b64decode(c))<span aria-hidden="true" class="line-numbers-rows"><sp
 
 <p>给了一个十六进制，转成bytes之后发现是base64编码的数据，解码之后得到了一个特别像栅栏加密的东西。送去bugku枚举果然得到了答案。</p>
 <p><img src="/images/TUCTF-2022/image-20221203163158498.png" alt="image-20221203163158498"></p>
-<h2 id="that-one-rsa-challenge"><a href="#That-One-RSA-Challenge" class="headerlink" title="That One RSA Challenge"></a>That One RSA Challenge<a href="#that-one-rsa-challenge" class="header-anchor">#</a></h2><h4 id="ti-mu-miao-shu"><a href="#题目描述-1" class="headerlink" title="题目描述"></a>题目描述<a href="#ti-mu-miao-shu" class="header-anchor">#</a></h4><p>Every CTF needs an RSA challenge, right? This one is pretty easy, but it’s a good warmup for the harder ones.<code>nc chals.tuctf.com 30003</code></p>
-<h4 id="jie-ti-bu-zou"><a href="#解题步骤-1" class="headerlink" title="解题步骤"></a>解题步骤<a href="#jie-ti-bu-zou" class="header-anchor">#</a></h4><p>nc 连接过去之后会给出一系列的公钥和密文，在线分解了一下n发现是不可以的。之后猜测是用多组公钥加密了同一个明文，所以在本地CRT之后再开五次方根求解出来了。</p>
+<h2 id="that-one-rsa-challenge"><a href="#That-One-RSA-Challenge" class="headerlink" title="That One RSA Challenge"></a>That One RSA Challenge</h2><h4 id="题目描述"><a href="#题目描述-1" class="headerlink" title="题目描述"></a>题目描述</h4><p>Every CTF needs an RSA challenge, right? This one is pretty easy, but it’s a good warmup for the harder ones.<code>nc chals.tuctf.com 30003</code></p>
+<h4 id="解题步骤"><a href="#解题步骤-1" class="headerlink" title="解题步骤"></a>解题步骤</h4><p>nc 连接过去之后会给出一系列的公钥和密文，在线分解了一下n发现是不可以的。之后猜测是用多组公钥加密了同一个明文，所以在本地CRT之后再开五次方根求解出来了。</p>
 <p><img src="/images/TUCTF-2022/image-20221203162335971.png" alt="image-20221203162335971"></p>
 <p><img src="/images/TUCTF-2022/image-20221203162513731.png" alt="image-20221203162513731"></p>
 <p><img src="/images/TUCTF-2022/image-20221203162525832.png" alt="image-20221203162525832"></p>
-<h2 id="more-effort"><a href="#More-Effort" class="headerlink" title="More Effort"></a>More Effort<a href="#more-effort" class="header-anchor">#</a></h2><h4 id="ti-mu-miao-shu"><a href="#题目描述-2" class="headerlink" title="题目描述"></a>题目描述<a href="#ti-mu-miao-shu" class="header-anchor">#</a></h4><p>I have designed a revised RSA algorithm which I believe it’s more secure. I am confident you cannot compromise my message with the p value. Meanwhile, it’s time-consuming to complete the encryption. You may need more effort to brute force it as it takes much longer to complete the encryption.</p>
+<h2 id="more-effort"><a href="#More-Effort" class="headerlink" title="More Effort"></a>More Effort</h2><h4 id="题目描述"><a href="#题目描述-2" class="headerlink" title="题目描述"></a>题目描述</h4><p>I have designed a revised RSA algorithm which I believe it’s more secure. I am confident you cannot compromise my message with the p value. Meanwhile, it’s time-consuming to complete the encryption. You may need more effort to brute force it as it takes much longer to complete the encryption.</p>
 <pre class="line-numbers language-python" data-language="python"><code class="language-python">#!&#x2F;usr&#x2F;bin&#x2F;env python3
 # -*- coding: utf-8 -*-
 &quot;&quot;&quot;
@@ -569,7 +569,7 @@ def main():
 if __name__ &#x3D;&#x3D; &quot;__main__&quot;:
 	main()<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h4 id="jie-ti-bu-zou"><a href="#解题步骤-2" class="headerlink" title="解题步骤"></a>解题步骤<a href="#jie-ti-bu-zou" class="header-anchor">#</a></h4><p>素数p已经给定了，似乎我们只要运行一下题目中的算法就可以获取s的值，但是在我的计算机上要花费三个小时。我们可以利用费马小定理来加快运算。由于 p 是一个素数，而 1-1800000000 都和 p 互素，由费马小定理可以知道</p>
+<h4 id="解题步骤"><a href="#解题步骤-2" class="headerlink" title="解题步骤"></a>解题步骤</h4><p>素数p已经给定了，似乎我们只要运行一下题目中的算法就可以获取s的值，但是在我的计算机上要花费三个小时。我们可以利用费马小定理来加快运算。由于 p 是一个素数，而 1-1800000000 都和 p 互素，由费马小定理可以知道</p>
 <p>$i^{p-1}\equiv1\mod,p$，所以 $i^{p-2}\equiv,i^{-1},\mod,p$。所以可以将模幂运算转化为求逆运算，而使用扩展的欧几里得算法的求逆运算是特别快速的，所以我们可以在一分钟之内完成求和从而得到 s。</p>
 <pre class="line-numbers language-python" data-language="python"><code class="language-python">import gmpy2
 from tqdm import tqdm
@@ -593,7 +593,7 @@ print(long_to_bytes(m))<span aria-hidden="true" class="line-numbers-rows"><span>
 
 
 
-<h2 id="unmix-the-flag"><a href="#Unmix-The-Flag" class="headerlink" title="Unmix The Flag"></a>Unmix The <strong>Flag</strong><a href="#unmix-the-flag" class="header-anchor">#</a></h2><h4 id="ti-mu-miao-shu"><a href="#题目描述-3" class="headerlink" title="题目描述"></a>题目描述<a href="#ti-mu-miao-shu" class="header-anchor">#</a></h4><p>Try to find the flag! :) Wait… Here’s the encryption: <code>⠱⠁ ⠹⠣ ⠱⠹ ⠱⠁ ⠹⠣ ⠹⠳ ⠱⠁ ⠹⠣ ⠹⠪ ⠱⠁ ⠹⠣ ⠱⠩ ⠹⠣ ⠱⠩ ⠹⠱ ⠻⠁ ⠫⠩ ⠫⠡ ⠻⠻ ⠹⠣ ⠱⠩ ⠹⠱ ⠻⠁ ⠻⠪ ⠻⠁ ⠻⠱ ⠫⠡ ⠻⠻ ⠫⠡ ⠫⠩</code> Make sure to enclose the message inside the TUCTF{}. Have fun!!</p>
+<h2 id="unmix-the-flag"><a href="#Unmix-The-Flag" class="headerlink" title="Unmix The Flag"></a>Unmix The <strong>Flag</strong></h2><h4 id="题目描述"><a href="#题目描述-3" class="headerlink" title="题目描述"></a>题目描述</h4><p>Try to find the flag! :) Wait… Here’s the encryption: <code>⠱⠁ ⠹⠣ ⠱⠹ ⠱⠁ ⠹⠣ ⠹⠳ ⠱⠁ ⠹⠣ ⠹⠪ ⠱⠁ ⠹⠣ ⠱⠩ ⠹⠣ ⠱⠩ ⠹⠱ ⠻⠁ ⠫⠩ ⠫⠡ ⠻⠻ ⠹⠣ ⠱⠩ ⠹⠱ ⠻⠁ ⠻⠪ ⠻⠁ ⠻⠱ ⠫⠡ ⠻⠻ ⠫⠡ ⠫⠩</code> Make sure to enclose the message inside the TUCTF{}. Have fun!!</p>
 <p>hint：It is GS-8 Braille</p>
 <pre class="line-numbers language-python" data-language="python"><code class="language-python">import string
 
@@ -649,12 +649,12 @@ print(mixed)<span aria-hidden="true" class="line-numbers-rows"><span></span><spa
 
 
 
-<h3 id="two-part-hashing"><a href="#Two-Part-Hashing" class="headerlink" title="Two Part Hashing"></a>Two Part Hashing<a href="#two-part-hashing" class="header-anchor">#</a></h3><h4 id="ti-mu-miao-shu"><a href="#题目描述-4" class="headerlink" title="题目描述"></a>题目描述<a href="#ti-mu-miao-shu" class="header-anchor">#</a></h4><p>Can you find the parts to the hash?</p>
-<h4 id="jie-ti-bu-zou"><a href="#解题步骤-3" class="headerlink" title="解题步骤"></a>解题步骤<a href="#jie-ti-bu-zou" class="header-anchor">#</a></h4><h3 id="play-fair"><a href="#Play-Fair" class="headerlink" title="Play Fair"></a>Play Fair<a href="#play-fair" class="header-anchor">#</a></h3><h4 id="ti-mu-miao-shu"><a href="#题目描述-5" class="headerlink" title="题目描述"></a>题目描述<a href="#ti-mu-miao-shu" class="header-anchor">#</a></h4><p>Something isn’t right with this cipher. Can you help me figure it out? Need a hint? IDK, Don’t ASCII.</p>
-<h2 id="never-ending-crypto-bacon"><a href="#Never-Ending-Crypto-Bacon" class="headerlink" title="Never Ending Crypto - Bacon"></a>Never Ending Crypto - Bacon<a href="#never-ending-crypto-bacon" class="header-anchor">#</a></h2><h4 id="ti-mu-miao-shu"><a href="#题目描述-6" class="headerlink" title="题目描述"></a>题目描述<a href="#ti-mu-miao-shu" class="header-anchor">#</a></h4><p>Might as well solve a never ending stream of crypto challenges while you get that bacon nice and crispy.</p>
-<h2 id="making-the-rounds"><a href="#Making-The-Rounds" class="headerlink" title="Making The Rounds"></a>Making The Rounds<a href="#making-the-rounds" class="header-anchor">#</a></h2><h4 id="ti-mu-miao-shu"><a href="#题目描述-7" class="headerlink" title="题目描述"></a>题目描述<a href="#ti-mu-miao-shu" class="header-anchor">#</a></h4><p>My friend just learned about AES and decided to write his own implementation. He’s not very good at it, though, something about it seems incomplete. Can you help decipher this message he sent me?</p>
+<h3 id="two-part-hashing"><a href="#Two-Part-Hashing" class="headerlink" title="Two Part Hashing"></a>Two Part Hashing</h3><h4 id="题目描述"><a href="#题目描述-4" class="headerlink" title="题目描述"></a>题目描述</h4><p>Can you find the parts to the hash?</p>
+<h4 id="解题步骤"><a href="#解题步骤-3" class="headerlink" title="解题步骤"></a>解题步骤</h4><h3 id="play-fair"><a href="#Play-Fair" class="headerlink" title="Play Fair"></a>Play Fair</h3><h4 id="题目描述"><a href="#题目描述-5" class="headerlink" title="题目描述"></a>题目描述</h4><p>Something isn’t right with this cipher. Can you help me figure it out? Need a hint? IDK, Don’t ASCII.</p>
+<h2 id="never-ending-crypto-bacon"><a href="#Never-Ending-Crypto-Bacon" class="headerlink" title="Never Ending Crypto - Bacon"></a>Never Ending Crypto - Bacon</h2><h4 id="题目描述"><a href="#题目描述-6" class="headerlink" title="题目描述"></a>题目描述</h4><p>Might as well solve a never ending stream of crypto challenges while you get that bacon nice and crispy.</p>
+<h2 id="making-the-rounds"><a href="#Making-The-Rounds" class="headerlink" title="Making The Rounds"></a>Making The Rounds</h2><h4 id="题目描述"><a href="#题目描述-7" class="headerlink" title="题目描述"></a>题目描述</h4><p>My friend just learned about AES and decided to write his own implementation. He’s not very good at it, though, something about it seems incomplete. Can you help decipher this message he sent me?</p>
 <p>Key: 679cc57d79127c6683df3830128c153c<br>IV: 0f0df6d13611737517e3f1b400bf7ee5</p>
-<h2 id="oracle-wizard"><a href="#Oracle-Wizard" class="headerlink" title="Oracle Wizard"></a>Oracle Wizard<a href="#oracle-wizard" class="header-anchor">#</a></h2><h4 id="ti-mu-miao-shu"><a href="#题目描述-8" class="headerlink" title="题目描述"></a>题目描述<a href="#ti-mu-miao-shu" class="header-anchor">#</a></h4><p>If I focus I can see it… Yes! It’s surrounded with curly braces… its so close I can almost make it out… T .. U .. C .. T .. F .. {<code>nc chals.tuctf.com 30004</code></p>
+<h2 id="oracle-wizard"><a href="#Oracle-Wizard" class="headerlink" title="Oracle Wizard"></a>Oracle Wizard</h2><h4 id="题目描述"><a href="#题目描述-8" class="headerlink" title="题目描述"></a>题目描述</h4><p>If I focus I can see it… Yes! It’s surrounded with curly braces… its so close I can almost make it out… T .. U .. C .. T .. F .. {<code>nc chals.tuctf.com 30004</code></p>
 
                 
             </div>

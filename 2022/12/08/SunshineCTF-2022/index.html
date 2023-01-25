@@ -29,7 +29,7 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 6.1.0"></head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 
 
@@ -505,7 +505,7 @@
 <p>SUnshineCTF有一道有趣的分组密码题，我记录下来。</p>
 <span id="more"></span>
 
-<h2 id="crypto"><a href="#Crypto" class="headerlink" title="Crypto"></a>Crypto<a href="#crypto" class="header-anchor">#</a></h2><h3 id="aeschall-mei-you-wan-quan-li-jie"><a href="#AESChall-沒有完全理解" class="headerlink" title="AESChall-沒有完全理解"></a>AESChall-沒有完全理解<a href="#aeschall-mei-you-wan-quan-li-jie" class="header-anchor">#</a></h3><h4 id="ti-mu-miao-shu"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述<a href="#ti-mu-miao-shu" class="header-anchor">#</a></h4><pre class="line-numbers language-python" data-language="python"><code class="language-python">#!&#x2F;usr&#x2F;bin&#x2F;env python
+<h2 id="crypto"><a href="#Crypto" class="headerlink" title="Crypto"></a>Crypto</h2><h3 id="aeschall-沒有完全理解"><a href="#AESChall-沒有完全理解" class="headerlink" title="AESChall-沒有完全理解"></a>AESChall-沒有完全理解</h3><h4 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h4><pre class="line-numbers language-python" data-language="python"><code class="language-python">#!&#x2F;usr&#x2F;bin&#x2F;env python
 
 
 &quot;&quot;&quot;
@@ -746,7 +746,7 @@ if __name__ &#x3D;&#x3D; &quot;__main__&quot;:
 
 
 
-<h4 id="jie-ti-bu-zou"><a href="#解题步骤" class="headerlink" title="解题步骤"></a>解题步骤<a href="#jie-ti-bu-zou" class="header-anchor">#</a></h4><p>这是一个经典的AES加密算法，但是题目用了自己的S盒，这导致AES加密变成了一个仿射密码，所以我们可以用矩阵破解。</p>
+<h4 id="解题步骤"><a href="#解题步骤" class="headerlink" title="解题步骤"></a>解题步骤</h4><p>这是一个经典的AES加密算法，但是题目用了自己的S盒，这导致AES加密变成了一个仿射密码，所以我们可以用矩阵破解。</p>
 <p>代码稍微有点长，要慢慢来看整体的加密过程中数据是如何变换的。进入 <code>encrypt</code> 之后</p>
 <p>1.调用 <code>text2matrix</code>函数将明文转为矩阵形式，具体的操作是用明文的128比特构成一个4*4的状态数组。</p>
 <p>2.调用 <code>add_round_key</code>函数进行轮密钥加，将状态数组中的每个字节和轮密钥进行异或。</p>
@@ -1070,12 +1070,12 @@ print(pt)<span aria-hidden="true" class="line-numbers-rows"><span></span><span><
 
 
 
-<h4 id="wp-lai-yuan"><a href="#WP来源" class="headerlink" title="WP来源"></a>WP来源<a href="#wp-lai-yuan" class="header-anchor">#</a></h4><p><a target="_blank" rel="noopener" href="https://github.com/SunshineCTF/SunshineCTF-2022-Public/blob/master/Crypto/AESChall/writeup.md">https://github.com/SunshineCTF/SunshineCTF-2022-Public/blob/master/Crypto/AESChall/writeup.md</a></p>
+<h4 id="wp来源"><a href="#WP来源" class="headerlink" title="WP来源"></a>WP来源</h4><p><a target="_blank" rel="noopener" href="https://github.com/SunshineCTF/SunshineCTF-2022-Public/blob/master/Crypto/AESChall/writeup.md">https://github.com/SunshineCTF/SunshineCTF-2022-Public/blob/master/Crypto/AESChall/writeup.md</a></p>
 <p><a target="_blank" rel="noopener" href="https://crypto.stackexchange.com/questions/20228/consequences-of-aes-without-any-one-of-its-operations/70107#70107?newreg=8ed3519e28c8457392dd6ae27295b3a3">https://crypto.stackexchange.com/questions/20228/consequences-of-aes-without-any-one-of-its-operations/70107#70107?newreg=8ed3519e28c8457392dd6ae27295b3a3</a></p>
-<h3 id="base128"><a href="#base128" class="headerlink" title="base128"></a>base128<a href="#base128" class="header-anchor">#</a></h3><h4 id="ti-mu-miao-shu"><a href="#题目描述-1" class="headerlink" title="题目描述"></a>题目描述<a href="#ti-mu-miao-shu" class="header-anchor">#</a></h4><p>Our researchers at CoolCryptoGames have been designing a new encoding algorithm for our Korean customers that is just as efficient as plain ol’ text. However, they kind-of forgot how to decode their own algorithm, so can you help them decrypt this so they can patent it?</p>
+<h3 id="base128"><a href="#base128" class="headerlink" title="base128"></a>base128</h3><h4 id="题目描述"><a href="#题目描述-1" class="headerlink" title="题目描述"></a>题目描述</h4><p>Our researchers at CoolCryptoGames have been designing a new encoding algorithm for our Korean customers that is just as efficient as plain ol’ text. However, they kind-of forgot how to decode their own algorithm, so can you help them decrypt this so they can patent it?</p>
 <pre class="line-numbers language-none"><code class="language-none">걳걵걮걻걢갴걳갳걟갱갲갸걟갱갵걟걢갱건걟걲갳걭갴거거갱걮걧걽<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<h4 id="jie-ti-bu-zou"><a href="#解题步骤-1" class="headerlink" title="解题步骤"></a>解题步骤<a href="#jie-ti-bu-zou" class="header-anchor">#</a></h4><h4 id="wp-lai-yuan"><a href="#WP来源-1" class="headerlink" title="WP来源"></a>WP来源<a href="#wp-lai-yuan" class="header-anchor">#</a></h4><p><a target="_blank" rel="noopener" href="https://github.com/SunshineCTF/SunshineCTF-2022-Public/tree/master/Crypto/base128">https://github.com/SunshineCTF/SunshineCTF-2022-Public/tree/master/Crypto/base128</a></p>
+<h4 id="解题步骤"><a href="#解题步骤-1" class="headerlink" title="解题步骤"></a>解题步骤</h4><h4 id="wp来源"><a href="#WP来源-1" class="headerlink" title="WP来源"></a>WP来源</h4><p><a target="_blank" rel="noopener" href="https://github.com/SunshineCTF/SunshineCTF-2022-Public/tree/master/Crypto/base128">https://github.com/SunshineCTF/SunshineCTF-2022-Public/tree/master/Crypto/base128</a></p>
 
                 
             </div>

