@@ -6,9 +6,7 @@
     <meta charset="utf-8">
     <meta name="keywords" content="Java代码审计之XXE, 学习记录">
     <meta name="description" content="
-
 歇息了两天，又回来了。
-
 
 前言进行 xxe 的代码审计之前需要对 xxe 漏洞有一个基本的了解。
 
@@ -17,7 +15,7 @@ Somnus’s blog
 
 环境搭建
 具体可以看官方给出的文档：
-https://r">
+https://ras">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -512,10 +510,8 @@ https://r">
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <!--toc-->
-
 <p>歇息了两天，又回来了。</p>
 <span id="more"></span>
-
 <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>进行 xxe 的代码审计之前需要对 xxe 漏洞有一个基本的了解。</p>
 <blockquote>
 <p>关于 XXE 的相关背景知识可以观看这个链接：</p>
@@ -533,29 +529,27 @@ https://r">
 <p>复制完毕直接运行 Tomcat 发车，然后根据官方文档的指示在浏览器访问特定目录就好啦！</p>
 <p>我下载的是 vulns.war，所以访问如下这个地址。</p>
 <pre class="line-numbers language-http" data-language="http"><code class="language-http">http:&#x2F;&#x2F;127.0.0.1:8080&#x2F;vulns&#x2F;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p><img src="/images/Java%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E4%B9%8BXXE/image-20230127122742469.png" alt="image-20230127122742469"></p>
+<p><img src="/images/Java代码审计之XXE/image-20230127122742469.png" alt="image-20230127122742469"></p>
 <h4 id="idea-创建-web-项目-待更新"><a href="#idea-创建-web-项目-待更新" class="headerlink" title="idea 创建 web 项目-待更新"></a>idea 创建 web 项目-待更新</h4><p>一直想在 idea 里面启动 Tomcat 并访问漏洞环境，但是不知道如何操作，这里先暂时不弄。</p>
 <blockquote>
 <p>idea 创建 web 项目的方式和以前的版本都不一样了，可以看看这篇文章：</p>
 <p><a target="_blank" rel="noopener" href="https://blog.csdn.net/wuqihawubito/article/details/124378124">(IDEA2022创建javaweb项目</a></p>
 </blockquote>
 <p>我的 22.2.2 版本的添加框架支持选项位置如下图</p>
-<p><img src="/images/Java%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E4%B9%8BXXE/image-20230127120357346.png" alt="image-20230127120357346"></p>
+<p><img src="/images/Java代码审计之XXE/image-20230127120357346.png" alt="image-20230127120357346"></p>
 <h3 id="代码审计"><a href="#代码审计" class="headerlink" title="代码审计"></a>代码审计</h3><p>启动 Tomcat 并访问漏洞地址后会发现在 Tomcat 的 webapps 目录下自动生成了漏洞目录（看网上说好像是 Tomcat 会自动解压缩 war 包）</p>
-<p><img src="/images/Java%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E4%B9%8BXXE/image-20230127123101032.png" alt="image-20230127123101032"></p>
+<p><img src="/images/Java代码审计之XXE/image-20230127123101032.png" alt="image-20230127123101032"></p>
 <p>我们访问 vulns 就可以看到源码啦！</p>
 <p>本次针对 xxe 进行一个代码审计，打开 007-xxe.jsp 分析源码。</p>
-<h4 id="007-xxejsp"><a href="#007-xxe-jsp" class="headerlink" title="007-xxe.jsp"></a>007-xxe.jsp</h4><h5 id="漏洞证明"><a href="#漏洞证明" class="headerlink" title="漏洞证明"></a>漏洞证明</h5><p><img src="/images/Java%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E4%B9%8BXXE/image-20230127125104325.png" alt="image-20230127125104325"></p>
-<p><img src="/images/Java%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E4%B9%8BXXE/image-20230127130331218.png" alt="image-20230127130331218"></p>
-<p><img src="/images/Java%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E4%B9%8BXXE/image-20230127125121848.png" alt="image-20230127125121848"></p>
-<p><img src="/images/Java%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E4%B9%8BXXE/image-20230127125157323.png" alt="image-20230127125157323"></p>
+<h4 id="007-xxejsp"><a href="#007-xxe-jsp" class="headerlink" title="007-xxe.jsp"></a>007-xxe.jsp</h4><h5 id="漏洞证明"><a href="#漏洞证明" class="headerlink" title="漏洞证明"></a>漏洞证明</h5><p><img src="/images/Java代码审计之XXE/image-20230127125104325.png" alt="image-20230127125104325"></p>
+<p><img src="/images/Java代码审计之XXE/image-20230127130331218.png" alt="image-20230127130331218"></p>
+<p><img src="/images/Java代码审计之XXE/image-20230127125121848.png" alt="image-20230127125121848"></p>
+<p><img src="/images/Java代码审计之XXE/image-20230127125157323.png" alt="image-20230127125157323"></p>
 <p><code>request.getRequestURL()</code> 是获取到请求的 url 链接，我们这里是 <code>http://127.0.0.1:8080/vulns/007-xxe.jsp</code></p>
 <p>之后拼接上 <code>windows_querystring</code> 这个字符串，该字符串的定义就在源码的开头。</p>
-<p><img src="/images/Java%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E4%B9%8BXXE/image-20230127125315130.png" alt="image-20230127125315130"></p>
+<p><img src="/images/Java代码审计之XXE/image-20230127125315130.png" alt="image-20230127125315130"></p>
 <p>这是我们 xxe 的 payload，将其解码看看：</p>
 <pre class="line-numbers language-xml-dtd" data-language="xml-dtd"><code class="language-xml-dtd">?data&#x3D;&lt;?xml version&#x3D;&quot;1.0&quot; encoding&#x3D;&quot;ISO-8859-1&quot;?&gt;&lt;!DOCTYPE foo [   &lt;!ELEMENT foo ANY &gt;  &lt;!ENTITY xxe SYSTEM &quot;file:&#x2F;&#x2F;&#x2F;c:&#x2F;windows&#x2F;win.ini&quot; &gt;]&gt;&lt;foo&gt;&amp;xxe;&lt;&#x2F;foo&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
 <h5 id="漏洞成因分析"><a href="#漏洞成因分析" class="headerlink" title="漏洞成因分析"></a>漏洞成因分析</h5><pre class="line-numbers language-jsp" data-language="jsp"><code class="language-jsp">String data &#x3D; request.getParameter(&quot;data&quot;);
     String tmp  &#x3D; &quot;&quot;;
 
@@ -573,27 +567,26 @@ https://r">
           out.print(&quot;&lt;&#x2F;pre&gt;&quot;);
   		&#125;
     &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>漏洞成因是该 PoC 使用了 XML 解析接口 <code>javax.xml.parsers.DocumentBuilder</code>，但未禁用外部实体。</p>
 <p>通过查询 Java 文档，可以知道相关类的定义。</p>
 <p>DocumentBuilderFactory 类的定义如下：</p>
-<p><img src="/images/Java%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E4%B9%8BXXE/image-20230127131555568.png" alt="image-20230127131555568"></p>
+<p><img src="/images/Java代码审计之XXE/image-20230127131555568.png" alt="image-20230127131555568"></p>
 <p><code>DocumentBuilderFactor.newInstance()</code> 方法定义如下：</p>
-<p><img src="/images/Java%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E4%B9%8BXXE/image-20230127131815009.png" alt="image-20230127131815009"></p>
+<p><img src="/images/Java代码审计之XXE/image-20230127131815009.png" alt="image-20230127131815009"></p>
 <p>DocumentBuilderFactory 类的 newDocumentBuilder() 方法定义如下：</p>
-<p><img src="/images/Java%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E4%B9%8BXXE/image-20230127131955041.png" alt="image-20230127131955041"></p>
+<p><img src="/images/Java代码审计之XXE/image-20230127131955041.png" alt="image-20230127131955041"></p>
 <p><code>DocumentBuilder</code> 类的定义如下</p>
-<p><img src="/images/Java%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E4%B9%8BXXE/image-20230127132039307.png" alt="image-20230127132039307"></p>
+<p><img src="/images/Java代码审计之XXE/image-20230127132039307.png" alt="image-20230127132039307"></p>
 <p>DocumentBuilder 类的 <code>parse()</code> 方法定义如下:</p>
-<p><img src="/images/Java%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E4%B9%8BXXE/image-20230127132428112.png" alt="image-20230127132428112"></p>
-<p><img src="/images/Java%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E4%B9%8BXXE/image-20230127132315674.png" alt="image-20230127132315674"></p>
+<p><img src="/images/Java代码审计之XXE/image-20230127132428112.png" alt="image-20230127132428112"></p>
+<p><img src="/images/Java代码审计之XXE/image-20230127132315674.png" alt="image-20230127132315674"></p>
 <p>这是一个输入流对象，所以调用的是第一个 parse 方法。这个方法我们传入的参数是 <code>new InputSource(new StringReader(request.getParameter(&quot;data&quot;)))</code>，继续看看这两个实例对象的含义是什么。</p>
 <p>StringReader 类定义如下：</p>
-<p><img src="/images/Java%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E4%B9%8BXXE/image-20230127132525044.png" alt="image-20230127132525044"></p>
-<p><img src="/images/Java%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E4%B9%8BXXE/image-20230127132541791.png" alt="image-20230127132541791"></p>
+<p><img src="/images/Java代码审计之XXE/image-20230127132525044.png" alt="image-20230127132525044"></p>
+<p><img src="/images/Java代码审计之XXE/image-20230127132541791.png" alt="image-20230127132541791"></p>
 <p>InputSource 类定义如下：</p>
-<p><img src="/images/Java%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E4%B9%8BXXE/image-20230127132631066.png" alt="image-20230127132631066"></p>
-<p><img src="/images/Java%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E4%B9%8BXXE/image-20230127132737669.png" alt="image-20230127132737669"></p>
+<p><img src="/images/Java代码审计之XXE/image-20230127132631066.png" alt="image-20230127132631066"></p>
+<p><img src="/images/Java代码审计之XXE/image-20230127132737669.png" alt="image-20230127132737669"></p>
 <p>传入的是一个 Reader 类对象，所以调用第三个构造方法。</p>
 <p>总结一下代码所做的事情：</p>
 <ol>
@@ -605,15 +598,15 @@ https://r">
 </li>
 </ol>
 <p>Java 中的 Document 是一个接口，代表整个 HTML 或 XML 文档。</p>
-<p><img src="/images/Java%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E4%B9%8BXXE/image-20230127133359069.png" alt="image-20230127133359069"></p>
+<p><img src="/images/Java代码审计之XXE/image-20230127133359069.png" alt="image-20230127133359069"></p>
 <p><code>getElementbyTagName()</code> 方法定义如下：</p>
-<p><img src="/images/Java%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E4%B9%8BXXE/image-20230127133446716.png" alt="image-20230127133446716"></p>
+<p><img src="/images/Java代码审计之XXE/image-20230127133446716.png" alt="image-20230127133446716"></p>
 <p>那么 <code>getElementbyTagName(&quot;foo&quot;)</code> 显然就是返回标签名为 foo 的所有元素了，这是一个 NodeList 对象</p>
-<p><img src="/images/Java%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E4%B9%8BXXE/image-20230127133759762.png" alt="image-20230127133759762"></p>
-<p><img src="/images/Java%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E4%B9%8BXXE/image-20230127133817974.png" alt="image-20230127133817974"></p>
-<p><img src="/images/Java%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E4%B9%8BXXE/image-20230127133925930.png" alt="image-20230127133925930"></p>
-<p><img src="/images/Java%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E4%B9%8BXXE/image-20230127133950219.png" alt="image-20230127133950219"></p>
-<p><img src="/images/Java%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E4%B9%8BXXE/image-20230127134023787.png" alt="image-20230127134023787"></p>
+<p><img src="/images/Java代码审计之XXE/image-20230127133759762.png" alt="image-20230127133759762"></p>
+<p><img src="/images/Java代码审计之XXE/image-20230127133817974.png" alt="image-20230127133817974"></p>
+<p><img src="/images/Java代码审计之XXE/image-20230127133925930.png" alt="image-20230127133925930"></p>
+<p><img src="/images/Java代码审计之XXE/image-20230127133950219.png" alt="image-20230127133950219"></p>
+<p><img src="/images/Java代码审计之XXE/image-20230127134023787.png" alt="image-20230127134023787"></p>
 
                 
             </div>
@@ -869,7 +862,6 @@ https://r">
                     <div class="summary block-with-text">
                         
                             
-
 歇息了两天，又回来了。
                         
                     </div>
