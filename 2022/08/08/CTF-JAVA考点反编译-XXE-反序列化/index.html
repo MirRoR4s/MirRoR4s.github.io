@@ -6,15 +6,13 @@
     <meta charset="utf-8">
     <meta name="keywords" content="CTF-JAVA考点反编译&amp;XXE&amp;反序列化, 学习记录">
     <meta name="description" content="
-
 简单学一手java在ctf中常见的题目类型。
-
 
 [TOC]
 
 Java简单逆向解密java反编译，将class文件转为java文件。
 在线网址直接反编译http://www.javadecompilers.com/result
-imp">
+impor">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -469,7 +467,7 @@ imp">
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    2.6k
+                    2.5k
                 </div>
                 
 
@@ -500,10 +498,8 @@ imp">
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <!--toc-->
-
 <p>简单学一手java在ctf中常见的题目类型。</p>
 <span id="more"></span>
-
 <p>[TOC]</p>
 <p><img src="Users\mirror\Desktop\write-up\blog\source\images\1375459-20220117100137072-1064275537.png" alt="img"></p>
 <h3 id="java简单逆向解密"><a href="#Java简单逆向解密" class="headerlink" title="Java简单逆向解密"></a>Java简单逆向解密</h3><p>java反编译，将class文件转为java文件。</p>
@@ -543,15 +539,13 @@ import java.util.Scanner;&#x2F;&#x2F;
         &#125;
     &#125;
 &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>输入flag，随后转字符数组，送到encrypt函数加密。关键点</p>
 <pre class="line-numbers language-Java" data-language="Java"><code class="language-Java">final int result &#x3D; arr[i] + &#39;@&#39; ^ 0x20;
             Resultlist.add(result);
 if (Resultlist.equals(KEYList)) &#123;
             System.out.println(&quot;Congratulations\uff01&quot;);
         &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>KEYList已知，逆着求一下arr[i]。注意到加密过程只是先让flag中的字符加上‘@’，然后跟0x20异或。</p>
+<p>KEYList已知，逆着求一下arr[i]。注意到加密过程只是先让flag中的字符加上’@’，然后跟0x20异或。</p>
 <p>按部就班的写一写，虽然可以几行搞定。</p>
 <pre class="line-numbers language-Java" data-language="Java"><code class="language-Java">public class Main &#123;
 
@@ -569,32 +563,31 @@ if (Resultlist.equals(KEYList)) &#123;
 
     &#125;
 &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <h3 id="roarctf-2019-easy_java-配置到源码"><a href="#RoarCTF-2019-easy-java-配置到源码" class="headerlink" title="RoarCTF-2019-easy_java-配置到源码"></a><strong>RoarCTF-2019-easy_java-配置到源码</strong></h3><p>知识点：下载漏洞利用，配置文件解析，Javaweb项目结构等</p>
 <p><a target="_blank" rel="noopener" href="https://blog.csdn.net/meijory/article/details/53573140">WEB-INF目录与META-INF目录详解_meijory的博客-CSDN博客_meta-inf路径</a></p>
 <p>这个东西是java的web安全目录，客户端访问不了。</p>
 <p>WEB-INF主要包含以下文件或目录:</p>
 <ul>
-<li><p>&#x2F;WEB-INF&#x2F;web.xml：web应用程序配置文件，描述了servlet和其他的应用组件配置及命名规则。</p>
+<li><p>/WEB-INF/web.xml：web应用程序配置文件，描述了servlet和其他的应用组件配置及命名规则。</p>
 </li>
-<li><p>&#x2F;WEB-INF&#x2F;classes&#x2F;：包含了站点所有用的class文件，包括servlet class和非servlet class，他们不能包含在.jar文件中</p>
+<li><p>/WEB-INF/classes/：包含了站点所有用的class文件，包括servlet class和非servlet class，他们不能包含在.jar文件中</p>
 </li>
-<li><p>&#x2F;WEB-INF&#x2F;lib&#x2F;：存放web应用需要的各种JAR文件，放置仅在这个应用中要求使用的jar文件，如数据库驱动jar文件</p>
+<li><p>/WEB-INF/lib/：存放web应用需要的各种JAR文件，放置仅在这个应用中要求使用的jar文件，如数据库驱动jar文件</p>
 </li>
-<li><p>&#x2F;WEB-INF&#x2F;src&#x2F;：源码目录，按照包名结构放置各个java文件。</p>
+<li><p>/WEB-INF/src/：源码目录，按照包名结构放置各个java文件。</p>
 </li>
-<li><p>&#x2F;WEB-INF&#x2F;database.properties：数据库配置文件</p>
+<li><p>/WEB-INF/database.properties：数据库配置文件</p>
 </li>
 </ul>
 <p>漏洞检测以及利用方法：通过找到web.xml文件，推断class文件的路径，最后直接查看或下载class文件，再通过反编译class文件，得到网站源码</p>
 <p>打开题目靶机，进去是一个登陆页面。点击help是一个参数为filename的url链接。</p>
 <p><img src="https://birkenwald.feishu.cn/space/api/box/stream/download/asynccode/?code=NzI1Njc5ZjU2YWZiN2Y1ZDM5YzdlMTMxMjU4YWJmZTFfdVRESVNXaG9ESEJTc3hiVlpCTk05dkNlc0cxdjJMNzBfVG9rZW46Ym94Y25XVlNYRmZMYnBpZnM5SlU0ZzdRNURlXzE2NTk5Mjk2MjE6MTY1OTkzMzIyMV9WNA" alt="img"></p>
 <p>一般这种就尝试任意文件下载或者文件包含。</p>
-<p>根据前面所讲，要找到并下载&#x2F;WEB-INF&#x2F;web.xml，所以传参filename&#x3D;WEB_INF&#x2F;web.xml试试</p>
+<p>根据前面所讲，要找到并下载/WEB-INF/web.xml，所以传参filename=WEB_INF/web.xml试试</p>
 <p>回显文件不存在异常，更换请求方法，用POST之后成功下载,打开之后发现如下信息。</p>
 <p><img src="Users\mirror\Desktop\write-up\blog\source\images\16599296234691.png" alt="img"></p>
 <p><code>servlet-class</code>字样就是我们要下载的class文件</p>
-<p>利用任意文件下载漏洞传参filename &#x3D; WEB-INF&#x2F;classes&#x2F;com&#x2F;wm&#x2F;ctf&#x2F;FlagController.class</p>
+<p>利用任意文件下载漏洞传参filename = WEB-INF/classes/com/wm/ctf/FlagController.class</p>
 <p>下载之后反编译得到java文件，阅读源代码。<a target="_blank" rel="noopener" href="http://www.javadecompilers.com/result">在线反编译java文件</a></p>
 <pre class="line-numbers language-Java" data-language="Java"><code class="language-Java">import java.io.IOException;
 import javax.servlet.ServletException;
@@ -616,11 +609,9 @@ public class FlagController extends HttpServlet
         httpServletResponse.getWriter().print(&quot;&lt;h1&gt;Flag is nearby ~ Come on! ! !&lt;&#x2F;h1&gt;&quot;);
     &#125;
 &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>base64解码拿到flag#flag{65e3b311-2da4-4404-bdad-3e7e0bc81a93}</p>
 <h3 id="网鼎杯2020-青龙组-filejava"><a href="#网鼎杯2020-青龙组-filejava" class="headerlink" title="网鼎杯2020-青龙组-filejava"></a>网鼎杯2020-青龙组-filejava</h3><p>题目链接：</p>
 <pre class="line-numbers language-none"><code class="language-none">https:&#x2F;&#x2F;buuoj.cn&#x2F;challenges#[%E7%BD%91%E9%BC%8E%E6%9D%AF%202020%20%E9%9D%92%E9%BE%99%E7%BB%84]filejava<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
 <p>重头戏，这题考点是java反编译+java的XXE。是一个14年的CVE！</p>
 <p><a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/7272">一篇文章读懂Java代码审计之XXE - 先知社区</a>(好文章，清晰易懂还有图示)</p>
 <p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/73cd11d83c30">Apache POI XML外部实体（XML External Entity，XXE）攻击详解</a></p>
@@ -637,7 +628,6 @@ public class FlagController extends HttpServlet
 <pre class="line-numbers language-java" data-language="java"><code class="language-java">&lt;servlet-class&gt;cn.abc.servlet.DownloadServlet&lt;&#x2F;servlet-class&gt;
 &lt;servlet-class&gt;cn.abc.servlet.ListFileServlet&lt;&#x2F;servlet-class&gt;
 &lt;servlet-class&gt;cn.abc.servlet.UploadServlet&lt;&#x2F;servlet-class&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-
 <p>直接下载对应的class文件然后反编译。<br>反编译DownloadServlet.class，主要功能就是实现了文件下载，其中文件名做了过滤不能包含flag</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java">&#x2F;&#x2F; 
 &#x2F;&#x2F; Decompiled by Procyon v0.5.36
@@ -707,7 +697,6 @@ public class DownloadServlet extends HttpServlet
         return dir3;
     &#125;
 &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>反编译WEB-INF_classes_cn_abc_servlet_ListFileServlet.class </p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java">&#x2F;&#x2F; 
 &#x2F;&#x2F; Decompiled by Procyon v0.5.36
@@ -746,7 +735,6 @@ public class ListFileServlet extends HttpServlet
         request.getRequestDispatcher(&quot;&#x2F;listfile.jsp&quot;).forward((ServletRequest)request, (ServletResponse)response);
     &#125;
 &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>反编译最后一个</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java">&#x2F;&#x2F; 
 &#x2F;&#x2F; Decompiled by Procyon v0.5.36
@@ -870,7 +858,6 @@ public class UploadServlet extends HttpServlet
         return dir3;
     &#125;
 &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 
                 
             </div>
@@ -1162,7 +1149,6 @@ public class UploadServlet extends HttpServlet
                     <div class="summary block-with-text">
                         
                             
-
 hhh，玩一下这个七夕杯
                         
                     </div>
@@ -1241,7 +1227,7 @@ hhh，玩一下这个七夕杯
             contentSelector: '#articleContent',
             headingsOffset: -($(window).height() * 0.4 - 45),
             collapseDepth: Number('0'),
-            headingSelector: 'h2, h3, h4'
+            headingSelector: 'h2, h3, h4,h5'
         });
 
         // modify the toc link href to support Chinese.
@@ -1253,7 +1239,7 @@ hhh，玩一下这个七夕杯
 
         // modify the heading title id to support Chinese.
         i = 0;
-        $('#articleContent').children('h2, h3, h4').each(function () {
+        $('#articleContent').children('h2, h3, h4,h5').each(function () {
             $(this).attr('id', tocHeading + (++i));
         });
 
@@ -1382,7 +1368,7 @@ hhh，玩一下这个七夕杯
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">267.7k</span>
+                        class="white-color">259.5k</span>
             
             
             

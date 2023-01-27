@@ -6,16 +6,14 @@
     <meta charset="utf-8">
     <meta name="keywords" content="InfoSec-CTF-2022, 学习记录">
     <meta name="description" content="
-
 速速复现
-
 
 Cryptofactorization_O(1)题目描述from Crypto.Util.number import getPrime, GCD, bytes_to_long
 
 
 class RSA:
 
-    def _">
+    def __i">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -510,10 +508,8 @@ class RSA:
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <!--toc-->
-
 <p>速速复现</p>
 <span id="more"></span>
-
 <h2 id="crypto"><a href="#Crypto" class="headerlink" title="Crypto"></a>Crypto</h2><h2 id="factorization_o1"><a href="#factorization-O-1" class="headerlink" title="factorization_O(1)"></a>factorization_O(1)</h2><h4 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h4><pre class="line-numbers language-python" data-language="python"><code class="language-python">from Crypto.Util.number import getPrime, GCD, bytes_to_long
 
 
@@ -546,7 +542,6 @@ with open(&#39;task.txt&#39;, &#39;w&#39;) as f:
 
 
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <h4 id="解题步骤"><a href="#解题步骤" class="headerlink" title="解题步骤"></a>解题步骤</h4><p>普通 RSA 解密，在 factordb查询一下就好。</p>
 <pre class="line-numbers language-python" data-language="python"><code class="language-python">from Crypto.Util.number import *
 e &#x3D; 0x10001
@@ -564,7 +559,6 @@ m &#x3D; pow(ct,d,n)
 
 print(long_to_bytes(m))
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <h2 id="vernam"><a href="#Vernam" class="headerlink" title="Vernam"></a>Vernam</h2><h4 id="题目描述"><a href="#题目描述-1" class="headerlink" title="题目描述"></a>题目描述</h4><pre class="line-numbers language-python" data-language="python"><code class="language-python">import secrets
 
 flag &#x3D; b&#39;flag&#123;******************************************************&#125;&#39;
@@ -575,7 +569,6 @@ with open(&#39;task.txt&#39;, &#39;w&#39;) as f:
     shift_flag &#x3D; flag[-6:] + flag[:-6]
     f.write(&#39;&#39;.join(f&#39;&#123;((shift_flag[i] + key[i]) % 256):02x&#125;&#39; for i in range(len(flag))) + &#39;\n&#39;)
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <h4 id="解题步骤"><a href="#解题步骤-1" class="headerlink" title="解题步骤"></a>解题步骤</h4><p>已知flag的前五位是 <code>flag&#123;</code>，可以利用已知明文攻击获得密钥的前五个字节。然后我们爆破密钥的第六个字节（共有256种可能），这样就得到了密钥的前六个字节。然后我们根据明文的第六个到第十一个字节是和密钥的前六个字节异或的特点可以恢复明文的六到十一个字节。恢复这部分明文之后同理就可以拿到密钥的六到十一字节。</p>
 <pre class="line-numbers language-python" data-language="python"><code class="language-python">part_flag &#x3D; b&#39;flag&#123;&#39;
 
@@ -592,7 +585,6 @@ with open(&#39;..&#x2F;task&#x2F;task.txt&#39;, &#39;-r&#39;) as f:
         if flag[-1] &#x3D;&#x3D; int.from_bytes(b&#39;&#125;&#39;, &#39;big&#39;):
             print(bytes(flag))
             break<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <h3 id="qr-code"><a href="#QR-code" class="headerlink" title="QR code"></a>QR code</h3><h4 id="题目描述"><a href="#题目描述-2" class="headerlink" title="题目描述"></a>题目描述</h4><p><strong>Crypto</strong></p>
 <p>Alice decided to send Bob a QR code. To do this, she generated a key using a physical random number generator, the length of which did not exceed 50,000 bytes. Next, she performed a byte-by-byte xor operation of QR code with a repeating key. Can you recover the QR code?</p>
 <h4 id="解题步骤"><a href="#解题步骤-2" class="headerlink" title="解题步骤"></a>解题步骤</h4><ol>
@@ -619,8 +611,7 @@ for key_len in range(2, 50001):
         find_key &#x3D; xor(encrypt_data[-last_part_len - key_len:-last_part_len], [0xFF])
         with open(&#39;decrypt_qr_&#39; + str(key_len) + &#39;.bmp&#39;, &#39;wb&#39;) as f:
             f.write(bytearray(xor(encrypt_data, find_key)))<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h4 id="wp来源"><a href="#WP来源" class="headerlink" title="WP来源"></a>WP来源</h4><p><a target="_blank" rel="noopener" href="https://github.com/infoseccomm/InfoSec-CTFs/blob/main/2022/Crypto/qr_code_xor/writeup/writeup.md">InfoSec-CTFs&#x2F;writeup.md at main · infoseccomm&#x2F;InfoSec-CTFs (github.com)</a></p>
+<h4 id="wp来源"><a href="#WP来源" class="headerlink" title="WP来源"></a>WP来源</h4><p><a target="_blank" rel="noopener" href="https://github.com/infoseccomm/InfoSec-CTFs/blob/main/2022/Crypto/qr_code_xor/writeup/writeup.md">InfoSec-CTFs/writeup.md at main · infoseccomm/InfoSec-CTFs (github.com)</a></p>
 <h2 id="never-gets-old-frank-reiter相关消息攻击"><a href="#Never-gets-old-Frank-Reiter相关消息攻击" class="headerlink" title="Never gets old   Frank-Reiter相关消息攻击"></a>Never gets old   Frank-Reiter相关消息攻击</h2><h4 id="题目描述"><a href="#题目描述-3" class="headerlink" title="题目描述"></a>题目描述</h4><p>Look, this server constantly outputs encrypted information. Are you able to decrypt it?</p>
 <pre class="line-numbers language-python" data-language="python"><code class="language-python">from Crypto.Util.number import bytes_to_long 
 from flag import flag
@@ -663,7 +654,6 @@ while True:
     ThreadCount +&#x3D; 1
     print(&#39;Thread Number: &#39; + str(ThreadCount))
 ServerSideSocket.close()<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <h4 id="解题步骤"><a href="#解题步骤-3" class="headerlink" title="解题步骤"></a>解题步骤</h4><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/lincappu/p/14657195.html">python arrow库详解 - lincappu - 博客园 (cnblogs.com)</a></p>
 <p><img src="/images/InfoSec-CTF-2022/image-20221204222100878.png" alt="image-20221204222100878"></p>
 <p><img src="/images/InfoSec-CTF-2022/image-20221204222202693.png" alt="image-20221204222202693"></p>
@@ -699,9 +689,6 @@ m1 &#x3D; get_plain(c1,c2)
 flag &#x3D; m1 - time1
 
 print (long_to_bytes(int(flag)))<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
 <h2 id="love-and-matrices"><a href="#Love-and-Matrices" class="headerlink" title="Love and Matrices"></a>Love and Matrices</h2><h4 id="题目描述"><a href="#题目描述-4" class="headerlink" title="题目描述"></a>题目描述</h4><p>Will matrices help to encrypt the flag properly?</p>
 <pre class="line-numbers language-none"><code class="language-none">import numpy
 from flag import flag
@@ -736,10 +723,7 @@ def encrypt(flag):
 
 encrypted &#x3D; encrypt(flag)
 numpy.save(&#39;enc.npy&#39;, encrypted)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
-<h4 id="解题步骤"><a href="#解题步骤-4" class="headerlink" title="解题步骤"></a>解题步骤</h4><p>这其实是一个超级简单的问题，仅仅需要一点点线性代数的知识就可以做出来。设 三个非奇异矩阵 X，Y，Z，其中 Z的行列式值为1且 Y &#x3D; X * Z 。根据相关知识可以知道 Z的行列式值等于 X的行列式值乘以 Y 的行列式值。想具体的了解可以看这篇文章：<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/297827171">矩阵乘积的行列式等于行列式的乘积 |AB|&#x3D;|A||B| - 知乎 (zhihu.com)</a></p>
+<h4 id="解题步骤"><a href="#解题步骤-4" class="headerlink" title="解题步骤"></a>解题步骤</h4><p>这其实是一个超级简单的问题，仅仅需要一点点线性代数的知识就可以做出来。设 三个非奇异矩阵 X，Y，Z，其中 Z的行列式值为1且 Y = X * Z 。根据相关知识可以知道 Z的行列式值等于 X的行列式值乘以 Y 的行列式值。想具体的了解可以看这篇文章：<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/297827171">矩阵乘积的行列式等于行列式的乘积 |AB|=|A||B| - 知乎 (zhihu.com)</a></p>
 <p>题目中恰好就生成了一个行列式值为 1  的 32 行 32 列的矩阵 Z，相关函数的定义在sage文档里写了：</p>
 <p><a target="_blank" rel="noopener" href="https://doc.sagemath.org/html/en/reference/matrices/sage/matrix/special.html#sage.matrix.special.random_matrix">https://doc.sagemath.org/html/en/reference/matrices/sage/matrix/special.html#sage.matrix.special.random_matrix</a></p>
 <p>题目告诉我们如果 flag 的当前比特是 1，就让 X 乘以 Z 并赋值给 Y。根据上述知识可以知道当 X 和 Y 的行列式值相等的时候，我们就可以认定 X 乘以了 Z 并认为flag 当前比特是 1。那如果 X 和 Y的行列式值在不乘以Z的也相等呢？这种情况发生的概率很低，因为随机生成两个32行32列的矩阵，其行列式值一般都是不等的。</p>
@@ -777,20 +761,15 @@ flag &#x3D; convert_from_bits(flag_bits)
 
 print (flag)
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
-
-
-<h2 id="evil_fibonacci"><a href="#evil-fibonacci" class="headerlink" title="evil_fibonacci"></a>evil_fibonacci</h2><h4 id="题目描述"><a href="#题目描述-5" class="headerlink" title="题目描述"></a>题目描述</h4><h4 id="解题步骤"><a href="#解题步骤-5" class="headerlink" title="解题步骤"></a>解题步骤</h4><p>密钥是斐波那契数列的第N项。希望找到一个在具有p个元素的有限域上的多项式 $f_n$，使得 $f_n$ 和斐波那契数列的项具有某些关系。可以如下定义一个多项式 ：$f_n(x) &#x3D; a_n + b_n * x$，也就是 $x^{n+1}$ 除以 $x^2-x-1$ 的余数，系数运算模p。我们发现：</p>
-<p>$f_0(x) &#x3D; 0 + 1 * x$</p>
-<p>$f_1(x) &#x3D; 1 + 1 * x$</p>
-<p>$f_2(x) &#x3D; 1 + 2 * x$</p>
-<p>$f_3(x) &#x3D; 2 + 3 * x$</p>
-<p>可以发现当 $n&gt;&#x3D;1$，我们有如下公式：</p>
-<p>$f_n(x)&#x3D;x*f_{n-1}(x),mod,(x^2-x-1)&#x3D;b_{n-1}+(a_{n-1}+b_{n-1},mod,p)*x$</p>
-<p>这就表明 $a_n&#x3D;F_n,b_n&#x3D;F_{n+1}$ ，$F_i$ 是斐波那契数列的第 i 项。</p>
-<p>所以 求 $F_n$ 即是 求 $a_n$，也就是要求 $f_{n}&#x3D;x^{n+1},mod,(x^2-x-1)$。</p>
+<h2 id="evil_fibonacci"><a href="#evil-fibonacci" class="headerlink" title="evil_fibonacci"></a>evil_fibonacci</h2><h4 id="题目描述"><a href="#题目描述-5" class="headerlink" title="题目描述"></a>题目描述</h4><h4 id="解题步骤"><a href="#解题步骤-5" class="headerlink" title="解题步骤"></a>解题步骤</h4><p>密钥是斐波那契数列的第N项。希望找到一个在具有p个元素的有限域上的多项式 $f_n$，使得 $f_n$ 和斐波那契数列的项具有某些关系。可以如下定义一个多项式 ：$f_n(x) = a_n + b_n * x$，也就是 $x^{n+1}$ 除以 $x^2-x-1$ 的余数，系数运算模p。我们发现：</p>
+<p>$f_0(x) = 0 + 1 * x$</p>
+<p>$f_1(x) = 1 + 1 * x$</p>
+<p>$f_2(x) = 1 + 2 * x$</p>
+<p>$f_3(x) = 2 + 3 * x$</p>
+<p>可以发现当 $n&gt;=1$，我们有如下公式：</p>
+<p>$f<em>n(x)=x*f</em>{n-1}(x)\,mod\,(x^2-x-1)=b<em>{n-1}+(a</em>{n-1}+b_{n-1}\,mod\,p)*x$</p>
+<p>这就表明 $a<em>n=F_n,b_n=F</em>{n+1}$ ，$F_i$ 是斐波那契数列的第 i 项。</p>
+<p>所以 求 $F<em>n$ 即是 求 $a_n$，也就是要求 $f</em>{n}=x^{n+1}\,mod\,(x^2-x-1)$。</p>
 <pre class="line-numbers language-python" data-language="python"><code class="language-python">from Crypto.Cipher import AES
 from Crypto.Hash import SHA256
 
@@ -808,9 +787,6 @@ fib &#x3D; str(y^(N + 1)).split(&#39; + &#39;)[-1]
 key &#x3D; SHA256.new(fib.encode()).digest()
 aes &#x3D; AES.new(key, AES.MODE_CTR, nonce&#x3D;iv)
 print(aes.decrypt(ct))<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
 <h2 id="zero_hash"><a href="#zero-hash" class="headerlink" title="zero_hash"></a>zero_hash</h2><h4 id="题目描述"><a href="#题目描述-6" class="headerlink" title="题目描述"></a>题目描述</h4><pre class="line-numbers language-python" data-language="python"><code class="language-python">from Crypto.Cipher import AES
 from Crypto.Hash import SHA256
 from Crypto.Util.number import bytes_to_long
@@ -847,7 +823,6 @@ with open(&#39;task.txt&#39;, &#39;w&#39;) as f:
     f.write(aes.encrypt(flag).hex() + &#39;\n&#39;)
     f.write(aes.nonce.hex() + &#39;\n&#39;)
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <h4 id="wp来源"><a href="#WP来源-1" class="headerlink" title="WP来源"></a>WP来源</h4><p><a target="_blank" rel="noopener" href="https://github.com/infoseccomm/InfoSec-CTFs/blob/main/2022/Crypto/zero_hash/writeup/writeup.md">https://github.com/infoseccomm/InfoSec-CTFs/blob/main/2022/Crypto/zero_hash/writeup/writeup.md</a></p>
 <h2 id="double_g-中途相遇攻击"><a href="#double-G-中途相遇攻击" class="headerlink" title="double_G  中途相遇攻击"></a>double_G  中途相遇攻击</h2><h4 id="题目描述"><a href="#题目描述-7" class="headerlink" title="题目描述"></a>题目描述</h4><pre class="line-numbers language-python" data-language="python"><code class="language-python">from Crypto.Cipher import AES
 from Crypto.Hash import SHA256
@@ -913,7 +888,6 @@ if __name__ &#x3D;&#x3D; &#39;__main__&#39;:
         f.write(pt_str + &#39;\n&#39;)
         f.write(ct_str + &#39;\n&#39;)
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <h4 id="解题步骤"><a href="#解题步骤-6" class="headerlink" title="解题步骤"></a>解题步骤</h4><p>很典型的中途相遇攻击的模型，之所以可以尝试这个操作是因为两个密钥都只有 28 比特（和 0xFFFFFFF相与了）</p>
 <p>相关知识：<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Meet-in-the-middle_attack">https://en.wikipedia.org/wiki/Meet-in-the-middle_attack</a></p>
 <p>预期在 $2^{29}$ 的时间内可以找到符合预期的密钥对。使用 C++ 花费了10分钟的时间..</p>
@@ -1005,7 +979,6 @@ int main ()
     cout &lt;&lt; &quot;Done!&quot; &lt;&lt; endl;
     return 0;
 &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>找到密钥对之后加上盐值求哈希值作为 AES 的密钥去解密 flag。</p>
 <pre class="line-numbers language-python" data-language="python"><code class="language-python">from Crypto.Cipher import AES
 from Crypto.Hash import SHA256
@@ -1024,9 +997,6 @@ for key2 in key2_ls:
     if pt.startswith(b&#39;flag&#123;&#39;):
         print(pt)
         break<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
 <h4 id="wp来源"><a href="#WP来源-2" class="headerlink" title="WP来源"></a>WP来源</h4><p><a target="_blank" rel="noopener" href="https://github.com/infoseccomm/InfoSec-CTFs/blob/main/2022/Crypto/double_G/writeup/writeup.md">https://github.com/infoseccomm/InfoSec-CTFs/blob/main/2022/Crypto/double_G/writeup/writeup.md</a></p>
 
                 
@@ -1282,7 +1252,6 @@ for key2 in key2_ls:
                     <div class="summary block-with-text">
                         
                             
-
 速速复现
                         
                     </div>
@@ -1333,7 +1302,6 @@ for key2 in key2_ls:
                     <div class="summary block-with-text">
                         
                             
-
 继续加油
                         
                     </div>
@@ -1416,7 +1384,7 @@ for key2 in key2_ls:
             contentSelector: '#articleContent',
             headingsOffset: -($(window).height() * 0.4 - 45),
             collapseDepth: Number('0'),
-            headingSelector: 'h2, h3, h4'
+            headingSelector: 'h2, h3, h4,h5'
         });
 
         // modify the toc link href to support Chinese.
@@ -1428,7 +1396,7 @@ for key2 in key2_ls:
 
         // modify the heading title id to support Chinese.
         i = 0;
-        $('#articleContent').children('h2, h3, h4').each(function () {
+        $('#articleContent').children('h2, h3, h4,h5').each(function () {
             $(this).attr('id', tocHeading + (++i));
         });
 
@@ -1557,7 +1525,7 @@ for key2 in key2_ls:
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">267.7k</span>
+                        class="white-color">259.5k</span>
             
             
             

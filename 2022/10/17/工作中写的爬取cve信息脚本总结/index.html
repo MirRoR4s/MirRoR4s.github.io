@@ -6,12 +6,10 @@
     <meta charset="utf-8">
     <meta name="keywords" content="工作中写的爬取cve信息脚本总结, 学习记录">
     <meta name="description" content="
-
 这是一个关于书写爬取cve信息脚本的总结
 
-
 思考初始编写的时候以为只是一个临时所用脚本，没有想到后续要求越来越多。以至于在我改动的时候总是牵一发而动全身，代码之间的耦合太强了，所以要想办法使得各个模块之间变得独立一些。
-经过我的思考，">
+经过我的思考，打算">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -506,10 +504,8 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <!--toc-->
-
 <p>这是一个关于书写爬取cve信息脚本的总结</p>
 <span id="more"></span>
-
 <h4 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h4><p>初始编写的时候以为只是一个临时所用脚本，没有想到后续要求越来越多。以至于在我改动的时候总是牵一发而动全身，代码之间的耦合太强了，所以要想办法使得各个模块之间变得独立一些。</p>
 <p>经过我的思考，打算先将get_cve_10这个得到10月份cve信息的大函数抽象成一个类，大函数里面各种子函数为该类的方法。</p>
 <h4 id="记录"><a href="#记录" class="headerlink" title="记录"></a>记录</h4><p>改造完毕之后有四个py文件</p>
@@ -563,7 +559,6 @@ if __name__ &#x3D;&#x3D; &quot;__main__&quot;:
 
 
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>该脚本是程序的入口点，从这里开始执行。使用方法已在脚本中给出。</p>
 <h5 id="spinder"><a href="#spinder" class="headerlink" title="spinder"></a>spinder</h5><pre class="line-numbers language-python" data-language="python"><code class="language-python">import xlsxwriter
 from bs4 import BeautifulSoup
@@ -697,7 +692,6 @@ class Spider:
          email.send(send_file,&#39;application&#x2F;zip&#39;,&#39;attachment;filename&#x3D;&quot;&#123;&#125;.xlsx&quot;&#39;.format(target))
 
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>该脚本主要负责设置xlsx文档的格式，以及调用solve脚本中的各种类方法进行爬虫。</p>
 <h5 id="solve"><a href="#solve" class="headerlink" title="solve"></a>solve</h5><pre class="line-numbers language-python" data-language="python"><code class="language-python">import requests
 import json
@@ -883,7 +877,6 @@ class ControlOutputFormat:
                 self.worksheet.write(self.dic[i] + self.row, str(html.unescape(ans[i])))
             return self.flag
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>该脚本由Req、parse、ControlOutputFormat类组成。Req负责发起爬虫请求。parse负责对请求之后的数据进行解析，最后由ControlOutputFormat对解析之后的数据进行输出的判断（匹配公司组件才输出）</p>
 <h5 id="send_email"><a href="#send-email" class="headerlink" title="send_email"></a>send_email</h5><pre class="line-numbers language-python" data-language="python"><code class="language-python">import smtplib
 from email.mime.text import MIMEText
@@ -976,7 +969,6 @@ email &#x3D; SendEmail(smtpserver,user,password,sender,receive,subject,content)
 # HTML邮件正文
 
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>该脚本主要由SendEmail类组成，负责自动发送邮箱。</p>
 
                 
@@ -1232,7 +1224,6 @@ email &#x3D; SendEmail(smtpserver,user,password,sender,receive,subject,content)
                     <div class="summary block-with-text">
                         
                             
-
 我心血来潮忽然觉得不是很理解jvm的相关概念和知识，于是打算书写这篇文章做一个汇总。
                         
                     </div>
@@ -1283,7 +1274,6 @@ email &#x3D; SendEmail(smtpserver,user,password,sender,receive,subject,content)
                     <div class="summary block-with-text">
                         
                             
-
 刚刚举行完的ASISCTF的赛后复现，WEB篇。
                         
                     </div>
@@ -1366,7 +1356,7 @@ email &#x3D; SendEmail(smtpserver,user,password,sender,receive,subject,content)
             contentSelector: '#articleContent',
             headingsOffset: -($(window).height() * 0.4 - 45),
             collapseDepth: Number('0'),
-            headingSelector: 'h2, h3, h4'
+            headingSelector: 'h2, h3, h4,h5'
         });
 
         // modify the toc link href to support Chinese.
@@ -1378,7 +1368,7 @@ email &#x3D; SendEmail(smtpserver,user,password,sender,receive,subject,content)
 
         // modify the heading title id to support Chinese.
         i = 0;
-        $('#articleContent').children('h2, h3, h4').each(function () {
+        $('#articleContent').children('h2, h3, h4,h5').each(function () {
             $(this).attr('id', tocHeading + (++i));
         });
 
@@ -1507,7 +1497,7 @@ email &#x3D; SendEmail(smtpserver,user,password,sender,receive,subject,content)
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">267.7k</span>
+                        class="white-color">259.5k</span>
             
             
             

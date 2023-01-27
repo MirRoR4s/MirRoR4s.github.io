@@ -6,11 +6,9 @@
     <meta charset="utf-8">
     <meta name="keywords" content="ångstromCTF 2022, 学习记录">
     <meta name="description" content="
-
 记得这是国赛前的最后一个校队比赛，过了这么久但是我还是没有变强太多。还是建议多看书…
 
-
-CRYPTOCaesar and Desister-移位密码题目描述After making dumb jokes about cryptogra">
+CRYPTOCaesar and Desister-移位密码题目描述After making dumb jokes about cryptograph">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -496,10 +494,8 @@ CRYPTOCaesar and Desister-移位密码题目描述After making dumb jokes about 
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <!--toc-->
-
 <p>记得这是国赛前的最后一个校队比赛，过了这么久但是我还是没有变强太多。还是建议多看书…</p>
 <span id="more"></span>
-
 <h2 id="crypto"><a href="#CRYPTO" class="headerlink" title="CRYPTO"></a>CRYPTO</h2><h3 id="caesar-and-desister-移位密码"><a href="#Caesar-and-Desister-移位密码" class="headerlink" title="Caesar and Desister-移位密码"></a><strong>Caesar and Desister</strong>-移位密码</h3><h4 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h4><p>After making dumb jokes about cryptography to all his classmates, clam got a cease and desist filed against him! When questioned in court, his only comment was “clam’s confounding Caesar cipher creates confusing cryptographic challenges.” Needless to say, the judge wasn’t very happy. Clam was sentenced to 5 years of making dumb Caesar cipher challenges. Here’s one of them: <code>sulx&#123;klgh_jayzl_lzwjw_ujqhlgyjshzwj_kume&#125;</code>.</p>
 <p>提示：There are only 26 possible Caesar ciphers. It’s not hard to try all of them.</p>
 <h4 id="题目内容"><a href="#题目内容" class="headerlink" title="题目内容"></a>题目内容</h4><h4 id="题目分析"><a href="#题目分析" class="headerlink" title="题目分析"></a>题目分析</h4><p>简单的移位密码，随便找个<a target="_blank" rel="noopener" href="https://ctf.bugku.com/tool/caesar">网站</a>解密就可。</p>
@@ -519,7 +515,6 @@ print(&quot;e &#x3D;&quot;,e)
 print(&quot;c &#x3D;&quot;,c)
 print(&quot;phi &#x3D;&quot;,(p-1)*(q-1))
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <h4 id="题目分析"><a href="#题目分析-1" class="headerlink" title="题目分析"></a>题目分析</h4><p>RSA 签到题，已经告知 phi，把私钥 d 计算出来即可。</p>
 <h4 id="解题脚本"><a href="#解题脚本-1" class="headerlink" title="解题脚本"></a>解题脚本</h4><pre class="line-numbers language-python" data-language="python"><code class="language-python">import Crypto.Util.number
 
@@ -533,9 +528,6 @@ m &#x3D; pow(c,d,n)
 print(Crypto.Util.number.long_to_bytes(m))
 #b&#39;actf&#123;just_kidding_this_algorithm_wasnt_actually_randomly_sampled&#125;&#39;
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
 <h3 id="vinegar-factory-凯撒移位密码"><a href="#Vinegar-Factory-凯撒移位密码" class="headerlink" title="Vinegar Factory-凯撒移位密码"></a><strong>Vinegar Factory</strong>-凯撒移位密码</h3><h4 id="题目描述"><a href="#题目描述-2" class="headerlink" title="题目描述"></a>题目描述</h4><p>Clam managed to get parole for his dumb cryptography jokes, but after making yet another dumb joke on his way out of the courtroom, he was sent straight back in. This time, he was sentenced to 5 years of making dumb Vigenere challenges. Clam, fed up with the monotony of challenge writing, made a program to do it for him. Can you solve enough challenges to get the flag?</p>
 <p>Connect to the challenge at <code>nc challs.actf.co 31333</code>. <a target="_blank" rel="noopener" href="https://files.actf.co/49eff279036cd18b8f356790d5ed9ac0c76633a9280d1584ebda666ad3eda0b2/main.py">Source</a></p>
 <p>Hint：You’ll have to script the solution since the server has a 20 second timeout. pwntools is very helpful for scripting IO.</p>
@@ -582,10 +574,7 @@ while True:
         break
     i +&#x3D; 1
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
-<h4 id="题目分析"><a href="#题目分析-2" class="headerlink" title="题目分析"></a>题目分析</h4><p>观察加密调用过程可以发现输出由三部分组成，start ，加密密文 ，end。最大的弱点发生在密钥的长度只有4个字母，再由加密密文的前四个字节对应的明文已知为actf，所以可以根据明文跟密文推导出密钥。进而对加密的密文进行解密。题目唯一有难度的地方是对加密的密文左右两边加上了start跟end部分的混肴，但是这不要紧，密文的格式&#x3D;密文集合中的元素+密文末尾后跟的四个字母（fleg加密后的4个字母），密文集合中的元素是小写字母+下划线，所以通过正则表达式的方法抽取特定格式的密文拿过来解密即可。也可以不正则直接解密找fleg这个字符串的，但是用正则保险一点&#x3D; &#x3D;</p>
+<h4 id="题目分析"><a href="#题目分析-2" class="headerlink" title="题目分析"></a>题目分析</h4><p>观察加密调用过程可以发现输出由三部分组成，start ，加密密文 ，end。最大的弱点发生在密钥的长度只有4个字母，再由加密密文的前四个字节对应的明文已知为actf，所以可以根据明文跟密文推导出密钥。进而对加密的密文进行解密。题目唯一有难度的地方是对加密的密文左右两边加上了start跟end部分的混肴，但是这不要紧，密文的格式=密文集合中的元素+密文末尾后跟的四个字母（fleg加密后的4个字母），密文集合中的元素是小写字母+下划线，所以通过正则表达式的方法抽取特定格式的密文拿过来解密即可。也可以不正则直接解密找fleg这个字符串的，但是用正则保险一点= =</p>
 <h4 id="解题脚本"><a href="#解题脚本-2" class="headerlink" title="解题脚本"></a>解题脚本</h4><pre class="line-numbers language-python" data-language="python"><code class="language-python">import string
 import re
 import string
@@ -637,9 +626,6 @@ while True:
 
 
 r.interactive()<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
 <h3 id="log-log-log-元素阶和-pohling-hellman-算法"><a href="#log-log-log-元素阶和-Pohling-Hellman-算法" class="headerlink" title="log log log-元素阶和 Pohling-Hellman 算法"></a><strong>log log log</strong>-元素阶和 Pohling-Hellman 算法</h3><h4 id="题目描述"><a href="#题目描述-3" class="headerlink" title="题目描述"></a>题目描述</h4><p>What rolls down stairs, alone or in pairs? <a target="_blank" rel="noopener" href="https://files.actf.co/97603a6931aaaf94c22c97a16ca632a7908af6aa3a98dba65bf913af7231489e/logloglog.sage">Source</a> <a target="_blank" rel="noopener" href="https://files.actf.co/06ce3975e58df84af120bd7ebb992a20ad142926e0ed833d64a11412665a4f7f/logloglog.txt">Output</a></p>
 <h4 id="题目内容"><a href="#题目内容-3" class="headerlink" title="题目内容"></a>题目内容</h4><pre class="line-numbers language-python" data-language="python"><code class="language-python">from secrets import randbits
 from flag import flag
@@ -667,7 +653,6 @@ print(g)
 print(hex(a))
 print(flagbits)
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>首先题目给的是</p>
 <p>$a\equiv g^e \mod p$</p>
 <p><code>g</code> 是乘法群的生成元，又因为有限域关于乘法作成一个循环群，所以 <code>g</code> 的阶数等于域的乘法群的阶数，我们用sage验证一下。</p>
@@ -675,15 +660,15 @@ print(flagbits)
 <p>可以看到只要求出了 e ，就可以得到 flag 。仔细分析代码就会发现 flag 的 880bits 就是 e 的低位 880 bits ，所以问题就变为了如何求 e 的低 880 bits。</p>
 <p>根据生成元的阶等于群的阶我们有</p>
 <p>$g^{p-1}\equiv1\mod p$ ，而</p>
-<p>$p-1&#x3D;2^{1024}*q$</p>
+<p>$p-1=2^{1024}*q$</p>
 <p>所以</p>
 <p>$g^{2^{1024}*q} \equiv 1 \mod p$</p>
 <p>所以</p>
-<p>$(g^q)^{2^{1024}}\equiv1\mod,p$</p>
+<p>$(g^q)^{2^{1024}}\equiv1\mod\,p$</p>
 <p>所以 $g^q$ 这个元素的阶整除 $2^{1024}$，在 sage 上验证发现这个元素的乘法阶就是 $2^{1024}$</p>
 <p>所以 </p>
-<p>$a^q\equiv(g^q)^e\mod,p$</p>
-<p>根据 $g^q$ 的阶，通过 <code>Pohlig-Hellman</code> 可以求出来 $e\mod,|g^q|$ 的值，也就是 <code>e</code> 的低 1024 位。</p>
+<p>$a^q\equiv(g^q)^e\mod\,p$</p>
+<p>根据 $g^q$ 的阶，通过 <code>Pohlig-Hellman</code> 可以求出来 $e\mod\,|g^q|$ 的值，也就是 <code>e</code> 的低 1024 位。</p>
 <p>于是我们就可以求出 flag。</p>
 <p>Pohlig-Hellman 在sage 的 discrete_log 函数自带的，直接调用就好，具体的算法实现看百度</p>
 <h4 id="解题脚本"><a href="#解题脚本-3" class="headerlink" title="解题脚本"></a>解题脚本</h4><pre class="line-numbers language-python" data-language="python"><code class="language-python">q&#x3D;127049168626532606399765615739991416718436721363030018955400489736067198869364016429387992001701094584958296787947271511542470576257229386752951962268029916809492721741399393261711747273503204896435780180020997260870445775304515469411553711610157730254858210474308834307348659449375607755507371266459204680043
@@ -697,9 +682,6 @@ from Crypto.Util.number import *
 long_to_bytes(discrete_log(a,g,ord&#x3D;2^1024))
 #b&quot;b\xd3\x9f\xe8\xcb\x8eV\xe8\x00\x05\n\xf6+&#x3D;5\xb0c\xd2actf&#123;it&#39;s log, it&#39;s log, it&#39;s big, it&#39;s heavy, it&#39;s wood, it&#39;s log, it&#39;s log, it&#39;s better than bad, it&#39;s good&#125;&quot;
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
 <h3 id="prophet"><a href="#Prophet" class="headerlink" title="Prophet"></a><strong>Prophet</strong></h3><h4 id="题目描述"><a href="#题目描述-4" class="headerlink" title="题目描述"></a>题目描述</h4><p>Clam’s tired of the drab life of being a Python programmer. When he heard of the legendary ginkoid coding in Go, he knew it was his calling. Before embarking on his dangerous journey to becoming a Google shill, he encrypted his most valued flag the only way he knows how: pure randomness. It’s a good thing he did, too, since Google sold all his data for 2 cents and caused him to forget the flag. Can you recover his flag?</p>
 <p><a target="_blank" rel="noopener" href="https://files.actf.co/28c37077e8bdde885b75f69d055148422ca14c358c7e430e910219bd290f865b/dist.go">Source</a>, <a target="_blank" rel="noopener" href="https://files.actf.co/025c263b3330a5069bdf41a022ba81f2c5ae5f2325adc87c07068b204199de2d/chall.txt">Output</a></p>
 <h4 id="题目内容"><a href="#题目内容-4" class="headerlink" title="题目内容"></a>题目内容</h4><pre class="line-numbers language-go" data-language="go"><code class="language-go">package main
@@ -730,7 +712,6 @@ func main() &#123;
 	&#125;
 &#125;
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <h4 id="题目分析"><a href="#题目分析-3" class="headerlink" title="题目分析"></a>题目分析</h4><p>是一个 go 语言的题目，采用异或加密了 flag。</p>
 <h4 id="解题脚本"><a href="#解题脚本-4" class="headerlink" title="解题脚本"></a>解题脚本</h4><h3 id="strike-slip-fault-简单的同余运算中途相遇攻击"><a href="#Strike-Slip-Fault-简单的同余运算-中途相遇攻击" class="headerlink" title="Strike-Slip Fault-简单的同余运算+中途相遇攻击"></a>Strike-Slip Fault-简单的同余运算+中途相遇攻击</h3><h4 id="题目描述"><a href="#题目描述-5" class="headerlink" title="题目描述"></a>题目描述</h4><p>We put a security system together but it keeps failing! We’re sure our hardware is perfect though… <a target="_blank" rel="noopener" href="https://files.actf.co/b20460c386e8a7af4e634a66b60d4b142309ce584506242aee2ebcd3b563bb77/fault.py">Source</a> <a target="_blank" rel="noopener" href="https://files.actf.co/8ec4d9194b065e9c8f89be6e98cabc349db392bdfcf23dacfa92a691b81b6169/fault.txt">output</a></p>
 <h4 id="题目内容"><a href="#题目内容-5" class="headerlink" title="题目内容"></a>题目内容</h4><pre class="line-numbers language-python" data-language="python"><code class="language-python">#!&#x2F;usr&#x2F;local&#x2F;bin&#x2F;python3
@@ -764,7 +745,6 @@ ans &#x3D; long_to_bytes(pow(c,d,n))
 if ans.startswith(flag):
         print(&quot;Check passed!&quot;)
 print(f&quot;Check failed, &#123;ans&#125; does not start with the flag.&quot;)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <h4 id="题目分析"><a href="#题目分析-4" class="headerlink" title="题目分析"></a>题目分析</h4><p>什么是<a target="_blank" rel="noopener" href="https://zh.m.wikipedia.org/zh-sg/%E4%B8%AD%E9%80%94%E7%9B%B8%E9%81%87%E6%94%BB%E6%93%8A">中途相遇攻击</a>？</p>
 <p><img src="/images/1652880258798.png" alt="1652880258798"></p>
 <h4 id="解题脚本"><a href="#解题脚本-5" class="headerlink" title="解题脚本"></a>解题脚本</h4><pre class="line-numbers language-python" data-language="python"><code class="language-python">from Crypto.Util.number import *
@@ -841,7 +821,6 @@ for i in tqdm(range(4096&#x2F;&#x2F;2+1,4096)):
             continue
         print(long_to_bytes(ans*powmod(c,-power,n)%n))
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 
                 
             </div>
@@ -1210,7 +1189,7 @@ for i in tqdm(range(4096&#x2F;&#x2F;2+1,4096)):
             contentSelector: '#articleContent',
             headingsOffset: -($(window).height() * 0.4 - 45),
             collapseDepth: Number('0'),
-            headingSelector: 'h2, h3, h4'
+            headingSelector: 'h2, h3, h4,h5'
         });
 
         // modify the toc link href to support Chinese.
@@ -1222,7 +1201,7 @@ for i in tqdm(range(4096&#x2F;&#x2F;2+1,4096)):
 
         // modify the heading title id to support Chinese.
         i = 0;
-        $('#articleContent').children('h2, h3, h4').each(function () {
+        $('#articleContent').children('h2, h3, h4,h5').each(function () {
             $(this).attr('id', tocHeading + (++i));
         });
 
@@ -1351,7 +1330,7 @@ for i in tqdm(range(4096&#x2F;&#x2F;2+1,4096)):
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">267.7k</span>
+                        class="white-color">259.5k</span>
             
             
             

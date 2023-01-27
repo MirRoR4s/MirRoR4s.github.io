@@ -6,11 +6,9 @@
     <meta charset="utf-8">
     <meta name="keywords" content="文件包含, 学习记录">
     <meta name="description" content="
-
 汇总互联网上优秀的文件包含漏洞讲解文章，并总结成我的知识！
 
-
-文件包含漏洞概述漏洞介绍程序开发人员一般会把重复使用的函数写到单个文件中，需要使用某个函数时直接调用此文件，而无需再次编写，这种文件调用的过程一般被称为文件包含。程序开发人">
+文件包含漏洞概述漏洞介绍程序开发人员一般会把重复使用的函数写到单个文件中，需要使用某个函数时直接调用此文件，而无需再次编写，这种文件调用的过程一般被称为文件包含。程序开发人员一">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -505,10 +503,8 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <!--toc-->
-
 <p>汇总互联网上优秀的文件包含漏洞讲解文章，并总结成我的知识！</p>
 <span id="more"></span>
-
 <h2 id="文件包含漏洞概述"><a href="#文件包含漏洞概述" class="headerlink" title="文件包含漏洞概述"></a>文件包含漏洞概述</h2><h3 id="漏洞介绍"><a href="#漏洞介绍" class="headerlink" title="漏洞介绍"></a>漏洞介绍</h3><p>程序开发人员一般会把重复使用的函数写到单个文件中，需要使用某个函数时直接调用此文件，而无需再次编写，这种文件调用的过程一般被称为文件包含。程序开发人员一般希望代码更灵活，所以将被包含的文件设置为变量，用来进行动态调用，但正是由于这种灵活性，从而导致客户端可以调用一个恶意文件，造成文件包含漏洞。</p>
 <p>在通过PHP的函数引入文件时，由于传入的文件名没有经过合理的校验，从而操作了预想之外的文件，导致意外的文件泄露甚至恶意的代码注入。</p>
 <h3 id="动态包含"><a href="#动态包含" class="headerlink" title="动态包含"></a>动态包含</h3><p>在使用文件包含的时候，为了更灵活的包含文件，将文件包含的名字处设置为变量，而这个变量是通过GET方式来获取的值，这样即可通过前端所输入的文件名进行包含对应的文件。</p>
@@ -518,7 +514,6 @@
 requeire_once()
 include()
 include_once()<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>require和include的区别在于 require 执行如果发生错误，函数会输出错误信息，并终止脚本的运行。</p>
 <p>require_once 的功能和 require相同，区别在于当重复调用同一文件时，程序只调用依次。</p>
 <p>include # 当使用该函数包含文件时，只有代码执行到 include 函数时才将文件包含进来，发送错误时给出一个警告，继续向下执行。</p>
@@ -528,10 +523,8 @@ include_once()<span aria-hidden="true" class="line-numbers-rows"><span></span><s
 $file &#x3D; $_GETp[&#39;file&#39;]
 include $file
 ?&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>在同目录下有一个phpinfo.txt，其内容为 <code>&lt;?phpinfo();?&gt;</code>。则只需要访问：</p>
 <pre class="line-numbers language-none"><code class="language-none">?file&#x3D;phpinfo.txt<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
 <p>即可成功解析 phpinfo。</p>
 <h3 id="利用场景"><a href="#利用场景" class="headerlink" title="利用场景"></a>利用场景</h3><p>1、具有相关的文件包含函数。</p>
 <p>2、文件包含函数中存在动态变量。</p>
@@ -791,7 +784,6 @@ include $file
                     <div class="summary block-with-text">
                         
                             
-
 对Java代码审计（入门篇）第 3 章做一个简单的回顾。
                         
                     </div>
@@ -842,7 +834,6 @@ include $file
                     <div class="summary block-with-text">
                         
                             
-
 祥云杯
                         
                     </div>
@@ -913,7 +904,7 @@ include $file
             contentSelector: '#articleContent',
             headingsOffset: -($(window).height() * 0.4 - 45),
             collapseDepth: Number('0'),
-            headingSelector: 'h2, h3, h4'
+            headingSelector: 'h2, h3, h4,h5'
         });
 
         // modify the toc link href to support Chinese.
@@ -925,7 +916,7 @@ include $file
 
         // modify the heading title id to support Chinese.
         i = 0;
-        $('#articleContent').children('h2, h3, h4').each(function () {
+        $('#articleContent').children('h2, h3, h4,h5').each(function () {
             $(this).attr('id', tocHeading + (++i));
         });
 
@@ -1054,7 +1045,7 @@ include $file
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">267.7k</span>
+                        class="white-color">259.5k</span>
             
             
             

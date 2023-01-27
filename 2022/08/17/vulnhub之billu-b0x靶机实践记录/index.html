@@ -6,15 +6,9 @@
     <meta charset="utf-8">
     <meta name="keywords" content="vulnhub之billu_b0x靶机实践记录, 学习记录">
     <meta name="description" content="
+从官网下载到这个靶机之后，解压并用vmware打开。发现登录的时候需要账号密码，这个应该就是我们此次攻击的目的——拿到账号密码。
 
-从官网下载到这个靶机之后，解压并用vmware打开。发现登录的时候需要账号密码，这个应该就是我们此次攻击的目的—-拿到账号密码。
-
-
-
-
-
-
-确定靶机IP情况由于不能登进实验机器，所以不知道其ip、端口的相关情况，由于我的kali攻击机">
+确定靶机IP情况由于不能登进实验机器，所以不知道其ip、端口的相关情况，由于我的kali攻击机跟这个实验靶">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -469,7 +463,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    903
+                    902
                 </div>
                 
 
@@ -500,40 +494,29 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <!--toc-->
-
-<p>从官网下载到这个靶机之后，解压并用vmware打开。发现登录的时候需要账号密码，这个应该就是我们此次攻击的目的—-拿到账号密码。</p>
+<p>从官网下载到这个靶机之后，解压并用vmware打开。发现登录的时候需要账号密码，这个应该就是我们此次攻击的目的——拿到账号密码。</p>
 <span id="more"></span>
-
-
-
-
-
 <h3 id="确定靶机ip情况"><a href="#确定靶机IP情况" class="headerlink" title="确定靶机IP情况"></a>确定靶机IP情况</h3><p>由于不能登进实验机器，所以不知道其ip、端口的相关情况，由于我的kali攻击机跟这个实验靶机在同一个网段下，所以先用arpscan命令找出当前局域网内的所有主机。</p>
 <pre class="line-numbers language-none"><code class="language-none">arp-scan -l #对本地局域网进行arp广播请求，这个命令需要root权限<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
 <p><img src="Users\mirror\Desktop\write-up\blog\source\images\image-20220817085720326.png" alt="image-20220817085720326"></p>
 <h3 id="确定靶机端口开放情况"><a href="#确定靶机端口开放情况" class="headerlink" title="确定靶机端口开放情况"></a>确定靶机端口开放情况</h3><p>从上一个步骤可以看到当前局域网内一共扫描出三个ip地址，我们分别ping一下发现只有<code>.2</code>和<code>.130</code> 会回复。所以我们的靶机ip地址一定就在这两个ip之间。我们用Nmap扫描一下这两个ip地址的端口开放情况。</p>
 <pre class="line-numbers language-none"><code class="language-none">nmap -sS -V 192.168.163.2 192.168.163.130<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
 <p>扫描到只有130开放了相关端口，而2没有反应，所以我们的靶机地址应该就是<code>192.168.163.130</code></p>
 <p><img src="Users\mirror\Desktop\write-up\blog\source\images\image-20220817090806117.png" alt="image-20220817090806117"></p>
 <p>继续进行系统版本扫描</p>
 <pre class="line-numbers language-none"><code class="language-none">nmap -O -v 192.168.163.130<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
 <p><img src="Users\mirror\Desktop\write-up\blog\source\images\image-20220817091211390.png" alt="image-20220817091211390"></p>
 <p>靶机开放了80端口，在网页访问一下发现是一个登录页面，并提示让我们展示sqli技能，可能存在SQL注入漏洞。抓包将我们的post登陆请求保存到文件里，然后打开sqlmap</p>
 <pre class="line-numbers language-none"><code class="language-none">sqlmap -r &#x2F;home&#x2F;kali&#x2F;Desktop&#x2F;tar.txt #-r表示从文件中读取sqlmap目标<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
 <p>经过一番扫描sqlmap没有探测出SQL注入漏洞，</p>
 <h3 id="dirsearch扫描web目录"><a href="#dirsearch扫描web目录" class="headerlink" title="dirsearch扫描web目录"></a>dirsearch扫描web目录</h3><pre class="line-numbers language-none"><code class="language-none">dirsearch.py -u 192.168.163.130 <span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
 <p><img src="Users\mirror\Desktop\write-up\blog\source\images\image-20220817094521749.png" alt="image-20220817094521749"></p>
 <p>add.php是一个文件上传点，但是不知道上传路径，暂时放过。</p>
 <p>访问images，但是并没有我们刚上传的图片，跳过。</p>
 <p>访问phpmy是一个phpadmin登录平台，暂时跳过。</p>
 <p>访问test.php时发现</p>
 <p><img src="Users\mirror\Desktop\write-up\blog\source\images\image-20220817094133200.png" alt="image-20220817094133200"></p>
-<p>get传参?file&#x3D;index.php还是说file参数为空，改post方式传递，发现可以下载文件。将我们刚刚扫描出的200、302的文件全部下载下来。</p>
+<p>get传参?file=index.php还是说file参数为空，改post方式传递，发现可以下载文件。将我们刚刚扫描出的200、302的文件全部下载下来。</p>
 <p>index.php内容如下</p>
 <pre class="line-numbers language-php" data-language="php"><code class="language-php">&lt;?php
 session_start();
@@ -587,7 +570,6 @@ else
 echo &quot;&lt;font size&#x3D;5 face&#x3D;\&quot;comic sans ms\&quot; style&#x3D;\&quot;left: 0;bottom: 0; position: absolute;margin: 0px 0px 5px;\&quot;&gt;B0X Powered By &lt;font color&#x3D;#ff9933&gt;Pirates&lt;&#x2F;font&gt; &quot;;
 
 ?&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>阅读代码可以知道利用<code>str_replace</code>函数将我们的单引号全部换为空</p>
 
                 
@@ -843,7 +825,6 @@ echo &quot;&lt;font size&#x3D;5 face&#x3D;\&quot;comic sans ms\&quot; style&#x3D
                     <div class="summary block-with-text">
                         
                             
-
 欢迎
                         
                     </div>
@@ -959,7 +940,7 @@ echo &quot;&lt;font size&#x3D;5 face&#x3D;\&quot;comic sans ms\&quot; style&#x3D
             contentSelector: '#articleContent',
             headingsOffset: -($(window).height() * 0.4 - 45),
             collapseDepth: Number('0'),
-            headingSelector: 'h2, h3, h4'
+            headingSelector: 'h2, h3, h4,h5'
         });
 
         // modify the toc link href to support Chinese.
@@ -971,7 +952,7 @@ echo &quot;&lt;font size&#x3D;5 face&#x3D;\&quot;comic sans ms\&quot; style&#x3D
 
         // modify the heading title id to support Chinese.
         i = 0;
-        $('#articleContent').children('h2, h3, h4').each(function () {
+        $('#articleContent').children('h2, h3, h4,h5').each(function () {
             $(this).attr('id', tocHeading + (++i));
         });
 
@@ -1100,7 +1081,7 @@ echo &quot;&lt;font size&#x3D;5 face&#x3D;\&quot;comic sans ms\&quot; style&#x3D
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">267.7k</span>
+                        class="white-color">259.5k</span>
             
             
             

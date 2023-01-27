@@ -6,13 +6,11 @@
     <meta charset="utf-8">
     <meta name="keywords" content="BalsnCTF-2022, 学习记录">
     <meta name="description" content="
-
 以中有足乐者，不知口体之奉不若人也。
-
 
 [TOC]
 CryptoYes another RSA with hint-整数的表示法+CRT+coppersmithfrom Crypto.Util.number import *
-from">
+from s">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -467,7 +465,7 @@ from">
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    846
+                    843
                 </div>
                 
 
@@ -498,10 +496,8 @@ from">
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <!--toc-->
-
 <p>以中有足乐者，不知口体之奉不若人也。</p>
 <span id="more"></span>
-
 <p>[TOC]</p>
 <h2 id="crypto"><a href="#Crypto" class="headerlink" title="Crypto"></a>Crypto</h2><h3 id="yes-another-rsa-with-hint-整数的表示法crtcoppersmith"><a href="#Yes-another-RSA-with-hint-整数的表示法-CRT-coppersmith" class="headerlink" title="Yes another RSA with hint-整数的表示法+CRT+coppersmith"></a>Yes another RSA with hint-整数的表示法+CRT+coppersmith</h3><pre class="line-numbers language-python" data-language="python"><code class="language-python">from Crypto.Util.number import *
 from secret import flag
@@ -525,15 +521,14 @@ print(f&quot;&#123;n &#x3D; &#125;&quot;)
 print(f&quot;&#123;e &#x3D; &#125;&quot;)
 print(f&quot;&#123;c &#x3D; &#125;&quot;)
 print(f&quot;&#123;hint &#x3D; &#125;&quot;)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>考虑将任意的x表示为其b进制展开：$(x_tx_{t-1}x_{t-2}…x_1x_0)_b$</p>
-<p>则$x &#x3D; \sum_{0}^tx_i*b^i\ \ (1)$</p>
+<p>考虑将任意的x表示为其b进制展开：$(x<em>tx</em>{t-1}x_{t-2}…x_1x_0)_b$</p>
+<p>则$x = \sum_{0}^tx_i*b^i\ \ (1)$</p>
 <p>因为$b\equiv 1 \ (\ mod\ (b-1)$</p>
 <p>将$(1)$两边模上$(b-1)$可以得到</p>
-<p>$x\equiv \sum_{0}^tx_i*b^i\equiv \sum_{0}^t x_i\ (\ mod\ (b-1))\equiv digitSum(x) $</p>
+<p>$x\equiv \sum<em>{0}^tx_i*b^i\equiv \sum</em>{0}^t x_i\ (\ mod\ (b-1))\equiv digitSum(x) $</p>
 <p>经过如上分析，$digitSum(p,i) $ 实际上等价于 $p\ mod \ (i-1)$ 的值</p>
-<p>于是我们可以得到 $p\ mod \ n,for\ n&#x3D;1,2,3,…199 $ 的值</p>
-<p>之后利用中国剩余定理CRT根据以上的方程得到 $p$ 的低位（290比特），未知位是512-290&#x3D;222比特。剩下的事情就是利用Coppersmith方法求解了..</p>
+<p>于是我们可以得到 $p\ mod \ n,for\ n=1,2,3,…199 $ 的值</p>
+<p>之后利用中国剩余定理CRT根据以上的方程得到 $p$ 的低位（290比特），未知位是512-290=222比特。剩下的事情就是利用Coppersmith方法求解了..</p>
 <pre class="line-numbers language-python" data-language="python"><code class="language-python"># sage 9.2
 n &#x3D; 69769370315605399620499157110259161770226204413410714287546175640222894393734656823609842094208000324903785445480970937467772043771047139468214623293799193606693151204028152125827120312591965423568920046988483517193159267137262989786922993050699199470525597334312901558499603311835177928669168435353736304603
 e &#x3D; 65537
@@ -558,9 +553,6 @@ assert n&#x3D;&#x3D;p*q
 
 print(long_to_bytes(int(pow(c,inverse(65537,(p-1)*(q-1)),n))))
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
 <h3 id="vss"><a href="#VSS" class="headerlink" title="VSS"></a>VSS</h3><pre class="line-numbers language-python" data-language="python"><code class="language-python">from Crypto.Util.number import *
 from Crypto.Cipher import AES
 from Crypto.Util.Padding import pad
@@ -607,12 +599,7 @@ while True:
         commit(y)
     else:
         exit(0)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
-
-
-<h2 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h2><p><a target="_blank" rel="noopener" href="https://tl2cents.github.io/2022/09/05/2022-BalsnCTF-Crypto-Writeup/%EF%BC%88come">https://tl2cents.github.io/2022/09/05/2022-BalsnCTF-Crypto-Writeup/（come</a> from China!）</p>
+<h2 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h2><p><a target="_blank" rel="noopener" href="https://tl2cents.github.io/2022/09/05/2022-BalsnCTF-Crypto-Writeup/（come">https://tl2cents.github.io/2022/09/05/2022-BalsnCTF-Crypto-Writeup/（come</a> from China!）</p>
 <p><a target="_blank" rel="noopener" href="https://github.com/kevin47/CTF-writeups/tree/master/22/balsn-ctf/old_but_gold">https://github.com/kevin47/CTF-writeups/tree/master/22/balsn-ctf/old_but_gold</a></p>
 <p><a target="_blank" rel="noopener" href="https://github.com/utaha1228/BalsnCTF-2022">https://github.com/utaha1228/BalsnCTF-2022</a></p>
 
@@ -991,7 +978,7 @@ while True:
             contentSelector: '#articleContent',
             headingsOffset: -($(window).height() * 0.4 - 45),
             collapseDepth: Number('0'),
-            headingSelector: 'h2, h3, h4'
+            headingSelector: 'h2, h3, h4,h5'
         });
 
         // modify the toc link href to support Chinese.
@@ -1003,7 +990,7 @@ while True:
 
         // modify the heading title id to support Chinese.
         i = 0;
-        $('#articleContent').children('h2, h3, h4').each(function () {
+        $('#articleContent').children('h2, h3, h4,h5').each(function () {
             $(this).attr('id', tocHeading + (++i));
         });
 
@@ -1132,7 +1119,7 @@ while True:
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">267.7k</span>
+                        class="white-color">259.5k</span>
             
             
             

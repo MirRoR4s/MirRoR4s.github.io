@@ -6,11 +6,9 @@
     <meta charset="utf-8">
     <meta name="keywords" content="X-MAS CTF 2022, 学习记录">
     <meta name="description" content="
-
 2022年12月16日的比赛。
 
-
-CryptoStrange Circles题目描述During preparations for this year’s Christmas, Santa had his elves dig up a">
+CryptoStrange Circles题目描述During preparations for this year’s Christmas, Santa had his elves dig up an ">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -505,10 +503,8 @@ CryptoStrange Circles题目描述During preparations for this year’s Christmas
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <!--toc-->
-
 <p>2022年12月16日的比赛。</p>
 <span id="more"></span>
-
 <h2 id="crypto"><a href="#Crypto" class="headerlink" title="Crypto"></a>Crypto</h2><h3 id="strange-circles"><a href="#Strange-Circles" class="headerlink" title="Strange Circles"></a><a target="_blank" rel="noopener" href="https://xmas.htsp.ro/challenge?id=4">Strange Circles</a></h3><h4 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h4><p>During preparations for this year’s Christmas, Santa had his elves dig up an ancient archeological site in Lapland.<br>They found an ancient text written on a tablet from an age long forgotten.<br>The only problem is that the text is written in a very weird language that no one can understand.<br>Santa Needs you to decode the ancient text and recover the hidden knowledge that was lost.</p>
 <p><strong>Note</strong>: The flag for this challenge has a non standard format, it’s composed of uppercase alphabetical characters, no spaces.</p>
 <h4 id="题目内容"><a href="#题目内容" class="headerlink" title="题目内容"></a>题目内容</h4><p><img src="/images/X-MAS-CTF-2022/image-20221223124301782.png" alt="image-20221223124301782"></p>
@@ -561,8 +557,7 @@ if __name__ &#x3D;&#x3D; &quot;__main__&quot;:
             krampto.stop_machine()
         else:
             exit()<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h4 id="题目分析"><a href="#题目分析-1" class="headerlink" title="题目分析"></a>题目分析</h4><p>输入 2 猜中 secret 就输出 flag。连接到服务器之后会给我们 31 个 640 比特的随机数，所以题目的考点应该是 random 模块伪随机数预测。我们手里有 $31<em>640 &#x3D; 19840$ ，但我们需要 $624</em>32&#x3D;19968$ 比特。也就是说我们少了4个32比特的数，这里可以使用 z3 模块来求解。github上有相关的脚本。</p>
+<h4 id="题目分析"><a href="#题目分析-1" class="headerlink" title="题目分析"></a>题目分析</h4><p>输入 2 猜中 secret 就输出 flag。连接到服务器之后会给我们 31 个 640 比特的随机数，所以题目的考点应该是 random 模块伪随机数预测。我们手里有 $31<em>640 = 19840$ ，但我们需要 $624</em>32=19968$ 比特。也就是说我们少了4个32比特的数，这里可以使用 z3 模块来求解。github上有相关的脚本。</p>
 <p>相关链接：</p>
 <p>1.<a target="_blank" rel="noopener" href="https://gist.github.com/c0nrad/7ac8ca66602eee9175bfd915bf80253b">完整WP</a></p>
 <p>2.<a target="_blank" rel="noopener" href="https://github.com/m1dm4n/CTF-WriteUp/blob/c5b615ede22c248a61ae1b326bd6a53620635df0/2022/ISITDTU-CTF-2022-Quals/DCeased%20XXIV/Untwister.py">z3模块求解剩余4个32字节整数脚本</a></p>
@@ -635,7 +630,6 @@ if __name__ &#x3D;&#x3D; &quot;__main__&quot;:
 
 
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <h5 id="离谱的点"><a href="#离谱的点" class="headerlink" title="离谱的点"></a>离谱的点</h5><p>看到一个别人的答案是：</p>
 <pre class="line-numbers language-python" data-language="python"><code class="language-python">from pwn import *
 from mt19937predictor import MT19937Predictor
@@ -656,14 +650,13 @@ r.clean()
 r.sendline(str(secret).encode())
 print(r.recvline().strip())
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>明明只往 predictor 里面灌输了 $640*31$ 个比特的数字，但是还是成功预测出来了。我看了一下<code>mt19937predictor</code> 的源码，里面也写道了需要 624 个连续的 DOWRDs 才可以完全唯一确定内部状态。</p>
 <p><img src="/images/X-MAS-CTF-2022/image-20221223234904481.png" alt="image-20221223234904481"></p>
 <h3 id="polyeq"><a href="#PolyEq" class="headerlink" title="PolyEq"></a><a target="_blank" rel="noopener" href="https://xmas.htsp.ro/challenge?id=5">PolyEq</a></h3><h4 id="题目描述"><a href="#题目描述-2" class="headerlink" title="题目描述"></a>题目描述</h4><p>As you already know, Santa is a math fanatic. This year he spent his summer studying interesting polynomial equations. He found a very difficult problem and he solved it with some clever maths. Now he proposes the same problem for you to solve:</p>
-<p>Let f and g be two monic polynomials of degree 32 over Zn.<br>Let S &#x3D; {x1, x2, …, xt} be a set of 2D points in ZnXZn. You know that following equation holds for at least V points:<br>f(x) &#x2F; g(x) &#x3D; y (1)</p>
+<p>Let f and g be two monic polynomials of degree 32 over Zn.<br>Let S = {x1, x2, …, xt} be a set of 2D points in ZnXZn. You know that following equation holds for at least V points:<br>f(x) / g(x) = y (1)</p>
 <p>Find two polynomials f and g such that equation (1) holds for at least V points.</p>
 <p><strong>Note</strong>: for every point in the set of points that hold for equation (1), g(x) is invertible.</p>
-<h4 id="题目内容"><a href="#题目内容-2" class="headerlink" title="题目内容"></a>题目内容</h4><h4 id="题目分析"><a href="#题目分析-2" class="headerlink" title="题目分析"></a>题目分析</h4><p>题目让我们找到两个多项式 f 和 g，使得 f(x)&#x2F;g(x) &#x3D; y 对 某个点集 S 中的 V 个点成立。</p>
+<h4 id="题目内容"><a href="#题目内容-2" class="headerlink" title="题目内容"></a>题目内容</h4><h4 id="题目分析"><a href="#题目分析-2" class="headerlink" title="题目分析"></a>题目分析</h4><p>题目让我们找到两个多项式 f 和 g，使得 f(x)/g(x) = y 对 某个点集 S 中的 V 个点成立。</p>
 <p>f 和 g 是定义在 $Z_n$ 上的 次数为 32 的两个首一多项式，并且题目会将点集 S 告诉我们，同时还会告诉我们 V 的数值。</p>
 <h5 id="官方wp"><a href="#官方WP" class="headerlink" title="官方WP"></a>官方WP</h5><p>从官方wp来看这好像是来自于今年密码学奥林匹克竞赛的第二轮的挑战2。</p>
 <p><a target="_blank" rel="noopener" href="https://discord.com/channels/519974854485737483/520005746457575435/1055219113380814858">https://discord.com/channels/519974854485737483/520005746457575435/1055219113380814858</a></p>
@@ -685,9 +678,6 @@ that goes into more detail why this technique works
 I put the observations in such a way that you can stop at any point and continue by yourself
 and that was my train of thought when I solved the task during NSU 
 So yeah, this is not an original task, but the math is clever enough that I felt it would be cool to share<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
 <h4 id="解题脚本"><a href="#解题脚本-1" class="headerlink" title="解题脚本"></a>解题脚本</h4>
                 
             </div>
@@ -991,7 +981,6 @@ So yeah, this is not an original task, but the math is clever enough that I felt
                     <div class="summary block-with-text">
                         
                             
-
 找工作第一关
                         
                     </div>
@@ -1074,7 +1063,7 @@ So yeah, this is not an original task, but the math is clever enough that I felt
             contentSelector: '#articleContent',
             headingsOffset: -($(window).height() * 0.4 - 45),
             collapseDepth: Number('0'),
-            headingSelector: 'h2, h3, h4'
+            headingSelector: 'h2, h3, h4,h5'
         });
 
         // modify the toc link href to support Chinese.
@@ -1086,7 +1075,7 @@ So yeah, this is not an original task, but the math is clever enough that I felt
 
         // modify the heading title id to support Chinese.
         i = 0;
-        $('#articleContent').children('h2, h3, h4').each(function () {
+        $('#articleContent').children('h2, h3, h4,h5').each(function () {
             $(this).attr('id', tocHeading + (++i));
         });
 
@@ -1215,7 +1204,7 @@ So yeah, this is not an original task, but the math is clever enough that I felt
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">267.7k</span>
+                        class="white-color">259.5k</span>
             
             
             

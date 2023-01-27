@@ -6,14 +6,12 @@
     <meta charset="utf-8">
     <meta name="keywords" content="JAVA反序列化00, 学习记录">
     <meta name="description" content="
-
 Java 安全可以从反序列化说起，而反序列化可以从反射说起。
-
 
 前言学习 Java 反序列化前最好先把 Java 基础看一遍，这样后续读 Java 代码就会舒服很多。
 菜鸟教程
 正射说反射之前先说正射是什么。
-正射定义我们在编写代码时">
+正射定义我们在编写代码时，当">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -508,17 +506,14 @@ Java 安全可以从反序列化说起，而反序列化可以从反射说起。
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <!--toc-->
-
 <p>Java 安全可以从反序列化说起，而反序列化可以从反射说起。</p>
 <span id="more"></span>
-
 <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>学习 Java 反序列化前最好先把 Java 基础看一遍，这样后续读 Java 代码就会舒服很多。</p>
 <p><a target="_blank" rel="noopener" href="https://www.runoob.com/java/java-loop.html">菜鸟教程</a></p>
 <h3 id="正射"><a href="#正射" class="headerlink" title="正射"></a>正射</h3><p>说反射之前先说正射是什么。</p>
 <h4 id="正射定义"><a href="#正射定义" class="headerlink" title="正射定义"></a>正射定义</h4><p>我们在编写代码时，当需要使用到某一个类的时候，都会先了解这个类是做什么的，然后实例化这个类，接着用实例化好的对象进行操作，这就是正射。</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java">Student student &#x3D; new Student();
 student.doHomework(&quot;数学&quot;);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
 <h3 id="反射"><a href="#反射" class="headerlink" title="反射"></a>反射</h3><h4 id="反射定义"><a href="#反射定义" class="headerlink" title="反射定义"></a>反射定义</h4><p>Java 的反射机制是指在运行状态中，对于任意一个类都能够知道这个类所有的属性和方法；并且对于任意一个对象，都能够调用它的任意一个方法；这种动态获取信息以及动态调用对象方法的功能称为 Java 语言的反射机制。</p>
 <p>简单地说，反射就是一开始我们并不知道我们要初始化的类对象是什么，所以自然也无法使用 new 关键字来创建对象了。下面是一个经典的反射代码</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java">Class clazz &#x3D; Class.forName(&quot;reflection.Student&quot;);
@@ -526,11 +521,8 @@ Method method &#x3D; clazz.getMethod(&quot;doHomework&quot;, String.class);
 Constructor constructor &#x3D; clazz.getConstructor();
 Object object &#x3D; constructor.newInstance();
 method.invoke(object, &quot;语文&quot;);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
 <h4 id="反射的作用"><a href="#反射的作用" class="headerlink" title="反射的作用"></a>反射的作用</h4><p>反射让 Java 具有动态性。</p>
-<h3 id="正反射对比"><a href="#正反射对比" class="headerlink" title="正反射对比"></a>正反射对比</h3><p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9601/image-20230104184013667.png" alt="image-20230104184013667"></p>
+<h3 id="正反射对比"><a href="#正反射对比" class="headerlink" title="正反射对比"></a>正反射对比</h3><p><img src="/images/JAVA反序列化01/image-20230104184013667.png" alt="image-20230104184013667"></p>
 <p>但是，其实现的过程还是有很大的差别的：</p>
 <ul>
 <li>第一段代码在未运行前就已经知道了要运行的类是 <code>Student</code></li>
@@ -541,36 +533,32 @@ method.invoke(object, &quot;语文&quot;);<span aria-hidden="true" class="line-n
 <p>Java 是如何让我们在运行时识别对象和类的信息的呢？主要有两种方式：一种是传统的 RRTI，它假定我们在编译期就已经知道了所有类型。<strong>另一种则是反射机制，它允许我们在运行时发现和使用类的信息。</strong></p>
 <p><strong>每个类都有一个 Class 对象</strong>，每新编译一个类就会产生一个 Class 对象，该对象会被保存在一个同名的 .class 文件中。比如创建一个 Student 类，那么 JVM 就会创建一个 Student 类对应 的 Class 类的 Class 对象，该 Class 对象保存了 Student 类相关的类型信息。</p>
 <p>值得注意的是，对于某个类的不同实例对象来说，其对应的 Class 对象都是相同的</p>
-<p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9601/image-20230104184641467.png" alt="image-20230104184641467"></p>
-<p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9601/image-20230105212528699.png" alt="image-20230105212528699"></p>
+<p><img src="/images/JAVA反序列化01/image-20230104184641467.png" alt="image-20230104184641467"></p>
+<p><img src="/images/JAVA反序列化01/image-20230105212528699.png" alt="image-20230105212528699"></p>
 <h4 id="class-类对象的作用"><a href="#Class-类对象的作用" class="headerlink" title="Class 类对象的作用"></a>Class 类对象的作用</h4><p>Class 类对象的作用是运行时提供或获得某个对象的类型信息。</p>
 <h3 id="反射使用"><a href="#反射使用" class="headerlink" title="反射使用"></a>反射使用</h3><h4 id="如何通过反射-获取-class-类对象"><a href="#如何通过反射-获取-Class-类对象？" class="headerlink" title="如何通过反射 获取 Class 类对象？"></a>如何通过反射 获取 Class 类对象？</h4><p>获取反射中的 Class 对象有三种方法。</p>
 <ul>
 <li>Class.forName 静态方法</li>
 </ul>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java">Class class1 &#x3D; Class.forName(&quot;reflection.TestReflection&quot;);<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
 <ul>
 <li>使用类的 .class 方法</li>
 </ul>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java">Class class2 &#x3D; TestReflection.class;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
 <ul>
 <li>使用实例对象的 getClass()</li>
 </ul>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java">TestReflection testReflection &#x3D; new TestReflection();
 Class class3 &#x3D; testReflection.getClass();<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
-<p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9601/image-20230104184951137.png" alt="image-20230104184951137"></p>
+<p><img src="/images/JAVA反序列化01/image-20230104184951137.png" alt="image-20230104184951137"></p>
 <h4 id="如何通过反射创建对象"><a href="#如何通过反射创建对象？" class="headerlink" title="如何通过反射创建对象？"></a>如何通过反射创建对象？</h4><p>通过反射创建类对象主要有两种方式：</p>
-<p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9601/image-20230104185030886.png" alt="image-20230104185030886"></p>
+<p><img src="/images/JAVA反序列化01/image-20230104185030886.png" alt="image-20230104185030886"></p>
 <ul>
 <li>使用 Class 类对象的 newInstance() 方法来创建对象</li>
 </ul>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java">Class class1 &#x3D; Class.forName(&quot;reflection.Student&quot;);
 Student student &#x3D; (Student) class1.newInstance();
 System.out.println(student);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-
 <ul>
 <li>使用 Constructor 类对象的 newInstance() 方法来创建对象</li>
 </ul>
@@ -578,10 +566,9 @@ System.out.println(student);<span aria-hidden="true" class="line-numbers-rows"><
 Student student1 &#x3D; (Student) constructor.newInstance();
 System.out.println(student1);
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-
 <p><code>getConstructor</code> 方法会返回一个 Constructor 对象，该对象反映了由当前的 Class 对象所表示的 class 的特定的公开的 constructor。Constructor 类位于 <strong>java.lang.reflect.Constructor</strong>，使用时要 import ！</p>
-<p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9601/image-20230104192419784.png" alt="image-20230104192419784"></p>
-<h4 id="如何通过反射获取类的方法"><a href="#如何通过反射获取类的方法？" class="headerlink" title="如何通过反射获取类的方法？"></a>如何通过反射获取类的方法？</h4><p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9601/image-20230105214301287.png" alt="image-20230105214301287"></p>
+<p><img src="/images/JAVA反序列化01/image-20230104192419784.png" alt="image-20230104192419784"></p>
+<h4 id="如何通过反射获取类的方法"><a href="#如何通过反射获取类的方法？" class="headerlink" title="如何通过反射获取类的方法？"></a>如何通过反射获取类的方法？</h4><p><img src="/images/JAVA反序列化01/image-20230105214301287.png" alt="image-20230105214301287"></p>
 <p>从图中也可以看到通过反射获取类的方法有三种方式。</p>
 <ul>
 <li>通过 class 对象 的 getMethods 方法获取某类的方法</li>
@@ -606,7 +593,6 @@ public class RuntimeExec &#123;
     &#125;
 &#125;
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p><code>getMethods</code> 方法会返回一个数组，数组只包含了所反射类的公有方法</p>
 <ul>
 <li>通过 class 对象的 getDeclareMethods 方法获取类的所有方法</li>
@@ -619,7 +605,6 @@ public class RuntimeExec &#123;
             System.out.println(a[i]);
 
         &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <ul>
 <li>通过 class 对象的 getMethod 方法获取类的特定方法</li>
 </ul>
@@ -628,18 +613,11 @@ public class RuntimeExec &#123;
        System.out.println(&quot;做&quot;+subject+&quot;作业啦！&quot;);
 
    &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
 <pre class="line-numbers language-java" data-language="java"><code class="language-java">Class class1 &#x3D; Class.forName(&quot;com.kuang.reflection.Student&quot;);
 
        Method a &#x3D; class1.getMethod(&quot;doHomework&quot;,String.class);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-
-
-
 <h4 id="如何通过反射执行某个类的方法"><a href="#如何通过反射执行某个类的方法？" class="headerlink" title="如何通过反射执行某个类的方法？"></a>如何通过反射执行某个类的方法？</h4><p>在前面获取到某个类的方法之后，我们肯定是想执行它，那么该如何做呢？需要用到 <code>java.lang.reflect.Method</code> 类中的  <strong>invoke</strong> 方法，该方法用于执行某个对象的目标方法，一般会和 getMethod 方法配合进行调用。</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java">public Object invoke(Object obj, Object... args)<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
 <p>第一个参数为类的实例，第二个参数为要执行的方法的参数</p>
 <ul>
 <li>obj：从中调用底层方法的对象，必须是实例化对象</li>
@@ -658,7 +636,6 @@ public class ReflectionTest04 &#123;
  method.invoke(m);  
  &#125;  
 &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <h4 id="如何利用反射弹计算器"><a href="#如何利用反射弹计算器" class="headerlink" title="如何利用反射弹计算器"></a>如何利用反射弹计算器</h4><p>思路：用我们的 <code>forName</code> 和 <code>newInstance()</code> 实例化对象后，再获取方法并执行。</p>
 <p>关于 java 执行系统命令，可以查看这篇文章 <a target="_blank" rel="noopener" href="https://blog.csdn.net/qsort_/article/details/104821283">java命令执行的三种方式</a></p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java">package src.ReflectDemo;  
@@ -672,9 +649,6 @@ public class FinalReflectionCalc &#123;
  Method m1 &#x3D; c1.getDeclaredMethod(&quot;exec&quot;,String.class);  
  &#125;  
 &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
 <h3 id="什么是动态语言和静态语言"><a href="#什么是动态语言和静态语言？" class="headerlink" title="什么是动态语言和静态语言？"></a>什么是动态语言和静态语言？</h3><h3 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h3><p><a target="_blank" rel="noopener" href="https://drun1baby.github.io/2022/05/20/Java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%9F%BA%E7%A1%80%E7%AF%87-02-Java%E5%8F%8D%E5%B0%84%E4%B8%8EURLDNS%E9%93%BE%E5%88%86%E6%9E%90/">Java反射与URLDNS链分析</a></p>
 <p><a target="_blank" rel="noopener" href="https://juejin.cn/post/6844904025607897096">谈谈Java反射：从入门到实践，再到原理</a></p>
 
@@ -931,7 +905,6 @@ public class FinalReflectionCalc &#123;
                     <div class="summary block-with-text">
                         
                             
-
 复盘复盘
                         
                     </div>
@@ -982,7 +955,6 @@ public class FinalReflectionCalc &#123;
                     <div class="summary block-with-text">
                         
                             
-
 坚持人生理想百年不动摇。
                         
                     </div>
@@ -1065,7 +1037,7 @@ public class FinalReflectionCalc &#123;
             contentSelector: '#articleContent',
             headingsOffset: -($(window).height() * 0.4 - 45),
             collapseDepth: Number('0'),
-            headingSelector: 'h2, h3, h4'
+            headingSelector: 'h2, h3, h4,h5'
         });
 
         // modify the toc link href to support Chinese.
@@ -1077,7 +1049,7 @@ public class FinalReflectionCalc &#123;
 
         // modify the heading title id to support Chinese.
         i = 0;
-        $('#articleContent').children('h2, h3, h4').each(function () {
+        $('#articleContent').children('h2, h3, h4,h5').each(function () {
             $(this).attr('id', tocHeading + (++i));
         });
 
@@ -1206,7 +1178,7 @@ public class FinalReflectionCalc &#123;
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">267.7k</span>
+                        class="white-color">259.5k</span>
             
             
             

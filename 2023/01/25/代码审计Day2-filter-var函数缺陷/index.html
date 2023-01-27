@@ -8,11 +8,10 @@
     <meta name="description" content="
 大年初四继续代码审计Day2.
 
-
 1.前言今天是说 filter_var 函数缺陷。
 ps：看完文章之后感觉不是这个函数的缺陷造成了漏洞，只是代码使用错了函数
 
-filter_var ： (PHP 5 &amp;gt;&amp;#x3D; 5.2.0,">
+filter_var ： (PHP 5 &amp;gt;= 5.2.0, PHP 7">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -476,7 +475,7 @@ filter_var ： (PHP 5 &amp;gt;&amp;#x3D; 5.2.0,">
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    179
+                    177
                 </div>
                 
 
@@ -509,13 +508,12 @@ filter_var ： (PHP 5 &amp;gt;&amp;#x3D; 5.2.0,">
                 <!--toc-->
 <p>大年初四继续代码审计Day2.</p>
 <span id="more"></span>
-
 <h3 id="1前言"><a href="#1-前言" class="headerlink" title="1.前言"></a>1.前言</h3><p>今天是说 <a target="_blank" rel="noopener" href="http://php.net/manual/zh/function.filter-var.php">filter_var</a> 函数缺陷。</p>
 <p>ps：看完文章之后感觉不是这个函数的缺陷造成了漏洞，只是代码使用错了函数</p>
 <blockquote>
-<p><a target="_blank" rel="noopener" href="http://php.net/manual/zh/function.filter-var.php"><strong>filter_var</strong> </a>： (PHP 5 &gt;&#x3D; 5.2.0, PHP 7)</p>
+<p><a target="_blank" rel="noopener" href="http://php.net/manual/zh/function.filter-var.php"><strong>filter_var</strong> </a>： (PHP 5 &gt;= 5.2.0, PHP 7)</p>
 <p><strong>功能</strong> ：使用特定的过滤器过滤一个变量</p>
-<p><strong>定义</strong> ：<a target="_blank" rel="noopener" href="http://php.net/manual/zh/language.pseudo-types.php#language.types.mixed">mixed</a> <strong>filter_var</strong> ( <a target="_blank" rel="noopener" href="http://php.net/manual/zh/language.pseudo-types.php#language.types.mixed">mixed</a> <code>$variable</code> [, int <code>$filter</code> &#x3D; FILTER_DEFAULT [, <a target="_blank" rel="noopener" href="http://php.net/manual/zh/language.pseudo-types.php#language.types.mixed">mixed</a> <code>$options</code> ]] )</p>
+<p><strong>定义</strong> ：<a target="_blank" rel="noopener" href="http://php.net/manual/zh/language.pseudo-types.php#language.types.mixed">mixed</a> <strong>filter_var</strong> ( <a target="_blank" rel="noopener" href="http://php.net/manual/zh/language.pseudo-types.php#language.types.mixed">mixed</a> <code>$variable</code> [, int <code>$filter</code> = FILTER_DEFAULT [, <a target="_blank" rel="noopener" href="http://php.net/manual/zh/language.pseudo-types.php#language.types.mixed">mixed</a> <code>$options</code> ]] )</p>
 </blockquote>
 <p>具体审计细节依旧不写太多，直接看七月火大佬写的就可以.</p>
 <blockquote>
@@ -523,7 +521,7 @@ filter_var ： (PHP 5 &amp;gt;&amp;#x3D; 5.2.0,">
 </blockquote>
 <p>但是由于我对 php 各种函数不是很熟悉，所以会记录一些函数。</p>
 <h3 id="2filter_validate_url-过滤器"><a href="#2-FILTER-VALIDATE-URL-过滤器" class="headerlink" title="2.FILTER_VALIDATE_URL 过滤器"></a>2.FILTER_VALIDATE_URL 过滤器</h3><p>代码中调用的 filter_var 函数正是使用了这个过滤器，以下是其具体含义。</p>
-<p><img src="/images/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1Day2-filter-var%E5%87%BD%E6%95%B0%E7%BC%BA%E9%99%B7/image-20230125172036342.png" alt="image-20230125172036342"></p>
+<p><img src="/images/代码审计Day2-filter-var函数缺陷/image-20230125172036342.png" alt="image-20230125172036342"></p>
 
                 
             </div>
@@ -761,49 +759,48 @@ filter_var ： (PHP 5 &amp;gt;&amp;#x3D; 5.2.0,">
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="far fa-dot-circle"></i>&nbsp;本篇
-            </div>
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2023/01/25/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1Day2-filter-var%E5%87%BD%E6%95%B0%E7%BC%BA%E9%99%B7/index.html">
+                <a href="/2023/01/27/Java%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E4%B9%8BXXE/index.html">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/23.jpg" class="responsive-img" alt="代码审计Day2-filter_var函数缺陷">
+                        <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="Java代码审计之XXE">
                         
-                        <span class="card-title">代码审计Day2-filter_var函数缺陷</span>
+                        <span class="card-title">Java代码审计之XXE</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
                             
-大年初四继续代码审计Day2.
+
+歇息了两天，又回来了。
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2023-01-25
-                            </span>
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2023-01-27
+                        </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/PHP%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" class="post-category">
-                                    PHP代码审计
+                            <a href="/categories/JAVA%E5%AE%89%E5%85%A8/" class="post-category">
+                                    JAVA安全
                                 </a>
                             
                             
                         </span>
                     </div>
                 </div>
-
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/PHP%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/">
-                        <span class="chip bg-color">PHP代码审计</span>
+                    <a href="/tags/JAVA%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/">
+                        <span class="chip bg-color">JAVA代码审计</span>
                     </a>
                     
                 </div>
@@ -830,7 +827,6 @@ filter_var ： (PHP 5 &amp;gt;&amp;#x3D; 5.2.0,">
                     <div class="summary block-with-text">
                         
                             
-
 每日图一乐之一个简单的敏感信息泄露漏洞
                         
                     </div>
@@ -913,7 +909,7 @@ filter_var ： (PHP 5 &amp;gt;&amp;#x3D; 5.2.0,">
             contentSelector: '#articleContent',
             headingsOffset: -($(window).height() * 0.4 - 45),
             collapseDepth: Number('0'),
-            headingSelector: 'h2, h3, h4'
+            headingSelector: 'h2, h3, h4,h5'
         });
 
         // modify the toc link href to support Chinese.
@@ -925,7 +921,7 @@ filter_var ： (PHP 5 &amp;gt;&amp;#x3D; 5.2.0,">
 
         // modify the heading title id to support Chinese.
         i = 0;
-        $('#articleContent').children('h2, h3, h4').each(function () {
+        $('#articleContent').children('h2, h3, h4,h5').each(function () {
             $(this).attr('id', tocHeading + (++i));
         });
 
@@ -1054,7 +1050,7 @@ filter_var ： (PHP 5 &amp;gt;&amp;#x3D; 5.2.0,">
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">267.7k</span>
+                        class="white-color">259.5k</span>
             
             
             

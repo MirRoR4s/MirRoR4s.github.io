@@ -7,10 +7,8 @@
     <meta name="keywords" content="网络通信开发基础, 学习记录">
     <meta name="description" content="
 
-
-
 python 语言 利用 TCP 协议实现数据通讯在python中有一个模块 socketserver（python2中是 SockerServer） 提供了 TCP、UDP 等协议的具体实现，下面来看看如何使用该模块。
-TCP 服">
+TCP 服务器">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -505,14 +503,11 @@ TCP 服">
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <!--toc-->
-
 <span id="more"></span>
-
 <h4 id="python-语言-利用-tcp-协议实现数据通讯"><a href="#python-语言-利用-TCP-协议实现数据通讯" class="headerlink" title="python 语言 利用 TCP 协议实现数据通讯"></a>python 语言 利用 TCP 协议实现数据通讯</h4><p>在python中有一个模块 socketserver（python2中是 SockerServer） 提供了 TCP、UDP 等协议的具体实现，下面来看看如何使用该模块。</p>
 <h4 id="tcp-服务器端-代码"><a href="#TCP-服务器端-代码" class="headerlink" title="TCP 服务器端 代码"></a>TCP 服务器端 代码</h4><p>利用该模块创建一个 TCP 服务器需要以下几个步骤：</p>
 <p>1、我们必须通过继承 BaseRequestHandler 类来创建一个请求处理程序类</p>
 <pre class="line-numbers language-python" data-language="python"><code class="language-python">class MyTCPSocketHandler(SocketServer.BaseRequestHandler):<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
 <p>2、子类必须重载所继承的 <code>handle()</code> 方法</p>
 <pre class="line-numbers language-python" data-language="python"><code class="language-python">def handle(self):
     # self.request is the TCP socket connected to the client
@@ -521,11 +516,9 @@ TCP 服">
     print(self.data)
     # just send back the same data, but upper-cased
     self.request.sendall(self.data.upper())<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>3、<code>handle()</code> 方法将会处理即将到来的请求。</p>
 <p>4、我们一定要实例化服务器类（即socketserver），将服务器的ip地址、端口和请求类作为参数传递给服务器类</p>
 <pre class="line-numbers language-python" data-language="python"><code class="language-python">server &#x3D; SocketServer.TCPServer((HOST, PORT), MyTCPSocketHandler)<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
 <p>5、最后，调用服务器对象的 <code>handle_request()</code> 或者 <code>serve_forever()</code> 方法去处理一个或多个请求。</p>
 <p>整体服务器端代码如下：</p>
 <pre class="line-numbers language-python" data-language="python"><code class="language-python"># echo_server.py
@@ -560,7 +553,6 @@ if __name__ &#x3D;&#x3D; &quot;__main__&quot;:
     # activate the server
     # this will keep running until Ctrl-C
     server.serve_forever()<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <h4 id="tcp-客户端代码"><a href="#TCP-客户端代码" class="headerlink" title="TCP 客户端代码"></a>TCP 客户端代码</h4><p>客户端没什么好说的，大体和服务器端相同，整体代码如下：</p>
 <pre class="line-numbers language-python" data-language="python"><code class="language-python"># echo_client.py
 
@@ -588,10 +580,7 @@ finally:
 
 print(&quot;Sent:     &#123;&#125;&quot;.format(data))
 print(&quot;Received: &#123;&#125;&quot;.format(received))<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
-<h4 id="运行示例"><a href="#运行示例" class="headerlink" title="运行示例"></a>运行示例</h4><p><img src="/../images/image-20221111112740844.png" alt="image-20221111112740844"></p>
+<h4 id="运行示例"><a href="#运行示例" class="headerlink" title="运行示例"></a>运行示例</h4><p><img src="images/image-20221111112740844.png" alt="image-20221111112740844"></p>
 <h4 id="扩展学习-客户端发送命令字符串到服务器端执行"><a href="#扩展学习-客户端发送命令字符串到服务器端执行" class="headerlink" title="扩展学习-客户端发送命令字符串到服务器端执行"></a>扩展学习-客户端发送命令字符串到服务器端执行</h4><p>需要修改一下服务器端代码的处理逻辑</p>
 <pre class="line-numbers language-python" data-language="python"><code class="language-python"># echo_server.py
 
@@ -628,10 +617,7 @@ if __name__ &#x3D;&#x3D; &quot;__main__&quot;:
     # activate the server
     # this will keep running until Ctrl-C
     server.serve_forever()<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
-<p><img src="/../images/image-20221111113056516.png" alt="image-20221111113056516"></p>
+<p><img src="images/image-20221111113056516.png" alt="image-20221111113056516"></p>
 <h3 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h3><p><a target="_blank" rel="noopener" href="https://www.bogotobogo.com/python/python_network_programming_socketserver_framework_for_network_servers.php">https://www.bogotobogo.com/python/python_network_programming_socketserver_framework_for_network_servers.php</a></p>
 
                 
@@ -887,7 +873,6 @@ if __name__ &#x3D;&#x3D; &quot;__main__&quot;:
                     <div class="summary block-with-text">
                         
                             
-
 p4 CTF 2022 赛后复盘
                         
                     </div>
@@ -1019,7 +1004,7 @@ p4 CTF 2022 赛后复盘
             contentSelector: '#articleContent',
             headingsOffset: -($(window).height() * 0.4 - 45),
             collapseDepth: Number('0'),
-            headingSelector: 'h2, h3, h4'
+            headingSelector: 'h2, h3, h4,h5'
         });
 
         // modify the toc link href to support Chinese.
@@ -1031,7 +1016,7 @@ p4 CTF 2022 赛后复盘
 
         // modify the heading title id to support Chinese.
         i = 0;
-        $('#articleContent').children('h2, h3, h4').each(function () {
+        $('#articleContent').children('h2, h3, h4,h5').each(function () {
             $(this).attr('id', tocHeading + (++i));
         });
 
@@ -1160,7 +1145,7 @@ p4 CTF 2022 赛后复盘
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">267.7k</span>
+                        class="white-color">259.5k</span>
             
             
             

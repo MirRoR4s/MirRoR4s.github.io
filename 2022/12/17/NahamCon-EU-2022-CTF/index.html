@@ -6,11 +6,9 @@
     <meta charset="utf-8">
     <meta name="keywords" content="NahamCon EU 2022 CTF, 学习记录">
     <meta name="description" content="
-
 2022年12月17日的一场比赛。
 
-
-Cryptodont_hack_my_d题目描述Some hardware hackers were able to extract my d by using simple power anal">
+Cryptodont_hack_my_d题目描述Some hardware hackers were able to extract my d by using simple power analys">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -505,10 +503,8 @@ Cryptodont_hack_my_d题目描述Some hardware hackers were able to extract my d 
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <!--toc-->
-
 <p>2022年12月17日的一场比赛。</p>
 <span id="more"></span>
-
 <h2 id="crypto"><a href="#Crypto" class="headerlink" title="Crypto"></a>Crypto</h2><h3 id="dont_hack_my_d"><a href="#dont-hack-my-d" class="headerlink" title="dont_hack_my_d"></a>dont_hack_my_d</h3><h4 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h4><p>Some hardware hackers were able to extract my <code>d</code> by using simple power analysis on the <a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=cbGB__V8MNk">Square &amp; Multiply Algorithm</a>. It’s okay though because I know a trick! No more hacking my <code>d</code> pls.</p>
 <h4 id="题目内容"><a href="#题目内容" class="headerlink" title="题目内容"></a>题目内容</h4><pre class="line-numbers language-python" data-language="python"><code class="language-python">import random
 import time
@@ -546,7 +542,6 @@ for i in range(2):
 
 
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <h4 id="题目分析"><a href="#题目分析" class="headerlink" title="题目分析"></a>题目分析</h4><p>签到题，根据每轮参数计算出 ct2 即可。</p>
 <h4 id="解题脚本"><a href="#解题脚本" class="headerlink" title="解题脚本"></a>解题脚本</h4><pre class="line-numbers language-python" data-language="python"><code class="language-python">from Crypto.Util.number import *
 e &#x3D; 65537
@@ -569,9 +564,6 @@ flag2 &#x3D; (pow(ct2_1, d2_1, n2_1) % n)
 
 flag &#x3D; long_to_bytes(flag1) + long_to_bytes(flag2)
 print(flag)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
 <h3 id="shapeshifter"><a href="#Shapeshifter" class="headerlink" title="Shapeshifter"></a>Shapeshifter</h3><h4 id="题目描述"><a href="#题目描述-1" class="headerlink" title="题目描述"></a>题目描述</h4><p>These bits are shapepshifting! I need some help getting them back to their original form. Someone told me this might be a <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Linear-feedback_shift_register#Fibonacci_LFSRs"><code>Fibonacci LFSR</code></a>.</p>
 <h4 id="题目内容"><a href="#题目内容-1" class="headerlink" title="题目内容"></a>题目内容</h4><pre class="line-numbers language-python" data-language="python"><code class="language-python">from Crypto.Util.number import bytes_to_long as b2l
 
@@ -601,16 +593,15 @@ for i in range(0, len(FLAG), 2):
 
 
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <h4 id="题目分析"><a href="#题目分析-1" class="headerlink" title="题目分析"></a>题目分析</h4><p>又学到了一个python的操作，太优雅了。</p>
 <p><img src="/images/NahamCon-EU-2022-CTF/image-20221217194047730.png" alt="image-20221217194047730"></p>
 <p>题目的这个LFSR的反馈函数已经给出来了，那么我们看看对于连续的两轮状态，如何恢复出上一轮的状态：</p>
 <p>假设我们上一轮的状态是 </p>
-<p>$a_0a_1…..a_{15}$</p>
+<p>$a<em>0a_1…..a</em>{15}$</p>
 <p>当前轮的状态是</p>
-<p>$a_{16}a_0a_1….a_{14}$</p>
+<p>$a<em>{16}a_0a_1….a</em>{14}$</p>
 <p>根据反馈函数我们知道</p>
-<p>$a_{16} &#x3D; a_{15}\oplus,a_{13}\oplus,a_{12}\oplus,a_{10}$</p>
+<p>$a<em>{16} = a</em>{15}\oplus\,a<em>{13}\oplus\,a</em>{12}\oplus\,a_{10}$</p>
 <p>如果我们已知了当前轮的全部值，那么就可以根据上式恢复出 $a_{15}$ ！</p>
 <p>所以想要恢复到初始的状态，只需要重复应用以上操作即可。</p>
 <h4 id="解题脚本"><a href="#解题脚本-1" class="headerlink" title="解题脚本"></a>解题脚本</h4><pre class="line-numbers language-python" data-language="python"><code class="language-python">from Crypto.Util.number import *
@@ -637,11 +628,6 @@ if __name__ &#x3D;&#x3D; &quot;__main__&quot;:
 
     print(flag)
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
-
-
 <h3 id="rektcursion-对角化"><a href="#rektcursion-对角化" class="headerlink" title="rektcursion-对角化"></a>rektcursion-对角化</h3><h4 id="题目描述"><a href="#题目描述-2" class="headerlink" title="题目描述"></a>题目描述</h4><p><a target="_blank" rel="noopener" href="https://www.google.com/search?q=recursion">Recursion</a> is all fun and games until…<br>Hint - Matrix Diagonalization could be useful</p>
 <h4 id="题目内容"><a href="#题目内容-2" class="headerlink" title="题目内容"></a>题目内容</h4><pre class="line-numbers language-python" data-language="python"><code class="language-python">import math
 import hashlib
@@ -678,7 +664,6 @@ if __name__ &#x3D;&#x3D; &quot;__main__&quot;:
     decrypt_flag(ret)
 
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <h4 id="题目分析"><a href="#题目分析-2" class="headerlink" title="题目分析"></a>题目分析</h4><p>原本想转成迭代形式的代码的，但是发现算的数值不对。提示是说矩阵对角化的，但是我不太会构造。</p>
 <p>看 <a target="_blank" rel="noopener" href="https://github.com/An00bRektn/CTF/tree/main/live_events/nahamcon-eu_22/crypto_rektcursion">WP</a> 之后明白这个对角矩阵似乎可以用来求出递归序列的通项公式，这能够让我们快速求出序列的某一项。</p>
 <p><a target="_blank" rel="noopener" href="https://discord.com/channels/598608711186907146/1053763447478829096/1053766136656830514">别人的做法</a>（大同小异）</p>
@@ -724,7 +709,6 @@ if __name__ &#x3D;&#x3D; &quot;__main__&quot;:
     print(&quot;Recursion done!&quot;)
     #print(ret)
     decrypt_ans(ret)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 
                 
             </div>
@@ -979,7 +963,6 @@ if __name__ &#x3D;&#x3D; &quot;__main__&quot;:
                     <div class="summary block-with-text">
                         
                             
-
 2022年12月17日的一场比赛。
                         
                     </div>
@@ -1030,7 +1013,6 @@ if __name__ &#x3D;&#x3D; &quot;__main__&quot;:
                     <div class="summary block-with-text">
                         
                             
-
 2022年12月9日的比赛。
                         
                     </div>
@@ -1113,7 +1095,7 @@ if __name__ &#x3D;&#x3D; &quot;__main__&quot;:
             contentSelector: '#articleContent',
             headingsOffset: -($(window).height() * 0.4 - 45),
             collapseDepth: Number('0'),
-            headingSelector: 'h2, h3, h4'
+            headingSelector: 'h2, h3, h4,h5'
         });
 
         // modify the toc link href to support Chinese.
@@ -1125,7 +1107,7 @@ if __name__ &#x3D;&#x3D; &quot;__main__&quot;:
 
         // modify the heading title id to support Chinese.
         i = 0;
-        $('#articleContent').children('h2, h3, h4').each(function () {
+        $('#articleContent').children('h2, h3, h4,h5').each(function () {
             $(this).attr('id', tocHeading + (++i));
         });
 
@@ -1254,7 +1236,7 @@ if __name__ &#x3D;&#x3D; &quot;__main__&quot;:
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">267.7k</span>
+                        class="white-color">259.5k</span>
             
             
             

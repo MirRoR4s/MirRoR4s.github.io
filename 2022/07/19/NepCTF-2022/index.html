@@ -465,7 +465,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    703
+                    694
                 </div>
                 
 
@@ -565,19 +565,16 @@ def solve():
 
 if __name__ &#x3D;&#x3D; &#39;__main__&#39;:
     solve()<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
-<h2 id="2p-or-s"><a href="#2-P-or-S" class="headerlink" title="2.P or S"></a>2.P or S</h2><p>Pbox可以对应一个binary矩阵P，所以加密过程可以写成：<br>$c&#x3D;P(P(P(P(P(P(pm+k0)+k1)+k2)+k3)+k4)+k5&#x3D;p^6m+\sum p^ik_{5-i}$</p>
+<h2 id="2p-or-s"><a href="#2-P-or-S" class="headerlink" title="2.P or S"></a>2.P or S</h2><p>Pbox可以对应一个binary矩阵P，所以加密过程可以写成：<br>$c=P(P(P(P(P(P(pm+k0)+k1)+k2)+k3)+k4)+k5=p^6m+\sum p^ik_{5-i}$</p>
 <p>已知一组明密文即可计算出$\sum P^ik_{5-i}$，对应求解即可。</p>
 <p>本题考察的是已知明文攻击和语意安全模型。</p>
-<h2 id="3中学数学"><a href="#3-中学数学" class="headerlink" title="3.中学数学"></a>3.中学数学</h2><p>已知 q&#x3D;next_prime(p+(p&gt;&gt;500))，则</p>
-<p>$q &#x3D; [(1+ \frac{1}{2^{500}})p]+r$ ，其中r是满足q为素数的最小整数。</p>
-<p>所以 $n&#x3D;pq&#x3D;[(1+\frac{1}{2^{500}})p^2]+rp$</p>
+<h2 id="3中学数学"><a href="#3-中学数学" class="headerlink" title="3.中学数学"></a>3.中学数学</h2><p>已知 q=next_prime(p+(p&gt;&gt;500))，则</p>
+<p>$q = [(1+ \frac{1}{2^{500}})p]+r$ ，其中r是满足q为素数的最小整数。</p>
+<p>所以 $n=pq=[(1+\frac{1}{2^{500}})p^2]+rp$</p>
 <p>于是</p>
-<p>$[(1+\frac{1}{2^{500}})n] &#x3D; [(1+\frac{1}{2^{500}})p]^2 + [(1+\frac{1}{2^{500}})]rp &gt; [(1+\frac{1}{2^{500}})p]^2$</p>
+<p>$[(1+\frac{1}{2^{500}})n] = [(1+\frac{1}{2^{500}})p]^2 + [(1+\frac{1}{2^{500}})]rp &gt; [(1+\frac{1}{2^{500}})p]^2$</p>
 <p>又有</p>
-<p>$[(1+\frac{1}{2^{500}})n]&#x3D;[(1+\frac{1}{2^{500}})p]^2+[(1+\frac{1}{2^{500}})rp]&lt;[(1+\frac{1}{2^{500}})p]^2+[(1+\frac{1}{2^{500}})rp]+2[(1+\frac{1}{2^{500}})rp]+r^2&#x3D;q^2$</p>
+<p>$[(1+\frac{1}{2^{500}})n]=[(1+\frac{1}{2^{500}})p]^2+[(1+\frac{1}{2^{500}})rp]&lt;[(1+\frac{1}{2^{500}})p]^2+[(1+\frac{1}{2^{500}})rp]+2[(1+\frac{1}{2^{500}})rp]+r^2=q^2$</p>
 <p>所以</p>
 <p>$[(1+\frac{1}{2^{500}})p] &lt; \sqrt{[(1+\frac{1}{2^{500}})n]} &lt; [(1+\frac{1}{2^{500}})p]+r$</p>
 <p>即</p>
@@ -838,7 +835,6 @@ if __name__ &#x3D;&#x3D; &#39;__main__&#39;:
                     <div class="summary block-with-text">
                         
                             
-
 特别有意思的一个比赛，难度分明。
                         
                     </div>
@@ -962,7 +958,7 @@ if __name__ &#x3D;&#x3D; &#39;__main__&#39;:
             contentSelector: '#articleContent',
             headingsOffset: -($(window).height() * 0.4 - 45),
             collapseDepth: Number('0'),
-            headingSelector: 'h2, h3, h4'
+            headingSelector: 'h2, h3, h4,h5'
         });
 
         // modify the toc link href to support Chinese.
@@ -974,7 +970,7 @@ if __name__ &#x3D;&#x3D; &#39;__main__&#39;:
 
         // modify the heading title id to support Chinese.
         i = 0;
-        $('#articleContent').children('h2, h3, h4').each(function () {
+        $('#articleContent').children('h2, h3, h4,h5').each(function () {
             $(this).attr('id', tocHeading + (++i));
         });
 
@@ -1103,7 +1099,7 @@ if __name__ &#x3D;&#x3D; &#39;__main__&#39;:
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">267.7k</span>
+                        class="white-color">259.5k</span>
             
             
             

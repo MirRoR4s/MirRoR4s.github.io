@@ -6,11 +6,9 @@
     <meta charset="utf-8">
     <meta name="keywords" content="TetCTF 2023, 学习记录">
     <meta name="description" content="
-
 坚持人生理想百年不动摇。
 
-
-WEBNewYearBot题目描述DescriptionNew Year New Code! My friend decide to learn code in new year, here his ver">
+WEBNewYearBot题目描述DescriptionNew Year New Code! My friend decide to learn code in new year, here his very ">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -505,13 +503,11 @@ WEBNewYearBot题目描述DescriptionNew Year New Code! My friend decide to learn
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <!--toc-->
-
 <p>坚持人生理想百年不动摇。</p>
 <span id="more"></span>
-
 <h2 id="web"><a href="#WEB" class="headerlink" title="WEB"></a>WEB</h2><h3 id="newyearbot"><a href="#NewYearBot" class="headerlink" title="NewYearBot"></a>NewYearBot</h3><h4 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h4><p><strong>Description</strong><br>New Year New Code! My friend decide to learn code in new year, here his very first website: <a target="_blank" rel="noopener" href="http://172.105.120.180:9999/">http://172.105.120.180:9999/</a></p>
 <p><strong>File</strong><br>He said it is very secure because he is very strict on what user can input, can you check?<br><a target="_blank" rel="noopener" href="https://drive.google.com/file/d/1tU18ePUAHHYpxJ9QhdVKBpuBm_eXy--r/view?usp=sharing">https://drive.google.com/file/d/1tU18ePUAHHYpxJ9QhdVKBpuBm_eXy--r/view?usp=sharing</a></p>
-<p><strong>Note</strong><br>Don’t generate excessive load. Scanning&#x2F;Dirbust is not needed.</p>
+<p><strong>Note</strong><br>Don’t generate excessive load. Scanning/Dirbust is not needed.</p>
 <h4 id="题目内容"><a href="#题目内容" class="headerlink" title="题目内容"></a>题目内容</h4><pre class="line-numbers language-python" data-language="python"><code class="language-python">from flask import Flask, request
 import re, random, os
 
@@ -634,7 +630,6 @@ def greeting():
 if __name__ &#x3D;&#x3D; &#39;__main__&#39;:
 	app.run(debug&#x3D;True)
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <h4 id="题目分析"><a href="#题目分析" class="headerlink" title="题目分析"></a>题目分析</h4><p>作为一个开发初学者，很自然地看不懂题目的代码，于是我找到了 Flask 的<a target="_blank" rel="noopener" href="https://tedboy.github.io/flask/interface_api.incoming_request_data.html#flask.Request.args">官方文档</a>，但是后面我发现 pycharm 的 ctrl＋鼠标右键看源码，里面的注释说得也很明白。</p>
 <p>题目的一切处理逻辑应该是从 <code>greeting</code> 函数的这里开始：</p>
 <p><img src="/images/TetCTF-2023/image-20230106184824729.png" alt="image-20230106184824729"></p>
@@ -647,7 +642,7 @@ if __name__ &#x3D;&#x3D; &#39;__main__&#39;:
 <p><img src="/images/TetCTF-2023/image-20230106203149256.png" alt="image-20230106203149256"></p>
 <p>最后题目会返回这个 greeting</p>
 <p><img src="/images/TetCTF-2023/image-20230106203238127.png" alt="image-20230106203238127"></p>
-<p>所以说只要我们传入 type&#x3D;FL4G，number&#x3D;0 就可以获取到 flag 的第一个字符。不幸的是，在 number 大于等于 6 时会返回 ???</p>
+<p>所以说只要我们传入 type=FL4G，number=0 就可以获取到 flag 的第一个字符。不幸的是，在 number 大于等于 6 时会返回 ???</p>
 <p>原因是什么呢？如下图</p>
 <p><img src="/images/TetCTF-2023/image-20230106205149310.png" alt="image-20230106205149310"></p>
 <p>是的，那就是我们传入的 number 要小于等于 最长列表长度减 1 ，而最大长度是 6 ，那么我们传入的 number 必须小于等于 5 。</p>
@@ -667,7 +662,6 @@ if __name__ &#x3D;&#x3D; &#39;__main__&#39;:
 <p><code>-~5</code> 会得到 <code>6</code> ，关于其底层原理，可以看这篇文章：<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/261080329">取反运算符~详解</a>。而减号和波浪号是在允许的 ascii 码值范围内，所以我们可以通过这种手法拿到 flag 的第六个字符</p>
 <p><img src="/images/TetCTF-2023/image-20230107091154708.png" alt="image-20230107091154708"></p>
 <h4 id="解题步骤"><a href="#解题步骤" class="headerlink" title="解题步骤"></a>解题步骤</h4><h5 id="方法一"><a href="#方法一" class="headerlink" title="方法一"></a>方法一</h5><pre class="line-numbers language-none"><code class="language-none">type&#x3D;FL4G&amp;number&#x3D;𝔰𝔩𝔦𝔠𝔢(𝔦𝔡(𝔯𝔢)) # POST<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
 <h5 id="方法二"><a href="#方法二" class="headerlink" title="方法二"></a>方法二</h5><p>如上图</p>
 <pre class="line-numbers language-none"><code class="language-none">-~0-~4 -&gt; 6
 -~0-~5 -&gt; 7
@@ -687,7 +681,6 @@ if __name__ &#x3D;&#x3D; &#39;__main__&#39;:
 ~2 -&gt; -3
 ~1 -&gt; -2
 ~0 -&gt; -1<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <h3 id="image-services-viewer"><a href="#Image-Services-Viewer" class="headerlink" title="Image Services Viewer"></a>Image Services Viewer</h3><h4 id="题目描述"><a href="#题目描述-1" class="headerlink" title="题目描述"></a>题目描述</h4><p>Do you know secret which on my server!!!!</p>
 <h4 id="题目内容"><a href="#题目内容-1" class="headerlink" title="题目内容"></a>题目内容</h4>
                 
@@ -943,7 +936,6 @@ if __name__ &#x3D;&#x3D; &#39;__main__&#39;:
                     <div class="summary block-with-text">
                         
                             
-
 Java 安全可以从反序列化说起，而反序列化可以从反射说起。
                         
                     </div>
@@ -1076,7 +1068,7 @@ Java 安全可以从反序列化说起，而反序列化可以从反射说起。
             contentSelector: '#articleContent',
             headingsOffset: -($(window).height() * 0.4 - 45),
             collapseDepth: Number('0'),
-            headingSelector: 'h2, h3, h4'
+            headingSelector: 'h2, h3, h4,h5'
         });
 
         // modify the toc link href to support Chinese.
@@ -1088,7 +1080,7 @@ Java 安全可以从反序列化说起，而反序列化可以从反射说起。
 
         // modify the heading title id to support Chinese.
         i = 0;
-        $('#articleContent').children('h2, h3, h4').each(function () {
+        $('#articleContent').children('h2, h3, h4,h5').each(function () {
             $(this).attr('id', tocHeading + (++i));
         });
 
@@ -1217,7 +1209,7 @@ Java 安全可以从反序列化说起，而反序列化可以从反射说起。
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">267.7k</span>
+                        class="white-color">259.5k</span>
             
             
             

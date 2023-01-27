@@ -6,15 +6,13 @@
     <meta charset="utf-8">
     <meta name="keywords" content="m0leCon_Beginner_CTF, 学习记录">
     <meta name="description" content="
-
 赛后复现。
-
 
 Cryptounrecognizeable题目描述I am getting into the military database, you won’t ever know my identity
 题目内容两张图片
 
 
-分">
+分析不">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -509,10 +507,8 @@ Cryptounrecognizeable题目描述I am getting into the military database, you wo
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <!--toc-->
-
 <p>赛后复现。</p>
 <span id="more"></span>
-
 <h2 id="crypto"><a href="#Crypto" class="headerlink" title="Crypto"></a>Crypto</h2><h3 id="unrecognizeable"><a href="#unrecognizeable" class="headerlink" title="unrecognizeable"></a><strong>unrecognizeable</strong></h3><h4 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h4><p>I am getting into the military database, you won’t ever know my identity</p>
 <h4 id="题目内容"><a href="#题目内容" class="headerlink" title="题目内容"></a>题目内容</h4><p>两张图片</p>
 <p><img src="/images/m0leCon-Beginner-CTF/whoami.png" alt="whoami"></p>
@@ -533,7 +529,6 @@ b &#x3D; ImageChops.subtract(im1,im2)
 im3 &#x3D; ImageChops.add(a,b)
 im3.save(&quot;im3.png&quot;)
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p><img src="/images/m0leCon-Beginner-CTF/image-20221113150930429.png" alt="image-20221113150930429"></p>
 <p>后面发现用 StegSolve 的异或功能可以更加清晰地显示出 flag 图片</p>
 <p><img src="/images/m0leCon-Beginner-CTF/image-20221113150913870.png" alt="image-20221113150913870"></p>
@@ -571,8 +566,7 @@ if __name__ &#x3D;&#x3D; &#39;__main__&#39;:
     print(&#39;N &#x3D;&#39;, N)
     print(&#39;ciphertext &#x3D;&#39;, ciphertext)
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h4 id="分析"><a href="#分析-1" class="headerlink" title="分析"></a>分析</h4><p>生成一个位于 [2,2**16] 区间的整数，并将此整数的每一位乘在一起得到乘积 r。如果 r 为 0 或 1 跳过此次循环，如果 r 不是素数或者 小于 2 的 256 次方则 令 $r&#x3D;2r-1$。</p>
+<h4 id="分析"><a href="#分析-1" class="headerlink" title="分析"></a>分析</h4><p>生成一个位于 [2,2**16] 区间的整数，并将此整数的每一位乘在一起得到乘积 r。如果 r 为 0 或 1 跳过此次循环，如果 r 不是素数或者 小于 2 的 256 次方则 令 $r=2r-1$。</p>
 <p>我们直接运行这个素数生成算法，然后查看 模数是否整除我们生成的素数就可以了。根据素数分布定理，这个过程应该不会太久。</p>
 <p><img src="/images/m0leCon-Beginner-CTF/image-20221113153038439.png" alt="image-20221113153038439"></p>
 <h4 id="解题脚本"><a href="#解题脚本-1" class="headerlink" title="解题脚本"></a>解题脚本</h4><pre class="line-numbers language-python" data-language="python"><code class="language-python">from Crypto.Util.number import isPrime, bytes_to_long
@@ -642,7 +636,6 @@ if __name__ &#x3D;&#x3D; &quot;__main__&quot;:
 	# Decrypt ciphertext
 	pt &#x3D; pow(ct, d, n)
 	print(f&quot;pt: &#123;bytes.fromhex(hex(pt)[2:]).decode()&#125;&quot;)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>也可以网站求解 <a target="_blank" rel="noopener" href="https://www.dcode.fr/rsa-cipher">https://www.dcode.fr/rsa-cipher</a> ：<br><img src="/images/m0leCon-Beginner-CTF/image-20221113162419121.png" alt="image-20221113162419121"></p>
 <h3 id="magic-not-crypto"><a href="#Magic-not-crypto" class="headerlink" title="Magic, not crypto"></a><strong>Magic, not crypto</strong></h3><h4 id="题目描述"><a href="#题目描述-2" class="headerlink" title="题目描述"></a>题目描述</h4><p>I’ve used my magic powers to obfuscate the challenge, will you be able to revert it?<br><code>nc tcp.challs.m0lecon.it 9839</code></p>
 <h4 id="题目内容"><a href="#题目内容-2" class="headerlink" title="题目内容"></a>题目内容</h4><pre class="line-numbers language-python" data-language="python"><code class="language-python"># The following imports are from the pycryptodome library
@@ -703,13 +696,12 @@ if __name__ &#x3D;&#x3D; &#39;__main__&#39;:
     print(steps)
     print(flag.hex())
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <h4 id="分析"><a href="#分析-2" class="headerlink" title="分析"></a>分析</h4><p>题目将 flag  进行 20次 加密，其中 RSA 加密至多使用一次，其余加密操作是 base64 编码、rot13 编码、逆序。</p>
 <p>题目已告知所用的加密算法步骤以及密文，我们简单地写出其对应的解密算法即可。注意到其中 RSA算法解密脚本的编写有些困难，因为我们甚至不知道模数n的值，但是观察源码就会发现 p、q的生成由明文的前四个字节决定</p>
 <p><img src="/images/m0leCon-Beginner-CTF/image-20221113155623802.png" alt="image-20221113155623802"></p>
 <p>只要拿到RSA算法输入的前四个字符就可以获得p、q，这是因为种子固定那么生成的数字也固定。</p>
 <p><img src="/images/m0leCon-Beginner-CTF/image-20221113155726537.png" alt="image-20221113155726537"></p>
-<p>​	只要我们不断重连服务器直至第一次使用的加密算法是RSA就可以停下来，此时RSA算法的输入的前四个字节是 <code>ptm&#123;</code>，亦或者说加密算法根本就没有使用 RSA，此时也可以轻松解出来！</p>
+<p>​    只要我们不断重连服务器直至第一次使用的加密算法是RSA就可以停下来，此时RSA算法的输入的前四个字节是 <code>ptm&#123;</code>，亦或者说加密算法根本就没有使用 RSA，此时也可以轻松解出来！</p>
 <p><img src="/images/m0leCon-Beginner-CTF/image-20221113155855153.png" alt="image-20221113155855153"></p>
 <h4 id="解题脚本"><a href="#解题脚本-2" class="headerlink" title="解题脚本"></a>解题脚本</h4><p>包含上述所说的两种情况的脚本如下</p>
 <p><img src="/images/m0leCon-Beginner-CTF/image.png" alt="图片"></p>
@@ -757,9 +749,6 @@ for step in steps:
     flag &#x3D; possible_methods[step](flag)
 
 print(long_to_bytes(flag))<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
 <h3 id="ssa"><a href="#SSA" class="headerlink" title="SSA"></a>SSA</h3><h4 id="题目描述"><a href="#题目描述-3" class="headerlink" title="题目描述"></a>题目描述</h4><p>Hi agent, the Secret Service Agency has a mission for you, will you be able to solve it?<br><code>nc tcp.challs.m0lecon.it 7483</code></p>
 <h4 id="题目内容"><a href="#题目内容-3" class="headerlink" title="题目内容"></a>题目内容</h4><pre class="line-numbers language-python" data-language="python"><code class="language-python"># The following imports are from the pycryptodome library
 from Crypto.Util.number import getPrime
@@ -805,7 +794,6 @@ if __name__ &#x3D;&#x3D; &#39;__main__&#39;:
         cipher.encrypt(pad(message.encode(), AES.block_size)).hex()
     )
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <h4 id="分析"><a href="#分析-3" class="headerlink" title="分析"></a>分析</h4><p>本题使用 Diffle-Hellman协议进行了一个 AES 的密钥交换，求出密钥即可获得 flag。</p>
 <p>注意到素数只有64比特，太小了，所以可以暴力枚举或者网站解密。</p>
 <p><a target="_blank" rel="noopener" href="https://www.alpertron.com.ar/DILOG.HTM">https://www.alpertron.com.ar/DILOG.HTM</a></p>
@@ -837,7 +825,6 @@ cipher &#x3D; AES.new(key, AES.MODE_CBC, iv)
 print(cipher.decrypt(long_to_bytes(Message)))
 
 #ptm&#123;us3_pr1m3s_wi7h_en0ugh_b17s&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <h3 id="transfers-notes-doing"><a href="#Transfer’s-notes-doing" class="headerlink" title="Transfer’s notes (doing)"></a><strong>Transfer’s notes</strong> (doing)</h3><h4 id="题目描述"><a href="#题目描述-4" class="headerlink" title="题目描述"></a>题目描述</h4><p>Someone said that this application would ensure the safety of all the noted transactions…<br><code>nc tcp.challs.m0lecon.it 8293</code></p>
 <h4 id="题目内容"><a href="#题目内容-4" class="headerlink" title="题目内容"></a>题目内容</h4><h5 id="interfacepy"><a href="#interface-py" class="headerlink" title="interface.py"></a>interface.py</h5><pre class="line-numbers language-python" data-language="python"><code class="language-python">header&#x3D;&quot;&quot;&quot;
 |---------------------------|
@@ -873,7 +860,6 @@ transaction &#x3D; &quot;[id] [receiver] &lt;- [amount] | [description]&quot;
 users &#x3D; users_border + &quot;\n| userid username&quot; + &#39; &#39; * 57 + &#39;|\n&#39; + users_border
 transactions &#x3D; transactions_borders + &quot;\n| userid        id        |&quot; + &#39; &#39; * 130 + &#39;|\n&#39; + transactions_borders
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <h5 id="servicepy"><a href="#service-py" class="headerlink" title="service.py"></a>service.py</h5><pre class="line-numbers language-python" data-language="python"><code class="language-python">import interface
 import utils
 
@@ -1032,7 +1018,6 @@ def main():
 
 if __name__ &#x3D;&#x3D; &quot;__main__&quot;:
     main()<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <h5 id="utilspy"><a href="#utils-py" class="headerlink" title="utils.py"></a>utils.py</h5><pre class="line-numbers language-python" data-language="python"><code class="language-python">import hashlib
 import random
 import json
@@ -1169,7 +1154,6 @@ for user in users():
         userid &#x3D; os.urandom(3).hex()
     Ids[user] &#x3D; userid
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 
                 
             </div>
@@ -1461,7 +1445,6 @@ for user in users():
                     <div class="summary block-with-text">
                         
                             
-
 赛后复现
                         
                     </div>
@@ -1544,7 +1527,7 @@ for user in users():
             contentSelector: '#articleContent',
             headingsOffset: -($(window).height() * 0.4 - 45),
             collapseDepth: Number('0'),
-            headingSelector: 'h2, h3, h4'
+            headingSelector: 'h2, h3, h4,h5'
         });
 
         // modify the toc link href to support Chinese.
@@ -1556,7 +1539,7 @@ for user in users():
 
         // modify the heading title id to support Chinese.
         i = 0;
-        $('#articleContent').children('h2, h3, h4').each(function () {
+        $('#articleContent').children('h2, h3, h4,h5').each(function () {
             $(this).attr('id', tocHeading + (++i));
         });
 
@@ -1685,7 +1668,7 @@ for user in users():
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">267.7k</span>
+                        class="white-color">259.5k</span>
             
             
             

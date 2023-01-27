@@ -5,15 +5,12 @@
 <head>
     <meta charset="utf-8">
     <meta name="keywords" content="DiceCTF@HOPE-2022, 学习记录">
-    <meta name="description" content="join the DiceCTF@hope in chinese time 2022&amp;#x2F;7&amp;#x2F;23
-
-
-
-
+    <meta name="description" content="join the DiceCTF@hope in chinese time 2022/7/23
 
 
 官方wp：https://github.com/dicegang/hope-2022-challenges
-[T">
+[TOC]
+obpimport ">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -498,13 +495,9 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>join the DiceCTF@hope in chinese time 2022&#x2F;7&#x2F;23</p>
+                <p>join the DiceCTF@hope in chinese time 2022/7/23</p>
 <!--toc-->
-
 <span id="more"></span>
-
-
-
 <p>官方wp：<a target="_blank" rel="noopener" href="https://github.com/dicegang/hope-2022-challenges">https://github.com/dicegang/hope-2022-challenges</a></p>
 <p>[TOC]</p>
 <h2 id="obp"><a href="#obp" class="headerlink" title="obp"></a>obp</h2><pre class="line-numbers language-python" data-language="python"><code class="language-python">import random
@@ -518,7 +511,6 @@ ciphertext &#x3D; [key ^ byte for byte in plaintext]
 with open(&#39;output.txt&#39;, &#39;w&#39;) as f:
     f.write(bytes(ciphertext).hex())
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <h2 id="pem"><a href="#pem" class="headerlink" title="pem"></a>pem</h2><pre class="line-numbers language-python" data-language="python"><code class="language-python">from Crypto.PublicKey import RSA
 from Crypto.Cipher import PKCS1_OAEP
 with open(&quot;privatekey.pem&quot;,&quot;rb&quot;) as f:
@@ -528,9 +520,6 @@ from Crypto.Util.number import *
 cipher_rsa &#x3D;PKCS1_OAEP.new(key)
 print(cipher_rsa.decrypt(f1))
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
 <h2 id="kfb"><a href="#kfb" class="headerlink" title="kfb"></a>kfb</h2><pre class="line-numbers language-python" data-language="python"><code class="language-python">#!&#x2F;usr&#x2F;local&#x2F;bin&#x2F;python -u
 
 from Crypto.Cipher import AES
@@ -566,9 +555,6 @@ def main():
 if __name__ &#x3D;&#x3D; &#39;__main__&#39;:
   main()
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
 <p>可以进行选择明文攻击，给服务器发送空字节加密，然后可以得到<code>encrypt_block(k,k)</code>，根据这个就可以解密flag。但是尤其要注意的是发送的空字节会经过一个pad，所以实际上跟<code>encrypt_block(k,k)</code>异或的是填充后的空字节。</p>
 <pre class="line-numbers language-python" data-language="python"><code class="language-python">from pwn import *
 from Crypto.Cipher import AES
@@ -609,9 +595,6 @@ print(flag)
 io.interactive()
 
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
 <h2 id="reverse-rsa"><a href="#reverse-rsa" class="headerlink" title="reverse-rsa"></a>reverse-rsa</h2><pre class="line-numbers language-python" data-language="python"><code class="language-python">#!&#x2F;usr&#x2F;local&#x2F;bin&#x2F;python
 
 import re
@@ -652,7 +635,6 @@ if re.fullmatch(flag_regex, m) is not None:
 else:
 	print(&quot;hack harder&quot;)
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>这是在问这么一个问题：任意选择n、e、p、q、d，求对未知的密文c，其解密出的m的格式是<code>hope&#123;xxxx&#125;</code></p>
 <p>用数学表达式表达为：$m’\equiv c^d \mod n $，其中$m’$ 要符合题目给的regex。我们可以随便取个符合regex的$m’$，比如<code>hope&#123;a&#125;</code>，注意字节顺序。</p>
 <p>然后这个问题就变成了离散对数问题，所以我们只要让<code>p-1,q-1</code> 都够smooth，然后分别解dlog之后crt就能求得需要得<code>e</code>了。</p>
@@ -695,8 +677,7 @@ while True:
 &quot;&quot;&quot;
 # hope&#123;successful_decryption_doesnt_mean_correct_decryption_0363f29466b883edd763dc311716194d37dff5cd93cd4f1b4ac46152f4f9&#125;
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>​	</p>
+<p>​    </p>
 <h2 id="despicable-you"><a href="#DESpicable-you" class="headerlink" title="DESpicable you"></a>DESpicable you</h2><pre class="line-numbers language-python" data-language="python"><code class="language-python">from os import urandom
 
 def encipher(a,b):
@@ -735,7 +716,6 @@ def main():
 main()
 
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>尝试的方法失败了，但是还是记录一下。做题的时候主要python的版本，python3在读取密文的时候会报错。而且python3在输出一个bytes的时候会自动转为整数？</p>
 <pre class="line-numbers language-python" data-language="python"><code class="language-python">from os import urandom
 from tqdm import tqdm
@@ -795,7 +775,6 @@ def decrypt(key,f):
 decrypt(key,f)
 
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <pre class="line-numbers language-python" data-language="python"><code class="language-python">def xor(s1,s2):
     a &#x3D; &#39;&#39;
     for i,j in zip(s1,s2):
@@ -827,7 +806,6 @@ for j in chars:
         print(j+l)
         print(pt)
         #hope&#123;maybe_1_sh0ulD_h4v3_h1R3d_4_5p3c1471st_5tgkjs3bgRh&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>官方wp似乎也没有找到flag，这个题在我的电脑上好像坏掉了。</p>
 <h2 id="replacement"><a href="#replacement" class="headerlink" title="replacement"></a>replacement</h2><p>题如其名，高级的替代密码，将打乱的明文告诉了我们。关键就在于找出密文跟明文的对应关系。而且本题还加大了难度，映射表有41个字符…..</p>
 <pre class="line-numbers language-python" data-language="python"><code class="language-python">import random
@@ -850,9 +828,6 @@ ciphertext &#x3D; &#39;&#39;.join(replacement.get(c, c) for c in plaintext)
 with open(&#39;output.txt&#39;, &#39;w&#39;) as f:
     f.write(ciphertext)
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
 <h2 id="small-fortune"><a href="#small-fortune" class="headerlink" title="small-fortune"></a>small-fortune</h2><pre class="line-numbers language-python" data-language="python"><code class="language-python">from Crypto.Util.number import *
 from gmpy2 import legendre
 
@@ -878,14 +853,13 @@ def gm_encrypt(msg, n, x):
 print(&quot;n &#x3D;&quot;, n)
 print(&quot;x &#x3D;&quot;, x)
 print(&quot;enc &#x3D;&quot;, gm_encrypt(flag, n, x))<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>首先有256bits的$n&#x3D;pq$ 和一个随机数$x$（二次剩余的部分好像用不到）当作公钥，然后加密流程是先生成一个未知的随机数$y$，之后bit bit bit 加密：</p>
+<p>首先有256bits的$n=pq$ 和一个随机数$x$（二次剩余的部分好像用不到）当作公钥，然后加密流程是先生成一个未知的随机数$y$，之后bit bit bit 加密：</p>
 <p>$c_i \equiv y_i^2x^{b_i}(\mod n)$</p>
-<p>其中的$y_0&#x3D;y,y_i&#x3D;y_{i-1}+d_i$ ，且 $d_i$是$2^{48}$以内的随机数。</p>
-<p>首先是假定<code>flag.txt</code>里面的flag格式是<code>hope&#123;....&#125;</code>且在最后没有换行，那么我们知道$b_0&#x3D;1,b_1&#x3D;0$。从这边可以列出两个等式：</p>
+<p>其中的$y<em>0=y,y_i=y</em>{i-1}+d_i$ ，且 $d_i$是$2^{48}$以内的随机数。</p>
+<p>首先是假定<code>flag.txt</code>里面的flag格式是<code>hope&#123;....&#125;</code>且在最后没有换行，那么我们知道$b_0=1,b_1=0$。从这边可以列出两个等式：</p>
 <p>$c_0\equiv y^2x^{b_0}\equiv y^2x \space(\mod n)$</p>
 <p>$c1\equiv (y+d1)^2x^{b_0}\equiv(y+d_1)^2 (\mod n)$</p>
-<p>分别移项可以得到两个多项式$f(y,d_1),g(y,d_1)$，用resultant可得$h&#x3D;Res_y(f,g)$是个$d_1$的四次多项式。 0</p>
+<p>分别移项可以得到两个多项式$f(y,d_1),g(y,d_1)$，用resultant可得$h=Res_y(f,g)$是个$d_1$的四次多项式。 0</p>
 <h2 id="streamlined"><a href="#streamlined" class="headerlink" title="streamlined"></a>streamlined</h2>
                 
             </div>
@@ -1262,7 +1236,7 @@ print(&quot;enc &#x3D;&quot;, gm_encrypt(flag, n, x))<span aria-hidden="true" cl
             contentSelector: '#articleContent',
             headingsOffset: -($(window).height() * 0.4 - 45),
             collapseDepth: Number('0'),
-            headingSelector: 'h2, h3, h4'
+            headingSelector: 'h2, h3, h4,h5'
         });
 
         // modify the toc link href to support Chinese.
@@ -1274,7 +1248,7 @@ print(&quot;enc &#x3D;&quot;, gm_encrypt(flag, n, x))<span aria-hidden="true" cl
 
         // modify the heading title id to support Chinese.
         i = 0;
-        $('#articleContent').children('h2, h3, h4').each(function () {
+        $('#articleContent').children('h2, h3, h4,h5').each(function () {
             $(this).attr('id', tocHeading + (++i));
         });
 
@@ -1403,7 +1377,7 @@ print(&quot;enc &#x3D;&quot;, gm_encrypt(flag, n, x))<span aria-hidden="true" cl
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">267.7k</span>
+                        class="white-color">259.5k</span>
             
             
             

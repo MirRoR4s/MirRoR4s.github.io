@@ -7,8 +7,7 @@
     <meta name="keywords" content="文件上传漏洞总结, 学习记录">
     <meta name="description" content="文件上传漏洞总结
  
-
-文件上传“文件上传”功能已经成为现在Web应用的一种常见需求，它不但有助于提供业务效率(例如：企业内部文件共享)，更有助于优化用户的体验（例如：上传视频、图片、头像等各种其他类型的文件）。”文件上传”功能一方面带来了">
+文件上传“文件上传”功能已经成为现在Web应用的一种常见需求，它不但有助于提供业务效率(例如：企业内部文件共享)，更有助于优化用户的体验（例如：上传视频、图片、头像等各种其他类型的文件）。”文件上传”功能一方面带来了良">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -504,7 +503,6 @@
             <div id="articleContent">
                 <p>文件上传漏洞总结</p>
  <span id="more"></span>
-
 <h3 id="文件上传"><a href="#文件上传" class="headerlink" title="文件上传"></a>文件上传</h3><p>“文件上传”功能已经成为现在Web应用的一种常见需求，它不但有助于提供业务效率(例如：企业内部文件共享)，更有助于优化用户的体验（例如：上传视频、图片、头像等各种其他类型的文件）。”文件上传”功能一方面带来了良好的体验，另一方面也带来了“安全问题”。目前文件上传漏洞已经成为web安全中经常利用到的一种漏洞形式，<strong>对于缺少安全防护的web应用，攻击者可以利用提供的文件上传功能将恶意代码植入到服务器中</strong>，之后再通过url去访问以执行代码达到攻击的目的。</p>
 <h3 id="文件上传漏洞的成因"><a href="#文件上传漏洞的成因" class="headerlink" title="文件上传漏洞的成因"></a>文件上传漏洞的成因</h3><p>造成文件上传漏洞的原因有：</p>
 <ul>
@@ -520,7 +518,7 @@
 <li>知道恶意文件上传后的路径</li>
 <li>恶意文件可以被访问或执行</li>
 </ul>
-<h3 id="文件上传过程中的检测"><a href="#文件上传过程中的检测" class="headerlink" title="文件上传过程中的检测"></a>文件上传过程中的检测</h3><p><img src="/images/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/1.png" alt="文件上传漏洞总结"></p>
+<h3 id="文件上传过程中的检测"><a href="#文件上传过程中的检测" class="headerlink" title="文件上传过程中的检测"></a>文件上传过程中的检测</h3><p><img src="/images/文件上传/1.png" alt="文件上传漏洞总结"></p>
 <p>文件上传漏洞危害极大，所以我们必须对用户上传的文件做好检测，防止恶意用户对我们的服务器进行攻击。那为了防范文件上传漏洞，我们都可以做那些检测呢？</p>
 <p>从上图可以看到，服务器端的检测主要就是查后缀、查内容。</p>
 <p>一般一个文件上传过程中的检测分为如下几个部分：</p>
@@ -558,7 +556,6 @@
         <span class="token punctuation">&#125;</span>
     <span class="token punctuation">&#125;</span>
 <span class="token operator">&lt;</span><span class="token operator">/</span>script<span class="token operator">></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>以上代码只允许我们上传 jpg、png、gif 后缀名的图片，但我们现在想要上传一个 shell.php，那么该如何绕过呢？</p>
 <h5 id="通过禁用前端-js-绕过前端-javascript-检测"><a href="#通过禁用前端-JS-绕过前端-JavaScript-检测" class="headerlink" title="通过禁用前端 JS 绕过前端 JavaScript 检测"></a>通过禁用前端 JS 绕过前端 JavaScript 检测</h5><p>以火狐浏览器为例说说如何关闭浏览器的 JS 功能：</p>
 <ul>
@@ -574,31 +571,28 @@
 <li>burpsuite 会捕获到上传的 http 请求包，此时我们在请求包中将我们的文件后缀名改回原本的形式。</li>
 </ol>
 <h4 id="服务器端-mime-类型检测绕过"><a href="#服务器端-MIME-类型检测绕过" class="headerlink" title="服务器端 MIME 类型检测绕过"></a>服务器端 MIME 类型检测绕过</h4><p>MIME 类型检测属于白名单检测的一种，在服务器端完成，它会对上传文件请求包中的 <code>Content-Type</code> 字段值进行校验，判断是否属于白名单，如果不属于则不允许上传。<a target="_blank" rel="noopener" href="https://www.runoob.com/http/mime-types.html">MIME 详细定义</a></p>
-<p><img src="/images/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/image-20230106104021410.png" alt="image-20230106104021410"></p>
+<p><img src="/images/文件上传/image-20230106104021410.png" alt="image-20230106104021410"></p>
 <h5 id="mime-类型检测示例代码"><a href="#MIME-类型检测示例代码" class="headerlink" title="MIME 类型检测示例代码"></a>MIME 类型检测示例代码</h5><pre class="line-numbers language-php" data-language="php"><code class="language-php">if (isset($_POST[&#39;submit&#39;])) &#123;
     if (file_exists(UPLOAD_PATH)) &#123;
         if (($_FILES[&#39;upload_file&#39;][&#39;type&#39;] &#x3D;&#x3D; &#39;image&#x2F;jpeg&#39;) || ($_FILES[&#39;upload_file&#39;][&#39;type&#39;] &#x3D;&#x3D; &#39;image&#x2F;png&#39;) || ($_FILES[&#39;upload_file&#39;][&#39;type&#39;] &#x3D;&#x3D; &#39;image&#x2F;gif&#39;)) &#123;
             
 &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>从以上代码中可以看到，此处对文件的Type进行了检查，只允许：image&#x2F;jpeg、image&#x2F;png、image&#x2F;gif三种格式，而且直接为服务器端校验，对于服务端的这种校验方式，我们可以<strong>通过 burpsuite 抓包来更改 Content-Type 为其允许的类型即可！</strong></p>
+<p>从以上代码中可以看到，此处对文件的Type进行了检查，只允许：image/jpeg、image/png、image/gif三种格式，而且直接为服务器端校验，对于服务端的这种校验方式，我们可以<strong>通过 burpsuite 抓包来更改 Content-Type 为其允许的类型即可！</strong></p>
 <h4 id="文件内容头校验绕过"><a href="#文件内容头校验绕过" class="headerlink" title="文件内容头校验绕过"></a>文件内容头校验绕过</h4><p>前面已经说到，服务器端可能会对上传文件的内容进行检测，其中就包括文件内容开始处的<strong>文件幻数检测</strong>。</p>
 <p><a target="_blank" rel="noopener" href="https://blog.csdn.net/just_h/article/details/126789044">文件幻术详解</a></p>
 <p>这个时候我们就需要在上传的木马文件前加上一些文件头信息。如果检测的是 gif 图片的文件幻数，那么应添加 <code>GIF89a</code>。</p>
 <pre class="line-numbers language-none"><code class="language-none">GIF89a&lt;?php phpinfo(); ?&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
 <p>以下是常见文件的幻数</p>
 <pre class="line-numbers language-none"><code class="language-none">（1） .JPEG;.JPE;.JPG，”JPGGraphic File”
 （2） .gif，”GIF 89A”
 （3） .zip，”Zip Compressed”
 （4） .doc;.xls;.xlt;.ppt;.apr，”MS Compound Document v1 or Lotus Approach APRfile”<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-
 <h4 id="文件后缀名绕过"><a href="#文件后缀名绕过" class="headerlink" title="文件后缀名绕过"></a>文件后缀名绕过</h4><p>为了能在服务器上执行代码，我们上传的木马文件肯定不可以是图片的后缀名，如果此时服务器端采用的是白名单检测后缀名，我们如何在保持木马文件后缀名的情况下成功上传呢？</p>
 <h5 id="00截断绕过白名单后缀名检测针对php"><a href="#00截断绕过白名单后缀名检测（针对PHP）" class="headerlink" title="00截断绕过白名单后缀名检测（针对PHP）"></a>00截断绕过白名单后缀名检测（针对PHP）</h5><p>00截断是很常见的截断方法，原理是有些函数处理时会将00这个空字符当作结束符，从而提前结束对相关数据的处理。</p>
 <p>截断条件：php 版本小于 5.3.4，php 的 magic_quotes_gpc 为 OFF 状态。</p>
 <p>示例：test.php%00.jpg,test.php0xoo.jpg</p>
 <p>值得注意的是，在 GET 型 00 截断中，我们要使用 <code>%00</code> 来截断，因为 GET 型提交的内容会被自动进行 URL 解码；而在 POST 型 00 截断中，<code>%00</code> 是不会被自动解码的，我们需要在 16 进制中对其进行修改，将其改为 00 即可截断。</p>
-<h5 id="利用-windows-特性绕过黑名单后缀名检测"><a href="#利用-windows-特性绕过黑名单后缀名检测" class="headerlink" title="利用 windows 特性绕过黑名单后缀名检测"></a>利用 windows 特性绕过黑名单后缀名检测</h5><h6 id="data-绕过"><a href="#DATA-绕过" class="headerlink" title="::$DATA 绕过"></a>::$DATA 绕过</h6><p><img src="/images/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/image-20230106180228070.png" alt="image-20230106180228070"></p>
+<h5 id="利用-windows-特性绕过黑名单后缀名检测"><a href="#利用-windows-特性绕过黑名单后缀名检测" class="headerlink" title="利用 windows 特性绕过黑名单后缀名检测"></a>利用 windows 特性绕过黑名单后缀名检测</h5><h6 id="data-绕过"><a href="#DATA-绕过" class="headerlink" title="::$DATA 绕过"></a>::$DATA 绕过</h6><p><img src="/images/文件上传/image-20230106180228070.png" alt="image-20230106180228070"></p>
 <p>针对这个绕过手法，我们的操作方式是使用 burpsuite 抓包在文件后缀中加 <code>::$DATA</code> ！</p>
 <h6 id="点绕过"><a href="#点绕过" class="headerlink" title="点绕过"></a>点绕过</h6><p>在 windows 系统下，后缀名的最后一个点会被自动删除掉，所以可以通过在结尾加一个点的方式绕过黑名单。</p>
 <h3 id="学习链接"><a href="#学习链接" class="headerlink" title="学习链接"></a>学习链接</h3><p><a target="_blank" rel="noopener" href="https://yinwc.github.io/2020/04/21/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E%E6%80%BB%E7%BB%93/">文件上传漏洞总结</a></p>
@@ -984,7 +978,7 @@
             contentSelector: '#articleContent',
             headingsOffset: -($(window).height() * 0.4 - 45),
             collapseDepth: Number('0'),
-            headingSelector: 'h2, h3, h4'
+            headingSelector: 'h2, h3, h4,h5'
         });
 
         // modify the toc link href to support Chinese.
@@ -996,7 +990,7 @@
 
         // modify the heading title id to support Chinese.
         i = 0;
-        $('#articleContent').children('h2, h3, h4').each(function () {
+        $('#articleContent').children('h2, h3, h4,h5').each(function () {
             $(this).attr('id', tocHeading + (++i));
         });
 
@@ -1125,7 +1119,7 @@
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">267.7k</span>
+                        class="white-color">259.5k</span>
             
             
             

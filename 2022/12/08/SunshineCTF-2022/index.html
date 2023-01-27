@@ -6,15 +6,13 @@
     <meta charset="utf-8">
     <meta name="keywords" content="SunshineCTF-2022, 学习记录">
     <meta name="description" content="
-
 SUnshineCTF有一道有趣的分组密码题，我记录下来。
-
 
 CryptoAESChall-沒有完全理解题目描述#!&amp;#x2F;usr&amp;#x2F;bin&amp;#x2F;env python
 
 
 &amp;quot;&amp;quot;&amp;quot;
-   ">
+    C">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -509,10 +507,8 @@ CryptoAESChall-沒有完全理解题目描述#!&amp;#x2F;usr&amp;#x2F;bin&amp;#x
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <!--toc-->
-
 <p>SUnshineCTF有一道有趣的分组密码题，我记录下来。</p>
 <span id="more"></span>
-
 <h2 id="crypto"><a href="#Crypto" class="headerlink" title="Crypto"></a>Crypto</h2><h3 id="aeschall-沒有完全理解"><a href="#AESChall-沒有完全理解" class="headerlink" title="AESChall-沒有完全理解"></a>AESChall-沒有完全理解</h3><h4 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h4><pre class="line-numbers language-python" data-language="python"><code class="language-python">#!&#x2F;usr&#x2F;bin&#x2F;env python
 
 
@@ -751,9 +747,6 @@ if __name__ &#x3D;&#x3D; &quot;__main__&quot;:
 
 # When ran with the correct flag it outputs the following, can you recover it?
 # Try to recover the flag!  725af38e9584f694638a7323e44749c5ba1e175e61f1bd7cf356da50e7c182cf7ed5ea6e12294f697f3b59b125a3940bc86ca5cfad39b4da4be547dcafbbb17b<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
 <h4 id="解题步骤"><a href="#解题步骤" class="headerlink" title="解题步骤"></a>解题步骤</h4><p>这是一个经典的AES加密算法，但是题目用了自己的S盒，这导致AES加密变成了一个仿射密码，所以我们可以用矩阵破解。</p>
 <p>代码稍微有点长，要慢慢来看整体的加密过程中数据是如何变换的。进入 <code>encrypt</code> 之后</p>
 <p>1.调用 <code>text2matrix</code>函数将明文转为矩阵形式，具体的操作是用明文的128比特构成一个4*4的状态数组。</p>
@@ -1034,9 +1027,6 @@ while len(ciphertext) &gt; 0:
 print(a, result)
 
         <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
 <p>另一个WP看起来舒服一些：</p>
 <pre class="line-numbers language-none"><code class="language-none">from aeschall import AES
 from pwn import xor, unhex
@@ -1075,14 +1065,10 @@ pt &#x3D; b&quot;&quot;
 for i in range(0, len(ct), 16):
     pt +&#x3D; aes.decrypt(ct[i:i+16])
 print(pt)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
 <h4 id="wp来源"><a href="#WP来源" class="headerlink" title="WP来源"></a>WP来源</h4><p><a target="_blank" rel="noopener" href="https://github.com/SunshineCTF/SunshineCTF-2022-Public/blob/master/Crypto/AESChall/writeup.md">https://github.com/SunshineCTF/SunshineCTF-2022-Public/blob/master/Crypto/AESChall/writeup.md</a></p>
 <p><a target="_blank" rel="noopener" href="https://crypto.stackexchange.com/questions/20228/consequences-of-aes-without-any-one-of-its-operations/70107#70107?newreg=8ed3519e28c8457392dd6ae27295b3a3">https://crypto.stackexchange.com/questions/20228/consequences-of-aes-without-any-one-of-its-operations/70107#70107?newreg=8ed3519e28c8457392dd6ae27295b3a3</a></p>
 <h3 id="base128"><a href="#base128" class="headerlink" title="base128"></a>base128</h3><h4 id="题目描述"><a href="#题目描述-1" class="headerlink" title="题目描述"></a>题目描述</h4><p>Our researchers at CoolCryptoGames have been designing a new encoding algorithm for our Korean customers that is just as efficient as plain ol’ text. However, they kind-of forgot how to decode their own algorithm, so can you help them decrypt this so they can patent it?</p>
 <pre class="line-numbers language-none"><code class="language-none">걳걵걮걻걢갴걳갳걟갱갲갸걟갱갵걟걢갱건걟걲갳걭갴거거갱걮걧걽<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
 <h4 id="解题步骤"><a href="#解题步骤-1" class="headerlink" title="解题步骤"></a>解题步骤</h4><h4 id="wp来源"><a href="#WP来源-1" class="headerlink" title="WP来源"></a>WP来源</h4><p><a target="_blank" rel="noopener" href="https://github.com/SunshineCTF/SunshineCTF-2022-Public/tree/master/Crypto/base128">https://github.com/SunshineCTF/SunshineCTF-2022-Public/tree/master/Crypto/base128</a></p>
 
                 
@@ -1338,7 +1324,6 @@ print(pt)<span aria-hidden="true" class="line-numbers-rows"><span></span><span><
                     <div class="summary block-with-text">
                         
                             
-
 持续奋斗中
                         
                     </div>
@@ -1389,7 +1374,6 @@ print(pt)<span aria-hidden="true" class="line-numbers-rows"><span></span><span><
                     <div class="summary block-with-text">
                         
                             
-
 速速复现
                         
                     </div>
@@ -1472,7 +1456,7 @@ print(pt)<span aria-hidden="true" class="line-numbers-rows"><span></span><span><
             contentSelector: '#articleContent',
             headingsOffset: -($(window).height() * 0.4 - 45),
             collapseDepth: Number('0'),
-            headingSelector: 'h2, h3, h4'
+            headingSelector: 'h2, h3, h4,h5'
         });
 
         // modify the toc link href to support Chinese.
@@ -1484,7 +1468,7 @@ print(pt)<span aria-hidden="true" class="line-numbers-rows"><span></span><span><
 
         // modify the heading title id to support Chinese.
         i = 0;
-        $('#articleContent').children('h2, h3, h4').each(function () {
+        $('#articleContent').children('h2, h3, h4,h5').each(function () {
             $(this).attr('id', tocHeading + (++i));
         });
 
@@ -1613,7 +1597,7 @@ print(pt)<span aria-hidden="true" class="line-numbers-rows"><span></span><span><
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">267.7k</span>
+                        class="white-color">259.5k</span>
             
             
             

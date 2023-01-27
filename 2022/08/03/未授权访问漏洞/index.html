@@ -6,13 +6,11 @@
     <meta charset="utf-8">
     <meta name="keywords" content="未授权访问漏洞, 学习记录">
     <meta name="description" content="
-
 从零开始学习各种常见未授权访问漏洞
-
 
 参考链接：https://www.freebuf.com/vuls/254160.html
 https://xz.aliyun.com/t/6103#toc-0
-什么是未授权访问漏洞？未授权访问是">
+什么是未授权访问漏洞？未授权访问是系统">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -467,7 +465,7 @@ https://xz.aliyun.com/t/6103#toc-0
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    762
+                    760
                 </div>
                 
 
@@ -498,33 +496,29 @@ https://xz.aliyun.com/t/6103#toc-0
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <!--toc-->
-
 <p>从零开始学习各种常见未授权访问漏洞</p>
 <span id="more"></span>
-
 <p>参考链接：<a target="_blank" rel="noopener" href="https://www.freebuf.com/vuls/254160.html">https://www.freebuf.com/vuls/254160.html</a></p>
 <p><a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/6103#toc-0">https://xz.aliyun.com/t/6103#toc-0</a></p>
 <h3 id="什么是未授权访问漏洞"><a href="#什么是未授权访问漏洞？" class="headerlink" title="什么是未授权访问漏洞？"></a>什么是未授权访问漏洞？</h3><p>未授权访问是系统对用户限制不全、或者无限制，可以让任意用户访问到需要权限认证的地址。未授权访问通常是会泄露用户信息，系统信息。某些服务和系统中，未授权访问还可以执行系统命令，操作系统文件，导致系统的整体安全遭到破坏。</p>
 <h3 id="mongodb未授权访问漏洞"><a href="#MongoDB未授权访问漏洞" class="headerlink" title="MongoDB未授权访问漏洞"></a>MongoDB未授权访问漏洞</h3><h5 id="漏洞简介"><a href="#漏洞简介" class="headerlink" title="漏洞简介"></a>漏洞简介</h5><p>MongoDB是一个基于分布式文件存储的数据库，由c++编写，旨在为WEB应用提供可扩展的高性能数据存储解决方案。MongoDB默认端口为27017。</p>
 <p>开启MongoDB服务时不添加任何参数时，默认是没有权限验证的，登录的用户可以通过默认端口无需密码对数据库进行任意操作，而且可以远程访问数据库。</p>
-<p>造成未授权访问的根本原因就在于启动Mongodb的时候未设置–auth ，也很少会有人给数据库添加上账号、密码（默认空口令），使用默认空口令将导致恶意攻击者无需进行账号认证就可以登录到数据服务器。</p>
+<p>造成未授权访问的根本原因就在于启动Mongodb的时候未设置—auth ，也很少会有人给数据库添加上账号、密码（默认空口令），使用默认空口令将导致恶意攻击者无需进行账号认证就可以登录到数据服务器。</p>
 <p>更多MongoDB的介绍请移步：<a target="_blank" rel="noopener" href="https://www.runoob.com/mongodb/mongodb-tutorial.html">https://www.runoob.com/mongodb/mongodb-tutorial.html</a></p>
 <h5 id="漏洞复现"><a href="#漏洞复现" class="headerlink" title="漏洞复现"></a>漏洞复现</h5><p>环境搭建</p>
 <p>使用docker</p>
 <p>docker search mongodb #从docker hub查找镜像</p>
 <p>docker pull mongo #从镜像仓库中拉取或者更新指定镜像</p>
 <p>docker images mongo #列出本地主机上的mongo镜像</p>
-<p>docker run -d -p 27017:27017 –name mongodb mongo #创建一个新的容器并运行一个命令</p>
+<p>docker run -d -p 27017:27017 —name mongodb mongo #创建一个新的容器并运行一个命令</p>
 <p>docker ps #显示正在运行的容器</p>
 <h5 id="漏洞利用"><a href="#漏洞利用" class="headerlink" title="漏洞利用"></a>漏洞利用</h5><p>利用失败…</p>
-<h3 id="redis未授权访问漏洞"><a href="#Redis未授权访问漏洞" class="headerlink" title="Redis未授权访问漏洞"></a>Redis未授权访问漏洞</h3><h5 id="漏洞简介以及危害"><a href="#漏洞简介以及危害" class="headerlink" title="漏洞简介以及危害"></a>漏洞简介以及危害</h5><p>Redis默认情况下，会绑定在0.0.0.0:6379，如果没有进行采用相关的策略，比如添加防火墙规则避免其他非信任来源ip访问等，这样讲会将Redis服务暴露到公网上，如果在没有设置密码认证（一般为空）的情况下，会导致任意用户在可以访问目标服务器的情况下未授权访问Redis以及读取Redis的数据。攻击者在未授权访问 Redis 的情况下，利用 Redis 自身的提供的config 命令，可以进行写文件操作，攻击者可以成功将自己的ssh公钥写入目标服务器的 &#x2F;root&#x2F;.ssh 文件夹的authotrized_keys 文件中，进而可以使用对应私钥直接使用ssh服务登录目标服务器、添加计划任务、写入Webshell等操作。</p>
+<h3 id="redis未授权访问漏洞"><a href="#Redis未授权访问漏洞" class="headerlink" title="Redis未授权访问漏洞"></a>Redis未授权访问漏洞</h3><h5 id="漏洞简介以及危害"><a href="#漏洞简介以及危害" class="headerlink" title="漏洞简介以及危害"></a>漏洞简介以及危害</h5><p>Redis默认情况下，会绑定在0.0.0.0:6379，如果没有进行采用相关的策略，比如添加防火墙规则避免其他非信任来源ip访问等，这样讲会将Redis服务暴露到公网上，如果在没有设置密码认证（一般为空）的情况下，会导致任意用户在可以访问目标服务器的情况下未授权访问Redis以及读取Redis的数据。攻击者在未授权访问 Redis 的情况下，利用 Redis 自身的提供的config 命令，可以进行写文件操作，攻击者可以成功将自己的ssh公钥写入目标服务器的 /root/.ssh 文件夹的authotrized_keys 文件中，进而可以使用对应私钥直接使用ssh服务登录目标服务器、添加计划任务、写入Webshell等操作。</p>
 <h4 id="漏洞利用"><a href="#漏洞利用-1" class="headerlink" title="漏洞利用"></a>漏洞利用</h4><h5 id="环境介绍"><a href="#环境介绍" class="headerlink" title="环境介绍"></a>环境介绍</h5><pre class="line-numbers language-none"><code class="language-none">目标靶机: Centos7
 ip地址: 192.168.18.138
 
 连接工具:Xshell<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-
 <h5 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建</h5><pre class="line-numbers language-none"><code class="language-none">wget http:&#x2F;&#x2F;download.redis.io&#x2F;releases&#x2F;redis-2.8.17.tar.gz<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
 <h5 id="漏洞利用"><a href="#漏洞利用-2" class="headerlink" title="漏洞利用"></a>漏洞利用</h5><p>利用失败，懒得下windows上得工具了…</p>
 
                 
@@ -780,7 +774,6 @@ ip地址: 192.168.18.138
                     <div class="summary block-with-text">
                         
                             
-
 今天开始学java的web安全相关内容，冲！
                         
                     </div>
@@ -831,7 +824,6 @@ ip地址: 192.168.18.138
                     <div class="summary block-with-text">
                         
                             
-
 小步大步发sage实现
                         
                     </div>
@@ -910,7 +902,7 @@ ip地址: 192.168.18.138
             contentSelector: '#articleContent',
             headingsOffset: -($(window).height() * 0.4 - 45),
             collapseDepth: Number('0'),
-            headingSelector: 'h2, h3, h4'
+            headingSelector: 'h2, h3, h4,h5'
         });
 
         // modify the toc link href to support Chinese.
@@ -922,7 +914,7 @@ ip地址: 192.168.18.138
 
         // modify the heading title id to support Chinese.
         i = 0;
-        $('#articleContent').children('h2, h3, h4').each(function () {
+        $('#articleContent').children('h2, h3, h4,h5').each(function () {
             $(this).attr('id', tocHeading + (++i));
         });
 
@@ -1051,7 +1043,7 @@ ip地址: 192.168.18.138
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">267.7k</span>
+                        class="white-color">259.5k</span>
             
             
             

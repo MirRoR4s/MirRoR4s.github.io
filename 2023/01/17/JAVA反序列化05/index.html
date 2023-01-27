@@ -6,14 +6,13 @@
     <meta charset="utf-8">
     <meta name="keywords" content="JAVA反序列化05-CC1补充, 学习记录">
     <meta name="description" content="
-
 这一篇还是记录一下 ysoserial 的正版 CC1
-
 
 前言
 书说上回，我们分析了一下 CC1 链当中的 TransformMap 的反序列化攻击，今天来补充一下正版 CC1 链的攻击分析。以下是 ysoserial 的调用链图
 
-">
+
+正">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -508,13 +507,11 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <!--toc-->
-
 <p>这一篇还是记录一下 ysoserial 的正版 CC1</p>
 <span id="more"></span>
-
 <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><ul>
 <li>书说上回，我们分析了一下 CC1 链当中的 TransformMap 的反序列化攻击，今天来补充一下正版 CC1 链的攻击分析。以下是 ysoserial 的调用链图</li>
-<li><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9605/image-20230122131346181.png" alt="image-20230122131346181"></li>
+<li><img src="/images/JAVA反序列化05/image-20230122131346181.png" alt="image-20230122131346181"></li>
 </ul>
 <h3 id="正版-cc1-链分析"><a href="#正版-CC1-链分析" class="headerlink" title="正版 CC1 链分析"></a>正版 CC1 链分析</h3><h4 id="1寻找链尾的-exec-方法"><a href="#1-寻找链尾的-exec-方法" class="headerlink" title="1.寻找链尾的 exec 方法"></a>1.寻找链尾的 exec 方法</h4><ul>
 <li>漏洞点还是 <code>InvokerTransformer</code></li>
@@ -524,11 +521,11 @@
 <p>上一篇说的是 TransformedMap 的链子，今天则是正版 CC1 链里面的 LazyMap 链子</p>
 </blockquote>
 <p>然后发现 LazyMap 的 get（公有的） 方法调用了 <code>.transform</code> 方法</p>
-<p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9605/image-20230122141102900.png" alt="image-20230122141102900"></p>
+<p><img src="/images/JAVA反序列化05/image-20230122141102900.png" alt="image-20230122141102900"></p>
 <h4 id="2寻找链子"><a href="#2-寻找链子" class="headerlink" title="2.寻找链子"></a>2.寻找链子</h4><ul>
 <li>从上图也可以看到是 <code>factory</code> 调用了 transform 方法，所以现在就要去找 <code>factory</code> 是什么</li>
 </ul>
-<p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9605/decorate.png" alt="img"></p>
+<p><img src="/images/JAVA反序列化05/decorate.png" alt="img"></p>
 <p>factory 是 LazyMap 的一个受保护的成员变量，同时 LazyMap 的 <code>decorate</code> 静态方法可以实例化一个 LazyMap 类对象，并且可以控制 factory 变量的值。</p>
 <p> 由于 LazyMap 的构造函数作用域为 <code>private</code>，因为无法直接获取，而 <code>decorate</code> 方法里面能够 new 一个 <code>LazyMap</code> 对象，于是我们构造如下的 EXP，来证明这条链子暂时是可行的。</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java">package org.example;
@@ -556,7 +553,6 @@ public class Main &#123;
         
         &#125;
         <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <ul>
 <li>运行之后成功弹出计算器，证明目前这条链是可行的，我们继续往上走，目标是找到入口类的 <code>readObject</code> 方法</li>
 </ul>
@@ -565,13 +561,13 @@ public class Main &#123;
 <blockquote>
 <p>过于夸张，一共有2871个结果，不知道漏洞的发现者到底是如何找到这条链的。。。如果沒有找到 AnnotationInvocationHandler 的话，可以按住 ctrl+shift+r 开启全局搜索 AnnotationInvocationHandler</p>
 </blockquote>
-<p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9605/AnnotationInvocationHandler.png" alt="img"></p>
+<p><img src="/images/JAVA反序列化05/AnnotationInvocationHandler.png" alt="img"></p>
 <p>同时这个类也非常好，它里面有 <code>readObject()</code> 方法，可以作为我们的入口类。</p>
 <ul>
 <li>现在的关键点是在于如何触发 <code>AnnotationInvocationHandler.invoke()</code></li>
 </ul>
 <h4 id="3编写-exp"><a href="#3-编写-EXP" class="headerlink" title="3.编写 EXP"></a>3.编写 EXP</h4><p>需要触发 <code>invoke()</code> 方法，马上想到动态代理，一个类被动态代理了之后，想要通过代理调用这个类的方法，就一定会调用 <code>invoke()</code> 方法。我们去找一找能利用的地方</p>
-<p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9605/ReadObjectMember.png" alt="img"></p>
+<p><img src="/images/JAVA反序列化05/ReadObjectMember.png" alt="img"></p>
 <p>在 readObject 反序列化里面调用了 <code>entrySet()</code> 方法，也就是说，如果我们将 <code>memberValues</code> 的值改为被代理对象，当调用被代理对象的方法，那么就会跳到执行 <code>invoke()</code> 方法，最终完成整条链子的调用。</p>
 <p>直接上我们的 EXP</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java">package org.example;
@@ -638,24 +634,21 @@ public class Main &#123;
 
 &#125;
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
 <p>EXP 最后又新建了一个 InvocationHandler1 实例并将这个实例反序列化，这一步目前真的不明白</p>
 <ol>
 <li>最后会调用到 LazyMap 的 get 方法，传入的参数值是 <code>entrySet</code></li>
 <li>之后调用 factory.transfrom(key)，factory为 chainedTransformer，key 为 entryset</li>
 <li>上一步的 key 是 entryset ，经过 chainedTransformer 的 transform 方法转换之后 key 首先变成了 Runtime.class，之后就是变成 InvokerTransformer 命令执行所需的一系列对象，最终导致命令执行</li>
 </ol>
-<p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9605/image-20230122153315940.png" alt="image-20230122153315940"></p>
-<p>i &#x3D; 0</p>
-<p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9605/image-20230122153446208.png" alt="image-20230122153446208"></p>
-<p>i &#x3D; 1</p>
-<p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9605/image-20230122153551328.png" alt="image-20230122153551328"></p>
-<p>i &#x3D; 2</p>
-<p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9605/image-20230122153621578.png" alt="image-20230122153621578"></p>
-<p>i &#x3D; 3</p>
-<p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9605/image-20230122153652820.png" alt="image-20230122153652820"></p>
+<p><img src="/images/JAVA反序列化05/image-20230122153315940.png" alt="image-20230122153315940"></p>
+<p>i = 0</p>
+<p><img src="/images/JAVA反序列化05/image-20230122153446208.png" alt="image-20230122153446208"></p>
+<p>i = 1</p>
+<p><img src="/images/JAVA反序列化05/image-20230122153551328.png" alt="image-20230122153551328"></p>
+<p>i = 2</p>
+<p><img src="/images/JAVA反序列化05/image-20230122153621578.png" alt="image-20230122153621578"></p>
+<p>i = 3</p>
+<p><img src="/images/JAVA反序列化05/image-20230122153652820.png" alt="image-20230122153652820"></p>
 <h3 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h3><p><a target="_blank" rel="noopener" href="https://drun1baby.github.io/2022/06/10/Java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96Commons-Collections%E7%AF%8702-CC1%E9%93%BE%E8%A1%A5%E5%85%85/">芜风师傅</a></p>
 <p><a target="_blank" rel="noopener" href="https://github.com/frohoff/ysoserial/blob/master/src/main/java/ysoserial/payloads/CommonsCollections1.java">ysoserial-CommonsCollections</a></p>
 
@@ -912,7 +905,6 @@ public class Main &#123;
                     <div class="summary block-with-text">
                         
                             
-
 继续刷 tryhackme
                         
                     </div>
@@ -1045,7 +1037,7 @@ public class Main &#123;
             contentSelector: '#articleContent',
             headingsOffset: -($(window).height() * 0.4 - 45),
             collapseDepth: Number('0'),
-            headingSelector: 'h2, h3, h4'
+            headingSelector: 'h2, h3, h4,h5'
         });
 
         // modify the toc link href to support Chinese.
@@ -1057,7 +1049,7 @@ public class Main &#123;
 
         // modify the heading title id to support Chinese.
         i = 0;
-        $('#articleContent').children('h2, h3, h4').each(function () {
+        $('#articleContent').children('h2, h3, h4,h5').each(function () {
             $(this).attr('id', tocHeading + (++i));
         });
 
@@ -1186,7 +1178,7 @@ public class Main &#123;
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">267.7k</span>
+                        class="white-color">259.5k</span>
             
             
             

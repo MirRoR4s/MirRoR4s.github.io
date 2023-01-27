@@ -6,13 +6,11 @@
     <meta charset="utf-8">
     <meta name="keywords" content="NCTF2022, 学习记录">
     <meta name="description" content="
-
 继续加油
-
 
 CryptoSignIn-Many-Time-Pad攻击题目描述import socketserver
 from Crypto.Util.number import *
-from Crypto.Cipher import ">
+from Crypto.Cipher import AE">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -507,10 +505,8 @@ from Crypto.Cipher import ">
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <!--toc-->
-
 <p>继续加油</p>
 <span id="more"></span>
-
 <h2 id="crypto"><a href="#Crypto" class="headerlink" title="Crypto"></a>Crypto</h2><h3 id="signin-many-time-pad攻击"><a href="#SignIn-Many-Time-Pad攻击" class="headerlink" title="SignIn-Many-Time-Pad攻击"></a><strong>SignIn</strong>-Many-Time-Pad攻击</h3><h4 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h4><pre class="line-numbers language-python" data-language="python"><code class="language-python">import socketserver
 from Crypto.Util.number import *
 from Crypto.Cipher import AES
@@ -588,15 +584,14 @@ if __name__ &#x3D;&#x3D; &quot;__main__&quot;:
             server.serve_forever()
         except:
             PORT &#x3D; PORT+1 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <h4 id="解题步骤"><a href="#解题步骤" class="headerlink" title="解题步骤"></a>解题步骤</h4><p>题目是将明文分成很多组，每一组的长度是32，然后用OFB模式进行加密。可以发现每一个分组的加密都使用了相同的密钥和IV。根据OFB模式的工作原理，这相当于明文每次都与一串固定的密钥流进行异或。我们可以将本题看作是一个 Many-Time-Pad 题目，对Many-Time-Pad的攻击可以参考这篇文章 Many-Time-Pad 攻击 (ruanx.net)：<a target="_blank" rel="noopener" href="https://www.ruanx.net/many-time-pad/">https://www.ruanx.net/many-time-pad/</a></p>
 <p>基本思想是很简单的，利用异或的性质可以知道两个密文的异或等于这两个密文对应的两个明文的异或。写成式子就是：</p>
-<p>$c1\oplus,c2&#x3D;m1\oplus,m2$</p>
+<p>$c1\oplus\,c2=m1\oplus\,m2$</p>
 <p>然后我们就要利用小写字母异或空格等于对应的大写字母，大写字母异或空格等于对应的小写字母这一特性。具体的说就是我们可以选择一个密文组比如是 $c1$ ，然后将 $c1$ 和其它不同的密文组进行异或，这样我们会得到多组 $c1$ 和其它密文组异或而来的新的分组。对于这些分组中的某个位置，比如是 $col$ ，如果在这个位置出现了很多字母，我们就可以较大概率地认为 $m1[col]$ 是一个空格。</p>
 <p>所以根据</p>
-<p> $c1[col]\oplus,c2[col]&#x3D;m1[col],\oplus,m2[col]$ </p>
+<p> $c1[col]\oplus\,c2[col]=m1[col]\,\oplus\,m2[col]$ </p>
 <p>我们就可以得到</p>
-<p> $m2[col] &#x3D; c1[col]\oplus,c2[col]\oplus空格$</p>
+<p> $m2[col] = c1[col]\oplus\,c2[col]\oplus空格$</p>
 <p>解题的代码：</p>
 <pre class="line-numbers language-python" data-language="python"><code class="language-python">import Crypto.Util.strxor as xo
 import libnum, codecs, numpy as np
@@ -661,9 +656,6 @@ if __name__&#x3D;&#x3D;&quot;__main__&quot;:
   m &#x3D; &#39;&#39;.join([&#39;&#39;.join([chr(c) for c in x]) for x in msg])[:l&#x2F;&#x2F;2]
   print(m)
   print(md5(m.encode()).hexdigest())<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
 <h3 id="coloratura-python-random模块伪随机数预测"><a href="#Coloratura-python-random模块伪随机数预测" class="headerlink" title="Coloratura-python-random模块伪随机数预测"></a>Coloratura-python-random模块伪随机数预测</h3><h4 id="题目描述"><a href="#题目描述-1" class="headerlink" title="题目描述"></a>题目描述</h4><p>Coloratura</p>
 <p>We fell in through the clouds</p>
 <p>And everyone before us</p>
@@ -705,7 +697,6 @@ if __name__ &#x3D;&#x3D; &#39;__main__&#39;:
             img3.putpixel((j, i), tuple([(p1[k] ^ p2[k]) for k in range(3)]))
     img3.save(&#39;attach.png&#39;)
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>有些陌生的模块，给出文档地址：<a target="_blank" rel="noopener" href="https://www.osgeo.cn/pillow/reference/ImageDraw.html">ImageDraw 模块 — Pillow (PIL Fork) 8.4.0 文档 (osgeo.cn)</a></p>
 <p><img src="/images/NCTF2022/image-20221203181912060.png" alt="image-20221203181912060"></p>
 <p><img src="/images/NCTF2022/image-20221203181847525.png" alt="image-20221203181847525"></p>
@@ -798,9 +789,6 @@ for i in range(height):
         p1, p2 &#x3D; img1.getpixel((j, i)), img2.getpixel((j, i))
         img3.putpixel((j, i), tuple([(p1[k] ^ p2[k]) for k in range(3)]))
 img3.save(&#39;flag.png&#39;)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
 <h3 id="superecc"><a href="#superecc" class="headerlink" title="superecc"></a><strong>superecc</strong></h3><h4 id="题目描述"><a href="#题目描述-2" class="headerlink" title="题目描述"></a>题目描述</h4><h4 id="解题步骤"><a href="#解题步骤-2" class="headerlink" title="解题步骤"></a>解题步骤</h4><p>考察点是扭曲爱德华曲线方程到 Weierstrass 曲线的转换。</p>
 <p>本题使用的曲线方程为</p>
 <p><img src="/images/NCTF2022/640.png" alt="图片"></p>
@@ -1063,7 +1051,6 @@ img3.save(&#39;flag.png&#39;)<span aria-hidden="true" class="line-numbers-rows">
                     <div class="summary block-with-text">
                         
                             
-
 速速复现
                         
                     </div>
@@ -1114,7 +1101,6 @@ img3.save(&#39;flag.png&#39;)<span aria-hidden="true" class="line-numbers-rows">
                     <div class="summary block-with-text">
                         
                             
-
 闲来无事参加的小比赛
                         
                     </div>
@@ -1197,7 +1183,7 @@ img3.save(&#39;flag.png&#39;)<span aria-hidden="true" class="line-numbers-rows">
             contentSelector: '#articleContent',
             headingsOffset: -($(window).height() * 0.4 - 45),
             collapseDepth: Number('0'),
-            headingSelector: 'h2, h3, h4'
+            headingSelector: 'h2, h3, h4,h5'
         });
 
         // modify the toc link href to support Chinese.
@@ -1209,7 +1195,7 @@ img3.save(&#39;flag.png&#39;)<span aria-hidden="true" class="line-numbers-rows">
 
         // modify the heading title id to support Chinese.
         i = 0;
-        $('#articleContent').children('h2, h3, h4').each(function () {
+        $('#articleContent').children('h2, h3, h4,h5').each(function () {
             $(this).attr('id', tocHeading + (++i));
         });
 
@@ -1338,7 +1324,7 @@ img3.save(&#39;flag.png&#39;)<span aria-hidden="true" class="line-numbers-rows">
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">267.7k</span>
+                        class="white-color">259.5k</span>
             
             
             

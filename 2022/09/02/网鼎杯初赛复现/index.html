@@ -6,15 +6,12 @@
     <meta charset="utf-8">
     <meta name="keywords" content="网鼎杯初赛复现, 学习记录">
     <meta name="description" content="
-
 欢迎
-
-
-
 
 CRYPTOcrypto092题目说了是170号段首批放号的联通号码，百度查到相关信息，然后咱们国家代码是86，未知的哈希值是13位的纯数字，根据已有信息直接爆破。
 import hashlib
-import string">
+import string
+imp">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -500,12 +497,8 @@ import string">
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <!--toc-->
-
 <p>欢迎</p>
 <span id="more"></span>
-
-
-
 <h3 id="crypto"><a href="#CRYPTO" class="headerlink" title="CRYPTO"></a>CRYPTO</h3><h3 id="crypto092"><a href="#crypto092" class="headerlink" title="crypto092"></a>crypto092</h3><p>题目说了是170号段首批放号的联通号码，百度查到相关信息，然后咱们国家代码是86，未知的哈希值是13位的纯数字，根据已有信息直接爆破。</p>
 <pre class="line-numbers language-python" data-language="python"><code class="language-python">import hashlib
 import string
@@ -523,7 +516,6 @@ for k in range(7,20):
         if hash &#x3D;&#x3D; tar:
             print(num)
             break<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <h3 id="crypto405"><a href="#crypto405" class="headerlink" title="crypto405"></a>crypto405</h3><p>根据flag的格式，很容易猜出flag的开头前五个是flag{。随后我们不妨从每一组密文间的关系入手，根据题目的加密过程，我们首先通过如下代码剖析一下每组密文间的关系，注意这里先不考虑模素数p。</p>
 <pre class="line-numbers language-python" data-language="python"><code class="language-python">flag &#x3D; b&#39;flag&#123;&#39;
 K &#x3D; var(&#39;k0 k1 k2 k3 k4&#39;)
@@ -542,23 +534,22 @@ for i in range(len(flag)):#
         tmp.append(grasshopper)
     table.append(grasshopper&#x3D;&#x3D;N[i])
     K &#x3D; tmp #更新密钥<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p><img src="https://i.imgur.com/QFPd432.png"></p>
+<p><img src="https://i.imgur.com/QFPd432.png" alt></p>
 <p>上图是两个密文分组的产生过程，不同密文分组用划线分割，最后的grasshopper4表示第五轮循环，此时产生密文并输出。</p>
-<p>首先需要注意的是，根据题目源代码，当前轮的grasshopper跟当前轮的密钥是一致的。其次我们可以发现第一组密文为$102<em>k0</em>k1<em>k2</em>k3<em>k4$，而第二组密文为$1192407267456</em>k0^5<em>k1^4</em>k2^3<em>k3^2</em>k4$。不难发现第二组密文即当前轮grasshopper4&#x3D;上一轮的grasshopper3乘以上一组密文。这里的轮数指的是对每一个加密的字母所进行的5次关于grasshoper的迭代，也就是加密过程中的内层循环。</p>
-<p>如果我们用 $C_i$ 表示下标为  $i ,i&gt;&#x3D;1$ 的密文组，上一轮grasshopper3的表示为 $g_{3}$ 那么上述结果就可以形式化地表述为：</p>
-<p>$C_i &#x3D; C_{i-1}\cdot g_3$ </p>
-<p>而 $C_i和C_{i-1}$ 我们已知，所以我们可以恢复出上一轮的grasshopper3。而我们有42组密文，这意味着我们能够恢复41组grasshopper3（密文组数减去1）</p>
+<p>首先需要注意的是，根据题目源代码，当前轮的grasshopper跟当前轮的密钥是一致的。其次我们可以发现第一组密文为$102<em>k0</em>k1<em>k2</em>k3<em>k4$，而第二组密文为$1192407267456</em>k0^5<em>k1^4</em>k2^3<em>k3^2</em>k4$。不难发现第二组密文即当前轮grasshopper4=上一轮的grasshopper3乘以上一组密文。这里的轮数指的是对每一个加密的字母所进行的5次关于grasshoper的迭代，也就是加密过程中的内层循环。</p>
+<p>如果我们用 $C<em>i$ 表示下标为  $i ,i&gt;=1$ 的密文组，上一轮grasshopper3的表示为 $g</em>{3}$ 那么上述结果就可以形式化地表述为：</p>
+<p>$C<em>i = C</em>{i-1}\cdot g_3$ </p>
+<p>而 $C<em>i和C</em>{i-1}$ 我们已知，所以我们可以恢复出上一轮的grasshopper3。而我们有42组密文，这意味着我们能够恢复41组grasshopper3（密文组数减去1）</p>
 <p>当我们恢复完41组grasshopper3之后，我们观察一下第二组密文的grasshopper3和第三组密文的grasshopper3</p>
 <p>第二组：</p>
-<p><img src="https://i.imgur.com/sVUiqCR.png"></p>
+<p><img src="https://i.imgur.com/sVUiqCR.png" alt></p>
 <p>第三组：</p>
-<p><img src="https://i.imgur.com/scR0nA2.png"></p>
-<p>我们发现第三组（下标为2）密文的grasshopper3 &#x3D; 第二组（下标为1）密文的grasshopper3 * 第三组的grasshopper2</p>
+<p><img src="https://i.imgur.com/scR0nA2.png" alt></p>
+<p>我们发现第三组（下标为2）密文的grasshopper3 = 第二组（下标为1）密文的grasshopper3 * 第三组的grasshopper2</p>
 <p>形式化地可以表述为：</p>
 <p>即 </p>
 <p>其中  表示是密文组的下标(从零开始)，</p>
-<p>这意味着我们可以恢复第三组的grasshopper2，同理我们可以恢复第四组、第五组一直到最后一组，一共是密文组数减去2 &#x3D; 40组</p>
+<p>这意味着我们可以恢复第三组的grasshopper2，同理我们可以恢复第四组、第五组一直到最后一组，一共是密文组数减去2 = 40组</p>
 <p>同样的道理我们可以从第四组（下标为3）密文组开始恢复第四组的grasshopper1，一共能够恢复39组。恢复完grasshopper1再继续从第五组密文组开始恢复grasshopper0，一共38组。此时我们已经拥有了38组grasshopper0，最后用同样的手法恢复初始的grasshopper即可，一共37组，再加上我们已知的flag{，加起来正好是flag的长度。</p>
 <p>在写代码的时候恢复grasshopper 的时候注意不要忘记我们要在模素数p的情况下进行运算，素数p只有16比特，直接爆破即可。</p>
 <pre class="line-numbers language-python" data-language="python"><code class="language-python">import gmpy2
@@ -602,7 +593,6 @@ for i in range(2**15,2**16):
 
     except:
         pass<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <h3 id="crypto162"><a href="#crypto162" class="headerlink" title="crypto162"></a>crypto162</h3><p>密钥是多个递归函数之和，由于递归太多次了，显然我们不能直接运行源代码求出这个和。阅读cal函数具体实现就不难发现存在一个递推方程</p>
 <p><code>cal(i,cof) = cof[2]*cal(i-3,cof)+cof[1]*cal(i-2,cof)+cof[0]*cal(i-1,cof)，其中初始状态是1,2,3</code></p>
 <p>所以我们直接把递归求和变为递推方程求和即可求出密钥。为了加快运算速度，注意到密钥最后只取了这个大数的倒数两千位和倒数一千位之间的一千位，所以求和的时候可以进行一个取模操作；值得注意的是这个加密代码应该是用py2写的，解密我们最好也用py2。</p>
@@ -896,7 +886,6 @@ print (aes.decrypt(enc))
                     <div class="summary block-with-text">
                         
                             
-
 我要成为顶级黑客！
                         
                     </div>
@@ -943,8 +932,7 @@ print (aes.decrypt(enc))
                     <div class="summary block-with-text">
                         
                             
-
-从官网下载到这个靶机之后，解压并用vmware打开。发现登录的时候需要账号密码，这个应该就是我们此次攻击的目的—-拿到账号密码。
+从官网下载到这个靶机之后，解压并用vmware打开。发现登录的时候需要账号密码，这个应该就是我们此次攻击的目的——拿到账号密码。
                         
                     </div>
                     <div class="publish-info">
@@ -1022,7 +1010,7 @@ print (aes.decrypt(enc))
             contentSelector: '#articleContent',
             headingsOffset: -($(window).height() * 0.4 - 45),
             collapseDepth: Number('0'),
-            headingSelector: 'h2, h3, h4'
+            headingSelector: 'h2, h3, h4,h5'
         });
 
         // modify the toc link href to support Chinese.
@@ -1034,7 +1022,7 @@ print (aes.decrypt(enc))
 
         // modify the heading title id to support Chinese.
         i = 0;
-        $('#articleContent').children('h2, h3, h4').each(function () {
+        $('#articleContent').children('h2, h3, h4,h5').each(function () {
             $(this).attr('id', tocHeading + (++i));
         });
 
@@ -1163,7 +1151,7 @@ print (aes.decrypt(enc))
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">267.7k</span>
+                        class="white-color">259.5k</span>
             
             
             

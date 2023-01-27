@@ -6,12 +6,10 @@
     <meta charset="utf-8">
     <meta name="keywords" content="WebGoat8-JWT-Token, 学习记录">
     <meta name="description" content="
-
 图一乐之简单的一次 java代码审计
 
-
 环境搭建去github页面下载源码然后用 idea 打开即可。同时使用官方给的命令把容器搭建起来：
-docker run -it -p 127.0.0.1:8080:8080 -p 127.0.">
+docker run -it -p 127.0.0.1:8080:8080 -p 127.0.0.">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -475,7 +473,7 @@ docker run -it -p 127.0.0.1:8080:8080 -p 127.0.">
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    677
+                    674
                 </div>
                 
 
@@ -506,40 +504,37 @@ docker run -it -p 127.0.0.1:8080:8080 -p 127.0.">
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <!--toc-->
-
 <p>图一乐之简单的一次 java代码审计</p>
 <span id="more"></span>
-
 <h3 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建</h3><p>去github页面下载源码然后用 idea 打开即可。同时使用官方给的命令把容器搭建起来：</p>
 <pre class="line-numbers language-none"><code class="language-none">docker run -it -p 127.0.0.1:8080:8080 -p 127.0.0.1:9090:9090 -e TZ&#x3D;Europe&#x2F;Amsterdam webgoat&#x2F;webgoat<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
 <h3 id="代码审计"><a href="#代码审计" class="headerlink" title="代码审计"></a>代码审计</h3><p>JWT Token 猜解实验的目标是改token为管理员的token并且重置投票。</p>
 <blockquote>
 <p>实验思路：通过抓取 “重置投票” 的 HTTP 请求数据包，以期在找到关键的接口信息后进行定向的代码审计</p>
 </blockquote>
 <p>首先是初始页面（老版本 WebGoat 的 JWT Token 实验应该是在 A2，我们现在是在 A7）</p>
-<p><img src="/images/WebGoat8-JWT-Token/image-20230124171148198.png" alt="image-20230124171148198"></p>
+<p><img src="WebGoat8-JWT-Token/image-20230124171148198.png" alt="image-20230124171148198"></p>
 <p>投票页面在第五关</p>
-<p><img src="/images/WebGoat8-JWT-Token/image-20230124171755987.png" alt="image-20230124171755987"></p>
-<p>当点击 reset vote 按钮（下图的垃圾桶图标）之后会向 JWT&#x2F;Votings 发送一个 http 请求包</p>
-<p><img src="/images/WebGoat8-JWT-Token/image-20230124171949601.png" alt="image-20230124171949601"></p>
+<p><img src="WebGoat8-JWT-Token/image-20230124171755987.png" alt="image-20230124171755987"></p>
+<p>当点击 reset vote 按钮（下图的垃圾桶图标）之后会向 JWT/Votings 发送一个 http 请求包</p>
+<p><img src="WebGoat8-JWT-Token/image-20230124171949601.png" alt="image-20230124171949601"></p>
 <p>为了在源码中快速定位到该接口对应的方法，可以在idea下输入 <code>ctrl+shift+r</code> 查找 <code>Votings</code> </p>
 <blockquote>
 <p>注意正确的代码在最后一条结果，不要选到 test 的代码了!</p>
 </blockquote>
-<p><img src="/images/WebGoat8-JWT-Token/image-20230124172340017.png" alt="image-20230124172340017"></p>
+<p><img src="WebGoat8-JWT-Token/image-20230124172340017.png" alt="image-20230124172340017"></p>
 <p>跟进去发现如下：</p>
-<p><img src="/images/WebGoat8-JWT-Token/image-20230124172756843.png" alt="image-20230124172756843"></p>
+<p><img src="WebGoat8-JWT-Token/image-20230124172756843.png" alt="image-20230124172756843"></p>
 <p>首先有一个判断 <code>accesstoekn</code> 是否为空的操作，为空直接退出来。</p>
 <p>圈红的代码顾名思义一下就是设置 jwt 的签名密钥之后去解析 accessToken，然后获取 claims 中的 admin 参数的值，若 “Boolean.valueOf(String.valueOf(claims.get(“admin”)))” 的返回值为 true，则判断该 token 是有效的，并将进行“重置投票”操作。</p>
 <p>那么变量 accessToken 是如何产生的？通过 resetVotes 方法的注解，可以发现该变量存储于 Cookie 中，且 Cookie 的键名为 <code>access_token</code></p>
-<p><img src="/images/WebGoat8-JWT-Token/image-20230124173503743.png" alt="image-20230124173503743"></p>
+<p><img src="WebGoat8-JWT-Token/image-20230124173503743.png" alt="image-20230124173503743"></p>
 <p>那这个 Cookie 对象在哪里被创建和定义呢？这里我也不知道咋找的，书里直接说是在 <code>login</code> 方法中被创建。可能用户在登录的时候会进行 Cookie 相关设置吧。idea下输入 <code>ctrl+f</code> 搜 login 找到了这个方法</p>
-<p><img src="/images/WebGoat8-JWT-Token/image-20230124174509473.png" alt="image-20230124174509473"></p>
+<p><img src="WebGoat8-JWT-Token/image-20230124174509473.png" alt="image-20230124174509473"></p>
 <p>在 134 行 用 <code>access_token</code> 和 token 参数的值实例化了一个 Cookie 类对象（这里可能是建立了一个键值对，键是 access_token，值是 token），而这个 token 显然就是我们在重置投票接口那里的 accesstoken。现在我们终于弄清楚这个 accesstoken 是咋来的了，那我们到底如何进行漏洞利用呢？</p>
 <p>根据前面的分析我们知道 jwt 的签名密钥是一个固定值，这使得我们可以伪造 jwt Tokens！</p>
-<p><img src="/images/WebGoat8-JWT-Token/image-20230124172951156.png" alt="image-20230124172951156"></p>
-<p>我们要做的事情就是访问 &#x2F;JWT&#x2F;Votings 接口然后伪造管理员的 accesstoken。我们先用一个普通用户的 accsstoken 访问过去看看回显</p>
+<p><img src="WebGoat8-JWT-Token/image-20230124172951156.png" alt="image-20230124172951156"></p>
+<p>我们要做的事情就是访问 /JWT/Votings 接口然后伪造管理员的 accesstoken。我们先用一个普通用户的 accsstoken 访问过去看看回显</p>
 <blockquote>
 <p>麻了，ubuntu 没有 burp suite 不好抓包，今天先到这里。</p>
 </blockquote>
@@ -798,7 +793,6 @@ docker run -it -p 127.0.0.1:8080:8080 -p 127.0.">
                     <div class="summary block-with-text">
                         
                             
-
 每日图一乐之一个简单的敏感信息泄露漏洞
                         
                     </div>
@@ -849,7 +843,6 @@ docker run -it -p 127.0.0.1:8080:8080 -p 127.0.">
                     <div class="summary block-with-text">
                         
                             
-
 每日图一乐之php代码审计
                         
                     </div>
@@ -932,7 +925,7 @@ docker run -it -p 127.0.0.1:8080:8080 -p 127.0.">
             contentSelector: '#articleContent',
             headingsOffset: -($(window).height() * 0.4 - 45),
             collapseDepth: Number('0'),
-            headingSelector: 'h2, h3, h4'
+            headingSelector: 'h2, h3, h4,h5'
         });
 
         // modify the toc link href to support Chinese.
@@ -944,7 +937,7 @@ docker run -it -p 127.0.0.1:8080:8080 -p 127.0.">
 
         // modify the heading title id to support Chinese.
         i = 0;
-        $('#articleContent').children('h2, h3, h4').each(function () {
+        $('#articleContent').children('h2, h3, h4,h5').each(function () {
             $(this).attr('id', tocHeading + (++i));
         });
 
@@ -1073,7 +1066,7 @@ docker run -it -p 127.0.0.1:8080:8080 -p 127.0.">
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">267.7k</span>
+                        class="white-color">259.5k</span>
             
             
             

@@ -7,12 +7,11 @@
     <meta name="keywords" content="moscCTF-2022, 学习记录">
     <meta name="description" content="今年年初不久的一场比赛，来自于澳门网络安全协会。
 
-
 [TOC]
 super secure algorithm#!&amp;#x2F;bin&amp;#x2F;python3
 
 def encrypt(flag):
-    f &amp;#x3D; lambda ">
+    f &amp;#x3D; lambda x">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -499,7 +498,6 @@ def encrypt(flag):
             <div id="articleContent">
                 <p>今年年初不久的一场比赛，来自于澳门网络安全协会。</p>
 <span id="more"></span>
-
 <p>[TOC]</p>
 <h2 id="super-secure-algorithm"><a href="#super-secure-algorithm" class="headerlink" title="super secure algorithm"></a>super secure algorithm</h2><pre class="line-numbers language-python" data-language="python"><code class="language-python">#!&#x2F;bin&#x2F;python3
 
@@ -511,10 +509,8 @@ FLAG &#x3D; open(&#39;.&#x2F;flag.txt&#39;, &#39;rb&#39;).read().strip()
 
 enc &#x3D; encrypt(FLAG)
 print(enc)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <pre class="line-numbers language-none"><code class="language-none">#enc
 ǈǆĲǂĲǇıƚƢŻŻŻŻǶŢŧƢƤƢƢƢƢǶǑŻƽǶŮǓżƢƘ<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
 <p>根据 f 这个函数的一一映射，故可以先建立一个映射表，然后把txt中的字符进行ord（）转换。在通过映射表还原便可。以下为代码：</p>
 <pre class="line-numbers language-python" data-language="python"><code class="language-python">s&#x3D;&quot;ǈǆĲǂĲǇıƚƢŻŻŻŻǶŢŧƢƤƢƢƢƢǶǑŻƽǶŮǓżƢƘ&quot;
 num&#x3D;[]
@@ -528,9 +524,6 @@ for i in range(256):
 for i in num:
     print(chr(chec[i]),end&#x3D;&#39;&#39;)
 #顺序有点点不同<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
 <h2 id="hmac-sha256"><a href="#HMAC-SHA256" class="headerlink" title="HMAC-SHA256"></a>HMAC-SHA256</h2><pre class="line-numbers language-python" data-language="python"><code class="language-python">import os
 import sys
 import hmac
@@ -561,13 +554,12 @@ if __name__ &#x3D;&#x3D; &#39;__main__&#39;:
 
     print(f&#39;Nice! &#123;flag&#125;&#39;)
    <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>题目要求我们输入N组不同的key跟msg</p>
-<p> digest &#x3D; hmac.digest(key, msg, hashlib.sha256)</p>
+<p> digest = hmac.digest(key, msg, hashlib.sha256)</p>
 <p>outputs.append(digest.hex())</p>
 <p>如果最后 len(set(outputs)) 的长度为1即可拿到flag</p>
 <p>当密钥key的长度小于一个块大小，(sha256一个块大小是64字节),密钥key会先在右边填充字节0</p>
-<p>比如key是hello world的话就会被填充为hello world______________，零用下划线代替。</p>
+<p>比如key是hello world的话就会被填充为hello world<strong><strong><strong>__</strong></strong></strong>，零用下划线代替。</p>
 <p>所以很容易观察到foo跟foo_将会被填充为一样的key然后生成相同的哈希值</p>
 <p>所以按照下面的方法构造key发给服务器即可拿到flag</p>
 <pre class="line-numbers language-python" data-language="python"><code class="language-python">from pwn import*
@@ -583,9 +575,6 @@ for i in range(1,65):
 print(r.recvline())
 r.interactive()
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
 <h2 id="rc4"><a href="#RC4" class="headerlink" title="RC4"></a>RC4</h2><pre class="line-numbers language-python" data-language="python"><code class="language-python">import os
 
 class RC4:
@@ -641,7 +630,6 @@ if __name__ &#x3D;&#x3D; &#39;__main__&#39;:
     - &quot;message 74657374696e67&quot;
       Returns the encrypted message &quot;testing&quot;
     &#39;&#39;&#39;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>题目利用自己的RC4函数生成一个数值，并将明文和该数值的异或值作为密文返回给我们，该数值与密钥有关</p>
 <p><strong>仔细阅读RC4这个函数的代码就会发现置换s数组的时候不应该mod 0xff（255） ，应该是与&amp; 0xff ,这导致下标总是在区间0-254内，而s数组原本的值是0-255的有序数字</strong></p>
 <p>该如何利用这个缺陷呢？</p>
@@ -709,9 +697,6 @@ for i in num1:
 
 print(flag)
 r.interactive()<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
 <h2 id="rsa-trio"><a href="#RSA-Trio" class="headerlink" title="RSA-Trio"></a>RSA-Trio</h2><pre class="line-numbers language-python" data-language="python"><code class="language-python">from gmpy2 import is_prime
 import os
 
@@ -748,17 +733,16 @@ def main():
 if __name__ &#x3D;&#x3D; &#39;__main__&#39;:
     main()
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>从代码可以看到一个原始消息m被加密了三次,且加密模数从小到大排序,我们设为 n1 &lt; n2 &lt; n3, 最终返回一个密文c，三次加密都使用了相同的e. 服务器的提供了一个加密功能，<strong>我们可以自由选择明文加密</strong>，但是选择的明文 不能大于其加密过程中的模数 n1 n2 n3 ，否则返回空. <strong>现在可执行的操作是拥有加密后的flag，自由加密任意符合大小的明文，该如何恢复flag？</strong></p>
 <p>题目要求每一轮作为加密的信息都必须位于其模数的区间之内</p>
 <p>比如第一轮用我们传入的m进行加密，m必须位于[0,n1)之间，m加密之后的结果t1作为第二轮加密的信息，t1必须位于[0,n2)之间，t1加密后的结果t2作为第三轮加密的信息，同理t2也必须位于[0,n3)之间.</p>
 <p><strong>这个m是我们可以控制的，每一轮连接服务器都会生成这三个素数，而且保持不变。只要我们通过二分法不断的输入一个m，如果m满足m+1是空，且m不空，那么m+1就是n1，通过这种方法我们就找到了n1</strong>. 为什么是n1呢？换句话说为什么能保证加密失败那么这个数一定是大于n1而不是其他数呢？</p>
-<p><strong>(我们假设第一轮符合加密的要求，也就是0&lt;m&lt;n1 ，于是t1&#x3D;pow(m,e,n1) ，由于取模操作，t1是肯定小于n1的，而n1 &lt; n2 &lt; n3，所以说从第二轮开始的所有加密的数都是肯定满足要求的，也就是说如果加密失败那么问题一定是出在加密过程的第一轮，即我们输入的数大于n1了！)</strong></p>
+<p><strong>(我们假设第一轮符合加密的要求，也就是0&lt;m&lt;n1 ，于是t1=pow(m,e,n1) ，由于取模操作，t1是肯定小于n1的，而n1 &lt; n2 &lt; n3，所以说从第二轮开始的所有加密的数都是肯定满足要求的，也就是说如果加密失败那么问题一定是出在加密过程的第一轮，即我们输入的数大于n1了！)</strong></p>
 <p>找到了n1，不妨看看如何找出n2 n3 </p>
 <p>应该没有很好的办法找出n2来，但是却可以很轻松地找到n3</p>
-<p>注意到 e&#x3D; 0b10001 不是0x10001 所以e应该是17 ，果然细节一定要注意！！</p>
-<p>我们可以构造一组m，使得a &#x3D;pow(m,289) 小于n2而pow(m,4913)大于等于n3 ，所以最终的加密结果c其实就是pow(a,e,n3)除以n3的余数，转化为算式即 kn3 &#x3D; pow(m,4913) - c.</p>
-<p> 比如找一组m0&#x3D;2,m1&#x3D;3 。 这两组转为算式之后的最大公约数就是n3的倍数，然后我们再枚举一下k就可以得到n3啦，或者更具体的去检查当前枚举的n3是否能被小素数整除</p>
+<p>注意到 e= 0b10001 不是0x10001 所以e应该是17 ，果然细节一定要注意！！</p>
+<p>我们可以构造一组m，使得a =pow(m,289) 小于n2而pow(m,4913)大于等于n3 ，所以最终的加密结果c其实就是pow(a,e,n3)除以n3的余数，转化为算式即 kn3 = pow(m,4913) - c.</p>
+<p> 比如找一组m0=2,m1=3 。 这两组转为算式之后的最大公约数就是n3的倍数，然后我们再枚举一下k就可以得到n3啦，或者更具体的去检查当前枚举的n3是否能被小素数整除</p>
 <p>得到了n1,n3 所以可以求出p q r进而求出每一轮加密的d，进而求出欧拉函数值，最终解密获得flag</p>
 <pre class="line-numbers language-python" data-language="python"><code class="language-python">#二分查找n1的脚本
 from pwn import *
@@ -821,9 +805,6 @@ if flag&#x3D;&#x3D;0:
 r.interactive()
 
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
 <h2 id="np-sha256"><a href="#NP-SHA256" class="headerlink" title="NP-SHA256"></a>NP-SHA256</h2><pre class="line-numbers language-python" data-language="python"><code class="language-python">&quot;&quot;&quot;This Python module is an implementation of the SHA-256 algorithm.
 From https:&#x2F;&#x2F;github.com&#x2F;keanemind&#x2F;Python-SHA-256&quot;&quot;&quot;
 
@@ -984,9 +965,6 @@ def _rotate_right(num: int, shift: int, size: int &#x3D; 32):
 if __name__ &#x3D;&#x3D; &quot;__main__&quot;:
     print(generate_hash(&quot;Hello&quot;).hex())
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
 <pre class="line-numbers language-python" data-language="python"><code class="language-python">import os
 import sys
 from sha256 import generate_hash
@@ -1018,14 +996,12 @@ def main():
 
 if __name__ &#x3D;&#x3D; &#39;__main__&#39;:
     main()<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>题目复制了python的sha256算法实现，但是同时删除了一些行。</p>
 <p><strong>这道题的考点就是让做题者找到两个不同的明文的哈希碰撞，且这两个明文的长度至少是64byte</strong></p>
 <p>题目其实简单到不行，只需要让m1是64个null bytes ，m2 是65个null bytes，这样就满足题目要求拿到flag</p>
 <pre class="line-numbers language-none"><code class="language-none">[&gt;] 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 [&gt;] 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 [&lt;] Good! MOCSCTF&#123;ev3ry_d3t41l_1n_cryp70gr4phy_m4t73rs&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-
 <p><strong>但是为什么这样就能产生相同的哈希值呢？让我们分析一下</strong>：</p>
 <p>我们可以输入一个<strong>空的m3</strong> 和<strong>一个null byte的m4</strong> 并看一下他们哈希值的计算过程：</p>
 <p>让我们把generate_hash 函数复制过来解释一下生成哈希值的过程吧！</p>
@@ -1112,7 +1088,7 @@ if __name__ &#x3D;&#x3D; &#39;__main__&#39;:
         # After all, this makes a, b, ..., h for both m3 and m4 equal for each round.
 
         # (omitted)
-    
+
     # [MYSTIZ&#39;S COMMENT]
     # Now h0, h1, ..., h7 for both m3 and m4 are equal.
     # That would imply the digests would be the same.
@@ -1129,8 +1105,7 @@ if __name__ &#x3D;&#x3D; &#39;__main__&#39;:
             (h2).to_bytes(4, &#39;big&#39;) + (h3).to_bytes(4, &#39;big&#39;) +
             (h4).to_bytes(4, &#39;big&#39;) + (h5).to_bytes(4, &#39;big&#39;) +
             (h6).to_bytes(4, &#39;big&#39;) + (h7).to_bytes(4, &#39;big&#39;))
-</code></pre>
-<p>m1 跟 m2 本质上是相同的，除了初始值h0-h7不同。</p>
+</code></pre><p>m1 跟 m2 本质上是相同的，除了初始值h0-h7不同。</p>
 <p>解题脚本</p>
 <pre class="line-numbers language-python" data-language="python"><code class="language-python">from pwn import*
 host &#x3D; &quot;34.136.108.210&quot;
@@ -1142,9 +1117,6 @@ r.sendline(s1.encode())
 r.sendline(s2.encode())
 print(r.recvline())
 r.interactive()<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
 <h2 id="slightly-informative"><a href="#Slightly-informative" class="headerlink" title="Slightly informative"></a>Slightly informative</h2><pre class="line-numbers language-python" data-language="python"><code class="language-python">from Crypto.Util.number import getPrime as get_prime
 
 def main():
@@ -1173,19 +1145,17 @@ def main():
 
 if __name__ &#x3D;&#x3D; &#39;__main__&#39;:
     main()<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <pre class="line-numbers language-none"><code class="language-none">n &#x3D; 104761374953173292488929744863165210794654068795777885288141577481002622221368522222345141465054888216685195323019389786561685227925970380642821816770602985472200153940453825122714968250922188816858014096712757866955919806714643962473332876738158067418215518151671679136192434497079441504252290233276785611599
 e &#x3D; 65537
 c &#x3D; 65928964054587881283125968144498292857628864173177955118556976763155079656459679077792117840779590338576427244089037717506889027748698067761926112680228885555444571382015302945365206338671155793788123643640188995655372264100530540193424123290247632274913224252938261740392478884552717293366009033122985923910
 s &#x3D; 5142613903784744424286082317496829116877907073407033860339838239164453521174213069438631369864823275015906330523317080155171707469704307761287329022024572
 t &#x3D; 7967501076725747803058232903884621217031867311480596291389476854702834454579805205282313799601751011483434096767204486104203547013606991412953137405179501
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>让我们回顾一下d的定义，然后对等式进行一系列化简，并把q用n&#x2F;&#x2F;p来代替</p>
-<p>$e<em>d \equiv 1 \mod \phi (n) &#x3D;&gt; e</em>d &#x3D; 1+k(p-1)(q-1) &#x3D; k[(n+1)-(p+q)]$</p>
-<p>由题知 $d&#x3D;sp+t，所以我们有\e(sp+t)&#x3D;1+k[(n+1)-(p+q)] &#x3D;&gt; \esp^2+etp&#x3D;p+k(n+1)<em>p-k</em>p^2-kn&#x3D;&gt;(k+es)*p^2+[et-1-k(n+1)]*p+kn&#x3D;0$</p>
+<p>让我们回顾一下d的定义，然后对等式进行一系列化简，并把q用n//p来代替</p>
+<p>$e<em>d \equiv 1 \mod \phi (n) =&gt; e</em>d = 1+k(p-1)(q-1) = k[(n+1)-(p+q)]$</p>
+<p>由题知 $d=sp+t，所以我们有\e(sp+t)=1+k[(n+1)-(p+q)] =&gt; \esp^2+etp=p+k(n+1)<em>p-k</em>p^2-kn=&gt;(k+es)<em>p^2+[et-1-k(n+1)]</em>p+kn=0$</p>
 <p>可以看出这个最终的等式是一个关于p的二次方程，但是k依然是一个未知数，但是不要担心，我们有以下事实 </p>
-<p>$因为e<em>d &#x3D;1+k</em>\phi(n) &gt; k \phi(n) &#x3D; &gt; k&#x2F;e &lt; d&#x2F;\phi(n)&#x3D;1$</p>
+<p>$因为e<em>d =1+k</em>\phi(n) &gt; k \phi(n) = &gt; k/e &lt; d/\phi(n)=1$</p>
 <p>将e的值带入可得k小于65537，这意味着我们可以通过爆破k来使得这个二次方程变为一个已知的关于p的二次方程！！！</p>
 <p>对爆破的至多65537个二次方程的根进行检验就可以找到真正的p，根的条件应该是能被n整除且是素数.</p>
 <p>找到p之后就得到了q之后求欧拉函数值直接解密flag即可</p>
@@ -1223,7 +1193,6 @@ for k in range(1,65535):
         print(&quot;m&#x3D;&quot;,m)
         print(&quot;flag&#x3D;&quot;,long_to_bytes(m))
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 
                 
             </div>
@@ -1523,7 +1492,6 @@ for k in range(1,65535):
                     <div class="summary block-with-text">
                         
                             
-
 这周复现完的一个比赛，难度比较低。
                         
                     </div>
@@ -1602,7 +1570,7 @@ for k in range(1,65535):
             contentSelector: '#articleContent',
             headingsOffset: -($(window).height() * 0.4 - 45),
             collapseDepth: Number('0'),
-            headingSelector: 'h2, h3, h4'
+            headingSelector: 'h2, h3, h4,h5'
         });
 
         // modify the toc link href to support Chinese.
@@ -1614,7 +1582,7 @@ for k in range(1,65535):
 
         // modify the heading title id to support Chinese.
         i = 0;
-        $('#articleContent').children('h2, h3, h4').each(function () {
+        $('#articleContent').children('h2, h3, h4,h5').each(function () {
             $(this).attr('id', tocHeading + (++i));
         });
 
@@ -1743,7 +1711,7 @@ for k in range(1,65535):
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">267.7k</span>
+                        class="white-color">259.5k</span>
             
             
             

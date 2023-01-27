@@ -6,11 +6,9 @@
     <meta charset="utf-8">
     <meta name="keywords" content="BSides Mumbai CTF 2022, 学习记录">
     <meta name="description" content="
-
 2022年12月10日的国外CTF比赛。
 
-
-CryptoPoet Xor-简单异或题目描述XOR was a famous poet of 1931. Please help him recover his poem. Read hi">
+CryptoPoet Xor-简单异或题目描述XOR was a famous poet of 1931. Please help him recover his poem. Read his ">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -505,12 +503,9 @@ CryptoPoet Xor-简单异或题目描述XOR was a famous poet of 1931. Please hel
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <!--toc-->
-
 <p>2022年12月10日的国外CTF比赛。</p>
 <span id="more"></span>
-
 <h2 id="crypto"><a href="#Crypto" class="headerlink" title="Crypto"></a>Crypto</h2><h3 id="poet-xor-简单异或"><a href="#Poet-Xor-简单异或" class="headerlink" title="Poet Xor-简单异或"></a><strong>Poet Xor</strong>-简单异或</h3><h4 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h4><pre class="line-numbers language-none"><code class="language-none">XOR was a famous poet of 1931. Please help him recover his poem. Read his poem and you&#39;ll get your reward in the the last line.<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
 <h4 id="题目内容"><a href="#题目内容" class="headerlink" title="题目内容"></a>题目内容</h4><pre class="line-numbers language-python" data-language="python"><code class="language-python">from secrets import token_bytes
 from itertools import cycle
 
@@ -524,8 +519,7 @@ for secret in FLAG:
 	cipher +&#x3D; enc.hex() + &#39;\n&#39;
 
 open(&quot;flag.enc&quot;, &quot;w&quot;).write(cipher)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h4 id="解题分析"><a href="#解题分析" class="headerlink" title="解题分析"></a>解题分析</h4><p>简单的异或加密，已知明文开头是 <code> BSMumbai</code>，所以利用已知明文攻击恢复出密钥。这里注意恢复密钥的时候要和最后一组密文异或，因为提示告诉我们flag在最后一行。</p>
+<h4 id="解题分析"><a href="#解题分析" class="headerlink" title="解题分析"></a>解题分析</h4><p>简单的异或加密，已知明文开头是 <code>BSMumbai</code>，所以利用已知明文攻击恢复出密钥。这里注意恢复密钥的时候要和最后一组密文异或，因为提示告诉我们flag在最后一行。</p>
 <h4 id="解题脚本"><a href="#解题脚本" class="headerlink" title="解题脚本"></a>解题脚本</h4><pre class="line-numbers language-python" data-language="python"><code class="language-python">from Crypto.Util.number import *
 from pwn import xor
 from Crypto.Util import strxor
@@ -537,11 +531,7 @@ key &#x3D; xor(text,c[:len(text)])
 flag &#x3D; xor(key,c)
 print(flag)
 #b&#39;BSMumbai&#123;w0w_1t_1s_4_fl4g_1n_th3_3nd&#125;&#39;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
 <h3 id="big-rsa-boneh-durfees-attack"><a href="#Big-RSA-Boneh-Durfee’s-attack" class="headerlink" title="Big RSA-Boneh-Durfee’s attack"></a><strong>Big RSA</strong>-Boneh-Durfee’s attack</h3><h4 id="题目描述"><a href="#题目描述-1" class="headerlink" title="题目描述"></a>题目描述</h4><pre class="line-numbers language-none"><code class="language-none">It&#39;s too cold outside! Maybe, __________ is a good idea!<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
 <h4 id="题目内容"><a href="#题目内容-1" class="headerlink" title="题目内容"></a>题目内容</h4><pre class="line-numbers language-python" data-language="python"><code class="language-python">from Crypto.Util.number import *
 from Crypto.PublicKey import RSA
 from Crypto.Cipher import PKCS1_v1_5
@@ -566,11 +556,10 @@ enc &#x3D; cipher_rsa.encrypt(FLAG)
 open(&#39;flag.enc&#39;, &#39;w&#39;).write( enc.hex() )
 open(&#39;pubkey.pem&#39;, &#39;wb&#39;).write( key.public_key().export_key(&#39;PEM&#39;) )
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <h4 id="解题分析"><a href="#解题分析-1" class="headerlink" title="解题分析"></a>解题分析</h4><p>密钥生成过程中的私钥指数太小了，满足</p>
 <p>$d &lt; n^{0.292}$ </p>
 <p>可以使用 Boneh-Durfee’s attack 快速恢复私钥。</p>
-<p><a target="_blank" rel="noopener" href="https://cryptohack.gitbook.io/cryptobook/untitled/low-private-component-attacks/boneh-durfee-attack%EF%BC%88%E7%9C%8B%E4%BA%86%E4%B8%80%E4%B8%8B%E6%84%9F%E8%A7%89%E4%B8%8D%E6%98%AF%E5%BE%88%E5%A5%BD%EF%BC%89">https://cryptohack.gitbook.io/cryptobook/untitled/low-private-component-attacks/boneh-durfee-attack（看了一下感觉不是很好）</a></p>
+<p><a target="_blank" rel="noopener" href="https://cryptohack.gitbook.io/cryptobook/untitled/low-private-component-attacks/boneh-durfee-attack（看了一下感觉不是很好）">https://cryptohack.gitbook.io/cryptobook/untitled/low-private-component-attacks/boneh-durfee-attack（看了一下感觉不是很好）</a></p>
 <p><a target="_blank" rel="noopener" href="https://www.cryptologie.net/article/241/implementation-of-boneh-and-durfee-attack-on-rsas-low-private-exponents/">https://www.cryptologie.net/article/241/implementation-of-boneh-and-durfee-attack-on-rsas-low-private-exponents/</a></p>
 <h4 id="解题脚本"><a href="#解题脚本-1" class="headerlink" title="解题脚本"></a>解题脚本</h4><pre class="line-numbers language-python" data-language="python"><code class="language-python">from __future__ import print_function
 import time
@@ -912,11 +901,7 @@ def example():
 
 if __name__ &#x3D;&#x3D; &quot;__main__&quot;:
     example()<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
 <h3 id="egglamal"><a href="#EggLamal" class="headerlink" title="EggLamal"></a><strong>EggLamal</strong></h3><h4 id="题目描述"><a href="#题目描述-2" class="headerlink" title="题目描述"></a>题目描述</h4><pre class="line-numbers language-none"><code class="language-none">Try this EggLamal (idk how does it taste)<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
 <h4 id="题目内容"><a href="#题目内容-2" class="headerlink" title="题目内容"></a>题目内容</h4><pre class="line-numbers language-python" data-language="python"><code class="language-python">from params import a, b, p
 
 FLAG &#x3D; int(open(&#39;flag.txt&#39;, &#39;rb&#39;).read().hex(), 16)
@@ -934,23 +919,22 @@ print(&#39;A &#x3D;&#39;, A)
 print(&#39;B &#x3D;&#39;, B)
 print(&#39;c &#x3D;&#39;, c)
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <h4 id="解题分析"><a href="#解题分析-2" class="headerlink" title="解题分析"></a>解题分析</h4><p>一个经典的 Elgamal 密码体制实现。注意到</p>
-<p>$B &#x3D; p-1$</p>
-<p>所以 $b$ 可能等于 $(p-1)&#x2F;2$ 。这一步尚未玩清楚，我的猜测如：</p>
-<p>$2^{p-1}\equiv 1,\mod ,p$</p>
-<p>$2^{(p-1)&#x2F;2}*2^{(p-1)&#x2F;2}\equiv1,\mod,p$</p>
+<p>$B = p-1$</p>
+<p>所以 $b$ 可能等于 $(p-1)/2$ 。这一步尚未玩清楚，我的猜测如：</p>
+<p>$2^{p-1}\equiv 1\,\mod \,p$</p>
+<p>$2^{(p-1)/2}*2^{(p-1)/2}\equiv1\,\mod\,p$</p>
 <p>所以 </p>
-<p>$2^{(p-1)&#x2F;2}$ 是自逆的，而在模 p 的乘法群中自逆的元素只有 1 和 p-1 两个，显然这个数字不会是1，那么只能是 p-1。</p>
+<p>$2^{(p-1)/2}$ 是自逆的，而在模 p 的乘法群中自逆的元素只有 1 和 p-1 两个，显然这个数字不会是1，那么只能是 p-1。</p>
 <p>所以</p>
-<p>$2^{(p-1)&#x2F;2}\equiv p-1\mod,p$</p>
-<p>所以 $b$ 可能等于 $(p-1)&#x2F;2$</p>
-<p>后续经过验证 $b$ 确实等于 $(p-1)&#x2F;2$</p>
+<p>$2^{(p-1)/2}\equiv p-1\mod\,p$</p>
+<p>所以 $b$ 可能等于 $(p-1)/2$</p>
+<p>后续经过验证 $b$ 确实等于 $(p-1)/2$</p>
 <p>所以 </p>
-<p>$S \equiv g^{ab}\mod,p$</p>
-<p>$S\equiv (g^{p-1})^{a&#x2F;2}$</p>
+<p>$S \equiv g^{ab}\mod\,p$</p>
+<p>$S\equiv (g^{p-1})^{a/2}$</p>
 <p>如果 $a$ 是偶数，那么 $S$ 等于 1，否则 $S$ 等于 $p-1$ 。这是因为</p>
-<p>$S\equiv (g^{p-1})^{(a-1)&#x2F;2}*(g^{p-1})^{1&#x2F;2}$</p>
+<p>$S\equiv (g^{p-1})^{(a-1)/2}*(g^{p-1})^{1/2}$</p>
 <p>上式右端第二个表达式就是 $b$ </p>
 <h4 id="解题脚本"><a href="#解题脚本-2" class="headerlink" title="解题脚本"></a>解题脚本</h4><pre class="line-numbers language-python" data-language="python"><code class="language-python">from Crypto.Util.number import *
 
@@ -965,11 +949,7 @@ if __name__ &#x3D;&#x3D; &quot;__main__&quot;:
     m &#x3D; c * inverse(p-1,p) %p
     print(long_to_bytes(m))
     #b&#39;BSMumbai&#123;ElGamal_Publickey_Cryptography&#125;&#39;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
 <h3 id="eccsub"><a href="#ECCSub" class="headerlink" title="ECCSub"></a><strong>ECCSub</strong></h3><h4 id="题目描述"><a href="#题目描述-3" class="headerlink" title="题目描述"></a>题目描述</h4><pre class="line-numbers language-none"><code class="language-none">Try this new cipher called ECCSub<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
 <h4 id="题目内容"><a href="#题目内容-3" class="headerlink" title="题目内容"></a>题目内容</h4><pre class="line-numbers language-python" data-language="python"><code class="language-python">import os
 
 FLAG &#x3D; open(&#39;flag.txt&#39;, &#39;rb&#39;).read().strip()
@@ -987,9 +967,8 @@ C &#x3D; [ hex(ECC_encode(int(os.urandom(8).hex() + hex(k)[2:], 16))) for k in F
 
 open(&#39;flag.enc&#39;, &#39;w&#39;).write(str(C))
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <h4 id="解题分析"><a href="#解题分析-3" class="headerlink" title="解题分析"></a>解题分析</h4><p>在 sage 下求解一个有限域 p 上的模多项式的根</p>
-<p>$f(x) &#x3D; x^3+ax+b\mod,p$</p>
+<p>$f(x) = x^3+ax+b\mod\,p$</p>
 <p>求出根之后转为十六进制，最后的两个十六进制数就是 flag 的某个字节。</p>
 <h4 id="解题脚本"><a href="#解题脚本-3" class="headerlink" title="解题脚本"></a>解题脚本</h4><pre class="line-numbers language-python" data-language="python"><code class="language-python">from Crypto.Util.number import *
 
@@ -1013,11 +992,7 @@ if __name__ &#x3D;&#x3D; &quot;__main__&quot;:
 
 
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
 <h3 id="asd-sea"><a href="#ASD-SEA" class="headerlink" title="ASD-SEA"></a><strong>ASD-SEA</strong></h3><h4 id="题目描述"><a href="#题目描述-4" class="headerlink" title="题目描述"></a>题目描述</h4><pre class="line-numbers language-none"><code class="language-none">Have you ever used the A,S,D or D,S,A keys for placeholders? yaaaAES, I did!<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
 <h4 id="题目内容"><a href="#题目内容-4" class="headerlink" title="题目内容"></a>题目内容</h4><pre class="line-numbers language-python" data-language="python"><code class="language-python">from Crypto.Util.Padding import pad
 from Crypto.Util.number import *
 from Crypto.PublicKey import DSA
@@ -1062,13 +1037,12 @@ if isVerified:
     cipher &#x3D; AES.new(aesKey, AES.MODE_ECB).encrypt(pad(FLAG,16)).hex()
     print(&quot;Cipher:&quot;, cipher)
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <h4 id="解题分析"><a href="#解题分析-4" class="headerlink" title="解题分析"></a>解题分析</h4><p>一个 DSA 签名算法，同时签名的密钥作为AES算法的密钥，我们需要恢复签名密钥。</p>
 <p><img src="/images/BSides-Mumbai-CTF-2022/image-20221216180401342.png" alt="image-20221216180401342"></p>
 <p>观察到在密钥生成过程中使用的 n 由 文件的消息摘要 加上两个字节组成，所以我们可以爆破这两个字节找到 n 。</p>
 <p>n 相当于上图中的 k，所以我们可以通过如下式子恢复 a 。</p>
 <p>$aS_1\equiv S_2*k-D$</p>
-<p>$a\equiv(S_2*k-D)*S_1^{-1}\mod,q$</p>
+<p>$a\equiv(S_2<em>k-D)</em>S_1^{-1}\mod\,q$</p>
 <h4 id="解题脚本"><a href="#解题脚本-4" class="headerlink" title="解题脚本"></a>解题脚本</h4><pre class="line-numbers language-python" data-language="python"><code class="language-python">from Crypto.Util.Padding import pad, unpad
 from Crypto.Util.number import *
 from Crypto.PublicKey import DSA
@@ -1093,9 +1067,6 @@ aes_key &#x3D; pad(long_to_bytes(x), 16)
 cipher &#x3D; AES.new(aes_key, AES.MODE_ECB)
 flag &#x3D; unpad(cipher.decrypt(ct), 16).decode()
 print(flag) # BSMumbai&#123;DSA_msg_related_nonce_problem&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
 <h3 id="官方wp"><a href="#官方WP" class="headerlink" title="官方WP"></a>官方WP</h3><p><a target="_blank" rel="noopener" href="https://b6a.black/posts/2022-12-14-bsides-mumbai/#egglamal">https://b6a.black/posts/2022-12-14-bsides-mumbai/#egglamal</a></p>
 
                 
@@ -1351,7 +1322,6 @@ print(flag) # BSMumbai&#123;DSA_msg_related_nonce_problem&#125;<span aria-hidden
                     <div class="summary block-with-text">
                         
                             
-
 2022年12月9日的比赛。
                         
                     </div>
@@ -1471,7 +1441,7 @@ print(flag) # BSMumbai&#123;DSA_msg_related_nonce_problem&#125;<span aria-hidden
             contentSelector: '#articleContent',
             headingsOffset: -($(window).height() * 0.4 - 45),
             collapseDepth: Number('0'),
-            headingSelector: 'h2, h3, h4'
+            headingSelector: 'h2, h3, h4,h5'
         });
 
         // modify the toc link href to support Chinese.
@@ -1483,7 +1453,7 @@ print(flag) # BSMumbai&#123;DSA_msg_related_nonce_problem&#125;<span aria-hidden
 
         // modify the heading title id to support Chinese.
         i = 0;
-        $('#articleContent').children('h2, h3, h4').each(function () {
+        $('#articleContent').children('h2, h3, h4,h5').each(function () {
             $(this).attr('id', tocHeading + (++i));
         });
 
@@ -1612,7 +1582,7 @@ print(flag) # BSMumbai&#123;DSA_msg_related_nonce_problem&#125;<span aria-hidden
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">267.7k</span>
+                        class="white-color">259.5k</span>
             
             
             

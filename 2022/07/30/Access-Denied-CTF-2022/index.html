@@ -6,12 +6,10 @@
     <meta charset="utf-8">
     <meta name="keywords" content="Access_Denied_CTF-2022, 学习记录">
     <meta name="description" content="
-
 记录一次总体难度不算太高的CTF比赛，最后好像是有10道题的，但是我只弄到5道
 
-
 rsa1热身题，常规解密
-p &amp;#x3D; 104286152584161080033722028718556277136633255996744609">
+p &amp;#x3D; 10428615258416108003372202871855627713663325599674460924">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -497,16 +495,13 @@ p &amp;#x3D; 104286152584161080033722028718556277136633255996744609">
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <!--toc-->
-
 <p>记录一次总体难度不算太高的CTF比赛，最后好像是有10道题的，但是我只弄到5道</p>
 <span id="more"></span>
-
 <h2 id="rsa1"><a href="#rsa1" class="headerlink" title="rsa1"></a>rsa1</h2><p>热身题，常规解密</p>
 <pre class="line-numbers language-python" data-language="python"><code class="language-python">p &#x3D; 10428615258416108003372202871855627713663325599674460924186517713082197448534315449595394752587304354394402047262801959990727856908043138185588365886987557
 q &#x3D; 8849030739304056868757301096931487921973840186794195322071503751716059434197468028088264340322992996182734000877348221433845302801843370163430108727308579
 e &#x3D; 65537
 cipher_text &#x3D; 84826403344972753121997388456739256614537789930909176473018827332005543366933391914385410712984001888365906754988120732970328825657318675360778107518188000885732104031648548997976916964730682864696944786364581243443475767387970255510475855029059715864139791778210784283726274424510221073880200865856769716576<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-
 <pre class="line-numbers language-python" data-language="python"><code class="language-python">from Crypto.Util.number import *
 p &#x3D; 10428615258416108003372202871855627713663325599674460924186517713082197448534315449595394752587304354394402047262801959990727856908043138185588365886987557
 q &#x3D; 8849030739304056868757301096931487921973840186794195322071503751716059434197468028088264340322992996182734000877348221433845302801843370163430108727308579
@@ -516,11 +511,9 @@ phi &#x3D; (p-1)*(q-1)
 d &#x3D; inverse(e,phi)
 print(long_to_bytes(pow(cipher_text,d,p*q)))
 #accessdenied&#123;RSA_1S_4M4Z1nG_R1GhT????_2a5286af&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <h2 id="rsa-2"><a href="#rsa-2" class="headerlink" title="rsa-2"></a>rsa-2</h2><pre class="line-numbers language-python" data-language="python"><code class="language-python">N &#x3D; 264057768287532610924734156161085846111271356228103155462076871372364307056741048144764594645062879781647063846971890031256799636109911752078600428566502298518944558664381187
 e &#x3D; 65537
 ct &#x3D; 175347248748800717331910762241898102719683222504200516534883687111045877096093372005991552193144558951747833811929393668749668731738201985792026669764642235225240342271148171<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-
 <p>在线分解得p、q</p>
 <pre class="line-numbers language-python" data-language="python"><code class="language-python">from Crypto.Util.number import *
 n &#x3D; 264057768287532610924734156161085846111271356228103155462076871372364307056741048144764594645062879781647063846971890031256799636109911752078600428566502298518944558664381187
@@ -532,9 +525,6 @@ phi &#x3D; (p-1)*(q-1)
 d &#x3D; inverse(e,phi)
 print(long_to_bytes(pow(cipher_text,d,p*q)))
 #accessdenied&#123;alw4y5_try_t0_f4ct0r1z3_n_9ba93547&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
 <h2 id="reused-key"><a href="#reused-key" class="headerlink" title="reused key"></a>reused key</h2><pre class="line-numbers language-python" data-language="python"><code class="language-python">import os
 
 flag &#x3D; &quot;XXXX&quot;
@@ -552,7 +542,6 @@ print(encrypt(some_simple_text.encode(&quot;utf-8&quot;)))
 
 # flag 65f32f851cdb20eee875eea5a9a30f826cfd247eb550dcc89d1d4cdf952f5c28ca5f162355567fd262bb96
 # encrypted some_simple_text 70f8259330c137d4e873ff9ea6a559ab2dea1a60d943859aa545578395301d28a0741d1e065a24d45cb19f<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>先尝试用已知明文<code>accessdenied&#123;</code>恢复出一部分密钥来。</p>
 <p>之后写脚本，一个字母一个字母地猜就可以</p>
 <pre class="line-numbers language-python" data-language="python"><code class="language-python">from functools import reduce
@@ -587,9 +576,6 @@ while True:
 print([xor(key, c) for c in ct])
 
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
 <h2 id="small-key"><a href="#Small-key" class="headerlink" title="Small key"></a>Small key</h2><pre class="line-numbers language-none"><code class="language-none">import os
 
 flag &#x3D; b&quot;XXXXXX&quot;
@@ -605,7 +591,6 @@ print(cipher_text.hex())
 
 
 # flag 763d32726973a23f79373473616ba86a60300e677634f734482a626f6e5ff22e636a327c2f5ff228240123242e6caa23483d6127765fff6d743a61212f38bb<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>跟上题本质是一样的，已知明文弄出密钥即可</p>
 <pre class="line-numbers language-python" data-language="python"><code class="language-python">from functools import reduce
 
@@ -625,9 +610,6 @@ for i in range(len(ct)):
 print(flag)
 
 accessdenied&#123;kn0wn_pl41n_t3xt_4tt4ck5_4r3_r34lly_c00l_97cd0658&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
 <h2 id="sifers"><a href="#sifers" class="headerlink" title="sifers"></a>sifers</h2><pre class="line-numbers language-python" data-language="python"><code class="language-python">0ujyfwa87u &lt;- rot7: 3ncrypt10n
 M25jMGQxbmc&#x3D; &lt;- base64: 3nc0d1ng
 GRXGI&#x3D;&#x3D;&#x3D; &lt;- base32: 4nd
@@ -639,7 +621,6 @@ q4ss6e6ag &lt;- rot13 d1ff3r3nt
 3ncrypt10n_3nc0d1ng_4nd_h4sh1ng_4ll_4r3_d1ff3r3nt_eb25d8b7
 accessdenied&#123;3ncrypt10n_3nc0d1ng_4nd_h4sh1ng_4ll_4r3_d1ff3r3nt_eb25d8b7&#125;
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>剩余的题没弄到了，可惜………..</p>
 
                 
@@ -895,7 +876,6 @@ accessdenied&#123;3ncrypt10n_3nc0d1ng_4nd_h4sh1ng_4ll_4r3_d1ff3r3nt_eb25d8b7&#12
                     <div class="summary block-with-text">
                         
                             
-
 小步大步发sage实现
                         
                     </div>
@@ -942,7 +922,6 @@ accessdenied&#123;3ncrypt10n_3nc0d1ng_4nd_h4sh1ng_4ll_4r3_d1ff3r3nt_eb25d8b7&#12
                     <div class="summary block-with-text">
                         
                             
-
 同样总体难度不大，但是挺好玩的0_0
                         
                     </div>
@@ -1021,7 +1000,7 @@ accessdenied&#123;3ncrypt10n_3nc0d1ng_4nd_h4sh1ng_4ll_4r3_d1ff3r3nt_eb25d8b7&#12
             contentSelector: '#articleContent',
             headingsOffset: -($(window).height() * 0.4 - 45),
             collapseDepth: Number('0'),
-            headingSelector: 'h2, h3, h4'
+            headingSelector: 'h2, h3, h4,h5'
         });
 
         // modify the toc link href to support Chinese.
@@ -1033,7 +1012,7 @@ accessdenied&#123;3ncrypt10n_3nc0d1ng_4nd_h4sh1ng_4ll_4r3_d1ff3r3nt_eb25d8b7&#12
 
         // modify the heading title id to support Chinese.
         i = 0;
-        $('#articleContent').children('h2, h3, h4').each(function () {
+        $('#articleContent').children('h2, h3, h4,h5').each(function () {
             $(this).attr('id', tocHeading + (++i));
         });
 
@@ -1162,7 +1141,7 @@ accessdenied&#123;3ncrypt10n_3nc0d1ng_4nd_h4sh1ng_4ll_4r3_d1ff3r3nt_eb25d8b7&#12
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">267.7k</span>
+                        class="white-color">259.5k</span>
             
             
             

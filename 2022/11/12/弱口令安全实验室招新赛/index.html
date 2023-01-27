@@ -6,15 +6,13 @@
     <meta charset="utf-8">
     <meta name="keywords" content="弱口令安全实验室招新赛, 学习记录">
     <meta name="description" content="
-
 三个密码题记录。
-
 
 Crypto82.83.65题目描述：(p-1)*(q-1)
 题目代码：import gmpy2
 import libnum
 from Crypto.Util.number import *
-from binasc">
+from binascii">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -509,10 +507,8 @@ from binasc">
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <!--toc-->
-
 <p>三个密码题记录。</p>
 <span id="more"></span>
-
 <h2 id="crypto"><a href="#Crypto" class="headerlink" title="Crypto"></a>Crypto</h2><h2 id="828365"><a href="#82-83-65" class="headerlink" title="82.83.65"></a>82.83.65</h2><h4 id="题目描述"><a href="#题目描述：" class="headerlink" title="题目描述："></a>题目描述：</h4><p>(p-1)*(q-1)</p>
 <h4 id="题目代码"><a href="#题目代码：" class="headerlink" title="题目代码："></a>题目代码：</h4><pre class="line-numbers language-python" data-language="python"><code class="language-python">import gmpy2
 import libnum
@@ -532,7 +528,6 @@ d &#x3D; gmpy2.invert(e,(p-1)*(q-1))
 c &#x3D; pow(int(b2a_hex(flag),16),e,n)
 print(c)
 # C &#x3D; 31021919570683223794356421266753186826747161146739784961769368259629146487802<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <h4 id="分析"><a href="#分析：" class="headerlink" title="分析："></a>分析：</h4><p>经典的一个 RSA 加密算法，解密所需参数都已给出。</p>
 <pre class="line-numbers language-python" data-language="python"><code class="language-python">import gmpy2
 import libnum
@@ -546,9 +541,6 @@ C &#x3D; 31021919570683223794356421266753186826747161146739784961769368259629146
 d &#x3D; pow(e,-1,(p-1)*(q-1))
 flag &#x3D; pow(C,d,n)
 print(long_to_bytes(flag))<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
 <h3 id="cryptosos"><a href="#CryptoSOS" class="headerlink" title="CryptoSOS"></a>CryptoSOS</h3><h4 id="题目描述"><a href="#题目描述：-1" class="headerlink" title="题目描述："></a>题目描述：</h4><p>这个东西真的好像是个Flag，但是提交不上去啊！</p>
 <h4 id="题目代码"><a href="#题目代码：-1" class="headerlink" title="题目代码："></a>题目代码：</h4><p>bvkrsi{o990o395-i7u7-4llo-u084-x2i4590ou34l}</p>
 <h3 id="snake"><a href="#Snake" class="headerlink" title="Snake"></a>Snake</h3><h4 id="题目描述"><a href="#题目描述：-2" class="headerlink" title="题目描述："></a>题目描述：</h4><p>题目描述：这道题或许是个象形题</p>
@@ -586,14 +578,10 @@ print b32encode(str(c))[::-1]
 print str(c)
 
 # 20392798836838831460465406987101354448592610558736461081264936079945558905138<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <pre class="line-numbers language-none"><code class="language-none">p &#x3D; 185392927331398754034773152474166007097
 n &#x3D; 33047182186833739970146873552408478599841138065558351794468963853252513446871
 c &#x3D; &#x3D;gzMxUDM5gTN1UDN5kzNwYzM5QjNyEDOwEjN0YzM3gTN1ATM2ITO1gDN0QTNzEDMxcDO5YDM0UjN0AjN0EzM4gzM4YzM4gTO3ITOzAjM
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-
-
-
 <h4 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h4><h4 id="解题脚本"><a href="#解题脚本" class="headerlink" title="解题脚本"></a>解题脚本</h4><pre class="line-numbers language-python" data-language="python"><code class="language-python">from Crypto.Util.number import *
 p &#x3D; 185392927331398754034773152474166007097
 n &#x3D; 33047182186833739970146873552408478599841138065558351794468963853252513446871
@@ -617,9 +605,6 @@ for e in range(20000,50000):
 
 
 #b&#39;qsnctf&#123;!RSA_SO_EASY$$&#125;&#39;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
 <h3 id="what"><a href="#What" class="headerlink" title="What?"></a>What?</h3><p>维吉尼亚加密，密钥长度为3，猜测是 qsn，经过验证确实是。</p>
 
                 
@@ -924,7 +909,6 @@ for e in range(20000,50000):
                     <div class="summary block-with-text">
                         
                             
-
 继续赛后复现。
                         
                     </div>
@@ -1007,7 +991,7 @@ for e in range(20000,50000):
             contentSelector: '#articleContent',
             headingsOffset: -($(window).height() * 0.4 - 45),
             collapseDepth: Number('0'),
-            headingSelector: 'h2, h3, h4'
+            headingSelector: 'h2, h3, h4,h5'
         });
 
         // modify the toc link href to support Chinese.
@@ -1019,7 +1003,7 @@ for e in range(20000,50000):
 
         // modify the heading title id to support Chinese.
         i = 0;
-        $('#articleContent').children('h2, h3, h4').each(function () {
+        $('#articleContent').children('h2, h3, h4,h5').each(function () {
             $(this).attr('id', tocHeading + (++i));
         });
 
@@ -1148,7 +1132,7 @@ for e in range(20000,50000):
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">267.7k</span>
+                        class="white-color">259.5k</span>
             
             
             

@@ -6,11 +6,9 @@
     <meta charset="utf-8">
     <meta name="keywords" content="p4_CTF_2022, 学习记录">
     <meta name="description" content="
-
 p4 CTF 2022 赛后复盘
 
-
-CryptoHello-crypto题目描述：Go check out my NIST submission for incredibly secure post quantum AES repla">
+CryptoHello-crypto题目描述：Go check out my NIST submission for incredibly secure post quantum AES replace">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -505,10 +503,8 @@ CryptoHello-crypto题目描述：Go check out my NIST submission for incredibly 
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <!--toc-->
-
 <p>p4 CTF 2022 赛后复盘</p>
 <span id="more"></span>
-
 <h2 id="crypto"><a href="#Crypto" class="headerlink" title="Crypto"></a>Crypto</h2><h3 id="hello-crypto"><a href="#Hello-crypto" class="headerlink" title="Hello-crypto"></a>Hello-crypto</h3><h4 id="题目描述"><a href="#题目描述：" class="headerlink" title="题目描述："></a>题目描述：</h4><p>Go check out my NIST submission for incredibly secure post quantum AES replacement</p>
 <p>The flag format is: <code>p4&#123;letters_digits_and_special_characters&#125;</code>.<br>If you have any questions, you can find our team-members at the <a target="_blank" rel="noopener" href="https://discord.gg/mXMKzCh5Zu"><strong>p4 discord server</strong></a></p>
 <h4 id="题目代码"><a href="#题目代码：" class="headerlink" title="题目代码："></a>题目代码：</h4><pre class="line-numbers language-python" data-language="python"><code class="language-python">import os
@@ -536,10 +532,9 @@ for i in range(8833):
 
 print(pt.hex())
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <h4 id="分析"><a href="#分析：" class="headerlink" title="分析："></a>分析：</h4><p>看上去是把 flag 进行了 8833次轮函数迭代，看看轮函数具体做了那些操作：</p>
 <p>将 key 和 pt 逐字节地异或，并将异或的结果 和 异或的结果去掉第一个字节并在末尾加上 <code>0xaa</code> 在异或，最后将结果赋值给 pt，重复以上过程 8833 次。乍一看这个抽象的过程好像没什么可以利用的点，不过好在善良的出题人给出了以下提示：</p>
-<p><img src="/../images/image-20221111233822292.png" alt="image-20221111233822292"></p>
+<p><img src="images/image-20221111233822292.png" alt="image-20221111233822292"></p>
 <p>在本地测试发现：</p>
 <pre class="line-numbers language-python" data-language="python"><code class="language-python">import os
 import sys
@@ -567,7 +562,6 @@ for i in range(8832):
 print(pt)
 #b&#39;flag&#123;test&#125;&#39; 8832
 #b&#39;4&amp;G\x04?\x861\xcb7\x88&#39; 8833<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>8832次的时候居然是明文，而8833次是一个密文。难道说密文实际上只由明文经过一次轮函数得到？</p>
 <p>将循环次数改为1 发现密文是：<code>b&#39;\x96s7G\xbaS\xd8\xb6\x95\x16&#39;</code>，额好吧我猜错了….</p>
 <p>那只能分析 8832 到 8833 这一轮轮函数发生的变化了！由上述性质可以知道只要我们得到了第 8832 轮的值就可以拿到 flag，看看如何由密文即第 8833 轮的值逆推回上一轮的值。</p>
@@ -825,7 +819,6 @@ print(pt)
                     <div class="summary block-with-text">
                         
                             
-
 继续赛后复现。
                         
                     </div>
@@ -957,7 +950,7 @@ print(pt)
             contentSelector: '#articleContent',
             headingsOffset: -($(window).height() * 0.4 - 45),
             collapseDepth: Number('0'),
-            headingSelector: 'h2, h3, h4'
+            headingSelector: 'h2, h3, h4,h5'
         });
 
         // modify the toc link href to support Chinese.
@@ -969,7 +962,7 @@ print(pt)
 
         // modify the heading title id to support Chinese.
         i = 0;
-        $('#articleContent').children('h2, h3, h4').each(function () {
+        $('#articleContent').children('h2, h3, h4,h5').each(function () {
             $(this).attr('id', tocHeading + (++i));
         });
 
@@ -1098,7 +1091,7 @@ print(pt)
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">267.7k</span>
+                        class="white-color">259.5k</span>
             
             
             

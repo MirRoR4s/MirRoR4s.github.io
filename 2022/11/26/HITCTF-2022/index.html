@@ -6,11 +6,7 @@
     <meta charset="utf-8">
     <meta name="keywords" content="HITCTF-2022, 学习记录">
     <meta name="description" content="
-
 赛中记录、赛后复盘
-
-
-
 
 Webpop&amp;lt;?php
 
@@ -19,7 +15,7 @@ Webpop&amp;lt;?php
 class a&amp;#123;
     protected $a1;
     private $a2;
-    p">
+    priva">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -501,12 +497,8 @@ class a&amp;#123;
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <!--toc-->
-
 <p>赛中记录、赛后复盘</p>
 <span id="more"></span>
-
-
-
 <h2 id="web"><a href="#Web" class="headerlink" title="Web"></a>Web</h2><h3 id="pop"><a href="#pop" class="headerlink" title="pop"></a>pop</h3><pre class="line-numbers language-php" data-language="php"><code class="language-php">&lt;?php
 
 &#x2F;&#x2F; php version 7.4.32
@@ -628,19 +620,17 @@ if(isset($_POST[&#39;ser&#39;]))&#123;
 &#125;else&#123;
     highlight_file(__FILE__);
 &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>经过一番观察，我放弃了 f 类。其余的可能可以命令执行的函数有：<br><img src="/images/HITCTF-2022/image-20221126192332305.png" alt="image-20221126192332305"></p>
 <p><code>__clone</code> 的函数名会判断是不是对象，那么就剩下 c 函数的 <code>__call</code> 了。</p>
 <p>call 在对象调用一个不可访问的方法时触发。寻找一番发现可以传参的只有 e函数的 invoke方法</p>
 <p><img src="/images/HITCTF-2022/image-20221126192756347.png" alt="image-20221126192756347"> </p>
 <pre class="line-numbers language-php" data-language="php"><code class="language-php">__invoke()，调用函数的方式调用一个对象时的回应方法<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
 <p>发现 a 类的 clone满足条件</p>
 <p><img src="/images/HITCTF-2022/image-20221126192928195.png" alt="image-20221126192928195"></p>
 <p>而 __clone()，当对象复制完成时调用</p>
 <p><img src="/images/HITCTF-2022/image-20221126193008540.png" alt="image-20221126193008540"></p>
 <p>d 类的 toString方法调用了</p>
-<p>​	__toString()，类被当成字符串时的回应方法。</p>
+<p>​    __toString()，类被当成字符串时的回应方法。</p>
 <p><img src="/images/HITCTF-2022/image-20221126193107206.png" alt="image-20221126193107206"></p>
 <p>发现 c类的析构方法满足条件</p>
 <p>所以总结如下：</p>
@@ -933,7 +923,6 @@ if(isset($_POST[&#39;ser&#39;]))&#123;
                     <div class="summary block-with-text">
                         
                             
-
 莫使金樽空对月。
                         
                     </div>
@@ -1016,7 +1005,7 @@ if(isset($_POST[&#39;ser&#39;]))&#123;
             contentSelector: '#articleContent',
             headingsOffset: -($(window).height() * 0.4 - 45),
             collapseDepth: Number('0'),
-            headingSelector: 'h2, h3, h4'
+            headingSelector: 'h2, h3, h4,h5'
         });
 
         // modify the toc link href to support Chinese.
@@ -1028,7 +1017,7 @@ if(isset($_POST[&#39;ser&#39;]))&#123;
 
         // modify the heading title id to support Chinese.
         i = 0;
-        $('#articleContent').children('h2, h3, h4').each(function () {
+        $('#articleContent').children('h2, h3, h4,h5').each(function () {
             $(this).attr('id', tocHeading + (++i));
         });
 
@@ -1157,7 +1146,7 @@ if(isset($_POST[&#39;ser&#39;]))&#123;
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">267.7k</span>
+                        class="white-color">259.5k</span>
             
             
             

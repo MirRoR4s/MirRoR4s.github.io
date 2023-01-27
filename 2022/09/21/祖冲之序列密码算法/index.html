@@ -7,15 +7,9 @@
     <meta name="keywords" content="GMT 0001.1-2012 祖冲之序列密码算法, 学习记录">
     <meta name="description" content="
 
-
-
-
-
-
-
 祖冲之序列密码算法 第 1 部分：算法描述具体的内容在pdf已讲述得很清楚，所以总结主要囊括在一些细节的部分。
 LFSR初始化模式初始化模式接收一个31比特字u。u是由非线性函数F的32比特输出W通过舍弃最低位比特得到。
-1">
+1、注意到在初">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -470,14 +464,14 @@ LFSR初始化模式初始化模式接收一个31比特字u。u是由非线性函
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    5.8k
+                    1.1k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    28 分
+                    4 分
                 </div>
                 
 
@@ -501,17 +495,11 @@ LFSR初始化模式初始化模式接收一个31比特字u。u是由非线性函
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <!--toc-->
-
-
-
 <span id="more"></span>
-
-
-
 <h2 id="祖冲之序列密码算法-第-1-部分算法描述"><a href="#祖冲之序列密码算法-第-1-部分：算法描述" class="headerlink" title="祖冲之序列密码算法 第 1 部分：算法描述"></a>祖冲之序列密码算法 第 1 部分：算法描述</h2><p>具体的内容在pdf已讲述得很清楚，所以总结主要囊括在一些细节的部分。</p>
 <h4 id="lfsr初始化模式"><a href="#LFSR初始化模式" class="headerlink" title="LFSR初始化模式"></a>LFSR初始化模式</h4><p>初始化模式接收一个31比特字u。u是由非线性函数F的32比特输出W通过舍弃最低位比特得到。</p>
 <p>1、注意到在初始化模式中反馈函数一共只使用了16个寄存器中的5个，分别是</p>
-<p>$s_{15},s_{13},s_{10},s_4,s_{0}$。<strong>但这五个寄存器前面的乘数目前不知道是如何选择的</strong>。$2^{15}s_{15}$ 表示$s_{15}$ 左移15位，其余同理。（这里pdf没有明确表明是否这个表示乘法）由此可见，祖冲之序列密码算法的LFSR并不是寻常的定义在GF(2)上的LFSR。</p>
+<p>$s<em>{15},s</em>{13},s<em>{10},s_4,s</em>{0}$。<strong>但这五个寄存器前面的乘数目前不知道是如何选择的</strong>。$2^{15}s<em>{15}$ 表示$s</em>{15}$ 左移15位，其余同理。（这里pdf没有明确表明是否这个表示乘法）由此可见，祖冲之序列密码算法的LFSR并不是寻常的定义在GF(2)上的LFSR。</p>
 <p>下方代码是不够优秀的，没有实现文档所给的快速模乘算法。</p>
 <pre class="line-numbers language-python" data-language="python"><code class="language-python">def LFSRWithInitialisationMode(self, u):
     &quot;&quot;&quot;
@@ -530,12 +518,9 @@ LFSR初始化模式初始化模式接收一个31比特字u。u是由非线性函
     for i in range(1, 16):
         self.LFSR_S[i - 1] &#x3D; self.LFSR_S[i]
     self.LFSR_S[15] &#x3D; s16<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
 <h5 id="zuc的模加运算"><a href="#ZUC的模加运算" class="headerlink" title="ZUC的模加运算"></a>ZUC的模加运算</h5><p>由于模乘涉及到了模加，所以先分析一下模加：</p>
-<p><img src="/../images/image-20221019105059240.png" alt="image-20221019105059240"></p>
-<p>从这里其实也能看出为什么祖冲之序列密码算法要使用31比特的字，应该是考虑到了计算机的实际应用实现。因为现有平台大多都是基于32位&#x2F;64位处理的，所以使用两个31比特字的加法计算机能够直接存储结果。</p>
+<p><img src="images/image-20221019105059240.png" alt="image-20221019105059240"></p>
+<p>从这里其实也能看出为什么祖冲之序列密码算法要使用31比特的字，应该是考虑到了计算机的实际应用实现。因为现有平台大多都是基于32位/64位处理的，所以使用两个31比特字的加法计算机能够直接存储结果。</p>
 <p>这是因为两个31比特字相加，其结果不会超过32比特，不会超过以32位作为字长的计算机的存储范围。</p>
 <p>当然，即使某数超过了计算机字长使得计算机无法直接存储，我们也可以在这台计算机上面存储这个整数，只不过不能使用一个计算机字来存储就是了。如果学习过数论及其应用的话，就知道可以使用中国剩余定理来帮助我们解决这类问题。</p>
 <p>现在回到算法分析上来，第一步是直接计算a+b的和并赋值给c，这没什么好说的。</p>
@@ -554,47 +539,72 @@ LFSR初始化模式初始化模式接收一个31比特字u。u是由非线性函
     c &#x3D; a + b
     c &#x3D; (c&amp;0x7fffffff) + (c &gt;&gt; 31)
     return c<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
-<h5 id="zuc的模乘运算未完成"><a href="#ZUC的模乘运算（未完成）" class="headerlink" title="ZUC的模乘运算（未完成）"></a>ZUC的模乘运算（未完成）</h5><p>在后续我阅读到pdf的末尾的时候，我大概明白乘数的选择原理了。当我们想要计算两个31比特字 $ab,mod(2^{31}-1)$ 的时候，如果b具有<strong>较低的汉明重量</strong>，那么我们就可以通过31比特的循环移位运算和模 $2^{31}-1$的加法运算快速实现两个31比特字模 $2^{31}-1$ 的乘法。而当b可以被写为2的幂次和的时候，其就具有较低的汉明权重，所以我们可以看到初始化模式中乘数都是2的幂次（$1+2^8&#x3D;2^0+2^8$）</p>
-<p><img src="/../images/image-20221019102909961.png" alt="image-20221019102909961"></p>
+<h5 id="zuc的模乘运算未完成"><a href="#ZUC的模乘运算（未完成）" class="headerlink" title="ZUC的模乘运算（未完成）"></a>ZUC的模乘运算（未完成）</h5><p>在后续我阅读到pdf的末尾的时候，我大概明白乘数的选择原理了。当我们想要计算两个31比特字 $ab\,mod(2^{31}-1)$ 的时候，如果b具有<strong>较低的汉明重量</strong>，那么我们就可以通过31比特的循环移位运算和模 $2^{31}-1$的加法运算快速实现两个31比特字模 $2^{31}-1$ 的乘法。而当b可以被写为2的幂次和的时候，其就具有较低的汉明权重，所以我们可以看到初始化模式中乘数都是2的幂次（$1+2^8=2^0+2^8$）</p>
+<p><img src="images/image-20221019102909961.png" alt="image-20221019102909961"></p>
 <p>由于我的数学水平还不够，没有办法从理论上证明上式，但无论如何还是记录一下分析的过程</p>
-<p>为了表达方便，令 $2^{31}-1&#x3D;m$</p>
-<p>$$<br>\begin{aligned}<br>ab,mod(2^{31}-1) &amp;&#x3D; a(2^{i}+2^{j}+2^k),mod,m\<br>&amp;&#x3D;(2^ia+2^ja+2^ka),mod,m\<br>&amp;&#x3D;(2^ia\mod m) + (2^ja\mod m) + (2^ka \mod m ) \mod m\</p>
-<p>\end{aligned}<br>$$</p>
-<p>先分析 $2^ia \mod m$ 是什么情况</p>
-<p>首先我们根据带余除法可以知道<br>$$<br>\begin{aligned}<br>2^i\mod m &#x3D; 2^i\mod (2^{31}-1) &amp;&#x3D; 2^{i-31}&amp;&amp;if\ i&gt;&#x3D;31\<br>&amp;&#x3D;2^i&amp;&amp;if,i&lt;31<br>\end{aligned}<br>$$<br>令 $2^ia$ &#x3D; $(a_k,a_{k-1},a_{k-2},….a_0)<em>2&#x3D;a_k2^k+ a</em>{k-1}2^{k-1}+….+a0$</p>
-<p>我们假设 $k&gt;&#x3D;31$ 否则 $2^i \mod m &#x3D;2^i$，而且假设 $k-j &gt; j$</p>
-<p>令 $k &#x3D; j+31,k-j&#x3D;31$，这就是说k和31的差值是j，那么前 $j+1$ 项在模 $m$ 后等价于其对应指数减去31,剩余的项则保持不变。我用5个省略号来区分这两种不同的项</p>
-<p>则<br>$$<br>\begin{aligned}</p>
-<p>2^ia\mod m &amp;&#x3D;a_k2^k+a_{k-1}2^{k-1}+…+a_{k-j}2^{k-j}+…..+a_j2^j+…+a_0 \<br>&amp;&#x3D;a_k2^{k-31}+a_{k-1}2^{k-32}+…+a_{k-j}2^{k-j-31}\<br>&amp;+…..+a_j2^j+a_{j-1}2^{j-1}+…..+a_0\<br>&amp;&#x3D;a_k2^{k-31}+a_{k-1}2^{k-32}+….+a_{k-j}2^{k-j-31}\<br>&amp;+….+a_j2^{k-31}+a_{j-1}2^{k-32}+…..+a_0\<br>&amp;&#x3D;(a_k+a_j)2^{k-31}+(a_{k-1}+a_{j-1})2^{k-32}+…+(a_{k-j}+a_0)2^{k-31-j}\<br>&amp;+a_{k-j-1}2^{k-j-1}+a_{k-j-2}2^{k-j-2}+….+a_{j+1}2^{j+1}<br>\end{aligned}<br>$$<br>其中 $k-31-j&gt;&#x3D;0$</p>
-<p>原来系数有$k+1$ 项的，现在变为 $k+1-(j+1)&#x3D; k-j-1+1&#x3D;31$ 项了。</p>
+<p>为了表达方便，令 $2^{31}-1=m$</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+ab\,mod(2^{31}-1) &= a(2^{i}+2^{j}+2^k)\,mod\,m\\
+&=(2^ia+2^ja+2^ka)\,mod\,m\\
+&=(2^ia\mod m) + (2^ja\mod m) + (2^ka \mod m ) \mod m\\
+
+\end{aligned}</script><p>先分析 $2^ia \mod m$ 是什么情况</p>
+<p>首先我们根据带余除法可以知道</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+2^i\mod m = 2^i\mod (2^{31}-1) &= 2^{i-31}&&if\ i>=31\\
+&=2^i&&if\,i<31
+\end{aligned}</script><p>令 $2^ia$ = $(a<em>k,a</em>{k-1},a<em>{k-2},….a_0)_2=a_k2^k+ a</em>{k-1}2^{k-1}+….+a0$</p>
+<p>我们假设 $k&gt;=31$ 否则 $2^i \mod m =2^i$，而且假设 $k-j &gt; j$</p>
+<p>令 $k = j+31,k-j=31$，这就是说k和31的差值是j，那么前 $j+1$ 项在模 $m$ 后等价于其对应指数减去31,剩余的项则保持不变。我用5个省略号来区分这两种不同的项</p>
+<p>则</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+
+2^ia\mod m &=a_k2^k+a_{k-1}2^{k-1}+...+a_{k-j}2^{k-j}+.....+a_j2^j+...+a_0 \\
+&=a_k2^{k-31}+a_{k-1}2^{k-32}+...+a_{k-j}2^{k-j-31}\\
+&+.....+a_j2^j+a_{j-1}2^{j-1}+.....+a_0\\
+&=a_k2^{k-31}+a_{k-1}2^{k-32}+....+a_{k-j}2^{k-j-31}\\
+&+....+a_j2^{k-31}+a_{j-1}2^{k-32}+.....+a_0\\
+&=(a_k+a_j)2^{k-31}+(a_{k-1}+a_{j-1})2^{k-32}+...+(a_{k-j}+a_0)2^{k-31-j}\\
+&+a_{k-j-1}2^{k-j-1}+a_{k-j-2}2^{k-j-2}+....+a_{j+1}2^{j+1}
+\end{aligned}</script><p>其中 $k-31-j&gt;=0$</p>
+<p>原来系数有$k+1$ 项的，现在变为 $k+1-(j+1)= k-j-1+1=31$ 项了。</p>
 <p>我的目标原来是想分析出 $2^ia \mod m$ 等价于 下图等号右边第一个式子的：</p>
-<p><img src="/../images/image-20221019192754643.png" alt="image-20221019192754643"></p>
+<p><img src="images/image-20221019192754643.png" alt="image-20221019192754643"></p>
 <p>很显然，我没有成功。</p>
-<p>现在假设我们要计算 $2^{31}+1\mod m &#x3D; 2$</p>
-<p>根据上式可以知道 $k&#x3D;31,j&#x3D;0$</p>
-<p>所以$2^{31}+1 \mod m &#x3D; (a_{31}+a_0)2^{0}+a_{30}2^{30}+…+a_12^1$ 一共31项</p>
+<p>现在假设我们要计算 $2^{31}+1\mod m = 2$</p>
+<p>根据上式可以知道 $k=31,j=0$</p>
+<p>所以$2^{31}+1 \mod m = (a<em>{31}+a_0)2^{0}+a</em>{30}2^{30}+…+a_12^1$ 一共31项</p>
 <p>这等价于 $2^{31}+1$ 去除掉最高最低项之后的数（在这里是0）再 加上 （最高项和最低项）的和。</p>
-<p>写成二进制即是：<br>$$<br>\begin{aligned}<br>2^{31}+1&amp;&#x3D;10000000000000000000000000000001_2\<br>&amp;&#x3D;(a_{31}+a_0)2^0\<br>&amp;&#x3D;2</p>
-<p>\end{aligned}<br>$$<br>如果是 $2^{31}+5\mod m $的话就等价于<br>$$<br>\begin{aligned}<br>2^{31}+5&amp;&#x3D;10000000000000000000000000000101_2\<br>&amp;&#x3D;(1+1)2^0+1*2^2&#x3D;6<br>\end{aligned}<br>$$<br> 分析到这就懒得继续了，有空再看看吧…</p>
+<p>写成二进制即是：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+2^{31}+1&=10000000000000000000000000000001_2\\
+&=(a_{31}+a_0)2^0\\
+&=2
+
+\end{aligned}</script><p>如果是 $2^{31}+5\mod m $的话就等价于</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+2^{31}+5&=10000000000000000000000000000101_2\\
+&=(1+1)2^0+1*2^2=6
+\end{aligned}</script><p> 分析到这就懒得继续了，有空再看看吧…</p>
 <p>现在假设我们要用python实现上式，我们该如何编写我们的代码？</p>
 <p>首先我们选择一个31比特的整数a</p>
 <pre class="line-numbers language-python" data-language="python"><code class="language-python">import random
 a &#x3D; random.getrandbits(31)
 assert a.bit_length() &#x3D;&#x3D; 31<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-
 <p>注意到断言不一定每次都成功，我猜测是因为python会自动省略高位的0，从而使得整数的比特位数变小了。</p>
-<p>然后我们选择一个具有较低汉明权重的整数b，这里就选 $b&#x3D;2^{15}$</p>
-<p>因为 $2^{15} &#x3D; 2^{15}+2^{0}+2^{0}$</p>
-<p>所以 $i&#x3D;15,j&#x3D;0,k&#x3D;0$</p>
+<p>然后我们选择一个具有较低汉明权重的整数b，这里就选 $b=2^{15}$</p>
+<p>因为 $2^{15} = 2^{15}+2^{0}+2^{0}$</p>
+<p>所以 $i=15,j=0,k=0$</p>
 <pre class="line-numbers language-none"><code class="language-none">b&#x3D;2**15<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
 <p>根据pdf中的式子，我们需要先实现循环移位运算。下面是我自己书写的一个代码，目前没有发现错误。</p>
-<p>后续继续测试还是发现了不少问题，比如循环移位0位需要特判一下。然后由于python会自动省略高位的0，在循环移位的时候可能会出现移位数为负数的情况，这也需要特别处理。从这我发现以后还是用c&#x2F;c++来写更契合。</p>
-<p>注：在后续测试发现当j&#x3D;k&#x3D;0的时候，不可以加上这两项，否则答案是不对的。</p>
-<p><img src="/../images/image-20221019142911310.png" alt="image-20221019142911310"></p>
+<p>后续继续测试还是发现了不少问题，比如循环移位0位需要特判一下。然后由于python会自动省略高位的0，在循环移位的时候可能会出现移位数为负数的情况，这也需要特别处理。从这我发现以后还是用c/c++来写更契合。</p>
+<p>注：在后续测试发现当j=k=0的时候，不可以加上这两项，否则答案是不对的。</p>
+<p><img src="images/image-20221019142911310.png" alt="image-20221019142911310"></p>
 <pre class="line-numbers language-python" data-language="python"><code class="language-python">class CyclicShift:
     &quot;&quot;&quot;
     循环移位类，负责对传入的整数进行循环移位
@@ -622,12 +632,9 @@ assert a.bit_length() &#x3D;&#x3D; 31<span aria-hidden="true" class="line-number
         return (n1 + n2) &amp; ((2 ** self.length) - 1)
 
     # def rotateRight(self,bit) -&gt; int :<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
 <p>所以现在我们就将a循环左移15位加上a循环左移0位再加上a循环左移0位，注意加法是模 $2^{31}-1$</p>
 <p>但是悲哀的是模乘算法不正确，我检查了一下我的循环移位应该没有出问题，我觉得我可能误会了pdf给出的算法的意思。</p>
-<h4 id="lfsr工作模式"><a href="#LFSR工作模式" class="headerlink" title="LFSR工作模式"></a>LFSR工作模式</h4><p><img src="/../images/image-20221017170536707.png" alt="image-20221017170536707"></p>
+<h4 id="lfsr工作模式"><a href="#LFSR工作模式" class="headerlink" title="LFSR工作模式"></a>LFSR工作模式</h4><p><img src="images/image-20221017170536707.png" alt="image-20221017170536707"></p>
 <p>工作模式的反馈函数和初始化模式的是一样的</p>
 <pre class="line-numbers language-python" data-language="python"><code class="language-python">def LFSRWithWorkMode(self):
     &quot;&quot;&quot;
@@ -641,11 +648,8 @@ assert a.bit_length() &#x3D;&#x3D; 31<span aria-hidden="true" class="line-number
     for i in range(1, 16):
         self.LFSR_S[i - 1] &#x3D; self.LFSR_S[i]
     self.LFSR_S[15] &#x3D; s16<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
 <h4 id="比特重组-br"><a href="#比特重组-BR" class="headerlink" title="比特重组 BR"></a>比特重组 BR</h4><p>比特重组就是从LFSR的寄存器单元抽取128比特组成4个32比特的字。即BR函数输出4个32比特的字 $X_0,X_1,X_2,X_3$</p>
-<p><img src="/../images/image-20221019154226976.png" alt="image-20221019154226976"></p>
+<p><img src="images/image-20221019154226976.png" alt="image-20221019154226976"></p>
 <pre class="line-numbers language-python" data-language="python"><code class="language-python">def BitReconstruction(self):
        &quot;&quot;&quot;
        比特重组从LFSR的寄存器单元抽取128比特组成4个32比特字X0,X1,X2,X3
@@ -660,9 +664,6 @@ assert a.bit_length() &#x3D;&#x3D; 31<span aria-hidden="true" class="line-number
        X3 &#x3D; self.BitLink_L(31, self.LFSR_S[2], self.LFSR_S[0])
 
        return [X0, X1, X2, X3]<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
 <h5 id="比特链接的实现"><a href="#比特链接的实现：" class="headerlink" title="比特链接的实现："></a>比特链接的实现：</h5><pre class="line-numbers language-python" data-language="python"><code class="language-python">def BitLink_H(self,n,a, b):
     # assert a.bit_length()&lt;&#x3D;31
     ans &#x3D; ((a &gt;&gt; (n - 16)) &amp; (2 ** 16 - 1)) &lt;&lt; 16 ^ (b &amp; 0x0000ffff)
@@ -672,7 +673,6 @@ assert a.bit_length() &#x3D;&#x3D; 31<span aria-hidden="true" class="line-number
 def BitLink_L(self,n,a,b):
     ans &#x3D; ((a &amp; 0x0000ffff) &lt;&lt; 16) ^ ((b &gt;&gt; (n-16)) &amp; 0x0000ffff)
     return ans<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>在实践中的例子：</p>
 <pre class="line-numbers language-python" data-language="python"><code class="language-python">def BitLink(a,b):
     #assert a.bit_length()&lt;&#x3D;31
@@ -694,11 +694,8 @@ print(t1[:16]+t2[-16:])
 ans &#x3D; BitLink(a,b)
 print(bin(ans)[2:].zfill(32))
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
 <h4 id="非线性函数-f"><a href="#非线性函数-F" class="headerlink" title="非线性函数 F"></a>非线性函数 F</h4><p>该函数包含两个32比特的记忆单元变量R1和R2，这应该是一个全局变量。函数真正的输入是3个32比特字$X_0,X_1,X_2$，输出也是一个32比特的字W。</p>
-<p><img src="/../images/image-20221018171207331.png" alt="image-20221018171207331"></p>
+<p><img src="images/image-20221018171207331.png" alt="image-20221018171207331"></p>
 <p>发现该函数实际上第一行就生成完毕了 $W$ ，后续的操作都是在更新 $R_1$ 和 $R_2$ 这两个全局变量的值。如果我们将其用python语言的形式来表示的话，在我看来应是如下的样子：</p>
 <p>实际在实现循环移位的时候如果将整数转为字符串的形式说实话会很简单，但是在我的印象中似乎很多密码实现还是采用位运算的形式。我不知道整数转字符串计算机底层是如何实现的，但是相比应该没有位运算快速。当然，我的循环移位函数虽然是以位运算为基础，但是不见得就比直接使用字符串来的快。还是要取决于函数的具体实现。</p>
 <pre class="line-numbers language-python" data-language="python"><code class="language-python">def F(self,X0, X1, X2):
@@ -728,7 +725,6 @@ print(bin(ans)[2:].zfill(32))
     print(hex(self.R2))
 
     return W<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <h5 id="l1-l2线性变换的实现"><a href="#L1、L2线性变换的实现" class="headerlink" title="L1、L2线性变换的实现"></a>L1、L2线性变换的实现</h5><p>这里真是卡住我很久，最后发现是循环左移出了问题导致线性变换结果有误。</p>
 <pre class="line-numbers language-python" data-language="python"><code class="language-python">def L1(self, X: int) -&gt; int:
     &quot;&quot;&quot;
@@ -747,7 +743,6 @@ def L2(self, X: int) -&gt; int:
     &quot;&quot;&quot;
     x &#x3D; CyclicShift(X,32)
     return X ^ (x.rotateLeft(8)) ^ (x.rotateLeft(14)) ^ (x.rotateLeft(22)) ^ (x.rotateLeft(30))<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <h5 id="s函数的实现"><a href="#S函数的实现" class="headerlink" title="S函数的实现"></a>S函数的实现</h5><p>这一部分也相当不完美，我应该以整数的形式来操作各种参数的，而不是下方的二进制字符串拼接。</p>
 <pre class="line-numbers language-python" data-language="python"><code class="language-python">def S(self, X) -&gt; int:
     &quot;&quot;&quot;
@@ -769,9 +764,6 @@ def L2(self, X: int) -&gt; int:
     Y &#x3D; (((y0 &lt;&lt; 24)) ^ (y1 &lt;&lt; 16) ^ (y2 &lt;&lt; 8) ^ y3) &amp; 0xffffffff
     assert (bin(y0)[2:].zfill(8) + bin(y1)[2:].zfill(8) + bin(y2)[2:].zfill(8) + bin(y3)[2:].zfill(8)) &#x3D;&#x3D; bin(Y)[2:].zfill( 32)
     return Y<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
 <h3 id="我的代码待完善"><a href="#我的代码（待完善）" class="headerlink" title="我的代码（待完善）"></a>我的代码（待完善）</h3><p>F函数还没有写好，应该是查询S盒的时候有点问题。经过我漫长的排查，终于发现是循环移位的问题，我改来改去还是没有改好。我后面发现当我进行循环移位的时候，我必须要手动指明这个整数的比特位数，因为python会自动省略高比特的0，这一点真的引起很大的麻烦。</p>
 <pre class="line-numbers language-python" data-language="python"><code class="language-python">&quot;&quot;&quot;
 祖冲之序列密码算法
@@ -1073,16 +1065,15 @@ z2 &#x3D; test.OutputKey()
 print(hex(z1)[2:].zfill(8))
 print(hex(z2)[2:].zfill(8))
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h5 id="全0输入测试示例"><a href="#全0输入测试示例" class="headerlink" title="全0输入测试示例"></a>全0输入测试示例</h5><p><img src="/../images/image-20221020123217547.png" alt="image-20221020123217547"></p>
-<p><img src="/../images/image-20221020123228464.png" alt="image-20221020123228464"></p>
-<h5 id="全1输入测试示例"><a href="#全1输入测试示例" class="headerlink" title="全1输入测试示例"></a>全1输入测试示例</h5><p><img src="/../images/image-20221020123338283.png" alt="image-20221020123338283"></p>
-<p><img src="/../images/image-20221020123414440.png" alt="image-20221020123414440"></p>
-<p><img src="/../images/image-20221020123404606.png" alt="image-20221020123404606"></p>
+<h5 id="全0输入测试示例"><a href="#全0输入测试示例" class="headerlink" title="全0输入测试示例"></a>全0输入测试示例</h5><p><img src="images/image-20221020123217547.png" alt="image-20221020123217547"></p>
+<p><img src="images/image-20221020123228464.png" alt="image-20221020123228464"></p>
+<h5 id="全1输入测试示例"><a href="#全1输入测试示例" class="headerlink" title="全1输入测试示例"></a>全1输入测试示例</h5><p><img src="images/image-20221020123338283.png" alt="image-20221020123338283"></p>
+<p><img src="images/image-20221020123414440.png" alt="image-20221020123414440"></p>
+<p><img src="images/image-20221020123404606.png" alt="image-20221020123404606"></p>
 <h4 id="待完善的地方"><a href="#待完善的地方" class="headerlink" title="待完善的地方"></a>待完善的地方</h4><p>1、没有使用pdf给出的快速模乘算法</p>
 <p>2、查询S盒的时候要进行一个32比特的分组，每一组8比特。我是转成二进制字符串进行处理了，应该要使用位运算。</p>
 <h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>祖冲之是一个典型的序列（流）密码，重点关注其密钥流生成算法即可。通过python基本实现了该密码算法，同时再编写代码的过程中都尽量使用位运算，而不是将整数转为字符串进行处理。同时要注重细节，很多密码算法具有雪崩效应，这使得我们在编程中出现的错误也会被放大，只要有一个比特或者字节因为编程错误发生了误差，那么就得不到加密的结果。我就是在L1函数的实现上出现了问题导致卡了1天的时间。</p>
-<h3 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h3><p>本文依据来源于中华人民共和国密码行业标准(GM&#x2F;T)文本：<a target="_blank" rel="noopener" href="http://www.gmbz.org.cn/main/bzlb.html">http://www.gmbz.org.cn/main/bzlb.html</a></p>
+<h3 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h3><p>本文依据来源于中华人民共和国密码行业标准(GM/T)文本：<a target="_blank" rel="noopener" href="http://www.gmbz.org.cn/main/bzlb.html">http://www.gmbz.org.cn/main/bzlb.html</a></p>
 <p>相关pdf下载链接：<a target="_blank" rel="noopener" href="https://github.com/guanzhi/GM-Standards">https://github.com/guanzhi/GM-Standards</a></p>
 
                 
@@ -1338,7 +1329,6 @@ print(hex(z2)[2:].zfill(8))
                     <div class="summary block-with-text">
                         
                             
-
 以中有足乐者，不知口体之奉不若人也。
                         
                     </div>
@@ -1385,7 +1375,6 @@ print(hex(z2)[2:].zfill(8))
                     <div class="summary block-with-text">
                         
                             
-
 我要刷完ctfshow
                         
                     </div>
@@ -1464,7 +1453,7 @@ print(hex(z2)[2:].zfill(8))
             contentSelector: '#articleContent',
             headingsOffset: -($(window).height() * 0.4 - 45),
             collapseDepth: Number('0'),
-            headingSelector: 'h2, h3, h4'
+            headingSelector: 'h2, h3, h4,h5'
         });
 
         // modify the toc link href to support Chinese.
@@ -1476,7 +1465,7 @@ print(hex(z2)[2:].zfill(8))
 
         // modify the heading title id to support Chinese.
         i = 0;
-        $('#articleContent').children('h2, h3, h4').each(function () {
+        $('#articleContent').children('h2, h3, h4,h5').each(function () {
             $(this).attr('id', tocHeading + (++i));
         });
 
@@ -1605,7 +1594,7 @@ print(hex(z2)[2:].zfill(8))
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">267.7k</span>
+                        class="white-color">259.5k</span>
             
             
             

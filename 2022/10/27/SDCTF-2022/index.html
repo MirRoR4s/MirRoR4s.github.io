@@ -6,11 +6,9 @@
     <meta charset="utf-8">
     <meta name="keywords" content="SDCTF-2022, 学习记录">
     <meta name="description" content="
-
 在NSS平台上看到了这个SDCTF，所以做了SDCTF的Crypto赛题的总结记录，除了最后两题其他题目都不难。
 
-
-CryptoSix Bites分析：根据提示的信息，six bites 音同 six bytes，猜测这是指密钥的长度">
+CryptoSix Bites 分析：根据提示的信息，six bites 音同 six bytes，猜测这是指密钥的长度。">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -505,15 +503,13 @@ CryptoSix Bites分析：根据提示的信息，six bites 音同 six bytes，猜
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <!--toc-->
-
 <p>在NSS平台上看到了这个SDCTF，所以做了SDCTF的Crypto赛题的总结记录，除了最后两题其他题目都不难。</p>
 <span id="more"></span>
-
-<h2 id="crypto"><a href="#Crypto" class="headerlink" title="Crypto"></a>Crypto</h2><h3 id="six-bites"><a href="#Six-Bites" class="headerlink" title="Six Bites"></a>Six Bites</h3><h6 id><a href="#" class="headerlink" title></a></h6><h5 id="分析"><a href="#分析：" class="headerlink" title="分析："></a>分析：</h5><p>根据提示的信息，six bites 音同 six bytes，猜测这是指密钥的长度。题目没有对加密方式进行提示，这时候一般都是猜测异或加密。我们知道flag的格式是 “sdctf{“，这是6个我们已知的字节。通过运用已知明文攻击，将已知的前六字节的明文和已知的前六字节密文相异或，我们就可以恢复出6个字节的密钥，最终解密整个密文获得flag。</p>
+<h2 id="crypto"><a href="#Crypto" class="headerlink" title="Crypto"></a>Crypto</h2><h3 id="six-bites"><a href="#Six-Bites" class="headerlink" title="Six Bites"></a>Six Bites</h3><h6 id><a href="#" class="headerlink" title=" "></a> </h6><h5 id="分析"><a href="#分析：" class="headerlink" title="分析："></a>分析：</h5><p>根据提示的信息，six bites 音同 six bytes，猜测这是指密钥的长度。题目没有对加密方式进行提示，这时候一般都是猜测异或加密。我们知道flag的格式是 “sdctf{“，这是6个我们已知的字节。通过运用已知明文攻击，将已知的前六字节的明文和已知的前六字节密文相异或，我们就可以恢复出6个字节的密钥，最终解密整个密文获得flag。</p>
 <h3 id="vinegar"><a href="#Vinegar" class="headerlink" title="Vinegar"></a>Vinegar</h3><h5 id="题目描述"><a href="#题目描述：" class="headerlink" title="题目描述："></a>题目描述：</h5><p>My friend gave me another encrypted flag…I think they hate me! I heard them yell something about “Vinegar”, but I still don’t know what they’re talking about! Ciphertext: <code>&#123;wbeyrjgewcfroggpesremvxgvefyrcmnnymxhdacgnnrwprhxpuyyaupbmskjrxfopr&#125;</code> 得到的flag使用NSSCTF{}格式提交。</p>
 <h6 id="分析"><a href="#分析：-1" class="headerlink" title="分析："></a>分析：</h6><p>题目名Vinegar让人想起维吉尼亚密码，我们不妨送去网站一试：<a target="_blank" rel="noopener" href="https://www.guballa.de/vigenere-solver">https://www.guballa.de/vigenere-solver</a></p>
 <p><img src="/images/image-20221028161136255.png" alt="image-20221028161136255"></p>
-<h3 id="case64ar-奇特的base64字母表"><a href="#Case64AR-奇特的base64字母表" class="headerlink" title="Case64AR-奇特的base64字母表"></a>Case64AR-奇特的base64字母表</h3><h5 id="题目描述"><a href="#题目描述：-1" class="headerlink" title="题目描述："></a>题目描述：</h5><p>Someone script kiddie just invented a new encryption scheme. It is described as a blend of modern and ancient cryptographic techniques. Can you prove that the encryption scheme is insecure by decoding the ciphertext below? Ciphertext: OoDVP4LtFm7lKnHk+JDrJo2jNZDROl&#x2F;1HH77H5Xv 得到的flag使用NSSCTF{}格式提交。</p>
+<h3 id="case64ar-奇特的base64字母表"><a href="#Case64AR-奇特的base64字母表" class="headerlink" title="Case64AR-奇特的base64字母表"></a>Case64AR-奇特的base64字母表</h3><h5 id="题目描述"><a href="#题目描述：-1" class="headerlink" title="题目描述："></a>题目描述：</h5><p>Someone script kiddie just invented a new encryption scheme. It is described as a blend of modern and ancient cryptographic techniques. Can you prove that the encryption scheme is insecure by decoding the ciphertext below? Ciphertext: OoDVP4LtFm7lKnHk+JDrJo2jNZDROl/1HH77H5Xv 得到的flag使用NSSCTF{}格式提交。</p>
 <h6 id="分析"><a href="#分析：-2" class="headerlink" title="分析："></a>分析：</h6><p>出题人让我们通过解码上述密文证明脚本小子的加密方案是不安全的，那我们就要考虑密文的编码方式是什么。</p>
 <p>密文看上去像是一个base64编码后的数据，但是我们直接解码发现是一串混乱的东西。这个时候阅读题目名不免想起了凯撒密码，难道是要做某种移位？但是这一串混乱的东西无论怎么移位都没有用。这个时候不妨尝试对base64所用的字母表做移位，因为题目的base64字母表并不一定就是寻常的base64字母表</p>
 <h3 id="tasty-crypto-roll"><a href="#Tasty-Crypto-Roll" class="headerlink" title="Tasty Crypto Roll"></a>Tasty Crypto Roll</h3><h4 id="题目描述"><a href="#题目描述：-2" class="headerlink" title="题目描述："></a>题目描述：</h4><p>Bob, the genius intern at our company, invented AES-improved. It is based on AES but with layers after layers of proprietary encryption techniques on top of it. The end result is an encryption scheme that achieves both confusion and diffusion. The more layers of crypto you add, the better the security, right? 得到的flag使用NSSCTF{}格式提交</p>
@@ -577,7 +573,6 @@ ciphertext &#x3D; encrypt(key_final, data)
 print(f&#39;Encrypted: &#123;ciphertext.hex()&#125;&#39;)
 with open(&#39;enc.bin&#39;, &#39;wb&#39;) as ef:
     ef.write(ciphertext)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <h6 id="分析"><a href="#分析：-3" class="headerlink" title="分析："></a>分析：</h6><p>本题难度属于hard级别，具有一定的劝退属性，但是无数学要求！</p>
 <p>代码比较长，我用汉语复述一遍题目在干什么。</p>
 <p>1、初始的时候题目会生成两个密钥key1和key2，一个是当前进程的id号，一个是16字节的未知值，随后它将这两个密钥打印输出。在我的机器上key1是一个5位的十进制数，而key2是一个16长度的bytes。</p>
@@ -585,7 +580,7 @@ with open(&#39;enc.bin&#39;, &#39;wb&#39;) as ef:
 <p>3、运用for循环构建codes列表，codes中的元素都是Unicode字符，codes长512！</p>
 <p><img src="https://birkenwald.feishu.cn/space/api/box/stream/download/asynccode/?code=YWMwMWM0N2M3NDQyNTEyNDE3Y2ZiM2MyYTg5Yzk4NzVfVVBFNWJzaHlMNmw4UEdLOTh2UVdFMDZRdnJhSDFmRlBfVG9rZW46Ym94Y25WTHZXT0NMQURsRkFQNXRVZ0o3Qk9lXzE2NjY4NzIzMDM6MTY2Njg3NTkwM19WNA" alt="img"></p>
 <p>随后以key1为种子调用random模块，并将codes列表打乱顺序。</p>
-<p>4、以上一步的codes列表为基础构建sboxes S盒，具体的构建手法是从codes中依次取出4个Unocide字符并拼接在一起作为S盒的一个元素，所以S盒中的元素就是一个长度为4的Unicode字符串。如下图，现在S盒已经不成人样了&#x3D; &#x3D;，题目最后还要确保S盒中共有128个不同的元素……</p>
+<p>4、以上一步的codes列表为基础构建sboxes S盒，具体的构建手法是从codes中依次取出4个Unocide字符并拼接在一起作为S盒的一个元素，所以S盒中的元素就是一个长度为4的Unicode字符串。如下图，现在S盒已经不成人样了= =，题目最后还要确保S盒中共有128个不同的元素……</p>
 <p><img src="https://birkenwald.feishu.cn/space/api/box/stream/download/asynccode/?code=NjVhYTE0MTFlN2YwNDc4NmYyMTA0YWZiNjMwZDFjMmVfUkZ1UXFKNWhSOFd5S1Z2Q1VhblQwWWVFaEE5cmVwbWZfVG9rZW46Ym94Y25KbGtudUNPaklITkY1YXFGd1Y0SkpmXzE2NjY4NzIzMDM6MTY2Njg3NTkwM19WNA" alt="img"></p>
 <p>5、遍历我们的data，取出当前遍历到的字节并将其转为整数，以该整数为索引查找S盒，那么我们会得到一个Unicode字符串，最后将这些Unicode字符串拼接在一起进行UTF-8编码就得到了新的data，这也是一个bytes对象！</p>
 <p>6、再次以key1为种子调用random.seed模块，并随机生成一个16字节的密钥key_final。</p>
@@ -631,14 +626,13 @@ with open(COR, &#39;w&#39;) as pk:
 
 print(f&#39;***** WARNING: YOUR SSH PRIVATE KEY HAS BEEN CORRUPTED *****&#39;)
 print(f&#39;Pay me 1000 BTC to recover your corrupted private key at &#123;COR&#125;&#39;)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <h6 id="分析"><a href="#分析：-4" class="headerlink" title="分析："></a>分析：</h6><p>原本合法的SSH私钥文件被勒索软件通过代码中的算法破环了，我们需要修复它！</p>
 <p>阅读完代码就会发现正常的私钥的某一部分被修改了：</p>
 <p><img src="/images/image-20221111180203921.png" alt="image-20221111180203921"></p>
 <p>所以我们要做的就是从剩余的正常数据恢复出完整的私钥来！</p>
 <p>相信大家对于 ssh-keygen 生成的 id_rsa 文件的格式大都有所了解或者听说过（不知道的可以看这篇文章：<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/33949377">ssh-keygen生成的id_rsa文件的格式</a>），但是本题的考点却是OpenSSH私钥格式，是的OpenSSH有自己的私钥格式！在这里顺便再提一嘴 ssl、openssl、openssh、ssh都分别是什么，他们有什么区别：</p>
 <p><img src="/images/image-20221111180226676.png" alt="image-20221111180226676"></p>
-<p>更具体的可以看这篇文章：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/foohack/p/4103212.html#:~:text=openssh%E4%BE%9D%E8%B5%96%E4%BA%8Eopenssl%EF%BC%8C%E6%B2%A1%E6%9C%89,openssl%E7%9A%84%E5%BA%93%E6%9D%A5%E5%81%9A%E3%80%82">SSL和SSH和OpenSSH，OpenSSL有什么区别 </a></p>
+<p>更具体的可以看这篇文章：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/foohack/p/4103212.html#:~:text=openssh依赖于openssl，没有,openssl的库来做。">SSL和SSH和OpenSSH，OpenSSL有什么区别 </a></p>
 <p>前面提到本题的考点是OpenSSH自带的私钥格式，那么OpenSSH自带的私钥格式是什么样子的呢？</p>
 <p>从这篇文章我们可以知道 <a target="_blank" rel="noopener" href="https://coolaj86.com/articles/the-openssh-private-key-format/">The OpenSSH Private Key Format</a> OpenSSH自身的私钥格式是什么。传统上，OpenSSH 使用与 OpenSSL 兼容的格式 PKCS#1（用于 RSA ）和 SEC1（用于 EC）作为私钥。</p>
 <p>OpenSSH私钥格式的外在表现形式是一个 PEM（PEM相关基础知识可以看这篇文章：<a target="_blank" rel="noopener" href="https://juejin.cn/post/6976125107143966750">证书、 der、 cer、 pem区别</a>） 编码的数据</p>
@@ -727,17 +721,14 @@ print(f&#39;Pay me 1000 BTC to recover your corrupted private key at &#123;COR&#
 <p>在翻看了一位日本友人的文章后，我发现prv0其实对应着解密指数，具体是如何操作的呢？</p>
 <p>首先我们在本地用如下命令生成一个 SSH 私钥文件：</p>
 <pre class="line-numbers language-Bash" data-language="Bash"><code class="language-Bash">ssh-keygen -m PEM<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>该函数创建的私钥文件格式是 base64 编码的 DER-encoded 格式，如果对相关知识好奇也可以看这篇文章：<a target="_blank" rel="noopener" href="https://www.jianshu.com/apps?utm_medium=desktop&utm_source=navbar-apps">密钥文件格式完全解析</a> 之后我们尝试将该文件转为OpenSSH独有的私钥格式文件，如果你没有 ssh-keygen命令相关环境，可以使用在线沙箱来完成相关的操作。<a target="_blank" rel="noopener" href="https://sandbox.cs50.io/">CS50 Sandbox</a></p>
+<p>该函数创建的私钥文件格式是 base64 编码的 DER-encoded 格式，如果对相关知识好奇也可以看这篇文章：<a target="_blank" rel="noopener" href="https://www.jianshu.com/apps?utm_medium=desktop&amp;utm_source=navbar-apps">密钥文件格式完全解析</a> 之后我们尝试将该文件转为OpenSSH独有的私钥格式文件，如果你没有 ssh-keygen命令相关环境，可以使用在线沙箱来完成相关的操作。<a target="_blank" rel="noopener" href="https://sandbox.cs50.io/">CS50 Sandbox</a></p>
 <p><img src="/images/image-20221111181100269.png" alt="image-20221111181100269"></p>
 <p><img src="/images/image-20221111181124745.png" alt="image-20221111181124745"></p>
 <p>复制到沙箱目录下来</p>
 <pre class="line-numbers language-Bash" data-language="Bash"><code class="language-Bash">cp &#x2F;root&#x2F;.ssh&#x2F;id_rsa &#x2F;root&#x2F;sandbox&#x2F;test_key_converted<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
 <p><img src="/images/image-20221111181135725.png" alt="image-20221111181135725"></p>
 <p>运行转化命令</p>
 <pre class="line-numbers language-Bash" data-language="Bash"><code class="language-Bash">ssh-keygen -p -N &quot;&quot; -o -f test_key_converted<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
 <p><img src="/images/image-20221111181225334.png" alt="image-20221111181225334"></p>
 <p>康康我们的新格式内容：</p>
 <p><img src="/images/image-20221111181232216.png" alt="image-20221111181232216"></p>
@@ -750,7 +741,6 @@ pub1 &#x3D; (f[0x41+1:0x41+0x181]) #去掉开头的空字节
 
 print(pub0.hex())
 print(pub1.hex())<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>每个人的起始字节位置都不同，如果你看到了这里就尝试寻找你自己的n、d吧！</p>
 <p>随后使用如下 python 代码获得p、q</p>
 <pre class="line-numbers language-Bash" data-language="Bash"><code class="language-Bash">import random
@@ -784,11 +774,10 @@ while True:
                                 print(&quot;pow(p, -1, q) &#x3D; &quot; + hex(pow(p, -1, q)))
                                 print(&quot;pow(q, -1, p) &#x3D; &quot; + hex(pow(q, -1, p)))
                                 sys.exit(0)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>之后使用 prv1 的最后2个字节确定 p 和 q 中的哪个应该是 prv2 和 prv3 。（因为 prv1是 q 在模 p 下的逆元，所以 $q*priv1\equiv1\mod p $ ，我们可以根据 p 和 q 的值求出 q 在模 p 下的逆元，并将其最后两个字节和 prv1 最后两个字节进行比对来确定 prv2 和 prv3 哪一个存储着 p 的值）注意到没有用零填充，我们将得到的值放入到 OepnSSH 私钥格式数据中。</p>
-<p>最后使用 CyberChef <a target="_blank" rel="noopener" href="https://gchq.github.io/CyberChef/#recipe=To_Base64('A-Za-z0-9%2B/%3D')Find_/_Replace({'option':'Regex','string':'(.{70})'},'$1\n',true,false,true,false)">To Base64, Find &#x2F; Replace - CyberChef</a> 对得到的 bin 文件进行 base64 编码，随后计算编码后的文件的 sha256 哈希值作为flag的内容提交。</p>
+<p>最后使用 CyberChef <a target="_blank" rel="noopener" href="https://gchq.github.io/CyberChef/#recipe=To_Base64(&#39;A-Za-z0-9%2B/%3D&#39;">To Base64, Find / Replace - CyberChef</a>Find_/_Replace({‘option’:’Regex’,’string’:’(.{70})’},’$1\n’,true,false,true,false)) 对得到的 bin 文件进行 base64 编码，随后计算编码后的文件的 sha256 哈希值作为flag的内容提交。</p>
 <h2 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h2><p><a target="_blank" rel="noopener" href="https://mikecat.github.io/ctf-writeups/2022/20220507_San_Diego_CTF_2022/CRYPTO/Key_Recovery/#en">https://mikecat.github.io/ctf-writeups/2022/20220507_San_Diego_CTF_2022/CRYPTO/Key_Recovery/#en</a></p>
-<p>[<a target="_blank" rel="noopener" href="https://github.com/acmucsd/sdctf-2022]">https://github.com/acmucsd/sdctf-2022]</a>(</p>
+<p>[<a target="_blank" rel="noopener" href="https://github.com/acmucsd/sdctf-2022](">https://github.com/acmucsd/sdctf-2022](</a></p>
 
                 
             </div>
@@ -1043,7 +1032,6 @@ while True:
                     <div class="summary block-with-text">
                         
                             
-
 我在复现SDCTF-2022的时候遇见了一道关于OpenSSH私钥格式的题目，我将网上的各种英文文章看了一遍之后，对我的学习做了一个汇总。
                         
                     </div>
@@ -1094,7 +1082,6 @@ while True:
                     <div class="summary block-with-text">
                         
                             
-
 福建师范大学NISA战队的新生赛复现记录
                         
                     </div>
@@ -1177,7 +1164,7 @@ while True:
             contentSelector: '#articleContent',
             headingsOffset: -($(window).height() * 0.4 - 45),
             collapseDepth: Number('0'),
-            headingSelector: 'h2, h3, h4'
+            headingSelector: 'h2, h3, h4,h5'
         });
 
         // modify the toc link href to support Chinese.
@@ -1189,7 +1176,7 @@ while True:
 
         // modify the heading title id to support Chinese.
         i = 0;
-        $('#articleContent').children('h2, h3, h4').each(function () {
+        $('#articleContent').children('h2, h3, h4,h5').each(function () {
             $(this).attr('id', tocHeading + (++i));
         });
 
@@ -1318,7 +1305,7 @@ while True:
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">267.7k</span>
+                        class="white-color">259.5k</span>
             
             
             

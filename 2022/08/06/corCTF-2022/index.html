@@ -6,15 +6,13 @@
     <meta charset="utf-8">
     <meta name="keywords" content="corCTF-2022, 学习记录">
     <meta name="description" content="
-
 8月6号玩耍的一个ctf比赛
-
 
 [TOC]
 太折磨了，最终只做出来一个签到题，第二个题不会之后再也没看其他的。
 
 tadpole-简单的同余定义根据同余的定义，将两个同余方程转化为p的倍数，然后求一下他们的公因数应该就是p
-a &amp;#x">
+a &amp;#x3D">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -500,10 +498,8 @@ a &amp;#x">
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <!--toc-->
-
 <p>8月6号玩耍的一个ctf比赛</p>
 <span id="more"></span>
-
 <p>[TOC]</p>
 <p>太折磨了，最终只做出来一个签到题，第二个题不会之后再也没看其他的。</p>
 <p><img src="Users\mirror\Desktop\write-up\blog\source\images\image-20220808202154675.png" alt="image-20220808202154675"></p>
@@ -520,9 +516,6 @@ from Crypto.Util.number import GCD,long_to_bytes
 p &#x3D; GCD(k1p,k2p)
 print(long_to_bytes(p))
 #b&#39;corctf&#123;1n_m4th3m4t1c5,_th3_3ucl1d14n_4lg0r1thm_1s_4n_3ff1c13nt_m3th0d_f0r_c0mput1ng_th3_GCD_0f_tw0_1nt3g3rs&#125; &lt;- this is flag adm&#39;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
 <h3 id="luckyguess-简单的同余求逆运算"><a href="#luckyguess-简单的同余求逆运算" class="headerlink" title="luckyguess-简单的同余求逆运算"></a>luckyguess-简单的同余求逆运算</h3><pre class="line-numbers language-python" data-language="python"><code class="language-python">#!&#x2F;usr&#x2F;local&#x2F;bin&#x2F;python
 from random import getrandbits
 
@@ -547,7 +540,6 @@ if x &#x3D;&#x3D; y:
     print(&quot;wow, you are truly psychic! here, have a flag:&quot;, open(&quot;flag.txt&quot;).read())
 else:
     print(&quot;sorry, you are not a true psychic... better luck next time&quot;)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>找到了一些别人的wp：</p>
 <p><a target="_blank" rel="noopener" href="https://an00brektn.github.io/corctf22/#luckyguess">https://an00brektn.github.io/corctf22/#luckyguess</a></p>
 <p><a target="_blank" rel="noopener" href="https://discord.com/channels/835621507576496129/879152734396354581/1006008901365420052">https://discord.com/channels/835621507576496129/879152734396354581/1006008901365420052</a></p>
@@ -599,24 +591,23 @@ key &#x3D; sha256(long_to_bytes(shared)).digest()[:16]
 iv &#x3D; long_to_bytes(randint(0, 2**128))
 cipher &#x3D; AES.new(key, AES.MODE_CBC, iv&#x3D;iv)
 print(iv.hex() + cipher.encrypt(pad(flag, 16)).hex())<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>阅读完源代码发现有点类似于Diffle-Hellman密钥交换，不同的是现在要对s进行a_priv次 f(s) 操作。从数学的角度分析一下：</p>
-<p>$S_0 &#x3D; S$</p>
-<p>$S_1 &#x3D; aS_0+b \mod p $</p>
-<p>$S_2 &#x3D; aS_1 +b \mod p$</p>
+<p>$S_0 = S$</p>
+<p>$S_1 = aS_0+b \mod p $</p>
+<p>$S_2 = aS_1 +b \mod p$</p>
 <p>以此类推得到</p>
-<p>$S_i &#x3D; aS_{i-1}+b \mod p $</p>
-<p>令 a_priv &#x3D;  $ka$ ,  b_priv &#x3D;  $kb$</p>
-<p>所以 <code>A = mult(s, a_priv)</code> 等价于 $S_{ka}\equiv aS_{ka-1}+b \mod p$</p>
-<p><code>B = mult(s, b_priv)</code> 等价于 $S_{kb}\equiv aS_{kb-1}+b \mod p $</p>
-<p>那么<code>mult(A, b_priv)</code> 就等价于 $S_{ka+1},S_{ka+2},…,S_{ka+kb}$ &#x3D; <code>mult(B,a_priv)</code></p>
+<p>$S<em>i = aS</em>{i-1}+b \mod p $</p>
+<p>令 a_priv =  $ka$ ,  b_priv =  $kb$</p>
+<p>所以 <code>A = mult(s, a_priv)</code> 等价于 $S<em>{ka}\equiv aS</em>{ka-1}+b \mod p$</p>
+<p><code>B = mult(s, b_priv)</code> 等价于 $S<em>{kb}\equiv aS</em>{kb-1}+b \mod p $</p>
+<p>那么<code>mult(A, b_priv)</code> 就等价于 $S<em>{ka+1},S</em>{ka+2},…,S_{ka+kb}$ = <code>mult(B,a_priv)</code></p>
 <p>因此二者是相等的，所以可以成功共享密钥。</p>
 <p>解法1：离散对数</p>
 <p><a target="_blank" rel="noopener" href="https://connor-mccartney.github.io/cryptography/other/corCTF-2022">https://connor-mccartney.github.io/cryptography/other/corCTF-2022</a></p>
-<p>$f(s)&#x3D;as+b\mod p \f(f(s))&#x3D;a(as+b)+b&#x3D;a^2s+ab+b\mod p\f(f(f(s)))&#x3D;a(a^2s+ab+b)+b&#x3D;a^3s+a^2b+ab+b \mod p$</p>
-<p>注意到上述公式除了最高次项之外，其余项可以写为和的形式，即 $f^n(s)&#x3D;a^ns+b\sum_{i&#x3D;1}^na^{i-1}&#x3D;a^ns+ \frac{b(1-a^n)}{1-a}\mod p$</p>
-<p>令 $u&#x3D;(1-a)^{-1}\mod p $</p>
-<p>则 $\begin{eqnarray} A <del>&amp;\equiv&amp;  a^ns+b(1-a^n)u \mod p \nonumber \ A</del>&amp;\equiv&amp; a^ns+bu-ba^nu \mod p \nonumber  \A-bu<del>&amp;\equiv&amp; a^n(s-bu) \nonumber  \(A-bu)(s-bu)^{-1}</del>&amp;\equiv&amp; a^n \mod p \nonumber  \end{eqnarray} $</p>
+<p>$f(s)=as+b\mod p \f(f(s))=a(as+b)+b=a^2s+ab+b\mod p\f(f(f(s)))=a(a^2s+ab+b)+b=a^3s+a^2b+ab+b \mod p$</p>
+<p>注意到上述公式除了最高次项之外，其余项可以写为和的形式，即 $f^n(s)=a^ns+b\sum_{i=1}^na^{i-1}=a^ns+ \frac{b(1-a^n)}{1-a}\mod p$</p>
+<p>令 $u=(1-a)^{-1}\mod p $</p>
+<p>则 $\begin{eqnarray} A ~&amp;\equiv&amp;  a^ns+b(1-a^n)u \mod p \nonumber \ A~&amp;\equiv&amp; a^ns+bu-ba^nu \mod p \nonumber  \A-bu~&amp;\equiv&amp; a^n(s-bu) \nonumber  \(A-bu)(s-bu)^{-1}~&amp;\equiv&amp; a^n \mod p \nonumber  \end{eqnarray} $</p>
 <p>上述等式左边是已知的值，模数 $p$ 也知道。所以现在的问题就转化为了离散对数问题，幸运地是，由于 $p-1$ 是光滑的，所以我们可以利用pohlig-hellman解出n。</p>
 <pre class="line-numbers language-python" data-language="python"><code class="language-python">from Crypto.Util.number import *  
 from Crypto.Cipher import AES  
@@ -648,15 +639,8 @@ cipher &#x3D; AES.new(key, AES.MODE_CBC, iv&#x3D;iv)
 print(cipher.decrypt(pad(enc, 16)))  
   
 #corctf&#123;th1s_lcg_3xch4ng3_1s_4_l1ttl3_1ns3cur3_f0r_n0w&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
-
-
-
-
 <p>解法2：</p>
-<p><img src="/../../../../../AppData/Roaming/Typora/typora-user-images/image-20220916231300684.png" alt="image-20220916231300684"></p>
+<p><img src="../../../../AppData/Roaming/Typora/typora-user-images/image-20220916231300684.png" alt="image-20220916231300684"></p>
 <h3 id="hide-共模攻击"><a href="#hidE-共模攻击" class="headerlink" title="hidE-共模攻击"></a>hidE-共模攻击</h3><pre class="line-numbers language-python" data-language="python"><code class="language-python">#!&#x2F;usr&#x2F;local&#x2F;bin&#x2F;python
 import random
 import time
@@ -706,7 +690,6 @@ def main():
 if __name__ &#x3D;&#x3D; &#39;__main__&#39;:
     main()
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>赛后复现原本想重启docker环境的，但是docker莫名报错，解决不了；最后自己写了一个服务器端环境。</p>
 <pre class="line-numbers language-python" data-language="python"><code class="language-python">#!&#x2F;usr&#x2F;local&#x2F;bin&#x2F;python
 import random
@@ -771,9 +754,6 @@ if __name__ &#x3D;&#x3D; &#39;__main__&#39;:
     main()
 
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
 <p>解题脚本：</p>
 <pre class="line-numbers language-python" data-language="python"><code class="language-python">from pwn import *
 from Crypto.Util.number import *
@@ -820,9 +800,6 @@ for t in range(start - 20, start + 20):
 
 # corctf&#123;y34h_th4t_w4snt_v3ry_h1dd3n_tbh_l0l&#125;
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
 <h3 id="generous-okamoto-uchiyama-cryptosystem"><a href="#generous-Okamoto-Uchiyama-cryptosystem" class="headerlink" title="generous-Okamoto-Uchiyama cryptosystem"></a>generous-Okamoto-Uchiyama cryptosystem</h3><pre class="line-numbers language-python" data-language="python"><code class="language-python">#!&#x2F;usr&#x2F;local&#x2F;bin&#x2F;python
 from Crypto.Util.number import getPrime, inverse, bytes_to_long
 from random import randrange
@@ -864,19 +841,16 @@ print(f&quot;Encrypted Flag: &#123;encrypt(pub, bytes_to_long(flag))&#125;&quot;
 while True:
 	inp &#x3D; int(input(&quot;Enter ciphertext&gt; &quot;))
 	print(f&quot;Oracle result: &#123;oracle(priv, inp)&#125;&quot;)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
 <h4 id="解题方法一二分查找迫近p"><a href="#解题方法一：二分查找迫近p" class="headerlink" title="解题方法一：二分查找迫近p"></a>解题方法一：二分查找迫近p</h4><p>本题实现了 <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Okamoto%E2%80%93Uchiyama_cryptosystem">Okamoto-Uchiyama cryptosystem</a> ，这也是一个公钥密码体制。现在我们拥有加密后的flag，并且我们可以解密任意密文并得到解密结果的最低位，很自然的就可以想到RSA的<a target="_blank" rel="noopener" href="https://ctf-wiki.org/crypto/asymmetric/rsa/rsa_chosen_plain_cipher/">LSB oracle</a>，使用类似的思想，看看能否从这个oracle中恢复出私钥的信息。</p>
-<p>注意到解密的信息会进行模 $p$ 的操作（在本题的密码体制中，公开模数 $n&#x3D;p^2q$ ， $p$ 和 $q$ 组成了私钥。），这对我们很有用，因为我们可以从已知明文的解密结果收集到 $p$ 的信息。</p>
+<p>注意到解密的信息会进行模 $p$ 的操作（在本题的密码体制中，公开模数 $n=p^2q$ ， $p$ 和 $q$ 组成了私钥。），这对我们很有用，因为我们可以从已知明文的解密结果收集到 $p$ 的信息。</p>
 <p>我们用 $\mathcal{O}$ 表示本题的oracle，于是我们有：</p>
 <p>$\left{ \begin{array}{rcl}1,&amp; if\ decrypt(c)\ is\ odd \ 0,&amp; otherwise\end{array}\right.$</p>
 <p>假设我们有一个小于p的信息m，考虑一下我们能从$\mathcal{O}(encrypt(2m))$ 中获得关于p的什么信息。</p>
 <p>如果该oracle返回1，那么我们一定有 $p&lt;2m$ 。你可能会疑惑难道 $p&lt;2m$ 就不会返回0么？</p>
 <p>让我们来分析一下，当 $p&lt;2m$ 时，根据带余除法我们有：</p>
-<p>$2m&#x3D;k*p+r,\ 0&lt;&#x3D;r&lt;p$</p>
+<p>$2m=k*p+r,\ 0&lt;=r&lt;p$</p>
 <p>因为 $2m$ 是偶数，$kp$ 是奇数，所以 $r$ 必定是奇数，所以此时返回的结果一定是 $1$ </p>
-<p>当 $p&gt;&#x3D;2m$ 时，此时模 $p$ 什么都没做，直接返回 $0$ 。</p>
+<p>当 $p&gt;=2m$ 时，此时模 $p$ 什么都没做，直接返回 $0$ 。</p>
 <p>因此根据以上两种状态，我们可以写一个二分查找算法来找到 $p$ 可能在的区间，从而拿到私钥。</p>
 <p>因为 $p$ 是一个 $512$ 比特的素数，所以最多进行 $512$ 次二分查找就可以确定 $p$ 所在的区间。</p>
 <pre class="line-numbers language-python" data-language="python"><code class="language-python">from pwn import *
@@ -929,9 +903,8 @@ flag &#x3D; decrypt(privkey, flag_enc)
 print(long_to_bytes(flag).decode())
 
 # corctf&#123;see?1_bit_is_very_generous_of_me&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>原链接：<a target="_blank" rel="noopener" href="https://jsur.in/posts/2022-08-08-corctf-2022-crypto-writeups#generous">https://jsur.in/posts/2022-08-08-corctf-2022-crypto-writeups#generous</a></p>
-<h4 id="解题方法二-原理未知-疑似利用同态性质"><a href="#解题方法二-原理未知-疑似利用同态性质：" class="headerlink" title="解题方法二-原理未知-疑似利用同态性质："></a>解题方法二-原理未知-疑似利用同态性质：</h4><p><img src="/../../../../../AppData/Roaming/Typora/typora-user-images/image-20220918181504139.png" alt="image-20220918181504139"></p>
+<h4 id="解题方法二-原理未知-疑似利用同态性质"><a href="#解题方法二-原理未知-疑似利用同态性质：" class="headerlink" title="解题方法二-原理未知-疑似利用同态性质："></a>解题方法二-原理未知-疑似利用同态性质：</h4><p><img src="../../../../AppData/Roaming/Typora/typora-user-images/image-20220918181504139.png" alt="image-20220918181504139"></p>
 <pre class="line-numbers language-python" data-language="python"><code class="language-python">from pwn import *
 from random import randrange
 from Crypto.Util.number import *
@@ -968,7 +941,6 @@ while True:
     print(unbits(bs[::-1]))
 # corctf&#123;see?1_bit_is_very_generous_of_me&#125;
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>引用：<a target="_blank" rel="noopener" href="https://blog.maple3142.net/2022/08/07/corctf-2022-writeups/#generous">https://blog.maple3142.net/2022/08/07/corctf-2022-writeups/#generous</a></p>
 <h4 id="解题方法三-同态-连分数"><a href="#解题方法三-同态-连分数：" class="headerlink" title="解题方法三-同态-连分数："></a>解题方法三-同态-连分数：</h4><p>正如方法一所说，这是一个典型的LSB oracle，这里有一个例子：<a target="_blank" rel="noopener" href="https://crypto.stackexchange.com/questions/11053/rsa-least-significant-bit-oracle-attack">https://crypto.stackexchange.com/questions/11053/rsa-least-significant-bit-oracle-attack</a></p>
 <pre class="line-numbers language-python" data-language="python"><code class="language-python">from telnetlib import Telnet
@@ -1017,7 +989,6 @@ print(&quot;factors of n&quot;)
 print(p)
 print(p)
 print(n &#x2F;&#x2F; (p*p))<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 
                 
             </div>
@@ -1272,7 +1243,6 @@ print(n &#x2F;&#x2F; (p*p))<span aria-hidden="true" class="line-numbers-rows"><s
                     <div class="summary block-with-text">
                         
                             
-
 周六参加的比赛，名字很酷，似乎是叫阿拉伯网络安全战争游戏？
                         
                     </div>
@@ -1319,7 +1289,6 @@ print(n &#x2F;&#x2F; (p*p))<span aria-hidden="true" class="line-numbers-rows"><s
                     <div class="summary block-with-text">
                         
                             
-
 今天开始学java的web安全相关内容，冲！
                         
                     </div>
@@ -1402,7 +1371,7 @@ print(n &#x2F;&#x2F; (p*p))<span aria-hidden="true" class="line-numbers-rows"><s
             contentSelector: '#articleContent',
             headingsOffset: -($(window).height() * 0.4 - 45),
             collapseDepth: Number('0'),
-            headingSelector: 'h2, h3, h4'
+            headingSelector: 'h2, h3, h4,h5'
         });
 
         // modify the toc link href to support Chinese.
@@ -1414,7 +1383,7 @@ print(n &#x2F;&#x2F; (p*p))<span aria-hidden="true" class="line-numbers-rows"><s
 
         // modify the heading title id to support Chinese.
         i = 0;
-        $('#articleContent').children('h2, h3, h4').each(function () {
+        $('#articleContent').children('h2, h3, h4,h5').each(function () {
             $(this).attr('id', tocHeading + (++i));
         });
 
@@ -1543,7 +1512,7 @@ print(n &#x2F;&#x2F; (p*p))<span aria-hidden="true" class="line-numbers-rows"><s
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">267.7k</span>
+                        class="white-color">259.5k</span>
             
             
             

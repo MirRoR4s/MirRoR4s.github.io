@@ -6,12 +6,10 @@
     <meta charset="utf-8">
     <meta name="keywords" content="java命令执行, 学习记录">
     <meta name="description" content="
-
 今天开始学java的web安全相关内容，冲！
 
-
 Java本地命令执行漏洞背景类似于php，java也提供了本地系统命令执行的函数，攻击者可以通过这些函数在目标服务器中执行任意系统命令，在java中可用于执行系统命令的API有：
-jav">
+java.">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -506,15 +504,12 @@ jav">
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <!--toc-->
-
 <p>今天开始学java的web安全相关内容，冲！</p>
 <span id="more"></span>
-
 <h3 id="java本地命令执行漏洞"><a href="#Java本地命令执行漏洞" class="headerlink" title="Java本地命令执行漏洞"></a>Java本地命令执行漏洞</h3><h4 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h4><p>类似于php，java也提供了本地系统命令执行的函数，攻击者可以通过这些函数在目标服务器中执行任意系统命令，在java中可用于执行系统命令的API有：</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java">java.lang.Runtime
 java.lang.ProcessBuilder
 java.lang.UNIXProcess &#x2F; ProcessImpl<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-
 <h4 id="runtime命令执行"><a href="#Runtime命令执行" class="headerlink" title="Runtime命令执行"></a>Runtime命令执行</h4><h5 id="execstring-command"><a href="#exec-String-command" class="headerlink" title="exec(String command)"></a>exec(String command)</h5><p>在java中通常会使用<code>java.lang.Runtime</code>类的<code>exec</code>方法来执行本地系统命令。</p>
 <p>以如下程序执行命令为例：</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java">import java.io.IOException;
@@ -527,7 +522,6 @@ public class linux_cmd &#123;
         &#x2F;&#x2F;Runtime.getRuntime().exec(new String[]&#123;&quot;&#x2F;bin&#x2F;sh&quot;, &quot;-c&quot;, Command&#125;);
     &#125;
 &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>直接执行上面的代码，不能成功创建1.txt。而执行注释的那一部分代码，则可以成功创建1.txt。</p>
 <p>下面开始对执行的代码进行调试分析。跟进 <code>Runtime.getRuntime().exec()</code></p>
 <p><img src="Users\mirror\Desktop\write-up\blog\source\images\image-20220805151529205.png" alt="image-20220805151529205"></p>
@@ -574,7 +568,6 @@ public class Main &#123;
     &#125;
 &#125;
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>蚌埠住了，装的windows的IDEA，没有<code>UNIXProcess</code>方法…..</p>
 <p>我已经想要弄一个linux主系统了…..</p>
 <p>但是问题不大，不影响我学会分析代码执行过程。</p>
@@ -590,7 +583,6 @@ public class Main &#123;
     &#125;
 &#125;
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <h4 id="processbuilder"><a href="#ProcessBuilder" class="headerlink" title="ProcessBuilder"></a>ProcessBuilder</h4><p>使用ProcessBuilder类创建一个进程，创建ProcessBuilder实例，指定该进程的名称和所需参数。</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java">package com.geekby;
 
@@ -612,18 +604,15 @@ public class Main &#123;
     &#125;
 &#125;
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
 <p><img src="Users\mirror\Desktop\write-up\blog\source\images\image-20220804142713847.png" alt="image-20220804142713847"></p>
 <p><img src="Users\mirror\Desktop\write-up\blog\source\images\image-20220804142837527.png" alt="image-20220804142837527"></p>
 <p><img src="Users\mirror\Desktop\write-up\blog\source\images\image-20220804142932635.png" alt="image-20220804142932635"></p>
 <p><img src="Users\mirror\Desktop\write-up\blog\source\images\image-20220804143121346.png" alt="image-20220804143121346"></p>
 <p>所以上述代码实现的功能就是创建子进程执行ping命令，然后输出命令执行的结果。通过分析调用栈可以发现，ProcessBuilder 在底层调用的逻辑与 Runtime.getRuntime.exec 逻辑相似，在此不做赘述。</p>
 <p>忽然发现自己不明白什么是java反射，网上搜到一篇文章</p>
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/pzjtian/article/details/107852022?spm=1001.2101.3001.6661.1&amp;utm_medium=distribute.pc_relevant_t0.none-task-blog-2~default~CTRLIST~default-1-107852022-blog-125000051.pc_relevant_multi_platform_featuressortv2removedup&amp;depth_1-utm_source=distribute.pc_relevant_t0.none-task-blog-2~default~CTRLIST~default-1-107852022-blog-125000051.pc_relevant_multi_platform_featuressortv2removedup&amp;utm_relevant_index=1">https://blog.csdn.net/pzjtian/article/details/107852022?spm=1001.2101.3001.6661.1&amp;utm_medium=distribute.pc_relevant_t0.none-task-blog-2%7Edefault%7ECTRLIST%7Edefault-1-107852022-blog-125000051.pc_relevant_multi_platform_featuressortv2removedup&amp;depth_1-utm_source=distribute.pc_relevant_t0.none-task-blog-2%7Edefault%7ECTRLIST%7Edefault-1-107852022-blog-125000051.pc_relevant_multi_platform_featuressortv2removedup&amp;utm_relevant_index=1</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/pzjtian/article/details/107852022?spm=1001.2101.3001.6661.1&amp;utm_medium=distribute.pc_relevant_t0.none-task-blog-2%7Edefault%7ECTRLIST%7Edefault-1-107852022-blog-125000051.pc_relevant_multi_platform_featuressortv2removedup&amp;depth_1-utm_source=distribute.pc_relevant_t0.none-task-blog-2%7Edefault%7ECTRLIST%7Edefault-1-107852022-blog-125000051.pc_relevant_multi_platform_featuressortv2removedup&amp;utm_relevant_index=1">https://blog.csdn.net/pzjtian/article/details/107852022?spm=1001.2101.3001.6661.1&amp;utm_medium=distribute.pc_relevant_t0.none-task-blog-2%7Edefault%7ECTRLIST%7Edefault-1-107852022-blog-125000051.pc_relevant_multi_platform_featuressortv2removedup&amp;depth_1-utm_source=distribute.pc_relevant_t0.none-task-blog-2%7Edefault%7ECTRLIST%7Edefault-1-107852022-blog-125000051.pc_relevant_multi_platform_featuressortv2removedup&amp;utm_relevant_index=1</a></p>
 <h3 id="runtimeexec-执行命令和反弹shell"><a href="#Runtime-exec-执行命令和反弹shell" class="headerlink" title="Runtime.exec() 执行命令和反弹shell"></a>Runtime.exec() 执行命令和反弹shell</h3><p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/eb41a0291123">https://www.jianshu.com/p/eb41a0291123</a></p>
-<h3 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h3><p>vscode：<a target="_blank" rel="noopener" href="https://blog.csdn.net/cheng_xu_yuan_yy/article/details/109015442%EF%BC%8C%E7%84%B6%E5%90%8E%E6%88%90%E5%8A%9F%E5%8F%91%E8%BD%A6%E3%80%82">https://blog.csdn.net/cheng_xu_yuan_yy/article/details/109015442，然后成功发车。</a></p>
+<h3 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h3><p>vscode：<a target="_blank" rel="noopener" href="https://blog.csdn.net/cheng_xu_yuan_yy/article/details/109015442，然后成功发车。">https://blog.csdn.net/cheng_xu_yuan_yy/article/details/109015442，然后成功发车。</a></p>
 <p>IDEA：<a target="_blank" rel="noopener" href="https://blog.csdn.net/oschina_41790905/article/details/79475187">https://blog.csdn.net/oschina_41790905/article/details/79475187</a></p>
 <p>学习博客：</p>
 <p><a target="_blank" rel="noopener" href="https://www.geekby.site/2022/02/java%E6%9C%AC%E5%9C%B0%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E/">https://www.geekby.site/2022/02/java%E6%9C%AC%E5%9C%B0%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E/</a></p>
@@ -882,7 +871,6 @@ public class Main &#123;
                     <div class="summary block-with-text">
                         
                             
-
 8月6号玩耍的一个ctf比赛
                         
                     </div>
@@ -929,7 +917,6 @@ public class Main &#123;
                     <div class="summary block-with-text">
                         
                             
-
 从零开始学习各种常见未授权访问漏洞
                         
                     </div>
@@ -1008,7 +995,7 @@ public class Main &#123;
             contentSelector: '#articleContent',
             headingsOffset: -($(window).height() * 0.4 - 45),
             collapseDepth: Number('0'),
-            headingSelector: 'h2, h3, h4'
+            headingSelector: 'h2, h3, h4,h5'
         });
 
         // modify the toc link href to support Chinese.
@@ -1020,7 +1007,7 @@ public class Main &#123;
 
         // modify the heading title id to support Chinese.
         i = 0;
-        $('#articleContent').children('h2, h3, h4').each(function () {
+        $('#articleContent').children('h2, h3, h4,h5').each(function () {
             $(this).attr('id', tocHeading + (++i));
         });
 
@@ -1149,7 +1136,7 @@ public class Main &#123;
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">267.7k</span>
+                        class="white-color">259.5k</span>
             
             
             

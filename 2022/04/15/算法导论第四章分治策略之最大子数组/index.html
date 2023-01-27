@@ -7,8 +7,7 @@
     <meta name="keywords" content="算法导论第四章分治策略之最大子数组, 学习记录">
     <meta name="description" content="最大子数组的定义：在一个数组中，和最大的非空的连续的子数组称为这个数组的最大子数组。
 
-
-最大子数组问题在算法导论这本书的由来是股票买卖问题。我们可以选择在交易结束的某一天选择买入或者卖出股票，而且我们已知未来股票的价格，想要解决的问题是如">
+最大子数组问题在算法导论这本书的由来是股票买卖问题。我们可以选择在交易结束的某一天选择买入或者卖出股票，而且我们已知未来股票的价格，想要解决的问题是如何">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -504,27 +503,26 @@
             <div id="articleContent">
                 <p>最大子数组的定义：在一个数组中，和最大的非空的连续的子数组称为这个数组的最大子数组。</p>
 <span id="more"></span>
-
-<p>最大子数组问题在算法导论这本书的由来是股票买卖问题。我们可以选择在交易结束的某一天选择买入或者卖出股票，而且我们已知未来股票的价格，想要解决的问题是如何买入&#x2F;卖出股票才能使得我们的利润最大？</p>
+<p>最大子数组问题在算法导论这本书的由来是股票买卖问题。我们可以选择在交易结束的某一天选择买入或者卖出股票，而且我们已知未来股票的价格，想要解决的问题是如何买入/卖出股票才能使得我们的利润最大？</p>
 <p>单纯的最低价格时买进，最高价格时卖出是不行的。</p>
 <p>比如</p>
-<p><img src="/../images/1650025335747.png"></p>
-<p>解决本题的直观想法就是从第 i 天开始，假设以这一天买入股票，然后从 j (  i&lt;j &lt;&#x3D;n ) 天循环遍历到末尾天数 n，不断计算价格差，然后最大的价格差就是我们想要的答案</p>
+<p><img src="images/1650025335747.png" alt></p>
+<p>解决本题的直观想法就是从第 i 天开始，假设以这一天买入股票，然后从 j (  i&lt;j &lt;=n ) 天循环遍历到末尾天数 n，不断计算价格差，然后最大的价格差就是我们想要的答案</p>
 <p>如何找出更好的解决问题的办法？书中给出了一个指引，转换解决问题的角度，不在拘泥于价格本身，而是去观察价格的变化量。</p>
 <p>将价格的变化量统计成一个数组，找出此数组的最大子数组，那么最大子数组的和就是我们能获得的最大收益。</p>
-<p><img src="/../images/1650026348305.png"></p>
+<p><img src="images/1650026348305.png" alt></p>
 <p>为什么最大子数组的和就是我们能获得的最大利润呢？这一点或许我也没有想通透。</p>
 <p>首先最大子数组是一个非空的连续子数组，数组的值是价格变化量，下标是天数。那么非空连续子数组的和代表的含义就是在一段连续的天数内，价格变化量的和。</p>
 <p>如果在数组的所有非空连续子数组中，某个子数组和是最大的，也就意味着其对应的那段连续天数的价格变化量的和是最大的，这个和大于所有连续子数组的和。 价格变化量的和越大，代表着从第一天买入股票到该连续天数的最后一天卖出股票所能获得的收益越大。</p>
 <p>那么我们只要在最大子数组代表着的这一段连续天数的第一天购入股票，最后一天卖出股票，就得到了最大的价格变化量之和。显然地，价格变化量之和代表着我们的利润，最大价格变化量之和对应着最大利润即对应着最大的连续子数组。所以最大连续子数组的和就是最大利润！</p>
 <p>好，接下来说如何求解最大子数组。</p>
-<p><img src="/../images/1650027504618.png"></p>
-<p><img src="/../images/1650027532820.png"></p>
+<p><img src="images/1650027504618.png" alt></p>
+<p><img src="images/1650027532820.png" alt></p>
 <p>好的，问题求解很显而易见了。A[low..high] 的最大子数组要么在A[low..mid] 要么在A[mid+1..high] 或者说最大子数组跨越了中点。而求解A[low..high]的最大子数组跟求解A[low..mid] A[mid+1..high]的解形式是一样的。所以我们可以递归的求解，当数组中只含有一个元素时，递归返回最大子数组的和为当前元素的值。</p>
 <p>关键是如何求解跨越了中点的最大子数组？因为最大子数组跨越了中点，在我的想法中，可以看作是从中点出发，向两边发散出去，直至遇见最大子数组的左边界 右边界。所以我们可以从中点开始，逆序地求出以中点为结尾的最大子数组，这个可以通过一个循环+比较实现。同理，在从中点下一个节点开始（中点在前面算过了，跳过一下），正序的求出以此节点为起点的最大子数组。</p>
 <p>书上给出的伪代码如下：</p>
-<p><img src="/../images/1650028067425.png"></p>
-<p><img src="/../images/1650028327220.png"></p>
+<p><img src="images/1650028067425.png" alt></p>
+<p><img src="images/1650028327220.png" alt></p>
 <p>咳咳不要问我为什么不说算法时间复杂度分析，我觉得要说就好好说，但是第四章的后面求解算法上下界的那部分我还没学好。。以后再来修改自己写的博客，对我当前的水平来说，不分析也无伤大雅，主要是学习算法的思想。</p>
 <p>下面给出自己的python伪代码，这玩意跟伪代码真的很接近了。</p>
 <pre class="line-numbers language-python" data-language="python"><code class="language-python">import sys
@@ -565,9 +563,8 @@ def FIND_MAXIMUN_SUBARRAY(A,low,high):
 
 A &#x3D; [-2,1,-3,4,-1,2,1,-5,4]
 print(FIND_MAXIMUN_SUBARRAY(A,0,len(A)-1))<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>直接拿力扣那个无敌规模的输入测试，卡死我了。。</p>
-<p><img src="/../images/1650030211556.png"></p>
+<p><img src="images/1650030211556.png" alt></p>
 <p>哈哈哈，在我的编译器几乎一秒出答案，而这个力扣的24秒是用线性算法加上C++写的….</p>
 <p>剩下的线性时间复杂度的算法，重头戏了，解决问题的最佳方法。</p>
 
@@ -955,7 +952,7 @@ print(FIND_MAXIMUN_SUBARRAY(A,0,len(A)-1))<span aria-hidden="true" class="line-n
             contentSelector: '#articleContent',
             headingsOffset: -($(window).height() * 0.4 - 45),
             collapseDepth: Number('0'),
-            headingSelector: 'h2, h3, h4'
+            headingSelector: 'h2, h3, h4,h5'
         });
 
         // modify the toc link href to support Chinese.
@@ -967,7 +964,7 @@ print(FIND_MAXIMUN_SUBARRAY(A,0,len(A)-1))<span aria-hidden="true" class="line-n
 
         // modify the heading title id to support Chinese.
         i = 0;
-        $('#articleContent').children('h2, h3, h4').each(function () {
+        $('#articleContent').children('h2, h3, h4,h5').each(function () {
             $(this).attr('id', tocHeading + (++i));
         });
 
@@ -1096,7 +1093,7 @@ print(FIND_MAXIMUN_SUBARRAY(A,0,len(A)-1))<span aria-hidden="true" class="line-n
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">267.7k</span>
+                        class="white-color">259.5k</span>
             
             
             

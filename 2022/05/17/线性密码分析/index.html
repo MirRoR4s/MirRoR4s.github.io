@@ -6,9 +6,8 @@
     <meta charset="utf-8">
     <meta name="keywords" content="线性密码分析, 学习记录">
     <meta name="description" content="
-
 未完成…需要补充概率以及抽代
-3.3.1 堆积引理线性密码分析的思想：假设能够在一个明文比特子集与最后一轮即将进行代换的输入状态比特子集之间找到一个概率线性关系，即存在一个比特子集使得其中元素的异或表现出非随机的分布，比如该异或值以偏离">
+3.3.1 堆积引理线性密码分析的思想：假设能够在一个明文比特子集与最后一轮即将进行代换的输入状态比特子集之间找到一个概率线性关系，即存在一个比特子集使得其中元素的异或表现出非随机的分布，比如该异或值以偏离1">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -494,25 +493,24 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <!-- more !-->
-
 <p>未完成…需要补充概率以及抽代</p>
-<h2 id="331-堆积引理"><a href="#3-3-1-堆积引理" class="headerlink" title="3.3.1 堆积引理"></a>3.3.1 堆积引理</h2><p>线性密码分析的思想：假设能够在一个明文比特子集与最后一轮即将进行代换的输入状态比特子集之间找到一个概率线性关系，即存在一个比特子集使得其中元素的异或表现出非随机的分布，比如该异或值以偏离1&#x2F;2的概率取值0。我们使用已知明文攻击，对每一个明-密文对，用所有可能的候选密钥来对最后一轮的密文解密。对每一个候选密钥，计算包含在线性关系式中的相关状态比特的异或值，然后确定上述的线性关系是否成立，如果成立，就在对应于特定候选密钥的计数器上加1，在这个过程的最后，我们希望计数频率里明-密文对数的一半最远的候选密钥含有哪些密钥比特的正确值。</p>
-<p>堆积引理：<img src="/../images/1652784166365.png" alt="1652784166365"></p>
-<p>随机变量$X_i$取值于集合${0,1}$，偏差定义为随机变量$X_i$取值为0的概率$p_i$与$1&#x2F;2$的差值。</p>
+<h2 id="331-堆积引理"><a href="#3-3-1-堆积引理" class="headerlink" title="3.3.1 堆积引理"></a>3.3.1 堆积引理</h2><p>线性密码分析的思想：假设能够在一个明文比特子集与最后一轮即将进行代换的输入状态比特子集之间找到一个概率线性关系，即存在一个比特子集使得其中元素的异或表现出非随机的分布，比如该异或值以偏离1/2的概率取值0。我们使用已知明文攻击，对每一个明-密文对，用所有可能的候选密钥来对最后一轮的密文解密。对每一个候选密钥，计算包含在线性关系式中的相关状态比特的异或值，然后确定上述的线性关系是否成立，如果成立，就在对应于特定候选密钥的计数器上加1，在这个过程的最后，我们希望计数频率里明-密文对数的一半最远的候选密钥含有哪些密钥比特的正确值。</p>
+<p>堆积引理：<img src="images/1652784166365.png" alt="1652784166365"></p>
+<p>随机变量$X_i$取值于集合${0,1}$，偏差定义为随机变量$X_i$取值为0的概率$p_i$与$1/2$的差值。</p>
 <p>证明采用的是数学归纳法，在此不加证明。</p>
-<p><img src="/../images/1652784808313.png" alt="1652784808313"></p>
+<p><img src="images/1652784808313.png" alt="1652784808313"></p>
 <p>推论3.2是很显然的，不过我们要注意堆积引理一般只有在随机变量$X_i$统计独立的情况下才成立。</p>
-<p><img src="/../images/1652784977989.png" alt="1652784977989"></p>
-<h2 id="332-s盒的线性逼近"><a href="#3-3-2-S盒的线性逼近" class="headerlink" title="3.3.2 S盒的线性逼近"></a>3.3.2 S盒的线性逼近</h2><p><img src="/../images/1652786177880.png" alt="1652786177880"></p>
+<p><img src="images/1652784977989.png" alt="1652784977989"></p>
+<h2 id="332-s盒的线性逼近"><a href="#3-3-2-S盒的线性逼近" class="headerlink" title="3.3.2 S盒的线性逼近"></a>3.3.2 S盒的线性逼近</h2><p><img src="images/1652786177880.png" alt="1652786177880"></p>
 <p>m重的输入是均匀随机地从集合${0,1}^m$中选择的，那么选到0的概率跟选到1的概率相等，所以随机变量$X_i$的偏差为0。上述还说了m个随机变量相互独立，这告诉我们这m个随机变量乘积的偏差满足堆积引理。</p>
 <p>现在有一个n重输出Y，一般情况下Y中的n个随机变量并不相互独立，并且跟输入X中的随机变量$X_i$也不相互独立。</p>
-<p><img src="/../images/1652786392821.png" alt="1652786392821"></p>
-<p><img src="/../images/1652786753420.png" alt="1652786753420"></p>
-<p>书中应该笔误了，第一个是不等于，第二个应该是等于。也就是说当我们定义置换$\pi_s$的结果是输出Y的时候，那么输入是X且输出是Y的概率为$2^{-m}$。因为输入是$X&#x3D;(x_1,x_2,…..,x_m)的概率为 (1&#x2F;2)^m&#x3D;2^{-m}$</p>
-<p>不要忘记输入是均匀随机的选择，所以不管是什么输入它的概率都是1&#x2F;2，而且各个输入间是独立的，所以同时成立的概率是乘积。在上图的最后我们看到，当我们把置换$\pi_s$的作用结果定义为Y的时候，输入是X<strong>或者</strong>输出是Y的概率等于1，之前的是输入是X且输入是Y的概率。</p>
-<h3 id="线性密码分析例子"><a href="#线性密码分析例子" class="headerlink" title="线性密码分析例子"></a>线性密码分析例子</h3><h4 id="例32"><a href="#例3-2" class="headerlink" title="例3.2"></a>例3.2</h4><p><img src="/../images/1652786962660.png" alt="1652786962660"></p>
-<p><img src="/../images/1652787533966.png" alt="1652787533966"></p>
-<p><img src="/../images/1652787541484.png" alt="1652787541484"></p>
+<p><img src="images/1652786392821.png" alt="1652786392821"></p>
+<p><img src="images/1652786753420.png" alt="1652786753420"></p>
+<p>书中应该笔误了，第一个是不等于，第二个应该是等于。也就是说当我们定义置换$\pi_s$的结果是输出Y的时候，那么输入是X且输出是Y的概率为$2^{-m}$。因为输入是$X=(x_1,x_2,…..,x_m)的概率为 (1/2)^m=2^{-m}$</p>
+<p>不要忘记输入是均匀随机的选择，所以不管是什么输入它的概率都是1/2，而且各个输入间是独立的，所以同时成立的概率是乘积。在上图的最后我们看到，当我们把置换$\pi_s$的作用结果定义为Y的时候，输入是X<strong>或者</strong>输出是Y的概率等于1，之前的是输入是X且输入是Y的概率。</p>
+<h3 id="线性密码分析例子"><a href="#线性密码分析例子" class="headerlink" title="线性密码分析例子"></a>线性密码分析例子</h3><h4 id="例32"><a href="#例3-2" class="headerlink" title="例3.2"></a>例3.2</h4><p><img src="images/1652786962660.png" alt="1652786962660"></p>
+<p><img src="images/1652787533966.png" alt="1652787533966"></p>
+<p><img src="images/1652787541484.png" alt="1652787541484"></p>
 <p>写脚本帮我们判断x1,x4,y2异或为0的概率</p>
 <pre class="line-numbers language-python" data-language="python"><code class="language-python">X &#x3D; [None]*16
 Y &#x3D; [None]*16
@@ -537,15 +535,14 @@ for i in range(16):
 print(cnt)#8
 print(cnt&#x2F;16)#0.5
 #确实是1&#x2F;2<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p><img src="/../images/1652787851470.png" alt="1652787851470"></p>
-<p><img src="/../images/1652787844289.png" alt="1652787844289"></p>
-<p>确实是$-3&#x2F;8$</p>
+<p><img src="images/1652787851470.png" alt="1652787851470"></p>
+<p><img src="images/1652787844289.png" alt="1652787844289"></p>
+<p>确实是$-3/8$</p>
 <h3 id="333-spn的线性密码分析"><a href="#3-3-3-SPN的线性密码分析" class="headerlink" title="3.3.3 SPN的线性密码分析"></a>3.3.3 SPN的线性密码分析</h3><p>线性密码分析要求找出一组S盒的线性逼近，这组线性逼近能够用来导出一个整个SPN（除最后一轮外）的线性逼近。</p>
-<p><img src="/../images/1652841059091.png" alt="1652841059091"></p>
-<p><img src="/../images/1652841074443.png" alt="1652841074443"></p>
-<p>上面的偏差是如何计算的呢？从定义着手，随机变量T1的变量为T1取0的概率减去1&#x2F;2,那么T1取0的概率其实就是这四个变量$U_5^1,..,V_6^1$异或值为0的概率，那么这个概率是多少呢？在异或当中，如果有偶数个0，那么异或结果为0；如果有奇数个0，那么异或结果为1。注意0个0也算偶数个0</p>
-<p>有偶数个0的概率&#x3D;4个都是0的概率+只有2个值为0的概率 + 全是1的概率 &#x3D; $1&#x2F;16 + 6&#x2F;16 + 1&#x2F;16 &#x3D; 8&#x2F;16$</p>
+<p><img src="images/1652841059091.png" alt="1652841059091"></p>
+<p><img src="images/1652841074443.png" alt="1652841074443"></p>
+<p>上面的偏差是如何计算的呢？从定义着手，随机变量T1的变量为T1取0的概率减去1/2,那么T1取0的概率其实就是这四个变量$U_5^1,..,V_6^1$异或值为0的概率，那么这个概率是多少呢？在异或当中，如果有偶数个0，那么异或结果为0；如果有奇数个0，那么异或结果为1。注意0个0也算偶数个0</p>
+<p>有偶数个0的概率=4个都是0的概率+只有2个值为0的概率 + 全是1的概率 = $1/16 + 6/16 + 1/16 = 8/16$</p>
 
                 
             </div>
@@ -845,7 +842,6 @@ print(cnt&#x2F;16)#0.5
                     <div class="summary block-with-text">
                         
                             
-
 记得这是国赛前的最后一个校队比赛，过了这么久但是我还是没有变强太多。还是建议多看书…
                         
                     </div>
@@ -924,7 +920,7 @@ print(cnt&#x2F;16)#0.5
             contentSelector: '#articleContent',
             headingsOffset: -($(window).height() * 0.4 - 45),
             collapseDepth: Number('0'),
-            headingSelector: 'h2, h3, h4'
+            headingSelector: 'h2, h3, h4,h5'
         });
 
         // modify the toc link href to support Chinese.
@@ -936,7 +932,7 @@ print(cnt&#x2F;16)#0.5
 
         // modify the heading title id to support Chinese.
         i = 0;
-        $('#articleContent').children('h2, h3, h4').each(function () {
+        $('#articleContent').children('h2, h3, h4,h5').each(function () {
             $(this).attr('id', tocHeading + (++i));
         });
 
@@ -1065,7 +1061,7 @@ print(cnt&#x2F;16)#0.5
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">267.7k</span>
+                        class="white-color">259.5k</span>
             
             
             

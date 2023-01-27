@@ -527,11 +527,9 @@ def main():
 
 if __name__ &#x3D;&#x3D; &#39;__main__&#39;:
     main()<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p><a target="_blank" rel="noopener" href="https://ctf-wiki.org/crypto/asymmetric/rsa/rsa_chosen_plain_cipher/">RSA 选择明密文攻击 - CTF Wiki</a></p>
 <p>解题思路是构造具有特定关系的多组明文对m1 m2 然后求出多组密文对的最大公因数，在本题中公因数大概就是n的幂，随后枚举幂数开根，能够开根出来的就是n了 </p>
-<p>$$c_1 \equiv m_1^e \mod n\c_2 \equiv m_2^e \mod n\观察这题的m_1 \space m_1的大小，m_2的平方是小于m_1的，所以构造m_2^3 &#x3D; m1比较合适\所以我们有c_1^3 \equiv (m_1^e)^3 \mod n \space 即 c_2^3 \equiv  m_1^e \mod n \space 所以c_1 - c_2^3 \equiv 0 \mod n\即 c_2^3 - c_1 &#x3D; kn(等式1)\我们可以构造多个具有上述关系的m_1 \space m_2 然后得到多个等式1，最后求这些等式的最大\公因数即可拿到n的幂(因为题目说当n的比特位数小于2048就要乘上自己)$$ </p>
-<p>其实构造具有上述关系的m1 m2 也是需要一点小技巧的，特别是还要求m1以特定字符串开头</p>
+<script type="math/tex; mode=display">c_1 \equiv m_1^e \mod n\\c_2 \equiv m_2^e \mod n\\观察这题的m_1 \space m_1的大小，m_2的平方是小于m_1的，所以构造m_2^3 = m1比较合适\\所以我们有c_1^3 \equiv (m_1^e)^3 \mod n \space 即 c_2^3 \equiv  m_1^e \mod n \space 所以c_1 - c_2^3 \equiv 0 \mod n\\即 c_2^3 - c_1 = kn(等式1)\\我们可以构造多个具有上述关系的m_1 \space m_2 然后得到多个等式1，最后求这些等式的最大\\公因数即可拿到n的幂(因为题目说当n的比特位数小于2048就要乘上自己)</script><p>其实构造具有上述关系的m1 m2 也是需要一点小技巧的，特别是还要求m1以特定字符串开头</p>
 <pre class="line-numbers language-python" data-language="python"><code class="language-python">from pwn import *
 from Crypto.Util.number import *
 import os
@@ -559,9 +557,6 @@ for i in range(2, 10):
     if exact:
         print(i, long_to_bytes(r))
 # SEE&#123;common_moduli_with_common_exponents_daf4ede8dda5c&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
 <h2 id="universality"><a href="#UniveRSAlity" class="headerlink" title="UniveRSAlity"></a>UniveRSAlity</h2><pre class="line-numbers language-python" data-language="python"><code class="language-python">import math, json
 from secrets import token_urlsafe
 from Crypto.Util.number import isPrime, bytes_to_long, long_to_bytes
@@ -607,16 +602,13 @@ def main():
 
 if __name__ &#x3D;&#x3D; &#39;__main__&#39;:
     main()<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>阅读题目源代码就可以发现我们输入的p跟q转换成float后必须包含pi跟e，这一部分直接暴力求解 </p>
-<p>第二部分是要找出使得$$m’ \equiv (m^e)^d \mod p*q \space的\space d (等式一)$$,其中m是原来的token编码后的值，而m’是修改后的值，为了拿到flag，m’应当是这样的形式:</p>
+<p>第二部分是要找出使得<script type="math/tex">m' \equiv (m^e)^d \mod p*q \space的\space d (等式一)</script>,其中m是原来的token编码后的值，而m’是修改后的值，为了拿到flag，m’应当是这样的形式:</p>
 <pre class="line-numbers language-none"><code class="language-none">js2 &#x3D; json.dumps(&#123;&quot;token&quot;: token, &quot;flag&quot;: 1&#125;)<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
 <p>我们的目标是求d，显然地这是一个离散对数问题DLP。尝试使用Pohlig-Hellman算法，此算法是一种求解光滑阶循环群上的离散对数的方法。而等式一等价于如下等式： </p>
-<p>$$m’ \equiv (m^e)^d \mod p \ m’ \equiv (m^e)^d \mod q $$ </p>
-<p>因为p q都是128bit的素数，所以上述两个式子可以看成是在有限域p和有限域q上的运算；如果有限域p和有限域q具有光滑阶数(有限域已经是循环群了，所以只需要满足光滑阶条件)，那么我们就可以运用Pohlig-Hellman算法求出两个等式的d，然后运用中国剩余定理求出在模p*q下的d，然后就可以得到flag。 </p>
+<script type="math/tex; mode=display">m' \equiv (m^e)^d \mod p \\ m' \equiv (m^e)^d \mod q</script><p>因为p q都是128bit的素数，所以上述两个式子可以看成是在有限域p和有限域q上的运算；如果有限域p和有限域q具有光滑阶数(有限域已经是循环群了，所以只需要满足光滑阶条件)，那么我们就可以运用Pohlig-Hellman算法求出两个等式的d，然后运用中国剩余定理求出在模p*q下的d，然后就可以得到flag。 </p>
 <p>所以现在需要构造两个128比特的包含pi和e的而且具有光滑阶数的素数p和q </p>
-<p><strong>p和q具有光滑阶数即p-1 和 q-1(模素数p的循环群阶数是p-1) 是光滑数，所以p-1和q-1可以因数分解为小素数的乘积</strong>，所以我们需要编写代码寻找满足这样条件的p q，找到了之后在运用Pohlig-Hellman算法求解DLP问题即可。<strong>不过我们也不需要手写Pohlig-Hellman算法，Sage自带了</strong>；具体实现链接可以看这个：<a target="_blank" rel="noopener" href="https://lazzzaro.github.io/2020/05/07/crypto-%E7%A6%BB%E6%95%A3%E5%AF%B9%E6%95%B0/index.html">离散对数</a></p>
+<p><strong>p和q具有光滑阶数即p-1 和 q-1(模素数p的循环群阶数是p-1) 是光滑数，所以p-1和q-1可以因数分解为小素数的乘积</strong>，所以我们需要编写代码寻找满足这样条件的p q，找到了之后在运用Pohlig-Hellman算法求解DLP问题即可。<strong>不过我们也不需要手写Pohlig-Hellman算法，Sage自带了</strong>；具体实现链接可以看这个：<a target="_blank" rel="noopener" href="https://lazzzaro.github.io/2020/05/07/crypto-离散对数/index.html">离散对数</a></p>
 <pre class="line-numbers language-python" data-language="python"><code class="language-python">from pwn import *
 from Crypto.Util.number import *
 from sage.all import GF, crt, factor
@@ -681,9 +673,6 @@ io.sendlineafter(b&quot;q&#x3D;&quot;, str(q).encode())
 io.sendlineafter(b&quot;d&#x3D;&quot;, str(d).encode())
 io.interactive()
 # SEE&#123;pohlig-hellman_easy_as_pie_db01d3f24beda43e&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
 <h2 id="the-true-ecc"><a href="#The-True-ECC" class="headerlink" title="The True ECC"></a>The True ECC</h2><pre class="line-numbers language-python" data-language="python"><code class="language-python"># python ecc.py &gt; out.py
 #ecc.py
 from random import randint
@@ -805,16 +794,14 @@ if __name__ &#x3D;&#x3D; &quot;__main__&quot;:
     print(&quot;alice_pub &#x3D;&quot;, alice_pub)
     print(&quot;blake_pub &#x3D;&quot;, blake_pub)
     print(&quot;ct &#x3D;&quot;, ct)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <pre class="line-numbers language-python" data-language="python"><code class="language-python">#out.py
 alice_pub &#x3D; (2138196312148079184382240325330500803425686967483863166176111074666553873369606997586883533252879522314508512610120185663459330505669976143538280185135503158, 1350098408534349199229781714086607605984656432458083815306756044307591092126215092360795039519565477039721903019874871683998662788499599535946383133093677646)
 blake_pub &#x3D; (4568773897927114993549462717422746966489956811871132275386853917467440322628373530720948282919382453518184702625364310911519327021756484938266990998628406420, 3649097172525610846241260554130988388479998230434661435854337888813320693155483292808012277418005770847521067027991154263171652473498536483631820529350606213)
 ct &#x3D; b&#39;q\xfa\xf2\xe5\xe3\xba.H\xa5\x07az\xc0;\xc4%\xdf\xfe\xa0MI&gt;o8\x96M\xb0\xfe]\xb2\xfdi\x8e\x9e\xea\x9f\xca\x98\xf9\x95\xe6&amp;\x1fB\xd5\x0b\xf2\xeb\xac\x18\x82\xdcu\xd5\xd5\x8e&lt;\xb3\xe4\x85e\xddX\xca0;\xe2G\xef7\\uM\x8d0A\xde+\x9fu&#39;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>椭圆曲线上的密码体制主要有两种，分别是Diffie-Hellman 密钥交换跟EIGamal密码体制。 </p>
 <p>知识点：<a target="_blank" rel="noopener" href="https://ctf-wiki.org/crypto/asymmetric/discrete-log/ecc/">ECC - CTF Wiki</a> </p>
 <p>阅读本题代码应当是Diffie-Hellman密钥交换体制，而且题目选取的椭圆曲线方程是 </p>
-<p>$$x^2 + ay^2 &#x3D; 1 \mod p $$，挺少见的。</p>
+<p><script type="math/tex">x^2 + ay^2 = 1 \mod p</script>，挺少见的。</p>
 
                 
             </div>
@@ -1191,7 +1178,7 @@ ct &#x3D; b&#39;q\xfa\xf2\xe5\xe3\xba.H\xa5\x07az\xc0;\xc4%\xdf\xfe\xa0MI&gt;o8\
             contentSelector: '#articleContent',
             headingsOffset: -($(window).height() * 0.4 - 45),
             collapseDepth: Number('0'),
-            headingSelector: 'h2, h3, h4'
+            headingSelector: 'h2, h3, h4,h5'
         });
 
         // modify the toc link href to support Chinese.
@@ -1203,7 +1190,7 @@ ct &#x3D; b&#39;q\xfa\xf2\xe5\xe3\xba.H\xa5\x07az\xc0;\xc4%\xdf\xfe\xa0MI&gt;o8\
 
         // modify the heading title id to support Chinese.
         i = 0;
-        $('#articleContent').children('h2, h3, h4').each(function () {
+        $('#articleContent').children('h2, h3, h4,h5').each(function () {
             $(this).attr('id', tocHeading + (++i));
         });
 
@@ -1332,7 +1319,7 @@ ct &#x3D; b&#39;q\xfa\xf2\xe5\xe3\xba.H\xa5\x07az\xc0;\xc4%\xdf\xfe\xa0MI&gt;o8\
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">267.7k</span>
+                        class="white-color">259.5k</span>
             
             
             

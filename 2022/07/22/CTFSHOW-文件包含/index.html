@@ -6,13 +6,11 @@
     <meta charset="utf-8">
     <meta name="keywords" content="CTFSHOW-文件包含, 学习记录">
     <meta name="description" content="
-
 CTFSHOW的文件包含的练习笔记。
-
 
 第82关这一关把点号禁用了，不可以用日志文件包含了。看答案是session文件包含。
 答案：https://www.freebuf.com/vuls/202819.html
-背后的思想就是利用s">
+背后的思想就是利用ses">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -467,7 +465,7 @@ CTFSHOW的文件包含的练习笔记。
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    653
+                    649
                 </div>
                 
 
@@ -498,10 +496,8 @@ CTFSHOW的文件包含的练习笔记。
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <!--toc-->
-
 <p>CTFSHOW的文件包含的练习笔记。</p>
 <span id="more"></span>
-
 <h2 id="第82关"><a href="#第82关" class="headerlink" title="第82关"></a>第82关</h2><p>这一关把点号禁用了，不可以用日志文件包含了。看答案是session文件包含。</p>
 <p>答案：<a target="_blank" rel="noopener" href="https://www.freebuf.com/vuls/202819.html">https://www.freebuf.com/vuls/202819.html</a></p>
 <p>背后的思想就是利用session.upload_progress将恶意语句写入session文件，随后包含session文件。所以我们需要知道session文件的路径。</p>
@@ -509,8 +505,8 @@ CTFSHOW的文件包含的练习笔记。
 <p>1.session文件在没有调用session_start()的情况下如何生成? </p>
 <p>2.生成了session文件，里面的内容在上传结束后会立即被清空，这时候又该如何做？</p>
 <p>第一个问题有两种解决的办法：</p>
-<p>1.如果session.auto_start&#x3D;On,则php在接受请求的时候会自动初始化Session，不需要执行session_start()。但是默认情况下，这个选项都是关闭的。</p>
-<p>2.session还有一个默认选择，session.use_strict_mode默认值为0，此时用户可以自己定义Session ID。比如，我们在Cookie里设置PHPSESSID&#x3D;TGAO，PHP将会在服务器上创建一个文件：&#x2F;tmp&#x2F;sess_TGAO。即使此时用户没有初始化Session，PHP也会自动初始化Session，并产生一个键值，这个键值由ini.get(“session.upload_progress.prefix”)+由我们构造的session.upload_progress.name值组成，并且这个键值会被写入到sess_xxxx文件里。</p>
+<p>1.如果session.auto_start=On,则php在接受请求的时候会自动初始化Session，不需要执行session_start()。但是默认情况下，这个选项都是关闭的。</p>
+<p>2.session还有一个默认选择，session.use_strict_mode默认值为0，此时用户可以自己定义Session ID。比如，我们在Cookie里设置PHPSESSID=TGAO，PHP将会在服务器上创建一个文件：/tmp/sess_TGAO。即使此时用户没有初始化Session，PHP也会自动初始化Session，并产生一个键值，这个键值由ini.get(“session.upload_progress.prefix”)+由我们构造的session.upload_progress.name值组成，并且这个键值会被写入到sess_xxxx文件里。</p>
 <p>所以我们可以控制这个键值，然后包含这个session文件，跟日志文件包含差不多，但是区别的地方在于session文件包含需要一个条件竞争的过程，因为我们往这个session里面写入的键值会在上传完成后被清除掉，所以我们需要不断地请求包含这个session文件才行。</p>
 <pre class="line-numbers language-python" data-language="python"><code class="language-python"># -- coding:UTF-8 --
 
@@ -564,7 +560,6 @@ if __name__ &#x3D;&#x3D; &#39;__main__&#39;:
         for i in range(5):
             threading.Thread(target&#x3D;read, args&#x3D;(session,)).start()
     evnet.set()<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 
                 
             </div>
@@ -864,7 +859,6 @@ if __name__ &#x3D;&#x3D; &#39;__main__&#39;:
                     <div class="summary block-with-text">
                         
                             
-
 红队渗透测试学习历程
 在利用kali操作系统学习红队渗透之前，最好在kali下配置好代理。方便我们更新软件
 https://zhuanlan.zhihu.com/p/414998586 kali代理福音！！
@@ -945,7 +939,7 @@ https://zhuanlan.zhihu.com/p/414998586 kali代理福音！！
             contentSelector: '#articleContent',
             headingsOffset: -($(window).height() * 0.4 - 45),
             collapseDepth: Number('0'),
-            headingSelector: 'h2, h3, h4'
+            headingSelector: 'h2, h3, h4,h5'
         });
 
         // modify the toc link href to support Chinese.
@@ -957,7 +951,7 @@ https://zhuanlan.zhihu.com/p/414998586 kali代理福音！！
 
         // modify the heading title id to support Chinese.
         i = 0;
-        $('#articleContent').children('h2, h3, h4').each(function () {
+        $('#articleContent').children('h2, h3, h4,h5').each(function () {
             $(this).attr('id', tocHeading + (++i));
         });
 
@@ -1086,7 +1080,7 @@ https://zhuanlan.zhihu.com/p/414998586 kali代理福音！！
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">267.7k</span>
+                        class="white-color">259.5k</span>
             
             
             
