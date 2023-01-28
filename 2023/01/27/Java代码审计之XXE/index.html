@@ -472,21 +472,21 @@ https://ras">
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2023-01-27
+                    2023-01-28
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    918
+                    1.2k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    3 分
+                    4 分
                 </div>
                 
 
@@ -530,18 +530,25 @@ https://ras">
 <p>我下载的是 vulns.war，所以访问如下这个地址。</p>
 <pre class="line-numbers language-http" data-language="http"><code class="language-http">http:&#x2F;&#x2F;127.0.0.1:8080&#x2F;vulns&#x2F;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p><img src="/images/Java代码审计之XXE/image-20230127122742469.png" alt="image-20230127122742469"></p>
-<h4 id="idea-创建-web-项目-待更新"><a href="#idea-创建-web-项目-待更新" class="headerlink" title="idea 创建 web 项目-待更新"></a>idea 创建 web 项目-待更新</h4><p>一直想在 idea 里面启动 Tomcat 并访问漏洞环境，但是不知道如何操作，这里先暂时不弄。</p>
+<h4 id="idea-创建-web-项目"><a href="#idea-创建-web-项目" class="headerlink" title="idea 创建 web 项目"></a>idea 创建 web 项目</h4><p>一直想在 idea 里面启动 Tomcat 并访问漏洞环境，但是不知道如何操作，这里先暂时不弄。</p>
 <blockquote>
 <p>idea 创建 web 项目的方式和以前的版本都不一样了，可以看看这篇文章：</p>
 <p><a target="_blank" rel="noopener" href="https://blog.csdn.net/wuqihawubito/article/details/124378124">(IDEA2022创建javaweb项目</a></p>
 </blockquote>
 <p>我的 22.2.2 版本的添加框架支持选项位置如下图</p>
 <p><img src="/images/Java代码审计之XXE/image-20230127120357346.png" alt="image-20230127120357346"></p>
+<blockquote>
+<p>后续来了，请按照如下链接中的操作利用idea打开war包</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_51980608/article/details/124291816">https://blog.csdn.net/weixin_51980608/article/details/124291816</a></p>
+</blockquote>
+<p>操作完之后可能在一些jsp文件中会报红，说是解析不了xxx方法，这个时候就需要我们手动导入一下依赖。</p>
+<p><img src="/images/Java代码审计之XXE/image-20230128103317844.png" alt="image-20230128103317844"></p>
+<p>什么方法报红了，就去找这个方法所依赖的 jar 包或者资源就好了。我最后是添加了 tomcat 10.0.27 作为库依赖然后 xxe 的那个 jsp 就不报红了。具体可以看看这个链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/RABCDXB/article/details/123355728">https://blog.csdn.net/RABCDXB/article/details/123355728</a></p>
 <h3 id="代码审计"><a href="#代码审计" class="headerlink" title="代码审计"></a>代码审计</h3><p>启动 Tomcat 并访问漏洞地址后会发现在 Tomcat 的 webapps 目录下自动生成了漏洞目录（看网上说好像是 Tomcat 会自动解压缩 war 包）</p>
 <p><img src="/images/Java代码审计之XXE/image-20230127123101032.png" alt="image-20230127123101032"></p>
 <p>我们访问 vulns 就可以看到源码啦！</p>
 <p>本次针对 xxe 进行一个代码审计，打开 007-xxe.jsp 分析源码。</p>
-<h4 id="007-xxejsp"><a href="#007-xxe-jsp" class="headerlink" title="007-xxe.jsp"></a>007-xxe.jsp</h4><h5 id="漏洞证明"><a href="#漏洞证明" class="headerlink" title="漏洞证明"></a>漏洞证明</h5><p><img src="/images/Java代码审计之XXE/image-20230127125104325.png" alt="image-20230127125104325"></p>
+<h4 id="漏洞证明"><a href="#漏洞证明" class="headerlink" title="漏洞证明"></a>漏洞证明</h4><p><img src="/images/Java代码审计之XXE/image-20230127125104325.png" alt="image-20230127125104325"></p>
 <p><img src="/images/Java代码审计之XXE/image-20230127130331218.png" alt="image-20230127130331218"></p>
 <p><img src="/images/Java代码审计之XXE/image-20230127125121848.png" alt="image-20230127125121848"></p>
 <p><img src="/images/Java代码审计之XXE/image-20230127125157323.png" alt="image-20230127125157323"></p>
@@ -550,7 +557,7 @@ https://ras">
 <p><img src="/images/Java代码审计之XXE/image-20230127125315130.png" alt="image-20230127125315130"></p>
 <p>这是我们 xxe 的 payload，将其解码看看：</p>
 <pre class="line-numbers language-xml-dtd" data-language="xml-dtd"><code class="language-xml-dtd">?data&#x3D;&lt;?xml version&#x3D;&quot;1.0&quot; encoding&#x3D;&quot;ISO-8859-1&quot;?&gt;&lt;!DOCTYPE foo [   &lt;!ELEMENT foo ANY &gt;  &lt;!ENTITY xxe SYSTEM &quot;file:&#x2F;&#x2F;&#x2F;c:&#x2F;windows&#x2F;win.ini&quot; &gt;]&gt;&lt;foo&gt;&amp;xxe;&lt;&#x2F;foo&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<h5 id="漏洞成因分析"><a href="#漏洞成因分析" class="headerlink" title="漏洞成因分析"></a>漏洞成因分析</h5><pre class="line-numbers language-jsp" data-language="jsp"><code class="language-jsp">String data &#x3D; request.getParameter(&quot;data&quot;);
+<h4 id="漏洞成因分析"><a href="#漏洞成因分析" class="headerlink" title="漏洞成因分析"></a>漏洞成因分析</h4><pre class="line-numbers language-jsp" data-language="jsp"><code class="language-jsp">String data &#x3D; request.getParameter(&quot;data&quot;);
     String tmp  &#x3D; &quot;&quot;;
 
     if (data !&#x3D; null) &#123;
@@ -601,12 +608,20 @@ https://ras">
 <p><img src="/images/Java代码审计之XXE/image-20230127133359069.png" alt="image-20230127133359069"></p>
 <p><code>getElementbyTagName()</code> 方法定义如下：</p>
 <p><img src="/images/Java代码审计之XXE/image-20230127133446716.png" alt="image-20230127133446716"></p>
-<p>那么 <code>getElementbyTagName(&quot;foo&quot;)</code> 显然就是返回标签名为 foo 的所有元素了，这是一个 NodeList 对象</p>
+<p>那么 <code>getElementbyTagName(&quot;foo&quot;)</code> 显然就是返回标签名为 foo 的所有元素了，这是一个 NodeList 对象。</p>
 <p><img src="/images/Java代码审计之XXE/image-20230127133759762.png" alt="image-20230127133759762"></p>
 <p><img src="/images/Java代码审计之XXE/image-20230127133817974.png" alt="image-20230127133817974"></p>
 <p><img src="/images/Java代码审计之XXE/image-20230127133925930.png" alt="image-20230127133925930"></p>
 <p><img src="/images/Java代码审计之XXE/image-20230127133950219.png" alt="image-20230127133950219"></p>
 <p><img src="/images/Java代码审计之XXE/image-20230127134023787.png" alt="image-20230127134023787"></p>
+<h4 id="动态调试"><a href="#动态调试" class="headerlink" title="动态调试"></a>动态调试</h4><p>静态地查看代码不是很好理解具体的运作流程，比如代码每一步的输出结果，所以最好还是利用 IDEA 进行一个动态调试。</p>
+<p><img src="/images/Java代码审计之XXE/image-20230128104424063.png" alt="image-20230128104424063"></p>
+<p>将最后几步的代码拆解一下</p>
+<pre class="line-numbers language-none"><code class="language-none">NodeList RegistrationNo &#x3D; doc.getElementsByTagName(&quot;foo&quot;);
+Node node &#x3D; RegistrationNo.item(0);
+tmp &#x3D; node.getFirstChild().getNodeValue();<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p><img src="/images/Java代码审计之XXE/image-20230128105232976.png" alt="image-20230128105232976"></p>
+<p>麻了，firstChild是空的，那咋返回的值。。</p>
 
                 
             </div>
@@ -1136,7 +1151,7 @@ https://ras">
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">259.5k</span>
+                        class="white-color">259.7k</span>
             
             
             
