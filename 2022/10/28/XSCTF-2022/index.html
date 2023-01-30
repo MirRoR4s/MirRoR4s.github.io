@@ -1,1683 +1,762 @@
-<!DOCTYPE HTML>
-<html lang="zh-CN">
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
 
 
 <head>
-    <meta charset="utf-8">
-    <meta name="keywords" content="XSCTF-2022, 学习记录">
-    <meta name="description" content="
-记录对XSCTF比赛的思考过程。
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="MirRoR4s">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="记录对XSCTF比赛的思考过程。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="XSCTF-2022">
+<meta property="og:url" content="https://mirror4s.github.io/2022/10/28/XSCTF-2022/index.html">
+<meta property="og:site_name" content="学习记录">
+<meta property="og:description" content="记录对XSCTF比赛的思考过程。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://mirror4s.github.io/images/image-20221028215042388.png">
+<meta property="og:image" content="https://mirror4s.github.io/images/image-20221028215129024.png">
+<meta property="og:image" content="https://mirror4s.github.io/images/image-20221028215911925.png">
+<meta property="og:image" content="https://mirror4s.github.io/images/image-20221029151642260.png">
+<meta property="og:image" content="https://mirror4s.github.io/images/image-20221028233856011.png">
+<meta property="og:image" content="https://mirror4s.github.io/images/image-20221101145107385.png">
+<meta property="og:image" content="https://mirror4s.github.io/images/image-20221101145647792.png">
+<meta property="article:published_time" content="2022-10-28T13:20:15.000Z">
+<meta property="article:modified_time" content="2023-01-10T09:15:50.772Z">
+<meta property="article:author" content="MirRoR4s">
+<meta property="article:tag" content="赛题记录">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://mirror4s.github.io/images/image-20221028215042388.png">
+  
+  
+  
+  <title>XSCTF-2022 - 学习记录</title>
 
-Crypto初识RSAfrom Crypto.Util.number import bytes_to_long,inverse,getPrime
-from flag import flag
-
-m &amp;#x">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <meta name="renderer" content="webkit|ie-stand|ie-comp">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="format-detection" content="telephone=no">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="referrer" content="no-referrer-when-downgrade">
-    <!-- Global site tag (gtag.js) - Google Analytics -->
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
 
-    <title>XSCTF-2022 | 学习记录</title>
-    <link rel="icon" type="image/png" href="/favicon.png">
-    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
-    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
-    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
-    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
-    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
-    <link rel="stylesheet" type="text/css" href="/css/matery.css">
-    <link rel="stylesheet" type="text/css" href="/css/my.css">
-    <link rel="stylesheet" type="text/css" href="/css/dark.css">
-    <script src="/libs/jquery/jquery-3.6.0.min.js"></script>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"mirror4s.github.io","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  
 <meta name="generator" content="Hexo 6.3.0"></head>
 
 
-
-
 <body>
-<header class="navbar-fixed">
-    <nav id="headNav" class="bg-color nav-transparent">
-        <div id="navContainer" class="nav-wrapper container">
-            <div class="brand-logo">
-                <a href="/" class="waves-effect waves-light">
-                    
-                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
-                    
-                    <span class="logo-span">学习记录</span>
-                </a>
-            </div>
-            
+  
 
-<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
-<ul class="right nav-menu">
-  
-  <li class="hide-on-med-and-down nav-item">
+  <header>
     
-    <a href="/" class="waves-effect waves-light">
-      
-      <i class="fas fa-home" style="zoom: 0.6;"></i>
-      
-      <span>首页</span>
-    </a>
-    
-  </li>
-  
-  <li class="hide-on-med-and-down nav-item">
-    
-    <a href="/tags" class="waves-effect waves-light">
-      
-      <i class="fas fa-tags" style="zoom: 0.6;"></i>
-      
-      <span>标签</span>
-    </a>
-    
-  </li>
-  
-  <li class="hide-on-med-and-down nav-item">
-    
-    <a href="/categories" class="waves-effect waves-light">
-      
-      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
-      
-      <span>分类</span>
-    </a>
-    
-  </li>
-  
-  <li class="hide-on-med-and-down nav-item">
-    
-    <a href="/archives" class="waves-effect waves-light">
-      
-      <i class="fas fa-archive" style="zoom: 0.6;"></i>
-      
-      <span>归档</span>
-    </a>
-    
-  </li>
-  
-  <li class="hide-on-med-and-down nav-item">
-    
-    <a href="/about" class="waves-effect waves-light">
-      
-      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
-      
-      <span>关于</span>
-    </a>
-    
-  </li>
-  
-  <li class="hide-on-med-and-down nav-item">
-    
-    <a href="/contact" class="waves-effect waves-light">
-      
-      <i class="fas fa-comments" style="zoom: 0.6;"></i>
-      
-      <span>留言板</span>
-    </a>
-    
-  </li>
-  
-  <li class="hide-on-med-and-down nav-item">
-    
-    <a href="/friends" class="waves-effect waves-light">
-      
-      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
-      
-      <span>友情链接</span>
-    </a>
-    
-  </li>
-  
-  <li>
-    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
-      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
-    </a>
-  </li>
-</ul>
 
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
 
-<div id="mobile-nav" class="side-nav sidenav">
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
 
-    <div class="mobile-head bg-color">
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
         
-        <img src="/medias/logo.png" class="logo-img circle responsive-img">
-        
-        <div class="logo-name">学习记录</div>
-        <div class="logo-desc">
-            
-            欢迎来到我的博客
-            
-        </div>
-    </div>
-
-    <ul class="menu-list mobile-menu-list">
-        
-        <li class="m-nav-item">
-	  
-		<a href="/" class="waves-effect waves-light">
-			
-			    <i class="fa-fw fas fa-home"></i>
-			
-			首页
-		</a>
           
-        </li>
-        
-        <li class="m-nav-item">
-	  
-		<a href="/tags" class="waves-effect waves-light">
-			
-			    <i class="fa-fw fas fa-tags"></i>
-			
-			标签
-		</a>
           
-        </li>
-        
-        <li class="m-nav-item">
-	  
-		<a href="/categories" class="waves-effect waves-light">
-			
-			    <i class="fa-fw fas fa-bookmark"></i>
-			
-			分类
-		</a>
           
-        </li>
-        
-        <li class="m-nav-item">
-	  
-		<a href="/archives" class="waves-effect waves-light">
-			
-			    <i class="fa-fw fas fa-archive"></i>
-			
-			归档
-		</a>
           
-        </li>
-        
-        <li class="m-nav-item">
-	  
-		<a href="/about" class="waves-effect waves-light">
-			
-			    <i class="fa-fw fas fa-user-circle"></i>
-			
-			关于
-		</a>
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
           
-        </li>
         
-        <li class="m-nav-item">
-	  
-		<a href="/contact" class="waves-effect waves-light">
-			
-			    <i class="fa-fw fas fa-comments"></i>
-			
-			留言板
-		</a>
           
-        </li>
-        
-        <li class="m-nav-item">
-	  
-		<a href="/friends" class="waves-effect waves-light">
-			
-			    <i class="fa-fw fas fa-address-book"></i>
-			
-			友情链接
-		</a>
           
-        </li>
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
         
         
-        <li><div class="divider"></div></li>
-        <li>
-            <a href="https://github.com/blinkfox/hexo-theme-matery" class="waves-effect waves-light" target="_blank">
-                <i class="fab fa-github-square fa-fw"></i>Fork Me
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
             </a>
-        </li>
+          </li>
+          
         
-    </ul>
-</div>
-
-
-        </div>
-
         
-            <style>
-    .nav-transparent .github-corner {
-        display: none !important;
-    }
-
-    .github-corner {
-        position: absolute;
-        z-index: 10;
-        top: 0;
-        right: 0;
-        border: 0;
-        transform: scale(1.1);
-    }
-
-    .github-corner svg {
-        color: #0f9d58;
-        fill: #fff;
-        height: 64px;
-        width: 64px;
-    }
-
-    .github-corner:hover .octo-arm {
-        animation: a 0.56s ease-in-out;
-    }
-
-    .github-corner .octo-arm {
-        animation: none;
-    }
-
-    @keyframes a {
-        0%,
-        to {
-            transform: rotate(0);
-        }
-        20%,
-        60% {
-            transform: rotate(-25deg);
-        }
-        40%,
-        80% {
-            transform: rotate(10deg);
-        }
-    }
-</style>
-
-<a href="https://github.com/blinkfox/hexo-theme-matery" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
-   data-tooltip="Fork Me" data-position="left" data-delay="50">
-    <svg viewBox="0 0 250 250" aria-hidden="true">
-        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
-        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
-              fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
-        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
-              fill="currentColor" class="octo-body"></path>
-    </svg>
-</a>
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
         
-    </nav>
-
-</header>
-
-
-<main id="main_wrap">
-    
-
-
-
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/9.jpg')">
-    <div class="container" style="right: 0px;left: 0px;">
-        <div class="row">
-            <div class="col s12 m12 l12">
-                <div class="brand">
-                    <h1 class="description center-align post-title">XSCTF-2022</h1>
-                </div>
-            </div>
-        </div>
+      </ul>
     </div>
-</div>
+  </div>
+</nav>
 
+  
 
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="XSCTF-2022"></span>
+          
+        </div>
 
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-10-28 21:20" pubdate>
+          2022年10月28日 晚上
+        </time>
+      </span>
+    
+  </div>
 
-<main class="post-container content">
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          21k 字
+        
+      </span>
+    
 
     
-    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
-<style>
-    #articleContent h1::before,
-    #articleContent h2::before,
-    #articleContent h3::before,
-    #articleContent h4::before,
-    #articleContent h5::before,
-    #articleContent h6::before {
-        display: block;
-        content: " ";
-        height: 100px;
-        margin-top: -100px;
-        visibility: hidden;
-    }
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          178 分钟
+        
+      </span>
+    
 
-    #articleContent :focus {
-        outline: none;
-    }
+    
+    
+  </div>
 
-    .toc-fixed {
-        position: fixed;
-        top: 64px;
-    }
-
-    .toc-widget {
-        width: 345px;
-        padding-left: 20px;
-    }
-
-    .toc-widget .toc-title {
-        padding: 35px 0 15px 17px;
-        font-size: 1.5rem;
-        font-weight: bold;
-        line-height: 1.5rem;
-    }
-
-    .toc-widget ol {
-        padding: 0;
-        list-style: none;
-    }
-
-    #toc-content {
-        padding-bottom: 30px;
-        overflow: auto;
-    }
-
-    #toc-content ol {
-        padding-left: 10px;
-    }
-
-    #toc-content ol li {
-        padding-left: 10px;
-    }
-
-    #toc-content .toc-link:hover {
-        color: #42b983;
-        font-weight: 700;
-        text-decoration: underline;
-    }
-
-    #toc-content .toc-link::before {
-        background-color: transparent;
-        max-height: 25px;
-
-        position: absolute;
-        right: 23.5vw;
-        display: block;
-    }
-
-    #toc-content .is-active-link {
-        color: #42b983;
-    }
-
-    #floating-toc-btn {
-        position: fixed;
-        right: 15px;
-        bottom: 137px;
-        padding-top: 15px;
-        margin-bottom: 0;
-        z-index: 998;
-    }
-
-    #floating-toc-btn .btn-floating {
-        width: 48px;
-        height: 48px;
-    }
-
-    #floating-toc-btn .btn-floating i {
-        line-height: 48px;
-        font-size: 1.4rem;
-    }
-</style>
-<div class="row">
-    <div id="main-content" class="col s12 m12 l9">
-        <!-- 文章内容详情 -->
-<div id="artDetail">
-    <div class="card">
-        <div class="card-content article-info">
-            <div class="row tag-cate">
-                <div class="col s7">
-                    
-                    <div class="article-tag">
-                        
-                            <a href="/tags/%E8%B5%9B%E9%A2%98%E8%AE%B0%E5%BD%95/">
-                                <span class="chip bg-color">赛题记录</span>
-                            </a>
-                        
-                    </div>
-                    
-                </div>
-                <div class="col s5 right-align">
-                    
-                    <div class="post-cate">
-                        <i class="fas fa-bookmark fa-fw icon-category"></i>
-                        
-                            <a href="/categories/CTF/" class="post-category">
-                                CTF
-                            </a>
-                        
-                    </div>
-                    
-                </div>
-            </div>
-
-            <div class="post-info">
-                
-                <div class="post-date info-break-policy">
-                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2022-10-28
-                </div>
-                
-
-                
-                <div class="post-date info-break-policy">
-                    <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2023-01-10
-                </div>
-                
-
-                
-                <div class="info-break-policy">
-                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    2.9k
-                </div>
-                
-
-                
-                <div class="info-break-policy">
-                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    15 分
-                </div>
-                
-
-                
-                    <div id="busuanzi_container_page_pv" class="info-break-policy">
-                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
-                        <span id="busuanzi_value_page_pv"></span>
-                    </div>
-				
-            </div>
-        </div>
-        <hr class="clearfix">
 
         
-        <!-- 是否加载使用自带的 prismjs. -->
-        <link rel="stylesheet" href="/libs/prism/prism.css">
-        
+      </div>
 
-        
+      
+    </div>
+  </div>
+</div>
 
-        <div class="card-content article-card-content">
-            <div id="articleContent">
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">XSCTF-2022</h1>
+            
+            
+              <div class="markdown-body">
+                
                 <!--toc-->
+
 <p>记录对XSCTF比赛的思考过程。</p>
 <span id="more"></span>
-<h2 id="crypto"><a href="#Crypto" class="headerlink" title="Crypto"></a>Crypto</h2><h3 id="初识rsa"><a href="#初识RSA" class="headerlink" title="初识RSA"></a>初识RSA</h3><pre class="line-numbers language-python" data-language="python"><code class="language-python">from Crypto.Util.number import bytes_to_long,inverse,getPrime
-from flag import flag
 
-m &#x3D; bytes_to_long(flag)
+<h2 id="crypto"><a href="#Crypto" class="headerlink" title="Crypto"></a>Crypto</h2><h3 id="初识rsa"><a href="#初识RSA" class="headerlink" title="初识RSA"></a>初识RSA</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> Crypto.Util.number <span class="hljs-keyword">import</span> bytes_to_long,inverse,getPrime<br><span class="hljs-keyword">from</span> flag <span class="hljs-keyword">import</span> flag<br><br>m = bytes_to_long(flag)<br><br>p = getPrime(<span class="hljs-number">1024</span>)<br>q = getPrime(<span class="hljs-number">1024</span>)<br>n = p*q<br><span class="hljs-built_in">print</span>(n)<br>e = <span class="hljs-number">65537</span><br><br>c = <span class="hljs-built_in">pow</span>(m,e,n)<br><br>pq = p*(q-<span class="hljs-number">1</span>)<br>qp = q*(p-<span class="hljs-number">1</span>)<br><br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;c=&quot;</span>,c)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;n=&quot;</span>,n)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;pq=&quot;</span>,pq)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;qp=&quot;</span>,qp)<br><br><span class="hljs-string">&#x27;&#x27;&#x27;</span><br><span class="hljs-string">c= 8722269075970644434253339592758512788160408912707387632591552130175707843950684315083250494010055435391879036285103810263591951437829414438640307561645721347859659807138051841516634704123100270651976676182059252251162982609391666023674158274992400910869692389001622774140191223807887675081808561012755545464977015973615407965906513878979919700065923364884766974187303774330319143647840846354404070430118235352622445115153298578370521811697710289716188726587743282814946239856766713516166990341116198180068191759095913957606379780234116317390622824096667107736103270907349927467971817639795094030622157581511033950777</span><br><span class="hljs-string">n= 10466186506773626671397261081802640650185744558208505628349249045496105597268556020207175016523119333667851114848452038431498926527983706092607207796937431312520131882751891731564121558651246025754915145600686076505962750195353958781726515647847167067621799990588328894365930423844435964506372428647802381074584935050067254029262890188260006596141011807724688556673520261743199388391094490191001701011230322653422314758778116196105077883955436582364267530633358016652912054880813710531145973799193443828969535902856467548523653920307742364119002349899553478815101092655897400295925170383678499125295006364960124859003</span><br><span class="hljs-string">pq= 10466186506773626671397261081802640650185744558208505628349249045496105597268556020207175016523119333667851114848452038431498926527983706092607207796937431312520131882751891731564121558651246025754915145600686076505962750195353958781726515647847167067621799990588328894365930423844435964506372428647802381074488896197029704465200125337817646702009123916866455067019234171839614862660036737875747177391796376553159880972782837853473250804807544086701088829096838316550146794766718580877976153967582795248676367265069623900208276878140709691073369415161936376086988069213820933152601453587292943483693378833664901178324</span><br><span class="hljs-string">qp= 10466186506773626671397261081802640650185744558208505628349249045496105597268556020207175016523119333667851114848452038431498926527983706092607207796937431312520131882751891731564121558651246025754915145600686076505962750195353958781726515647847167067621799990588328894365930423844435964506372428647802381074475956379708898904933143429835002718457573266164923043251954374464149976302585916538814746811455883837138715445492053610047383292461097590195481556557381952895539341802954749542143253491617052100969586396996063822508764438280468492894012685918249843558593322831683872737943676955669923498182824352081785243246</span><br><span class="hljs-string">&#x27;&#x27;&#x27;</span><br><br><br></code></pre></td></tr></table></figure>
 
-p &#x3D; getPrime(1024)
-q &#x3D; getPrime(1024)
-n &#x3D; p*q
-print(n)
-e &#x3D; 65537
-
-c &#x3D; pow(m,e,n)
-
-pq &#x3D; p*(q-1)
-qp &#x3D; q*(p-1)
-
-print(&quot;c&#x3D;&quot;,c)
-print(&quot;n&#x3D;&quot;,n)
-print(&quot;pq&#x3D;&quot;,pq)
-print(&quot;qp&#x3D;&quot;,qp)
-
-&#39;&#39;&#39;
-c&#x3D; 8722269075970644434253339592758512788160408912707387632591552130175707843950684315083250494010055435391879036285103810263591951437829414438640307561645721347859659807138051841516634704123100270651976676182059252251162982609391666023674158274992400910869692389001622774140191223807887675081808561012755545464977015973615407965906513878979919700065923364884766974187303774330319143647840846354404070430118235352622445115153298578370521811697710289716188726587743282814946239856766713516166990341116198180068191759095913957606379780234116317390622824096667107736103270907349927467971817639795094030622157581511033950777
-n&#x3D; 10466186506773626671397261081802640650185744558208505628349249045496105597268556020207175016523119333667851114848452038431498926527983706092607207796937431312520131882751891731564121558651246025754915145600686076505962750195353958781726515647847167067621799990588328894365930423844435964506372428647802381074584935050067254029262890188260006596141011807724688556673520261743199388391094490191001701011230322653422314758778116196105077883955436582364267530633358016652912054880813710531145973799193443828969535902856467548523653920307742364119002349899553478815101092655897400295925170383678499125295006364960124859003
-pq&#x3D; 10466186506773626671397261081802640650185744558208505628349249045496105597268556020207175016523119333667851114848452038431498926527983706092607207796937431312520131882751891731564121558651246025754915145600686076505962750195353958781726515647847167067621799990588328894365930423844435964506372428647802381074488896197029704465200125337817646702009123916866455067019234171839614862660036737875747177391796376553159880972782837853473250804807544086701088829096838316550146794766718580877976153967582795248676367265069623900208276878140709691073369415161936376086988069213820933152601453587292943483693378833664901178324
-qp&#x3D; 10466186506773626671397261081802640650185744558208505628349249045496105597268556020207175016523119333667851114848452038431498926527983706092607207796937431312520131882751891731564121558651246025754915145600686076505962750195353958781726515647847167067621799990588328894365930423844435964506372428647802381074475956379708898904933143429835002718457573266164923043251954374464149976302585916538814746811455883837138715445492053610047383292461097590195481556557381952895539341802954749542143253491617052100969586396996063822508764438280468492894012685918249843558593322831683872737943676955669923498182824352081785243246
-&#39;&#39;&#39;
-
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h4 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h4><p>pq和qp的乘积为n和phi(n)的乘积，所以除以n即可得到phi(n)。之后的步骤正常解密即可。</p>
-<h3 id="简单的lfsr"><a href="#简单的LFSR" class="headerlink" title="简单的LFSR"></a>简单的LFSR</h3><pre class="line-numbers language-python" data-language="python"><code class="language-python">from secret import secret
-for b in secret: assert(b &#x3D;&#x3D; &#39;0&#39; or b &#x3D;&#x3D; &#39;1&#39;)
-assert(len(secret) &#x3D;&#x3D; 128)
-# a 01 string with length 128
-# your flag is flag&#123;md5(secret).hexdigest()&#125;
+<h3 id="简单的lfsr"><a href="#简单的LFSR" class="headerlink" title="简单的LFSR"></a>简单的LFSR</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> secret <span class="hljs-keyword">import</span> secret<br><span class="hljs-keyword">for</span> b <span class="hljs-keyword">in</span> secret: <span class="hljs-keyword">assert</span>(b == <span class="hljs-string">&#x27;0&#x27;</span> <span class="hljs-keyword">or</span> b == <span class="hljs-string">&#x27;1&#x27;</span>)<br><span class="hljs-keyword">assert</span>(<span class="hljs-built_in">len</span>(secret) == <span class="hljs-number">128</span>)<br><span class="hljs-comment"># a 01 string with length 128</span><br><span class="hljs-comment"># your flag is flag&#123;md5(secret).hexdigest()&#125;</span><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">string2bits</span>(<span class="hljs-params">s</span>):<br>    <span class="hljs-keyword">return</span> [<span class="hljs-built_in">int</span>(b) <span class="hljs-keyword">for</span> b <span class="hljs-keyword">in</span> s]<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">lfsr</span>(<span class="hljs-params">state, mask</span>):<br>    <span class="hljs-keyword">assert</span>(<span class="hljs-built_in">len</span>(state) == <span class="hljs-number">128</span>)<br>    <span class="hljs-keyword">assert</span>(<span class="hljs-built_in">len</span>(mask)  == <span class="hljs-number">128</span>)<br><br>    output = <span class="hljs-number">0</span><br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">128</span>):<br>        output = output + (state[i] * mask[i])<br><br>    <span class="hljs-keyword">return</span> output<br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&#x27;__main__&#x27;</span>:<br>    initState = [<span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>]<br>    mask = string2bits(secret)<br><br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">256</span>):<br>        state = initState[i:]<br>        output = lfsr(state, mask)<br>        initState += [output]<br><br>    outputState = initState[<span class="hljs-number">128</span>:]<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;outputState =&#x27;</span>, outputState)<br>    <span class="hljs-comment">#</span><br>    <span class="hljs-comment"># outputState = [31, 66, 128, 222, 385, 664, 1143, 2000, 3458, 6003, 10379, 17942, 31047, 53687, 92924, 160797, 278304, 481638, 833479, 1442422, 2496163, 4319845, 7475835, 12937561, 22389578, 38746915, 67054735, 116043520, 200822710, 347539886, 601445745, 1040850538, 1801275628, 3117252874, 5394657302, 9335889442, 16156509611, 27960142496, 48387281659, 83738092531, 144915522009, 250787996657, 434008851435, 751087316130, 1299817167363, 2249438425629, 3892834588915, 6736864173067, 11658686709797, 20176297502410, 34916709837729, 60426182042628, 104572380769600, 180970937597032, 313184800936842, 541991553121913, 937960088661442, 1623215570164618, 2809105439634215, 4861383488449105, 8413016146818879, 14559402864389777, 25196220721365800, 43604091771673155, 75460397027739861, 130590302153314191, 225997048627046433, 391106116962451401, 676840674047358730, 1171327366605398299, 2027076463289970382, 3508019282374090135, 6070910253447116278, 10506199749411485204, 18181825882182859769, 31465115864423937634, 54452920337985370536, 94235169707018163674, 163081560265112209496, 282225790871820528073, 488414489680745790033, 845240659945376349091, 1462757121910708796880, 2531419155626961478438, 4380824981460105751921, 7581370898424646092677, 13120173698498971899800, 22705518590912550882405, 39293730885686099313323, 68000969928723717268434, 117681162033195064953557, 203656740661184789826464, 352444412513853856490154, 609933476834387348179796, 1055539066458205919344242, 1826695472762162772755920, 3161243819621244340994611, 5470787351316040252901913, 9467638673598260118507327, 16384512191330329194463349, 28354719587732695891973236, 49070128760035595469947547, 84919814815174884654495265, 146960587438213290271803310, 254327147405947343219170013, 440133637427387650641676733, 761686751771954639615932308, 1318160346062225166536927204, 2281182774793880566386854202, 3947770745464875128215489476, 6831935621711193478803584270, 11823215517979626989252654459, 20461027873324936552011726278, 35409458704049766870463574070, 61278923692217093991616774374, 106048118957748860598268928024, 183524821535095103500935105397, 317604503036094959823791626415, 549640204006492782256703506357, 951196695803666227643791343005, 1646122586216645151673646795131, 2848747878127492747395146497119, 4929987925010971381846789176787, 8531741656523753626888968333475, 14764866932914585711739993009471, 25551792860485990447357753377411, 44219438031623458174827090101591, 76525303351860239321171606062486, 132433208420836012247860425341878, 229186346534231007543300455047052, 396625454174562824696341867974807, 686392332170111774628387415187708, 1187857281228776953526538661167132, 2055682813511567389589959681437591, 3557524878237416677051445431119245, 6156583679200434562674367324375645, 10654464521349051207718915685250792, 18438410026033851006551039004948926, 31909155416202798852780253976608864, 55221366589513932226781115179478434, 95565027912492621164419094117570641, 165382987128929746587819720020389833, 286208595645816231325692474821432127, 495307054513959920117280296979778603, 857168799202977606481906830566592959, 1483399728776458203402121501599814357, 2567142851419860475561591348189292465, 4442647717774532025797522076302827645, 7688360128977964468508623330874749520, 13305327189541069887965447505836108943, 23025941637865784521234444191415083701, 39848248807227476288131461546822173104, 68960607908058729168472941626927516912, 119341892941264496254850267375680858596, 206530769418287872448439164819365157712, 357418151038572249261836365381689027787, 618540932431735991718001801386896334770, 1070434962471260463170389697079661487176, 1852474022011964581139009223827365513544, 3205855677870125101423860144920010424249, 5547991769498476629256700835469967207037, 9601247144996961660705018593534913225922, 16615732425220501988109900409620796156745, 28754864847988594478375696246052761203187, 49762612400465240380187427652132912229336, 86118213596547492163397334421181607606370, 149034513167786192667574788821667110253623, 257916243121530494722068502259305736264048, 446344856986474817826595353109273441918350, 772435768089263602359077702861161388353409, 1336762385595787378549468975393213339116484, 2313375104267880490155624917599100889633507, 4003482167596451918353914186255524345816532, 6928348730257112541629154203810355027525535, 11990066177033590775605142065871666200189459, 20749776393589512464840020374644649655647874, 35909161302935015278730531942138798319507636, 62143699335409560081369603141161471393159562, 107544682943462043814216772302622710407400704, 186114746194704481727730115452186541297539854, 322086576510057527551600558671512063007190557, 557396793585831655018738502556644467159583633, 964620099559052960425720416252526682882655111, 1669352868873354804885622348664567494237803783, 2888949755545809136243688064556192446919868175, 4999560515746991945989073252770067125902428535, 8652142635098861248148452777057412533362877977, 14973230535426489152060521332311783517581989420, 25912382876992006096351135796067625851883928825, 44843468133024591960270046213401958144446811548, 77605237763877474989955856305494246316739147127, 134302122006319171731632762048131880552676359659, 232420652202367984596938247872208285088912788686, 402222680946414142984184322215356821073359953948, 696078784456971603910909918744734815016448573082, 1204620468022900362280402553035290601874308600586, 2084692860035604927076197374205039877760447754956, 3607729103106034863624554004184342562208475089341, 6243466138784576918107250594832177417637788944304, 10804821623826866941723224844111388709787418308073, 18698615116609470739339911758664365362637188157227, 32359461308280335893458609544003265039362932173740, 56000657248244594858300036379967633467510318826268, 96913653239119041752111865895809664169241405330164, 167716892009274048794745102986623447430717183044189, 290247606246426020117292750048691625438809474898504, 502296888062545512718475829352732508523042936581530, 869265269816240261877029457458234318249621243667628, 1504333646627354107869007496936781479204707239575364, 2603370684363759081777877568090078592049534352669947, 4505342904082185194291963661562434728467247085801567, 7796859204598587173314308958000104480418858953375158, 13493093589225451977147040588861591346827624626553088, 23350886533928418622148518003626067086836308029229306, 40410592153292809121198774051487713973447271440824879, 69933788415571610361075397290260005189363125951186151, 121026060286409890014591649872661507384922097295622585, 209445356819655999941471437498154462693217873859873519, 362462079567824464738504374835340908769751488853277318, 627269857492024846036766185061792395514128412691597750, 1085541071185182881358902065797900004206275433304525877, 1878616361292087979017649753948129817575491489985996469, 3251097104102362704835900720328806405351210311448488910, 5626285705844227224482132571164442587287950705132698177, 9736741115435595736854097976874400909429981720207988487, 16850215667245180941552990697851306753178430167486844006, 29160657006948951882262364132481449161390275730087294685, 50464868454466647556267645846637274956572498586114427735, 87333524327649631040132103644841977096784627243509857937, 151137706390139040826448707126591974417399010694640174718, 261555988593488478677610370284679511774525269175612894617, 452643730033345117036459086235348615186246366652477694168, 783336475835524143955537154153262203019092265959952337070, 1355626939379487620769121922144227585175531097052439217983, 2346021735820790423533561047507688175516954900918138334291, 4059979796110323903393797058491537625611005518946149411026, 7026122432346967683382009847205881024752630926437218981740, 12159271452933065576710291263470354882115951853620136774055, 21042599768180623908382939506716338579508214228553692875423, 36415915765826987773364669427220163018133640081486671468436, 63020678797925209300085103082659626905494796721119527734083, 109062366622625198169859916735972641477602693706580750774247, 188741220186912829686057249397861922209555075583934877024777, 326631901551406455092777938653826814900794821912935940782874, 565262845103114204256414747869081614169923740442179762058936, 978232936025018959853100287323851115023773163216042197843195, 1692910980111501346802672231436092377546116455476214539222026, 2929718966760270262844895994547637314231078419236801672684198, 5070114923366815738216357619638190602226980891746062079428250, 8774242726964718704518978915749604855301897112378619823447909, 15184534590503864395968205111669668293209355696392197598100449, 26278061583779512058870924747917968681797893736357134971437061, 45476304623307832769415233578427592641287934525440233150419102, 78700412341998941621862709864667467345902574612843786168968091, 136197409928206718914848388530217366761295027423898231594892758, 235700600786468895717413188934153824796333855958950958366797470]</span><br>    <span class="hljs-comment">#</span><br><br><br></code></pre></td></tr></table></figure>
 
-def string2bits(s):
-    return [int(b) for b in s]
-
-def lfsr(state, mask):
-    assert(len(state) &#x3D;&#x3D; 128)
-    assert(len(mask)  &#x3D;&#x3D; 128)
-
-    output &#x3D; 0
-    for i in range(128):
-        output &#x3D; output + (state[i] * mask[i])
-
-    return output
-
-if __name__ &#x3D;&#x3D; &#39;__main__&#39;:
-    initState &#x3D; [0, 1, 0, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 0, 1, 1, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 0, 1, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 0, 0, 1, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 0, 1, 0, 0, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 1, 0, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0]
-    mask &#x3D; string2bits(secret)
-
-    for i in range(256):
-        state &#x3D; initState[i:]
-        output &#x3D; lfsr(state, mask)
-        initState +&#x3D; [output]
-
-    outputState &#x3D; initState[128:]
-    print(&#39;outputState &#x3D;&#39;, outputState)
-    #
-    # outputState &#x3D; [31, 66, 128, 222, 385, 664, 1143, 2000, 3458, 6003, 10379, 17942, 31047, 53687, 92924, 160797, 278304, 481638, 833479, 1442422, 2496163, 4319845, 7475835, 12937561, 22389578, 38746915, 67054735, 116043520, 200822710, 347539886, 601445745, 1040850538, 1801275628, 3117252874, 5394657302, 9335889442, 16156509611, 27960142496, 48387281659, 83738092531, 144915522009, 250787996657, 434008851435, 751087316130, 1299817167363, 2249438425629, 3892834588915, 6736864173067, 11658686709797, 20176297502410, 34916709837729, 60426182042628, 104572380769600, 180970937597032, 313184800936842, 541991553121913, 937960088661442, 1623215570164618, 2809105439634215, 4861383488449105, 8413016146818879, 14559402864389777, 25196220721365800, 43604091771673155, 75460397027739861, 130590302153314191, 225997048627046433, 391106116962451401, 676840674047358730, 1171327366605398299, 2027076463289970382, 3508019282374090135, 6070910253447116278, 10506199749411485204, 18181825882182859769, 31465115864423937634, 54452920337985370536, 94235169707018163674, 163081560265112209496, 282225790871820528073, 488414489680745790033, 845240659945376349091, 1462757121910708796880, 2531419155626961478438, 4380824981460105751921, 7581370898424646092677, 13120173698498971899800, 22705518590912550882405, 39293730885686099313323, 68000969928723717268434, 117681162033195064953557, 203656740661184789826464, 352444412513853856490154, 609933476834387348179796, 1055539066458205919344242, 1826695472762162772755920, 3161243819621244340994611, 5470787351316040252901913, 9467638673598260118507327, 16384512191330329194463349, 28354719587732695891973236, 49070128760035595469947547, 84919814815174884654495265, 146960587438213290271803310, 254327147405947343219170013, 440133637427387650641676733, 761686751771954639615932308, 1318160346062225166536927204, 2281182774793880566386854202, 3947770745464875128215489476, 6831935621711193478803584270, 11823215517979626989252654459, 20461027873324936552011726278, 35409458704049766870463574070, 61278923692217093991616774374, 106048118957748860598268928024, 183524821535095103500935105397, 317604503036094959823791626415, 549640204006492782256703506357, 951196695803666227643791343005, 1646122586216645151673646795131, 2848747878127492747395146497119, 4929987925010971381846789176787, 8531741656523753626888968333475, 14764866932914585711739993009471, 25551792860485990447357753377411, 44219438031623458174827090101591, 76525303351860239321171606062486, 132433208420836012247860425341878, 229186346534231007543300455047052, 396625454174562824696341867974807, 686392332170111774628387415187708, 1187857281228776953526538661167132, 2055682813511567389589959681437591, 3557524878237416677051445431119245, 6156583679200434562674367324375645, 10654464521349051207718915685250792, 18438410026033851006551039004948926, 31909155416202798852780253976608864, 55221366589513932226781115179478434, 95565027912492621164419094117570641, 165382987128929746587819720020389833, 286208595645816231325692474821432127, 495307054513959920117280296979778603, 857168799202977606481906830566592959, 1483399728776458203402121501599814357, 2567142851419860475561591348189292465, 4442647717774532025797522076302827645, 7688360128977964468508623330874749520, 13305327189541069887965447505836108943, 23025941637865784521234444191415083701, 39848248807227476288131461546822173104, 68960607908058729168472941626927516912, 119341892941264496254850267375680858596, 206530769418287872448439164819365157712, 357418151038572249261836365381689027787, 618540932431735991718001801386896334770, 1070434962471260463170389697079661487176, 1852474022011964581139009223827365513544, 3205855677870125101423860144920010424249, 5547991769498476629256700835469967207037, 9601247144996961660705018593534913225922, 16615732425220501988109900409620796156745, 28754864847988594478375696246052761203187, 49762612400465240380187427652132912229336, 86118213596547492163397334421181607606370, 149034513167786192667574788821667110253623, 257916243121530494722068502259305736264048, 446344856986474817826595353109273441918350, 772435768089263602359077702861161388353409, 1336762385595787378549468975393213339116484, 2313375104267880490155624917599100889633507, 4003482167596451918353914186255524345816532, 6928348730257112541629154203810355027525535, 11990066177033590775605142065871666200189459, 20749776393589512464840020374644649655647874, 35909161302935015278730531942138798319507636, 62143699335409560081369603141161471393159562, 107544682943462043814216772302622710407400704, 186114746194704481727730115452186541297539854, 322086576510057527551600558671512063007190557, 557396793585831655018738502556644467159583633, 964620099559052960425720416252526682882655111, 1669352868873354804885622348664567494237803783, 2888949755545809136243688064556192446919868175, 4999560515746991945989073252770067125902428535, 8652142635098861248148452777057412533362877977, 14973230535426489152060521332311783517581989420, 25912382876992006096351135796067625851883928825, 44843468133024591960270046213401958144446811548, 77605237763877474989955856305494246316739147127, 134302122006319171731632762048131880552676359659, 232420652202367984596938247872208285088912788686, 402222680946414142984184322215356821073359953948, 696078784456971603910909918744734815016448573082, 1204620468022900362280402553035290601874308600586, 2084692860035604927076197374205039877760447754956, 3607729103106034863624554004184342562208475089341, 6243466138784576918107250594832177417637788944304, 10804821623826866941723224844111388709787418308073, 18698615116609470739339911758664365362637188157227, 32359461308280335893458609544003265039362932173740, 56000657248244594858300036379967633467510318826268, 96913653239119041752111865895809664169241405330164, 167716892009274048794745102986623447430717183044189, 290247606246426020117292750048691625438809474898504, 502296888062545512718475829352732508523042936581530, 869265269816240261877029457458234318249621243667628, 1504333646627354107869007496936781479204707239575364, 2603370684363759081777877568090078592049534352669947, 4505342904082185194291963661562434728467247085801567, 7796859204598587173314308958000104480418858953375158, 13493093589225451977147040588861591346827624626553088, 23350886533928418622148518003626067086836308029229306, 40410592153292809121198774051487713973447271440824879, 69933788415571610361075397290260005189363125951186151, 121026060286409890014591649872661507384922097295622585, 209445356819655999941471437498154462693217873859873519, 362462079567824464738504374835340908769751488853277318, 627269857492024846036766185061792395514128412691597750, 1085541071185182881358902065797900004206275433304525877, 1878616361292087979017649753948129817575491489985996469, 3251097104102362704835900720328806405351210311448488910, 5626285705844227224482132571164442587287950705132698177, 9736741115435595736854097976874400909429981720207988487, 16850215667245180941552990697851306753178430167486844006, 29160657006948951882262364132481449161390275730087294685, 50464868454466647556267645846637274956572498586114427735, 87333524327649631040132103644841977096784627243509857937, 151137706390139040826448707126591974417399010694640174718, 261555988593488478677610370284679511774525269175612894617, 452643730033345117036459086235348615186246366652477694168, 783336475835524143955537154153262203019092265959952337070, 1355626939379487620769121922144227585175531097052439217983, 2346021735820790423533561047507688175516954900918138334291, 4059979796110323903393797058491537625611005518946149411026, 7026122432346967683382009847205881024752630926437218981740, 12159271452933065576710291263470354882115951853620136774055, 21042599768180623908382939506716338579508214228553692875423, 36415915765826987773364669427220163018133640081486671468436, 63020678797925209300085103082659626905494796721119527734083, 109062366622625198169859916735972641477602693706580750774247, 188741220186912829686057249397861922209555075583934877024777, 326631901551406455092777938653826814900794821912935940782874, 565262845103114204256414747869081614169923740442179762058936, 978232936025018959853100287323851115023773163216042197843195, 1692910980111501346802672231436092377546116455476214539222026, 2929718966760270262844895994547637314231078419236801672684198, 5070114923366815738216357619638190602226980891746062079428250, 8774242726964718704518978915749604855301897112378619823447909, 15184534590503864395968205111669668293209355696392197598100449, 26278061583779512058870924747917968681797893736357134971437061, 45476304623307832769415233578427592641287934525440233150419102, 78700412341998941621862709864667467345902574612843786168968091, 136197409928206718914848388530217366761295027423898231594892758, 235700600786468895717413188934153824796333855958950958366797470]
-    #
-
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h4 id="分析"><a href="#分析-1" class="headerlink" title="分析"></a>分析</h4><p>先来看看题目都做了什么。其定义了一个列表InitState，这个是作为线性反馈移位寄存器的初始状态，也就说State列表每一个元素就对应一个寄存器。而mask是一个由0、1整数构成的列表，这个是我们要求的值。</p>
 <p>lfsr函数每轮都会返回一个output，并且每一轮线性反馈移位寄存器都会右移，这表现在State列表每一轮都会从当前寄存器（第一轮就从第一个寄存器开始）开始：</p>
-<p><img src="/images/image-20221028215042388.png" alt="image-20221028215042388"></p>
+<p><img src="/images/image-20221028215042388.png" srcset="/img/loading.gif" lazyload alt="image-20221028215042388"></p>
 <p>那么output是怎么来的呢？</p>
-<p><img src="/images/image-20221028215129024.png" alt="image-20221028215129024"></p>
+<p><img src="/images/image-20221028215129024.png" srcset="/img/loading.gif" lazyload alt="image-20221028215129024"></p>
 <p>从上图可以看到output实际上是在mask的控制下，从线性反馈移位寄存器中抽出元素，并将这些元素的值加起来得到的。我们可以将其抽象为两个矩阵的乘法：state是一个 $1\times128$ 的矩阵，而 mask 是一个 $128 \times 1$ 的矩阵。</p>
 <p>最后我们再来看看题目告诉了我们什么：</p>
-<p><img src="/images/image-20221028215911925.png" alt="image-20221028215911925"></p>
-<p>在经过256轮for循环后，题目将State列表的后256个元素（初始状态是128个元素，每一轮循环在列表末尾增加一个元素，这个元素就是output）告诉了我们。稍加思考我们就发现，outputState 列表的 outputState[0:128] 和 mask=M 生成了 outputState[128]，outputState 列表的 outputState[1:129]  和 mask 生成了State[129]，继续这个过程我们知道 outputState[127:255] 和 mask生成了 outputState[255]。我们可以将上述过程抽象为一个128行128列的方阵和一个行向量 mask 的乘积，其结果就是 outputState[128:] 即一个128行1列的行向量。</p>
-<h3 id="线性反馈移位寄存器"><a href="#线性反馈移位寄存器" class="headerlink" title="线性反馈移位寄存器"></a>线性反馈移位寄存器</h3><pre class="line-numbers language-python" data-language="python"><code class="language-python">from secret import secret
-for b in secret: assert(b &#x3D;&#x3D; &#39;0&#39; or b &#x3D;&#x3D; &#39;1&#39;)
-assert(len(secret) &#x3D;&#x3D; 128)
-# a 01 string with length 128
-# your flag is flag&#123;md5(secret).hexdigest()&#125;
+<p><img src="/images/image-20221028215911925.png" srcset="/img/loading.gif" lazyload alt="image-20221028215911925"></p>
+<p>在经过256轮for循环后，题目将State列表的后256个元素（初始状态是128个元素，每一轮循环在列表末尾增加一个元素，这个元素就是output）告诉了我们。稍加思考我们就发现，outputState 列表的 outputState[0:128] 和 mask&#x3D;M 生成了 outputState[128]，outputState 列表的 outputState[1:129]  和 mask 生成了State[129]，继续这个过程我们知道 outputState[127:255] 和 mask生成了 outputState[255]。我们可以将上述过程抽象为一个128行128列的方阵和一个行向量 mask 的乘积，其结果就是 outputState[128:] 即一个128行1列的行向量。</p>
+<h3 id="线性反馈移位寄存器"><a href="#线性反馈移位寄存器" class="headerlink" title="线性反馈移位寄存器"></a>线性反馈移位寄存器</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> secret <span class="hljs-keyword">import</span> secret<br><span class="hljs-keyword">for</span> b <span class="hljs-keyword">in</span> secret: <span class="hljs-keyword">assert</span>(b == <span class="hljs-string">&#x27;0&#x27;</span> <span class="hljs-keyword">or</span> b == <span class="hljs-string">&#x27;1&#x27;</span>)<br><span class="hljs-keyword">assert</span>(<span class="hljs-built_in">len</span>(secret) == <span class="hljs-number">128</span>)<br><span class="hljs-comment"># a 01 string with length 128</span><br><span class="hljs-comment"># your flag is flag&#123;md5(secret).hexdigest()&#125;</span><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">string2bits</span>(<span class="hljs-params">s</span>):<br>    <span class="hljs-keyword">return</span> [<span class="hljs-built_in">int</span>(b) <span class="hljs-keyword">for</span> b <span class="hljs-keyword">in</span> s]<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">bits2string</span>(<span class="hljs-params">bs</span>):<br>    s = [<span class="hljs-built_in">str</span>(b) <span class="hljs-keyword">for</span> b <span class="hljs-keyword">in</span> bs]<br>    <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;&#x27;</span>.join(s)<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">lfsr</span>(<span class="hljs-params">state, mask</span>):<br>    <span class="hljs-keyword">assert</span>(<span class="hljs-built_in">len</span>(state) == <span class="hljs-number">128</span>)<br>    <span class="hljs-keyword">assert</span>(<span class="hljs-built_in">len</span>(mask)  == <span class="hljs-number">128</span>)<br><br>    output = <span class="hljs-number">0</span><br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">128</span>):<br>        output = output ^ (state[i] &amp; mask[i])<br><br>    <span class="hljs-keyword">return</span> output<br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&#x27;__main__&#x27;</span>:<br>    initState = [<span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>]<br>    mask = string2bits(secret)<br><br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">256</span>):<br>        state = initState[i:]<br>        output = lfsr(state, mask)<br>        initState += [output]<br><br>    outputState = bits2string(initState[<span class="hljs-number">128</span>:])<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;outputState =&#x27;</span>, outputState)<br>    <span class="hljs-comment">#</span><br>    <span class="hljs-comment"># outputState = 1010100001001011101000000100100001101011010100101011010101011010100100001110010010110111010111110000000000011011001110100011000111110100110011011011100111000000001100001000001011010011011010110110111100110101001110001001001000001110111011110001111001111111</span><br>    <span class="hljs-comment">#</span><br><br><br></code></pre></td></tr></table></figure>
 
-def string2bits(s):
-    return [int(b) for b in s]
 
-def bits2string(bs):
-    s &#x3D; [str(b) for b in bs]
-    return &#39;&#39;.join(s)
 
-def lfsr(state, mask):
-    assert(len(state) &#x3D;&#x3D; 128)
-    assert(len(mask)  &#x3D;&#x3D; 128)
-
-    output &#x3D; 0
-    for i in range(128):
-        output &#x3D; output ^ (state[i] &amp; mask[i])
-
-    return output
-
-if __name__ &#x3D;&#x3D; &#39;__main__&#39;:
-    initState &#x3D; [0, 1, 0, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 0, 1, 1, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 0, 1, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 0, 0, 1, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 0, 1, 0, 0, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 1, 0, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0]
-    mask &#x3D; string2bits(secret)
-
-    for i in range(256):
-        state &#x3D; initState[i:]
-        output &#x3D; lfsr(state, mask)
-        initState +&#x3D; [output]
-
-    outputState &#x3D; bits2string(initState[128:])
-    print(&#39;outputState &#x3D;&#39;, outputState)
-    #
-    # outputState &#x3D; 1010100001001011101000000100100001101011010100101011010101011010100100001110010010110111010111110000000000011011001110100011000111110100110011011011100111000000001100001000001011010011011010110110111100110101001110001001001000001110111011110001111001111111
-    #
-
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h4 id="分析"><a href="#分析-2" class="headerlink" title="分析"></a>分析</h4><p>阅读代码我们发现和上一题几乎没有差别，只不过将加法运算换成了异或运算，将乘法运算换成了与运算。只需要知道异或运算就是模2的加法，与运算就是模2的乘法即可。所以我们完全可以用上一题的做法来作出本题，但是我们需要将定义的矩阵更换到GF(2)上！</p>
-<p><img src="/images/image-20221029151642260.png" alt="image-20221029151642260"></p>
-<h3 id="babyrsa"><a href="#babyrsa" class="headerlink" title="babyrsa"></a>babyrsa</h3><pre class="line-numbers language-python" data-language="python"><code class="language-python">#!&#x2F;usr&#x2F;bin&#x2F;env python3
+<p><img src="/images/image-20221029151642260.png" srcset="/img/loading.gif" lazyload alt="image-20221029151642260"></p>
+<h3 id="babyrsa"><a href="#babyrsa" class="headerlink" title="babyrsa"></a>babyrsa</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment">#!/usr/bin/env python3</span><br><br><span class="hljs-keyword">import</span> random<br><span class="hljs-keyword">import</span> signal<br><span class="hljs-keyword">import</span> socketserver<br><span class="hljs-keyword">import</span> string<br><span class="hljs-keyword">from</span> hashlib <span class="hljs-keyword">import</span> sha256<br><span class="hljs-keyword">from</span> os <span class="hljs-keyword">import</span> urandom<br><span class="hljs-keyword">from</span> Crypto.Util.number <span class="hljs-keyword">import</span> *<br><span class="hljs-keyword">from</span> gmpy2 <span class="hljs-keyword">import</span> next_prime<br><br>flag = <span class="hljs-string">&#x27;flag&#123;xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx&#125;&#x27;</span><br><br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Task</span>(socketserver.BaseRequestHandler):<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, *args, **kargs</span>):<br>        <span class="hljs-built_in">super</span>().__init__(*args, **kargs)<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">proof_of_work</span>(<span class="hljs-params">self</span>):<br>        random.seed(urandom(<span class="hljs-number">8</span>))<br>        proof = <span class="hljs-string">&#x27;&#x27;</span>.join([random.choice(string.ascii_letters + string.digits) <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">16</span>)])<br>        digest = sha256(proof.encode()).hexdigest()<br>        self.dosend(<span class="hljs-string">&#x27;sha256(XXXX + &#123;&#125;) == &#123;&#125;&#x27;</span>.<span class="hljs-built_in">format</span>(proof[<span class="hljs-number">4</span>:], digest) + <span class="hljs-string">&quot;\n&quot;</span> + <span class="hljs-string">&#x27;@ XXXX=&#x27;</span>)<br>        x = self.request.recv(<span class="hljs-number">10</span>)<br>        x = (x.strip()).decode(<span class="hljs-string">&#x27;utf-8&#x27;</span>)<br>        <span class="hljs-keyword">if</span> <span class="hljs-built_in">len</span>(x) != <span class="hljs-number">4</span> <span class="hljs-keyword">or</span> sha256((x + proof[<span class="hljs-number">4</span>:]).encode()).hexdigest() != digest:<br>            <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span><br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">True</span><br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">dosend</span>(<span class="hljs-params">self, msg</span>):<br>        <span class="hljs-keyword">try</span>:<br>            self.request.sendall(msg.encode(<span class="hljs-string">&#x27;latin-1&#x27;</span>) + <span class="hljs-string">b&#x27;\n&#x27;</span>)<br>        <span class="hljs-keyword">except</span>:<br>            <span class="hljs-keyword">pass</span><br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">timeout_handler</span>(<span class="hljs-params">self, signum, frame</span>):<br>        <span class="hljs-keyword">raise</span> TimeoutError<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">error</span>(<span class="hljs-params">self</span>):<br>        self.dosend(<span class="hljs-string">&quot;sorry!&quot;</span>)<br>        self.request.close()<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">game1</span>(<span class="hljs-params">self</span>):<br>        p = getPrime(<span class="hljs-number">20</span>)<br>        q = getPrime(<span class="hljs-number">20</span>)<br>        e = <span class="hljs-number">0x10001</span><br>        m = random.randint(<span class="hljs-number">0x10000</span>, <span class="hljs-number">0xfffff</span>)<br>        c = <span class="hljs-built_in">pow</span>(m, e, p * q)<br>        self.dosend(<span class="hljs-string">&quot;Welcome to game1&quot;</span> + <span class="hljs-string">&quot;\n&quot;</span> + <span class="hljs-string">&quot;The answer submitted should be hexadecimal strings like 0x1a23\n&quot;</span> + <span class="hljs-string">&quot;# n=&quot;</span> + <span class="hljs-built_in">hex</span>(p * q) + <span class="hljs-string">&quot;\n&quot;</span> + <span class="hljs-string">&quot;# e=&quot;</span> + <span class="hljs-built_in">hex</span>(e) + <span class="hljs-string">&quot;\n&quot;</span> + <span class="hljs-string">&quot;# c=&quot;</span> + <span class="hljs-built_in">hex</span>(<br>            c) + <span class="hljs-string">&quot;\n&quot;</span> + <span class="hljs-string">&quot;@ m=&quot;</span>)<br>        rec_m = self.request.recv(<span class="hljs-number">1024</span>).strip().decode(<span class="hljs-string">&#x27;utf-8&#x27;</span>)<br>        <span class="hljs-keyword">if</span> rec_m != <span class="hljs-built_in">hex</span>(m):<br>            self.error()<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">game3</span>(<span class="hljs-params">self</span>):<br>        self.dosend(<span class="hljs-string">&quot;Welcome to game3. In this game should try 30 times and solve them&quot;</span>)<br>        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">30</span>):<br>            p = getPrime(<span class="hljs-number">512</span>)<br>            q = next_prime(p)<br>            e = <span class="hljs-number">0x10001</span><br>            m = random.randint(<span class="hljs-number">0x100000000000</span>, <span class="hljs-number">0xffffffffffff</span>)<br>            c = <span class="hljs-built_in">pow</span>(m, e, p * q)<br>            self.dosend(<br>                <span class="hljs-string">&quot;&#123;&#125; try&quot;</span>.<span class="hljs-built_in">format</span>(i + <span class="hljs-number">1</span>) + <span class="hljs-string">&quot;\n&quot;</span> + <span class="hljs-string">&quot;# n=&quot;</span> + <span class="hljs-built_in">hex</span>(p * q) + <span class="hljs-string">&quot;\n&quot;</span> + <span class="hljs-string">&quot;# e=&quot;</span> + <span class="hljs-built_in">hex</span>(e) + <span class="hljs-string">&quot;\n&quot;</span> + <span class="hljs-string">&quot;# c=&quot;</span> + <span class="hljs-built_in">hex</span>(<br>                    c) + <span class="hljs-string">&quot;\n&quot;</span> + <span class="hljs-string">&quot;@ m=&quot;</span>)<br>            rec_m = self.request.recv(<span class="hljs-number">1024</span>).strip().decode()<br>            <span class="hljs-keyword">if</span> rec_m == <span class="hljs-built_in">hex</span>(m):<br>                <span class="hljs-keyword">continue</span><br>            <span class="hljs-keyword">else</span>:<br>                self.error()<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">handle</span>(<span class="hljs-params">self</span>):<br>        <span class="hljs-keyword">try</span>:<br>            signal.signal(signal.SIGALRM, self.timeout_handler)<br>            signal.alarm(<span class="hljs-number">50</span>)<br>            <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> self.proof_of_work():<br>                self.dosend(<span class="hljs-string">&#x27;You must pass the PoW!&#x27;</span>)<br>                self.request.close()<br>            signal.alarm(<span class="hljs-number">300</span>)<br><br>            self.game1()<br>            self.game3()<br>            <br>            self.dosend(flag)<br><br>        <span class="hljs-keyword">except</span> TimeoutError:<br>            self.dosend(<span class="hljs-string">&#x27;Timeout!&#x27;</span>)<br>            self.request.close()<br>        <span class="hljs-keyword">except</span>:<br>            self.dosend(<span class="hljs-string">&#x27;Wtf?&#x27;</span>)<br>            self.request.close()<br><br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">ThreadedServer</span>(socketserver.ForkingMixIn, socketserver.TCPServer):<br>    <span class="hljs-keyword">pass</span><br><br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&quot;__main__&quot;</span>:<br>    HOST, PORT = <span class="hljs-string">&#x27;0.0.0.0&#x27;</span>, <span class="hljs-number">10001</span><br>    server = ThreadedServer((HOST, PORT), Task)<br>    server.allow_reuse_address = <span class="hljs-literal">True</span><br>    server.serve_forever()<br>    <br><br><br></code></pre></td></tr></table></figure>
 
-import random
-import signal
-import socketserver
-import string
-from hashlib import sha256
-from os import urandom
-from Crypto.Util.number import *
-from gmpy2 import next_prime
-
-flag &#x3D; &#39;flag&#123;xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx&#125;&#39;
-
-
-class Task(socketserver.BaseRequestHandler):
-    def __init__(self, *args, **kargs):
-        super().__init__(*args, **kargs)
-
-    def proof_of_work(self):
-        random.seed(urandom(8))
-        proof &#x3D; &#39;&#39;.join([random.choice(string.ascii_letters + string.digits) for _ in range(16)])
-        digest &#x3D; sha256(proof.encode()).hexdigest()
-        self.dosend(&#39;sha256(XXXX + &#123;&#125;) &#x3D;&#x3D; &#123;&#125;&#39;.format(proof[4:], digest) + &quot;\n&quot; + &#39;@ XXXX&#x3D;&#39;)
-        x &#x3D; self.request.recv(10)
-        x &#x3D; (x.strip()).decode(&#39;utf-8&#39;)
-        if len(x) !&#x3D; 4 or sha256((x + proof[4:]).encode()).hexdigest() !&#x3D; digest:
-            return False
-        return True
-
-    def dosend(self, msg):
-        try:
-            self.request.sendall(msg.encode(&#39;latin-1&#39;) + b&#39;\n&#39;)
-        except:
-            pass
-
-    def timeout_handler(self, signum, frame):
-        raise TimeoutError
-
-    def error(self):
-        self.dosend(&quot;sorry!&quot;)
-        self.request.close()
-
-    def game1(self):
-        p &#x3D; getPrime(20)
-        q &#x3D; getPrime(20)
-        e &#x3D; 0x10001
-        m &#x3D; random.randint(0x10000, 0xfffff)
-        c &#x3D; pow(m, e, p * q)
-        self.dosend(&quot;Welcome to game1&quot; + &quot;\n&quot; + &quot;The answer submitted should be hexadecimal strings like 0x1a23\n&quot; + &quot;# n&#x3D;&quot; + hex(p * q) + &quot;\n&quot; + &quot;# e&#x3D;&quot; + hex(e) + &quot;\n&quot; + &quot;# c&#x3D;&quot; + hex(
-            c) + &quot;\n&quot; + &quot;@ m&#x3D;&quot;)
-        rec_m &#x3D; self.request.recv(1024).strip().decode(&#39;utf-8&#39;)
-        if rec_m !&#x3D; hex(m):
-            self.error()
-
-    def game3(self):
-        self.dosend(&quot;Welcome to game3. In this game should try 30 times and solve them&quot;)
-        for i in range(30):
-            p &#x3D; getPrime(512)
-            q &#x3D; next_prime(p)
-            e &#x3D; 0x10001
-            m &#x3D; random.randint(0x100000000000, 0xffffffffffff)
-            c &#x3D; pow(m, e, p * q)
-            self.dosend(
-                &quot;&#123;&#125; try&quot;.format(i + 1) + &quot;\n&quot; + &quot;# n&#x3D;&quot; + hex(p * q) + &quot;\n&quot; + &quot;# e&#x3D;&quot; + hex(e) + &quot;\n&quot; + &quot;# c&#x3D;&quot; + hex(
-                    c) + &quot;\n&quot; + &quot;@ m&#x3D;&quot;)
-            rec_m &#x3D; self.request.recv(1024).strip().decode()
-            if rec_m &#x3D;&#x3D; hex(m):
-                continue
-            else:
-                self.error()
-
-    def handle(self):
-        try:
-            signal.signal(signal.SIGALRM, self.timeout_handler)
-            signal.alarm(50)
-            if not self.proof_of_work():
-                self.dosend(&#39;You must pass the PoW!&#39;)
-                self.request.close()
-            signal.alarm(300)
-
-            self.game1()
-            self.game3()
-            
-            self.dosend(flag)
-
-        except TimeoutError:
-            self.dosend(&#39;Timeout!&#39;)
-            self.request.close()
-        except:
-            self.dosend(&#39;Wtf?&#39;)
-            self.request.close()
-
-
-class ThreadedServer(socketserver.ForkingMixIn, socketserver.TCPServer):
-    pass
-
-
-if __name__ &#x3D;&#x3D; &quot;__main__&quot;:
-    HOST, PORT &#x3D; &#39;0.0.0.0&#39;, 10001
-    server &#x3D; ThreadedServer((HOST, PORT), Task)
-    server.allow_reuse_address &#x3D; True
-    server.serve_forever()
-    
-
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h4 id="分析"><a href="#分析-3" class="headerlink" title="分析"></a>分析</h4><p>本题主要考察编写交互式脚本的能力，借助pwntools模块可以轻松完成。难度最高的是在gam3这里，我们利用p、q过于相近的弱点，尝试对接收到的n开二次方根，并在其周边区间内搜索p即可。具体实现可以看 <a target="_blank" rel="noopener" href="https://www.cnblogs.com/organic/p/6240167.html">费马因子分解算法</a></p>
-<p><img src="/images/image-20221028233856011.png" alt="image-20221028233856011"></p>
-<h3 id="babyblock"><a href="#babyblock" class="headerlink" title="babyblock"></a>babyblock</h3><pre class="line-numbers language-python" data-language="python"><code class="language-python">#!&#x2F;usr&#x2F;bin&#x2F;env python3
+<p><img src="/images/image-20221028233856011.png" srcset="/img/loading.gif" lazyload alt="image-20221028233856011"></p>
+<h3 id="babyblock"><a href="#babyblock" class="headerlink" title="babyblock"></a>babyblock</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment">#!/usr/bin/env python3</span><br><br><span class="hljs-keyword">import</span> random<br><span class="hljs-keyword">import</span> signal<br><span class="hljs-keyword">import</span> socketserver<br><span class="hljs-keyword">import</span> string<br><span class="hljs-keyword">from</span> hashlib <span class="hljs-keyword">import</span> sha256<br><span class="hljs-keyword">from</span> os <span class="hljs-keyword">import</span> urandom<br><span class="hljs-keyword">from</span> Crypto.Cipher <span class="hljs-keyword">import</span> AES<br><br>flag = <span class="hljs-string">b&#x27;flag&#123;xxxxxxxxxxxxxxxxxxxxxxxxxx&#125;&#x27;</span><br>BLOCK_SIZE = <span class="hljs-number">16</span><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">pad</span>(<span class="hljs-params">m</span>):<br>    <span class="hljs-keyword">if</span> <span class="hljs-built_in">len</span>(m) % BLOCK_SIZE != <span class="hljs-number">0</span>:<br>        m += <span class="hljs-string">b&#x27;\x00&#x27;</span> * (BLOCK_SIZE - <span class="hljs-built_in">len</span>(m) % BLOCK_SIZE)<br>    <span class="hljs-keyword">return</span> m<br><br>pad(flag)<br>part_flag = [flag[i:i + BLOCK_SIZE] <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">0</span>, <span class="hljs-built_in">len</span>(flag), BLOCK_SIZE)]<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Task</span>(socketserver.BaseRequestHandler):<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, *args, **kargs</span>):<br>        <span class="hljs-built_in">super</span>().__init__(*args, **kargs)<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">proof_of_work</span>(<span class="hljs-params">self</span>):<br>        random.seed(urandom(<span class="hljs-number">8</span>))<br>        proof = <span class="hljs-string">&#x27;&#x27;</span>.join([random.choice(string.ascii_letters + string.digits) <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">16</span>)])<br>        digest = sha256(proof.encode()).hexdigest()<br>        self.dosend(<span class="hljs-string">&#x27;sha256(XXXX + &#123;&#125;) == &#123;&#125;&#x27;</span>.<span class="hljs-built_in">format</span>(proof[<span class="hljs-number">4</span>:], digest) + <span class="hljs-string">&quot;\n&quot;</span> + <span class="hljs-string">&#x27;@ XXXX=&#x27;</span>)<br>        x = self.request.recv(<span class="hljs-number">10</span>)<br>        x = (x.strip()).decode(<span class="hljs-string">&#x27;utf-8&#x27;</span>)<br>        <span class="hljs-keyword">if</span> <span class="hljs-built_in">len</span>(x) != <span class="hljs-number">4</span> <span class="hljs-keyword">or</span> sha256((x + proof[<span class="hljs-number">4</span>:]).encode()).hexdigest() != digest:<br>            <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span><br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">True</span><br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">dosend</span>(<span class="hljs-params">self, msg, newline=<span class="hljs-literal">True</span></span>):<br>        <span class="hljs-keyword">try</span>:<br>            string = msg.encode(<span class="hljs-string">&#x27;latin-1&#x27;</span>)<br>            <span class="hljs-keyword">if</span> newline:<br>                string = string + <span class="hljs-string">b&quot;\n&quot;</span><br>            self.request.sendall(string)<br>        <span class="hljs-keyword">except</span>:<br>            <span class="hljs-keyword">pass</span><br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">receive</span>(<span class="hljs-params">self, prompt=<span class="hljs-string">&quot;&gt;&gt; &quot;</span></span>):<br>        self.dosend(prompt, newline=<span class="hljs-literal">False</span>)<br>        <span class="hljs-keyword">return</span> self.request.recv(<span class="hljs-number">2048</span>).strip()<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">timeout_handler</span>(<span class="hljs-params">self, signum, frame</span>):<br>        <span class="hljs-keyword">raise</span> TimeoutError<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">error</span>(<span class="hljs-params">self</span>):<br>        self.dosend(<span class="hljs-string">&quot;sorry!&quot;</span>)<br>        self.request.close()<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">keyGen</span>(<span class="hljs-params">self</span>):<br>        key = <span class="hljs-string">&#x27;&#x27;</span>.join([random.choice(string.ascii_letters + string.digits) <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">16</span>)])<br>        <span class="hljs-keyword">return</span> key.encode()<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">encrypt</span>(<span class="hljs-params">self</span>):<br>        self.dosend(<span class="hljs-string">&quot;Enter HEXADECIMAL message:&quot;</span>)<br>        m = self.receive().decode().strip()<br>        m = pad(<span class="hljs-built_in">bytes</span>.fromhex(m))<br>        cipher = AES.new(self.key, AES.MODE_CBC, iv=self.IV)<br>        c = cipher.encrypt(m)<br>        self.dosend(<span class="hljs-string">&quot;This is your cipher&quot;</span>)<br>        self.dosend(c.<span class="hljs-built_in">hex</span>())<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">decrypt</span>(<span class="hljs-params">self</span>):<br>        self.dosend(<span class="hljs-string">&quot;Enter HEXADECIMAL cipher:&quot;</span>)<br>        c = self.receive().decode().strip()<br>        c = pad(<span class="hljs-built_in">bytes</span>.fromhex(c))<br>        cipher = AES.new(self.key, AES.MODE_CBC, iv=self.IV)<br>        m = cipher.decrypt(c)<br>        self.dosend(<span class="hljs-string">&quot;This is your message&quot;</span>)<br>        self.dosend(m.<span class="hljs-built_in">hex</span>())<br><br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">selectIV</span>(<span class="hljs-params">self</span>):<br>        <span class="hljs-keyword">while</span> <span class="hljs-literal">True</span>:<br>            self.dosend(<span class="hljs-string">&quot;Which part of flag do you want to choose?&quot;</span>)<br>            part = self.receive().decode().strip()<br>            <span class="hljs-keyword">try</span>:<br>                part = <span class="hljs-built_in">int</span>(part)<br>                <span class="hljs-keyword">assert</span> <span class="hljs-number">0</span> &lt;= part &lt; <span class="hljs-built_in">len</span>(part_flag)<br>                <span class="hljs-keyword">return</span> part_flag[part]<br>            <span class="hljs-keyword">except</span>:<br>                <span class="hljs-keyword">continue</span><br><br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">handle</span>(<span class="hljs-params">self</span>):<br>        <span class="hljs-keyword">try</span>:<br>            signal.signal(signal.SIGALRM, self.timeout_handler)<br>            signal.alarm(<span class="hljs-number">50</span>)<br>            <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> self.proof_of_work():<br>                self.dosend(<span class="hljs-string">&#x27;You must pass the PoW!&#x27;</span>)<br>                self.request.close()<br>            signal.alarm(<span class="hljs-number">300</span>)<br><br>            self.key = self.keyGen()<br>            self.IV = self.selectIV()<br>            <span class="hljs-keyword">while</span> <span class="hljs-literal">True</span>:<br>                self.dosend(<span class="hljs-string">&quot;1: Encrypt&quot;</span>)<br>                self.dosend(<span class="hljs-string">&quot;2: Decrypt&quot;</span>)<br>                self.dosend(<span class="hljs-string">&quot;3: ChangeIV&quot;</span>)<br>                self.dosend(<span class="hljs-string">&quot;4: Give up&quot;</span>)<br>                choice = self.receive().decode()<br>                <span class="hljs-keyword">if</span> choice == <span class="hljs-string">&quot;1&quot;</span>:<br>                    self.encrypt()<br>                <span class="hljs-keyword">elif</span> choice == <span class="hljs-string">&quot;2&quot;</span>:<br>                    self.decrypt()<br>                <span class="hljs-keyword">elif</span> choice == <span class="hljs-string">&quot;3&quot;</span>:<br>                    self.IV = self.selectIV()<br>                <span class="hljs-keyword">elif</span> choice == <span class="hljs-string">&quot;4&quot;</span>:<br>                    self.dosend(<span class="hljs-string">&quot;88&quot;</span>)<br>                    self.request.close()<br><br>        <span class="hljs-keyword">except</span> TimeoutError:<br>            self.dosend(<span class="hljs-string">&#x27;\nTimeout!&#x27;</span>)<br>            self.request.close()<br>        <span class="hljs-keyword">except</span>:<br>            self.dosend(<span class="hljs-string">&#x27;Wtf?&#x27;</span>)<br>            self.request.close()<br><br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">ThreadedServer</span>(socketserver.ForkingMixIn, socketserver.TCPServer):<br>    <span class="hljs-keyword">pass</span><br><br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&quot;__main__&quot;</span>:<br>    HOST, PORT = <span class="hljs-string">&#x27;0.0.0.0&#x27;</span>, <span class="hljs-number">10002</span><br>    server = ThreadedServer((HOST, PORT), Task)<br>    server.allow_reuse_address = <span class="hljs-literal">True</span><br>    server.serve_forever()<br>    <br><br><br></code></pre></td></tr></table></figure>
 
-import random
-import signal
-import socketserver
-import string
-from hashlib import sha256
-from os import urandom
-from Crypto.Cipher import AES
-
-flag &#x3D; b&#39;flag&#123;xxxxxxxxxxxxxxxxxxxxxxxxxx&#125;&#39;
-BLOCK_SIZE &#x3D; 16
-
-def pad(m):
-    if len(m) % BLOCK_SIZE !&#x3D; 0:
-        m +&#x3D; b&#39;\x00&#39; * (BLOCK_SIZE - len(m) % BLOCK_SIZE)
-    return m
-
-pad(flag)
-part_flag &#x3D; [flag[i:i + BLOCK_SIZE] for i in range(0, len(flag), BLOCK_SIZE)]
-
-class Task(socketserver.BaseRequestHandler):
-    def __init__(self, *args, **kargs):
-        super().__init__(*args, **kargs)
-
-    def proof_of_work(self):
-        random.seed(urandom(8))
-        proof &#x3D; &#39;&#39;.join([random.choice(string.ascii_letters + string.digits) for _ in range(16)])
-        digest &#x3D; sha256(proof.encode()).hexdigest()
-        self.dosend(&#39;sha256(XXXX + &#123;&#125;) &#x3D;&#x3D; &#123;&#125;&#39;.format(proof[4:], digest) + &quot;\n&quot; + &#39;@ XXXX&#x3D;&#39;)
-        x &#x3D; self.request.recv(10)
-        x &#x3D; (x.strip()).decode(&#39;utf-8&#39;)
-        if len(x) !&#x3D; 4 or sha256((x + proof[4:]).encode()).hexdigest() !&#x3D; digest:
-            return False
-        return True
-
-    def dosend(self, msg, newline&#x3D;True):
-        try:
-            string &#x3D; msg.encode(&#39;latin-1&#39;)
-            if newline:
-                string &#x3D; string + b&quot;\n&quot;
-            self.request.sendall(string)
-        except:
-            pass
-
-    def receive(self, prompt&#x3D;&quot;&gt;&gt; &quot;):
-        self.dosend(prompt, newline&#x3D;False)
-        return self.request.recv(2048).strip()
-
-    def timeout_handler(self, signum, frame):
-        raise TimeoutError
-
-    def error(self):
-        self.dosend(&quot;sorry!&quot;)
-        self.request.close()
-
-    def keyGen(self):
-        key &#x3D; &#39;&#39;.join([random.choice(string.ascii_letters + string.digits) for _ in range(16)])
-        return key.encode()
-
-    def encrypt(self):
-        self.dosend(&quot;Enter HEXADECIMAL message:&quot;)
-        m &#x3D; self.receive().decode().strip()
-        m &#x3D; pad(bytes.fromhex(m))
-        cipher &#x3D; AES.new(self.key, AES.MODE_CBC, iv&#x3D;self.IV)
-        c &#x3D; cipher.encrypt(m)
-        self.dosend(&quot;This is your cipher&quot;)
-        self.dosend(c.hex())
-
-    def decrypt(self):
-        self.dosend(&quot;Enter HEXADECIMAL cipher:&quot;)
-        c &#x3D; self.receive().decode().strip()
-        c &#x3D; pad(bytes.fromhex(c))
-        cipher &#x3D; AES.new(self.key, AES.MODE_CBC, iv&#x3D;self.IV)
-        m &#x3D; cipher.decrypt(c)
-        self.dosend(&quot;This is your message&quot;)
-        self.dosend(m.hex())
-
-
-    def selectIV(self):
-        while True:
-            self.dosend(&quot;Which part of flag do you want to choose?&quot;)
-            part &#x3D; self.receive().decode().strip()
-            try:
-                part &#x3D; int(part)
-                assert 0 &lt;&#x3D; part &lt; len(part_flag)
-                return part_flag[part]
-            except:
-                continue
-
-
-    def handle(self):
-        try:
-            signal.signal(signal.SIGALRM, self.timeout_handler)
-            signal.alarm(50)
-            if not self.proof_of_work():
-                self.dosend(&#39;You must pass the PoW!&#39;)
-                self.request.close()
-            signal.alarm(300)
-
-            self.key &#x3D; self.keyGen()
-            self.IV &#x3D; self.selectIV()
-            while True:
-                self.dosend(&quot;1: Encrypt&quot;)
-                self.dosend(&quot;2: Decrypt&quot;)
-                self.dosend(&quot;3: ChangeIV&quot;)
-                self.dosend(&quot;4: Give up&quot;)
-                choice &#x3D; self.receive().decode()
-                if choice &#x3D;&#x3D; &quot;1&quot;:
-                    self.encrypt()
-                elif choice &#x3D;&#x3D; &quot;2&quot;:
-                    self.decrypt()
-                elif choice &#x3D;&#x3D; &quot;3&quot;:
-                    self.IV &#x3D; self.selectIV()
-                elif choice &#x3D;&#x3D; &quot;4&quot;:
-                    self.dosend(&quot;88&quot;)
-                    self.request.close()
-
-        except TimeoutError:
-            self.dosend(&#39;\nTimeout!&#39;)
-            self.request.close()
-        except:
-            self.dosend(&#39;Wtf?&#39;)
-            self.request.close()
-
-
-class ThreadedServer(socketserver.ForkingMixIn, socketserver.TCPServer):
-    pass
-
-
-if __name__ &#x3D;&#x3D; &quot;__main__&quot;:
-    HOST, PORT &#x3D; &#39;0.0.0.0&#39;, 10002
-    server &#x3D; ThreadedServer((HOST, PORT), Task)
-    server.allow_reuse_address &#x3D; True
-    server.serve_forever()
-    
-
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h4 id="分析"><a href="#分析-4" class="headerlink" title="分析"></a>分析</h4><p>阅读完代码就会发现我们的目标是获取 IV 的值，如果熟悉CBC的操作模式的话，就可以轻松作出本题。</p>
-<p><img src="images/image-20221101145107385.png" alt="image-20221101145107385"></p>
+<p><img src="/../images/image-20221101145107385.png" srcset="/img/loading.gif" lazyload alt="image-20221101145107385"></p>
 <p>在这里直接贴出官方的wp操作手法：</p>
 <p>1、思路一</p>
-<script type="math/tex; mode=display">m = m_1m_2,c = c_1c_2 \\ c_1  =Enc_{k}(IV \oplus m_1) \\ c_2  =Enc_{k}(c_1 \oplus m_2) \\ m' = Dec_{k}(c_2) \oplus IV\\ \Rightarrow IV = m' \oplus Dec_{k}(c_2) = m' \oplus c_1 \oplus m_2</script><p>2、思路二</p>
-<script type="math/tex; mode=display">m\\ c_1  =Enc_{k}(IV \oplus m) \\ c_2 = mc_1 \\ m' = Dec_{k}(c_1) \oplus m\\ \Rightarrow IV = m'</script><p>构造 16 字节的 <script type="math/tex">m</script> 扔进加密机得到 <script type="math/tex">c_1</script>，再把 <script type="math/tex">m</script> 和 <script type="math/tex">c_1</script> 拼接起来扔进解密机出来就是 IV。</p>
+<p>$$m &#x3D; m_1m_2,c &#x3D; c_1c_2 \ c_1  &#x3D;Enc_{k}(IV \oplus m_1) \ c_2  &#x3D;Enc_{k}(c_1 \oplus m_2) \ m’ &#x3D; Dec_{k}(c_2) \oplus IV\ \Rightarrow IV &#x3D; m’ \oplus Dec_{k}(c_2) &#x3D; m’ \oplus c_1 \oplus m_2 $$</p>
+<p>2、思路二</p>
+<p>$$m\ c_1  &#x3D;Enc_{k}(IV \oplus m) \ c_2 &#x3D; mc_1 \ m’ &#x3D; Dec_{k}(c_1) \oplus m\ \Rightarrow IV &#x3D; m’ $$</p>
+<p>构造 16 字节的 $$m $$ 扔进加密机得到 $$c_1 $$，再把 $$m $$ 和 $$c_1 $$ 拼接起来扔进解密机出来就是 IV。</p>
 <p>这个式子推导看不懂的话，就把每一块代进上面的图，check 1 下你就会了。</p>
 <h3 id="red-alert-2"><a href="#Red-Alert-2" class="headerlink" title="Red Alert 2"></a>Red Alert 2</h3><h4 id="分析"><a href="#分析-5" class="headerlink" title="分析"></a>分析</h4><p>看上去很像摩斯电码，去网站解码一下。很过分的是题目的摩斯电码是中文的，要找一个支持中文扩展的在线 morse！</p>
 <p><a target="_blank" rel="noopener" href="http://www.all-tool.cn/Tools/morse/">http://www.all-tool.cn/Tools/morse/</a></p>
 <p><a target="_blank" rel="noopener" href="http://www.hiencode.com/morse.html">http://www.hiencode.com/morse.html</a></p>
-<p><img src="images/image-20221101145647792.png" alt="image-20221101145647792"></p>
+<p><img src="/../images/image-20221101145647792.png" srcset="/img/loading.gif" lazyload alt="image-20221101145647792"></p>
 
                 
-            </div>
+              </div>
+            
             <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
 
-            
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/CTF/" class="category-chain-item">CTF</a>
+  
+  
 
-    <div class="reprint" id="reprint-statement">
-        
-            <div class="reprint__author">
-                <span class="reprint-meta" style="font-weight: bold;">
-                    <i class="fas fa-user">
-                        文章作者:
-                    </i>
-                </span>
-                <span class="reprint-info">
-                    <a href="/about" rel="external nofollow noreferrer">MirRoR4s</a>
-                </span>
-            </div>
-            <div class="reprint__type">
-                <span class="reprint-meta" style="font-weight: bold;">
-                    <i class="fas fa-link">
-                        文章链接:
-                    </i>
-                </span>
-                <span class="reprint-info">
-                    <a href="https://MirRoR4s.github.io/2022/10/28/XSCTF-2022/index.html">https://MirRoR4s.github.io/2022/10/28/XSCTF-2022/index.html</a>
-                </span>
-            </div>
-            <div class="reprint__notice">
-                <span class="reprint-meta" style="font-weight: bold;">
-                    <i class="fas fa-copyright">
-                        版权声明:
-                    </i>
-                </span>
-                <span class="reprint-info">
-                    本博客所有文章除特別声明外，均采用
-                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
-                    许可协议。转载请注明来源
-                    <a href="/about" target="_blank">MirRoR4s</a>
-                    !
-                </span>
-            </div>
-        
+      </span>
+    
+  
+</span>
+
     </div>
-
-    <script async defer>
-      document.addEventListener("copy", function (e) {
-        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
-        M.toast({html: toastHTML})
-      });
-
-      function navToReprintStatement() {
-        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
-      }
-    </script>
-
-
-
-            <div class="tag_share" style="display: block;">
-                <div class="post-meta__tag-list" style="display: inline-block;">
-                    
-                        <div class="article-tag">
-                            
-                                <a href="/tags/%E8%B5%9B%E9%A2%98%E8%AE%B0%E5%BD%95/">
-                                    <span class="chip bg-color">赛题记录</span>
-                                </a>
-                            
-                        </div>
-                    
-                </div>
-                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
-                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
-<div id="article-share">
-
-    
-    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
-    <script src="/libs/share/js/social-share.min.js"></script>
-    
-
-    
-
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E8%B5%9B%E9%A2%98%E8%AE%B0%E5%BD%95/">#赛题记录</a>
+      
+    </div>
+  
 </div>
 
-                </div>
-            </div>
-            
-                <style>
-    #reward {
-        margin: 40px 0;
-        text-align: center;
-    }
 
-    #reward .reward-link {
-        font-size: 1.4rem;
-        line-height: 38px;
-    }
+              
+  
 
-    #reward .btn-floating:hover {
-        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.2);
-    }
-
-    #rewardModal {
-        width: 320px;
-        height: 350px;
-    }
-
-    #rewardModal .reward-title {
-        margin: 15px auto;
-        padding-bottom: 5px;
-    }
-
-    #rewardModal .modal-content {
-        padding: 10px;
-    }
-
-    #rewardModal .close {
-        position: absolute;
-        right: 15px;
-        top: 15px;
-        color: rgba(0, 0, 0, 0.5);
-        font-size: 1.3rem;
-        line-height: 20px;
-        cursor: pointer;
-    }
-
-    #rewardModal .close:hover {
-        color: #ef5350;
-        transform: scale(1.3);
-        -moz-transform:scale(1.3);
-        -webkit-transform:scale(1.3);
-        -o-transform:scale(1.3);
-    }
-
-    #rewardModal .reward-tabs {
-        margin: 0 auto;
-        width: 210px;
-    }
-
-    .reward-tabs .tabs {
-        height: 38px;
-        margin: 10px auto;
-        padding-left: 0;
-    }
-
-    .reward-content ul {
-        padding-left: 0 !important;
-    }
-
-    .reward-tabs .tabs .tab {
-        height: 38px;
-        line-height: 38px;
-    }
-
-    .reward-tabs .tab a {
-        color: #fff;
-        background-color: #ccc;
-    }
-
-    .reward-tabs .tab a:hover {
-        background-color: #ccc;
-        color: #fff;
-    }
-
-    .reward-tabs .wechat-tab .active {
-        color: #fff !important;
-        background-color: #22AB38 !important;
-    }
-
-    .reward-tabs .alipay-tab .active {
-        color: #fff !important;
-        background-color: #019FE8 !important;
-    }
-
-    .reward-tabs .reward-img {
-        width: 210px;
-        height: 210px;
-    }
-</style>
-
-<div id="reward">
-    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-medium waves-effect waves-light red">赏</a>
-
-    <!-- Modal Structure -->
-    <div id="rewardModal" class="modal">
-        <div class="modal-content">
-            <a class="close modal-close"><i class="fas fa-times"></i></a>
-            <h4 class="reward-title">你的赏识是我前进的动力</h4>
-            <div class="reward-content">
-                <div class="reward-tabs">
-                    <ul class="tabs row">
-                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
-                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
-                    </ul>
-                    <div id="alipay">
-                        <img src="/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
-                    </div>
-                    <div id="wechat">
-                        <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
-                    </div>
-                </div>
-            </div>
-        </div>
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>XSCTF-2022</div>
+      <div>https://mirror4s.github.io/2022/10/28/XSCTF-2022/index.html</div>
     </div>
-</div>
-
-<script>
-    $(function () {
-        $('.tabs').tabs();
-    });
-</script>
-
-            
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>MirRoR4s</div>
         </div>
-    </div>
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-<article id="prenext-posts" class="prev-next articles">
-    <div class="row article-row">
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
-            <div class="card">
-                <a href="/2022/10/29/%E7%A5%A5%E4%BA%91%E6%9D%AF-2022/index.html">
-                    <div class="card-image">
-                        
-                        
-                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="祥云杯-2022">
-                        
-                        <span class="card-title">祥云杯-2022</span>
-                    </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2022年10月28日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
                 </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            
-祥云杯
-                        
-                    </div>
-                    <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2022-10-29
-                        </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-user fa-fw"></i>
-                            MirRoR4s
-                            
-                        </span>
-                    </div>
-                </div>
-                
-            </div>
+              
+            
+          </div>
         </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
-            </div>
-            <div class="card">
-                <a href="/2022/10/27/OpenSSH%E7%A7%81%E9%92%A5%E6%A0%BC%E5%BC%8F%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93/index.html">
-                    <div class="card-image">
-                        
-                        
-                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="OpenSSH私钥格式学习总结">
-                        
-                        <span class="card-title">OpenSSH私钥格式学习总结</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            
-我在复现SDCTF-2022的时候遇见了一道关于OpenSSH私钥格式的题目，我将网上的各种英文文章看了一遍之后，对我的学习做了一个汇总。
-                        
-                    </div>
-                    <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-10-27
-                            </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/Crypto/" class="post-category">
-                                    Crypto
-                                </a>
-                            
-                            
-                        </span>
-                    </div>
-                </div>
-                
-                <div class="card-action article-tags">
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
                     
-                    <a href="/tags/%E5%85%AC%E9%92%A5%E5%AF%86%E7%A0%81%E5%AD%A6/">
-                        <span class="chip bg-color">公钥密码学</span>
-                    </a>
                     
+                      <a href="/2022/10/29/%E7%A5%A5%E4%BA%91%E6%9D%AF-2022/index.html" title="祥云杯-2022">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">祥云杯-2022</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/10/27/OpenSSH%E7%A7%81%E9%92%A5%E6%A0%BC%E5%BC%8F%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93/index.html" title="OpenSSH私钥格式学习总结">
+                        <span class="hidden-mobile">OpenSSH私钥格式学习总结</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
                 </div>
-                
+              
             </div>
+
+            
+          </article>
         </div>
-        
+      </div>
     </div>
-</article>
 
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
 </div>
 
 
 
-<!-- 代码块功能依赖 -->
-<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
-
-<!-- 代码语言 -->
-
-<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
-
-
-<!-- 代码块复制 -->
-
-<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
-
-
-<!-- 代码块收缩 -->
-
-<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+  </aside>
 
 
     </div>
-    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
-        <div class="toc-widget card">
-            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
-            <div id="toc-content"></div>
-        </div>
-    </div>
-</div>
-
-<!-- TOC 悬浮按钮. -->
-
-<div id="floating-toc-btn" class="hide-on-med-and-down">
-    <a class="btn-floating btn-large bg-color">
-        <i class="fas fa-list-ul"></i>
-    </a>
+  </div>
 </div>
 
 
-<script src=""></script>
-<script>
-    $.getScript("/libs/tocbot/tocbot.min.js",function () {
-        tocbot.init({
-            tocSelector: '#toc-content',
-            contentSelector: '#articleContent',
-            headingsOffset: -($(window).height() * 0.4 - 45),
-            collapseDepth: Number('0'),
-            headingSelector: 'h2, h3, h4,h5'
-        });
 
-        // modify the toc link href to support Chinese.
-        let i = 0;
-        let tocHeading = 'toc-heading-';
-        $('#toc-content a').each(function () {
-            $(this).attr('href', '#' + tocHeading + (++i));
-        });
 
-        // modify the heading title id to support Chinese.
-        i = 0;
-        $('#articleContent').children('h2, h3, h4,h5').each(function () {
-            $(this).attr('id', tocHeading + (++i));
-        });
 
-        // Set scroll toc fixed.
-        let tocHeight = parseInt($(window).height() * 0.4 - 64);
-        let $tocWidget = $('.toc-widget');
-        $(window).scroll(function () {
-            let scroll = $(window).scrollTop();
-            /* add post toc fixed. */
-            if (scroll > tocHeight) {
-                $tocWidget.addClass('toc-fixed');
-            } else {
-                $tocWidget.removeClass('toc-fixed');
-            }
-        });
+  
 
-        
-        /* 修复文章卡片 div 的宽度. */
-        let fixPostCardWidth = function (srcId, targetId) {
-            let srcDiv = $('#' + srcId);
-            if (srcDiv.length === 0) {
-                return;
-            }
 
-            let w = srcDiv.width();
-            if (w >= 450) {
-                w = w + 21;
-            } else if (w >= 350 && w < 450) {
-                w = w + 18;
-            } else if (w >= 300 && w < 350) {
-                w = w + 16;
-            } else {
-                w = w + 14;
-            }
-            $('#' + targetId).width(w);
-        };
 
-        // 切换TOC目录展开收缩的相关操作.
-        const expandedClass = 'expanded';
-        let $tocAside = $('#toc-aside');
-        let $mainContent = $('#main-content');
-        $('#floating-toc-btn .btn-floating').click(function () {
-            if ($tocAside.hasClass(expandedClass)) {
-                $tocAside.removeClass(expandedClass).hide();
-                $mainContent.removeClass('l9');
-            } else {
-                $tocAside.addClass(expandedClass).show();
-                $mainContent.addClass('l9');
-            }
-            fixPostCardWidth('artDetail', 'prenext-posts');
-        });
-        
-    })
-</script>
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
 
     
 
-</main>
-
-
-
-</main>
-
-<footer class="page-footer bg-color">
     
-        <link rel="stylesheet" href="/libs/aplayer/APlayer.min.css">
-<style>
-    .aplayer .aplayer-lrc p {
-        
-        font-size: 12px;
-        font-weight: 700;
-        line-height: 16px !important;
-    }
-
-    .aplayer .aplayer-lrc p.aplayer-lrc-current {
-        
-        font-size: 15px;
-        color: #42b983;
-    }
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
 
     
-    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body {
-        left: -66px !important;
-    }
-
-    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body:hover {
-        left: 0px !important;
-    }
-
-    
-</style>
-<div class="">
-    
-    <div class="row">
-        <meting-js class="col l8 offset-l2 m10 offset-m1 s12"
-                   server="netease"
-                   type="playlist"
-                   id="503838841"
-                   fixed='true'
-                   autoplay='false'
-                   theme='#42b983'
-                   loop='all'
-                   order='random'
-                   preload='auto'
-                   volume='0.7'
-                   list-folded='true'
-        >
-        </meting-js>
-    </div>
-</div>
-
-<script src="/libs/aplayer/APlayer.min.js"></script>
-<script src="/libs/aplayer/Meting.min.js"></script>
-
-    
-    <div class="container row center-align"
-         style="margin-bottom: 0px !important;">
-        <div class="col s12 m8 l8 copy-right">
-            Copyright&nbsp;&copy;
-            
-                <span id="year">2019-2023</span>
-            
-            <a href="/about" target="_blank">MirRoR4s</a>
-            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
-            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
-            <br>
-            
-                &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">265.2k</span>
-            
-            
-            
-                
-            
-            
-                <span id="busuanzi_container_site_pv">
-                &nbsp;|&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;
-                    <span id="busuanzi_value_site_pv" class="white-color"></span>
-            </span>
-            
-            
-                <span id="busuanzi_container_site_uv">
-                &nbsp;|&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;
-                    <span id="busuanzi_value_site_uv" class="white-color"></span>
-            </span>
-            
-            <br>
-
-            <!-- 运行天数提醒. -->
-            
-            <br>
-            
-        </div>
-        <div class="col s12 m4 l4 social-link social-statis">
-    <a href="https://github.com/blinkfox" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
-        <i class="fab fa-github"></i>
-    </a>
-
-
-
-    <a href="mailto:1181062873@qq.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
-        <i class="fas fa-envelope-open"></i>
-    </a>
-
-
-
-
-
-
-
-    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=1181062873" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 1181062873" data-position="top" data-delay="50">
-        <i class="fab fa-qq"></i>
-    </a>
-
-
-
-
-
-
-
-    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
-        <i class="fas fa-rss"></i>
-    </a>
-
-</div>
-    </div>
-</footer>
-
-<div class="progress-bar"></div>
-
-
-<!-- 搜索遮罩框 -->
-<div id="searchModal" class="modal">
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
     <div class="modal-content">
-        <div class="search-header">
-            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
-            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
-                   class="search-input">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
         </div>
-        <div id="searchResult"></div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
     </div>
+  </div>
 </div>
 
-<script type="text/javascript">
-$(function () {
-    var searchFunc = function (path, search_id, content_id) {
-        'use strict';
-        $.ajax({
-            url: path,
-            dataType: "xml",
-            success: function (xmlResponse) {
-                // get the contents from search data
-                var datas = $("entry", xmlResponse).map(function () {
-                    return {
-                        title: $("title", this).text(),
-                        content: $("content", this).text(),
-                        url: $("url", this).text()
-                    };
-                }).get();
-                var $input = document.getElementById(search_id);
-                var $resultContent = document.getElementById(content_id);
-                $input.addEventListener('input', function () {
-                    var str = '<ul class=\"search-result-list\">';
-                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
-                    $resultContent.innerHTML = "";
-                    if (this.value.trim().length <= 0) {
-                        return;
-                    }
-                    // perform local searching
-                    datas.forEach(function (data) {
-                        var isMatch = true;
-                        var data_title = data.title.trim().toLowerCase();
-                        var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
-                        var data_url = data.url;
-                        data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
-                        var index_title = -1;
-                        var index_content = -1;
-                        var first_occur = -1;
-                        // only match artiles with not empty titles and contents
-                        if (data_title !== '' && data_content !== '') {
-                            keywords.forEach(function (keyword, i) {
-                                index_title = data_title.indexOf(keyword);
-                                index_content = data_content.indexOf(keyword);
-                                if (index_title < 0 && index_content < 0) {
-                                    isMatch = false;
-                                } else {
-                                    if (index_content < 0) {
-                                        index_content = 0;
-                                    }
-                                    if (i === 0) {
-                                        first_occur = index_content;
-                                    }
-                                }
-                            });
-                        }
-                        // show search results
-                        if (isMatch) {
-                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
-                            var content = data.content.trim().replace(/<[^>]+>/g, "");
-                            if (first_occur >= 0) {
-                                // cut out 100 characters
-                                var start = first_occur - 20;
-                                var end = first_occur + 80;
-                                if (start < 0) {
-                                    start = 0;
-                                }
-                                if (start === 0) {
-                                    end = 100;
-                                }
-                                if (end > content.length) {
-                                    end = content.length;
-                                }
-                                var match_content = content.substr(start, end);
-                                // highlight all keywords
-                                keywords.forEach(function (keyword) {
-                                    var regS = new RegExp(keyword, "gi");
-                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
-                                });
+    
 
-                                str += "<p class=\"search-result\">" + match_content + "...</p>"
-                            }
-                            str += "</li>";
-                        }
-                    });
-                    str += "</ul>";
-                    $resultContent.innerHTML = str;
-                });
-            }
-        });
-    };
+    
+  </main>
 
-    searchFunc('/search.xml', 'searchInput', 'searchResult');
-});
-</script>
-
-<!-- 深色模式按钮 -->
-<a onclick="switchNightMode()" id="sma" title="模式切换">
-    <i class="fa fa-moon" id="nightMode" aria-hidden="true"></i>
-</a>
-<!-- 回到顶部按钮 -->
-<div id="backTop" class="top-scroll">
-    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
-        <i class="fas fa-arrow-up"></i>
-    </a>
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
 </div>
 
+  </footer>
 
-<script type="text/javascript">
-    $.getScript("https://cdn.jsdelivr.net/npm/pjax/pjax.min.js",loadPjax)
-    function loadPjax(){
-        var pjax = new Pjax({
-            selectors: [
-                "head title",
-                'head meta[name="keywords"]',
-                'head meta[name="description"]',
-                "main#main_wrap",
-                "#rightside"
-            ],
-            cache: true,
-            cacheBust: false
-        });
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
     }
 
-    // 开始 PJAX 执行的函数
-    document.addEventListener('pjax:send', function () {
-    });
-    // PJAX 完成之后执行的函数，可以和上面的重载放在一起
-    document.addEventListener('pjax:complete', function () {
-        document.querySelectorAll('script[data-pjax]').forEach(item => {
-            const newScript = document.createElement('script')
-            const content = item.text || item.textContent || item.innerHTML || ""
-            Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
-            newScript.appendChild(document.createTextNode(content))
-            item.parentNode.replaceChild(newScript, item)
-        })
-    });
-
-    // Pjax请求错误时，跳转到404页面
-    document.addEventListener('pjax:error', (err) => {
-        if (err.request.status === 404) {
-            pjax.loadUrl('/404.html')
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
         }
-    })
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
 </script>
 
 
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
 
-<script src="/libs/materialize/materialize.min.js"></script>
-<script src="/libs/masonry/masonry.pkgd.min.js"></script>
-<script src="/libs/aos/aos.js"></script>
-<script src="/libs/scrollprogress/scrollProgress.min.js"></script>
-<script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
-<script src="/js/matery.js"></script>
+  <script>Fluid.plugins.codeWidget();</script>
 
 
-
-
-
-<!-- 雪花特效 -->
-
-
-<!-- 鼠标星星特效 -->
-
-
-
-    <script src="https://ssl.captcha.qq.com/TCaptcha.js"></script>
-    <script src="/libs/others/TencentCaptcha.js"></script>
-    <button id="TencentCaptcha" data-appid="xxxxxxxxxx" data-cbfn="callback" type="button"
-            hidden></button>
-
-
-<!-- Baidu Analytics -->
-
-<!-- Baidu Push -->
-
+  
 <script>
-    (function () {
-        var bp = document.createElement('script');
-        var curProtocol = window.location.protocol.split(':')[0];
-        if (curProtocol === 'https') {
-            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
-        } else {
-            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
         }
-        var s = document.getElementsByTagName("script")[0];
-        s.parentNode.insertBefore(bp, s);
-    })();
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
 </script>
 
 
-    <script src="/libs/others/clicklove.js" async="async"></script>
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
 
 
-    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
 
 
 
 
 
-
-<!--腾讯兔小巢-->
-
-
-
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
 
 
+  
 
-
-
-    <script src="/libs/instantpage/instantpage.js" type="module"></script>
-
-
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
 </body>
-
 </html>

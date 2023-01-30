@@ -1,1525 +1,755 @@
-<!DOCTYPE HTML>
-<html lang="zh-CN">
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
 
 
 <head>
-    <meta charset="utf-8">
-    <meta name="keywords" content="NahamCon EU 2022 CTF, 学习记录">
-    <meta name="description" content="
-2022年12月17日的一场比赛。
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="MirRoR4s">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="2022年12月17日的一场比赛。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="NahamCon EU 2022 CTF">
+<meta property="og:url" content="https://mirror4s.github.io/2022/12/17/NahamCon-EU-2022-CTF/index.html">
+<meta property="og:site_name" content="学习记录">
+<meta property="og:description" content="2022年12月17日的一场比赛。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://mirror4s.github.io/images/NahamCon-EU-2022-CTF/image-20221217194047730.png">
+<meta property="og:image" content="https://mirror4s.github.io/images/NahamCon-EU-2022-CTF/image-20221218160208898.png">
+<meta property="article:published_time" content="2022-12-17T11:26:38.000Z">
+<meta property="article:modified_time" content="2022-12-18T08:04:28.366Z">
+<meta property="article:author" content="MirRoR4s">
+<meta property="article:tag" content="Crypto">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://mirror4s.github.io/images/NahamCon-EU-2022-CTF/image-20221217194047730.png">
+  
+  
+  
+  <title>NahamCon EU 2022 CTF - 学习记录</title>
 
-Cryptodont_hack_my_d题目描述Some hardware hackers were able to extract my d by using simple power analys">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <meta name="renderer" content="webkit|ie-stand|ie-comp">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="format-detection" content="telephone=no">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="referrer" content="no-referrer-when-downgrade">
-    <!-- Global site tag (gtag.js) - Google Analytics -->
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
 
-    <title>NahamCon EU 2022 CTF | 学习记录</title>
-    <link rel="icon" type="image/png" href="/favicon.png">
-    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
-    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
-    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
-    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
-    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
-    <link rel="stylesheet" type="text/css" href="/css/matery.css">
-    <link rel="stylesheet" type="text/css" href="/css/my.css">
-    <link rel="stylesheet" type="text/css" href="/css/dark.css">
-    <script src="/libs/jquery/jquery-3.6.0.min.js"></script>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"mirror4s.github.io","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  
 <meta name="generator" content="Hexo 6.3.0"></head>
 
 
-
-
 <body>
-<header class="navbar-fixed">
-    <nav id="headNav" class="bg-color nav-transparent">
-        <div id="navContainer" class="nav-wrapper container">
-            <div class="brand-logo">
-                <a href="/" class="waves-effect waves-light">
-                    
-                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
-                    
-                    <span class="logo-span">学习记录</span>
-                </a>
-            </div>
-            
+  
 
-<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
-<ul class="right nav-menu">
-  
-  <li class="hide-on-med-and-down nav-item">
+  <header>
     
-    <a href="/" class="waves-effect waves-light">
-      
-      <i class="fas fa-home" style="zoom: 0.6;"></i>
-      
-      <span>首页</span>
-    </a>
-    
-  </li>
-  
-  <li class="hide-on-med-and-down nav-item">
-    
-    <a href="/tags" class="waves-effect waves-light">
-      
-      <i class="fas fa-tags" style="zoom: 0.6;"></i>
-      
-      <span>标签</span>
-    </a>
-    
-  </li>
-  
-  <li class="hide-on-med-and-down nav-item">
-    
-    <a href="/categories" class="waves-effect waves-light">
-      
-      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
-      
-      <span>分类</span>
-    </a>
-    
-  </li>
-  
-  <li class="hide-on-med-and-down nav-item">
-    
-    <a href="/archives" class="waves-effect waves-light">
-      
-      <i class="fas fa-archive" style="zoom: 0.6;"></i>
-      
-      <span>归档</span>
-    </a>
-    
-  </li>
-  
-  <li class="hide-on-med-and-down nav-item">
-    
-    <a href="/about" class="waves-effect waves-light">
-      
-      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
-      
-      <span>关于</span>
-    </a>
-    
-  </li>
-  
-  <li class="hide-on-med-and-down nav-item">
-    
-    <a href="/contact" class="waves-effect waves-light">
-      
-      <i class="fas fa-comments" style="zoom: 0.6;"></i>
-      
-      <span>留言板</span>
-    </a>
-    
-  </li>
-  
-  <li class="hide-on-med-and-down nav-item">
-    
-    <a href="/friends" class="waves-effect waves-light">
-      
-      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
-      
-      <span>友情链接</span>
-    </a>
-    
-  </li>
-  
-  <li>
-    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
-      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
-    </a>
-  </li>
-</ul>
 
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
 
-<div id="mobile-nav" class="side-nav sidenav">
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
 
-    <div class="mobile-head bg-color">
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
         
-        <img src="/medias/logo.png" class="logo-img circle responsive-img">
-        
-        <div class="logo-name">学习记录</div>
-        <div class="logo-desc">
-            
-            欢迎来到我的博客
-            
-        </div>
-    </div>
-
-    <ul class="menu-list mobile-menu-list">
-        
-        <li class="m-nav-item">
-	  
-		<a href="/" class="waves-effect waves-light">
-			
-			    <i class="fa-fw fas fa-home"></i>
-			
-			首页
-		</a>
           
-        </li>
-        
-        <li class="m-nav-item">
-	  
-		<a href="/tags" class="waves-effect waves-light">
-			
-			    <i class="fa-fw fas fa-tags"></i>
-			
-			标签
-		</a>
           
-        </li>
-        
-        <li class="m-nav-item">
-	  
-		<a href="/categories" class="waves-effect waves-light">
-			
-			    <i class="fa-fw fas fa-bookmark"></i>
-			
-			分类
-		</a>
           
-        </li>
-        
-        <li class="m-nav-item">
-	  
-		<a href="/archives" class="waves-effect waves-light">
-			
-			    <i class="fa-fw fas fa-archive"></i>
-			
-			归档
-		</a>
           
-        </li>
-        
-        <li class="m-nav-item">
-	  
-		<a href="/about" class="waves-effect waves-light">
-			
-			    <i class="fa-fw fas fa-user-circle"></i>
-			
-			关于
-		</a>
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
           
-        </li>
         
-        <li class="m-nav-item">
-	  
-		<a href="/contact" class="waves-effect waves-light">
-			
-			    <i class="fa-fw fas fa-comments"></i>
-			
-			留言板
-		</a>
           
-        </li>
-        
-        <li class="m-nav-item">
-	  
-		<a href="/friends" class="waves-effect waves-light">
-			
-			    <i class="fa-fw fas fa-address-book"></i>
-			
-			友情链接
-		</a>
           
-        </li>
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
         
         
-        <li><div class="divider"></div></li>
-        <li>
-            <a href="https://github.com/blinkfox/hexo-theme-matery" class="waves-effect waves-light" target="_blank">
-                <i class="fab fa-github-square fa-fw"></i>Fork Me
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
             </a>
-        </li>
+          </li>
+          
         
-    </ul>
-</div>
-
-
-        </div>
-
         
-            <style>
-    .nav-transparent .github-corner {
-        display: none !important;
-    }
-
-    .github-corner {
-        position: absolute;
-        z-index: 10;
-        top: 0;
-        right: 0;
-        border: 0;
-        transform: scale(1.1);
-    }
-
-    .github-corner svg {
-        color: #0f9d58;
-        fill: #fff;
-        height: 64px;
-        width: 64px;
-    }
-
-    .github-corner:hover .octo-arm {
-        animation: a 0.56s ease-in-out;
-    }
-
-    .github-corner .octo-arm {
-        animation: none;
-    }
-
-    @keyframes a {
-        0%,
-        to {
-            transform: rotate(0);
-        }
-        20%,
-        60% {
-            transform: rotate(-25deg);
-        }
-        40%,
-        80% {
-            transform: rotate(10deg);
-        }
-    }
-</style>
-
-<a href="https://github.com/blinkfox/hexo-theme-matery" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
-   data-tooltip="Fork Me" data-position="left" data-delay="50">
-    <svg viewBox="0 0 250 250" aria-hidden="true">
-        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
-        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
-              fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
-        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
-              fill="currentColor" class="octo-body"></path>
-    </svg>
-</a>
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
         
-    </nav>
-
-</header>
-
-
-<main id="main_wrap">
-    
-
-
-
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/4.jpg')">
-    <div class="container" style="right: 0px;left: 0px;">
-        <div class="row">
-            <div class="col s12 m12 l12">
-                <div class="brand">
-                    <h1 class="description center-align post-title">NahamCon EU 2022 CTF</h1>
-                </div>
-            </div>
-        </div>
+      </ul>
     </div>
-</div>
+  </div>
+</nav>
 
+  
 
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="NahamCon EU 2022 CTF"></span>
+          
+        </div>
 
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-12-17 19:26" pubdate>
+          2022年12月17日 晚上
+        </time>
+      </span>
+    
+  </div>
 
-<main class="post-container content">
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          21k 字
+        
+      </span>
+    
 
     
-    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
-<style>
-    #articleContent h1::before,
-    #articleContent h2::before,
-    #articleContent h3::before,
-    #articleContent h4::before,
-    #articleContent h5::before,
-    #articleContent h6::before {
-        display: block;
-        content: " ";
-        height: 100px;
-        margin-top: -100px;
-        visibility: hidden;
-    }
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          174 分钟
+        
+      </span>
+    
 
-    #articleContent :focus {
-        outline: none;
-    }
+    
+    
+  </div>
 
-    .toc-fixed {
-        position: fixed;
-        top: 64px;
-    }
-
-    .toc-widget {
-        width: 345px;
-        padding-left: 20px;
-    }
-
-    .toc-widget .toc-title {
-        padding: 35px 0 15px 17px;
-        font-size: 1.5rem;
-        font-weight: bold;
-        line-height: 1.5rem;
-    }
-
-    .toc-widget ol {
-        padding: 0;
-        list-style: none;
-    }
-
-    #toc-content {
-        padding-bottom: 30px;
-        overflow: auto;
-    }
-
-    #toc-content ol {
-        padding-left: 10px;
-    }
-
-    #toc-content ol li {
-        padding-left: 10px;
-    }
-
-    #toc-content .toc-link:hover {
-        color: #42b983;
-        font-weight: 700;
-        text-decoration: underline;
-    }
-
-    #toc-content .toc-link::before {
-        background-color: transparent;
-        max-height: 25px;
-
-        position: absolute;
-        right: 23.5vw;
-        display: block;
-    }
-
-    #toc-content .is-active-link {
-        color: #42b983;
-    }
-
-    #floating-toc-btn {
-        position: fixed;
-        right: 15px;
-        bottom: 137px;
-        padding-top: 15px;
-        margin-bottom: 0;
-        z-index: 998;
-    }
-
-    #floating-toc-btn .btn-floating {
-        width: 48px;
-        height: 48px;
-    }
-
-    #floating-toc-btn .btn-floating i {
-        line-height: 48px;
-        font-size: 1.4rem;
-    }
-</style>
-<div class="row">
-    <div id="main-content" class="col s12 m12 l9">
-        <!-- 文章内容详情 -->
-<div id="artDetail">
-    <div class="card">
-        <div class="card-content article-info">
-            <div class="row tag-cate">
-                <div class="col s7">
-                    
-                    <div class="article-tag">
-                        
-                            <a href="/tags/Crypto/">
-                                <span class="chip bg-color">Crypto</span>
-                            </a>
-                        
-                    </div>
-                    
-                </div>
-                <div class="col s5 right-align">
-                    
-                    <div class="post-cate">
-                        <i class="fas fa-bookmark fa-fw icon-category"></i>
-                        
-                            <a href="/categories/CTF/" class="post-category">
-                                CTF
-                            </a>
-                        
-                    </div>
-                    
-                </div>
-            </div>
-
-            <div class="post-info">
-                
-                <div class="post-date info-break-policy">
-                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2022-12-17
-                </div>
-                
-
-                
-                <div class="post-date info-break-policy">
-                    <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2022-12-18
-                </div>
-                
-
-                
-                <div class="info-break-policy">
-                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.2k
-                </div>
-                
-
-                
-                <div class="info-break-policy">
-                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    6 分
-                </div>
-                
-
-                
-                    <div id="busuanzi_container_page_pv" class="info-break-policy">
-                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
-                        <span id="busuanzi_value_page_pv"></span>
-                    </div>
-				
-            </div>
-        </div>
-        <hr class="clearfix">
 
         
-        <!-- 是否加载使用自带的 prismjs. -->
-        <link rel="stylesheet" href="/libs/prism/prism.css">
-        
+      </div>
 
-        
+      
+    </div>
+  </div>
+</div>
 
-        <div class="card-content article-card-content">
-            <div id="articleContent">
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">NahamCon EU 2022 CTF</h1>
+            
+            
+              <div class="markdown-body">
+                
                 <!--toc-->
+
 <p>2022年12月17日的一场比赛。</p>
 <span id="more"></span>
+
 <h2 id="crypto"><a href="#Crypto" class="headerlink" title="Crypto"></a>Crypto</h2><h3 id="dont_hack_my_d"><a href="#dont-hack-my-d" class="headerlink" title="dont_hack_my_d"></a>dont_hack_my_d</h3><h4 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h4><p>Some hardware hackers were able to extract my <code>d</code> by using simple power analysis on the <a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=cbGB__V8MNk">Square &amp; Multiply Algorithm</a>. It’s okay though because I know a trick! No more hacking my <code>d</code> pls.</p>
-<h4 id="题目内容"><a href="#题目内容" class="headerlink" title="题目内容"></a>题目内容</h4><pre class="line-numbers language-python" data-language="python"><code class="language-python">import random
-import time
-from Crypto.Util.number import bytes_to_long as b2l, long_to_bytes as l2b, getPrime
+<h4 id="题目内容"><a href="#题目内容" class="headerlink" title="题目内容"></a>题目内容</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> random<br><span class="hljs-keyword">import</span> time<br><span class="hljs-keyword">from</span> Crypto.Util.number <span class="hljs-keyword">import</span> bytes_to_long <span class="hljs-keyword">as</span> b2l, long_to_bytes <span class="hljs-keyword">as</span> l2b, getPrime<br><br>time.clock = time.time<br><br><span class="hljs-comment"># params</span><br>p = getPrime(<span class="hljs-number">2048</span>)<br>q = getPrime(<span class="hljs-number">2048</span>)<br>n = p*q<br>phi = (p-<span class="hljs-number">1</span>)*(q-<span class="hljs-number">1</span>)<br>e = <span class="hljs-number">0x10001</span><br>d = <span class="hljs-built_in">pow</span>(e, -<span class="hljs-number">1</span>, phi)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&#x27;e = <span class="hljs-subst">&#123;e&#125;</span>\nn = <span class="hljs-subst">&#123;n&#125;</span>&#x27;</span>)<br><br><span class="hljs-comment"># flag stuff</span><br>flag = <span class="hljs-built_in">open</span>(<span class="hljs-string">&#x27;flag.txt&#x27;</span>, <span class="hljs-string">&#x27;r&#x27;</span>).read().strip()<br><span class="hljs-keyword">assert</span>(<span class="hljs-built_in">len</span>(flag) == <span class="hljs-number">38</span>)<br>pts = [flag[<span class="hljs-number">0</span>:<span class="hljs-built_in">len</span>(flag)//<span class="hljs-number">2</span>], flag[<span class="hljs-built_in">len</span>(flag)//<span class="hljs-number">2</span>:]]<br><span class="hljs-comment">#print(f&#x27;pts = &#123;pts&#125;\nl1 = &#123;len(pts[0])&#125; --- l2 = &#123;len(pts[1])&#125;&#x27;)</span><br><br><span class="hljs-comment"># no more side channel attacks &gt;:(</span><br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">2</span>):<br>    pt = b2l(pts[i].encode())<br>    ct = <span class="hljs-built_in">pow</span>(pt, e, n)<br><br>    rvals = [random.randrange(<span class="hljs-number">2</span>, n-<span class="hljs-number">1</span>) <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">3</span>)]<br>    ct2 = ct + rvals[<span class="hljs-number">0</span>]*n<br>    d2 = d + rvals[<span class="hljs-number">1</span>]*phi<br>    n2 = rvals[<span class="hljs-number">2</span>]*n<br>    <span class="hljs-keyword">assert</span>(pt == (<span class="hljs-built_in">pow</span>(ct2, d2, n2) % n))<br><br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">f&#x27;ct_<span class="hljs-subst">&#123;i&#125;</span> = <span class="hljs-subst">&#123;ct&#125;</span>\nd2_<span class="hljs-subst">&#123;i&#125;</span> = <span class="hljs-subst">&#123;d2&#125;</span>\nrvals_<span class="hljs-subst">&#123;i&#125;</span> = <span class="hljs-subst">&#123;rvals&#125;</span>&#x27;</span>)<br><br><br><br></code></pre></td></tr></table></figure>
 
-time.clock &#x3D; time.time
-
-# params
-p &#x3D; getPrime(2048)
-q &#x3D; getPrime(2048)
-n &#x3D; p*q
-phi &#x3D; (p-1)*(q-1)
-e &#x3D; 0x10001
-d &#x3D; pow(e, -1, phi)
-print(f&#39;e &#x3D; &#123;e&#125;\nn &#x3D; &#123;n&#125;&#39;)
-
-# flag stuff
-flag &#x3D; open(&#39;flag.txt&#39;, &#39;r&#39;).read().strip()
-assert(len(flag) &#x3D;&#x3D; 38)
-pts &#x3D; [flag[0:len(flag)&#x2F;&#x2F;2], flag[len(flag)&#x2F;&#x2F;2:]]
-#print(f&#39;pts &#x3D; &#123;pts&#125;\nl1 &#x3D; &#123;len(pts[0])&#125; --- l2 &#x3D; &#123;len(pts[1])&#125;&#39;)
-
-# no more side channel attacks &gt;:(
-for i in range(2):
-    pt &#x3D; b2l(pts[i].encode())
-    ct &#x3D; pow(pt, e, n)
-
-    rvals &#x3D; [random.randrange(2, n-1) for _ in range(3)]
-    ct2 &#x3D; ct + rvals[0]*n
-    d2 &#x3D; d + rvals[1]*phi
-    n2 &#x3D; rvals[2]*n
-    assert(pt &#x3D;&#x3D; (pow(ct2, d2, n2) % n))
-
-    print(f&#39;ct_&#123;i&#125; &#x3D; &#123;ct&#125;\nd2_&#123;i&#125; &#x3D; &#123;d2&#125;\nrvals_&#123;i&#125; &#x3D; &#123;rvals&#125;&#39;)
-
-
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h4 id="题目分析"><a href="#题目分析" class="headerlink" title="题目分析"></a>题目分析</h4><p>签到题，根据每轮参数计算出 ct2 即可。</p>
-<h4 id="解题脚本"><a href="#解题脚本" class="headerlink" title="解题脚本"></a>解题脚本</h4><pre class="line-numbers language-python" data-language="python"><code class="language-python">from Crypto.Util.number import *
-e &#x3D; 65537
-n &#x3D; 571600472871054756856872861710614837779048972363306890443115350847467685871898672827599455585029651007703106670957162179582885122574962320961995396006131591778935337148117455760855822655410811730853432313049519414639239730659116782141641986254249976281112163140638956534881943205809144100956562342279447003168578219037049641634095627070813716474207460011079482037024783816583498190591249546823408693214309137559797072962709285933201289937382707098407254685341160904207786283556910751730155611975347264528159613784976246345672916387305885535478849462342430081208911521945538040396954979359549349229657005078088000679989005207994990677756103529126511204797263421932510450105504301689409512779407594685003208879418770907049936865522524767765349036310229903969476585935095640510106493858653701853433659812416539308126484127786848820399080368158787836543718617942235588283829052498046684375083076907869733032896618932600107128246777714141040569231107455524324449875985767629582672227280996769319914943051898378681327996956331989767769976842091861236740159519373538404162847358253254286800593006933300249657651693630075692652964194783974118245942080714867351092780014212386066330165929415032203132188415479536862431756662025231600808048909
-ct_0 &#x3D; 416135314909816686216200968243060935362340575643234806993250368664668134836076071864140392927477314028301793224780435634360996349002905522126030489517071154035687637479873551095754572316064125312982109059337286329497216499106559276212697204964854750251966627624483147376835223939270127477753015555433824325294895239794434117613307049298580098859348394265855883994007344942851112866078592492452839234164195211127408748482151000059038722621488609651567336796332131736131657360819610252644932265797802810837127038360493414975808102413682755607446507546485124793152258673850526696274135302352135628869515111236617281757214607611421135915573479471468354623140945668974150677183687763147602617934269331104361070856257666545808020025858258112840863761640579275321349064700833458643121741434867276134264887860619290841776238320636394716661129206908057877674914788381562156278967404994421767571716297571574727226030302833758640634810265984465827796697525541491873081954202320556984517810092659276177715834982766977552498426137641323877230827981731299843750828326766218889477406882845394750160560072936172184168769722359644733662508462976026031496930142349966411102852963199828799018972194077301368940383852718592003555081075165514643149333754
-d2_0 &#x3D; 321648898489990725762716435907669079782041913311916286352518983604481271810432118181229465423346368567645457351811209532097661830314736962865829522257155445171943801570657670068383941360251163846724129529557621875206280642281173206000241240969203584344903262774907857425551035265784474588667371906924750178061682535525769206917711676154125370419309401003532034787087937235255696994039457783839199765499390299748834833125634677799333665429742988935095505275540917105363398919663096963087138120200680514217189637239189928947711987389013086067387607065447206917464228547381778091224328422740218349175172683041097914682107870902283779328053789329896133628963479269983547685498884024506799895054220552897642590221797816464331186820115803332629539030089703516577728557703838872292658454097261099300993720928077342572379117290625954722268199191233540156840456615553266356435611833546636704232997798652803757014775136930415013545714825841734983484830619764590610019535547774097909932135617822343437746397931890197996152241569715380692389708812255274799532480599649397023622830516732196879665106615984668578255459649681136614188391200988553837993589101643823041481812094879340327711390415387625021076813096353478550572386502333824526049387649097500519831681109341963319367192275757979006664548248108762091213757320513537628276546212610512783033452628375381569587146593601092448818737027876005977365544631392945274280528676326215927711028731636647348565964286700208643591735039848581185082267328977406670704407683911443578134866189247942857482711535122888731124352636093671466956884955398719150927378931720898378066405204937406968041823979684181000126012968127156311774998003294338753366433994772843934125091324630060130465600909096415742450651042529408157666027025973062033885132116662463914170351009408639811425388114901442241970184203553335792035288213795758469894254478173349733127665718395097263063140438341303188055293329998892528802860195483045584226108180948601607644158204035756785607895674020199715741430755850932597624586130178709569252904604614892607005881559329907919355220545478402127290321358441777165667295336752028018591021901788844039752201043482324539220912587011555397815567280582411140372385814030718156689014482972787606122514313534463210411680107201225459176300017129158416464552862589162678792205839219043413235342067858620787070917292301867631203580787318038945931973304359331556928456316581487702269528746135771960694141580734645573314192524795439993
-rvals_0 &#x3D; [350799763312554145955230180685001679666528767932949810978932225269497373787324060369840196201595720598033796426252955179349625276581393790549433193826340457944811500649643986612388259828736034828376585065472938381414748725008385284368161882085815413718118269367195977152280024021514840536257777290907008927157103054078110647383493783671093356975427911361922619692263374970944303385543430994401069790534760724516294318605969966798288903697776375853347682995634961296555000770706411784208179368090186093272610548020147861163090170321254784514325353116557484451854929639406890765502216655988972701630017119062973076886352333162866700906065640118169478013173820093112571039935713532241311454052390125148129264631939248336527383896258580876859530007253741394773447549227124480134096300965819891216584876738405169618835442565493067962464620209516922516499573172516927584890792357078948931993201756100743544065443866193417880739071018699671786243686466553972075085576945448047633571363756438307911286720901794431676254805171279058135288537872399498119340136940063394871696414344343334354629777719178514787403669623529882558727520920962545221326864519012283603359829801912462682507918530353914421180918793336152126915534834270322506595522541, 562716291808509953473330372561768292598715646394302617269487277535199020476316193414343511657565195886811402071445845059671762312943896962563450019022331459494257559779752061151117582342055892698749516295592777277177791555617269552192052593903660717784307417908208268324767801491241476879584444167439072270869142575255175945886202725499753104013451221030969387504139373107591125555454443028597782030135550358490526043646069133978168502240601186256407559459770584186440581819417904554480594011908271125856006757018098027513149333990952940669976193420753011210752213423808488383766876562518652324799192546807893326653322642849345574558962397220728699650041357381858374122259279975005924738288286243925484531706182978198624869935811892972426642840761263999508385223742418755279991038160925693669410740581563863693622632156620253027562571790358492125138209963566948624423477637913041852188610197152256613891173759546416090072932319063680367294084132389089245703645288245295770292028547124555601415315410743618001646876307537653378554693796989012890639312839139554838349394724992319379208789484970808645095994767442221748876619546454805519231199959429832375831469643659535498536254522259188879176075147688427850413686063066905240538603124, 525142044558543271273928724708201874431275336135846663572928176106836526023938644054113068498487700627433474590112405988022720409096593978713186747242576697777794647237756555539496023638871240154185318019731152645871141127463202788605660542674751464071378589238240664510458096470288565405116338584264363916745147668105531617260897769833228332000340189029373903026421075452670809392253489788081325206782516126016188617880905113944912540764713203220610638383313714120817715718293729674112252872374249843208165035284205333564229187276000120135688443191768077830318991946219214745395488440759075377081454082083771931004273666798317293985640424324823012993429458125749086273526792218759388727206044222628229096459302898320109057425706344442894381890653857940159621817430840660472207748193382783016219170304119681453919374344165088343929869948906832825134272069604979410290902572092842448788518912158463236088994676194217871249221976084750417392347113749108810929038338337027601078658297048751004156899188921707516723572142542666863234665963769866935601768432045626062958820655842263992663826749758247323643330149317977625307044793314713381369563987919783618980732515187588731510532284658110653671567331142610352797417398385040847561807574]
-ct_1 &#x3D; 48781178448519717145030961584310688320458243411845630045089869571841258252276882062504938179332902878211275672372537046149954128621785878838392317041927411844624752487659561853720441718732981338158883185880994522983419159353544238543644342296548785662198800425903787461003487692819228443896133282342991303848227635342068891349652923691524028062659044265536905440902952792854661520332375117067764795381343641897992571767827825219694997323983960056950773283898680067756135025974480864568721905593825388137463460236756901845600819113582866752158631809994400455049909919806532633846463429094502845406001876665040724018835781010636502529933114096896868168083073222988221541153421840303974632764845978231153855193664149278981036695492388529552988461313691238436981563564777418547182933940708503240508922979341573817702615571164924075368738778459871676229687325106278120781738306874334478450101728487721056587713695412452160627447735949004315946458460639559192872433357498240440867033695264872498064029991850990390479397960260206309118497120129501886985381172016355970552313740265651233581796839940652980915583595518500086477097901869236690822963739967876727663772456159598511970672254417571764639583689161920284245175121620508556355133976
-d2_1 &#x3D; 259187866359327432438485652953609260818159520893611322188947813006728826611226696627292646053133559150603509903248125752373369874963498042077411581838209478782180553518039658527598952626993581420730874382532551106596410386989464304079067596844582878250138528974967337761685993686596817243322008807346068163875884547364071403079801777925732552850212376236555593648451488930441100311138977442029592920487446630173444429360890564443620079888528363987116316514568982078377578018393359665573481339277995759791751913491381856732995842843290441053211896781499078980385734055499127206091453799541574308041834669474653423775940437253567275867573700697109133237989561154238368427919328472395730971497174190916585612888279727882376998548689784397733455379588621094678694090941033309564280839334683086599323411748981321293828106224288316970847543731680191500094650799071371074157830231906300812892611646748351335024822186608371333461945482425838427654668072619882944181679233909662905190317079013916909885542812988364676117606791053090432451343961112030178787755484062545036488929020402937893556940132104908068943145475700171665485352022619836926965613936349311843292255982187987477532340263613414214870026166867979254104108043602150963319163371826207750988366541482356048351194480098766589828356190810490487312100110168482812177077259179901118886621935067909978919596040657161901144921220348045525037765639482248509551915262122984815818994635965348932661139322251575797048893869591463611928165423974115454910101371256909900380978420778270903021786512631541277419324659681569529477140147630067386196900828220774815255509559596595224841047609318703243617545490795647414286604620002404579616008328453039584091195092314939573904344616288887086292329067835864768733368021151301703207244846142153863612005470776088705092650111398511255985994135408831008395745276611163030473928076268621931559893620284357118536905726403512208734009713486836681183921461124380273864761669832717700175786680917939420286919690578700040311869967712804696287090491895425771785920084510156953053680339546908987416623706163807353527947610444520717316227092447571792441038182018899418440010054843287005152241761457153232205639663639403419455083921299901509600720812777271436322503382748425933114309438563451894626121368386036018683590737735102448529600143100889319738393757967487188878057006271884780154861028896047073048446967472203468829570161680626781096929230673210274699624679673898833653935844321261993
-rvals_1 &#x3D; [155577233451255589416781525194249746052714152639839715986237019768039056414721782958544287907507795271050513796476934299488861066267746823057650816911807314112134618507414900316810423610250340721036612315274836747825979738269208235530836413646118261630341204437217756191937411827244792879665928878109189339887552781654686895933944315161673003872673527751058317871164704126861635980035769848102138188257328699166395915201400311584831015706391359060030850534456376095695597208726226123504512451954247912184024010614966518327265968544778670326529398536029362264699743049853404203628281428534044514202727438384796115576757809238872340528210398771130457034801411590194918420672090370194426285493310569017262942340370354299698594068939221173021904561242802064805839056625601001719451015921706991927028901374206324427156754003496072824998520094160900737060832728969189163988804323028136455910346921973920735223211738593739792400361946293151519129613677889299223399820066810751620097428479931726788939705187986999294444806526451095580140157609594483874414191725199054564608134078283117759772114247193893006472605189534901173284629503688766144472383408970744616360989868218123308274417426857646887763998707419507931533663170386387067211002229, 453442358186776146293133752586038485353395554698647918879985238445949862500734570656080736433325516740059042899938188167369963228899968072185418645453032711589611151879682341553156554737543456979631420263580653222209631705205630169340126602974140185826128174815388911424440791901104262464338580923450320128725588840371876394275968746159437282937244614144274174654054910883517422100952371647992913494713476470830266523955328259005624642486368823894380250974054884379723159187136270936404508879007469424825069935536269676800224103944931052778803126897431795207695651222749169437953323696608453040537129923665404344290267788303174769585947501833196706780832718113858586169300506837139690530102067747249681709985173406563367128479314636863770335814131757168311306008187802995381450959313386866964270525377713732839780388189014091243486001376968194516274846171461907722356486426417063034276577563640522036519482307158208961785724153105654762752751179079585932066629681237699681886986491422472368574518732811193779688657849534489177729528851850428625634043277992171102882417506181884288073699795116307555619619750679946373936760302018204256322125299572315547286096519522459105679346296516557979591599351300623451742624912951158586291729224, 166806290845408856664369192112393095569391169998591634660904301734622555914531337467911726010835264617481006854659596584135222334715582471156538118800159106058584962126528440868995058360596202936894998909431659246982774963079619166533576456401173821251921941123534623327723410382539438201304699255492757164747176714096022043768559836739995611793643800897607578918622438659006026753339334081828646800936589925941594756768102145800762394535296407154537817263343769710052967767335377911107275638102342208203954776424632700431497823046123106555285075870600848332484284669236216640142567072093744492301296568663333899724806449009712707932530021191716773058010510921364059214257598004199224570770528735415361285311773923709757588444662591816303552951770686462093667968896361240595056822540193899979511652730357137145177412068528236153169539697564133590654319081013142541788575504630463489488329657365304648955681149856756021314282837252777369687564227293662741000715607546953746386073672989514721554456020744860642374591664971489956086207172018545632026242313077116196037248013825517066194260921244105720864007209252796841071365361560243988161429097675290463943274987935652596037561431315883175002023948170202388978170474972997597708352476]
+<h4 id="解题脚本"><a href="#解题脚本" class="headerlink" title="解题脚本"></a>解题脚本</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> Crypto.Util.number <span class="hljs-keyword">import</span> *<br>e = <span class="hljs-number">65537</span><br>n = <span class="hljs-number">571600472871054756856872861710614837779048972363306890443115350847467685871898672827599455585029651007703106670957162179582885122574962320961995396006131591778935337148117455760855822655410811730853432313049519414639239730659116782141641986254249976281112163140638956534881943205809144100956562342279447003168578219037049641634095627070813716474207460011079482037024783816583498190591249546823408693214309137559797072962709285933201289937382707098407254685341160904207786283556910751730155611975347264528159613784976246345672916387305885535478849462342430081208911521945538040396954979359549349229657005078088000679989005207994990677756103529126511204797263421932510450105504301689409512779407594685003208879418770907049936865522524767765349036310229903969476585935095640510106493858653701853433659812416539308126484127786848820399080368158787836543718617942235588283829052498046684375083076907869733032896618932600107128246777714141040569231107455524324449875985767629582672227280996769319914943051898378681327996956331989767769976842091861236740159519373538404162847358253254286800593006933300249657651693630075692652964194783974118245942080714867351092780014212386066330165929415032203132188415479536862431756662025231600808048909</span><br>ct_0 = <span class="hljs-number">416135314909816686216200968243060935362340575643234806993250368664668134836076071864140392927477314028301793224780435634360996349002905522126030489517071154035687637479873551095754572316064125312982109059337286329497216499106559276212697204964854750251966627624483147376835223939270127477753015555433824325294895239794434117613307049298580098859348394265855883994007344942851112866078592492452839234164195211127408748482151000059038722621488609651567336796332131736131657360819610252644932265797802810837127038360493414975808102413682755607446507546485124793152258673850526696274135302352135628869515111236617281757214607611421135915573479471468354623140945668974150677183687763147602617934269331104361070856257666545808020025858258112840863761640579275321349064700833458643121741434867276134264887860619290841776238320636394716661129206908057877674914788381562156278967404994421767571716297571574727226030302833758640634810265984465827796697525541491873081954202320556984517810092659276177715834982766977552498426137641323877230827981731299843750828326766218889477406882845394750160560072936172184168769722359644733662508462976026031496930142349966411102852963199828799018972194077301368940383852718592003555081075165514643149333754</span><br>d2_0 = <span class="hljs-number">321648898489990725762716435907669079782041913311916286352518983604481271810432118181229465423346368567645457351811209532097661830314736962865829522257155445171943801570657670068383941360251163846724129529557621875206280642281173206000241240969203584344903262774907857425551035265784474588667371906924750178061682535525769206917711676154125370419309401003532034787087937235255696994039457783839199765499390299748834833125634677799333665429742988935095505275540917105363398919663096963087138120200680514217189637239189928947711987389013086067387607065447206917464228547381778091224328422740218349175172683041097914682107870902283779328053789329896133628963479269983547685498884024506799895054220552897642590221797816464331186820115803332629539030089703516577728557703838872292658454097261099300993720928077342572379117290625954722268199191233540156840456615553266356435611833546636704232997798652803757014775136930415013545714825841734983484830619764590610019535547774097909932135617822343437746397931890197996152241569715380692389708812255274799532480599649397023622830516732196879665106615984668578255459649681136614188391200988553837993589101643823041481812094879340327711390415387625021076813096353478550572386502333824526049387649097500519831681109341963319367192275757979006664548248108762091213757320513537628276546212610512783033452628375381569587146593601092448818737027876005977365544631392945274280528676326215927711028731636647348565964286700208643591735039848581185082267328977406670704407683911443578134866189247942857482711535122888731124352636093671466956884955398719150927378931720898378066405204937406968041823979684181000126012968127156311774998003294338753366433994772843934125091324630060130465600909096415742450651042529408157666027025973062033885132116662463914170351009408639811425388114901442241970184203553335792035288213795758469894254478173349733127665718395097263063140438341303188055293329998892528802860195483045584226108180948601607644158204035756785607895674020199715741430755850932597624586130178709569252904604614892607005881559329907919355220545478402127290321358441777165667295336752028018591021901788844039752201043482324539220912587011555397815567280582411140372385814030718156689014482972787606122514313534463210411680107201225459176300017129158416464552862589162678792205839219043413235342067858620787070917292301867631203580787318038945931973304359331556928456316581487702269528746135771960694141580734645573314192524795439993</span><br>rvals_0 = [<span class="hljs-number">350799763312554145955230180685001679666528767932949810978932225269497373787324060369840196201595720598033796426252955179349625276581393790549433193826340457944811500649643986612388259828736034828376585065472938381414748725008385284368161882085815413718118269367195977152280024021514840536257777290907008927157103054078110647383493783671093356975427911361922619692263374970944303385543430994401069790534760724516294318605969966798288903697776375853347682995634961296555000770706411784208179368090186093272610548020147861163090170321254784514325353116557484451854929639406890765502216655988972701630017119062973076886352333162866700906065640118169478013173820093112571039935713532241311454052390125148129264631939248336527383896258580876859530007253741394773447549227124480134096300965819891216584876738405169618835442565493067962464620209516922516499573172516927584890792357078948931993201756100743544065443866193417880739071018699671786243686466553972075085576945448047633571363756438307911286720901794431676254805171279058135288537872399498119340136940063394871696414344343334354629777719178514787403669623529882558727520920962545221326864519012283603359829801912462682507918530353914421180918793336152126915534834270322506595522541</span>, <span class="hljs-number">562716291808509953473330372561768292598715646394302617269487277535199020476316193414343511657565195886811402071445845059671762312943896962563450019022331459494257559779752061151117582342055892698749516295592777277177791555617269552192052593903660717784307417908208268324767801491241476879584444167439072270869142575255175945886202725499753104013451221030969387504139373107591125555454443028597782030135550358490526043646069133978168502240601186256407559459770584186440581819417904554480594011908271125856006757018098027513149333990952940669976193420753011210752213423808488383766876562518652324799192546807893326653322642849345574558962397220728699650041357381858374122259279975005924738288286243925484531706182978198624869935811892972426642840761263999508385223742418755279991038160925693669410740581563863693622632156620253027562571790358492125138209963566948624423477637913041852188610197152256613891173759546416090072932319063680367294084132389089245703645288245295770292028547124555601415315410743618001646876307537653378554693796989012890639312839139554838349394724992319379208789484970808645095994767442221748876619546454805519231199959429832375831469643659535498536254522259188879176075147688427850413686063066905240538603124</span>, <span class="hljs-number">525142044558543271273928724708201874431275336135846663572928176106836526023938644054113068498487700627433474590112405988022720409096593978713186747242576697777794647237756555539496023638871240154185318019731152645871141127463202788605660542674751464071378589238240664510458096470288565405116338584264363916745147668105531617260897769833228332000340189029373903026421075452670809392253489788081325206782516126016188617880905113944912540764713203220610638383313714120817715718293729674112252872374249843208165035284205333564229187276000120135688443191768077830318991946219214745395488440759075377081454082083771931004273666798317293985640424324823012993429458125749086273526792218759388727206044222628229096459302898320109057425706344442894381890653857940159621817430840660472207748193382783016219170304119681453919374344165088343929869948906832825134272069604979410290902572092842448788518912158463236088994676194217871249221976084750417392347113749108810929038338337027601078658297048751004156899188921707516723572142542666863234665963769866935601768432045626062958820655842263992663826749758247323643330149317977625307044793314713381369563987919783618980732515187588731510532284658110653671567331142610352797417398385040847561807574</span>]<br>ct_1 = <span class="hljs-number">48781178448519717145030961584310688320458243411845630045089869571841258252276882062504938179332902878211275672372537046149954128621785878838392317041927411844624752487659561853720441718732981338158883185880994522983419159353544238543644342296548785662198800425903787461003487692819228443896133282342991303848227635342068891349652923691524028062659044265536905440902952792854661520332375117067764795381343641897992571767827825219694997323983960056950773283898680067756135025974480864568721905593825388137463460236756901845600819113582866752158631809994400455049909919806532633846463429094502845406001876665040724018835781010636502529933114096896868168083073222988221541153421840303974632764845978231153855193664149278981036695492388529552988461313691238436981563564777418547182933940708503240508922979341573817702615571164924075368738778459871676229687325106278120781738306874334478450101728487721056587713695412452160627447735949004315946458460639559192872433357498240440867033695264872498064029991850990390479397960260206309118497120129501886985381172016355970552313740265651233581796839940652980915583595518500086477097901869236690822963739967876727663772456159598511970672254417571764639583689161920284245175121620508556355133976</span><br>d2_1 = <span class="hljs-number">259187866359327432438485652953609260818159520893611322188947813006728826611226696627292646053133559150603509903248125752373369874963498042077411581838209478782180553518039658527598952626993581420730874382532551106596410386989464304079067596844582878250138528974967337761685993686596817243322008807346068163875884547364071403079801777925732552850212376236555593648451488930441100311138977442029592920487446630173444429360890564443620079888528363987116316514568982078377578018393359665573481339277995759791751913491381856732995842843290441053211896781499078980385734055499127206091453799541574308041834669474653423775940437253567275867573700697109133237989561154238368427919328472395730971497174190916585612888279727882376998548689784397733455379588621094678694090941033309564280839334683086599323411748981321293828106224288316970847543731680191500094650799071371074157830231906300812892611646748351335024822186608371333461945482425838427654668072619882944181679233909662905190317079013916909885542812988364676117606791053090432451343961112030178787755484062545036488929020402937893556940132104908068943145475700171665485352022619836926965613936349311843292255982187987477532340263613414214870026166867979254104108043602150963319163371826207750988366541482356048351194480098766589828356190810490487312100110168482812177077259179901118886621935067909978919596040657161901144921220348045525037765639482248509551915262122984815818994635965348932661139322251575797048893869591463611928165423974115454910101371256909900380978420778270903021786512631541277419324659681569529477140147630067386196900828220774815255509559596595224841047609318703243617545490795647414286604620002404579616008328453039584091195092314939573904344616288887086292329067835864768733368021151301703207244846142153863612005470776088705092650111398511255985994135408831008395745276611163030473928076268621931559893620284357118536905726403512208734009713486836681183921461124380273864761669832717700175786680917939420286919690578700040311869967712804696287090491895425771785920084510156953053680339546908987416623706163807353527947610444520717316227092447571792441038182018899418440010054843287005152241761457153232205639663639403419455083921299901509600720812777271436322503382748425933114309438563451894626121368386036018683590737735102448529600143100889319738393757967487188878057006271884780154861028896047073048446967472203468829570161680626781096929230673210274699624679673898833653935844321261993</span><br>rvals_1 = [<span class="hljs-number">155577233451255589416781525194249746052714152639839715986237019768039056414721782958544287907507795271050513796476934299488861066267746823057650816911807314112134618507414900316810423610250340721036612315274836747825979738269208235530836413646118261630341204437217756191937411827244792879665928878109189339887552781654686895933944315161673003872673527751058317871164704126861635980035769848102138188257328699166395915201400311584831015706391359060030850534456376095695597208726226123504512451954247912184024010614966518327265968544778670326529398536029362264699743049853404203628281428534044514202727438384796115576757809238872340528210398771130457034801411590194918420672090370194426285493310569017262942340370354299698594068939221173021904561242802064805839056625601001719451015921706991927028901374206324427156754003496072824998520094160900737060832728969189163988804323028136455910346921973920735223211738593739792400361946293151519129613677889299223399820066810751620097428479931726788939705187986999294444806526451095580140157609594483874414191725199054564608134078283117759772114247193893006472605189534901173284629503688766144472383408970744616360989868218123308274417426857646887763998707419507931533663170386387067211002229</span>, <span class="hljs-number">453442358186776146293133752586038485353395554698647918879985238445949862500734570656080736433325516740059042899938188167369963228899968072185418645453032711589611151879682341553156554737543456979631420263580653222209631705205630169340126602974140185826128174815388911424440791901104262464338580923450320128725588840371876394275968746159437282937244614144274174654054910883517422100952371647992913494713476470830266523955328259005624642486368823894380250974054884379723159187136270936404508879007469424825069935536269676800224103944931052778803126897431795207695651222749169437953323696608453040537129923665404344290267788303174769585947501833196706780832718113858586169300506837139690530102067747249681709985173406563367128479314636863770335814131757168311306008187802995381450959313386866964270525377713732839780388189014091243486001376968194516274846171461907722356486426417063034276577563640522036519482307158208961785724153105654762752751179079585932066629681237699681886986491422472368574518732811193779688657849534489177729528851850428625634043277992171102882417506181884288073699795116307555619619750679946373936760302018204256322125299572315547286096519522459105679346296516557979591599351300623451742624912951158586291729224</span>, <span class="hljs-number">166806290845408856664369192112393095569391169998591634660904301734622555914531337467911726010835264617481006854659596584135222334715582471156538118800159106058584962126528440868995058360596202936894998909431659246982774963079619166533576456401173821251921941123534623327723410382539438201304699255492757164747176714096022043768559836739995611793643800897607578918622438659006026753339334081828646800936589925941594756768102145800762394535296407154537817263343769710052967767335377911107275638102342208203954776424632700431497823046123106555285075870600848332484284669236216640142567072093744492301296568663333899724806449009712707932530021191716773058010510921364059214257598004199224570770528735415361285311773923709757588444662591816303552951770686462093667968896361240595056822540193899979511652730357137145177412068528236153169539697564133590654319081013142541788575504630463489488329657365304648955681149856756021314282837252777369687564227293662741000715607546953746386073672989514721554456020744860642374591664971489956086207172018545632026242313077116196037248013825517066194260921244105720864007209252796841071365361560243988161429097675290463943274987935652596037561431315883175002023948170202388978170474972997597708352476</span>]<br><br>ct2_0 = ct_0 + rvals_0[<span class="hljs-number">0</span>]*n<br>ct2_1 = ct_1 + rvals_1[<span class="hljs-number">0</span>]*n<br><br>n2_0 = rvals_0[<span class="hljs-number">2</span>]*n<br>n2_1 = rvals_1[<span class="hljs-number">2</span>]*n<br><br>flag1 = (<span class="hljs-built_in">pow</span>(ct2_0, d2_0, n2_0) % n)<br>flag2 = (<span class="hljs-built_in">pow</span>(ct2_1, d2_1, n2_1) % n)<br><br>flag = long_to_bytes(flag1) + long_to_bytes(flag2)<br><span class="hljs-built_in">print</span>(flag)<br></code></pre></td></tr></table></figure>
 
-ct2_0 &#x3D; ct_0 + rvals_0[0]*n
-ct2_1 &#x3D; ct_1 + rvals_1[0]*n
 
-n2_0 &#x3D; rvals_0[2]*n
-n2_1 &#x3D; rvals_1[2]*n
 
-flag1 &#x3D; (pow(ct2_0, d2_0, n2_0) % n)
-flag2 &#x3D; (pow(ct2_1, d2_1, n2_1) % n)
-
-flag &#x3D; long_to_bytes(flag1) + long_to_bytes(flag2)
-print(flag)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h3 id="shapeshifter"><a href="#Shapeshifter" class="headerlink" title="Shapeshifter"></a>Shapeshifter</h3><h4 id="题目描述"><a href="#题目描述-1" class="headerlink" title="题目描述"></a>题目描述</h4><p>These bits are shapepshifting! I need some help getting them back to their original form. Someone told me this might be a <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Linear-feedback_shift_register#Fibonacci_LFSRs"><code>Fibonacci LFSR</code></a>.</p>
-<h4 id="题目内容"><a href="#题目内容-1" class="headerlink" title="题目内容"></a>题目内容</h4><pre class="line-numbers language-python" data-language="python"><code class="language-python">from Crypto.Util.number import bytes_to_long as b2l
+<h4 id="题目内容"><a href="#题目内容-1" class="headerlink" title="题目内容"></a>题目内容</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> Crypto.Util.number <span class="hljs-keyword">import</span> bytes_to_long <span class="hljs-keyword">as</span> b2l<br><br>FLAG = <span class="hljs-built_in">open</span>(<span class="hljs-string">&#x27;flag.txt&#x27;</span>, <span class="hljs-string">&#x27;r&#x27;</span>).read().strip().encode()<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">LFSR</span>():<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, iv</span>):<br>        self.state = [<span class="hljs-built_in">int</span>(c) <span class="hljs-keyword">for</span> c <span class="hljs-keyword">in</span> iv]<br>        <span class="hljs-comment">#self.state = self.iv</span><br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">shift</span>(<span class="hljs-params">self</span>):<br>        s = self.state<br>        newbit = s[<span class="hljs-number">15</span>] ^ s[<span class="hljs-number">13</span>] ^ s[<span class="hljs-number">12</span>] ^ s[<span class="hljs-number">10</span>] <span class="hljs-comment"># ^ s[0]</span><br>        s.pop()<br>        self.state = [newbit] + s<br><br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">0</span>, <span class="hljs-built_in">len</span>(FLAG), <span class="hljs-number">2</span>):<br>    chars = <span class="hljs-string">f&#x27;<span class="hljs-subst">&#123;b2l(FLAG[i:i+<span class="hljs-number">2</span>]):016b&#125;</span>&#x27;</span><br>    <span class="hljs-keyword">assert</span> <span class="hljs-built_in">len</span>(chars) == <span class="hljs-number">16</span><br><br>    lfsr = LFSR(chars)<br>    <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">31337</span>):<br>        lfsr.shift()<br><br>    finalstate = <span class="hljs-string">&#x27;&#x27;</span>.join([<span class="hljs-built_in">str</span>(c) <span class="hljs-keyword">for</span> c <span class="hljs-keyword">in</span> lfsr.state])<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">f&#x27;<span class="hljs-subst">&#123;finalstate&#125;</span>&#x27;</span>)<br><br><br><br></code></pre></td></tr></table></figure>
 
-FLAG &#x3D; open(&#39;flag.txt&#39;, &#39;r&#39;).read().strip().encode()
-
-class LFSR():
-    def __init__(self, iv):
-        self.state &#x3D; [int(c) for c in iv]
-        #self.state &#x3D; self.iv
-
-    def shift(self):
-        s &#x3D; self.state
-        newbit &#x3D; s[15] ^ s[13] ^ s[12] ^ s[10] # ^ s[0]
-        s.pop()
-        self.state &#x3D; [newbit] + s
-
-for i in range(0, len(FLAG), 2):
-    chars &#x3D; f&#39;&#123;b2l(FLAG[i:i+2]):016b&#125;&#39;
-    assert len(chars) &#x3D;&#x3D; 16
-
-    lfsr &#x3D; LFSR(chars)
-    for _ in range(31337):
-        lfsr.shift()
-
-    finalstate &#x3D; &#39;&#39;.join([str(c) for c in lfsr.state])
-    print(f&#39;&#123;finalstate&#125;&#39;)
-
-
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h4 id="题目分析"><a href="#题目分析-1" class="headerlink" title="题目分析"></a>题目分析</h4><p>又学到了一个python的操作，太优雅了。</p>
-<p><img src="/images/NahamCon-EU-2022-CTF/image-20221217194047730.png" alt="image-20221217194047730"></p>
+<p><img src="/images/NahamCon-EU-2022-CTF/image-20221217194047730.png" srcset="/img/loading.gif" lazyload alt="image-20221217194047730"></p>
 <p>题目的这个LFSR的反馈函数已经给出来了，那么我们看看对于连续的两轮状态，如何恢复出上一轮的状态：</p>
 <p>假设我们上一轮的状态是 </p>
-<p>$a<em>0a_1…..a</em>{15}$</p>
+<p>$a_0a_1…..a_{15}$</p>
 <p>当前轮的状态是</p>
-<p>$a<em>{16}a_0a_1….a</em>{14}$</p>
+<p>$a_{16}a_0a_1….a_{14}$</p>
 <p>根据反馈函数我们知道</p>
-<p>$a<em>{16} = a</em>{15}\oplus\,a<em>{13}\oplus\,a</em>{12}\oplus\,a_{10}$</p>
+<p>$a_{16} &#x3D; a_{15}\oplus,a_{13}\oplus,a_{12}\oplus,a_{10}$</p>
 <p>如果我们已知了当前轮的全部值，那么就可以根据上式恢复出 $a_{15}$ ！</p>
 <p>所以想要恢复到初始的状态，只需要重复应用以上操作即可。</p>
-<h4 id="解题脚本"><a href="#解题脚本-1" class="headerlink" title="解题脚本"></a>解题脚本</h4><pre class="line-numbers language-python" data-language="python"><code class="language-python">from Crypto.Util.number import *
-def reverse_state(state):
-    state_1,tmp &#x3D; state[1:],state[0]
-    state_1 +&#x3D; [(state_1[13] ^ state_1[12] ^ state_1[10] ^ tmp)]
-    assert len(state_1) &#x3D;&#x3D; 16
-    return state_1
-
-if __name__ &#x3D;&#x3D; &quot;__main__&quot;:
-    round &#x3D; 31337
-    flag &#x3D; b&quot;&quot;
-    f &#x3D; open(&quot;output.txt&quot;,&quot;r&quot;)
-    while True:
-        line &#x3D; f.readline().strip()
-        if not line:
-            break
-        state &#x3D; [int(i) for i in line]
-        for i in range(round):
-            state &#x3D; reverse_state(state)
-        tmp &#x3D; long_to_bytes(int(&#39;&#39;.join([str(i) for i in state]), 2))
-        flag +&#x3D; tmp
+<h4 id="解题脚本"><a href="#解题脚本-1" class="headerlink" title="解题脚本"></a>解题脚本</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> Crypto.Util.number <span class="hljs-keyword">import</span> *<br><span class="hljs-keyword">def</span> <span class="hljs-title function_">reverse_state</span>(<span class="hljs-params">state</span>):<br>    state_1,tmp = state[<span class="hljs-number">1</span>:],state[<span class="hljs-number">0</span>]<br>    state_1 += [(state_1[<span class="hljs-number">13</span>] ^ state_1[<span class="hljs-number">12</span>] ^ state_1[<span class="hljs-number">10</span>] ^ tmp)]<br>    <span class="hljs-keyword">assert</span> <span class="hljs-built_in">len</span>(state_1) == <span class="hljs-number">16</span><br>    <span class="hljs-keyword">return</span> state_1<br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&quot;__main__&quot;</span>:<br>    <span class="hljs-built_in">round</span> = <span class="hljs-number">31337</span><br>    flag = <span class="hljs-string">b&quot;&quot;</span><br>    f = <span class="hljs-built_in">open</span>(<span class="hljs-string">&quot;output.txt&quot;</span>,<span class="hljs-string">&quot;r&quot;</span>)<br>    <span class="hljs-keyword">while</span> <span class="hljs-literal">True</span>:<br>        line = f.readline().strip()<br>        <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> line:<br>            <span class="hljs-keyword">break</span><br>        state = [<span class="hljs-built_in">int</span>(i) <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> line]<br>        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">round</span>):<br>            state = reverse_state(state)<br>        tmp = long_to_bytes(<span class="hljs-built_in">int</span>(<span class="hljs-string">&#x27;&#x27;</span>.join([<span class="hljs-built_in">str</span>(i) <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> state]), <span class="hljs-number">2</span>))<br>        flag += tmp<br><br><br>    <span class="hljs-built_in">print</span>(flag)<br><br></code></pre></td></tr></table></figure>
 
 
-    print(flag)
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
 <h3 id="rektcursion-对角化"><a href="#rektcursion-对角化" class="headerlink" title="rektcursion-对角化"></a>rektcursion-对角化</h3><h4 id="题目描述"><a href="#题目描述-2" class="headerlink" title="题目描述"></a>题目描述</h4><p><a target="_blank" rel="noopener" href="https://www.google.com/search?q=recursion">Recursion</a> is all fun and games until…<br>Hint - Matrix Diagonalization could be useful</p>
-<h4 id="题目内容"><a href="#题目内容-2" class="headerlink" title="题目内容"></a>题目内容</h4><pre class="line-numbers language-python" data-language="python"><code class="language-python">import math
-import hashlib
-from Crypto.Cipher import AES
+<h4 id="题目内容"><a href="#题目内容-2" class="headerlink" title="题目内容"></a>题目内容</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> math<br><span class="hljs-keyword">import</span> hashlib<br><span class="hljs-keyword">from</span> Crypto.Cipher <span class="hljs-keyword">import</span> AES<br><br>ENC_MSG = <span class="hljs-built_in">open</span>(<span class="hljs-string">&#x27;msg.enc&#x27;</span>, <span class="hljs-string">&#x27;rb&#x27;</span>).read()<br>NUM_HASH = <span class="hljs-string">&quot;636e276981116cf433ac4c60ba9b355b6377a50e&quot;</span><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">f</span>(<span class="hljs-params">i</span>):<br>    <span class="hljs-keyword">if</span> i &lt; <span class="hljs-number">5</span>:<br>        <span class="hljs-keyword">return</span> i+<span class="hljs-number">1</span><br>    <br>    <span class="hljs-keyword">return</span> <span class="hljs-number">1905846624</span>*f(i-<span class="hljs-number">5</span>) - <span class="hljs-number">133141548</span>*f(i-<span class="hljs-number">4</span>) + <span class="hljs-number">3715204</span>*f(i-<span class="hljs-number">3</span>) - <span class="hljs-number">51759</span>*f(i-<span class="hljs-number">2</span>) + <span class="hljs-number">360</span>*f(i-<span class="hljs-number">1</span>)<br><br><span class="hljs-comment"># Decrypt the flag</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">decrypt_flag</span>(<span class="hljs-params">sol</span>):<br>    sol = sol % <span class="hljs-built_in">pow</span>(<span class="hljs-number">10</span>,<span class="hljs-number">31337</span>)<br>    sol = <span class="hljs-built_in">str</span>(sol)<br>    num_hash = hashlib.sha1(sol.encode()).hexdigest()<br>    key = hashlib.sha256(sol.encode()).digest()<br><br>    <span class="hljs-keyword">if</span> num_hash != NUM_HASH:<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;number not computed correctly&#x27;</span>)<br>        exit()<br><br>    iv = <span class="hljs-string">b&#x27;\x00&#x27;</span>*<span class="hljs-number">16</span><br>    cipher = AES.new(key, AES.MODE_CBC, iv)<br>    <span class="hljs-built_in">print</span>(<span class="hljs-built_in">len</span>(unpad(ENC_MSG)))<br>    msg_dec = cipher.decrypt(ENC_MSG)<br>    <span class="hljs-built_in">print</span>(msg_dec)<br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&quot;__main__&quot;</span>:<br>    ret = f(<span class="hljs-number">13371337</span>)<br>    decrypt_flag(ret)<br><br><br></code></pre></td></tr></table></figure>
 
-ENC_MSG &#x3D; open(&#39;msg.enc&#39;, &#39;rb&#39;).read()
-NUM_HASH &#x3D; &quot;636e276981116cf433ac4c60ba9b355b6377a50e&quot;
-
-def f(i):
-    if i &lt; 5:
-        return i+1
-    
-    return 1905846624*f(i-5) - 133141548*f(i-4) + 3715204*f(i-3) - 51759*f(i-2) + 360*f(i-1)
-
-# Decrypt the flag
-def decrypt_flag(sol):
-    sol &#x3D; sol % pow(10,31337)
-    sol &#x3D; str(sol)
-    num_hash &#x3D; hashlib.sha1(sol.encode()).hexdigest()
-    key &#x3D; hashlib.sha256(sol.encode()).digest()
-
-    if num_hash !&#x3D; NUM_HASH:
-        print(&#39;number not computed correctly&#39;)
-        exit()
-
-    iv &#x3D; b&#39;\x00&#39;*16
-    cipher &#x3D; AES.new(key, AES.MODE_CBC, iv)
-    print(len(unpad(ENC_MSG)))
-    msg_dec &#x3D; cipher.decrypt(ENC_MSG)
-    print(msg_dec)
-
-if __name__ &#x3D;&#x3D; &quot;__main__&quot;:
-    ret &#x3D; f(13371337)
-    decrypt_flag(ret)
-
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h4 id="题目分析"><a href="#题目分析-2" class="headerlink" title="题目分析"></a>题目分析</h4><p>原本想转成迭代形式的代码的，但是发现算的数值不对。提示是说矩阵对角化的，但是我不太会构造。</p>
 <p>看 <a target="_blank" rel="noopener" href="https://github.com/An00bRektn/CTF/tree/main/live_events/nahamcon-eu_22/crypto_rektcursion">WP</a> 之后明白这个对角矩阵似乎可以用来求出递归序列的通项公式，这能够让我们快速求出序列的某一项。</p>
 <p><a target="_blank" rel="noopener" href="https://discord.com/channels/598608711186907146/1053763447478829096/1053766136656830514">别人的做法</a>（大同小异）</p>
-<p><img src="/images/NahamCon-EU-2022-CTF/image-20221218160208898.png" alt="image-20221218160208898"></p>
-<h4 id="解题脚本"><a href="#解题脚本-2" class="headerlink" title="解题脚本"></a>解题脚本</h4><pre class="line-numbers language-python" data-language="python"><code class="language-python">import math
-import hashlib
-from Crypto.Cipher import AES
+<p><img src="/images/NahamCon-EU-2022-CTF/image-20221218160208898.png" srcset="/img/loading.gif" lazyload alt="image-20221218160208898"></p>
+<h4 id="解题脚本"><a href="#解题脚本-2" class="headerlink" title="解题脚本"></a>解题脚本</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> math<br><span class="hljs-keyword">import</span> hashlib<br><span class="hljs-keyword">from</span> Crypto.Cipher <span class="hljs-keyword">import</span> AES<br><br>ENC_MSG = <span class="hljs-built_in">open</span>(<span class="hljs-string">&#x27;msg.enc&#x27;</span>, <span class="hljs-string">&#x27;rb&#x27;</span>).read()<br>NUM_HASH = <span class="hljs-string">&quot;636e276981116cf433ac4c60ba9b355b6377a50e&quot;</span><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">f</span>(<span class="hljs-params">i</span>):<br>    coeff_matrix = matrix([[<span class="hljs-number">0</span>,<span class="hljs-number">1</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>],<br>                       [<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">1</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>],<br>                       [<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">1</span>,<span class="hljs-number">0</span>],<br>                       [<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">1</span>],<br>                       [<span class="hljs-number">1905846624</span>,-<span class="hljs-number">133141548</span>,<span class="hljs-number">3715204</span>,-<span class="hljs-number">51759</span>,<span class="hljs-number">360</span>]])<br>    start = matrix([[<span class="hljs-number">1</span>],[<span class="hljs-number">2</span>],[<span class="hljs-number">3</span>],[<span class="hljs-number">4</span>],[<span class="hljs-number">5</span>]])<br>    D, P = coeff_matrix.eigenmatrix_right()<br>    power = P*(D**i)*(P**-<span class="hljs-number">1</span>)<br>    answer = power*start<br>    <span class="hljs-keyword">return</span> answer[<span class="hljs-number">0</span>][<span class="hljs-number">0</span>]<br><br><span class="hljs-comment"># Decrypt the answer</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">decrypt_ans</span>(<span class="hljs-params">sol</span>):<br>    sol = sol % <span class="hljs-built_in">pow</span>(<span class="hljs-number">10</span>,<span class="hljs-number">31337</span>)<br>    sol = <span class="hljs-built_in">str</span>(sol)<br>    num_hash = hashlib.sha1(sol.encode()).hexdigest()<br>    key = hashlib.sha256(sol.encode()).digest()<br><br>    <span class="hljs-keyword">if</span> num_hash != NUM_HASH:<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;number not computed correctly&#x27;</span>)<br>        exit()<br>    <span class="hljs-built_in">print</span>(key)<br>    iv = <span class="hljs-string">b&#x27;\x00&#x27;</span>*<span class="hljs-number">16</span><br>    cipher = AES.new(key, AES.MODE_CBC, iv)<br>    <span class="hljs-built_in">print</span>(<span class="hljs-built_in">len</span>(unpad(ENC_MSG)))<br>    msg_dec = cipher.decrypt(ENC_MSG)<br>    <span class="hljs-built_in">print</span>(msg_dec)<br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&quot;__main__&quot;</span>:<br>    ret = f(<span class="hljs-number">13371337</span>)<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;Recursion done!&quot;</span>)<br>    <span class="hljs-comment">#print(ret)</span><br>    decrypt_ans(ret)<br></code></pre></td></tr></table></figure>
 
-ENC_MSG &#x3D; open(&#39;msg.enc&#39;, &#39;rb&#39;).read()
-NUM_HASH &#x3D; &quot;636e276981116cf433ac4c60ba9b355b6377a50e&quot;
-
-def f(i):
-    coeff_matrix &#x3D; matrix([[0,1,0,0,0],
-                       [0,0,1,0,0],
-                       [0,0,0,1,0],
-                       [0,0,0,0,1],
-                       [1905846624,-133141548,3715204,-51759,360]])
-    start &#x3D; matrix([[1],[2],[3],[4],[5]])
-    D, P &#x3D; coeff_matrix.eigenmatrix_right()
-    power &#x3D; P*(D**i)*(P**-1)
-    answer &#x3D; power*start
-    return answer[0][0]
-
-# Decrypt the answer
-def decrypt_ans(sol):
-    sol &#x3D; sol % pow(10,31337)
-    sol &#x3D; str(sol)
-    num_hash &#x3D; hashlib.sha1(sol.encode()).hexdigest()
-    key &#x3D; hashlib.sha256(sol.encode()).digest()
-
-    if num_hash !&#x3D; NUM_HASH:
-        print(&#39;number not computed correctly&#39;)
-        exit()
-    print(key)
-    iv &#x3D; b&#39;\x00&#39;*16
-    cipher &#x3D; AES.new(key, AES.MODE_CBC, iv)
-    print(len(unpad(ENC_MSG)))
-    msg_dec &#x3D; cipher.decrypt(ENC_MSG)
-    print(msg_dec)
-
-if __name__ &#x3D;&#x3D; &quot;__main__&quot;:
-    ret &#x3D; f(13371337)
-    print(&quot;Recursion done!&quot;)
-    #print(ret)
-    decrypt_ans(ret)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
                 
-            </div>
+              </div>
+            
             <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
 
-            
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/CTF/" class="category-chain-item">CTF</a>
+  
+  
 
-    <div class="reprint" id="reprint-statement">
-        
-            <div class="reprint__author">
-                <span class="reprint-meta" style="font-weight: bold;">
-                    <i class="fas fa-user">
-                        文章作者:
-                    </i>
-                </span>
-                <span class="reprint-info">
-                    <a href="/about" rel="external nofollow noreferrer">MirRoR4s</a>
-                </span>
-            </div>
-            <div class="reprint__type">
-                <span class="reprint-meta" style="font-weight: bold;">
-                    <i class="fas fa-link">
-                        文章链接:
-                    </i>
-                </span>
-                <span class="reprint-info">
-                    <a href="https://MirRoR4s.github.io/2022/12/17/NahamCon-EU-2022-CTF/index.html">https://MirRoR4s.github.io/2022/12/17/NahamCon-EU-2022-CTF/index.html</a>
-                </span>
-            </div>
-            <div class="reprint__notice">
-                <span class="reprint-meta" style="font-weight: bold;">
-                    <i class="fas fa-copyright">
-                        版权声明:
-                    </i>
-                </span>
-                <span class="reprint-info">
-                    本博客所有文章除特別声明外，均采用
-                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
-                    许可协议。转载请注明来源
-                    <a href="/about" target="_blank">MirRoR4s</a>
-                    !
-                </span>
-            </div>
-        
+      </span>
+    
+  
+</span>
+
     </div>
-
-    <script async defer>
-      document.addEventListener("copy", function (e) {
-        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
-        M.toast({html: toastHTML})
-      });
-
-      function navToReprintStatement() {
-        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
-      }
-    </script>
-
-
-
-            <div class="tag_share" style="display: block;">
-                <div class="post-meta__tag-list" style="display: inline-block;">
-                    
-                        <div class="article-tag">
-                            
-                                <a href="/tags/Crypto/">
-                                    <span class="chip bg-color">Crypto</span>
-                                </a>
-                            
-                        </div>
-                    
-                </div>
-                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
-                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
-<div id="article-share">
-
-    
-    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
-    <script src="/libs/share/js/social-share.min.js"></script>
-    
-
-    
-
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Crypto/">#Crypto</a>
+      
+    </div>
+  
 </div>
 
-                </div>
-            </div>
-            
-                <style>
-    #reward {
-        margin: 40px 0;
-        text-align: center;
-    }
 
-    #reward .reward-link {
-        font-size: 1.4rem;
-        line-height: 38px;
-    }
+              
+  
 
-    #reward .btn-floating:hover {
-        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.2);
-    }
-
-    #rewardModal {
-        width: 320px;
-        height: 350px;
-    }
-
-    #rewardModal .reward-title {
-        margin: 15px auto;
-        padding-bottom: 5px;
-    }
-
-    #rewardModal .modal-content {
-        padding: 10px;
-    }
-
-    #rewardModal .close {
-        position: absolute;
-        right: 15px;
-        top: 15px;
-        color: rgba(0, 0, 0, 0.5);
-        font-size: 1.3rem;
-        line-height: 20px;
-        cursor: pointer;
-    }
-
-    #rewardModal .close:hover {
-        color: #ef5350;
-        transform: scale(1.3);
-        -moz-transform:scale(1.3);
-        -webkit-transform:scale(1.3);
-        -o-transform:scale(1.3);
-    }
-
-    #rewardModal .reward-tabs {
-        margin: 0 auto;
-        width: 210px;
-    }
-
-    .reward-tabs .tabs {
-        height: 38px;
-        margin: 10px auto;
-        padding-left: 0;
-    }
-
-    .reward-content ul {
-        padding-left: 0 !important;
-    }
-
-    .reward-tabs .tabs .tab {
-        height: 38px;
-        line-height: 38px;
-    }
-
-    .reward-tabs .tab a {
-        color: #fff;
-        background-color: #ccc;
-    }
-
-    .reward-tabs .tab a:hover {
-        background-color: #ccc;
-        color: #fff;
-    }
-
-    .reward-tabs .wechat-tab .active {
-        color: #fff !important;
-        background-color: #22AB38 !important;
-    }
-
-    .reward-tabs .alipay-tab .active {
-        color: #fff !important;
-        background-color: #019FE8 !important;
-    }
-
-    .reward-tabs .reward-img {
-        width: 210px;
-        height: 210px;
-    }
-</style>
-
-<div id="reward">
-    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-medium waves-effect waves-light red">赏</a>
-
-    <!-- Modal Structure -->
-    <div id="rewardModal" class="modal">
-        <div class="modal-content">
-            <a class="close modal-close"><i class="fas fa-times"></i></a>
-            <h4 class="reward-title">你的赏识是我前进的动力</h4>
-            <div class="reward-content">
-                <div class="reward-tabs">
-                    <ul class="tabs row">
-                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
-                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
-                    </ul>
-                    <div id="alipay">
-                        <img src="/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
-                    </div>
-                    <div id="wechat">
-                        <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
-                    </div>
-                </div>
-            </div>
-        </div>
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>NahamCon EU 2022 CTF</div>
+      <div>https://mirror4s.github.io/2022/12/17/NahamCon-EU-2022-CTF/index.html</div>
     </div>
-</div>
-
-<script>
-    $(function () {
-        $('.tabs').tabs();
-    });
-</script>
-
-            
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>MirRoR4s</div>
         </div>
-    </div>
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-<article id="prenext-posts" class="prev-next articles">
-    <div class="row article-row">
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
-            <div class="card">
-                <a href="/2022/12/17/BackdoorCTF-2022/index.html">
-                    <div class="card-image">
-                        
-                        
-                        <img src="/medias/featureimages/18.jpg" class="responsive-img" alt="BackdoorCTF 2022">
-                        
-                        <span class="card-title">BackdoorCTF 2022</span>
-                    </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2022年12月17日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
                 </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            
-2022年12月17日的一场比赛。
-                        
-                    </div>
-                    <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2022-12-17
-                        </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/CTF/" class="post-category">
-                                    CTF
-                                </a>
-                            
-                            
-                        </span>
-                    </div>
-                </div>
-                
-                <div class="card-action article-tags">
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
                     
-                    <a href="/tags/Crypto/">
-                        <span class="chip bg-color">Crypto</span>
-                    </a>
                     
+                      <a href="/2022/12/17/BackdoorCTF-2022/index.html" title="BackdoorCTF 2022">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">BackdoorCTF 2022</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/12/16/KITCTFCTF-2022/index.html" title="KITCTFCTF 2022">
+                        <span class="hidden-mobile">KITCTFCTF 2022</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
                 </div>
-                
+              
             </div>
+
+            
+          </article>
         </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
-            </div>
-            <div class="card">
-                <a href="/2022/12/16/KITCTFCTF-2022/index.html">
-                    <div class="card-image">
-                        
-                        
-                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="KITCTFCTF 2022">
-                        
-                        <span class="card-title">KITCTFCTF 2022</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            
-2022年12月9日的比赛。
-                        
-                    </div>
-                    <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-12-16
-                            </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/CTF/" class="post-category">
-                                    CTF
-                                </a>
-                            
-                            
-                        </span>
-                    </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/Crypto/">
-                        <span class="chip bg-color">Crypto</span>
-                    </a>
-                    
-                </div>
-                
-            </div>
-        </div>
-        
+      </div>
     </div>
-</article>
 
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
 </div>
 
 
 
-<!-- 代码块功能依赖 -->
-<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
-
-<!-- 代码语言 -->
-
-<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
-
-
-<!-- 代码块复制 -->
-
-<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
-
-
-<!-- 代码块收缩 -->
-
-<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+  </aside>
 
 
     </div>
-    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
-        <div class="toc-widget card">
-            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
-            <div id="toc-content"></div>
-        </div>
-    </div>
-</div>
-
-<!-- TOC 悬浮按钮. -->
-
-<div id="floating-toc-btn" class="hide-on-med-and-down">
-    <a class="btn-floating btn-large bg-color">
-        <i class="fas fa-list-ul"></i>
-    </a>
+  </div>
 </div>
 
 
-<script src=""></script>
-<script>
-    $.getScript("/libs/tocbot/tocbot.min.js",function () {
-        tocbot.init({
-            tocSelector: '#toc-content',
-            contentSelector: '#articleContent',
-            headingsOffset: -($(window).height() * 0.4 - 45),
-            collapseDepth: Number('0'),
-            headingSelector: 'h2, h3, h4,h5'
-        });
 
-        // modify the toc link href to support Chinese.
-        let i = 0;
-        let tocHeading = 'toc-heading-';
-        $('#toc-content a').each(function () {
-            $(this).attr('href', '#' + tocHeading + (++i));
-        });
 
-        // modify the heading title id to support Chinese.
-        i = 0;
-        $('#articleContent').children('h2, h3, h4,h5').each(function () {
-            $(this).attr('id', tocHeading + (++i));
-        });
 
-        // Set scroll toc fixed.
-        let tocHeight = parseInt($(window).height() * 0.4 - 64);
-        let $tocWidget = $('.toc-widget');
-        $(window).scroll(function () {
-            let scroll = $(window).scrollTop();
-            /* add post toc fixed. */
-            if (scroll > tocHeight) {
-                $tocWidget.addClass('toc-fixed');
-            } else {
-                $tocWidget.removeClass('toc-fixed');
-            }
-        });
+  
 
-        
-        /* 修复文章卡片 div 的宽度. */
-        let fixPostCardWidth = function (srcId, targetId) {
-            let srcDiv = $('#' + srcId);
-            if (srcDiv.length === 0) {
-                return;
-            }
 
-            let w = srcDiv.width();
-            if (w >= 450) {
-                w = w + 21;
-            } else if (w >= 350 && w < 450) {
-                w = w + 18;
-            } else if (w >= 300 && w < 350) {
-                w = w + 16;
-            } else {
-                w = w + 14;
-            }
-            $('#' + targetId).width(w);
-        };
 
-        // 切换TOC目录展开收缩的相关操作.
-        const expandedClass = 'expanded';
-        let $tocAside = $('#toc-aside');
-        let $mainContent = $('#main-content');
-        $('#floating-toc-btn .btn-floating').click(function () {
-            if ($tocAside.hasClass(expandedClass)) {
-                $tocAside.removeClass(expandedClass).hide();
-                $mainContent.removeClass('l9');
-            } else {
-                $tocAside.addClass(expandedClass).show();
-                $mainContent.addClass('l9');
-            }
-            fixPostCardWidth('artDetail', 'prenext-posts');
-        });
-        
-    })
-</script>
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
 
     
 
-</main>
-
-
-
-</main>
-
-<footer class="page-footer bg-color">
     
-        <link rel="stylesheet" href="/libs/aplayer/APlayer.min.css">
-<style>
-    .aplayer .aplayer-lrc p {
-        
-        font-size: 12px;
-        font-weight: 700;
-        line-height: 16px !important;
-    }
-
-    .aplayer .aplayer-lrc p.aplayer-lrc-current {
-        
-        font-size: 15px;
-        color: #42b983;
-    }
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
 
     
-    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body {
-        left: -66px !important;
-    }
-
-    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body:hover {
-        left: 0px !important;
-    }
-
-    
-</style>
-<div class="">
-    
-    <div class="row">
-        <meting-js class="col l8 offset-l2 m10 offset-m1 s12"
-                   server="netease"
-                   type="playlist"
-                   id="503838841"
-                   fixed='true'
-                   autoplay='false'
-                   theme='#42b983'
-                   loop='all'
-                   order='random'
-                   preload='auto'
-                   volume='0.7'
-                   list-folded='true'
-        >
-        </meting-js>
-    </div>
-</div>
-
-<script src="/libs/aplayer/APlayer.min.js"></script>
-<script src="/libs/aplayer/Meting.min.js"></script>
-
-    
-    <div class="container row center-align"
-         style="margin-bottom: 0px !important;">
-        <div class="col s12 m8 l8 copy-right">
-            Copyright&nbsp;&copy;
-            
-                <span id="year">2019-2023</span>
-            
-            <a href="/about" target="_blank">MirRoR4s</a>
-            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
-            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
-            <br>
-            
-                &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">265.2k</span>
-            
-            
-            
-                
-            
-            
-                <span id="busuanzi_container_site_pv">
-                &nbsp;|&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;
-                    <span id="busuanzi_value_site_pv" class="white-color"></span>
-            </span>
-            
-            
-                <span id="busuanzi_container_site_uv">
-                &nbsp;|&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;
-                    <span id="busuanzi_value_site_uv" class="white-color"></span>
-            </span>
-            
-            <br>
-
-            <!-- 运行天数提醒. -->
-            
-            <br>
-            
-        </div>
-        <div class="col s12 m4 l4 social-link social-statis">
-    <a href="https://github.com/blinkfox" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
-        <i class="fab fa-github"></i>
-    </a>
-
-
-
-    <a href="mailto:1181062873@qq.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
-        <i class="fas fa-envelope-open"></i>
-    </a>
-
-
-
-
-
-
-
-    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=1181062873" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 1181062873" data-position="top" data-delay="50">
-        <i class="fab fa-qq"></i>
-    </a>
-
-
-
-
-
-
-
-    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
-        <i class="fas fa-rss"></i>
-    </a>
-
-</div>
-    </div>
-</footer>
-
-<div class="progress-bar"></div>
-
-
-<!-- 搜索遮罩框 -->
-<div id="searchModal" class="modal">
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
     <div class="modal-content">
-        <div class="search-header">
-            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
-            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
-                   class="search-input">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
         </div>
-        <div id="searchResult"></div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
     </div>
+  </div>
 </div>
 
-<script type="text/javascript">
-$(function () {
-    var searchFunc = function (path, search_id, content_id) {
-        'use strict';
-        $.ajax({
-            url: path,
-            dataType: "xml",
-            success: function (xmlResponse) {
-                // get the contents from search data
-                var datas = $("entry", xmlResponse).map(function () {
-                    return {
-                        title: $("title", this).text(),
-                        content: $("content", this).text(),
-                        url: $("url", this).text()
-                    };
-                }).get();
-                var $input = document.getElementById(search_id);
-                var $resultContent = document.getElementById(content_id);
-                $input.addEventListener('input', function () {
-                    var str = '<ul class=\"search-result-list\">';
-                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
-                    $resultContent.innerHTML = "";
-                    if (this.value.trim().length <= 0) {
-                        return;
-                    }
-                    // perform local searching
-                    datas.forEach(function (data) {
-                        var isMatch = true;
-                        var data_title = data.title.trim().toLowerCase();
-                        var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
-                        var data_url = data.url;
-                        data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
-                        var index_title = -1;
-                        var index_content = -1;
-                        var first_occur = -1;
-                        // only match artiles with not empty titles and contents
-                        if (data_title !== '' && data_content !== '') {
-                            keywords.forEach(function (keyword, i) {
-                                index_title = data_title.indexOf(keyword);
-                                index_content = data_content.indexOf(keyword);
-                                if (index_title < 0 && index_content < 0) {
-                                    isMatch = false;
-                                } else {
-                                    if (index_content < 0) {
-                                        index_content = 0;
-                                    }
-                                    if (i === 0) {
-                                        first_occur = index_content;
-                                    }
-                                }
-                            });
-                        }
-                        // show search results
-                        if (isMatch) {
-                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
-                            var content = data.content.trim().replace(/<[^>]+>/g, "");
-                            if (first_occur >= 0) {
-                                // cut out 100 characters
-                                var start = first_occur - 20;
-                                var end = first_occur + 80;
-                                if (start < 0) {
-                                    start = 0;
-                                }
-                                if (start === 0) {
-                                    end = 100;
-                                }
-                                if (end > content.length) {
-                                    end = content.length;
-                                }
-                                var match_content = content.substr(start, end);
-                                // highlight all keywords
-                                keywords.forEach(function (keyword) {
-                                    var regS = new RegExp(keyword, "gi");
-                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
-                                });
+    
 
-                                str += "<p class=\"search-result\">" + match_content + "...</p>"
-                            }
-                            str += "</li>";
-                        }
-                    });
-                    str += "</ul>";
-                    $resultContent.innerHTML = str;
-                });
-            }
-        });
-    };
+    
+  </main>
 
-    searchFunc('/search.xml', 'searchInput', 'searchResult');
-});
-</script>
-
-<!-- 深色模式按钮 -->
-<a onclick="switchNightMode()" id="sma" title="模式切换">
-    <i class="fa fa-moon" id="nightMode" aria-hidden="true"></i>
-</a>
-<!-- 回到顶部按钮 -->
-<div id="backTop" class="top-scroll">
-    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
-        <i class="fas fa-arrow-up"></i>
-    </a>
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
 </div>
 
+  </footer>
 
-<script type="text/javascript">
-    $.getScript("https://cdn.jsdelivr.net/npm/pjax/pjax.min.js",loadPjax)
-    function loadPjax(){
-        var pjax = new Pjax({
-            selectors: [
-                "head title",
-                'head meta[name="keywords"]',
-                'head meta[name="description"]',
-                "main#main_wrap",
-                "#rightside"
-            ],
-            cache: true,
-            cacheBust: false
-        });
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
     }
 
-    // 开始 PJAX 执行的函数
-    document.addEventListener('pjax:send', function () {
-    });
-    // PJAX 完成之后执行的函数，可以和上面的重载放在一起
-    document.addEventListener('pjax:complete', function () {
-        document.querySelectorAll('script[data-pjax]').forEach(item => {
-            const newScript = document.createElement('script')
-            const content = item.text || item.textContent || item.innerHTML || ""
-            Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
-            newScript.appendChild(document.createTextNode(content))
-            item.parentNode.replaceChild(newScript, item)
-        })
-    });
-
-    // Pjax请求错误时，跳转到404页面
-    document.addEventListener('pjax:error', (err) => {
-        if (err.request.status === 404) {
-            pjax.loadUrl('/404.html')
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
         }
-    })
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
 </script>
 
 
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
 
-<script src="/libs/materialize/materialize.min.js"></script>
-<script src="/libs/masonry/masonry.pkgd.min.js"></script>
-<script src="/libs/aos/aos.js"></script>
-<script src="/libs/scrollprogress/scrollProgress.min.js"></script>
-<script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
-<script src="/js/matery.js"></script>
+  <script>Fluid.plugins.codeWidget();</script>
 
 
-
-
-
-<!-- 雪花特效 -->
-
-
-<!-- 鼠标星星特效 -->
-
-
-
-    <script src="https://ssl.captcha.qq.com/TCaptcha.js"></script>
-    <script src="/libs/others/TencentCaptcha.js"></script>
-    <button id="TencentCaptcha" data-appid="xxxxxxxxxx" data-cbfn="callback" type="button"
-            hidden></button>
-
-
-<!-- Baidu Analytics -->
-
-<!-- Baidu Push -->
-
+  
 <script>
-    (function () {
-        var bp = document.createElement('script');
-        var curProtocol = window.location.protocol.split(':')[0];
-        if (curProtocol === 'https') {
-            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
-        } else {
-            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
         }
-        var s = document.getElementsByTagName("script")[0];
-        s.parentNode.insertBefore(bp, s);
-    })();
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
 </script>
 
 
-    <script src="/libs/others/clicklove.js" async="async"></script>
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
 
 
-    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
 
 
 
 
 
-
-<!--腾讯兔小巢-->
-
-
-
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
 
 
+  
 
-
-
-    <script src="/libs/instantpage/instantpage.js" type="module"></script>
-
-
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
 </body>
-
 </html>

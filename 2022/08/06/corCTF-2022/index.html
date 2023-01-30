@@ -1,545 +1,313 @@
-<!DOCTYPE HTML>
-<html lang="zh-CN">
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
 
 
 <head>
-    <meta charset="utf-8">
-    <meta name="keywords" content="corCTF-2022, 学习记录">
-    <meta name="description" content="
-8月6号玩耍的一个ctf比赛
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="MirRoR4s">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="8月6号玩耍的一个ctf比赛">
+<meta property="og:type" content="article">
+<meta property="og:title" content="corCTF-2022">
+<meta property="og:url" content="https://mirror4s.github.io/2022/08/06/corCTF-2022/index.html">
+<meta property="og:site_name" content="学习记录">
+<meta property="og:description" content="8月6号玩耍的一个ctf比赛">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://mirror4s.github.io/2022/08/06/corCTF-2022/Users/mirror/Desktop/write-up/blog/source/images/image-20220808202154675.png">
+<meta property="og:image" content="https://mirror4s.github.io/AppData/Roaming/Typora/typora-user-images/image-20220916231300684.png">
+<meta property="og:image" content="https://mirror4s.github.io/AppData/Roaming/Typora/typora-user-images/image-20220918181504139.png">
+<meta property="article:published_time" content="2022-08-06T05:16:32.000Z">
+<meta property="article:modified_time" content="2022-09-19T01:41:37.096Z">
+<meta property="article:author" content="MirRoR4s">
+<meta property="article:tag" content="Crypto">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://mirror4s.github.io/2022/08/06/corCTF-2022/Users/mirror/Desktop/write-up/blog/source/images/image-20220808202154675.png">
+  
+  
+  
+  <title>corCTF-2022 - 学习记录</title>
 
-[TOC]
-太折磨了，最终只做出来一个签到题，第二个题不会之后再也没看其他的。
-
-tadpole-简单的同余定义根据同余的定义，将两个同余方程转化为p的倍数，然后求一下他们的公因数应该就是p
-a &amp;#x3D">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <meta name="renderer" content="webkit|ie-stand|ie-comp">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="format-detection" content="telephone=no">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="referrer" content="no-referrer-when-downgrade">
-    <!-- Global site tag (gtag.js) - Google Analytics -->
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
 
-    <title>corCTF-2022 | 学习记录</title>
-    <link rel="icon" type="image/png" href="/favicon.png">
-    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
-    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
-    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
-    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
-    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
-    <link rel="stylesheet" type="text/css" href="/css/matery.css">
-    <link rel="stylesheet" type="text/css" href="/css/my.css">
-    <link rel="stylesheet" type="text/css" href="/css/dark.css">
-    <script src="/libs/jquery/jquery-3.6.0.min.js"></script>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"mirror4s.github.io","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  
 <meta name="generator" content="Hexo 6.3.0"></head>
 
 
-
-
 <body>
-<header class="navbar-fixed">
-    <nav id="headNav" class="bg-color nav-transparent">
-        <div id="navContainer" class="nav-wrapper container">
-            <div class="brand-logo">
-                <a href="/" class="waves-effect waves-light">
-                    
-                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
-                    
-                    <span class="logo-span">学习记录</span>
-                </a>
-            </div>
-            
+  
 
-<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
-<ul class="right nav-menu">
-  
-  <li class="hide-on-med-and-down nav-item">
+  <header>
     
-    <a href="/" class="waves-effect waves-light">
-      
-      <i class="fas fa-home" style="zoom: 0.6;"></i>
-      
-      <span>首页</span>
-    </a>
-    
-  </li>
-  
-  <li class="hide-on-med-and-down nav-item">
-    
-    <a href="/tags" class="waves-effect waves-light">
-      
-      <i class="fas fa-tags" style="zoom: 0.6;"></i>
-      
-      <span>标签</span>
-    </a>
-    
-  </li>
-  
-  <li class="hide-on-med-and-down nav-item">
-    
-    <a href="/categories" class="waves-effect waves-light">
-      
-      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
-      
-      <span>分类</span>
-    </a>
-    
-  </li>
-  
-  <li class="hide-on-med-and-down nav-item">
-    
-    <a href="/archives" class="waves-effect waves-light">
-      
-      <i class="fas fa-archive" style="zoom: 0.6;"></i>
-      
-      <span>归档</span>
-    </a>
-    
-  </li>
-  
-  <li class="hide-on-med-and-down nav-item">
-    
-    <a href="/about" class="waves-effect waves-light">
-      
-      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
-      
-      <span>关于</span>
-    </a>
-    
-  </li>
-  
-  <li class="hide-on-med-and-down nav-item">
-    
-    <a href="/contact" class="waves-effect waves-light">
-      
-      <i class="fas fa-comments" style="zoom: 0.6;"></i>
-      
-      <span>留言板</span>
-    </a>
-    
-  </li>
-  
-  <li class="hide-on-med-and-down nav-item">
-    
-    <a href="/friends" class="waves-effect waves-light">
-      
-      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
-      
-      <span>友情链接</span>
-    </a>
-    
-  </li>
-  
-  <li>
-    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
-      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
-    </a>
-  </li>
-</ul>
 
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
 
-<div id="mobile-nav" class="side-nav sidenav">
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
 
-    <div class="mobile-head bg-color">
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
         
-        <img src="/medias/logo.png" class="logo-img circle responsive-img">
-        
-        <div class="logo-name">学习记录</div>
-        <div class="logo-desc">
-            
-            欢迎来到我的博客
-            
-        </div>
-    </div>
-
-    <ul class="menu-list mobile-menu-list">
-        
-        <li class="m-nav-item">
-	  
-		<a href="/" class="waves-effect waves-light">
-			
-			    <i class="fa-fw fas fa-home"></i>
-			
-			首页
-		</a>
           
-        </li>
-        
-        <li class="m-nav-item">
-	  
-		<a href="/tags" class="waves-effect waves-light">
-			
-			    <i class="fa-fw fas fa-tags"></i>
-			
-			标签
-		</a>
           
-        </li>
-        
-        <li class="m-nav-item">
-	  
-		<a href="/categories" class="waves-effect waves-light">
-			
-			    <i class="fa-fw fas fa-bookmark"></i>
-			
-			分类
-		</a>
           
-        </li>
-        
-        <li class="m-nav-item">
-	  
-		<a href="/archives" class="waves-effect waves-light">
-			
-			    <i class="fa-fw fas fa-archive"></i>
-			
-			归档
-		</a>
           
-        </li>
-        
-        <li class="m-nav-item">
-	  
-		<a href="/about" class="waves-effect waves-light">
-			
-			    <i class="fa-fw fas fa-user-circle"></i>
-			
-			关于
-		</a>
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
           
-        </li>
         
-        <li class="m-nav-item">
-	  
-		<a href="/contact" class="waves-effect waves-light">
-			
-			    <i class="fa-fw fas fa-comments"></i>
-			
-			留言板
-		</a>
           
-        </li>
-        
-        <li class="m-nav-item">
-	  
-		<a href="/friends" class="waves-effect waves-light">
-			
-			    <i class="fa-fw fas fa-address-book"></i>
-			
-			友情链接
-		</a>
           
-        </li>
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
         
         
-        <li><div class="divider"></div></li>
-        <li>
-            <a href="https://github.com/blinkfox/hexo-theme-matery" class="waves-effect waves-light" target="_blank">
-                <i class="fab fa-github-square fa-fw"></i>Fork Me
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
             </a>
-        </li>
+          </li>
+          
         
-    </ul>
-</div>
-
-
-        </div>
-
         
-            <style>
-    .nav-transparent .github-corner {
-        display: none !important;
-    }
-
-    .github-corner {
-        position: absolute;
-        z-index: 10;
-        top: 0;
-        right: 0;
-        border: 0;
-        transform: scale(1.1);
-    }
-
-    .github-corner svg {
-        color: #0f9d58;
-        fill: #fff;
-        height: 64px;
-        width: 64px;
-    }
-
-    .github-corner:hover .octo-arm {
-        animation: a 0.56s ease-in-out;
-    }
-
-    .github-corner .octo-arm {
-        animation: none;
-    }
-
-    @keyframes a {
-        0%,
-        to {
-            transform: rotate(0);
-        }
-        20%,
-        60% {
-            transform: rotate(-25deg);
-        }
-        40%,
-        80% {
-            transform: rotate(10deg);
-        }
-    }
-</style>
-
-<a href="https://github.com/blinkfox/hexo-theme-matery" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
-   data-tooltip="Fork Me" data-position="left" data-delay="50">
-    <svg viewBox="0 0 250 250" aria-hidden="true">
-        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
-        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
-              fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
-        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
-              fill="currentColor" class="octo-body"></path>
-    </svg>
-</a>
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
         
-    </nav>
-
-</header>
-
-
-<main id="main_wrap">
-    
-
-
-
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/12.jpg')">
-    <div class="container" style="right: 0px;left: 0px;">
-        <div class="row">
-            <div class="col s12 m12 l12">
-                <div class="brand">
-                    <h1 class="description center-align post-title">corCTF-2022</h1>
-                </div>
-            </div>
-        </div>
+      </ul>
     </div>
-</div>
+  </div>
+</nav>
 
+  
 
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="corCTF-2022"></span>
+          
+        </div>
 
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-08-06 13:16" pubdate>
+          2022年8月6日 下午
+        </time>
+      </span>
+    
+  </div>
 
-<main class="post-container content">
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          16k 字
+        
+      </span>
+    
 
     
-    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
-<style>
-    #articleContent h1::before,
-    #articleContent h2::before,
-    #articleContent h3::before,
-    #articleContent h4::before,
-    #articleContent h5::before,
-    #articleContent h6::before {
-        display: block;
-        content: " ";
-        height: 100px;
-        margin-top: -100px;
-        visibility: hidden;
-    }
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          137 分钟
+        
+      </span>
+    
 
-    #articleContent :focus {
-        outline: none;
-    }
+    
+    
+  </div>
 
-    .toc-fixed {
-        position: fixed;
-        top: 64px;
-    }
-
-    .toc-widget {
-        width: 345px;
-        padding-left: 20px;
-    }
-
-    .toc-widget .toc-title {
-        padding: 35px 0 15px 17px;
-        font-size: 1.5rem;
-        font-weight: bold;
-        line-height: 1.5rem;
-    }
-
-    .toc-widget ol {
-        padding: 0;
-        list-style: none;
-    }
-
-    #toc-content {
-        padding-bottom: 30px;
-        overflow: auto;
-    }
-
-    #toc-content ol {
-        padding-left: 10px;
-    }
-
-    #toc-content ol li {
-        padding-left: 10px;
-    }
-
-    #toc-content .toc-link:hover {
-        color: #42b983;
-        font-weight: 700;
-        text-decoration: underline;
-    }
-
-    #toc-content .toc-link::before {
-        background-color: transparent;
-        max-height: 25px;
-
-        position: absolute;
-        right: 23.5vw;
-        display: block;
-    }
-
-    #toc-content .is-active-link {
-        color: #42b983;
-    }
-
-    #floating-toc-btn {
-        position: fixed;
-        right: 15px;
-        bottom: 137px;
-        padding-top: 15px;
-        margin-bottom: 0;
-        z-index: 998;
-    }
-
-    #floating-toc-btn .btn-floating {
-        width: 48px;
-        height: 48px;
-    }
-
-    #floating-toc-btn .btn-floating i {
-        line-height: 48px;
-        font-size: 1.4rem;
-    }
-</style>
-<div class="row">
-    <div id="main-content" class="col s12 m12 l9">
-        <!-- 文章内容详情 -->
-<div id="artDetail">
-    <div class="card">
-        <div class="card-content article-info">
-            <div class="row tag-cate">
-                <div class="col s7">
-                    
-                    <div class="article-tag">
-                        
-                            <a href="/tags/Crypto/">
-                                <span class="chip bg-color">Crypto</span>
-                            </a>
-                        
-                    </div>
-                    
-                </div>
-                <div class="col s5 right-align">
-                    
-                </div>
-            </div>
-
-            <div class="post-info">
-                
-                <div class="post-date info-break-policy">
-                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2022-08-06
-                </div>
-                
-
-                
-                <div class="post-date info-break-policy">
-                    <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2022-09-19
-                </div>
-                
-
-                
-                <div class="info-break-policy">
-                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    3.4k
-                </div>
-                
-
-                
-                <div class="info-break-policy">
-                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    18 分
-                </div>
-                
-
-                
-                    <div id="busuanzi_container_page_pv" class="info-break-policy">
-                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
-                        <span id="busuanzi_value_page_pv"></span>
-                    </div>
-				
-            </div>
-        </div>
-        <hr class="clearfix">
 
         
-        <!-- 是否加载使用自带的 prismjs. -->
-        <link rel="stylesheet" href="/libs/prism/prism.css">
-        
+      </div>
 
-        
+      
+    </div>
+  </div>
+</div>
 
-        <div class="card-content article-card-content">
-            <div id="articleContent">
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">corCTF-2022</h1>
+            
+            
+              <div class="markdown-body">
+                
                 <!--toc-->
+
 <p>8月6号玩耍的一个ctf比赛</p>
 <span id="more"></span>
+
 <p>[TOC]</p>
 <p>太折磨了，最终只做出来一个签到题，第二个题不会之后再也没看其他的。</p>
-<p><img src="Users\mirror\Desktop\write-up\blog\source\images\image-20220808202154675.png" alt="image-20220808202154675"></p>
+<p><img src="Users\mirror\Desktop\write-up\blog\source\images\image-20220808202154675.png" srcset="/img/loading.gif" lazyload alt="image-20220808202154675"></p>
 <h3 id="tadpole-简单的同余定义"><a href="#tadpole-简单的同余定义" class="headerlink" title="tadpole-简单的同余定义"></a>tadpole-简单的同余定义</h3><p>根据同余的定义，将两个同余方程转化为p的倍数，然后求一下他们的公因数应该就是p</p>
-<pre class="line-numbers language-python" data-language="python"><code class="language-python">a &#x3D;  7904681699700731398014734140051852539595806699214201704996640156917030632322659247608208994194840235514587046537148300460058962186080655943804500265088604049870276334033409850015651340974377752209566343260236095126079946537115705967909011471361527517536608234561184232228641232031445095605905800675590040729
-b &#x3D;  16276123569406561065481657801212560821090379741833362117064628294630146690975007397274564762071994252430611109538448562330994891595998956302505598671868738461167036849263008183930906881997588494441620076078667417828837239330797541019054284027314592321358909551790371565447129285494856611848340083448507929914
-c1 &#x3D;  52926479498929750044944450970022719277159248911867759992013481774911823190312079157541825423250020665153531167070545276398175787563829542933394906173782217836783565154742242903537987641141610732290449825336292689379131350316072955262065808081711030055841841406454441280215520187695501682433223390854051207100
-c2 &#x3D;  65547980822717919074991147621216627925232640728803041128894527143789172030203362875900831296779973655308791371486165705460914922484808659375299900737148358509883361622225046840011907835671004704947767016613458301891561318029714351016012481309583866288472491239769813776978841785764693181622804797533665463949
-s1 &#x3D; 31337
-s2 &#x3D; c1
-k1p &#x3D; a*s1 + b -c1
-k2p &#x3D; a*s2 + b - c2
-from Crypto.Util.number import GCD,long_to_bytes
-p &#x3D; GCD(k1p,k2p)
-print(long_to_bytes(p))
-#b&#39;corctf&#123;1n_m4th3m4t1c5,_th3_3ucl1d14n_4lg0r1thm_1s_4n_3ff1c13nt_m3th0d_f0r_c0mput1ng_th3_GCD_0f_tw0_1nt3g3rs&#125; &lt;- this is flag adm&#39;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="luckyguess-简单的同余求逆运算"><a href="#luckyguess-简单的同余求逆运算" class="headerlink" title="luckyguess-简单的同余求逆运算"></a>luckyguess-简单的同余求逆运算</h3><pre class="line-numbers language-python" data-language="python"><code class="language-python">#!&#x2F;usr&#x2F;local&#x2F;bin&#x2F;python
-from random import getrandbits
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs python">a =  <span class="hljs-number">7904681699700731398014734140051852539595806699214201704996640156917030632322659247608208994194840235514587046537148300460058962186080655943804500265088604049870276334033409850015651340974377752209566343260236095126079946537115705967909011471361527517536608234561184232228641232031445095605905800675590040729</span><br>b =  <span class="hljs-number">16276123569406561065481657801212560821090379741833362117064628294630146690975007397274564762071994252430611109538448562330994891595998956302505598671868738461167036849263008183930906881997588494441620076078667417828837239330797541019054284027314592321358909551790371565447129285494856611848340083448507929914</span><br>c1 =  <span class="hljs-number">52926479498929750044944450970022719277159248911867759992013481774911823190312079157541825423250020665153531167070545276398175787563829542933394906173782217836783565154742242903537987641141610732290449825336292689379131350316072955262065808081711030055841841406454441280215520187695501682433223390854051207100</span><br>c2 =  <span class="hljs-number">65547980822717919074991147621216627925232640728803041128894527143789172030203362875900831296779973655308791371486165705460914922484808659375299900737148358509883361622225046840011907835671004704947767016613458301891561318029714351016012481309583866288472491239769813776978841785764693181622804797533665463949</span><br>s1 = <span class="hljs-number">31337</span><br>s2 = c1<br>k1p = a*s1 + b -c1<br>k2p = a*s2 + b - c2<br><span class="hljs-keyword">from</span> Crypto.Util.number <span class="hljs-keyword">import</span> GCD,long_to_bytes<br>p = GCD(k1p,k2p)<br><span class="hljs-built_in">print</span>(long_to_bytes(p))<br><span class="hljs-comment">#b&#x27;corctf&#123;1n_m4th3m4t1c5,_th3_3ucl1d14n_4lg0r1thm_1s_4n_3ff1c13nt_m3th0d_f0r_c0mput1ng_th3_GCD_0f_tw0_1nt3g3rs&#125; &lt;- this is flag adm&#x27;</span><br></code></pre></td></tr></table></figure>
 
-p &#x3D; 2**521 - 1
-a &#x3D; getrandbits(521)
-b &#x3D; getrandbits(521)
-print(&quot;a &#x3D;&quot;, a)
-print(&quot;b &#x3D;&quot;, b)
 
-try:
-    x &#x3D; int(input(&quot;enter your starting point: &quot;))
-    y &#x3D; int(input(&quot;alright, what&#39;s your guess? &quot;))
-except:
-    print(&quot;?&quot;)
-    exit(-1)
 
-r &#x3D; getrandbits(20)
-for _ in range(r):
-    x &#x3D; (x * a + b) % p
+<h3 id="luckyguess-简单的同余求逆运算"><a href="#luckyguess-简单的同余求逆运算" class="headerlink" title="luckyguess-简单的同余求逆运算"></a>luckyguess-简单的同余求逆运算</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment">#!/usr/local/bin/python</span><br><span class="hljs-keyword">from</span> random <span class="hljs-keyword">import</span> getrandbits<br><br>p = <span class="hljs-number">2</span>**<span class="hljs-number">521</span> - <span class="hljs-number">1</span><br>a = getrandbits(<span class="hljs-number">521</span>)<br>b = getrandbits(<span class="hljs-number">521</span>)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;a =&quot;</span>, a)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;b =&quot;</span>, b)<br><br><span class="hljs-keyword">try</span>:<br>    x = <span class="hljs-built_in">int</span>(<span class="hljs-built_in">input</span>(<span class="hljs-string">&quot;enter your starting point: &quot;</span>))<br>    y = <span class="hljs-built_in">int</span>(<span class="hljs-built_in">input</span>(<span class="hljs-string">&quot;alright, what&#x27;s your guess? &quot;</span>))<br><span class="hljs-keyword">except</span>:<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;?&quot;</span>)<br>    exit(-<span class="hljs-number">1</span>)<br><br>r = getrandbits(<span class="hljs-number">20</span>)<br><span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(r):<br>    x = (x * a + b) % p<br><br><span class="hljs-keyword">if</span> x == y:<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;wow, you are truly psychic! here, have a flag:&quot;</span>, <span class="hljs-built_in">open</span>(<span class="hljs-string">&quot;flag.txt&quot;</span>).read())<br><span class="hljs-keyword">else</span>:<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;sorry, you are not a true psychic... better luck next time&quot;</span>)<br></code></pre></td></tr></table></figure>
 
-if x &#x3D;&#x3D; y:
-    print(&quot;wow, you are truly psychic! here, have a flag:&quot;, open(&quot;flag.txt&quot;).read())
-else:
-    print(&quot;sorry, you are not a true psychic... better luck next time&quot;)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>找到了一些别人的wp：</p>
 <p><a target="_blank" rel="noopener" href="https://an00brektn.github.io/corctf22/#luckyguess">https://an00brektn.github.io/corctf22/#luckyguess</a></p>
 <p><a target="_blank" rel="noopener" href="https://discord.com/channels/835621507576496129/879152734396354581/1006008901365420052">https://discord.com/channels/835621507576496129/879152734396354581/1006008901365420052</a></p>
@@ -549,1253 +317,469 @@ else:
 <p>因为 $p$ 是素数，所以$(1-a)$ 在模 $p$ 下的逆元大概率存在，所以我们可以得到</p>
 <p>$x\equiv b\ (1-a)^{-1} \mod p$</p>
 <p>而 $a$ 、 $b$ 是固定的值，所以 $x$ 就这么求出来了。</p>
-<h3 id="exchanged-公式推导pohlig-hellman解离散对数"><a href="#exchanged-公式推导-pohlig-hellman解离散对数" class="headerlink" title="exchanged-公式推导+pohlig-hellman解离散对数"></a>exchanged-公式推导+pohlig-hellman解离散对数</h3><pre class="line-numbers language-python" data-language="python"><code class="language-python">from Crypto.Util.number import *
-from Crypto.Cipher import AES
-from Crypto.Util.Padding import pad
-from hashlib import sha256
-from secrets import randbelow
+<h3 id="exchanged-公式推导pohlig-hellman解离散对数"><a href="#exchanged-公式推导-pohlig-hellman解离散对数" class="headerlink" title="exchanged-公式推导+pohlig-hellman解离散对数"></a>exchanged-公式推导+pohlig-hellman解离散对数</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> Crypto.Util.number <span class="hljs-keyword">import</span> *<br><span class="hljs-keyword">from</span> Crypto.Cipher <span class="hljs-keyword">import</span> AES<br><span class="hljs-keyword">from</span> Crypto.Util.Padding <span class="hljs-keyword">import</span> pad<br><span class="hljs-keyword">from</span> hashlib <span class="hljs-keyword">import</span> sha256<br><span class="hljs-keyword">from</span> secrets <span class="hljs-keyword">import</span> randbelow<br><br>p = <span class="hljs-number">142031099029600410074857132245225995042133907174773113428619183542435280521982827908693709967174895346639746117298434598064909317599742674575275028013832939859778024440938714958561951083471842387497181706195805000375824824688304388119038321175358608957437054475286727321806430701729130544065757189542110211847</span><br>a = randbelow(p)<br>b = randbelow(p)<br>s = randbelow(p)<br><br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;p =&quot;</span>, p)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;a =&quot;</span>, a)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;b =&quot;</span>, b)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;s =&quot;</span>, s)<br><br>a_priv = randbelow(p) <span class="hljs-comment">#Return a random int in the range [0, p)</span><br>b_priv = randbelow(p)<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">f</span>(<span class="hljs-params">s</span>):<br>    <span class="hljs-keyword">return</span> (a * s + b) % p <span class="hljs-comment">#仿射加密？</span><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">mult</span>(<span class="hljs-params">s, n</span>):<br>    <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(n):<br>        s = f(s)<br>    <span class="hljs-keyword">return</span> s<br><br>A = mult(s, a_priv) <span class="hljs-comment">#对s进行a_priv次仿射加密</span><br>B = mult(s, b_priv) <span class="hljs-comment">#对s进行b_priv次仿射加密</span><br><br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;A =&quot;</span>, A)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;B =&quot;</span>, B)<br><br>shared = mult(A, b_priv) <span class="hljs-comment">#对A进行b_priv次仿射加密</span><br><span class="hljs-keyword">assert</span> mult(B, a_priv) == shared<br><br><br>flag = <span class="hljs-built_in">open</span>(<span class="hljs-string">&quot;flag.txt&quot;</span>, <span class="hljs-string">&quot;rb&quot;</span>).read()<br>key = sha256(long_to_bytes(shared)).digest()[:<span class="hljs-number">16</span>]<br>iv = long_to_bytes(randint(<span class="hljs-number">0</span>, <span class="hljs-number">2</span>**<span class="hljs-number">128</span>))<br>cipher = AES.new(key, AES.MODE_CBC, iv=iv)<br><span class="hljs-built_in">print</span>(iv.<span class="hljs-built_in">hex</span>() + cipher.encrypt(pad(flag, <span class="hljs-number">16</span>)).<span class="hljs-built_in">hex</span>())<br></code></pre></td></tr></table></figure>
 
-p &#x3D; 142031099029600410074857132245225995042133907174773113428619183542435280521982827908693709967174895346639746117298434598064909317599742674575275028013832939859778024440938714958561951083471842387497181706195805000375824824688304388119038321175358608957437054475286727321806430701729130544065757189542110211847
-a &#x3D; randbelow(p)
-b &#x3D; randbelow(p)
-s &#x3D; randbelow(p)
-
-print(&quot;p &#x3D;&quot;, p)
-print(&quot;a &#x3D;&quot;, a)
-print(&quot;b &#x3D;&quot;, b)
-print(&quot;s &#x3D;&quot;, s)
-
-a_priv &#x3D; randbelow(p) #Return a random int in the range [0, p)
-b_priv &#x3D; randbelow(p)
-
-def f(s):
-    return (a * s + b) % p #仿射加密？
-
-def mult(s, n):
-    for _ in range(n):
-        s &#x3D; f(s)
-    return s
-
-A &#x3D; mult(s, a_priv) #对s进行a_priv次仿射加密
-B &#x3D; mult(s, b_priv) #对s进行b_priv次仿射加密
-
-print(&quot;A &#x3D;&quot;, A)
-print(&quot;B &#x3D;&quot;, B)
-
-shared &#x3D; mult(A, b_priv) #对A进行b_priv次仿射加密
-assert mult(B, a_priv) &#x3D;&#x3D; shared
-
-
-flag &#x3D; open(&quot;flag.txt&quot;, &quot;rb&quot;).read()
-key &#x3D; sha256(long_to_bytes(shared)).digest()[:16]
-iv &#x3D; long_to_bytes(randint(0, 2**128))
-cipher &#x3D; AES.new(key, AES.MODE_CBC, iv&#x3D;iv)
-print(iv.hex() + cipher.encrypt(pad(flag, 16)).hex())<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>阅读完源代码发现有点类似于Diffle-Hellman密钥交换，不同的是现在要对s进行a_priv次 f(s) 操作。从数学的角度分析一下：</p>
-<p>$S_0 = S$</p>
-<p>$S_1 = aS_0+b \mod p $</p>
-<p>$S_2 = aS_1 +b \mod p$</p>
+<p>$S_0 &#x3D; S$</p>
+<p>$S_1 &#x3D; aS_0+b \mod p $</p>
+<p>$S_2 &#x3D; aS_1 +b \mod p$</p>
 <p>以此类推得到</p>
-<p>$S<em>i = aS</em>{i-1}+b \mod p $</p>
-<p>令 a_priv =  $ka$ ,  b_priv =  $kb$</p>
-<p>所以 <code>A = mult(s, a_priv)</code> 等价于 $S<em>{ka}\equiv aS</em>{ka-1}+b \mod p$</p>
-<p><code>B = mult(s, b_priv)</code> 等价于 $S<em>{kb}\equiv aS</em>{kb-1}+b \mod p $</p>
-<p>那么<code>mult(A, b_priv)</code> 就等价于 $S<em>{ka+1},S</em>{ka+2},…,S_{ka+kb}$ = <code>mult(B,a_priv)</code></p>
+<p>$S_i &#x3D; aS_{i-1}+b \mod p $</p>
+<p>令 a_priv &#x3D;  $ka$ ,  b_priv &#x3D;  $kb$</p>
+<p>所以 <code>A = mult(s, a_priv)</code> 等价于 $S_{ka}\equiv aS_{ka-1}+b \mod p$</p>
+<p><code>B = mult(s, b_priv)</code> 等价于 $S_{kb}\equiv aS_{kb-1}+b \mod p $</p>
+<p>那么<code>mult(A, b_priv)</code> 就等价于 $S_{ka+1},S_{ka+2},…,S_{ka+kb}$ &#x3D; <code>mult(B,a_priv)</code></p>
 <p>因此二者是相等的，所以可以成功共享密钥。</p>
 <p>解法1：离散对数</p>
 <p><a target="_blank" rel="noopener" href="https://connor-mccartney.github.io/cryptography/other/corCTF-2022">https://connor-mccartney.github.io/cryptography/other/corCTF-2022</a></p>
-<p>$f(s)=as+b\mod p \f(f(s))=a(as+b)+b=a^2s+ab+b\mod p\f(f(f(s)))=a(a^2s+ab+b)+b=a^3s+a^2b+ab+b \mod p$</p>
-<p>注意到上述公式除了最高次项之外，其余项可以写为和的形式，即 $f^n(s)=a^ns+b\sum_{i=1}^na^{i-1}=a^ns+ \frac{b(1-a^n)}{1-a}\mod p$</p>
-<p>令 $u=(1-a)^{-1}\mod p $</p>
-<p>则 $\begin{eqnarray} A ~&amp;\equiv&amp;  a^ns+b(1-a^n)u \mod p \nonumber \ A~&amp;\equiv&amp; a^ns+bu-ba^nu \mod p \nonumber  \A-bu~&amp;\equiv&amp; a^n(s-bu) \nonumber  \(A-bu)(s-bu)^{-1}~&amp;\equiv&amp; a^n \mod p \nonumber  \end{eqnarray} $</p>
+<p>$f(s)&#x3D;as+b\mod p \f(f(s))&#x3D;a(as+b)+b&#x3D;a^2s+ab+b\mod p\f(f(f(s)))&#x3D;a(a^2s+ab+b)+b&#x3D;a^3s+a^2b+ab+b \mod p$</p>
+<p>注意到上述公式除了最高次项之外，其余项可以写为和的形式，即 $f^n(s)&#x3D;a^ns+b\sum_{i&#x3D;1}^na^{i-1}&#x3D;a^ns+ \frac{b(1-a^n)}{1-a}\mod p$</p>
+<p>令 $u&#x3D;(1-a)^{-1}\mod p $</p>
+<p>则 $\begin{eqnarray} A <del>&amp;\equiv&amp;  a^ns+b(1-a^n)u \mod p \nonumber \ A</del>&amp;\equiv&amp; a^ns+bu-ba^nu \mod p \nonumber  \A-bu<del>&amp;\equiv&amp; a^n(s-bu) \nonumber  \(A-bu)(s-bu)^{-1}</del>&amp;\equiv&amp; a^n \mod p \nonumber  \end{eqnarray} $</p>
 <p>上述等式左边是已知的值，模数 $p$ 也知道。所以现在的问题就转化为了离散对数问题，幸运地是，由于 $p-1$ 是光滑的，所以我们可以利用pohlig-hellman解出n。</p>
-<pre class="line-numbers language-python" data-language="python"><code class="language-python">from Crypto.Util.number import *  
-from Crypto.Cipher import AES  
-from Crypto.Util.Padding import pad  
-from hashlib import sha256  
-from sympy.ntheory.residue_ntheory import _discrete_log_pohlig_hellman  
-  
-p &#x3D; 142031099029600410074857132245225995042133907174773113428619183542435280521982827908693709967174895346639746117298434598064909317599742674575275028013832939859778024440938714958561951083471842387497181706195805000375824824688304388119038321175358608957437054475286727321806430701729130544065757189542110211847  
-a &#x3D; 118090659823726532118457015460393501353551257181901234830868805299366725758012165845638977878322282762929021570278435511082796994178870962500440332899721398426189888618654464380851733007647761349698218193871563040337609238025971961729401986114391957513108804134147523112841191971447906617102015540889276702905  
-b &#x3D; 57950149871006152434673020146375196555892205626959676251724410016184935825712508121123309360222777559827093965468965268147720027647842492655071706063669328135127202250040935414836416360350924218462798003878266563205893267635176851677889275076622582116735064397099811275094311855310291134721254402338711815917  
-s &#x3D; 35701581351111604654913348867007078339402691770410368133625030427202791057766853103510974089592411344065769957370802617378495161837442670157827768677411871042401500071366317439681461271483880858007469502453361706001973441902698612564888892738986839322028935932565866492285930239231621460094395437739108335763  
-A &#x3D; 27055699502555282613679205402426727304359886337822675232856463708560598772666004663660052528328692282077165590259495090388216629240053397041429587052611133163886938471164829537589711598253115270161090086180001501227164925199272064309777701514693535680247097233110602308486009083412543129797852747444605837628  
-B &#x3D; 132178320037112737009726468367471898242195923568158234871773607005424001152694338993978703689030147215843125095282272730052868843423659165019475476788785426513627877574198334376818205173785102362137159225281640301442638067549414775820844039938433118586793458501467811405967773962568614238426424346683176754273  
-output &#x3D; &quot;e0364f9f55fc27fc46f3ab1dc9db48fa482eae28750eaba12f4f76091b099b01fdb64212f66caa6f366934c3b9929bad37997b3f9d071ce3c74d3e36acb26d6efc9caa2508ed023828583a236400d64e&quot;  
-  
-def mult_alternative(s, n):  
-   return (pow(a,n,p)*s + b*(1-pow(a,n,p))*pow(1-a, -1, p)) % p  
-  
-u &#x3D; pow(1-a, -1, p)  
-a_priv &#x3D; (_discrete_log_pohlig_hellman(p, ((A - b*u) * pow(s - u*b, -1, p)) % p, a))  
-b_priv &#x3D; (_discrete_log_pohlig_hellman(p, ((B - b*u) * pow(s - u*b, -1, p)) % p, a))  
-  
-assert mult_alternative(A, b_priv) &#x3D;&#x3D; mult_alternative(B, a_priv)  
-shared &#x3D; mult_alternative(A, b_priv)  
-key &#x3D; sha256(long_to_bytes(shared)).digest()[:16]  
-iv &#x3D; bytes.fromhex(output[:32])  
-enc &#x3D; bytes.fromhex(output[32:])  
-cipher &#x3D; AES.new(key, AES.MODE_CBC, iv&#x3D;iv)  
-print(cipher.decrypt(pad(enc, 16)))  
-  
-#corctf&#123;th1s_lcg_3xch4ng3_1s_4_l1ttl3_1ns3cur3_f0r_n0w&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> Crypto.Util.number <span class="hljs-keyword">import</span> *  <br><span class="hljs-keyword">from</span> Crypto.Cipher <span class="hljs-keyword">import</span> AES  <br><span class="hljs-keyword">from</span> Crypto.Util.Padding <span class="hljs-keyword">import</span> pad  <br><span class="hljs-keyword">from</span> hashlib <span class="hljs-keyword">import</span> sha256  <br><span class="hljs-keyword">from</span> sympy.ntheory.residue_ntheory <span class="hljs-keyword">import</span> _discrete_log_pohlig_hellman  <br>  <br>p = <span class="hljs-number">142031099029600410074857132245225995042133907174773113428619183542435280521982827908693709967174895346639746117298434598064909317599742674575275028013832939859778024440938714958561951083471842387497181706195805000375824824688304388119038321175358608957437054475286727321806430701729130544065757189542110211847</span>  <br>a = <span class="hljs-number">118090659823726532118457015460393501353551257181901234830868805299366725758012165845638977878322282762929021570278435511082796994178870962500440332899721398426189888618654464380851733007647761349698218193871563040337609238025971961729401986114391957513108804134147523112841191971447906617102015540889276702905</span>  <br>b = <span class="hljs-number">57950149871006152434673020146375196555892205626959676251724410016184935825712508121123309360222777559827093965468965268147720027647842492655071706063669328135127202250040935414836416360350924218462798003878266563205893267635176851677889275076622582116735064397099811275094311855310291134721254402338711815917</span>  <br>s = <span class="hljs-number">35701581351111604654913348867007078339402691770410368133625030427202791057766853103510974089592411344065769957370802617378495161837442670157827768677411871042401500071366317439681461271483880858007469502453361706001973441902698612564888892738986839322028935932565866492285930239231621460094395437739108335763</span>  <br>A = <span class="hljs-number">27055699502555282613679205402426727304359886337822675232856463708560598772666004663660052528328692282077165590259495090388216629240053397041429587052611133163886938471164829537589711598253115270161090086180001501227164925199272064309777701514693535680247097233110602308486009083412543129797852747444605837628</span>  <br>B = <span class="hljs-number">132178320037112737009726468367471898242195923568158234871773607005424001152694338993978703689030147215843125095282272730052868843423659165019475476788785426513627877574198334376818205173785102362137159225281640301442638067549414775820844039938433118586793458501467811405967773962568614238426424346683176754273</span>  <br>output = <span class="hljs-string">&quot;e0364f9f55fc27fc46f3ab1dc9db48fa482eae28750eaba12f4f76091b099b01fdb64212f66caa6f366934c3b9929bad37997b3f9d071ce3c74d3e36acb26d6efc9caa2508ed023828583a236400d64e&quot;</span>  <br>  <br><span class="hljs-keyword">def</span> <span class="hljs-title function_">mult_alternative</span>(<span class="hljs-params">s, n</span>):  <br>   <span class="hljs-keyword">return</span> (<span class="hljs-built_in">pow</span>(a,n,p)*s + b*(<span class="hljs-number">1</span>-<span class="hljs-built_in">pow</span>(a,n,p))*<span class="hljs-built_in">pow</span>(<span class="hljs-number">1</span>-a, -<span class="hljs-number">1</span>, p)) % p  <br>  <br>u = <span class="hljs-built_in">pow</span>(<span class="hljs-number">1</span>-a, -<span class="hljs-number">1</span>, p)  <br>a_priv = (_discrete_log_pohlig_hellman(p, ((A - b*u) * <span class="hljs-built_in">pow</span>(s - u*b, -<span class="hljs-number">1</span>, p)) % p, a))  <br>b_priv = (_discrete_log_pohlig_hellman(p, ((B - b*u) * <span class="hljs-built_in">pow</span>(s - u*b, -<span class="hljs-number">1</span>, p)) % p, a))  <br>  <br><span class="hljs-keyword">assert</span> mult_alternative(A, b_priv) == mult_alternative(B, a_priv)  <br>shared = mult_alternative(A, b_priv)  <br>key = sha256(long_to_bytes(shared)).digest()[:<span class="hljs-number">16</span>]  <br>iv = <span class="hljs-built_in">bytes</span>.fromhex(output[:<span class="hljs-number">32</span>])  <br>enc = <span class="hljs-built_in">bytes</span>.fromhex(output[<span class="hljs-number">32</span>:])  <br>cipher = AES.new(key, AES.MODE_CBC, iv=iv)  <br><span class="hljs-built_in">print</span>(cipher.decrypt(pad(enc, <span class="hljs-number">16</span>)))  <br>  <br><span class="hljs-comment">#corctf&#123;th1s_lcg_3xch4ng3_1s_4_l1ttl3_1ns3cur3_f0r_n0w&#125;</span><br></code></pre></td></tr></table></figure>
+
+
+
+
+
+
+
 <p>解法2：</p>
-<p><img src="../../../../AppData/Roaming/Typora/typora-user-images/image-20220916231300684.png" alt="image-20220916231300684"></p>
-<h3 id="hide-共模攻击"><a href="#hidE-共模攻击" class="headerlink" title="hidE-共模攻击"></a>hidE-共模攻击</h3><pre class="line-numbers language-python" data-language="python"><code class="language-python">#!&#x2F;usr&#x2F;local&#x2F;bin&#x2F;python
-import random
-import time
-import math
-import binascii
-from Crypto.Util.number import *
+<p><img src="/../../../../../AppData/Roaming/Typora/typora-user-images/image-20220916231300684.png" srcset="/img/loading.gif" lazyload alt="image-20220916231300684"></p>
+<h3 id="hide-共模攻击"><a href="#hidE-共模攻击" class="headerlink" title="hidE-共模攻击"></a>hidE-共模攻击</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment">#!/usr/local/bin/python</span><br><span class="hljs-keyword">import</span> random<br><span class="hljs-keyword">import</span> time<br><span class="hljs-keyword">import</span> math<br><span class="hljs-keyword">import</span> binascii<br><span class="hljs-keyword">from</span> Crypto.Util.number <span class="hljs-keyword">import</span> *<br><br>p, q = getPrime(<span class="hljs-number">512</span>), getPrime(<span class="hljs-number">512</span>)<br>n = p * q<br>phi = (p - <span class="hljs-number">1</span>) * (q - <span class="hljs-number">1</span>)<br><br>flag = <span class="hljs-built_in">open</span>(<span class="hljs-string">&#x27;./flag.txt&#x27;</span>).read().encode()<br><br>random.seed(<span class="hljs-built_in">int</span>(time.time()))<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">encrypt</span>(<span class="hljs-params">msg</span>):<br>    e = random.randint(<span class="hljs-number">1</span>, n)<br>    <span class="hljs-keyword">while</span> math.gcd(e, phi) != <span class="hljs-number">1</span>:<br>        e = random.randint(<span class="hljs-number">1</span>, n)<br>    pt = bytes_to_long(msg)<br>    ct = <span class="hljs-built_in">pow</span>(pt, e, n)<br>    <span class="hljs-keyword">return</span> binascii.hexlify(long_to_bytes(ct)).decode()<br><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">main</span>():<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;Secure Encryption Service&#x27;</span>)<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;Your modulus is:&#x27;</span>, n)<br>    <span class="hljs-keyword">while</span> <span class="hljs-literal">True</span>:<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;Options&#x27;</span>)<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;-------&#x27;</span>)<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;(1) Encrypt flag&#x27;</span>)<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;(2) Encrypt message&#x27;</span>)<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;(3) Quit&#x27;</span>)<br>        x = <span class="hljs-built_in">input</span>(<span class="hljs-string">&#x27;Choose an option: &#x27;</span>)<br>        <span class="hljs-keyword">if</span> x <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> <span class="hljs-string">&#x27;123&#x27;</span>:<br>            <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;Unrecognized option.&#x27;</span>)<br>            exit()<br>        <span class="hljs-keyword">elif</span> x == <span class="hljs-string">&#x27;1&#x27;</span>:<br>            <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;Here is your encrypted flag:&#x27;</span>, encrypt(flag))<br>        <span class="hljs-keyword">elif</span> x == <span class="hljs-string">&#x27;2&#x27;</span>:<br>            msg = <span class="hljs-built_in">input</span>(<span class="hljs-string">&#x27;Enter your message in hex: &#x27;</span>)<br>            <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;Here is your encrypted message:&#x27;</span>, encrypt(binascii.unhexlify(msg)))<br>        <span class="hljs-keyword">elif</span> x == <span class="hljs-string">&#x27;3&#x27;</span>:<br>            <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;Bye&#x27;</span>)<br>            exit()<br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&#x27;__main__&#x27;</span>:<br>    main()<br><br></code></pre></td></tr></table></figure>
 
-p, q &#x3D; getPrime(512), getPrime(512)
-n &#x3D; p * q
-phi &#x3D; (p - 1) * (q - 1)
-
-flag &#x3D; open(&#39;.&#x2F;flag.txt&#39;).read().encode()
-
-random.seed(int(time.time()))
-
-def encrypt(msg):
-    e &#x3D; random.randint(1, n)
-    while math.gcd(e, phi) !&#x3D; 1:
-        e &#x3D; random.randint(1, n)
-    pt &#x3D; bytes_to_long(msg)
-    ct &#x3D; pow(pt, e, n)
-    return binascii.hexlify(long_to_bytes(ct)).decode()
-
-
-def main():
-    print(&#39;Secure Encryption Service&#39;)
-    print(&#39;Your modulus is:&#39;, n)
-    while True:
-        print(&#39;Options&#39;)
-        print(&#39;-------&#39;)
-        print(&#39;(1) Encrypt flag&#39;)
-        print(&#39;(2) Encrypt message&#39;)
-        print(&#39;(3) Quit&#39;)
-        x &#x3D; input(&#39;Choose an option: &#39;)
-        if x not in &#39;123&#39;:
-            print(&#39;Unrecognized option.&#39;)
-            exit()
-        elif x &#x3D;&#x3D; &#39;1&#39;:
-            print(&#39;Here is your encrypted flag:&#39;, encrypt(flag))
-        elif x &#x3D;&#x3D; &#39;2&#39;:
-            msg &#x3D; input(&#39;Enter your message in hex: &#39;)
-            print(&#39;Here is your encrypted message:&#39;, encrypt(binascii.unhexlify(msg)))
-        elif x &#x3D;&#x3D; &#39;3&#39;:
-            print(&#39;Bye&#39;)
-            exit()
-
-if __name__ &#x3D;&#x3D; &#39;__main__&#39;:
-    main()
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>赛后复现原本想重启docker环境的，但是docker莫名报错，解决不了；最后自己写了一个服务器端环境。</p>
-<pre class="line-numbers language-python" data-language="python"><code class="language-python">#!&#x2F;usr&#x2F;local&#x2F;bin&#x2F;python
-import random
-import time
-import math
-import binascii
-from Crypto.Util.number import *
-from pwn import *
-l &#x3D; listen(12345)
-l.wait_for_connection()
-
-p, q &#x3D; getPrime(512), getPrime(512)
-n &#x3D; p * q
-phi &#x3D; (p - 1) * (q - 1)
-
-flag &#x3D; b&#39;corctf&#123;y34h_th4t_w4snt_v3ry_h1dd3n_tbh_l0l&#125;&#39;
-
-random.seed(int(time.time()))
-
-def encrypt(msg):
-    e &#x3D; random.randint(1, n)
-    while math.gcd(e, phi) !&#x3D; 1:
-        e &#x3D; random.randint(1, n)
-    pt &#x3D; bytes_to_long(msg)
-    ct &#x3D; pow(pt, e, n)
-    return binascii.hexlify(long_to_bytes(ct)).decode()
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment">#!/usr/local/bin/python</span><br><span class="hljs-keyword">import</span> random<br><span class="hljs-keyword">import</span> time<br><span class="hljs-keyword">import</span> math<br><span class="hljs-keyword">import</span> binascii<br><span class="hljs-keyword">from</span> Crypto.Util.number <span class="hljs-keyword">import</span> *<br><span class="hljs-keyword">from</span> pwn <span class="hljs-keyword">import</span> *<br>l = listen(<span class="hljs-number">12345</span>)<br>l.wait_for_connection()<br><br>p, q = getPrime(<span class="hljs-number">512</span>), getPrime(<span class="hljs-number">512</span>)<br>n = p * q<br>phi = (p - <span class="hljs-number">1</span>) * (q - <span class="hljs-number">1</span>)<br><br>flag = <span class="hljs-string">b&#x27;corctf&#123;y34h_th4t_w4snt_v3ry_h1dd3n_tbh_l0l&#125;&#x27;</span><br><br>random.seed(<span class="hljs-built_in">int</span>(time.time()))<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">encrypt</span>(<span class="hljs-params">msg</span>):<br>    e = random.randint(<span class="hljs-number">1</span>, n)<br>    <span class="hljs-keyword">while</span> math.gcd(e, phi) != <span class="hljs-number">1</span>:<br>        e = random.randint(<span class="hljs-number">1</span>, n)<br>    pt = bytes_to_long(msg)<br>    ct = <span class="hljs-built_in">pow</span>(pt, e, n)<br>    <span class="hljs-keyword">return</span> binascii.hexlify(long_to_bytes(ct)).decode()<br><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">main</span>():<br>    l.sendline(<span class="hljs-string">&#x27;Secure Encryption Service&#x27;</span>.encode())<br>    l.sendline(<span class="hljs-string">&quot;Your modulus is: &#123;&#125;&quot;</span>.<span class="hljs-built_in">format</span>(n).encode())<br>    <span class="hljs-comment">#l.send(str(n).encode())</span><br>    <span class="hljs-keyword">while</span> <span class="hljs-literal">True</span>:<br>        l.sendline(<span class="hljs-string">&#x27;Options&#x27;</span>.encode())<br>        l.sendline(<span class="hljs-string">&#x27;-------&#x27;</span>.encode())<br>        l.sendline(<span class="hljs-string">&#x27;(1) Encrypt flag&#x27;</span>.encode())<br>        l.sendline(<span class="hljs-string">&#x27;(2) Encrypt message&#x27;</span>.encode())<br>        l.sendline(<span class="hljs-string">&#x27;(3) Quit&#x27;</span>.encode())<br>        l.sendline(<span class="hljs-string">&#x27;Choose an option: &#x27;</span>.encode())<br><br>        x = l.recvline().strip().decode()<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;x=&#x27;</span>,x)<br>        <span class="hljs-keyword">if</span> x <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> <span class="hljs-string">&#x27;123&#x27;</span>:<br>            <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;我不在&#x27;</span>)<br>            l.sendline(<span class="hljs-string">&#x27;Unrecognized option.&#x27;</span>.encode())<br>            exit()<br>        <span class="hljs-keyword">elif</span> x == <span class="hljs-string">&#x27;1&#x27;</span>:<br>            <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;1111&#x27;</span>)<br>            data = <span class="hljs-string">&#x27;Here is your encrypted flag: &#123;&#125;&#x27;</span>.<span class="hljs-built_in">format</span>(encrypt(flag)).encode()<br>            <span class="hljs-built_in">print</span>(data)<br>            l.sendline(data)<br><br>        <span class="hljs-keyword">elif</span> x == <span class="hljs-string">&#x27;2&#x27;</span>:<br>            l.sendline(<span class="hljs-string">&#x27;Enter your message in hex: &#x27;</span>.encode())<br>            msg = l.recvline()<br>            l.sendline(<span class="hljs-string">&#x27;Here is your encrypted message:&#x27;</span>, encrypt(binascii.unhexlify(msg)))<br>        <span class="hljs-keyword">elif</span> x == <span class="hljs-string">&#x27;3&#x27;</span>:<br>            l.sendline(<span class="hljs-string">&#x27;Bye&#x27;</span>.encode())<br>            exit()<br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&#x27;__main__&#x27;</span>:<br>    main()<br><br><br></code></pre></td></tr></table></figure>
 
 
-def main():
-    l.sendline(&#39;Secure Encryption Service&#39;.encode())
-    l.sendline(&quot;Your modulus is: &#123;&#125;&quot;.format(n).encode())
-    #l.send(str(n).encode())
-    while True:
-        l.sendline(&#39;Options&#39;.encode())
-        l.sendline(&#39;-------&#39;.encode())
-        l.sendline(&#39;(1) Encrypt flag&#39;.encode())
-        l.sendline(&#39;(2) Encrypt message&#39;.encode())
-        l.sendline(&#39;(3) Quit&#39;.encode())
-        l.sendline(&#39;Choose an option: &#39;.encode())
 
-        x &#x3D; l.recvline().strip().decode()
-        print(&#39;x&#x3D;&#39;,x)
-        if x not in &#39;123&#39;:
-            print(&#39;我不在&#39;)
-            l.sendline(&#39;Unrecognized option.&#39;.encode())
-            exit()
-        elif x &#x3D;&#x3D; &#39;1&#39;:
-            print(&#39;1111&#39;)
-            data &#x3D; &#39;Here is your encrypted flag: &#123;&#125;&#39;.format(encrypt(flag)).encode()
-            print(data)
-            l.sendline(data)
-
-        elif x &#x3D;&#x3D; &#39;2&#39;:
-            l.sendline(&#39;Enter your message in hex: &#39;.encode())
-            msg &#x3D; l.recvline()
-            l.sendline(&#39;Here is your encrypted message:&#39;, encrypt(binascii.unhexlify(msg)))
-        elif x &#x3D;&#x3D; &#39;3&#39;:
-            l.sendline(&#39;Bye&#39;.encode())
-            exit()
-
-if __name__ &#x3D;&#x3D; &#39;__main__&#39;:
-    main()
-
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>解题脚本：</p>
-<pre class="line-numbers language-python" data-language="python"><code class="language-python">from pwn import *
-from Crypto.Util.number import *
-from time import time
-from random import Random
-from gmpy2 import *
-
-# io &#x3D; process([&quot;python&quot;, &quot;main.py&quot;])
-io &#x3D; remote(&quot;127.0.0.1&quot;, 12345)
-io.recvuntil(b&quot;Your modulus is: &quot;)
-n &#x3D; int(io.recvline())
-print(n)
-
-def getflag():
-    io.sendlineafter(b&quot;option: &quot;, b&quot;1&quot;)
-    io.recvuntil(b&quot;flag: &quot;)
-    data &#x3D; io.recvline().strip().decode()
-    print(&#39;data&#x3D;&#39;,data)
-    return bytes_to_long(bytes.fromhex(data))
-
-
-start &#x3D; int(time())
-c1, c2 &#x3D; getflag(), getflag()
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> pwn <span class="hljs-keyword">import</span> *<br><span class="hljs-keyword">from</span> Crypto.Util.number <span class="hljs-keyword">import</span> *<br><span class="hljs-keyword">from</span> time <span class="hljs-keyword">import</span> time<br><span class="hljs-keyword">from</span> random <span class="hljs-keyword">import</span> Random<br><span class="hljs-keyword">from</span> gmpy2 <span class="hljs-keyword">import</span> *<br><br><span class="hljs-comment"># io = process([&quot;python&quot;, &quot;main.py&quot;])</span><br>io = remote(<span class="hljs-string">&quot;127.0.0.1&quot;</span>, <span class="hljs-number">12345</span>)<br>io.recvuntil(<span class="hljs-string">b&quot;Your modulus is: &quot;</span>)<br>n = <span class="hljs-built_in">int</span>(io.recvline())<br><span class="hljs-built_in">print</span>(n)<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">getflag</span>():<br>    io.sendlineafter(<span class="hljs-string">b&quot;option: &quot;</span>, <span class="hljs-string">b&quot;1&quot;</span>)<br>    io.recvuntil(<span class="hljs-string">b&quot;flag: &quot;</span>)<br>    data = io.recvline().strip().decode()<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;data=&#x27;</span>,data)<br>    <span class="hljs-keyword">return</span> bytes_to_long(<span class="hljs-built_in">bytes</span>.fromhex(data))<br><br><br>start = <span class="hljs-built_in">int</span>(time())<br>c1, c2 = getflag(), getflag()<br><br><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">attack</span>(<span class="hljs-params">c1, c2, e1, e2</span>):<br>    g, a, b = gcdext(e1, e2)<br>    g, a, b = <span class="hljs-built_in">int</span>(g), <span class="hljs-built_in">int</span>(a), <span class="hljs-built_in">int</span>(b)<br>    <span class="hljs-keyword">if</span> <span class="hljs-built_in">int</span>(g) != <span class="hljs-number">1</span>:<br>        <span class="hljs-keyword">return</span><br>    <span class="hljs-keyword">return</span> powmod(c1, a, n) * powmod(c2, b, n) % n<br><br><br><span class="hljs-keyword">for</span> t <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(start - <span class="hljs-number">20</span>, start + <span class="hljs-number">20</span>):<br>    rng = Random(t)<br>    es = [rng.randint(<span class="hljs-number">1</span>, n) <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">10</span>)]<br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(es)):<br>        <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(i, <span class="hljs-built_in">len</span>(es)):<br>            m = attack(c1, c2, es[i], es[j])<br><br>            <span class="hljs-keyword">if</span> m <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> <span class="hljs-literal">None</span> <span class="hljs-keyword">and</span> <span class="hljs-string">b&#x27;corctf&#123;&#x27;</span> <span class="hljs-keyword">in</span> long_to_bytes(m)  :<br>                <span class="hljs-built_in">print</span>(long_to_bytes(m))<br><br><span class="hljs-comment"># corctf&#123;y34h_th4t_w4snt_v3ry_h1dd3n_tbh_l0l&#125;</span><br><br></code></pre></td></tr></table></figure>
 
 
 
-def attack(c1, c2, e1, e2):
-    g, a, b &#x3D; gcdext(e1, e2)
-    g, a, b &#x3D; int(g), int(a), int(b)
-    if int(g) !&#x3D; 1:
-        return
-    return powmod(c1, a, n) * powmod(c2, b, n) % n
+<h3 id="generous-okamoto-uchiyama-cryptosystem"><a href="#generous-Okamoto-Uchiyama-cryptosystem" class="headerlink" title="generous-Okamoto-Uchiyama cryptosystem"></a>generous-Okamoto-Uchiyama cryptosystem</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment">#!/usr/local/bin/python</span><br><span class="hljs-keyword">from</span> Crypto.Util.number <span class="hljs-keyword">import</span> getPrime, inverse, bytes_to_long<br><span class="hljs-keyword">from</span> random <span class="hljs-keyword">import</span> randrange<br><br><span class="hljs-keyword">with</span> <span class="hljs-built_in">open</span>(<span class="hljs-string">&quot;flag.txt&quot;</span>, <span class="hljs-string">&quot;rb&quot;</span>) <span class="hljs-keyword">as</span> f:<br>	flag = f.read().strip()<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">gen_keypair</span>():<br>	p, q = getPrime(<span class="hljs-number">512</span>), getPrime(<span class="hljs-number">512</span>)<br>	n = (p**<span class="hljs-number">2</span>) * q<br>	<span class="hljs-keyword">while</span> <span class="hljs-literal">True</span>:<br>		g = randrange(<span class="hljs-number">2</span>, n)<br>		<span class="hljs-keyword">if</span> <span class="hljs-built_in">pow</span>(g, p-<span class="hljs-number">1</span>, p**<span class="hljs-number">2</span>) != <span class="hljs-number">1</span>:<br>			<span class="hljs-keyword">break</span><br>	h = <span class="hljs-built_in">pow</span>(g, n, n)<br>	<span class="hljs-keyword">return</span> (n, g, h), (g, p, q)<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">encrypt</span>(<span class="hljs-params">pubkey, m</span>):<br>	n, g, h = pubkey<br>	r = randrange(<span class="hljs-number">1</span>, n)<br>	c = <span class="hljs-built_in">pow</span>(g, m, n) * <span class="hljs-built_in">pow</span>(h, r, n) % n<br>	<span class="hljs-keyword">return</span> c<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">decrypt</span>(<span class="hljs-params">privkey, c</span>):<br>	g, p, q = privkey<br>	a = (<span class="hljs-built_in">pow</span>(c, p-<span class="hljs-number">1</span>, p**<span class="hljs-number">2</span>) - <span class="hljs-number">1</span>) // p<br>	b = (<span class="hljs-built_in">pow</span>(g, p-<span class="hljs-number">1</span>, p**<span class="hljs-number">2</span>) - <span class="hljs-number">1</span>) // p<br>	m = a * inverse(b, p) % p<br>	<span class="hljs-keyword">return</span> m<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">oracle</span>(<span class="hljs-params">privkey, c</span>):<br>	m = decrypt(privkey, c)<br>	<span class="hljs-keyword">return</span> m % <span class="hljs-number">2</span><br><br>pub, priv = gen_keypair()<br>n, g, h = pub<br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;Public Key:\n<span class="hljs-subst">&#123;n = &#125;</span>\n<span class="hljs-subst">&#123;g = &#125;</span>\n<span class="hljs-subst">&#123;h = &#125;</span>&quot;</span>)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;Encrypted Flag: <span class="hljs-subst">&#123;encrypt(pub, bytes_to_long(flag))&#125;</span>&quot;</span>)<br><span class="hljs-keyword">while</span> <span class="hljs-literal">True</span>:<br>	inp = <span class="hljs-built_in">int</span>(<span class="hljs-built_in">input</span>(<span class="hljs-string">&quot;Enter ciphertext&gt; &quot;</span>))<br>	<span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;Oracle result: <span class="hljs-subst">&#123;oracle(priv, inp)&#125;</span>&quot;</span>)<br></code></pre></td></tr></table></figure>
 
 
-for t in range(start - 20, start + 20):
-    rng &#x3D; Random(t)
-    es &#x3D; [rng.randint(1, n) for _ in range(10)]
-    for i in range(len(es)):
-        for j in range(i, len(es)):
-            m &#x3D; attack(c1, c2, es[i], es[j])
 
-            if m is not None and b&#39;corctf&#123;&#39; in long_to_bytes(m)  :
-                print(long_to_bytes(m))
-
-# corctf&#123;y34h_th4t_w4snt_v3ry_h1dd3n_tbh_l0l&#125;
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="generous-okamoto-uchiyama-cryptosystem"><a href="#generous-Okamoto-Uchiyama-cryptosystem" class="headerlink" title="generous-Okamoto-Uchiyama cryptosystem"></a>generous-Okamoto-Uchiyama cryptosystem</h3><pre class="line-numbers language-python" data-language="python"><code class="language-python">#!&#x2F;usr&#x2F;local&#x2F;bin&#x2F;python
-from Crypto.Util.number import getPrime, inverse, bytes_to_long
-from random import randrange
-
-with open(&quot;flag.txt&quot;, &quot;rb&quot;) as f:
-	flag &#x3D; f.read().strip()
-
-def gen_keypair():
-	p, q &#x3D; getPrime(512), getPrime(512)
-	n &#x3D; (p**2) * q
-	while True:
-		g &#x3D; randrange(2, n)
-		if pow(g, p-1, p**2) !&#x3D; 1:
-			break
-	h &#x3D; pow(g, n, n)
-	return (n, g, h), (g, p, q)
-
-def encrypt(pubkey, m):
-	n, g, h &#x3D; pubkey
-	r &#x3D; randrange(1, n)
-	c &#x3D; pow(g, m, n) * pow(h, r, n) % n
-	return c
-
-def decrypt(privkey, c):
-	g, p, q &#x3D; privkey
-	a &#x3D; (pow(c, p-1, p**2) - 1) &#x2F;&#x2F; p
-	b &#x3D; (pow(g, p-1, p**2) - 1) &#x2F;&#x2F; p
-	m &#x3D; a * inverse(b, p) % p
-	return m
-
-def oracle(privkey, c):
-	m &#x3D; decrypt(privkey, c)
-	return m % 2
-
-pub, priv &#x3D; gen_keypair()
-n, g, h &#x3D; pub
-print(f&quot;Public Key:\n&#123;n &#x3D; &#125;\n&#123;g &#x3D; &#125;\n&#123;h &#x3D; &#125;&quot;)
-print(f&quot;Encrypted Flag: &#123;encrypt(pub, bytes_to_long(flag))&#125;&quot;)
-while True:
-	inp &#x3D; int(input(&quot;Enter ciphertext&gt; &quot;))
-	print(f&quot;Oracle result: &#123;oracle(priv, inp)&#125;&quot;)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h4 id="解题方法一二分查找迫近p"><a href="#解题方法一：二分查找迫近p" class="headerlink" title="解题方法一：二分查找迫近p"></a>解题方法一：二分查找迫近p</h4><p>本题实现了 <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Okamoto%E2%80%93Uchiyama_cryptosystem">Okamoto-Uchiyama cryptosystem</a> ，这也是一个公钥密码体制。现在我们拥有加密后的flag，并且我们可以解密任意密文并得到解密结果的最低位，很自然的就可以想到RSA的<a target="_blank" rel="noopener" href="https://ctf-wiki.org/crypto/asymmetric/rsa/rsa_chosen_plain_cipher/">LSB oracle</a>，使用类似的思想，看看能否从这个oracle中恢复出私钥的信息。</p>
-<p>注意到解密的信息会进行模 $p$ 的操作（在本题的密码体制中，公开模数 $n=p^2q$ ， $p$ 和 $q$ 组成了私钥。），这对我们很有用，因为我们可以从已知明文的解密结果收集到 $p$ 的信息。</p>
+<p>注意到解密的信息会进行模 $p$ 的操作（在本题的密码体制中，公开模数 $n&#x3D;p^2q$ ， $p$ 和 $q$ 组成了私钥。），这对我们很有用，因为我们可以从已知明文的解密结果收集到 $p$ 的信息。</p>
 <p>我们用 $\mathcal{O}$ 表示本题的oracle，于是我们有：</p>
 <p>$\left{ \begin{array}{rcl}1,&amp; if\ decrypt(c)\ is\ odd \ 0,&amp; otherwise\end{array}\right.$</p>
 <p>假设我们有一个小于p的信息m，考虑一下我们能从$\mathcal{O}(encrypt(2m))$ 中获得关于p的什么信息。</p>
 <p>如果该oracle返回1，那么我们一定有 $p&lt;2m$ 。你可能会疑惑难道 $p&lt;2m$ 就不会返回0么？</p>
 <p>让我们来分析一下，当 $p&lt;2m$ 时，根据带余除法我们有：</p>
-<p>$2m=k*p+r,\ 0&lt;=r&lt;p$</p>
+<p>$2m&#x3D;k*p+r,\ 0&lt;&#x3D;r&lt;p$</p>
 <p>因为 $2m$ 是偶数，$kp$ 是奇数，所以 $r$ 必定是奇数，所以此时返回的结果一定是 $1$ </p>
-<p>当 $p&gt;=2m$ 时，此时模 $p$ 什么都没做，直接返回 $0$ 。</p>
+<p>当 $p&gt;&#x3D;2m$ 时，此时模 $p$ 什么都没做，直接返回 $0$ 。</p>
 <p>因此根据以上两种状态，我们可以写一个二分查找算法来找到 $p$ 可能在的区间，从而拿到私钥。</p>
 <p>因为 $p$ 是一个 $512$ 比特的素数，所以最多进行 $512$ 次二分查找就可以确定 $p$ 所在的区间。</p>
-<pre class="line-numbers language-python" data-language="python"><code class="language-python">from pwn import *
-from Crypto.Util.number import long_to_bytes, inverse
-import random
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> pwn <span class="hljs-keyword">import</span> *<br><span class="hljs-keyword">from</span> Crypto.Util.number <span class="hljs-keyword">import</span> long_to_bytes, inverse<br><span class="hljs-keyword">import</span> random<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">encrypt</span>(<span class="hljs-params">pubkey, m</span>):<br>	n, g, h = pubkey<br>	r = random.randrange(<span class="hljs-number">1</span>, n)<br>	c = <span class="hljs-built_in">pow</span>(g, m, n) * <span class="hljs-built_in">pow</span>(h, r, n) % n<br>	<span class="hljs-keyword">return</span> c<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">decrypt</span>(<span class="hljs-params">privkey, c</span>):<br>	g, p, q = privkey<br>	a = (<span class="hljs-built_in">pow</span>(c, p-<span class="hljs-number">1</span>, p**<span class="hljs-number">2</span>) - <span class="hljs-number">1</span>) // p<br>	b = (<span class="hljs-built_in">pow</span>(g, p-<span class="hljs-number">1</span>, p**<span class="hljs-number">2</span>) - <span class="hljs-number">1</span>) // p<br>	m = a * inverse(b, p) % p<br>	<span class="hljs-keyword">return</span> m<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">oracle</span>(<span class="hljs-params">c</span>):<br>	conn.sendlineafter(<span class="hljs-string">b&#x27;&gt; &#x27;</span>, <span class="hljs-built_in">str</span>(c).encode())<br>	<span class="hljs-keyword">return</span> <span class="hljs-built_in">int</span>(conn.recvline().decode().strip().split(<span class="hljs-string">&#x27;result: &#x27;</span>)[<span class="hljs-number">1</span>])<br><br>conn = remote(<span class="hljs-string">&#x27;be.ax&#x27;</span>, <span class="hljs-number">31244</span>)<br>conn.recvline()<br>n = <span class="hljs-built_in">int</span>(conn.recvline().decode().strip().split(<span class="hljs-string">&#x27;n = &#x27;</span>)[<span class="hljs-number">1</span>])<br>g = <span class="hljs-built_in">int</span>(conn.recvline().decode().strip().split(<span class="hljs-string">&#x27;g = &#x27;</span>)[<span class="hljs-number">1</span>])<br>h = <span class="hljs-built_in">int</span>(conn.recvline().decode().strip().split(<span class="hljs-string">&#x27;h = &#x27;</span>)[<span class="hljs-number">1</span>])<br>flag_enc = <span class="hljs-built_in">int</span>(conn.recvline().decode().strip().split(<span class="hljs-string">&#x27;Flag: &#x27;</span>)[<span class="hljs-number">1</span>])<br>pubkey = (n, g, h)<br><br>U = <span class="hljs-number">2</span>**<span class="hljs-number">511</span><br>L = <span class="hljs-number">0</span><br>i = <span class="hljs-number">1</span><br><span class="hljs-keyword">while</span> i &lt; <span class="hljs-number">512</span>:<br>	my_m = (U + L) // <span class="hljs-number">2</span><br>	my_c = encrypt(pubkey, <span class="hljs-number">2</span> * my_m)<br>	b = oracle(my_c)<br>	<span class="hljs-keyword">if</span> b:<br>		U = (L + U) // <span class="hljs-number">2</span><br>	<span class="hljs-keyword">else</span>:<br>		L = (U + L) // <span class="hljs-number">2</span><br>	<span class="hljs-built_in">print</span>(i, L, U)<br>	i += <span class="hljs-number">1</span><br><br>p = <span class="hljs-number">2</span> * L + <span class="hljs-number">1</span><br>q = n // (p*p)<br>privkey = (g, p, q)<br>flag = decrypt(privkey, flag_enc)<br><span class="hljs-built_in">print</span>(long_to_bytes(flag).decode())<br><br><span class="hljs-comment"># corctf&#123;see?1_bit_is_very_generous_of_me&#125;</span><br></code></pre></td></tr></table></figure>
 
-def encrypt(pubkey, m):
-	n, g, h &#x3D; pubkey
-	r &#x3D; random.randrange(1, n)
-	c &#x3D; pow(g, m, n) * pow(h, r, n) % n
-	return c
-
-def decrypt(privkey, c):
-	g, p, q &#x3D; privkey
-	a &#x3D; (pow(c, p-1, p**2) - 1) &#x2F;&#x2F; p
-	b &#x3D; (pow(g, p-1, p**2) - 1) &#x2F;&#x2F; p
-	m &#x3D; a * inverse(b, p) % p
-	return m
-
-def oracle(c):
-	conn.sendlineafter(b&#39;&gt; &#39;, str(c).encode())
-	return int(conn.recvline().decode().strip().split(&#39;result: &#39;)[1])
-
-conn &#x3D; remote(&#39;be.ax&#39;, 31244)
-conn.recvline()
-n &#x3D; int(conn.recvline().decode().strip().split(&#39;n &#x3D; &#39;)[1])
-g &#x3D; int(conn.recvline().decode().strip().split(&#39;g &#x3D; &#39;)[1])
-h &#x3D; int(conn.recvline().decode().strip().split(&#39;h &#x3D; &#39;)[1])
-flag_enc &#x3D; int(conn.recvline().decode().strip().split(&#39;Flag: &#39;)[1])
-pubkey &#x3D; (n, g, h)
-
-U &#x3D; 2**511
-L &#x3D; 0
-i &#x3D; 1
-while i &lt; 512:
-	my_m &#x3D; (U + L) &#x2F;&#x2F; 2
-	my_c &#x3D; encrypt(pubkey, 2 * my_m)
-	b &#x3D; oracle(my_c)
-	if b:
-		U &#x3D; (L + U) &#x2F;&#x2F; 2
-	else:
-		L &#x3D; (U + L) &#x2F;&#x2F; 2
-	print(i, L, U)
-	i +&#x3D; 1
-
-p &#x3D; 2 * L + 1
-q &#x3D; n &#x2F;&#x2F; (p*p)
-privkey &#x3D; (g, p, q)
-flag &#x3D; decrypt(privkey, flag_enc)
-print(long_to_bytes(flag).decode())
-
-# corctf&#123;see?1_bit_is_very_generous_of_me&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>原链接：<a target="_blank" rel="noopener" href="https://jsur.in/posts/2022-08-08-corctf-2022-crypto-writeups#generous">https://jsur.in/posts/2022-08-08-corctf-2022-crypto-writeups#generous</a></p>
-<h4 id="解题方法二-原理未知-疑似利用同态性质"><a href="#解题方法二-原理未知-疑似利用同态性质：" class="headerlink" title="解题方法二-原理未知-疑似利用同态性质："></a>解题方法二-原理未知-疑似利用同态性质：</h4><p><img src="../../../../AppData/Roaming/Typora/typora-user-images/image-20220918181504139.png" alt="image-20220918181504139"></p>
-<pre class="line-numbers language-python" data-language="python"><code class="language-python">from pwn import *
-from random import randrange
-from Crypto.Util.number import *
+<h4 id="解题方法二-原理未知-疑似利用同态性质"><a href="#解题方法二-原理未知-疑似利用同态性质：" class="headerlink" title="解题方法二-原理未知-疑似利用同态性质："></a>解题方法二-原理未知-疑似利用同态性质：</h4><p><img src="/../../../../../AppData/Roaming/Typora/typora-user-images/image-20220918181504139.png" srcset="/img/loading.gif" lazyload alt="image-20220918181504139"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> pwn <span class="hljs-keyword">import</span> *<br><span class="hljs-keyword">from</span> random <span class="hljs-keyword">import</span> randrange<br><span class="hljs-keyword">from</span> Crypto.Util.number <span class="hljs-keyword">import</span> *<br><br><span class="hljs-comment"># io = process([&#x27;python&#x27;, &#x27;generous.py&#x27;])</span><br>io = remote(<span class="hljs-string">&quot;be.ax&quot;</span>, <span class="hljs-number">31244</span>)<br>io.recvuntil(<span class="hljs-string">b&#x27;n = &#x27;</span>)<br>n = <span class="hljs-built_in">int</span>(io.recvlineS())<br>io.recvuntil(<span class="hljs-string">b&#x27;g = &#x27;</span>)<br>g = <span class="hljs-built_in">int</span>(io.recvlineS())<br>io.recvuntil(<span class="hljs-string">b&#x27;h = &#x27;</span>)<br>h = <span class="hljs-built_in">int</span>(io.recvlineS())<br>pub = (n, g, h)<br>io.recvuntil(<span class="hljs-string">b&#x27;Encrypted Flag: &#x27;</span>)<br>c = <span class="hljs-built_in">int</span>(io.recvlineS())<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">encrypt</span>(<span class="hljs-params">pubkey, m</span>):<br>	n, g, h = pubkey<br>	r = randrange(<span class="hljs-number">1</span>, n)<br>	c = <span class="hljs-built_in">pow</span>(g, m, n) * <span class="hljs-built_in">pow</span>(h, r, n) % n<br>	<span class="hljs-keyword">return</span> c<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">oracle</span>(<span class="hljs-params">c</span>):<br>    io.sendlineafter(<span class="hljs-string">b&#x27;Enter ciphertext&gt; &#x27;</span>, <span class="hljs-built_in">str</span>(c).encode())<br>    io.recvuntil(<span class="hljs-string">b&#x27;Oracle result: &#x27;</span>)<br>    <span class="hljs-keyword">return</span> <span class="hljs-built_in">int</span>(io.recvlineS())<br><br>bs = []<br><span class="hljs-keyword">while</span> <span class="hljs-literal">True</span>:<br>    b = oracle(c)<br>    bs.append(b)<br>    c = (c * encrypt(pub, -b))%n<br>    c = <span class="hljs-built_in">pow</span>(c,<span class="hljs-built_in">pow</span>(<span class="hljs-number">2</span>,-<span class="hljs-number">1</span>,n),n)<br>    <span class="hljs-built_in">print</span>(unbits(bs[::-<span class="hljs-number">1</span>]))<br><span class="hljs-comment"># corctf&#123;see?1_bit_is_very_generous_of_me&#125;</span><br><br></code></pre></td></tr></table></figure>
 
-# io &#x3D; process([&#39;python&#39;, &#39;generous.py&#39;])
-io &#x3D; remote(&quot;be.ax&quot;, 31244)
-io.recvuntil(b&#39;n &#x3D; &#39;)
-n &#x3D; int(io.recvlineS())
-io.recvuntil(b&#39;g &#x3D; &#39;)
-g &#x3D; int(io.recvlineS())
-io.recvuntil(b&#39;h &#x3D; &#39;)
-h &#x3D; int(io.recvlineS())
-pub &#x3D; (n, g, h)
-io.recvuntil(b&#39;Encrypted Flag: &#39;)
-c &#x3D; int(io.recvlineS())
-
-def encrypt(pubkey, m):
-	n, g, h &#x3D; pubkey
-	r &#x3D; randrange(1, n)
-	c &#x3D; pow(g, m, n) * pow(h, r, n) % n
-	return c
-
-def oracle(c):
-    io.sendlineafter(b&#39;Enter ciphertext&gt; &#39;, str(c).encode())
-    io.recvuntil(b&#39;Oracle result: &#39;)
-    return int(io.recvlineS())
-
-bs &#x3D; []
-while True:
-    b &#x3D; oracle(c)
-    bs.append(b)
-    c &#x3D; (c * encrypt(pub, -b))%n
-    c &#x3D; pow(c,pow(2,-1,n),n)
-    print(unbits(bs[::-1]))
-# corctf&#123;see?1_bit_is_very_generous_of_me&#125;
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>引用：<a target="_blank" rel="noopener" href="https://blog.maple3142.net/2022/08/07/corctf-2022-writeups/#generous">https://blog.maple3142.net/2022/08/07/corctf-2022-writeups/#generous</a></p>
 <h4 id="解题方法三-同态-连分数"><a href="#解题方法三-同态-连分数：" class="headerlink" title="解题方法三-同态-连分数："></a>解题方法三-同态-连分数：</h4><p>正如方法一所说，这是一个典型的LSB oracle，这里有一个例子：<a target="_blank" rel="noopener" href="https://crypto.stackexchange.com/questions/11053/rsa-least-significant-bit-oracle-attack">https://crypto.stackexchange.com/questions/11053/rsa-least-significant-bit-oracle-attack</a></p>
-<pre class="line-numbers language-python" data-language="python"><code class="language-python">from telnetlib import Telnet
-from sage.all import Integer, continued_fraction, QQ
-from tqdm import tqdm
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> telnetlib <span class="hljs-keyword">import</span> Telnet<br><span class="hljs-keyword">from</span> sage.<span class="hljs-built_in">all</span> <span class="hljs-keyword">import</span> Integer, continued_fraction, QQ<br><span class="hljs-keyword">from</span> tqdm <span class="hljs-keyword">import</span> tqdm<br><br>c = Telnet(<span class="hljs-string">&quot;be.ax&quot;</span>, <span class="hljs-number">31244</span>)<br><span class="hljs-keyword">while</span> <span class="hljs-literal">True</span>:<br>    line = c.read_until(<span class="hljs-string">b&quot;\n&quot;</span>).decode()<br>    <span class="hljs-keyword">if</span> <span class="hljs-string">&quot;n =&quot;</span> <span class="hljs-keyword">in</span> line:<br>        n = <span class="hljs-built_in">int</span>(line.strip().split()[-<span class="hljs-number">1</span>])<br>    <span class="hljs-keyword">elif</span> <span class="hljs-string">&quot;Flag:&quot;</span> <span class="hljs-keyword">in</span> line:<br>        ct = <span class="hljs-built_in">int</span>(line.strip().split()[-<span class="hljs-number">1</span>])<br>        <span class="hljs-keyword">break</span><br>c.read_until(<span class="hljs-string">b&quot;ciphertext&gt; &quot;</span>)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;n =&quot;</span>, n)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;ct =&quot;</span>, ct)<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">oracle</span>(<span class="hljs-params">x: <span class="hljs-built_in">int</span></span>):<br>    c.write(<span class="hljs-built_in">str</span>(x).encode() + <span class="hljs-string">b&quot;\n&quot;</span>)<br>    line = c.read_until(<span class="hljs-string">b&quot;\n&quot;</span>).decode()<br>    <span class="hljs-keyword">if</span> <span class="hljs-string">&quot; 1&quot;</span> <span class="hljs-keyword">in</span> line:<br>        <span class="hljs-keyword">return</span> <span class="hljs-number">1</span><br>    <span class="hljs-keyword">else</span>:<br>        <span class="hljs-keyword">return</span> <span class="hljs-number">0</span><br><br>x = ct<br>bits = []<br><span class="hljs-keyword">for</span> k <span class="hljs-keyword">in</span> tqdm(<span class="hljs-built_in">range</span>(<span class="hljs-number">1024</span>)):<br>    x = (x*x)%n<br>    bit = oracle(x)<br>    bits.append(bit)<br><span class="hljs-keyword">assert</span> <span class="hljs-built_in">len</span>(bits) == <span class="hljs-number">1024</span><br><br>num = <span class="hljs-built_in">sum</span>(b * <span class="hljs-number">2</span>**(<span class="hljs-number">1023</span>-i) <span class="hljs-keyword">for</span> i, b <span class="hljs-keyword">in</span> <span class="hljs-built_in">enumerate</span>(bits))<br>cf = continued_fraction(QQ(num) / QQ(<span class="hljs-number">2</span>**<span class="hljs-number">1024</span>))<br><span class="hljs-keyword">for</span> f <span class="hljs-keyword">in</span> cf.convergents():<br>    a = <span class="hljs-built_in">int</span>(f.numerator())<br>    b = <span class="hljs-built_in">int</span>(f.denominator())<br>    <span class="hljs-keyword">if</span> Integer(b).is_prime() <span class="hljs-keyword">and</span> b.bit_length() == <span class="hljs-number">512</span>:<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;p =&quot;</span>, b)<br>        p = b<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;msg =&quot;</span>, a.to_bytes(<span class="hljs-number">50</span>, <span class="hljs-string">&quot;big&quot;</span>))<br><span class="hljs-keyword">assert</span> n % (p*p) == <span class="hljs-number">0</span><br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;factors of n&quot;</span>)<br><span class="hljs-built_in">print</span>(p)<br><span class="hljs-built_in">print</span>(p)<br><span class="hljs-built_in">print</span>(n // (p*p))<br></code></pre></td></tr></table></figure>
 
-c &#x3D; Telnet(&quot;be.ax&quot;, 31244)
-while True:
-    line &#x3D; c.read_until(b&quot;\n&quot;).decode()
-    if &quot;n &#x3D;&quot; in line:
-        n &#x3D; int(line.strip().split()[-1])
-    elif &quot;Flag:&quot; in line:
-        ct &#x3D; int(line.strip().split()[-1])
-        break
-c.read_until(b&quot;ciphertext&gt; &quot;)
-print(&quot;n &#x3D;&quot;, n)
-print(&quot;ct &#x3D;&quot;, ct)
-
-def oracle(x: int):
-    c.write(str(x).encode() + b&quot;\n&quot;)
-    line &#x3D; c.read_until(b&quot;\n&quot;).decode()
-    if &quot; 1&quot; in line:
-        return 1
-    else:
-        return 0
-
-x &#x3D; ct
-bits &#x3D; []
-for k in tqdm(range(1024)):
-    x &#x3D; (x*x)%n
-    bit &#x3D; oracle(x)
-    bits.append(bit)
-assert len(bits) &#x3D;&#x3D; 1024
-
-num &#x3D; sum(b * 2**(1023-i) for i, b in enumerate(bits))
-cf &#x3D; continued_fraction(QQ(num) &#x2F; QQ(2**1024))
-for f in cf.convergents():
-    a &#x3D; int(f.numerator())
-    b &#x3D; int(f.denominator())
-    if Integer(b).is_prime() and b.bit_length() &#x3D;&#x3D; 512:
-        print(&quot;p &#x3D;&quot;, b)
-        p &#x3D; b
-        print(&quot;msg &#x3D;&quot;, a.to_bytes(50, &quot;big&quot;))
-assert n % (p*p) &#x3D;&#x3D; 0
-print(&quot;factors of n&quot;)
-print(p)
-print(p)
-print(n &#x2F;&#x2F; (p*p))<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
                 
-            </div>
+              </div>
+            
             <hr/>
-
-            
-
-    <div class="reprint" id="reprint-statement">
-        
-            <div class="reprint__author">
-                <span class="reprint-meta" style="font-weight: bold;">
-                    <i class="fas fa-user">
-                        文章作者:
-                    </i>
-                </span>
-                <span class="reprint-info">
-                    <a href="/about" rel="external nofollow noreferrer">MirRoR4s</a>
-                </span>
-            </div>
-            <div class="reprint__type">
-                <span class="reprint-meta" style="font-weight: bold;">
-                    <i class="fas fa-link">
-                        文章链接:
-                    </i>
-                </span>
-                <span class="reprint-info">
-                    <a href="https://MirRoR4s.github.io/2022/08/06/corCTF-2022/index.html">https://MirRoR4s.github.io/2022/08/06/corCTF-2022/index.html</a>
-                </span>
-            </div>
-            <div class="reprint__notice">
-                <span class="reprint-meta" style="font-weight: bold;">
-                    <i class="fas fa-copyright">
-                        版权声明:
-                    </i>
-                </span>
-                <span class="reprint-info">
-                    本博客所有文章除特別声明外，均采用
-                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
-                    许可协议。转载请注明来源
-                    <a href="/about" target="_blank">MirRoR4s</a>
-                    !
-                </span>
-            </div>
-        
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Crypto/">#Crypto</a>
+      
     </div>
-
-    <script async defer>
-      document.addEventListener("copy", function (e) {
-        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
-        M.toast({html: toastHTML})
-      });
-
-      function navToReprintStatement() {
-        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
-      }
-    </script>
-
-
-
-            <div class="tag_share" style="display: block;">
-                <div class="post-meta__tag-list" style="display: inline-block;">
-                    
-                        <div class="article-tag">
-                            
-                                <a href="/tags/Crypto/">
-                                    <span class="chip bg-color">Crypto</span>
-                                </a>
-                            
-                        </div>
-                    
-                </div>
-                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
-                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
-<div id="article-share">
-
-    
-    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
-    <script src="/libs/share/js/social-share.min.js"></script>
-    
-
-    
-
+  
 </div>
 
-                </div>
-            </div>
-            
-                <style>
-    #reward {
-        margin: 40px 0;
-        text-align: center;
-    }
 
-    #reward .reward-link {
-        font-size: 1.4rem;
-        line-height: 38px;
-    }
+              
+  
 
-    #reward .btn-floating:hover {
-        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.2);
-    }
-
-    #rewardModal {
-        width: 320px;
-        height: 350px;
-    }
-
-    #rewardModal .reward-title {
-        margin: 15px auto;
-        padding-bottom: 5px;
-    }
-
-    #rewardModal .modal-content {
-        padding: 10px;
-    }
-
-    #rewardModal .close {
-        position: absolute;
-        right: 15px;
-        top: 15px;
-        color: rgba(0, 0, 0, 0.5);
-        font-size: 1.3rem;
-        line-height: 20px;
-        cursor: pointer;
-    }
-
-    #rewardModal .close:hover {
-        color: #ef5350;
-        transform: scale(1.3);
-        -moz-transform:scale(1.3);
-        -webkit-transform:scale(1.3);
-        -o-transform:scale(1.3);
-    }
-
-    #rewardModal .reward-tabs {
-        margin: 0 auto;
-        width: 210px;
-    }
-
-    .reward-tabs .tabs {
-        height: 38px;
-        margin: 10px auto;
-        padding-left: 0;
-    }
-
-    .reward-content ul {
-        padding-left: 0 !important;
-    }
-
-    .reward-tabs .tabs .tab {
-        height: 38px;
-        line-height: 38px;
-    }
-
-    .reward-tabs .tab a {
-        color: #fff;
-        background-color: #ccc;
-    }
-
-    .reward-tabs .tab a:hover {
-        background-color: #ccc;
-        color: #fff;
-    }
-
-    .reward-tabs .wechat-tab .active {
-        color: #fff !important;
-        background-color: #22AB38 !important;
-    }
-
-    .reward-tabs .alipay-tab .active {
-        color: #fff !important;
-        background-color: #019FE8 !important;
-    }
-
-    .reward-tabs .reward-img {
-        width: 210px;
-        height: 210px;
-    }
-</style>
-
-<div id="reward">
-    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-medium waves-effect waves-light red">赏</a>
-
-    <!-- Modal Structure -->
-    <div id="rewardModal" class="modal">
-        <div class="modal-content">
-            <a class="close modal-close"><i class="fas fa-times"></i></a>
-            <h4 class="reward-title">你的赏识是我前进的动力</h4>
-            <div class="reward-content">
-                <div class="reward-tabs">
-                    <ul class="tabs row">
-                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
-                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
-                    </ul>
-                    <div id="alipay">
-                        <img src="/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
-                    </div>
-                    <div id="wechat">
-                        <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
-                    </div>
-                </div>
-            </div>
-        </div>
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>corCTF-2022</div>
+      <div>https://mirror4s.github.io/2022/08/06/corCTF-2022/index.html</div>
     </div>
-</div>
-
-<script>
-    $(function () {
-        $('.tabs').tabs();
-    });
-</script>
-
-            
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>MirRoR4s</div>
         </div>
-    </div>
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-<article id="prenext-posts" class="prev-next articles">
-    <div class="row article-row">
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
-            <div class="card">
-                <a href="/2022/08/06/ASC-Wargames/index.html">
-                    <div class="card-image">
-                        
-                        
-                        <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="ASC-Wargames">
-                        
-                        <span class="card-title">ASC-Wargames</span>
-                    </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2022年8月6日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
                 </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            
-周六参加的比赛，名字很酷，似乎是叫阿拉伯网络安全战争游戏？
-                        
-                    </div>
-                    <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2022-08-06
-                        </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-user fa-fw"></i>
-                            MirRoR4s
-                            
-                        </span>
-                    </div>
-                </div>
-                
-                <div class="card-action article-tags">
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
                     
-                    <a href="/tags/Crypto/">
-                        <span class="chip bg-color">Crypto</span>
-                    </a>
                     
+                      <a href="/2022/08/06/ASC-Wargames/index.html" title="ASC-Wargames">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">ASC-Wargames</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/08/03/java%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C/index.html" title="java命令执行">
+                        <span class="hidden-mobile">java命令执行</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
                 </div>
-                
+              
             </div>
+
+            
+          </article>
         </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
-            </div>
-            <div class="card">
-                <a href="/2022/08/03/java%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C/index.html">
-                    <div class="card-image">
-                        
-                        
-                        <img src="/medias/featureimages/22.jpg" class="responsive-img" alt="java命令执行">
-                        
-                        <span class="card-title">java命令执行</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            
-今天开始学java的web安全相关内容，冲！
-                        
-                    </div>
-                    <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-08-03
-                            </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/JAVA%E5%AE%89%E5%85%A8/" class="post-category">
-                                    JAVA安全
-                                </a>
-                            
-                            
-                        </span>
-                    </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/JAVA%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C/">
-                        <span class="chip bg-color">JAVA命令执行</span>
-                    </a>
-                    
-                </div>
-                
-            </div>
-        </div>
-        
+      </div>
     </div>
-</article>
 
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
 </div>
 
 
 
-<!-- 代码块功能依赖 -->
-<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
-
-<!-- 代码语言 -->
-
-<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
-
-
-<!-- 代码块复制 -->
-
-<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
-
-
-<!-- 代码块收缩 -->
-
-<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+  </aside>
 
 
     </div>
-    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
-        <div class="toc-widget card">
-            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
-            <div id="toc-content"></div>
-        </div>
-    </div>
-</div>
-
-<!-- TOC 悬浮按钮. -->
-
-<div id="floating-toc-btn" class="hide-on-med-and-down">
-    <a class="btn-floating btn-large bg-color">
-        <i class="fas fa-list-ul"></i>
-    </a>
+  </div>
 </div>
 
 
-<script src=""></script>
-<script>
-    $.getScript("/libs/tocbot/tocbot.min.js",function () {
-        tocbot.init({
-            tocSelector: '#toc-content',
-            contentSelector: '#articleContent',
-            headingsOffset: -($(window).height() * 0.4 - 45),
-            collapseDepth: Number('0'),
-            headingSelector: 'h2, h3, h4,h5'
-        });
 
-        // modify the toc link href to support Chinese.
-        let i = 0;
-        let tocHeading = 'toc-heading-';
-        $('#toc-content a').each(function () {
-            $(this).attr('href', '#' + tocHeading + (++i));
-        });
 
-        // modify the heading title id to support Chinese.
-        i = 0;
-        $('#articleContent').children('h2, h3, h4,h5').each(function () {
-            $(this).attr('id', tocHeading + (++i));
-        });
 
-        // Set scroll toc fixed.
-        let tocHeight = parseInt($(window).height() * 0.4 - 64);
-        let $tocWidget = $('.toc-widget');
-        $(window).scroll(function () {
-            let scroll = $(window).scrollTop();
-            /* add post toc fixed. */
-            if (scroll > tocHeight) {
-                $tocWidget.addClass('toc-fixed');
-            } else {
-                $tocWidget.removeClass('toc-fixed');
-            }
-        });
+  
 
-        
-        /* 修复文章卡片 div 的宽度. */
-        let fixPostCardWidth = function (srcId, targetId) {
-            let srcDiv = $('#' + srcId);
-            if (srcDiv.length === 0) {
-                return;
-            }
 
-            let w = srcDiv.width();
-            if (w >= 450) {
-                w = w + 21;
-            } else if (w >= 350 && w < 450) {
-                w = w + 18;
-            } else if (w >= 300 && w < 350) {
-                w = w + 16;
-            } else {
-                w = w + 14;
-            }
-            $('#' + targetId).width(w);
-        };
 
-        // 切换TOC目录展开收缩的相关操作.
-        const expandedClass = 'expanded';
-        let $tocAside = $('#toc-aside');
-        let $mainContent = $('#main-content');
-        $('#floating-toc-btn .btn-floating').click(function () {
-            if ($tocAside.hasClass(expandedClass)) {
-                $tocAside.removeClass(expandedClass).hide();
-                $mainContent.removeClass('l9');
-            } else {
-                $tocAside.addClass(expandedClass).show();
-                $mainContent.addClass('l9');
-            }
-            fixPostCardWidth('artDetail', 'prenext-posts');
-        });
-        
-    })
-</script>
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
 
     
 
-</main>
-
-
-
-</main>
-
-<footer class="page-footer bg-color">
     
-        <link rel="stylesheet" href="/libs/aplayer/APlayer.min.css">
-<style>
-    .aplayer .aplayer-lrc p {
-        
-        font-size: 12px;
-        font-weight: 700;
-        line-height: 16px !important;
-    }
-
-    .aplayer .aplayer-lrc p.aplayer-lrc-current {
-        
-        font-size: 15px;
-        color: #42b983;
-    }
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
 
     
-    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body {
-        left: -66px !important;
-    }
-
-    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body:hover {
-        left: 0px !important;
-    }
-
-    
-</style>
-<div class="">
-    
-    <div class="row">
-        <meting-js class="col l8 offset-l2 m10 offset-m1 s12"
-                   server="netease"
-                   type="playlist"
-                   id="503838841"
-                   fixed='true'
-                   autoplay='false'
-                   theme='#42b983'
-                   loop='all'
-                   order='random'
-                   preload='auto'
-                   volume='0.7'
-                   list-folded='true'
-        >
-        </meting-js>
-    </div>
-</div>
-
-<script src="/libs/aplayer/APlayer.min.js"></script>
-<script src="/libs/aplayer/Meting.min.js"></script>
-
-    
-    <div class="container row center-align"
-         style="margin-bottom: 0px !important;">
-        <div class="col s12 m8 l8 copy-right">
-            Copyright&nbsp;&copy;
-            
-                <span id="year">2019-2023</span>
-            
-            <a href="/about" target="_blank">MirRoR4s</a>
-            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
-            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
-            <br>
-            
-                &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">265.2k</span>
-            
-            
-            
-                
-            
-            
-                <span id="busuanzi_container_site_pv">
-                &nbsp;|&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;
-                    <span id="busuanzi_value_site_pv" class="white-color"></span>
-            </span>
-            
-            
-                <span id="busuanzi_container_site_uv">
-                &nbsp;|&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;
-                    <span id="busuanzi_value_site_uv" class="white-color"></span>
-            </span>
-            
-            <br>
-
-            <!-- 运行天数提醒. -->
-            
-            <br>
-            
-        </div>
-        <div class="col s12 m4 l4 social-link social-statis">
-    <a href="https://github.com/blinkfox" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
-        <i class="fab fa-github"></i>
-    </a>
-
-
-
-    <a href="mailto:1181062873@qq.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
-        <i class="fas fa-envelope-open"></i>
-    </a>
-
-
-
-
-
-
-
-    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=1181062873" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 1181062873" data-position="top" data-delay="50">
-        <i class="fab fa-qq"></i>
-    </a>
-
-
-
-
-
-
-
-    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
-        <i class="fas fa-rss"></i>
-    </a>
-
-</div>
-    </div>
-</footer>
-
-<div class="progress-bar"></div>
-
-
-<!-- 搜索遮罩框 -->
-<div id="searchModal" class="modal">
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
     <div class="modal-content">
-        <div class="search-header">
-            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
-            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
-                   class="search-input">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
         </div>
-        <div id="searchResult"></div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
     </div>
+  </div>
 </div>
 
-<script type="text/javascript">
-$(function () {
-    var searchFunc = function (path, search_id, content_id) {
-        'use strict';
-        $.ajax({
-            url: path,
-            dataType: "xml",
-            success: function (xmlResponse) {
-                // get the contents from search data
-                var datas = $("entry", xmlResponse).map(function () {
-                    return {
-                        title: $("title", this).text(),
-                        content: $("content", this).text(),
-                        url: $("url", this).text()
-                    };
-                }).get();
-                var $input = document.getElementById(search_id);
-                var $resultContent = document.getElementById(content_id);
-                $input.addEventListener('input', function () {
-                    var str = '<ul class=\"search-result-list\">';
-                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
-                    $resultContent.innerHTML = "";
-                    if (this.value.trim().length <= 0) {
-                        return;
-                    }
-                    // perform local searching
-                    datas.forEach(function (data) {
-                        var isMatch = true;
-                        var data_title = data.title.trim().toLowerCase();
-                        var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
-                        var data_url = data.url;
-                        data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
-                        var index_title = -1;
-                        var index_content = -1;
-                        var first_occur = -1;
-                        // only match artiles with not empty titles and contents
-                        if (data_title !== '' && data_content !== '') {
-                            keywords.forEach(function (keyword, i) {
-                                index_title = data_title.indexOf(keyword);
-                                index_content = data_content.indexOf(keyword);
-                                if (index_title < 0 && index_content < 0) {
-                                    isMatch = false;
-                                } else {
-                                    if (index_content < 0) {
-                                        index_content = 0;
-                                    }
-                                    if (i === 0) {
-                                        first_occur = index_content;
-                                    }
-                                }
-                            });
-                        }
-                        // show search results
-                        if (isMatch) {
-                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
-                            var content = data.content.trim().replace(/<[^>]+>/g, "");
-                            if (first_occur >= 0) {
-                                // cut out 100 characters
-                                var start = first_occur - 20;
-                                var end = first_occur + 80;
-                                if (start < 0) {
-                                    start = 0;
-                                }
-                                if (start === 0) {
-                                    end = 100;
-                                }
-                                if (end > content.length) {
-                                    end = content.length;
-                                }
-                                var match_content = content.substr(start, end);
-                                // highlight all keywords
-                                keywords.forEach(function (keyword) {
-                                    var regS = new RegExp(keyword, "gi");
-                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
-                                });
+    
 
-                                str += "<p class=\"search-result\">" + match_content + "...</p>"
-                            }
-                            str += "</li>";
-                        }
-                    });
-                    str += "</ul>";
-                    $resultContent.innerHTML = str;
-                });
-            }
-        });
-    };
+    
+  </main>
 
-    searchFunc('/search.xml', 'searchInput', 'searchResult');
-});
-</script>
-
-<!-- 深色模式按钮 -->
-<a onclick="switchNightMode()" id="sma" title="模式切换">
-    <i class="fa fa-moon" id="nightMode" aria-hidden="true"></i>
-</a>
-<!-- 回到顶部按钮 -->
-<div id="backTop" class="top-scroll">
-    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
-        <i class="fas fa-arrow-up"></i>
-    </a>
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
 </div>
 
+  </footer>
 
-<script type="text/javascript">
-    $.getScript("https://cdn.jsdelivr.net/npm/pjax/pjax.min.js",loadPjax)
-    function loadPjax(){
-        var pjax = new Pjax({
-            selectors: [
-                "head title",
-                'head meta[name="keywords"]',
-                'head meta[name="description"]',
-                "main#main_wrap",
-                "#rightside"
-            ],
-            cache: true,
-            cacheBust: false
-        });
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
     }
 
-    // 开始 PJAX 执行的函数
-    document.addEventListener('pjax:send', function () {
-    });
-    // PJAX 完成之后执行的函数，可以和上面的重载放在一起
-    document.addEventListener('pjax:complete', function () {
-        document.querySelectorAll('script[data-pjax]').forEach(item => {
-            const newScript = document.createElement('script')
-            const content = item.text || item.textContent || item.innerHTML || ""
-            Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
-            newScript.appendChild(document.createTextNode(content))
-            item.parentNode.replaceChild(newScript, item)
-        })
-    });
-
-    // Pjax请求错误时，跳转到404页面
-    document.addEventListener('pjax:error', (err) => {
-        if (err.request.status === 404) {
-            pjax.loadUrl('/404.html')
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
         }
-    })
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
 </script>
 
 
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
 
-<script src="/libs/materialize/materialize.min.js"></script>
-<script src="/libs/masonry/masonry.pkgd.min.js"></script>
-<script src="/libs/aos/aos.js"></script>
-<script src="/libs/scrollprogress/scrollProgress.min.js"></script>
-<script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
-<script src="/js/matery.js"></script>
+  <script>Fluid.plugins.codeWidget();</script>
 
 
-
-
-
-<!-- 雪花特效 -->
-
-
-<!-- 鼠标星星特效 -->
-
-
-
-    <script src="https://ssl.captcha.qq.com/TCaptcha.js"></script>
-    <script src="/libs/others/TencentCaptcha.js"></script>
-    <button id="TencentCaptcha" data-appid="xxxxxxxxxx" data-cbfn="callback" type="button"
-            hidden></button>
-
-
-<!-- Baidu Analytics -->
-
-<!-- Baidu Push -->
-
+  
 <script>
-    (function () {
-        var bp = document.createElement('script');
-        var curProtocol = window.location.protocol.split(':')[0];
-        if (curProtocol === 'https') {
-            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
-        } else {
-            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
         }
-        var s = document.getElementsByTagName("script")[0];
-        s.parentNode.insertBefore(bp, s);
-    })();
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
 </script>
 
 
-    <script src="/libs/others/clicklove.js" async="async"></script>
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
 
 
-    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
 
 
 
 
 
-
-<!--腾讯兔小巢-->
-
-
-
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
 
 
+  
 
-
-
-    <script src="/libs/instantpage/instantpage.js" type="module"></script>
-
-
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
 </body>
-
 </html>

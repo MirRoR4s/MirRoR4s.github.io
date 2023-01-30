@@ -1,1786 +1,730 @@
-<!DOCTYPE HTML>
-<html lang="zh-CN">
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
 
 
 <head>
-    <meta charset="utf-8">
-    <meta name="keywords" content="工作中写的爬取cve信息脚本总结, 学习记录">
-    <meta name="description" content="
-这是一个关于书写爬取cve信息脚本的总结
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="MirRoR4s">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="这是一个关于书写爬取cve信息脚本的总结">
+<meta property="og:type" content="article">
+<meta property="og:title" content="工作中写的爬取cve信息脚本总结">
+<meta property="og:url" content="https://mirror4s.github.io/2022/10/17/%E5%B7%A5%E4%BD%9C%E4%B8%AD%E5%86%99%E7%9A%84%E7%88%AC%E5%8F%96cve%E4%BF%A1%E6%81%AF%E8%84%9A%E6%9C%AC%E6%80%BB%E7%BB%93/index.html">
+<meta property="og:site_name" content="学习记录">
+<meta property="og:description" content="这是一个关于书写爬取cve信息脚本的总结">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-10-17T01:21:41.000Z">
+<meta property="article:modified_time" content="2022-10-18T01:04:42.884Z">
+<meta property="article:author" content="MirRoR4s">
+<meta property="article:tag" content="开发">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>工作中写的爬取cve信息脚本总结 - 学习记录</title>
 
-思考初始编写的时候以为只是一个临时所用脚本，没有想到后续要求越来越多。以至于在我改动的时候总是牵一发而动全身，代码之间的耦合太强了，所以要想办法使得各个模块之间变得独立一些。
-经过我的思考，打算">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <meta name="renderer" content="webkit|ie-stand|ie-comp">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="format-detection" content="telephone=no">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="referrer" content="no-referrer-when-downgrade">
-    <!-- Global site tag (gtag.js) - Google Analytics -->
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
 
-    <title>工作中写的爬取cve信息脚本总结 | 学习记录</title>
-    <link rel="icon" type="image/png" href="/favicon.png">
-    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
-    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
-    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
-    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
-    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
-    <link rel="stylesheet" type="text/css" href="/css/matery.css">
-    <link rel="stylesheet" type="text/css" href="/css/my.css">
-    <link rel="stylesheet" type="text/css" href="/css/dark.css">
-    <script src="/libs/jquery/jquery-3.6.0.min.js"></script>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"mirror4s.github.io","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  
 <meta name="generator" content="Hexo 6.3.0"></head>
 
 
-
-
 <body>
-<header class="navbar-fixed">
-    <nav id="headNav" class="bg-color nav-transparent">
-        <div id="navContainer" class="nav-wrapper container">
-            <div class="brand-logo">
-                <a href="/" class="waves-effect waves-light">
-                    
-                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
-                    
-                    <span class="logo-span">学习记录</span>
-                </a>
-            </div>
-            
+  
 
-<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
-<ul class="right nav-menu">
-  
-  <li class="hide-on-med-and-down nav-item">
+  <header>
     
-    <a href="/" class="waves-effect waves-light">
-      
-      <i class="fas fa-home" style="zoom: 0.6;"></i>
-      
-      <span>首页</span>
-    </a>
-    
-  </li>
-  
-  <li class="hide-on-med-and-down nav-item">
-    
-    <a href="/tags" class="waves-effect waves-light">
-      
-      <i class="fas fa-tags" style="zoom: 0.6;"></i>
-      
-      <span>标签</span>
-    </a>
-    
-  </li>
-  
-  <li class="hide-on-med-and-down nav-item">
-    
-    <a href="/categories" class="waves-effect waves-light">
-      
-      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
-      
-      <span>分类</span>
-    </a>
-    
-  </li>
-  
-  <li class="hide-on-med-and-down nav-item">
-    
-    <a href="/archives" class="waves-effect waves-light">
-      
-      <i class="fas fa-archive" style="zoom: 0.6;"></i>
-      
-      <span>归档</span>
-    </a>
-    
-  </li>
-  
-  <li class="hide-on-med-and-down nav-item">
-    
-    <a href="/about" class="waves-effect waves-light">
-      
-      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
-      
-      <span>关于</span>
-    </a>
-    
-  </li>
-  
-  <li class="hide-on-med-and-down nav-item">
-    
-    <a href="/contact" class="waves-effect waves-light">
-      
-      <i class="fas fa-comments" style="zoom: 0.6;"></i>
-      
-      <span>留言板</span>
-    </a>
-    
-  </li>
-  
-  <li class="hide-on-med-and-down nav-item">
-    
-    <a href="/friends" class="waves-effect waves-light">
-      
-      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
-      
-      <span>友情链接</span>
-    </a>
-    
-  </li>
-  
-  <li>
-    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
-      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
-    </a>
-  </li>
-</ul>
 
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
 
-<div id="mobile-nav" class="side-nav sidenav">
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
 
-    <div class="mobile-head bg-color">
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
         
-        <img src="/medias/logo.png" class="logo-img circle responsive-img">
-        
-        <div class="logo-name">学习记录</div>
-        <div class="logo-desc">
-            
-            欢迎来到我的博客
-            
-        </div>
-    </div>
-
-    <ul class="menu-list mobile-menu-list">
-        
-        <li class="m-nav-item">
-	  
-		<a href="/" class="waves-effect waves-light">
-			
-			    <i class="fa-fw fas fa-home"></i>
-			
-			首页
-		</a>
           
-        </li>
-        
-        <li class="m-nav-item">
-	  
-		<a href="/tags" class="waves-effect waves-light">
-			
-			    <i class="fa-fw fas fa-tags"></i>
-			
-			标签
-		</a>
           
-        </li>
-        
-        <li class="m-nav-item">
-	  
-		<a href="/categories" class="waves-effect waves-light">
-			
-			    <i class="fa-fw fas fa-bookmark"></i>
-			
-			分类
-		</a>
           
-        </li>
-        
-        <li class="m-nav-item">
-	  
-		<a href="/archives" class="waves-effect waves-light">
-			
-			    <i class="fa-fw fas fa-archive"></i>
-			
-			归档
-		</a>
           
-        </li>
-        
-        <li class="m-nav-item">
-	  
-		<a href="/about" class="waves-effect waves-light">
-			
-			    <i class="fa-fw fas fa-user-circle"></i>
-			
-			关于
-		</a>
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
           
-        </li>
         
-        <li class="m-nav-item">
-	  
-		<a href="/contact" class="waves-effect waves-light">
-			
-			    <i class="fa-fw fas fa-comments"></i>
-			
-			留言板
-		</a>
           
-        </li>
-        
-        <li class="m-nav-item">
-	  
-		<a href="/friends" class="waves-effect waves-light">
-			
-			    <i class="fa-fw fas fa-address-book"></i>
-			
-			友情链接
-		</a>
           
-        </li>
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
         
         
-        <li><div class="divider"></div></li>
-        <li>
-            <a href="https://github.com/blinkfox/hexo-theme-matery" class="waves-effect waves-light" target="_blank">
-                <i class="fab fa-github-square fa-fw"></i>Fork Me
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
             </a>
-        </li>
+          </li>
+          
         
-    </ul>
-</div>
-
-
-        </div>
-
         
-            <style>
-    .nav-transparent .github-corner {
-        display: none !important;
-    }
-
-    .github-corner {
-        position: absolute;
-        z-index: 10;
-        top: 0;
-        right: 0;
-        border: 0;
-        transform: scale(1.1);
-    }
-
-    .github-corner svg {
-        color: #0f9d58;
-        fill: #fff;
-        height: 64px;
-        width: 64px;
-    }
-
-    .github-corner:hover .octo-arm {
-        animation: a 0.56s ease-in-out;
-    }
-
-    .github-corner .octo-arm {
-        animation: none;
-    }
-
-    @keyframes a {
-        0%,
-        to {
-            transform: rotate(0);
-        }
-        20%,
-        60% {
-            transform: rotate(-25deg);
-        }
-        40%,
-        80% {
-            transform: rotate(10deg);
-        }
-    }
-</style>
-
-<a href="https://github.com/blinkfox/hexo-theme-matery" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
-   data-tooltip="Fork Me" data-position="left" data-delay="50">
-    <svg viewBox="0 0 250 250" aria-hidden="true">
-        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
-        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
-              fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
-        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
-              fill="currentColor" class="octo-body"></path>
-    </svg>
-</a>
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
         
-    </nav>
-
-</header>
-
-
-<main id="main_wrap">
-    
-
-
-
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/15.jpg')">
-    <div class="container" style="right: 0px;left: 0px;">
-        <div class="row">
-            <div class="col s12 m12 l12">
-                <div class="brand">
-                    <h1 class="description center-align post-title">工作中写的爬取cve信息脚本总结</h1>
-                </div>
-            </div>
-        </div>
+      </ul>
     </div>
-</div>
+  </div>
+</nav>
 
+  
 
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="工作中写的爬取cve信息脚本总结"></span>
+          
+        </div>
 
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-10-17 09:21" pubdate>
+          2022年10月17日 上午
+        </time>
+      </span>
+    
+  </div>
 
-<main class="post-container content">
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          14k 字
+        
+      </span>
+    
 
     
-    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
-<style>
-    #articleContent h1::before,
-    #articleContent h2::before,
-    #articleContent h3::before,
-    #articleContent h4::before,
-    #articleContent h5::before,
-    #articleContent h6::before {
-        display: block;
-        content: " ";
-        height: 100px;
-        margin-top: -100px;
-        visibility: hidden;
-    }
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          116 分钟
+        
+      </span>
+    
 
-    #articleContent :focus {
-        outline: none;
-    }
+    
+    
+  </div>
 
-    .toc-fixed {
-        position: fixed;
-        top: 64px;
-    }
-
-    .toc-widget {
-        width: 345px;
-        padding-left: 20px;
-    }
-
-    .toc-widget .toc-title {
-        padding: 35px 0 15px 17px;
-        font-size: 1.5rem;
-        font-weight: bold;
-        line-height: 1.5rem;
-    }
-
-    .toc-widget ol {
-        padding: 0;
-        list-style: none;
-    }
-
-    #toc-content {
-        padding-bottom: 30px;
-        overflow: auto;
-    }
-
-    #toc-content ol {
-        padding-left: 10px;
-    }
-
-    #toc-content ol li {
-        padding-left: 10px;
-    }
-
-    #toc-content .toc-link:hover {
-        color: #42b983;
-        font-weight: 700;
-        text-decoration: underline;
-    }
-
-    #toc-content .toc-link::before {
-        background-color: transparent;
-        max-height: 25px;
-
-        position: absolute;
-        right: 23.5vw;
-        display: block;
-    }
-
-    #toc-content .is-active-link {
-        color: #42b983;
-    }
-
-    #floating-toc-btn {
-        position: fixed;
-        right: 15px;
-        bottom: 137px;
-        padding-top: 15px;
-        margin-bottom: 0;
-        z-index: 998;
-    }
-
-    #floating-toc-btn .btn-floating {
-        width: 48px;
-        height: 48px;
-    }
-
-    #floating-toc-btn .btn-floating i {
-        line-height: 48px;
-        font-size: 1.4rem;
-    }
-</style>
-<div class="row">
-    <div id="main-content" class="col s12 m12 l9">
-        <!-- 文章内容详情 -->
-<div id="artDetail">
-    <div class="card">
-        <div class="card-content article-info">
-            <div class="row tag-cate">
-                <div class="col s7">
-                    
-                    <div class="article-tag">
-                        
-                            <a href="/tags/%E5%BC%80%E5%8F%91/">
-                                <span class="chip bg-color">开发</span>
-                            </a>
-                        
-                    </div>
-                    
-                </div>
-                <div class="col s5 right-align">
-                    
-                    <div class="post-cate">
-                        <i class="fas fa-bookmark fa-fw icon-category"></i>
-                        
-                            <a href="/categories/%E5%B7%A5%E4%BD%9C%E6%80%BB%E7%BB%93/" class="post-category">
-                                工作总结
-                            </a>
-                        
-                    </div>
-                    
-                </div>
-            </div>
-
-            <div class="post-info">
-                
-                <div class="post-date info-break-policy">
-                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2022-10-17
-                </div>
-                
-
-                
-                <div class="post-date info-break-policy">
-                    <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2022-10-18
-                </div>
-                
-
-                
-                <div class="info-break-policy">
-                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    3.2k
-                </div>
-                
-
-                
-                <div class="info-break-policy">
-                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    17 分
-                </div>
-                
-
-                
-                    <div id="busuanzi_container_page_pv" class="info-break-policy">
-                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
-                        <span id="busuanzi_value_page_pv"></span>
-                    </div>
-				
-            </div>
-        </div>
-        <hr class="clearfix">
 
         
-        <!-- 是否加载使用自带的 prismjs. -->
-        <link rel="stylesheet" href="/libs/prism/prism.css">
-        
+      </div>
 
-        
+      
+    </div>
+  </div>
+</div>
 
-        <div class="card-content article-card-content">
-            <div id="articleContent">
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">工作中写的爬取cve信息脚本总结</h1>
+            
+            
+              <div class="markdown-body">
+                
                 <!--toc-->
+
 <p>这是一个关于书写爬取cve信息脚本的总结</p>
 <span id="more"></span>
+
 <h4 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h4><p>初始编写的时候以为只是一个临时所用脚本，没有想到后续要求越来越多。以至于在我改动的时候总是牵一发而动全身，代码之间的耦合太强了，所以要想办法使得各个模块之间变得独立一些。</p>
 <p>经过我的思考，打算先将get_cve_10这个得到10月份cve信息的大函数抽象成一个类，大函数里面各种子函数为该类的方法。</p>
 <h4 id="记录"><a href="#记录" class="headerlink" title="记录"></a>记录</h4><p>改造完毕之后有四个py文件</p>
-<h5 id="main"><a href="#main" class="headerlink" title="main"></a>main</h5><pre class="line-numbers language-python" data-language="python"><code class="language-python">from spinder import *
+<h5 id="main"><a href="#main" class="headerlink" title="main"></a>main</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> spinder <span class="hljs-keyword">import</span> *<br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&quot;__main__&quot;</span>:<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;请您稍等，正在抓取相关信息..........&#x27;</span>)<br>    spinder = Spider()<br>    spinder.get_info() <span class="hljs-comment">#生成CVE_changes.txt文件</span><br><br>    <span class="hljs-keyword">while</span> <span class="hljs-literal">True</span>:<br>        target = <span class="hljs-string">&#x27;1&#x27;</span><br>        <span class="hljs-keyword">if</span> target == <span class="hljs-string">&#x27;1&#x27;</span>:<br>            <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;请稍等，正在努力爬取....&#x27;</span>)<br>            date = <span class="hljs-built_in">dict</span>[<span class="hljs-string">&#x27;today.html&#x27;</span>]<br>            Url = base_url + <span class="hljs-string">&#x27;today.html&#x27;</span><br>            <span class="hljs-built_in">print</span>(Url)<br>            spinder = Spider(Url)<br>            <span class="hljs-comment">#get_tar_info(Url)</span><br>            spinder.get_tar_info()<br>            spinder.run(date)<br>            <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;爬虫文件生成成功，请查收！&#x27;</span>)<br>            exit()<br><br><br>        <span class="hljs-keyword">else</span>:<br>            target = <span class="hljs-string">&#x27;CVE.&#x27;</span> + target + <span class="hljs-string">&#x27;.html&#x27;</span><br>            <span class="hljs-comment"># cve.2022.9.17.html</span><br>            <span class="hljs-keyword">try</span>:<br>                <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;请稍等，正在努力爬取....&#x27;</span>)<br>                date = <span class="hljs-built_in">dict</span>[target]<br>                <span class="hljs-comment">#print(date)</span><br>                Url = base_url + target<br>                spinder = Spider(Url)<br>                spinder.get_tar_info()<br>                spinder.run(date)<br>                <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;爬虫文件生成成功，请查收！&#x27;</span>)<br>            <span class="hljs-keyword">except</span> Exception <span class="hljs-keyword">as</span> err:<br><br>                <span class="hljs-built_in">print</span>(err)<br>                <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;发生错误&#x27;</span>)<br>                <span class="hljs-keyword">pass</span><br><br><br><br><br><br><br><br><br><br><br><br></code></pre></td></tr></table></figure>
 
-if __name__ &#x3D;&#x3D; &quot;__main__&quot;:
-    print(&#39;请您稍等，正在抓取相关信息..........&#39;)
-    spinder &#x3D; Spider()
-    spinder.get_info() #生成CVE_changes.txt文件
-
-    while True:
-        target &#x3D; &#39;1&#39;
-        if target &#x3D;&#x3D; &#39;1&#39;:
-            print(&#39;请稍等，正在努力爬取....&#39;)
-            date &#x3D; dict[&#39;today.html&#39;]
-            Url &#x3D; base_url + &#39;today.html&#39;
-            print(Url)
-            spinder &#x3D; Spider(Url)
-            #get_tar_info(Url)
-            spinder.get_tar_info()
-            spinder.run(date)
-            print(&#39;爬虫文件生成成功，请查收！&#39;)
-            exit()
-
-
-        else:
-            target &#x3D; &#39;CVE.&#39; + target + &#39;.html&#39;
-            # cve.2022.9.17.html
-            try:
-                print(&#39;请稍等，正在努力爬取....&#39;)
-                date &#x3D; dict[target]
-                #print(date)
-                Url &#x3D; base_url + target
-                spinder &#x3D; Spider(Url)
-                spinder.get_tar_info()
-                spinder.run(date)
-                print(&#39;爬虫文件生成成功，请查收！&#39;)
-            except Exception as err:
-
-                print(err)
-                print(&#39;发生错误&#39;)
-                pass
-
-
-
-
-
-
-
-
-
-
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>该脚本是程序的入口点，从这里开始执行。使用方法已在脚本中给出。</p>
-<h5 id="spinder"><a href="#spinder" class="headerlink" title="spinder"></a>spinder</h5><pre class="line-numbers language-python" data-language="python"><code class="language-python">import xlsxwriter
-from bs4 import BeautifulSoup
-from tqdm import tqdm
-from solve import *
-from send_email import *
-dict &#x3D; &#123;&#125;
-base_url &#x3D; &quot;https:&#x2F;&#x2F;cassandra.cerias.purdue.edu&#x2F;CVE_changes&#x2F;&quot;
-r &#x3D; re.compile(r&#39;\d&#123;4&#125;-\d&#123;4,5&#125;&#39;)
-class Spider:
-    def __init__(self,url&#x3D;&quot;&quot;):
-        &quot;&quot;&quot;
+<h5 id="spinder"><a href="#spinder" class="headerlink" title="spinder"></a>spinder</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> xlsxwriter<br><span class="hljs-keyword">from</span> bs4 <span class="hljs-keyword">import</span> BeautifulSoup<br><span class="hljs-keyword">from</span> tqdm <span class="hljs-keyword">import</span> tqdm<br><span class="hljs-keyword">from</span> solve <span class="hljs-keyword">import</span> *<br><span class="hljs-keyword">from</span> send_email <span class="hljs-keyword">import</span> *<br><span class="hljs-built_in">dict</span> = &#123;&#125;<br>base_url = <span class="hljs-string">&quot;https://cassandra.cerias.purdue.edu/CVE_changes/&quot;</span><br>r = re.<span class="hljs-built_in">compile</span>(<span class="hljs-string">r&#x27;\d&#123;4&#125;-\d&#123;4,5&#125;&#x27;</span>)<br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Spider</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self,url=<span class="hljs-string">&quot;&quot;</span></span>):<br>        <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string"></span><br><span class="hljs-string">        :param url: url是一个汇总网址，里面记录以CVEid的形式记录了很多CVE的信息</span><br><span class="hljs-string">        &quot;&quot;&quot;</span><br>        self.url = url<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">get_info</span>(<span class="hljs-params">self</span>):<br>        <span class="hljs-comment"># 获取到所有CVE的链接并写入文件中</span><br>        file = <span class="hljs-built_in">open</span>(<span class="hljs-string">&#x27;./CVE_changes.txt&#x27;</span>, <span class="hljs-string">&#x27;w&#x27;</span>, encoding=<span class="hljs-string">&#x27;utf-8&#x27;</span>)<br>        url = base_url  <span class="hljs-comment"># 这是一个汇总了每天更新的cve-id的网站</span><br>        burp0_headers = &#123;<br>            <span class="hljs-string">&quot;User-Agent&quot;</span>: <span class="hljs-string">&quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.81 Safari/537.36&quot;</span>,<br>            <span class="hljs-string">&quot;Accept&quot;</span>: <span class="hljs-string">&quot;text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9&quot;</span>,<br>            <span class="hljs-string">&quot;Accept-Language&quot;</span>: <span class="hljs-string">&quot;zh-CN,zh;q=0.9&quot;</span>,<br>            <span class="hljs-string">&quot;Accept-Encoding&quot;</span>: <span class="hljs-string">&quot;gzip, deflate&quot;</span>, <span class="hljs-string">&quot;Connection&quot;</span>: <span class="hljs-string">&quot;close&quot;</span>,<br>        &#125;<br><br>        r = requests.get(url=url, headers=burp0_headers)<br>        soup = BeautifulSoup(r.text, <span class="hljs-string">&#x27;html.parser&#x27;</span>)<br><br>        <span class="hljs-keyword">for</span> link <span class="hljs-keyword">in</span> soup.find_all(<span class="hljs-string">&#x27;a&#x27;</span>):<br>            tmp = link.get(<span class="hljs-string">&#x27;href&#x27;</span>)<br>            <span class="hljs-keyword">if</span> <span class="hljs-string">&#x27;CVE&#x27;</span> <span class="hljs-keyword">in</span> tmp:<br>                file.write(tmp)<br>                file.write(<span class="hljs-string">&#x27;\n&#x27;</span>)<br><br>        <span class="hljs-comment"># 以cve页面为key，日期为value建立字典</span><br>        pattern = re.<span class="hljs-built_in">compile</span>(<span class="hljs-string">r&#x27;((CVE|today)(\.\d&#123;4&#125;)*(\.\d&#123;2&#125;)*(\.\d&#123;2&#125;)*\.(html|tar))|(\d&#123;4&#125;-\d&#123;2&#125;-\d&#123;2&#125;)&#x27;</span>)<br>        database = []<br>        <span class="hljs-keyword">for</span> td <span class="hljs-keyword">in</span> soup.find_all(<span class="hljs-string">&#x27;td&#x27;</span>):<br>            data = (pattern.match(td.text))<br>            <span class="hljs-keyword">if</span> data <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> <span class="hljs-literal">None</span>:<br>                <span class="hljs-comment"># print(data.group())</span><br>                database.append(data.group())<br><br>        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">0</span>, <span class="hljs-built_in">len</span>(database) - <span class="hljs-number">1</span>, <span class="hljs-number">2</span>):<br>            <span class="hljs-built_in">dict</span>[database[i]] = database[i + <span class="hljs-number">1</span>]  <span class="hljs-comment"># 以cve页面为key，日期为value建立字典</span><br><br>        file.close()<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">get_tar_info</span>(<span class="hljs-params">self</span>):<br>        <span class="hljs-comment"># 从CVE-id.txt读取</span><br>        file = <span class="hljs-built_in">open</span>(<span class="hljs-string">&#x27;./CVE-id.txt&#x27;</span>, <span class="hljs-string">&#x27;w&#x27;</span>, encoding=<span class="hljs-string">&#x27;utf-8&#x27;</span>)<br>        r = requests.get(url=self.url)<br>        soup = BeautifulSoup(r.text, <span class="hljs-string">&#x27;html.parser&#x27;</span>)<br><br>        <span class="hljs-keyword">for</span> link <span class="hljs-keyword">in</span> soup.find_all(<span class="hljs-string">&#x27;a&#x27;</span>):<br>            <span class="hljs-comment"># print(link.get(&#x27;href&#x27;))</span><br>            file.write(link.get(<span class="hljs-string">&#x27;href&#x27;</span>))<br>            file.write(<span class="hljs-string">&#x27;\n&#x27;</span>)<br><br>        file.close()<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">run</span>(<span class="hljs-params">self,target</span>):<br>        workbook = xlsxwriter.Workbook(filename=<span class="hljs-string">&#x27;./&#123;&#125;.xlsx&#x27;</span>.<span class="hljs-built_in">format</span>(target),<br>                                       options=&#123;  <span class="hljs-comment"># 全局设置</span><br>                                           <span class="hljs-string">&#x27;strings_to_numbers&#x27;</span>: <span class="hljs-literal">True</span>,  <span class="hljs-comment"># str 类型数字转换为 int 数字</span><br>                                           <span class="hljs-string">&#x27;strings_to_urls&#x27;</span>: <span class="hljs-literal">False</span>,  <span class="hljs-comment"># 自动识别超链接</span><br>                                           <span class="hljs-string">&#x27;constant_memory&#x27;</span>: <span class="hljs-literal">True</span>,  <span class="hljs-comment"># 连续内存模式 (True 适用于大数据量输出)</span><br>                                           <span class="hljs-string">&#x27;default_format_properties&#x27;</span>: &#123;<br>                                               <span class="hljs-string">&#x27;font_name&#x27;</span>: <span class="hljs-string">&#x27;微软雅黑&#x27;</span>,  <span class="hljs-comment"># 字体. 默认值 &quot;Arial&quot;</span><br>                                               <span class="hljs-string">&#x27;font_size&#x27;</span>: <span class="hljs-number">10</span>,  <span class="hljs-comment"># 字号. 默认值 11</span><br>                                               <span class="hljs-comment"># &#x27;bold&#x27;: False,  # 字体加粗</span><br>                                               <span class="hljs-comment"># &#x27;border&#x27;: 1,  # 单元格边框宽度. 默认值 0</span><br>                                               <span class="hljs-string">&#x27;align&#x27;</span>: <span class="hljs-string">&#x27;left&#x27;</span>,  <span class="hljs-comment"># 对齐方式</span><br>                                               <span class="hljs-string">&#x27;valign&#x27;</span>: <span class="hljs-string">&#x27;vcenter&#x27;</span>,  <span class="hljs-comment"># 垂直对齐方式</span><br>                                               <span class="hljs-string">&#x27;text_wrap&#x27;</span>: <span class="hljs-literal">True</span>,  <span class="hljs-comment"># 单元格内是否自动换行</span><br>                                               <span class="hljs-comment"># ...</span><br>                                           &#125;,<br>                                       &#125;)  <span class="hljs-comment"># 创建一个Excel文件 worksheet</span><br><br>        worksheet = workbook.add_worksheet()  <span class="hljs-comment"># Sheet1</span><br>        fmt = workbook.add_format(&#123;<span class="hljs-string">&#x27;align&#x27;</span>: <span class="hljs-string">&#x27;center&#x27;</span>, <span class="hljs-string">&#x27;valign&#x27;</span>: <span class="hljs-string">&#x27;vcenter&#x27;</span>, <span class="hljs-string">&#x27;fg_color&#x27;</span>: <span class="hljs-string">&#x27;green&#x27;</span>, <span class="hljs-string">&#x27;font_size&#x27;</span>: <span class="hljs-number">10</span>&#125;)<br><br>        <span class="hljs-comment"># sheet.merge_range(x1, y1, x2, y2, value, cell_format=None)</span><br><br>        worksheet.merge_range(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">4</span>, target, cell_format=fmt)<br><br>        bold = workbook.add_format(&#123;<span class="hljs-string">&#x27;bold&#x27;</span>: <span class="hljs-literal">True</span>, <span class="hljs-string">&#x27;fg_color&#x27;</span>: <span class="hljs-string">&#x27;orange&#x27;</span>, <span class="hljs-string">&#x27;valign&#x27;</span>: <span class="hljs-string">&#x27;vcenter&#x27;</span>, <span class="hljs-string">&#x27;align&#x27;</span>: <span class="hljs-string">&#x27;center&#x27;</span>&#125;)<br>        worksheet.write(<span class="hljs-string">&#x27;A2&#x27;</span>, <span class="hljs-string">&#x27;CVE-ID&#x27;</span>, bold)  <span class="hljs-comment"># 在A1单元格写入&#x27;Hello&#x27;字符串</span><br><br>        worksheet.write(<span class="hljs-string">&#x27;B2&#x27;</span>, <span class="hljs-string">&#x27;Description&#x27;</span>, bold)  <span class="hljs-comment"># 在B1单元格写入&#x27;World&#x27;字符串</span><br>        <span class="hljs-comment"># worksheet.write(&#x27;C2&#x27;, &#x27;State&#x27;, bold)</span><br>        <span class="hljs-comment"># worksheet.write(&#x27;D2&#x27;, &#x27;Problem Types&#x27;, bold)</span><br>        worksheet.write(<span class="hljs-string">&#x27;C2&#x27;</span>, <span class="hljs-string">&#x27;Vendors&#x27;</span>, bold)<br>        worksheet.write(<span class="hljs-string">&#x27;D2&#x27;</span>, <span class="hljs-string">&#x27;Products&#x27;</span>, bold)<br>        worksheet.write(<span class="hljs-string">&#x27;E2&#x27;</span>, <span class="hljs-string">&#x27;Versions&#x27;</span>, bold)<br>        <span class="hljs-comment"># worksheet.write(&#x27;H2&#x27;, &#x27;References&#x27;, bold)</span><br>        <span class="hljs-comment"># worksheet.write(&#x27;G2&#x27;, &#x27;Date&#x27;, bold)</span><br>        <span class="hljs-comment"># 定义一个加粗的格式对象设置0到1即（A到B） 列单元格宽度为10像素，且引用加粗格式对象</span><br><br>        <span class="hljs-comment"># worksheet.set_column(0,2, 10,bold)</span><br>        worksheet.set_column(<span class="hljs-string">&#x27;A:A&#x27;</span>, <span class="hljs-number">20</span>)<br>        worksheet.set_column(<span class="hljs-string">&#x27;B:B&#x27;</span>, <span class="hljs-number">70</span>)  <span class="hljs-comment"># 设置C到D列单元格宽度为20像素</span><br>        worksheet.set_column(<span class="hljs-string">&#x27;C:H&#x27;</span>, <span class="hljs-number">20</span>)<br><br>        f = <span class="hljs-built_in">open</span>(<span class="hljs-string">&#x27;./CVE-id.txt&#x27;</span>, <span class="hljs-string">&#x27;r&#x27;</span>).readlines()<br>        row = <span class="hljs-number">3</span><br>        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> tqdm(f):<br>            <span class="hljs-comment"># print(&#x27;url=&#x27;, str(i))</span><br>            url_api = <span class="hljs-string">&quot;https://www.cve.org/api/?action=getCveById&amp;cveId=CVE-&#123;&#125;&quot;</span>.<span class="hljs-built_in">format</span>(r.search(<span class="hljs-built_in">str</span>(i)).group())<br>            <span class="hljs-comment"># print(url_api)</span><br>            <span class="hljs-keyword">try</span>:<br>                req = Req(url_api)<br>                messages = parse(req)<br>                flag = ControlOutputFormat(messages, row, worksheet, <span class="hljs-string">&#x27;test.xlsx&#x27;</span>).output()<br>                <span class="hljs-comment"># flag = solve(url_api, row, worksheet) # str(i)是url链接</span><br>                <span class="hljs-keyword">if</span> flag:<br>                    row += <span class="hljs-number">1</span><br>            <span class="hljs-keyword">except</span> Exception <span class="hljs-keyword">as</span> err:<br><br>                <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;发生错误&#x27;</span>)<br>                <span class="hljs-built_in">print</span>(err)<br>                <span class="hljs-keyword">pass</span><br>        workbook.close()<br><br>        <span class="hljs-keyword">if</span> row &gt;= <span class="hljs-number">3</span>:<br><br>         send_file = <span class="hljs-built_in">open</span>(<span class="hljs-string">r&quot;./&#123;&#125;.xlsx&quot;</span>.<span class="hljs-built_in">format</span>(target), <span class="hljs-string">&quot;rb&quot;</span>).read()<br>         email.send(send_file,<span class="hljs-string">&#x27;application/zip&#x27;</span>,<span class="hljs-string">&#x27;attachment;filename=&quot;&#123;&#125;.xlsx&quot;&#x27;</span>.<span class="hljs-built_in">format</span>(target))<br><br><br></code></pre></td></tr></table></figure>
 
-        :param url: url是一个汇总网址，里面记录以CVEid的形式记录了很多CVE的信息
-        &quot;&quot;&quot;
-        self.url &#x3D; url
-
-    def get_info(self):
-        # 获取到所有CVE的链接并写入文件中
-        file &#x3D; open(&#39;.&#x2F;CVE_changes.txt&#39;, &#39;w&#39;, encoding&#x3D;&#39;utf-8&#39;)
-        url &#x3D; base_url  # 这是一个汇总了每天更新的cve-id的网站
-        burp0_headers &#x3D; &#123;
-            &quot;User-Agent&quot;: &quot;Mozilla&#x2F;5.0 (Windows NT 10.0; Win64; x64) AppleWebKit&#x2F;537.36 (KHTML, like Gecko) Chrome&#x2F;104.0.5112.81 Safari&#x2F;537.36&quot;,
-            &quot;Accept&quot;: &quot;text&#x2F;html,application&#x2F;xhtml+xml,application&#x2F;xml;q&#x3D;0.9,image&#x2F;avif,image&#x2F;webp,image&#x2F;apng,*&#x2F;*;q&#x3D;0.8,application&#x2F;signed-exchange;v&#x3D;b3;q&#x3D;0.9&quot;,
-            &quot;Accept-Language&quot;: &quot;zh-CN,zh;q&#x3D;0.9&quot;,
-            &quot;Accept-Encoding&quot;: &quot;gzip, deflate&quot;, &quot;Connection&quot;: &quot;close&quot;,
-        &#125;
-
-        r &#x3D; requests.get(url&#x3D;url, headers&#x3D;burp0_headers)
-        soup &#x3D; BeautifulSoup(r.text, &#39;html.parser&#39;)
-
-        for link in soup.find_all(&#39;a&#39;):
-            tmp &#x3D; link.get(&#39;href&#39;)
-            if &#39;CVE&#39; in tmp:
-                file.write(tmp)
-                file.write(&#39;\n&#39;)
-
-        # 以cve页面为key，日期为value建立字典
-        pattern &#x3D; re.compile(r&#39;((CVE|today)(\.\d&#123;4&#125;)*(\.\d&#123;2&#125;)*(\.\d&#123;2&#125;)*\.(html|tar))|(\d&#123;4&#125;-\d&#123;2&#125;-\d&#123;2&#125;)&#39;)
-        database &#x3D; []
-        for td in soup.find_all(&#39;td&#39;):
-            data &#x3D; (pattern.match(td.text))
-            if data is not None:
-                # print(data.group())
-                database.append(data.group())
-
-        for i in range(0, len(database) - 1, 2):
-            dict[database[i]] &#x3D; database[i + 1]  # 以cve页面为key，日期为value建立字典
-
-        file.close()
-
-    def get_tar_info(self):
-        # 从CVE-id.txt读取
-        file &#x3D; open(&#39;.&#x2F;CVE-id.txt&#39;, &#39;w&#39;, encoding&#x3D;&#39;utf-8&#39;)
-        r &#x3D; requests.get(url&#x3D;self.url)
-        soup &#x3D; BeautifulSoup(r.text, &#39;html.parser&#39;)
-
-        for link in soup.find_all(&#39;a&#39;):
-            # print(link.get(&#39;href&#39;))
-            file.write(link.get(&#39;href&#39;))
-            file.write(&#39;\n&#39;)
-
-        file.close()
-
-    def run(self,target):
-        workbook &#x3D; xlsxwriter.Workbook(filename&#x3D;&#39;.&#x2F;&#123;&#125;.xlsx&#39;.format(target),
-                                       options&#x3D;&#123;  # 全局设置
-                                           &#39;strings_to_numbers&#39;: True,  # str 类型数字转换为 int 数字
-                                           &#39;strings_to_urls&#39;: False,  # 自动识别超链接
-                                           &#39;constant_memory&#39;: True,  # 连续内存模式 (True 适用于大数据量输出)
-                                           &#39;default_format_properties&#39;: &#123;
-                                               &#39;font_name&#39;: &#39;微软雅黑&#39;,  # 字体. 默认值 &quot;Arial&quot;
-                                               &#39;font_size&#39;: 10,  # 字号. 默认值 11
-                                               # &#39;bold&#39;: False,  # 字体加粗
-                                               # &#39;border&#39;: 1,  # 单元格边框宽度. 默认值 0
-                                               &#39;align&#39;: &#39;left&#39;,  # 对齐方式
-                                               &#39;valign&#39;: &#39;vcenter&#39;,  # 垂直对齐方式
-                                               &#39;text_wrap&#39;: True,  # 单元格内是否自动换行
-                                               # ...
-                                           &#125;,
-                                       &#125;)  # 创建一个Excel文件 worksheet
-
-        worksheet &#x3D; workbook.add_worksheet()  # Sheet1
-        fmt &#x3D; workbook.add_format(&#123;&#39;align&#39;: &#39;center&#39;, &#39;valign&#39;: &#39;vcenter&#39;, &#39;fg_color&#39;: &#39;green&#39;, &#39;font_size&#39;: 10&#125;)
-
-        # sheet.merge_range(x1, y1, x2, y2, value, cell_format&#x3D;None)
-
-        worksheet.merge_range(0, 0, 0, 4, target, cell_format&#x3D;fmt)
-
-        bold &#x3D; workbook.add_format(&#123;&#39;bold&#39;: True, &#39;fg_color&#39;: &#39;orange&#39;, &#39;valign&#39;: &#39;vcenter&#39;, &#39;align&#39;: &#39;center&#39;&#125;)
-        worksheet.write(&#39;A2&#39;, &#39;CVE-ID&#39;, bold)  # 在A1单元格写入&#39;Hello&#39;字符串
-
-        worksheet.write(&#39;B2&#39;, &#39;Description&#39;, bold)  # 在B1单元格写入&#39;World&#39;字符串
-        # worksheet.write(&#39;C2&#39;, &#39;State&#39;, bold)
-        # worksheet.write(&#39;D2&#39;, &#39;Problem Types&#39;, bold)
-        worksheet.write(&#39;C2&#39;, &#39;Vendors&#39;, bold)
-        worksheet.write(&#39;D2&#39;, &#39;Products&#39;, bold)
-        worksheet.write(&#39;E2&#39;, &#39;Versions&#39;, bold)
-        # worksheet.write(&#39;H2&#39;, &#39;References&#39;, bold)
-        # worksheet.write(&#39;G2&#39;, &#39;Date&#39;, bold)
-        # 定义一个加粗的格式对象设置0到1即（A到B） 列单元格宽度为10像素，且引用加粗格式对象
-
-        # worksheet.set_column(0,2, 10,bold)
-        worksheet.set_column(&#39;A:A&#39;, 20)
-        worksheet.set_column(&#39;B:B&#39;, 70)  # 设置C到D列单元格宽度为20像素
-        worksheet.set_column(&#39;C:H&#39;, 20)
-
-        f &#x3D; open(&#39;.&#x2F;CVE-id.txt&#39;, &#39;r&#39;).readlines()
-        row &#x3D; 3
-        for i in tqdm(f):
-            # print(&#39;url&#x3D;&#39;, str(i))
-            url_api &#x3D; &quot;https:&#x2F;&#x2F;www.cve.org&#x2F;api&#x2F;?action&#x3D;getCveById&amp;cveId&#x3D;CVE-&#123;&#125;&quot;.format(r.search(str(i)).group())
-            # print(url_api)
-            try:
-                req &#x3D; Req(url_api)
-                messages &#x3D; parse(req)
-                flag &#x3D; ControlOutputFormat(messages, row, worksheet, &#39;test.xlsx&#39;).output()
-                # flag &#x3D; solve(url_api, row, worksheet) # str(i)是url链接
-                if flag:
-                    row +&#x3D; 1
-            except Exception as err:
-
-                print(&#39;发生错误&#39;)
-                print(err)
-                pass
-        workbook.close()
-
-        if row &gt;&#x3D; 3:
-
-         send_file &#x3D; open(r&quot;.&#x2F;&#123;&#125;.xlsx&quot;.format(target), &quot;rb&quot;).read()
-         email.send(send_file,&#39;application&#x2F;zip&#39;,&#39;attachment;filename&#x3D;&quot;&#123;&#125;.xlsx&quot;&#39;.format(target))
-
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>该脚本主要负责设置xlsx文档的格式，以及调用solve脚本中的各种类方法进行爬虫。</p>
-<h5 id="solve"><a href="#solve" class="headerlink" title="solve"></a>solve</h5><pre class="line-numbers language-python" data-language="python"><code class="language-python">import requests
-import json
-import datetime
-import html
-import openpyxl
-import re
-time &#x3D; str(datetime.date.today())
+<h5 id="solve"><a href="#solve" class="headerlink" title="solve"></a>solve</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> requests<br><span class="hljs-keyword">import</span> json<br><span class="hljs-keyword">import</span> datetime<br><span class="hljs-keyword">import</span> html<br><span class="hljs-keyword">import</span> openpyxl<br><span class="hljs-keyword">import</span> re<br>time = <span class="hljs-built_in">str</span>(datetime.date.today())<br><br><span class="hljs-string">&quot;&quot;&quot;读取公司组件的xlsx格式文件&quot;&quot;&quot;</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">read_excel</span>(<span class="hljs-params">name</span>):<br>    wb = openpyxl.load_workbook(name)<br>    <span class="hljs-comment"># 获取行数和列数</span><br>    sheet = wb[<span class="hljs-string">&#x27;Sheet1&#x27;</span>]<br>    max_row = sheet.max_row<br>    dic = &#123;&#125;<br>    <span class="hljs-comment"># 遍历excel数据</span><br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">3</span>, max_row + <span class="hljs-number">1</span>):<br>        key = (sheet.cell(i, <span class="hljs-number">3</span>).value).lower()<br>        tmp = []<br>        <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">4</span>, <span class="hljs-number">5</span>):<br>            value = <span class="hljs-built_in">str</span>(sheet.cell(i, j).value)<br>            <span class="hljs-keyword">if</span> value:<br>                tmp += re.split(<span class="hljs-string">&#x27;、&#x27;</span>, value)<br>        dic[key] = tmp<br><br>    <span class="hljs-keyword">return</span> dic<br><span class="hljs-string">&quot;&quot;&quot;请求类，根据cve的网址爬取cve的信息并返回&quot;&quot;&quot;</span><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Req</span>:<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self,url</span>):<br>        <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string"></span><br><span class="hljs-string">        :param url: 要爬取的cve信息的url</span><br><span class="hljs-string">        &quot;&quot;&quot;</span><br>        self.url = url<br><br>        <span class="hljs-comment">#print(&#x27;url=&#x27;,url)</span><br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">send_req</span>(<span class="hljs-params">self</span>):<br><br>         burp0_headers = &#123;<br>        <span class="hljs-string">&quot;User-Agent&quot;</span>: <span class="hljs-string">&quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.81 Safari/537.36&quot;</span>,<br>        <span class="hljs-string">&quot;Accept&quot;</span>: <span class="hljs-string">&quot;text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9&quot;</span>,<br>        <span class="hljs-string">&quot;Accept-Language&quot;</span>: <span class="hljs-string">&quot;zh-CN,zh;q=0.9&quot;</span>,<br>        <span class="hljs-string">&quot;Accept-Encoding&quot;</span>: <span class="hljs-string">&quot;gzip, deflate&quot;</span>, <span class="hljs-string">&quot;Connection&quot;</span>: <span class="hljs-string">&quot;close&quot;</span>,<br>        &#125;<br>         r = requests.get(url=self.url, headers=burp0_headers)<br><br>         data = (json.loads(<span class="hljs-built_in">str</span>(r.text))) <span class="hljs-comment">#解析响应的数据</span><br><br>         <span class="hljs-keyword">return</span> data<br><br><br><br><span class="hljs-string">&quot;&quot;&quot;该类负责对10月份的cve信息进行解析，传入的参数是爬取好的json格式数据&quot;&quot;&quot;</span><br><span class="hljs-keyword">class</span>  <span class="hljs-title class_">parse</span>:<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self,req_data</span>):<br>        <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string"></span><br><span class="hljs-string">        :param req_data: req_data是Req类的实例，</span><br><span class="hljs-string">        &quot;&quot;&quot;</span><br>        self.data = req_data.send_req()<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">get_cve_id</span>(<span class="hljs-params">self</span>):  <span class="hljs-comment"># 获取CVE_ID</span><br>        <span class="hljs-keyword">try</span>:<br>            <span class="hljs-keyword">return</span> self.data[<span class="hljs-string">&#x27;cveMetadata&#x27;</span>][<span class="hljs-string">&#x27;cveId&#x27;</span>]<br>        <span class="hljs-keyword">except</span> Exception <span class="hljs-keyword">as</span> error:<br>            <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;get_cve_id发生错误：&#x27;</span>,error)<br>            <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;N/A&quot;</span><br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">get_cve_desc</span>(<span class="hljs-params">self</span>):  <span class="hljs-comment"># 获取CVE的描述信息</span><br>        <span class="hljs-keyword">try</span>:<br>            <span class="hljs-keyword">return</span> self.data[<span class="hljs-string">&#x27;containers&#x27;</span>][<span class="hljs-string">&#x27;cna&#x27;</span>][<span class="hljs-string">&#x27;descriptions&#x27;</span>][<span class="hljs-number">0</span>][<span class="hljs-string">&#x27;value&#x27;</span>]<br>        <span class="hljs-keyword">except</span> Exception <span class="hljs-keyword">as</span> error:<br>            <span class="hljs-built_in">print</span>(error)<br>            <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;N/A&quot;</span><br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">get_cve_state</span>(<span class="hljs-params">self</span>):  <span class="hljs-comment"># 获取CVE的state</span><br>        <span class="hljs-keyword">try</span>:<br>            <span class="hljs-keyword">return</span> self.data[<span class="hljs-string">&#x27;cveMetadata&#x27;</span>][<span class="hljs-string">&#x27;state&#x27;</span>]<br>        <span class="hljs-keyword">except</span> Exception <span class="hljs-keyword">as</span> error:<br>            <span class="hljs-built_in">print</span>(error)<br>            <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;N/A&quot;</span><br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">get_cve_prob_type</span>(<span class="hljs-params">self</span>):  <span class="hljs-comment"># 获取CVE的问题类型信息</span><br>        <span class="hljs-keyword">try</span>:<br>             <span class="hljs-keyword">return</span> self.data[<span class="hljs-string">&#x27;containers&#x27;</span>][<span class="hljs-string">&#x27;cna&#x27;</span>][<span class="hljs-string">&#x27;problemTypes&#x27;</span>][<span class="hljs-number">0</span>][<span class="hljs-string">&#x27;descriptions&#x27;</span>][<span class="hljs-number">0</span>][<span class="hljs-string">&#x27;description&#x27;</span>]<br><br>        <span class="hljs-keyword">except</span> Exception <span class="hljs-keyword">as</span> error:<br>            <span class="hljs-built_in">print</span>(error)<br>            <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;N/A&quot;</span><br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">get_cve_ventor</span>(<span class="hljs-params">self</span>):<br>        <span class="hljs-keyword">try</span>:<br>            <span class="hljs-keyword">return</span>  self.data[<span class="hljs-string">&#x27;containers&#x27;</span>][<span class="hljs-string">&#x27;cna&#x27;</span>][<span class="hljs-string">&#x27;affected&#x27;</span>][<span class="hljs-number">0</span>][<span class="hljs-string">&#x27;vendor&#x27;</span>]<br>        <span class="hljs-keyword">except</span> Exception <span class="hljs-keyword">as</span> error:<br>            <span class="hljs-built_in">print</span>(error)<br>            <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;N/A&quot;</span><br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">get_cve_version</span>(<span class="hljs-params">self</span>):<br>        <span class="hljs-keyword">try</span>:<br>            <span class="hljs-keyword">return</span> (self.data[<span class="hljs-string">&#x27;containers&#x27;</span>][<span class="hljs-string">&#x27;cna&#x27;</span>][<span class="hljs-string">&#x27;affected&#x27;</span>][<span class="hljs-number">0</span>][<span class="hljs-string">&#x27;versions&#x27;</span>][<span class="hljs-number">0</span>][<span class="hljs-string">&#x27;version&#x27;</span>]) + <span class="hljs-string">&#x27;,&#x27;</span>+ <span class="hljs-string">&#x27; &#x27;</span> + self.data[<span class="hljs-string">&#x27;containers&#x27;</span>][<span class="hljs-string">&#x27;cna&#x27;</span>][<span class="hljs-string">&#x27;affected&#x27;</span>][<span class="hljs-number">0</span>][<span class="hljs-string">&#x27;versions&#x27;</span>][<span class="hljs-number">0</span>][<span class="hljs-string">&#x27;status&#x27;</span>]<br>        <span class="hljs-keyword">except</span>:<br>            <span class="hljs-comment">#print(&#x27;get_cve_version未有此项&#x27;)</span><br>            <span class="hljs-keyword">try</span>:<br>                <span class="hljs-keyword">return</span> self.data[<span class="hljs-string">&#x27;containers&#x27;</span>][<span class="hljs-string">&#x27;cna&#x27;</span>][<span class="hljs-string">&#x27;affected&#x27;</span>][<span class="hljs-number">0</span>][<span class="hljs-string">&#x27;versions&#x27;</span>][<span class="hljs-number">0</span>][<span class="hljs-string">&#x27;version&#x27;</span>]<br>            <span class="hljs-keyword">except</span>:<br>                <span class="hljs-keyword">pass</span><br><br>            <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;N/A&quot;</span><br><br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">get_cve_product</span>(<span class="hljs-params">self</span>):<br>        <span class="hljs-keyword">try</span>:<br>           <span class="hljs-keyword">return</span> self.data[<span class="hljs-string">&#x27;containers&#x27;</span>][<span class="hljs-string">&#x27;cna&#x27;</span>][<span class="hljs-string">&#x27;affected&#x27;</span>][<span class="hljs-number">0</span>][<span class="hljs-string">&#x27;product&#x27;</span>]<br>        <span class="hljs-keyword">except</span>:<br>            <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;N/A&quot;</span><br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">get_cve_references</span>(<span class="hljs-params">self</span>):<br>        info = <span class="hljs-string">&quot;&quot;&quot;&quot;&quot;&quot;</span><br>        <span class="hljs-comment">#print(data)</span><br>        <span class="hljs-keyword">try</span>:<br>            array = self.data[<span class="hljs-string">&#x27;containers&#x27;</span>][<span class="hljs-string">&#x27;cna&#x27;</span>][<span class="hljs-string">&#x27;references&#x27;</span>]<br>            <span class="hljs-built_in">print</span>(array)<br>            <span class="hljs-comment"># print(array)</span><br>            <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> array:<br>              info += <span class="hljs-string">&#x27;URL&#x27;</span>+ <span class="hljs-string">&quot;:&quot;</span> + i[<span class="hljs-string">&#x27;url&#x27;</span>] + <span class="hljs-string">&#x27;\n\n&#x27;</span><br><br>            info += <span class="hljs-string">&quot;View additional information about https://nvd.nist.gov/view/vuln/detail?vulnId=&#123;&#125; on NVD.(Note: The NVD is not operated by the CVE Program)\n&quot;</span>.<span class="hljs-built_in">format</span>(<br>                self.get_cve_id())<br>        <span class="hljs-keyword">except</span> Exception <span class="hljs-keyword">as</span> error:<br>            <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;发生异常&#x27;</span>,error)<br>            <span class="hljs-keyword">return</span> info<br>        <span class="hljs-keyword">return</span> info<br><br><br><br><span class="hljs-string">&quot;&quot;&quot;该类负责获取输出并控制输出的格式，目前只有匹配公司组件的内容才输出&quot;&quot;&quot;</span><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">ControlOutputFormat</span>:<br><br>    <span class="hljs-string">&quot;&quot;&quot;&quot;&quot;&quot;</span><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self,cve10,row,worksheet,name=<span class="hljs-string">&#x27;test.xlsx&#x27;</span></span>):<br>        <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string"></span><br><span class="hljs-string">        :param cve10: 一个parse类的实例</span><br><span class="hljs-string">        :param row:  表示写入xlsx表格的第几行</span><br><span class="hljs-string">        :param worksheet: 一个xlsx表格</span><br><span class="hljs-string">        :param name: 要打开的含有公司组件的xlsx表格的文件名</span><br><span class="hljs-string">        &quot;&quot;&quot;</span><br>        self.flag = <span class="hljs-literal">False</span> <span class="hljs-comment">#flag是标志位，表示当前的内容是否含有公司的组件</span><br>        self.row = row<br>        self.<span class="hljs-built_in">id</span> = cve10.get_cve_id()<br>        self.desc = cve10.get_cve_desc()<br>        self.state = cve10.get_cve_state()<br>        self.pb = cve10.get_cve_prob_type()<br>        self.ven = cve10.get_cve_ventor()<br>        self.pro = (cve10.get_cve_product()).lower()<br>        self.ver = cve10.get_cve_version()<br>        self.read_excel = read_excel(name)<br>        self.worksheet = worksheet<br>        self.dic =  &#123;<span class="hljs-number">0</span>:<span class="hljs-string">&#x27;A&#x27;</span>,<span class="hljs-number">1</span>:<span class="hljs-string">&#x27;B&#x27;</span>,<span class="hljs-number">2</span>:<span class="hljs-string">&#x27;C&#x27;</span>,<span class="hljs-number">3</span>:<span class="hljs-string">&#x27;D&#x27;</span>,<span class="hljs-number">4</span>:<span class="hljs-string">&#x27;E&#x27;</span>,<span class="hljs-number">5</span>:<span class="hljs-string">&#x27;F&#x27;</span>,<span class="hljs-number">6</span>:<span class="hljs-string">&#x27;G&#x27;</span>,<span class="hljs-number">7</span>:<span class="hljs-string">&#x27;H&#x27;</span>&#125;<br><br><br><br>    <span class="hljs-string">&quot;&quot;&quot;检测内容中是否有和公司匹配的组件&quot;&quot;&quot;</span><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">sol_con</span>(<span class="hljs-params">self</span>):<br><br>        <span class="hljs-keyword">if</span> self.read_excel.get(self.pro) != <span class="hljs-literal">None</span>:<br>            <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;发现与公司组件配对漏洞信息&#x27;</span>)<br>            self.flag = <span class="hljs-literal">True</span><br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">output</span>(<span class="hljs-params">self</span>):<br>        self.row = <span class="hljs-built_in">str</span>(self.row)<br>        ans =  [self.<span class="hljs-built_in">id</span>, self.desc,  self.ven, self.pro, self.ver]<br>        self.sol_con()<br><br><br>        <span class="hljs-keyword">if</span> self.flag:<br>            <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(ans)):<br>                <span class="hljs-comment"># print(i)</span><br>                self.worksheet.write(self.dic[i] + self.row, <span class="hljs-built_in">str</span>(html.unescape(ans[i])))<br>            <span class="hljs-keyword">return</span> self.flag<br><br></code></pre></td></tr></table></figure>
 
-&quot;&quot;&quot;读取公司组件的xlsx格式文件&quot;&quot;&quot;
-def read_excel(name):
-    wb &#x3D; openpyxl.load_workbook(name)
-    # 获取行数和列数
-    sheet &#x3D; wb[&#39;Sheet1&#39;]
-    max_row &#x3D; sheet.max_row
-    dic &#x3D; &#123;&#125;
-    # 遍历excel数据
-    for i in range(3, max_row + 1):
-        key &#x3D; (sheet.cell(i, 3).value).lower()
-        tmp &#x3D; []
-        for j in range(4, 5):
-            value &#x3D; str(sheet.cell(i, j).value)
-            if value:
-                tmp +&#x3D; re.split(&#39;、&#39;, value)
-        dic[key] &#x3D; tmp
-
-    return dic
-&quot;&quot;&quot;请求类，根据cve的网址爬取cve的信息并返回&quot;&quot;&quot;
-class Req:
-
-    def __init__(self,url):
-        &quot;&quot;&quot;
-
-        :param url: 要爬取的cve信息的url
-        &quot;&quot;&quot;
-        self.url &#x3D; url
-
-        #print(&#39;url&#x3D;&#39;,url)
-
-    def send_req(self):
-
-         burp0_headers &#x3D; &#123;
-        &quot;User-Agent&quot;: &quot;Mozilla&#x2F;5.0 (Windows NT 10.0; Win64; x64) AppleWebKit&#x2F;537.36 (KHTML, like Gecko) Chrome&#x2F;104.0.5112.81 Safari&#x2F;537.36&quot;,
-        &quot;Accept&quot;: &quot;text&#x2F;html,application&#x2F;xhtml+xml,application&#x2F;xml;q&#x3D;0.9,image&#x2F;avif,image&#x2F;webp,image&#x2F;apng,*&#x2F;*;q&#x3D;0.8,application&#x2F;signed-exchange;v&#x3D;b3;q&#x3D;0.9&quot;,
-        &quot;Accept-Language&quot;: &quot;zh-CN,zh;q&#x3D;0.9&quot;,
-        &quot;Accept-Encoding&quot;: &quot;gzip, deflate&quot;, &quot;Connection&quot;: &quot;close&quot;,
-        &#125;
-         r &#x3D; requests.get(url&#x3D;self.url, headers&#x3D;burp0_headers)
-
-         data &#x3D; (json.loads(str(r.text))) #解析响应的数据
-
-         return data
-
-
-
-&quot;&quot;&quot;该类负责对10月份的cve信息进行解析，传入的参数是爬取好的json格式数据&quot;&quot;&quot;
-class  parse:
-
-    def __init__(self,req_data):
-        &quot;&quot;&quot;
-
-        :param req_data: req_data是Req类的实例，
-        &quot;&quot;&quot;
-        self.data &#x3D; req_data.send_req()
-
-    def get_cve_id(self):  # 获取CVE_ID
-        try:
-            return self.data[&#39;cveMetadata&#39;][&#39;cveId&#39;]
-        except Exception as error:
-            print(&#39;get_cve_id发生错误：&#39;,error)
-            return &quot;N&#x2F;A&quot;
-
-    def get_cve_desc(self):  # 获取CVE的描述信息
-        try:
-            return self.data[&#39;containers&#39;][&#39;cna&#39;][&#39;descriptions&#39;][0][&#39;value&#39;]
-        except Exception as error:
-            print(error)
-            return &quot;N&#x2F;A&quot;
-
-    def get_cve_state(self):  # 获取CVE的state
-        try:
-            return self.data[&#39;cveMetadata&#39;][&#39;state&#39;]
-        except Exception as error:
-            print(error)
-            return &quot;N&#x2F;A&quot;
-
-    def get_cve_prob_type(self):  # 获取CVE的问题类型信息
-        try:
-             return self.data[&#39;containers&#39;][&#39;cna&#39;][&#39;problemTypes&#39;][0][&#39;descriptions&#39;][0][&#39;description&#39;]
-
-        except Exception as error:
-            print(error)
-            return &quot;N&#x2F;A&quot;
-
-    def get_cve_ventor(self):
-        try:
-            return  self.data[&#39;containers&#39;][&#39;cna&#39;][&#39;affected&#39;][0][&#39;vendor&#39;]
-        except Exception as error:
-            print(error)
-            return &quot;N&#x2F;A&quot;
-
-    def get_cve_version(self):
-        try:
-            return (self.data[&#39;containers&#39;][&#39;cna&#39;][&#39;affected&#39;][0][&#39;versions&#39;][0][&#39;version&#39;]) + &#39;,&#39;+ &#39; &#39; + self.data[&#39;containers&#39;][&#39;cna&#39;][&#39;affected&#39;][0][&#39;versions&#39;][0][&#39;status&#39;]
-        except:
-            #print(&#39;get_cve_version未有此项&#39;)
-            try:
-                return self.data[&#39;containers&#39;][&#39;cna&#39;][&#39;affected&#39;][0][&#39;versions&#39;][0][&#39;version&#39;]
-            except:
-                pass
-
-            return &quot;N&#x2F;A&quot;
-
-
-    def get_cve_product(self):
-        try:
-           return self.data[&#39;containers&#39;][&#39;cna&#39;][&#39;affected&#39;][0][&#39;product&#39;]
-        except:
-            return &quot;N&#x2F;A&quot;
-
-    def get_cve_references(self):
-        info &#x3D; &quot;&quot;&quot;&quot;&quot;&quot;
-        #print(data)
-        try:
-            array &#x3D; self.data[&#39;containers&#39;][&#39;cna&#39;][&#39;references&#39;]
-            print(array)
-            # print(array)
-            for i in array:
-              info +&#x3D; &#39;URL&#39;+ &quot;:&quot; + i[&#39;url&#39;] + &#39;\n\n&#39;
-
-            info +&#x3D; &quot;View additional information about https:&#x2F;&#x2F;nvd.nist.gov&#x2F;view&#x2F;vuln&#x2F;detail?vulnId&#x3D;&#123;&#125; on NVD.(Note: The NVD is not operated by the CVE Program)\n&quot;.format(
-                self.get_cve_id())
-        except Exception as error:
-            print(&#39;发生异常&#39;,error)
-            return info
-        return info
-
-
-
-&quot;&quot;&quot;该类负责获取输出并控制输出的格式，目前只有匹配公司组件的内容才输出&quot;&quot;&quot;
-class ControlOutputFormat:
-
-    &quot;&quot;&quot;&quot;&quot;&quot;
-    def __init__(self,cve10,row,worksheet,name&#x3D;&#39;test.xlsx&#39;):
-        &quot;&quot;&quot;
-
-        :param cve10: 一个parse类的实例
-        :param row:  表示写入xlsx表格的第几行
-        :param worksheet: 一个xlsx表格
-        :param name: 要打开的含有公司组件的xlsx表格的文件名
-        &quot;&quot;&quot;
-        self.flag &#x3D; False #flag是标志位，表示当前的内容是否含有公司的组件
-        self.row &#x3D; row
-        self.id &#x3D; cve10.get_cve_id()
-        self.desc &#x3D; cve10.get_cve_desc()
-        self.state &#x3D; cve10.get_cve_state()
-        self.pb &#x3D; cve10.get_cve_prob_type()
-        self.ven &#x3D; cve10.get_cve_ventor()
-        self.pro &#x3D; (cve10.get_cve_product()).lower()
-        self.ver &#x3D; cve10.get_cve_version()
-        self.read_excel &#x3D; read_excel(name)
-        self.worksheet &#x3D; worksheet
-        self.dic &#x3D;  &#123;0:&#39;A&#39;,1:&#39;B&#39;,2:&#39;C&#39;,3:&#39;D&#39;,4:&#39;E&#39;,5:&#39;F&#39;,6:&#39;G&#39;,7:&#39;H&#39;&#125;
-
-
-
-    &quot;&quot;&quot;检测内容中是否有和公司匹配的组件&quot;&quot;&quot;
-    def sol_con(self):
-
-        if self.read_excel.get(self.pro) !&#x3D; None:
-            print(&#39;发现与公司组件配对漏洞信息&#39;)
-            self.flag &#x3D; True
-
-    def output(self):
-        self.row &#x3D; str(self.row)
-        ans &#x3D;  [self.id, self.desc,  self.ven, self.pro, self.ver]
-        self.sol_con()
-
-
-        if self.flag:
-            for i in range(len(ans)):
-                # print(i)
-                self.worksheet.write(self.dic[i] + self.row, str(html.unescape(ans[i])))
-            return self.flag
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>该脚本由Req、parse、ControlOutputFormat类组成。Req负责发起爬虫请求。parse负责对请求之后的数据进行解析，最后由ControlOutputFormat对解析之后的数据进行输出的判断（匹配公司组件才输出）</p>
-<h5 id="send_email"><a href="#send-email" class="headerlink" title="send_email"></a>send_email</h5><pre class="line-numbers language-python" data-language="python"><code class="language-python">import smtplib
-from email.mime.text import MIMEText
-from email.header import Header
-from email.mime.application import MIMEApplication
-from email.mime.multipart import MIMEMultipart
+<h5 id="send_email"><a href="#send-email" class="headerlink" title="send_email"></a>send_email</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> smtplib<br><span class="hljs-keyword">from</span> email.mime.text <span class="hljs-keyword">import</span> MIMEText<br><span class="hljs-keyword">from</span> email.header <span class="hljs-keyword">import</span> Header<br><span class="hljs-keyword">from</span> email.mime.application <span class="hljs-keyword">import</span> MIMEApplication<br><span class="hljs-keyword">from</span> email.mime.multipart <span class="hljs-keyword">import</span> MIMEMultipart<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">SendEmail</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self,smtpserver,user,password,sender,receiver,subject,content</span>):<br>        <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string"></span><br><span class="hljs-string">        :param smtpserver: smtp服务器的ip地址，可以是域名</span><br><span class="hljs-string">        :param user: 登录邮箱的用户名</span><br><span class="hljs-string">        :param password: 登录邮箱的密码</span><br><span class="hljs-string">        :param sender: 发送邮件时显示的发送方</span><br><span class="hljs-string">        :param receiver: 发送邮件时显示的接收方</span><br><span class="hljs-string">        :param subject:  发送邮件的主题</span><br><span class="hljs-string">        :param content:  发送邮件的内容</span><br><span class="hljs-string">        &quot;&quot;&quot;</span><br>        self.smtpserver = smtpserver<br>        self.user = user<br>        self.password = password<br>        self.sender = sender<br>        self.receiver = receiver<br>        self.subject = subject<br>        self.content = content<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">send</span>(<span class="hljs-params">self,accessory,content_type,content_disposition</span>):<br>        <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">        发送邮件,支持带附件</span><br><span class="hljs-string">        accessory是一个所打开附件的文件流</span><br><span class="hljs-string">        content_type指明发送附件的内容类型</span><br><span class="hljs-string">        content_dispistion 指明发送附件的文件名等</span><br><span class="hljs-string">        :return: 无</span><br><span class="hljs-string">        &quot;&quot;&quot;</span><br>        att = MIMEText(accessory, <span class="hljs-string">&quot;base64&quot;</span>, <span class="hljs-string">&#x27;utf-8&#x27;</span>)<br>        <span class="hljs-comment">#att[&#x27;Content-Type&#x27;] = &#x27;application/zip&#x27;</span><br>        <span class="hljs-comment">#att[&#x27;Content-Disposition&#x27;] = &#x27;attachment;filename=&quot;1.xlsx&quot;&#x27;</span><br>        att[<span class="hljs-string">&#x27;Content-Type&#x27;</span>] = content_type<br>        att[<span class="hljs-string">&#x27;Content-Disposition&#x27;</span>] = content_disposition<br><br>        msgRoot = MIMEMultipart()<br>        msgRoot.attach(MIMEText(content, <span class="hljs-string">&#x27;html&#x27;</span>, <span class="hljs-string">&#x27;utf-8&#x27;</span>))<br>        msgRoot[<span class="hljs-string">&#x27;Subject&#x27;</span>] = self.subject<br>        msgRoot[<span class="hljs-string">&#x27;From&#x27;</span>] = self.sender<br>        msgRoot[<span class="hljs-string">&#x27;To&#x27;</span>] = self.receiver<br>        msgRoot.attach(att)<br><br>        <span class="hljs-string">&#x27;&#x27;&#x27;msg[&#x27;From&#x27;] = &quot;huangjiantao@damddos.com&quot;</span><br><span class="hljs-string">        msg[&#x27;To&#x27;] = &quot;790356373@qq.com&quot;</span><br><span class="hljs-string">        msg[&#x27;Subject&#x27;] = Header(subject,&#x27;utf-8&#x27;)&#x27;&#x27;&#x27;</span><br><br>        <span class="hljs-comment"># SSL协议端口号要使用465</span><br>        smtp = smtplib.SMTP_SSL(smtpserver, <span class="hljs-number">465</span>)<br><br>        <span class="hljs-comment"># HELO向服务器标志用户身份</span><br>        smtp.helo(smtpserver)<br><br>        <span class="hljs-comment"># 服务器返回结果确认</span><br>        smtp.ehlo(smtpserver)<br><br>        <span class="hljs-comment"># 登录邮箱服务器用户名密码</span><br>        smtp.login(user, password)<br><br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;Send email start...&quot;</span>)<br>        smtp.sendmail(sender, receive, msgRoot.as_string())<br>        smtp.quit()<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;email send end!&quot;</span>)<br><br><br><br><br><br><span class="hljs-comment"># 发送邮箱服务器</span><br>smtpserver = <span class="hljs-string">&quot;smtp.qiye.163.com&quot;</span><br><br><span class="hljs-comment"># 发送邮箱用户名密码</span><br>user = <span class="hljs-string">&quot;huangjiantao@damddos.com&quot;</span><br>password = <span class="hljs-string">&quot;HC1u9CGU8FrJ8FVa&quot;</span><br><br><span class="hljs-comment"># 发送和接收邮箱</span><br>sender = <span class="hljs-string">&quot;huangjiantao@damddos.com&quot;</span><br><span class="hljs-comment">#receive = &quot;modm@damddos.com&quot;</span><br>receive = <span class="hljs-string">&quot;jiangj@damddos.com&quot;</span><br><br><span class="hljs-comment"># 发送邮件主题和内容</span><br>subject = <span class="hljs-string">&quot;考勤表&quot;</span><br>content = <span class="hljs-string">&quot;&lt;html&gt;&lt;h1 style=&#x27;color:black&#x27;&gt;您好，这是今日爬取CVE的记录表&lt;/h1&gt;&lt;/html&gt;&quot;</span><br>email = SendEmail(smtpserver,user,password,sender,receive,subject,content)<br><span class="hljs-comment"># HTML邮件正文</span><br><br><br></code></pre></td></tr></table></figure>
 
-class SendEmail:
-    def __init__(self,smtpserver,user,password,sender,receiver,subject,content):
-        &quot;&quot;&quot;
-
-        :param smtpserver: smtp服务器的ip地址，可以是域名
-        :param user: 登录邮箱的用户名
-        :param password: 登录邮箱的密码
-        :param sender: 发送邮件时显示的发送方
-        :param receiver: 发送邮件时显示的接收方
-        :param subject:  发送邮件的主题
-        :param content:  发送邮件的内容
-        &quot;&quot;&quot;
-        self.smtpserver &#x3D; smtpserver
-        self.user &#x3D; user
-        self.password &#x3D; password
-        self.sender &#x3D; sender
-        self.receiver &#x3D; receiver
-        self.subject &#x3D; subject
-        self.content &#x3D; content
-
-    def send(self,accessory,content_type,content_disposition):
-        &quot;&quot;&quot;
-        发送邮件,支持带附件
-        accessory是一个所打开附件的文件流
-        content_type指明发送附件的内容类型
-        content_dispistion 指明发送附件的文件名等
-        :return: 无
-        &quot;&quot;&quot;
-        att &#x3D; MIMEText(accessory, &quot;base64&quot;, &#39;utf-8&#39;)
-        #att[&#39;Content-Type&#39;] &#x3D; &#39;application&#x2F;zip&#39;
-        #att[&#39;Content-Disposition&#39;] &#x3D; &#39;attachment;filename&#x3D;&quot;1.xlsx&quot;&#39;
-        att[&#39;Content-Type&#39;] &#x3D; content_type
-        att[&#39;Content-Disposition&#39;] &#x3D; content_disposition
-
-        msgRoot &#x3D; MIMEMultipart()
-        msgRoot.attach(MIMEText(content, &#39;html&#39;, &#39;utf-8&#39;))
-        msgRoot[&#39;Subject&#39;] &#x3D; self.subject
-        msgRoot[&#39;From&#39;] &#x3D; self.sender
-        msgRoot[&#39;To&#39;] &#x3D; self.receiver
-        msgRoot.attach(att)
-
-        &#39;&#39;&#39;msg[&#39;From&#39;] &#x3D; &quot;huangjiantao@damddos.com&quot;
-        msg[&#39;To&#39;] &#x3D; &quot;790356373@qq.com&quot;
-        msg[&#39;Subject&#39;] &#x3D; Header(subject,&#39;utf-8&#39;)&#39;&#39;&#39;
-
-        # SSL协议端口号要使用465
-        smtp &#x3D; smtplib.SMTP_SSL(smtpserver, 465)
-
-        # HELO向服务器标志用户身份
-        smtp.helo(smtpserver)
-
-        # 服务器返回结果确认
-        smtp.ehlo(smtpserver)
-
-        # 登录邮箱服务器用户名密码
-        smtp.login(user, password)
-
-        print(&quot;Send email start...&quot;)
-        smtp.sendmail(sender, receive, msgRoot.as_string())
-        smtp.quit()
-        print(&quot;email send end!&quot;)
-
-
-
-
-
-# 发送邮箱服务器
-smtpserver &#x3D; &quot;smtp.qiye.163.com&quot;
-
-# 发送邮箱用户名密码
-user &#x3D; &quot;huangjiantao@damddos.com&quot;
-password &#x3D; &quot;HC1u9CGU8FrJ8FVa&quot;
-
-# 发送和接收邮箱
-sender &#x3D; &quot;huangjiantao@damddos.com&quot;
-#receive &#x3D; &quot;modm@damddos.com&quot;
-receive &#x3D; &quot;jiangj@damddos.com&quot;
-
-# 发送邮件主题和内容
-subject &#x3D; &quot;考勤表&quot;
-content &#x3D; &quot;&lt;html&gt;&lt;h1 style&#x3D;&#39;color:black&#39;&gt;您好，这是今日爬取CVE的记录表&lt;&#x2F;h1&gt;&lt;&#x2F;html&gt;&quot;
-email &#x3D; SendEmail(smtpserver,user,password,sender,receive,subject,content)
-# HTML邮件正文
-
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>该脚本主要由SendEmail类组成，负责自动发送邮箱。</p>
 
                 
-            </div>
+              </div>
+            
             <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
 
-            
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%B7%A5%E4%BD%9C%E6%80%BB%E7%BB%93/" class="category-chain-item">工作总结</a>
+  
+  
 
-    <div class="reprint" id="reprint-statement">
-        
-            <div class="reprint__author">
-                <span class="reprint-meta" style="font-weight: bold;">
-                    <i class="fas fa-user">
-                        文章作者:
-                    </i>
-                </span>
-                <span class="reprint-info">
-                    <a href="/about" rel="external nofollow noreferrer">MirRoR4s</a>
-                </span>
-            </div>
-            <div class="reprint__type">
-                <span class="reprint-meta" style="font-weight: bold;">
-                    <i class="fas fa-link">
-                        文章链接:
-                    </i>
-                </span>
-                <span class="reprint-info">
-                    <a href="https://MirRoR4s.github.io/2022/10/17/%E5%B7%A5%E4%BD%9C%E4%B8%AD%E5%86%99%E7%9A%84%E7%88%AC%E5%8F%96cve%E4%BF%A1%E6%81%AF%E8%84%9A%E6%9C%AC%E6%80%BB%E7%BB%93/index.html">https://MirRoR4s.github.io/2022/10/17/%E5%B7%A5%E4%BD%9C%E4%B8%AD%E5%86%99%E7%9A%84%E7%88%AC%E5%8F%96cve%E4%BF%A1%E6%81%AF%E8%84%9A%E6%9C%AC%E6%80%BB%E7%BB%93/index.html</a>
-                </span>
-            </div>
-            <div class="reprint__notice">
-                <span class="reprint-meta" style="font-weight: bold;">
-                    <i class="fas fa-copyright">
-                        版权声明:
-                    </i>
-                </span>
-                <span class="reprint-info">
-                    本博客所有文章除特別声明外，均采用
-                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
-                    许可协议。转载请注明来源
-                    <a href="/about" target="_blank">MirRoR4s</a>
-                    !
-                </span>
-            </div>
-        
+      </span>
+    
+  
+</span>
+
     </div>
-
-    <script async defer>
-      document.addEventListener("copy", function (e) {
-        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
-        M.toast({html: toastHTML})
-      });
-
-      function navToReprintStatement() {
-        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
-      }
-    </script>
-
-
-
-            <div class="tag_share" style="display: block;">
-                <div class="post-meta__tag-list" style="display: inline-block;">
-                    
-                        <div class="article-tag">
-                            
-                                <a href="/tags/%E5%BC%80%E5%8F%91/">
-                                    <span class="chip bg-color">开发</span>
-                                </a>
-                            
-                        </div>
-                    
-                </div>
-                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
-                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
-<div id="article-share">
-
-    
-    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
-    <script src="/libs/share/js/social-share.min.js"></script>
-    
-
-    
-
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E5%BC%80%E5%8F%91/">#开发</a>
+      
+    </div>
+  
 </div>
 
-                </div>
-            </div>
-            
-                <style>
-    #reward {
-        margin: 40px 0;
-        text-align: center;
-    }
 
-    #reward .reward-link {
-        font-size: 1.4rem;
-        line-height: 38px;
-    }
+              
+  
 
-    #reward .btn-floating:hover {
-        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.2);
-    }
-
-    #rewardModal {
-        width: 320px;
-        height: 350px;
-    }
-
-    #rewardModal .reward-title {
-        margin: 15px auto;
-        padding-bottom: 5px;
-    }
-
-    #rewardModal .modal-content {
-        padding: 10px;
-    }
-
-    #rewardModal .close {
-        position: absolute;
-        right: 15px;
-        top: 15px;
-        color: rgba(0, 0, 0, 0.5);
-        font-size: 1.3rem;
-        line-height: 20px;
-        cursor: pointer;
-    }
-
-    #rewardModal .close:hover {
-        color: #ef5350;
-        transform: scale(1.3);
-        -moz-transform:scale(1.3);
-        -webkit-transform:scale(1.3);
-        -o-transform:scale(1.3);
-    }
-
-    #rewardModal .reward-tabs {
-        margin: 0 auto;
-        width: 210px;
-    }
-
-    .reward-tabs .tabs {
-        height: 38px;
-        margin: 10px auto;
-        padding-left: 0;
-    }
-
-    .reward-content ul {
-        padding-left: 0 !important;
-    }
-
-    .reward-tabs .tabs .tab {
-        height: 38px;
-        line-height: 38px;
-    }
-
-    .reward-tabs .tab a {
-        color: #fff;
-        background-color: #ccc;
-    }
-
-    .reward-tabs .tab a:hover {
-        background-color: #ccc;
-        color: #fff;
-    }
-
-    .reward-tabs .wechat-tab .active {
-        color: #fff !important;
-        background-color: #22AB38 !important;
-    }
-
-    .reward-tabs .alipay-tab .active {
-        color: #fff !important;
-        background-color: #019FE8 !important;
-    }
-
-    .reward-tabs .reward-img {
-        width: 210px;
-        height: 210px;
-    }
-</style>
-
-<div id="reward">
-    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-medium waves-effect waves-light red">赏</a>
-
-    <!-- Modal Structure -->
-    <div id="rewardModal" class="modal">
-        <div class="modal-content">
-            <a class="close modal-close"><i class="fas fa-times"></i></a>
-            <h4 class="reward-title">你的赏识是我前进的动力</h4>
-            <div class="reward-content">
-                <div class="reward-tabs">
-                    <ul class="tabs row">
-                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
-                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
-                    </ul>
-                    <div id="alipay">
-                        <img src="/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
-                    </div>
-                    <div id="wechat">
-                        <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
-                    </div>
-                </div>
-            </div>
-        </div>
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>工作中写的爬取cve信息脚本总结</div>
+      <div>https://mirror4s.github.io/2022/10/17/工作中写的爬取cve信息脚本总结/index.html</div>
     </div>
-</div>
-
-<script>
-    $(function () {
-        $('.tabs').tabs();
-    });
-</script>
-
-            
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>MirRoR4s</div>
         </div>
-    </div>
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-<article id="prenext-posts" class="prev-next articles">
-    <div class="row article-row">
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
-            <div class="card">
-                <a href="/2022/10/18/jvm%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93/index.html">
-                    <div class="card-image">
-                        
-                        
-                        <img src="/medias/featureimages/13.jpg" class="responsive-img" alt="jvm学习总结">
-                        
-                        <span class="card-title">jvm学习总结</span>
-                    </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2022年10月17日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
                 </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            
-我心血来潮忽然觉得不是很理解jvm的相关概念和知识，于是打算书写这篇文章做一个汇总。
-                        
-                    </div>
-                    <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2022-10-18
-                        </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/JAVA/" class="post-category">
-                                    JAVA
-                                </a>
-                            
-                            
-                        </span>
-                    </div>
-                </div>
-                
-                <div class="card-action article-tags">
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
                     
-                    <a href="/tags/jvm/">
-                        <span class="chip bg-color">jvm</span>
-                    </a>
                     
+                      <a href="/2022/10/18/jvm%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93/index.html" title="jvm学习总结">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">jvm学习总结</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/10/15/ASIS-CTF/index.html" title="ASIS-CTF">
+                        <span class="hidden-mobile">ASIS-CTF</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
                 </div>
-                
+              
             </div>
+
+            
+          </article>
         </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
-            </div>
-            <div class="card">
-                <a href="/2022/10/15/ASIS-CTF/index.html">
-                    <div class="card-image">
-                        
-                        
-                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="ASIS-CTF">
-                        
-                        <span class="card-title">ASIS-CTF</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            
-刚刚举行完的ASISCTF的赛后复现，WEB篇。
-                        
-                    </div>
-                    <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-10-15
-                            </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/CTF/" class="post-category">
-                                    CTF
-                                </a>
-                            
-                            
-                        </span>
-                    </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/%E8%B5%9B%E9%A2%98%E8%AE%B0%E5%BD%95/">
-                        <span class="chip bg-color">赛题记录</span>
-                    </a>
-                    
-                </div>
-                
-            </div>
-        </div>
-        
+      </div>
     </div>
-</article>
 
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
 </div>
 
 
 
-<!-- 代码块功能依赖 -->
-<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
-
-<!-- 代码语言 -->
-
-<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
-
-
-<!-- 代码块复制 -->
-
-<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
-
-
-<!-- 代码块收缩 -->
-
-<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+  </aside>
 
 
     </div>
-    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
-        <div class="toc-widget card">
-            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
-            <div id="toc-content"></div>
-        </div>
-    </div>
-</div>
-
-<!-- TOC 悬浮按钮. -->
-
-<div id="floating-toc-btn" class="hide-on-med-and-down">
-    <a class="btn-floating btn-large bg-color">
-        <i class="fas fa-list-ul"></i>
-    </a>
+  </div>
 </div>
 
 
-<script src=""></script>
-<script>
-    $.getScript("/libs/tocbot/tocbot.min.js",function () {
-        tocbot.init({
-            tocSelector: '#toc-content',
-            contentSelector: '#articleContent',
-            headingsOffset: -($(window).height() * 0.4 - 45),
-            collapseDepth: Number('0'),
-            headingSelector: 'h2, h3, h4,h5'
-        });
 
-        // modify the toc link href to support Chinese.
-        let i = 0;
-        let tocHeading = 'toc-heading-';
-        $('#toc-content a').each(function () {
-            $(this).attr('href', '#' + tocHeading + (++i));
-        });
 
-        // modify the heading title id to support Chinese.
-        i = 0;
-        $('#articleContent').children('h2, h3, h4,h5').each(function () {
-            $(this).attr('id', tocHeading + (++i));
-        });
 
-        // Set scroll toc fixed.
-        let tocHeight = parseInt($(window).height() * 0.4 - 64);
-        let $tocWidget = $('.toc-widget');
-        $(window).scroll(function () {
-            let scroll = $(window).scrollTop();
-            /* add post toc fixed. */
-            if (scroll > tocHeight) {
-                $tocWidget.addClass('toc-fixed');
-            } else {
-                $tocWidget.removeClass('toc-fixed');
-            }
-        });
+  
 
-        
-        /* 修复文章卡片 div 的宽度. */
-        let fixPostCardWidth = function (srcId, targetId) {
-            let srcDiv = $('#' + srcId);
-            if (srcDiv.length === 0) {
-                return;
-            }
 
-            let w = srcDiv.width();
-            if (w >= 450) {
-                w = w + 21;
-            } else if (w >= 350 && w < 450) {
-                w = w + 18;
-            } else if (w >= 300 && w < 350) {
-                w = w + 16;
-            } else {
-                w = w + 14;
-            }
-            $('#' + targetId).width(w);
-        };
 
-        // 切换TOC目录展开收缩的相关操作.
-        const expandedClass = 'expanded';
-        let $tocAside = $('#toc-aside');
-        let $mainContent = $('#main-content');
-        $('#floating-toc-btn .btn-floating').click(function () {
-            if ($tocAside.hasClass(expandedClass)) {
-                $tocAside.removeClass(expandedClass).hide();
-                $mainContent.removeClass('l9');
-            } else {
-                $tocAside.addClass(expandedClass).show();
-                $mainContent.addClass('l9');
-            }
-            fixPostCardWidth('artDetail', 'prenext-posts');
-        });
-        
-    })
-</script>
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
 
     
 
-</main>
-
-
-
-</main>
-
-<footer class="page-footer bg-color">
     
-        <link rel="stylesheet" href="/libs/aplayer/APlayer.min.css">
-<style>
-    .aplayer .aplayer-lrc p {
-        
-        font-size: 12px;
-        font-weight: 700;
-        line-height: 16px !important;
-    }
-
-    .aplayer .aplayer-lrc p.aplayer-lrc-current {
-        
-        font-size: 15px;
-        color: #42b983;
-    }
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
 
     
-    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body {
-        left: -66px !important;
-    }
-
-    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body:hover {
-        left: 0px !important;
-    }
-
-    
-</style>
-<div class="">
-    
-    <div class="row">
-        <meting-js class="col l8 offset-l2 m10 offset-m1 s12"
-                   server="netease"
-                   type="playlist"
-                   id="503838841"
-                   fixed='true'
-                   autoplay='false'
-                   theme='#42b983'
-                   loop='all'
-                   order='random'
-                   preload='auto'
-                   volume='0.7'
-                   list-folded='true'
-        >
-        </meting-js>
-    </div>
-</div>
-
-<script src="/libs/aplayer/APlayer.min.js"></script>
-<script src="/libs/aplayer/Meting.min.js"></script>
-
-    
-    <div class="container row center-align"
-         style="margin-bottom: 0px !important;">
-        <div class="col s12 m8 l8 copy-right">
-            Copyright&nbsp;&copy;
-            
-                <span id="year">2019-2023</span>
-            
-            <a href="/about" target="_blank">MirRoR4s</a>
-            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
-            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
-            <br>
-            
-                &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">265.2k</span>
-            
-            
-            
-                
-            
-            
-                <span id="busuanzi_container_site_pv">
-                &nbsp;|&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;
-                    <span id="busuanzi_value_site_pv" class="white-color"></span>
-            </span>
-            
-            
-                <span id="busuanzi_container_site_uv">
-                &nbsp;|&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;
-                    <span id="busuanzi_value_site_uv" class="white-color"></span>
-            </span>
-            
-            <br>
-
-            <!-- 运行天数提醒. -->
-            
-            <br>
-            
-        </div>
-        <div class="col s12 m4 l4 social-link social-statis">
-    <a href="https://github.com/blinkfox" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
-        <i class="fab fa-github"></i>
-    </a>
-
-
-
-    <a href="mailto:1181062873@qq.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
-        <i class="fas fa-envelope-open"></i>
-    </a>
-
-
-
-
-
-
-
-    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=1181062873" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 1181062873" data-position="top" data-delay="50">
-        <i class="fab fa-qq"></i>
-    </a>
-
-
-
-
-
-
-
-    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
-        <i class="fas fa-rss"></i>
-    </a>
-
-</div>
-    </div>
-</footer>
-
-<div class="progress-bar"></div>
-
-
-<!-- 搜索遮罩框 -->
-<div id="searchModal" class="modal">
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
     <div class="modal-content">
-        <div class="search-header">
-            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
-            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
-                   class="search-input">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
         </div>
-        <div id="searchResult"></div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
     </div>
+  </div>
 </div>
 
-<script type="text/javascript">
-$(function () {
-    var searchFunc = function (path, search_id, content_id) {
-        'use strict';
-        $.ajax({
-            url: path,
-            dataType: "xml",
-            success: function (xmlResponse) {
-                // get the contents from search data
-                var datas = $("entry", xmlResponse).map(function () {
-                    return {
-                        title: $("title", this).text(),
-                        content: $("content", this).text(),
-                        url: $("url", this).text()
-                    };
-                }).get();
-                var $input = document.getElementById(search_id);
-                var $resultContent = document.getElementById(content_id);
-                $input.addEventListener('input', function () {
-                    var str = '<ul class=\"search-result-list\">';
-                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
-                    $resultContent.innerHTML = "";
-                    if (this.value.trim().length <= 0) {
-                        return;
-                    }
-                    // perform local searching
-                    datas.forEach(function (data) {
-                        var isMatch = true;
-                        var data_title = data.title.trim().toLowerCase();
-                        var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
-                        var data_url = data.url;
-                        data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
-                        var index_title = -1;
-                        var index_content = -1;
-                        var first_occur = -1;
-                        // only match artiles with not empty titles and contents
-                        if (data_title !== '' && data_content !== '') {
-                            keywords.forEach(function (keyword, i) {
-                                index_title = data_title.indexOf(keyword);
-                                index_content = data_content.indexOf(keyword);
-                                if (index_title < 0 && index_content < 0) {
-                                    isMatch = false;
-                                } else {
-                                    if (index_content < 0) {
-                                        index_content = 0;
-                                    }
-                                    if (i === 0) {
-                                        first_occur = index_content;
-                                    }
-                                }
-                            });
-                        }
-                        // show search results
-                        if (isMatch) {
-                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
-                            var content = data.content.trim().replace(/<[^>]+>/g, "");
-                            if (first_occur >= 0) {
-                                // cut out 100 characters
-                                var start = first_occur - 20;
-                                var end = first_occur + 80;
-                                if (start < 0) {
-                                    start = 0;
-                                }
-                                if (start === 0) {
-                                    end = 100;
-                                }
-                                if (end > content.length) {
-                                    end = content.length;
-                                }
-                                var match_content = content.substr(start, end);
-                                // highlight all keywords
-                                keywords.forEach(function (keyword) {
-                                    var regS = new RegExp(keyword, "gi");
-                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
-                                });
+    
 
-                                str += "<p class=\"search-result\">" + match_content + "...</p>"
-                            }
-                            str += "</li>";
-                        }
-                    });
-                    str += "</ul>";
-                    $resultContent.innerHTML = str;
-                });
-            }
-        });
-    };
+    
+  </main>
 
-    searchFunc('/search.xml', 'searchInput', 'searchResult');
-});
-</script>
-
-<!-- 深色模式按钮 -->
-<a onclick="switchNightMode()" id="sma" title="模式切换">
-    <i class="fa fa-moon" id="nightMode" aria-hidden="true"></i>
-</a>
-<!-- 回到顶部按钮 -->
-<div id="backTop" class="top-scroll">
-    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
-        <i class="fas fa-arrow-up"></i>
-    </a>
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
 </div>
 
+  </footer>
 
-<script type="text/javascript">
-    $.getScript("https://cdn.jsdelivr.net/npm/pjax/pjax.min.js",loadPjax)
-    function loadPjax(){
-        var pjax = new Pjax({
-            selectors: [
-                "head title",
-                'head meta[name="keywords"]',
-                'head meta[name="description"]',
-                "main#main_wrap",
-                "#rightside"
-            ],
-            cache: true,
-            cacheBust: false
-        });
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
     }
 
-    // 开始 PJAX 执行的函数
-    document.addEventListener('pjax:send', function () {
-    });
-    // PJAX 完成之后执行的函数，可以和上面的重载放在一起
-    document.addEventListener('pjax:complete', function () {
-        document.querySelectorAll('script[data-pjax]').forEach(item => {
-            const newScript = document.createElement('script')
-            const content = item.text || item.textContent || item.innerHTML || ""
-            Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
-            newScript.appendChild(document.createTextNode(content))
-            item.parentNode.replaceChild(newScript, item)
-        })
-    });
-
-    // Pjax请求错误时，跳转到404页面
-    document.addEventListener('pjax:error', (err) => {
-        if (err.request.status === 404) {
-            pjax.loadUrl('/404.html')
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
         }
-    })
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
 </script>
 
 
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
 
-<script src="/libs/materialize/materialize.min.js"></script>
-<script src="/libs/masonry/masonry.pkgd.min.js"></script>
-<script src="/libs/aos/aos.js"></script>
-<script src="/libs/scrollprogress/scrollProgress.min.js"></script>
-<script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
-<script src="/js/matery.js"></script>
+  <script>Fluid.plugins.codeWidget();</script>
 
 
-
-
-
-<!-- 雪花特效 -->
-
-
-<!-- 鼠标星星特效 -->
-
-
-
-    <script src="https://ssl.captcha.qq.com/TCaptcha.js"></script>
-    <script src="/libs/others/TencentCaptcha.js"></script>
-    <button id="TencentCaptcha" data-appid="xxxxxxxxxx" data-cbfn="callback" type="button"
-            hidden></button>
-
-
-<!-- Baidu Analytics -->
-
-<!-- Baidu Push -->
-
+  
 <script>
-    (function () {
-        var bp = document.createElement('script');
-        var curProtocol = window.location.protocol.split(':')[0];
-        if (curProtocol === 'https') {
-            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
-        } else {
-            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
         }
-        var s = document.getElementsByTagName("script")[0];
-        s.parentNode.insertBefore(bp, s);
-    })();
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
 </script>
 
 
-    <script src="/libs/others/clicklove.js" async="async"></script>
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
 
 
-    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
 
 
 
 
 
-
-<!--腾讯兔小巢-->
-
-
-
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
 
 
+  
 
-
-
-    <script src="/libs/instantpage/instantpage.js" type="module"></script>
-
-
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
 </body>
-
 </html>
