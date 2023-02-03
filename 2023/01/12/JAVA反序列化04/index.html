@@ -24,6 +24,7 @@
 <meta property="og:description" content="这一篇分析 Java 反序列化 CommonsCollections 的 CC1 链。">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://mirror4s.github.io/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/image-20230113103415079.png">
+<meta property="og:image" content="https://mirror4s.github.io/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/image-20230203180113819.png">
 <meta property="og:image" content="https://mirror4s.github.io/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/image-20230113103810638.png">
 <meta property="og:image" content="https://mirror4s.github.io/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/image-20230113103610790.png">
 <meta property="og:image" content="https://mirror4s.github.io/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/image-20230113103700410.png">
@@ -32,10 +33,10 @@
 <meta property="og:image" content="https://mirror4s.github.io/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/AttackRoad.png">
 <meta property="og:image" content="https://mirror4s.github.io/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/image-20230114163028342.png">
 <meta property="og:image" content="https://mirror4s.github.io/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/image-20230114163041395.png">
-<meta property="og:image" content="https://mirror4s.github.io/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/image-20230114163748548.png">
+<meta property="og:image" content="https://mirror4s.github.io/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/image-20230203180338437.png">
 <meta property="og:image" content="https://mirror4s.github.io/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/image-20230114163858589.png">
-<meta property="og:image" content="https://mirror4s.github.io/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/image-20230114164208076.png">
-<meta property="og:image" content="https://mirror4s.github.io/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/image-20230114164455224.png">
+<meta property="og:image" content="https://mirror4s.github.io/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/image-20230203181559198.png">
+<meta property="og:image" content="https://mirror4s.github.io/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/image-20230203181646361.png">
 <meta property="og:image" content="https://mirror4s.github.io/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/image-20230114165818223.png">
 <meta property="og:image" content="https://mirror4s.github.io/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/image-20230114170157802.png">
 <meta property="og:image" content="https://mirror4s.github.io/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/image-20230114171925635.png">
@@ -74,7 +75,7 @@
 <meta property="og:image" content="https://mirror4s.github.io/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/image-20230116113107441.png">
 <meta property="og:image" content="https://mirror4s.github.io/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/image-20230116115829515.png">
 <meta property="article:published_time" content="2023-01-12T11:48:51.000Z">
-<meta property="article:modified_time" content="2023-01-27T04:50:48.027Z">
+<meta property="article:modified_time" content="2023-02-03T10:16:47.801Z">
 <meta property="article:author" content="MirRoR4s">
 <meta property="article:tag" content="JAVA反序列化">
 <meta name="twitter:card" content="summary_large_image">
@@ -297,7 +298,7 @@
         
         
         
-          127 分钟
+          128 分钟
         
       </span>
     
@@ -340,7 +341,7 @@
               <p class="note note-info">
                 
                   
-                    本文最后更新于：2023年1月27日 下午
+                    本文最后更新于：2023年2月3日 晚上
                   
                 
               </p>
@@ -353,9 +354,10 @@
 <p>这一篇分析 Java 反序列化 CommonsCollections 的 CC1 链。</p>
 <span id="more"></span>
 
-<h2 id="common-collections-相关介绍"><a href="#Common-Collections-相关介绍" class="headerlink" title="Common-Collections 相关介绍"></a>Common-Collections 相关介绍</h2><p>直接看<a target="_blank" rel="noopener" href="https://blinkfox.github.io/2018/09/13/hou-duan/java/commons/commons-collections-bao-he-jian-jie/">闪烁之狐</a>大佬的即可。</p>
+<h3 id="一-前言"><a href="#一-前言" class="headerlink" title="一. 前言"></a>一. 前言</h3><p>Common-Collections 相关介绍</p>
+<p>直接看<a target="_blank" rel="noopener" href="https://blinkfox.github.io/2018/09/13/hou-duan/java/commons/commons-collections-bao-he-jian-jie/">闪烁之狐</a>大佬的即可。</p>
 <p>也可以看看这篇 <a target="_blank" rel="noopener" href="https://foxglovesecurity.com/2015/11/06/what-do-weblogic-websphere-jboss-jenkins-opennms-and-your-application-have-in-common-this-vulnerability/">foxlovesecurity</a></p>
-<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><h3 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建</h3><ul>
+<h3 id="二-环境搭建"><a href="#二-环境搭建" class="headerlink" title="二. 环境搭建"></a>二. 环境搭建</h3><ul>
 <li><a target="_blank" rel="noopener" href="https://www.oracle.com/cn/java/technologies/javase/javase8-archive-downloads.html">JDK8u65</a></li>
 <li><a target="_blank" rel="noopener" href="http://hg.openjdk.java.net/jdk8u/jdk8u/jdk/rev/af660750b2f4">openJDK 8u65</a></li>
 <li>Maven 3.6.3(其余版本可以先试试，不行再降版本)</li>
@@ -368,7 +370,7 @@
 <p>一番查找发现下载网站 <a target="_blank" rel="noopener" href="https://blog.lupf.cn/articles/2022/02/19/1645283454543.html">Oracle JDK 8u65 全平台安装包下载 - 码霸霸 (lupf.cn)</a></p>
 </blockquote>
 <p>我新建了一个名为 <strong>jdk8u65</strong> 的文件作为我的安装目录</p>
-<h4 id="pomxml-添加依赖"><a href="#pom-xml-添加依赖" class="headerlink" title="pom.xml 添加依赖"></a>pom.xml 添加依赖</h4><p>再接着，创建一个 IDEA 项目，选中 maven，并使用 jdk8u65。创建完毕之后在 pom.xml 中添加如下依赖</p>
+<h4 id="21-pomxml-添加依赖"><a href="#2-1-pom-xml-添加依赖" class="headerlink" title="2.1 pom.xml 添加依赖"></a>2.1 pom.xml 添加依赖</h4><p>再接着，创建一个 IDEA 项目，选中 maven，并使用 jdk8u65。创建完毕之后在 pom.xml 中添加如下依赖</p>
 <p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/image-20230113103415079.png" srcset="/img/loading.gif" lazyload alt="image-20230113103415079"></p>
 <p>添加依赖之后右上角如果出现 pom 的图标，点击一下就好了。</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-meta">&lt;?xml version=<span class="hljs-string">&quot;1.0&quot;</span> encoding=<span class="hljs-string">&quot;UTF-8&quot;</span>?&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">project</span> <span class="hljs-attr">xmlns</span>=<span class="hljs-string">&quot;http://maven.apache.org/POM/4.0.0&quot;</span></span><br><span class="hljs-tag">         <span class="hljs-attr">xmlns:xsi</span>=<span class="hljs-string">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span></span><br><span class="hljs-tag">         <span class="hljs-attr">xsi:schemaLocation</span>=<span class="hljs-string">&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">modelVersion</span>&gt;</span>4.0.0<span class="hljs-tag">&lt;/<span class="hljs-name">modelVersion</span>&gt;</span><br><br>    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.example<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>CC1<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>1.0-SNAPSHOT<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">dependencies</span>&gt;</span><br>        <span class="hljs-comment">&lt;!-- https://mvnrepository.com/artifact/commons-collections/commons-collections --&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>commons-collections<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>commons-collections<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>3.2.1<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br>        <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">dependencies</span>&gt;</span><br><br><br>    <span class="hljs-tag">&lt;<span class="hljs-name">properties</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">maven.compiler.source</span>&gt;</span>8<span class="hljs-tag">&lt;/<span class="hljs-name">maven.compiler.source</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">maven.compiler.target</span>&gt;</span>8<span class="hljs-tag">&lt;/<span class="hljs-name">maven.compiler.target</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">project.build.sourceEncoding</span>&gt;</span>UTF-8<span class="hljs-tag">&lt;/<span class="hljs-name">project.build.sourceEncoding</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">properties</span>&gt;</span><br><br><span class="hljs-tag">&lt;/<span class="hljs-name">project</span>&gt;</span><br></code></pre></td></tr></table></figure>
@@ -377,7 +379,8 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs Java"><span class="hljs-keyword">import</span> org.apache.commons.collections.functors.InvokerTransformer;<br></code></pre></td></tr></table></figure>
 
 <p>如果成功说明安装成功了。之后点进去 <code>InvokerTransformer</code> 包，然后如果右上角出现了 pom 的下载源，那就下载。</p>
-<h4 id="修改-sun-包"><a href="#修改-sun-包" class="headerlink" title="修改 sun 包"></a>修改 sun 包</h4><p>首先在我们的 jdk8u65 文件夹有一个 src.zip</p>
+<p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/image-20230203180113819.png" srcset="/img/loading.gif" lazyload alt="image-20230203180113819"></p>
+<h4 id="22-修改-sun-包"><a href="#2-2-修改-sun-包" class="headerlink" title="2.2 修改 sun 包"></a>2.2 修改 sun 包</h4><p>首先在我们的 jdk8u65 文件夹有一个 src.zip</p>
 <p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/image-20230113103810638.png" srcset="/img/loading.gif" lazyload alt="image-20230113103810638"></p>
 <p>我们在这个目录新建一个文件夹 src，并将 src.zip 的内容解压到 src，之后去下面的链接下载 sun 包。</p>
 <p><a target="_blank" rel="noopener" href="http://hg.openjdk.java.net/jdk8u/jdk8u/jdk/rev/af660750b2f4">openJDK 8u65</a>————去到这个下载链接并点击 zip 下载</p>
@@ -387,31 +390,31 @@
 <p>之后进入 idea，打开项目结构，将我们的 sun 目录添加到源路径</p>
 <p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/image-20230113104721285.png" srcset="/img/loading.gif" lazyload alt="image-20230113104721285"></p>
 <p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/image-20230113104700713.png" srcset="/img/loading.gif" lazyload alt="image-20230113104700713"></p>
-<h2 id="transformmap-版-cc1-攻击链分析"><a href="#TransformMap-版-CC1-攻击链分析" class="headerlink" title="TransformMap 版 CC1 攻击链分析"></a>TransformMap 版 CC1 攻击链分析</h2><h3 id="反序列化攻击思路"><a href="#反序列化攻击思路" class="headerlink" title="反序列化攻击思路"></a>反序列化攻击思路</h3><p>首先我们再次明确一下反序列化的攻击思路</p>
+<h3 id="三-transformmap-版-cc1-攻击链分析"><a href="#三-TransformMap-版-CC1-攻击链分析" class="headerlink" title="三. TransformMap 版 CC1 攻击链分析"></a>三. TransformMap 版 CC1 攻击链分析</h3><h4 id="31-反序列化攻击思路"><a href="#3-1-反序列化攻击思路" class="headerlink" title="3.1 反序列化攻击思路"></a>3.1 反序列化攻击思路</h4><p>首先我们再次明确一下反序列化的攻击思路</p>
 <ul>
 <li>入口类需要一个 <code>readObject</code> 方法</li>
 <li>结尾需要一个能够命令执行的方法</li>
 <li>从入口类出发通过链子引导到结尾命令执行，故我们的攻击应从尾部出发去寻找头部。</li>
 </ul>
 <p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/AttackRoad.png" srcset="/img/loading.gif" lazyload alt="img"></p>
-<h3 id="1寻找尾部的-exec-方法"><a href="#1-寻找尾部的-exec-方法" class="headerlink" title="1.寻找尾部的 exec 方法"></a>1.寻找尾部的 exec 方法</h3><p>接下来就正式开始复现 CC1 的链。</p>
+<h5 id="311-寻找尾部的-exec-方法"><a href="#3-1-1-寻找尾部的-exec-方法" class="headerlink" title="3.1.1 寻找尾部的 exec 方法"></a>3.1.1 寻找尾部的 exec 方法</h5><p>接下来就正式开始复现 CC1 的链。</p>
 <p>首先在 idea 左侧项目找到 commons-collections-3.2.1，然后在集合模块找到 <code>Transformer.java</code> 文件。</p>
 <p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/image-20230114163028342.png" srcset="/img/loading.gif" lazyload alt="image-20230114163028342"></p>
-<p>具体是在 org.apache.commons.collections 包下</p>
+<p>具体是在 org.apache.commons.collections 包下(位置靠下，所以往下拉一拉才能看到)</p>
 <p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/image-20230114163041395.png" srcset="/img/loading.gif" lazyload alt="image-20230114163041395"></p>
 <blockquote>
-<p>网上没有人说为什么直接去 Transformer.java ，我也没懂，暂时搁置。</p>
+<p>网上没有人说为什么直接去 Transformer.java ，我也没懂，暂时搁置。这或许就是挖掘 Java 漏洞所要做的事情吧，找到攻击链！</p>
 </blockquote>
-<p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/image-20230114163748548.png" srcset="/img/loading.gif" lazyload alt="image-20230114163748548"></p>
+<p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/image-20230203180338437.png" srcset="/img/loading.gif" lazyload alt="image-20230203180338437"></p>
 <p>这是一个接口，我们使用 <code>ctrl + alt + B</code> 查看实现了这个接口的类。</p>
 <p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/image-20230114163858589.png" srcset="/img/loading.gif" lazyload alt="image-20230114163858589"></p>
 <p>我看的视频和文章都是人工翻找以上的类看看有没有能执行 exec 方法的，我就省略这一步了，直接定位到 <code>InvokerTransformer</code> </p>
 <ul>
 <li><code>InvokerTransformer</code> 类的 <code>transform</code> 方法 存在一个反射调用任意类，所以这可以作为我们链子的终点。</li>
 </ul>
-<p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/image-20230114164208076.png" srcset="/img/loading.gif" lazyload alt="image-20230114164208076"></p>
+<p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/image-20230203181559198.png" srcset="/img/loading.gif" lazyload alt="image-20230203181559198"></p>
 <p>既然这里有漏洞，我们不妨先利用反射弹一个计算器玩玩。<code>InvokerTransformer</code> 类的构造函数如下</p>
-<p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/image-20230114164455224.png" srcset="/img/loading.gif" lazyload alt="image-20230114164455224"></p>
+<p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9604/image-20230203181646361.png" srcset="/img/loading.gif" lazyload alt="image-20230203181646361"></p>
 <p>注意到构造函数是公有的，所以我们可以直接 new 出来。</p>
 <p>第一个参数明显是字符串类型的方法名，第二个参数是一个 Class 数组，表示方法的参数类型，第三个是一个 Object 数组，表示方法的参数。</p>
 <p>实例化一个 InvokerTransformer 对象</p>
