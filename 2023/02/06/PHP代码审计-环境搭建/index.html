@@ -34,8 +34,9 @@
 <meta property="og:image" content="https://mirror4s.github.io/images/PHP%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/image-20230206140831556.png">
 <meta property="og:image" content="https://mirror4s.github.io/images/PHP%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/image-20230206140854377.png">
 <meta property="og:image" content="https://mirror4s.github.io/images/PHP%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/image-20230206140656041.png">
+<meta property="og:image" content="https://mirror4s.github.io/images/PHP%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/image-20230221110245588.png">
 <meta property="article:published_time" content="2023-02-06T02:00:26.000Z">
-<meta property="article:modified_time" content="2023-02-06T06:19:05.164Z">
+<meta property="article:modified_time" content="2023-02-21T03:02:46.240Z">
 <meta property="article:author" content="MirRoR4s">
 <meta property="article:tag" content="PHP代码审计">
 <meta name="twitter:card" content="summary_large_image">
@@ -301,7 +302,7 @@
               <p class="note note-info">
                 
                   
-                    本文最后更新于：2023年2月6日 下午
+                    本文最后更新于：2023年2月21日 上午
                   
                 
               </p>
@@ -312,6 +313,7 @@
                 <!--toc-->
 <p>最近复现 PHP 的一个题目，很想动态调试一下，所以写了这篇文章。</p>
 <span id="more"></span>
+
 <h3 id="前提"><a href="#前提" class="headerlink" title="前提"></a>前提</h3><h3 id="1-安装-xdebug"><a href="#1-安装-XDebug" class="headerlink" title="1. 安装 XDebug"></a>1. 安装 XDebug</h3><p>先去 <a target="_blank" rel="noopener" href="https://xdebug.org/wizard">https://xdebug.org/wizard</a> 这里把你的 phpinfo 的输出复制上去，随后根据推荐指南下载即可</p>
 <p>以下是我的指南：</p>
 <blockquote>
@@ -324,30 +326,32 @@
 </blockquote>
 <h3 id="2-配置-xdebug"><a href="#2-配置-XDebug" class="headerlink" title="2. 配置 XDebug"></a>2. 配置 XDebug</h3><p>在 <strong>php.ini</strong> 末尾添加如下信息</p>
 <figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-section">[XDebug]</span><br><span class="hljs-comment">; 性能分析信息文件的输出目录（根据实际环境修改）</span><br><span class="hljs-attr">xdebug.output_dir</span>=<span class="hljs-string">&quot;C:\phpstudy_pro\PHPTutorial\tmp\xdebug&quot;</span><br><span class="hljs-comment">; 堆栈跟踪文件的存放目录（根据实际环境修改）</span><br><span class="hljs-attr">xdebug.trace_output_dir</span>=<span class="hljs-string">&quot;C:\phpstudy_pro\PHPTutorial\tmp\xdebug&quot;</span><br><span class="hljs-comment">; xdebug 库文件，就是从官网下载下来的dll文件的绝对路径</span><br><span class="hljs-attr">zend_extension</span> = <span class="hljs-string">&quot;C:\phpstudy_pro\Extensions\php\php7.3.4nts\ext\php_xdebug-3.1.6-7.3-vc15-nts-x86_64.dll&quot;</span><br><span class="hljs-comment">; 开启远程调试</span><br><span class="hljs-attr">xdebug.remote_enable</span>= <span class="hljs-literal">On</span><br><span class="hljs-comment">; IP 地址</span><br><span class="hljs-attr">xdebug.client_host</span>=<span class="hljs-string">&quot;127.0.0.1&quot;</span><br><span class="hljs-comment">; xdebug 监听端口和协议</span><br><span class="hljs-attr">xdebug.client_port</span>=<span class="hljs-number">9000</span><br><span class="hljs-attr">xdebug.remote_handler</span>=dbgp<br><span class="hljs-comment">; idekey</span><br><span class="hljs-attr">xdebug.idekey</span>=<span class="hljs-string">&quot;PHPSTORM&quot;</span><br><span class="hljs-attr">xdebug.profiler_enable</span>= <span class="hljs-literal">On</span><br><span class="hljs-attr">xdebug.auto_trace</span>= <span class="hljs-literal">On</span><br><span class="hljs-attr">xdebug.collect_params</span>=<span class="hljs-literal">On</span><br><span class="hljs-attr">xdebug.collect_return</span>=<span class="hljs-literal">On</span><br><span class="hljs-attr">xdebug.mode</span>=<span class="hljs-string">&quot;debug&quot;</span><br></code></pre></td></tr></table></figure>
-<h3 id><a href="#" class="headerlink" title=" "></a> </h3><h3 id="3-配置网站"><a href="#3-配置网站" class="headerlink" title="3. 配置网站"></a>3. 配置网站</h3><p>打开 phpstudy，开启 apache</p>
+
+<h3 id><a href="#" class="headerlink" title></a></h3><h3 id="3-配置网站"><a href="#3-配置网站" class="headerlink" title="3. 配置网站"></a>3. 配置网站</h3><p>打开 phpstudy，开启 apache</p>
 <p>我的主域名是 localhost<br>网站根目录是c:\phpstudy\www<br>端口是 800</p>
-<p><img src="/images/PHP代码审计-环境搭建/image-20230206112615691.png" srcset="/img/loading.gif" lazyload alt="image-20230206112615691"></p>
-<p><img src="/images/PHP代码审计-环境搭建/image-20230206112606087.png" srcset="/img/loading.gif" lazyload alt="image-20230206112606087"></p>
-<h3 id="4-配置-phpstorm"><a href="#4-配置-phpstorm" class="headerlink" title="4. 配置 phpstorm"></a>4. 配置 phpstorm</h3><p><img src="/images/PHP代码审计-环境搭建/image-20230206112750094.png" srcset="/img/loading.gif" lazyload alt="image-20230206112750094"></p>
+<p><img src="/images/PHP%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/image-20230206112615691.png" srcset="/img/loading.gif" lazyload alt="image-20230206112615691"></p>
+<p><img src="/images/PHP%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/image-20230206112606087.png" srcset="/img/loading.gif" lazyload alt="image-20230206112606087"></p>
+<h3 id="4-配置-phpstorm"><a href="#4-配置-phpstorm" class="headerlink" title="4. 配置 phpstorm"></a>4. 配置 phpstorm</h3><p><img src="/images/PHP%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/image-20230206112750094.png" srcset="/img/loading.gif" lazyload alt="image-20230206112750094"></p>
 <p><strong>配置调试</strong></p>
-<p><img src="/images/PHP代码审计-环境搭建/image-20230206112724226.png" srcset="/img/loading.gif" lazyload alt="image-20230206112724226"></p>
+<p><img src="/images/PHP%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/image-20230206112724226.png" srcset="/img/loading.gif" lazyload alt="image-20230206112724226"></p>
 <p>端口与刚刚php.ini里边的xdebug.client_port一样</p>
 <p><strong>配置dbgp</strong></p>
 <p>不用解释了，端口都是和php.ini里边的xdebug.client_port一样，主机填本机的。</p>
-<p><img src="/images/PHP代码审计-环境搭建/image-20230206112912691.png" srcset="/img/loading.gif" lazyload alt="image-20230206112912691"></p>
+<p><img src="/images/PHP%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/image-20230206112912691.png" srcset="/img/loading.gif" lazyload alt="image-20230206112912691"></p>
 <p><strong>配置服务器</strong></p>
-<p><img src="/images/PHP代码审计-环境搭建/image-20230206112735908.png" srcset="/img/loading.gif" lazyload alt="image-20230206112735908"></p>
+<p><img src="/images/PHP%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/image-20230206112735908.png" srcset="/img/loading.gif" lazyload alt="image-20230206112735908"></p>
 <p>我127.0.0.1，你也可以直接填 localhost, 只要你知道该域名指向的文件根目录在哪里就行了。<br>后面验证会用到域名对应的文件根目录</p>
 <p><strong>编辑配置：</strong></p>
-<p><img src="/images/PHP代码审计-环境搭建/image-20230206113057456.png" srcset="/img/loading.gif" lazyload alt="image-20230206113057456"></p>
+<p><img src="/images/PHP%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/image-20230206113057456.png" srcset="/img/loading.gif" lazyload alt="image-20230206113057456"></p>
 <p>新建 php web page页面 （php 网页）</p>
-<p><img src="/images/PHP代码审计-环境搭建/image-20230206113012459.png" srcset="/img/loading.gif" lazyload alt="image-20230206113012459"></p>
+<p><img src="/images/PHP%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/image-20230206113012459.png" srcset="/img/loading.gif" lazyload alt="image-20230206113012459"></p>
 <h3 id="5-安装-xdebug-helper"><a href="#5-安装-Xdebug-helper" class="headerlink" title="5. 安装 Xdebug helper"></a>5. 安装 Xdebug helper</h3><p>谷歌浏览器扩展商店搜索然后安装即可</p>
-<p><img src="/images/PHP代码审计-环境搭建/image-20230206140831556.png" srcset="/img/loading.gif" lazyload alt="image-20230206140831556"></p>
-<p>随后进入选项页面：<strong>chrome-extension://eadndfjplgieldjbigjakmdgkmoaaaoc/options.html</strong> 配置 idekey</p>
-<p><img src="/images/PHP代码审计-环境搭建/image-20230206140854377.png" srcset="/img/loading.gif" lazyload alt="image-20230206140854377"></p>
-<p><img src="/images/PHP代码审计-环境搭建/image-20230206140656041.png" srcset="/img/loading.gif" lazyload alt="image-20230206140656041"></p>
+<p><img src="/images/PHP%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/image-20230206140831556.png" srcset="/img/loading.gif" lazyload alt="image-20230206140831556"></p>
+<p>随后进入选项页面：<strong>chrome-extension:&#x2F;&#x2F;eadndfjplgieldjbigjakmdgkmoaaaoc&#x2F;options.html</strong> 配置 idekey</p>
+<p><img src="/images/PHP%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/image-20230206140854377.png" srcset="/img/loading.gif" lazyload alt="image-20230206140854377"></p>
+<p><img src="/images/PHP%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/image-20230206140656041.png" srcset="/img/loading.gif" lazyload alt="image-20230206140656041"></p>
 <h3 id="6-注意事项"><a href="#6-注意事项" class="headerlink" title="6. 注意事项"></a>6. 注意事项</h3><p>在调试的时候发现页面500之后调试就自动中断了，可以看看这个：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_44836237/article/details/122324587">(14条消息) XDEBUG调试时页面500和自动中断问题_XiXioo1的博客-CSDN博客_nginx xdebug 自动断开</a></p>
+<h2 id="远程调试"><a href="#远程调试" class="headerlink" title="远程调试"></a>远程调试</h2><p><img src="/images/PHP%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/image-20230221110245588.png" srcset="/img/loading.gif" lazyload alt="image-20230221110245588"></p>
 <h3 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h3><p><a target="_blank" rel="noopener" href="https://blog.51cto.com/u_13640989/2709976">https://blog.51cto.com/u_13640989/2709976</a></p>
 
                 

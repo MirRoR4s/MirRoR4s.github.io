@@ -1,0 +1,753 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="MirRoR4s">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="第二小节   前言纯属个人理解，如有勘误，不好意思 (●’◡’●) 私钥加密的场景古典密码学主要涉及到设计和使用密码，该密码允许通信双发互相发送信息，同时信息对能够追踪通信的敌手来说又是隐藏的。用现代的话语来说，密码被称为****加密方案****，这也是我们此处会使用的术语。 所有古典加密方案的安全性都依赖于一个秘密——一个由通信双方提前共享的密钥（敌手不知道此密钥）。通信双方提前共享一些私密">
+<meta property="og:type" content="article">
+<meta property="og:title" content="1.2私钥加密的场景">
+<meta property="og:url" content="https://mirror4s.github.io/2023/02/24/1-2%E7%A7%81%E9%92%A5%E5%8A%A0%E5%AF%86%E7%9A%84%E5%9C%BA%E6%99%AF/index.html">
+<meta property="og:site_name" content="学习记录">
+<meta property="og:description" content="第二小节   前言纯属个人理解，如有勘误，不好意思 (●’◡’●) 私钥加密的场景古典密码学主要涉及到设计和使用密码，该密码允许通信双发互相发送信息，同时信息对能够追踪通信的敌手来说又是隐藏的。用现代的话语来说，密码被称为****加密方案****，这也是我们此处会使用的术语。 所有古典加密方案的安全性都依赖于一个秘密——一个由通信双方提前共享的密钥（敌手不知道此密钥）。通信双方提前共享一些私密">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-02-24T01:52:56.000Z">
+<meta property="article:modified_time" content="2023-02-24T03:41:43.153Z">
+<meta property="article:author" content="MirRoR4s">
+<meta property="article:tag" content="密码学">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>1.2私钥加密的场景 - 学习记录</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"mirror4s.github.io","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="1.2私钥加密的场景"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-02-24 09:52" pubdate>
+          2023年2月24日 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.9k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          16 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">1.2私钥加密的场景</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    本文最后更新于：2023年2月24日 中午
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <span id="more"></span>
+
+<p>第二小节</p>
+<!--toc-->
+
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>纯属个人理解，如有勘误，不好意思 (●’◡’●)</p>
+<h2 id="私钥加密的场景"><a href="#私钥加密的场景" class="headerlink" title="私钥加密的场景"></a>私钥加密的场景</h2><p>古典密码学主要涉及到设计和使用密码，该密码允许通信双发互相发送信息，同时信息对能够追踪通信的敌手来说又是隐藏的。用现代的话语来说，密码被称为****加密方案****，这也是我们此处会使用的术语。</p>
+<p>所有古典加密方案的安全性都依赖于一个秘密——一个由通信双方提前共享的密钥（敌手不知道此密钥）。通信双方提前共享一些私密信息的场景，被称为****私钥场景。****用于该场景下的私钥加密就是密码学原语的一个例子。在描述一些古典加密方案之前，我们先更加笼统地讨论一下私钥加密。</p>
+<p>在私钥加密中，通信双方共享一个密钥，并在它们想要私密地通信时使用该密钥。通信一方可以通过使用共享密钥加密信息从而将信息（或者说是明文）传送给另一方的接收者。加密后的信息称为密文。</p>
+<p>接收者使用相同的密钥解密信息从而恢复原始的信息。用于明文、密文之间转换的密钥是相同的，这就是为什么该场景被称为对称密钥场景。对称性基于加密和解密使用的是同一把密钥，这和非对称或者说是公钥加密是相反的，因为非对称加密的加密和解密使用不同的密钥。</p>
+<p>上文已经提到，加密的目的是使得能够追踪通信信道的敌手无法读取明文（敌手只能观察到密文）。未来的章节会更加具体地谈论这一点。</p>
+<p>关于私钥密钥学有两种典型的应用。第一种是允许物理上分开的通信双方进行私密通信。举个例子，比如一位在纽约的工作人员想要和她在加利福尼亚的同事进行通信。我们假定他们能够提前以一种安全的方式共享密钥（注意不可以直接将密钥发送到信道上，因为这样敌手也可以知道密钥），这是可以做到的。比如他们两个可以事先在某个安全的地方会面并商谈密钥。在其他情况下，事先共享密钥则更加困难。接下来的几个章节，我们都简单地假设事先共享密钥是可能的。</p>
+<p>私钥密码学第二个广泛的应用涉及到自我通信。自我通信是什么意思？顾名思义这说的是你和你自己通信，但是通信的时间节点不同。比如我们可以考虑一下你将存在硬盘里的数据加密，并在未来的某个时间典回到硬盘对数据进行解密恢复出原始数据。在这里硬盘就相当于之前的通信信道，如果说攻击者能够访问你的硬盘并读取其中的内容的话，那么他们也许可以“窃听”你。</p>
+<p>在这种场景下共享密钥就是一件很简单的事情，因为你只需要记住你使用的密钥是什么即可，虽然说你在未来可能会忘记它。</p>
+<h3 id="加密语法"><a href="#加密语法" class="headerlink" title="加密语法"></a>加密语法</h3><p>从形式上来说，我们通过指定一个明文空间 M 连同三个算法（密钥生成算法 Gen、加密算法 Enc、解密算法 Dec） 来定义一个加密方案。明文空间 M 定义了 “合法” 信息的集合，即那些由加密方案支持的信息。</p>
+<p>加密方案的算法具有以下功能：</p>
+<ol>
+<li>密钥生成算法 Gen 是一个概率性的算法，会根据一些分布输出一个密钥 k</li>
+<li>加密算法 Enc 以密钥k和信息m作为输入并输出密文c。我们用 $Enc_k(m)$ 表示明文m使用密钥k加密。</li>
+<li>解密算法 Dec 以密钥k和明文c作为输入并输出明文m。我们用 $Dec_k(c)$ 表示密文c使用密钥k解密</li>
+</ol>
+<p>一个加密方案必须满足以下正确性要求：对每个由密钥生成算法输出的密钥k和每个属于明文空间 M 的明文m，$Dec_k(Enc_k(m))&#x3D;m$ 成立。</p>
+<p>用文字来说就是：使用密钥k加密信息m得到密文c之后，再使用密钥k解密密文c可以得到原始信息m。</p>
+<p>由密钥生成算法所输出的所有可能密钥的集合被称为密钥空间，用 K 来表示。通常来说，Gen 密钥生成算法均匀地从密钥空间中选择一个密钥。</p>
+<p>回顾以下我们先前的讨论，对于想要私密通信的双方，他们可以如下使用一个加密方案：</p>
+<ol>
+<li>首先运行密钥生成算法得到一个通信双方共享的密钥k</li>
+<li>之后，当发送方想要发送信息给另一方时，他计算密文c&#x3D;Enc_k(m) 并将其通过公开信道发送给另一方。</li>
+<li>接收方接收到密文c之后，通过计算m&#x3D;Dec_k(c) 恢复出原始明文。</li>
+</ol>
+<p><strong>密钥和 Kerckhoffs 原则</strong></p>
+<p>从前文可明显看出，若敌手知道解密算法 Dec 和共享密钥k，那么他将能够解密通信双方发送的任何密文。出于这个原因，通信双方一定要安全地共享密钥k并对其他人完全保密。你可能会认为他们应该也将解密算法保密，但若按照这个逻辑的话，为什么不将加密方案的所有细节都保密呢？</p>
+<p>Auguste Kerckhoffs 在 19 世纪晚期解释了一些用于军事的密码的设计原则，其中最重要的一条如下（如今被简单地称为 kerckhoffs 原则）：</p>
+<p>密码方法一定不被要求是保密的，它一定能够轻松地落入敌人手中。</p>
+<p>那就是说，即使敌手知晓加密方案的所有细节，但只要该敌手不知道加密方案使用的密钥，加密方案依然是安全的。也就是说，通信的安全性不依赖于加密方案的保密，而是仅仅依赖于密钥的保密。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%AF%86%E7%A0%81%E5%AD%A6/" class="category-chain-item">密码学</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E5%AF%86%E7%A0%81%E5%AD%A6/">#密码学</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>1.2私钥加密的场景</div>
+      <div>https://mirror4s.github.io/2023/02/24/1-2私钥加密的场景/index.html</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>MirRoR4s</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年2月24日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/02/27/tryhackme-%E7%89%B9%E6%9D%83%E6%8F%90%E5%8D%87-What-the-Shell/index.html" title="tryhackme-特权提升-What_the_Shell?">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">tryhackme-特权提升-What_the_Shell?</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/02/20/ctfshow-ssrf/index.html" title="ctfshow-ssrf">
+                        <span class="hidden-mobile">ctfshow-ssrf</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
