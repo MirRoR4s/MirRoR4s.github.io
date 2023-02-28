@@ -41,7 +41,7 @@
 <meta property="og:image" content="https://i.imgur.com/COmVX8K.png">
 <meta property="og:image" content="https://i.imgur.com/W19gHwL.png">
 <meta property="article:published_time" content="2023-02-27T10:21:48.000Z">
-<meta property="article:modified_time" content="2023-02-27T11:22:35.004Z">
+<meta property="article:modified_time" content="2023-02-28T03:33:19.742Z">
 <meta property="article:author" content="MirRoR4s">
 <meta property="article:tag" content="tryhackme">
 <meta name="twitter:card" content="summary_large_image">
@@ -307,7 +307,7 @@
               <p class="note note-info">
                 
                   
-                    本文最后更新于：2023年2月27日 晚上
+                    本文最后更新于：2023年2月28日 中午
                   
                 
               </p>
@@ -322,10 +322,11 @@
 
 <p>[TOC]</p>
 <h1 id="privilege-escalation-权限提升"><a href="#Privilege-Escalation-权限提升" class="headerlink" title="Privilege Escalation 权限提升"></a>Privilege Escalation 权限提升</h1><h2 id="第-1-章-前言"><a href="#第-1-章-前言" class="headerlink" title="第 1 章 前言"></a>第 1 章 前言</h2><p>这是 tryhackme 渗透测试章节的最后一个房间。原本想谷歌机翻然后我手工看一下，但是感觉这样练习不了英文，所以全部手工翻译，实在翻不出来再交给谷歌。手工翻译不免存在勘误，建议英文好的读者朋友们直接去阅览原文。</p>
-<h2 id="第-2-章-shell"><a href="#第-2-章-shell" class="headerlink" title="第 2 章 shell"></a>第 2 章 shell</h2><h3 id="21-shell-是什么"><a href="#2-1-shell-是什么？" class="headerlink" title="2.1 shell 是什么？"></a>2.1 shell 是什么？</h3><p>在我们深入了解发送和接收 shell 的复杂性之前，理解 shell 实际上是什么很重要。用最简单的术语来说，shell 就是我们在与命令行环境 (CLI) 交互时使用的工具。换句话说，Linux 中常见的 bash 或 sh 程序都是 shell 的示例，Windows 中的 cmd.exe 和 Powershell 也是如此。当以远程系统为目标时，有时可以强制在服务器（例如网络服务器）上运行的应用程序执行任意代码。发生这种情况时，我们希望使用此初始访问权限来获取在目标上运行的 shell。</p>
-<p>简单来说，我们可以强制远程服务器向我们发送对服务器的命令行访问（reverse shell），或者在我们可以连接的服务器上打开一个端口以执行更多命令（bind shell ). 我们将在整个会议室中更详细地介绍这两种情况。</p>
+<h2 id="第-2-章-shell"><a href="#第-2-章-shell" class="headerlink" title="第 2 章 shell"></a>第 2 章 shell</h2><h3 id="21-shell-是什么"><a href="#2-1-shell-是什么？" class="headerlink" title="2.1 shell 是什么？"></a>2.1 shell 是什么？</h3><p>在我们深入了解发送和接收 shell 的复杂性之前，理解 shell 是什么很重要。用最简单的术语来说，shell 就是我们在与命令行环境 (CLI) 交互时使用的工具。换句话说，Linux 中常见的 bash 或 sh 程序都是 shell 的示例，Windows 中的 cmd.exe 和 Powershell 也是如此。当以远程系统为目标时，有时可以强制在服务器（例如网络服务器）上运行的应用程序执行任意代码。发生这种情况时，我们希望使用此初始访问权限来获取在目标上运行的 shell。</p>
+<p>简单来说，我们可以强制远程服务器向我们发送对它的命令行访问（reverse shell），或者在我们可以连接的服务器上打开一个端口以执行更多命令（bind shell )。</p>
 <blockquote>
-<p>reverse shell 就是反向&#x2F;反弹 shell 的意思<br>bind shell 就是正向 shell</p>
+<p>reverse shell 就是反向&#x2F;反弹 shell 的意思</p>
+<p>bind shell 就是正向 shell</p>
 </blockquote>
 <p>这个房间的格式如下： </p>
 <ul>
@@ -335,7 +336,10 @@
 </ul>
 <h3 id="22-工具篇"><a href="#2-2-工具篇" class="headerlink" title="2.2 工具篇"></a>2.2 工具篇</h3><p>我们将使用多种工具来接收 reverse shell 和发送 bind shell。一般而言，我们需要恶意 shell code，以及与生成的 shell 交互的方法。我们将在下面简要讨论其中的每一个：</p>
 <p><strong>Netcat：</strong></p>
-<p>Netcat 是传统的网络“瑞士军刀”。它用于手动执行各种网络交互，包括在枚举期间抓取 banner 之类的东西，但对于我们的使用来说更重要的是，它可以用于接收 reverse shell 或者连接到目标系统上 bind shell 的远程端口。默认情况下，Netcat shell 非常不稳定（容易丢失），所以后文会介绍改进的技术。</p>
+<p>Netcat 号称网络的 “瑞士军刀” 。它用于手动执行各种网络交互，包括在枚举期间抓取 banner 之类的东西，但对于我们的使用来说更重要的是它可以用于接收 reverse shell 或者连接到目标系统上 bind shell 的远程端口。</p>
+<blockquote>
+<p>默认情况下，Netcat shell 非常不稳定（容易丢失），所以后文会介绍改进的技术。</p>
+</blockquote>
 <p><strong>Socat：</strong></p>
 <p>Socat 就像 steroids（英文原意是类固醇） 上的 netcat。它可以做所有相同的事情，甚至更多。 Socat shell 通常比开箱即用的 netcat shell 更稳定。从这个意义上说，它远远优于 netcat；但是 socat 相比于 netcat 有两个问题： </p>
 <ul>

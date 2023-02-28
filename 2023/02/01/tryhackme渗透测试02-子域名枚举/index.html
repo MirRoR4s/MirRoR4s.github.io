@@ -235,7 +235,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.2k 字
+          2.3k 字
         
       </span>
     
@@ -298,19 +298,21 @@
               <div class="markdown-body">
                 
                 <!--toc-->
+
 <p>今日说子域名枚举</p>
 <span id="more"></span>
+
 <h1 id="一-子域枚举"><a href="#一-子域枚举" class="headerlink" title="一. 子域枚举"></a>一. 子域枚举</h1><p>了解发现子域以扩大目标攻击面的各种方法。</p>
 <h3 id="11-简介"><a href="#1-1-简介" class="headerlink" title="1.1 简介"></a>1.1 简介</h3><p>子域枚举是查找一个域的有效子域的过程，但我们为什么要这样做呢？我们这样做是为了扩大我们的攻击面，以尝试发现更多潜在的漏洞点。</p>
 <p>我们将探索三种不同的子域枚举方法：蛮力、OSINT（开源情报）和虚拟主机。</p>
 <p>启动机器，然后继续执行下一个任务。</p>
-<h3 id="12-osint-ssltls-证书"><a href="#1-2-OSINT-SSL-TLS-证书" class="headerlink" title="1.2 OSINT-SSL/TLS 证书"></a>1.2 OSINT-SSL/TLS 证书</h3><p><strong>SSL/TLS 证书</strong></p>
-<p>当 CA（证书颁发机构）为某个域名创建 SSL/TLS（安全套接字层/传输层安全性）证书时，CA 会建立所谓的 “证书透明度 (CT) 日志” 。这些是为域名创建的每个 SSL/TLS 证书的可公开访问的日志。Certificate Transparency 日志的目的是阻止使用恶意和意外生成的证书。我们可以利用这项服务来发现属于某个域的子域，像 <a target="_blank" rel="noopener" href="http://crt.sh/">https://crt.sh</a> 和 <a target="_blank" rel="noopener" href="https://ui.ctsearch.entrust.com/ui/ctsearchui">https://ui.ctsearch.entrust.com/ui/ctsearchui</a> 这样的网站提供了一个可搜索的证书数据库，显示当前和历史成果。</p>
+<h3 id="12-osint-sslx2ftls-证书"><a href="#1-2-OSINT-SSL-x2F-TLS-证书" class="headerlink" title="1.2 OSINT-SSL&#x2F;TLS 证书"></a>1.2 OSINT-SSL&#x2F;TLS 证书</h3><p><strong>SSL&#x2F;TLS 证书</strong></p>
+<p>当 CA（证书颁发机构）为某个域名创建 SSL&#x2F;TLS（安全套接字层&#x2F;传输层安全性）证书时，CA 会建立所谓的 “证书透明度 (CT) 日志” 。这些是为域名创建的每个 SSL&#x2F;TLS 证书的可公开访问的日志。Certificate Transparency 日志的目的是阻止使用恶意和意外生成的证书。我们可以利用这项服务来发现属于某个域的子域，像 <a target="_blank" rel="noopener" href="http://crt.sh/">https://crt.sh</a> 和 <a target="_blank" rel="noopener" href="https://ui.ctsearch.entrust.com/ui/ctsearchui">https://ui.ctsearch.entrust.com/ui/ctsearchui</a> 这样的网站提供了一个可搜索的证书数据库，显示当前和历史成果。</p>
 <p>进入 <a target="_blank" rel="noopener" href="https://crt.sh/">crt.sh </a>搜索域名 <strong>tryhackme.com</strong>，找到 2020-12-26 记录的条目<strong>并</strong>输入下面的域回答问题。</p>
 <h3 id="13-开源情报-osint-搜索引擎"><a href="#1-3-开源情报-OSINT-搜索引擎" class="headerlink" title="1.3 开源情报 OSINT-搜索引擎"></a>1.3 开源情报 OSINT-搜索引擎</h3><p><strong>搜索引擎</strong></p>
-<p>搜索引擎包含指向超过十亿个网站的数万亿个链接，这可能是寻找新子域的绝佳资源。 在 Google 等网站上使用高级搜索方法，例如 site:filter，可以缩小搜索结果的范围。例如，“-site:www.domain.com site:*.domain.com”将只包含指向域名 domain.com 的结果，但不包括任何指向 www.domain.com 的链接；因此，它只向我们显示属于 domain.com 的子域名。</p>
+<p>搜索引擎包含指向超过十亿个网站的数万亿个链接，这可能是寻找新子域的绝佳资源。 在 Google 等网站上使用高级搜索方法，例如 site:filter，可以缩小搜索结果的范围。例如，“-site:<a target="_blank" rel="noopener" href="http://www.domain.com/">www.domain.com</a> site:*.domain.com”将只包含指向域名 domain.com 的结果，但不包括任何指向 <a target="_blank" rel="noopener" href="http://www.domain.com/">www.domain.com</a> 的链接；因此，它只向我们显示属于 domain.com 的子域名。</p>
 <p>转到 <a target="_blank" rel="noopener" href="https://www.google.com/">Google</a> 并使用搜索词 </p>
-<p><strong>-site:www.tryhackme.com </strong></p>
+<p>**-site:<a target="_blank" rel="noopener" href="http://www.tryhackme.com/">www.tryhackme.com</a> **</p>
 <p><strong>site:*.tryhackme.com</strong> </p>
 <p>它应该显示 tryhackme.com 的子域；使用该子域来回答下面的问题。</p>
 <p>回答以下问题</p>
@@ -323,15 +325,17 @@
 <p>为了加快 OSINT 子域发现的过程，我们可以借助 <a target="_blank" rel="noopener" href="https://github.com/aboul3la/Sublist3r">Sublist3r</a> 等工具自动执行上述方法，单击 “查看站点” 按钮打开静态站点并运行 <strong>sublist3r</strong> 模拟以发现一个新的子域，这将有助于回答下面的问题。</p>
 <p>回答以下问题</p>
 <p>sublist3r 发现的第一个子域是什么？</p>
-<h3 id="16-virtual-hosts-虚拟主机"><a href="#1-6-Virtual-Hosts-虚拟主机" class="headerlink" title="1.6 Virtual Hosts 虚拟主机"></a>1.6 Virtual Hosts 虚拟主机</h3><p>某些子域并不总是托管在可公开访问的 DNS 结果中，例如 Web 应用程序或管理门户的开发版本。相反，DNS 记录可以保存在私有 DNS 服务器上，或者记录在开发人员机器上的 /etc/hosts 文件（或 Windows 用户的 c:\windows\system32\drivers\etc\hosts 文件）中，该文件将域名映射到 IP 地址。 </p>
+<h3 id="16-virtual-hosts-虚拟主机"><a href="#1-6-Virtual-Hosts-虚拟主机" class="headerlink" title="1.6 Virtual Hosts 虚拟主机"></a>1.6 Virtual Hosts 虚拟主机</h3><p>某些子域并不总是托管在可公开访问的 DNS 结果中，例如 Web 应用程序或管理门户的开发版本。相反，DNS 记录可以保存在私有 DNS 服务器上，或者记录在开发人员机器上的 &#x2F;etc&#x2F;hosts 文件（或 Windows 用户的 c:\windows\system32\drivers\etc\hosts 文件）中，该文件将域名映射到 IP 地址。 </p>
 <p>因为当客户端请求网站时，Web 服务器可以从一台服务器托管多个网站，因此服务器可以从 <strong>Host</strong> 标头中知道客户端想要哪个网站。我们可以通过更改此主机标头并监视响应以查看我们是否发现了新网站来利用此主机标头。</p>
 <p>与 DNS Bruteforce 一样，我们可以通过使用常用子域的单词列表来自动执行此过程。</p>
 <p>启动 AttackBox，然后在 Acme IT Support 机器上尝试使用以下命令来尝试发现新的子域。</p>
 <figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">user@machine$ ffuf -w <span class="hljs-regexp">/usr/</span>share<span class="hljs-regexp">/wordlists/</span>SecLists<span class="hljs-regexp">/Discovery/</span>DNS<span class="hljs-regexp">/namelist.txt -H &quot;Host: FUZZ.acmeitsupport.thm&quot; -u http:/</span><span class="hljs-regexp">/10.10.157.26</span><br></code></pre></td></tr></table></figure>
-<p>上面的命令使用 <strong>-w</strong> 开关来指定我们将要使用的单词表。<strong>-H</strong> 开关添加/编辑标题（在本例中为主机标题），我们在子域通常所在的空间中有<strong>FUZZ关键字，这是我们将尝试单词列表中所有选项的地方。</strong></p>
+
+<p>上面的命令使用 <strong>-w</strong> 开关来指定我们将要使用的单词表。**-H** 开关添加&#x2F;编辑标题（在本例中为主机标题），我们在子域通常所在的空间中有<strong>FUZZ关键字，这是我们将尝试单词列表中所有选项的地方。</strong></p>
 <p>因为上面的命令总是会产生一个有效的结果，所以我们需要过滤输出。我们可以通过使用带有 <strong>-fs</strong> 开关的页面大小结果来做到这一点。编辑以下命令，将 {size} 替换为先前结果中出现次数最多的大小值，然后在 AttackBox 上尝试。</p>
 <figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">user@machine$ ffuf -w <span class="hljs-regexp">/usr/</span>share<span class="hljs-regexp">/wordlists/</span>SecLists<span class="hljs-regexp">/Discovery/</span>DNS<span class="hljs-regexp">/namelist.txt -H &quot;Host: FUZZ.acmeitsupport.thm&quot; -u http:/</span><span class="hljs-regexp">/10.10.157.26 -fs &#123;size&#125;</span><br></code></pre></td></tr></table></figure>
-<p>除了<strong>-fs</strong>开关，此命令与第一个命令的语法相似，它告诉 ffuf 忽略任何指定大小的结果。</p>
+
+<p>除了**-fs**开关，此命令与第一个命令的语法相似，它告诉 ffuf 忽略任何指定大小的结果。</p>
 <p>上面的命令应该揭示了两个我们以前没有遇到过的积极结果。</p>
 <p>回答以下问题</p>
 <p>发现的第一个子域是什么？</p>

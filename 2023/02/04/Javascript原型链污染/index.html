@@ -296,16 +296,25 @@
               <div class="markdown-body">
                 
                 <!--toc-->
+
 <span id="more"></span>
+
 <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>在最近的西湖论剑中遇见了一个 js 原型链污染的题目，碰巧我还没有学习过这个，所以写下了这篇文章记录相关原理。</p>
 <h3 id="前置知识"><a href="#前置知识" class="headerlink" title="前置知识"></a>前置知识</h3><p>需要能读懂基本的 js 代码，推荐阅读：<a target="_blank" rel="noopener" href="https://www.w3school.com.cn/js/index.asp">JavaScript 教程 (w3school.com.cn)</a></p>
 <h3 id="不安全的对象递归合并"><a href="#不安全的对象递归合并" class="headerlink" title="不安全的对象递归合并"></a>不安全的对象递归合并</h3><p>以不安全的对象递归合并操作为例，我们定义一个递归合并函数merge()。</p>
-<p>（该函数来自 “<a target="_blank" rel="noopener" href="https://gist.github.com/ahtcx/0cd94e62691f539160b32ecda18af3d6#file-deep-merge-js”">https://gist.github.com/ahtcx/0cd94e62691f539160b32ecda18af3d6#file-deep-merge-js”</a> ）</p>
+<p>（该函数来自 “<a target="_blank" rel="noopener" href="https://gist.github.com/ahtcx/0cd94e62691f539160b32ecda18af3d6#file-deep-merge-js%E2%80%9D">https://gist.github.com/ahtcx/0cd94e62691f539160b32ecda18af3d6#file-deep-merge-js”</a> ）</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">const</span> <span class="hljs-title function_">merge</span> = (<span class="hljs-params">target, source</span>) =&gt; &#123;<br>  <span class="hljs-comment">// Iterate through `source` properties and if an `Object` set property to merge of `target` and `source` properties</span><br>  <span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> key <span class="hljs-keyword">of</span> <span class="hljs-title class_">Object</span>.<span class="hljs-title function_">keys</span>(source)) &#123;<br>    <span class="hljs-keyword">if</span> (source[key] <span class="hljs-keyword">instanceof</span> <span class="hljs-title class_">Object</span>) <span class="hljs-title class_">Object</span>.<span class="hljs-title function_">assign</span>(source[key], <span class="hljs-title function_">merge</span>(target[key], source[key]))<br>  &#125;<br>  <span class="hljs-comment">// Join `target` and modified `source`</span><br>  <span class="hljs-title class_">Object</span>.<span class="hljs-title function_">assign</span>(target || &#123;&#125;, source)<br>  <span class="hljs-keyword">return</span> target<br>&#125;<br><span class="hljs-keyword">function</span> <span class="hljs-title function_">Person</span>(<span class="hljs-params">name,age,gender</span>)&#123;<br>	<span class="hljs-variable language_">this</span>.<span class="hljs-property">name</span>=name;<br>	<span class="hljs-variable language_">this</span>.<span class="hljs-property">age</span>=age;<br>	<span class="hljs-variable language_">this</span>.<span class="hljs-property">gender</span>=gender;<br>&#125;<br><span class="hljs-keyword">let</span> newperson=<span class="hljs-keyword">new</span> <span class="hljs-title class_">Person</span>(<span class="hljs-string">&quot;test1&quot;</span>,<span class="hljs-number">22</span>,<span class="hljs-string">&quot;male&quot;</span>);<br><span class="hljs-keyword">let</span> job=<span class="hljs-title class_">JSON</span>.<span class="hljs-title function_">parse</span>(<span class="hljs-string">&#x27;&#123;&quot;title&quot;:&quot;Security Engineer&quot;,&quot;country&quot;:&quot;China&quot;,&quot;__proto__&quot;:&#123;&quot;x&quot;:1&#125;&#125;&#x27;</span>);<br><span class="hljs-title function_">merge</span>(newperson,job);<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(newperson);<br></code></pre></td></tr></table></figure>
+
+
+
+
+
+
+
 <h3 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h3><p><a target="_blank" rel="noopener" href="https://www.leavesongs.com/PENETRATION/javascript-prototype-pollution-attack.html#0x02-javascript">https://www.leavesongs.com/PENETRATION/javascript-prototype-pollution-attack.html#0x02-javascript</a></p>
 <p><a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/10809">https://xz.aliyun.com/t/10809</a></p>
 <p><a target="_blank" rel="noopener" href="https://www.freebuf.com/articles/web/275619.html">JavaScript原型链污染原理及相关CVE漏洞剖析 - FreeBuf网络安全行业门户</a></p>
-<p><a target="_blank" rel="noopener" href="https://drun1baby.github.io/2022/12/29/JavaScript-原型链污染/">JavaScript 原型链污染 | 芜风 (drun1baby.github.io)</a></p>
+<p><a target="_blank" rel="noopener" href="https://drun1baby.github.io/2022/12/29/JavaScript-%E5%8E%9F%E5%9E%8B%E9%93%BE%E6%B1%A1%E6%9F%93/">JavaScript 原型链污染 | 芜风 (drun1baby.github.io)</a></p>
 
                 
               </div>
