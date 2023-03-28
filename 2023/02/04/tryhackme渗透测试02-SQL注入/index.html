@@ -44,7 +44,7 @@
 <meta property="og:image" content="https://mirror4s.github.io/images/tryhackme%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%9502-SQL%E6%B3%A8%E5%85%A5/image-20230204100916044.png">
 <meta property="og:image" content="https://mirror4s.github.io/images/tryhackme%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%9502-SQL%E6%B3%A8%E5%85%A5/75103b88e95d4eda2244dbb360cba4ff.png">
 <meta property="article:published_time" content="2023-02-04T01:43:53.000Z">
-<meta property="article:modified_time" content="2023-02-04T04:20:41.890Z">
+<meta property="article:modified_time" content="2023-03-11T08:56:32.071Z">
 <meta property="article:author" content="MirRoR4s">
 <meta property="article:tag" content="tryhackme">
 <meta name="twitter:card" content="summary_large_image">
@@ -267,7 +267,7 @@
         
         
         
-          97 分钟
+          98 分钟
         
       </span>
     
@@ -310,7 +310,7 @@
               <p class="note note-info">
                 
                   
-                    本文最后更新于：2023年2月4日 中午
+                    本文最后更新于：2023年3月11日 下午
                   
                 
               </p>
@@ -323,73 +323,83 @@
 <p>02 篇为数不多的免费章节</p>
 <span id="more"></span>
 
-<h3 id="一-前言"><a href="#一-前言" class="headerlink" title="一. 前言"></a>一. 前言</h3><p>目标：了解如何检测和利用 SQL 注入漏洞</p>
-<p>SQL（结构化查询语言）注入，通常称为 SQLi，是对 Web 应用程序数据库服务器的攻击，会导致执行恶意查询。 当 Web 应用程序使用未经正确验证的用户输入与数据库通信时，攻击者有可能窃取、删除或更改私人和客户数据，并攻击 Web 应用程序的身份验证方法以获取私有信息或客户区。 这就是为什么 SQLi 不仅是最古老的 Web 应用程序漏洞之一，而且也是最具破坏性的。</p>
+<h3 id="一-前言"><a href="#一-前言" class="headerlink" title="一. 前言"></a>一. 前言</h3><p><strong>目标</strong>：了解如何检测和利用 SQL 注入漏洞</p>
+<p>SQL（结构化查询语言）注入，通常称为 SQLi，是对 Web 应用程序数据库服务器的攻击，会导致执行恶意查询。 当 Web 应用程序使用未经验证的用户输入与数据库通信时，攻击者有可能窃取、删除或更改数据，并攻击 Web 应用程序的身份验证方法以获取私有信息或客户数据。 这就是为什么 SQLi 不仅是最古老的 Web 应用程序漏洞之一，而且也是最具破坏性的。</p>
 <p>在这个房间里，您将了解什么是数据库、什么是 SQL 以及一些基本的 SQL 命令、如何检测 SQL 漏洞、如何利用 SQLi 漏洞以及作为开发人员如何保护自己免受 SQL 注入攻击。</p>
-<h3 id="二-sql注入"><a href="#二-SQL注入" class="headerlink" title="二.  SQL注入"></a>二.  SQL注入</h3><h4 id="21-什么是数据库"><a href="#2-1-什么是数据库？" class="headerlink" title="2.1 什么是数据库？"></a>2.1 什么是数据库？</h4><p>如果您不习惯使用数据库或利用它们，可能需要习惯一些新术语，所以让我们从一些关于数据库的结构和工作方式的基础知识开始。</p>
-<p><strong>什么是数据库？</strong></p>
-<p>数据库是以有组织的方式以电子方式存储数据集合的一种方式。 数据库由 DBMS 控制，DBMS 是数据库管理系统的首字母缩写，DBMS 分为关系型和非关系型两个阵营，这个房间的重点将放在关系型数据库上，您会遇到的一些常见数据库是 MySQL、Microsoft SQL Server、Access、PostgreSQL 和 SQLite。 我们将在本任务结束时解释关系数据库和非关系数据库之间的区别，但首先，学习一些术语很重要。</p>
-<p>在 DBMS 中，您可以有多个数据库，每个数据库都包含自己的一组相关数据。 例如，您可能有一个名为“商店”的数据库。 在此数据库中，您希望存储有关可供购买的产品的信息、已注册到您的在线商店的用户以及有关您收到的订单的信息。 您将使用称为表的东西将此信息单独存储在数据库中，每个表都用唯一的名称标识。 您可以在下图中看到这种结构，但您还可以看到企业如何使用其他单独的数据库来存储员工信息或客户团队。</p>
+<h3 id="二-sql注入"><a href="#二-SQL注入" class="headerlink" title="二.  SQL注入"></a>二.  SQL注入</h3><h4 id="21-什么是数据库"><a href="#2-1-什么是数据库？" class="headerlink" title="2.1 什么是数据库？"></a>2.1 什么是数据库？</h4><p>如果您不习惯使用数据库或利用它们，可能需要理解一些新术语，所以让我们从一些关于数据库的结构和工作方式的基础知识开始。</p>
+<p><strong>1. 什么是数据库？</strong></p>
+<p>数据库是以有组织的方式以电子形式存储数据集合的一种方式。 数据库由 DBMS 控制，DBMS 是数据库管理系统的首字母缩写，DBMS 分为关系型和非关系型两种，这个房间的重点将放在关系型数据库上，您会遇到的一些常见数据库是 MySQL、Microsoft SQL Server、Access、PostgreSQL 和 SQLite。 我们将在本任务结束时解释关系数据库和非关系数据库之间的区别，但首先，学习一些术语很重要。</p>
+<p>在 DBMS 中，您可以有多个数据库，每个数据库都包含自己的一组相关数据。 例如，您可能有一个名为“商店”的数据库。 在此数据库中，您希望存储有关可供购买的产品的信息、已注册到您的在线商店的用户以及有关您收到的订单的信息。 <strong>您将使用称为表的东西将此信息单独存储在数据库中，每个表都用唯一的名称标识</strong>。 您可以在下图中看到这种结构，但您还可以看到企业如何使用其他单独的数据库来存储员工信息或客户团队。</p>
 <p><img src="/images/tryhackme%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%9502-SQL%E6%B3%A8%E5%85%A5/f31d5855476c01e8359df000da4ac79d.png" srcset="/img/loading.gif" lazyload alt="img"></p>
-<p><strong>什么是表？</strong></p>
-<p>表由列和行组成，一种有用的方式是将表想象成一个网格，列从左到右穿过顶部，包含单元格的名称，行从上到下，每一行都有 实际数据。</p>
+<p><strong>2. 什么是表？</strong></p>
+<p><strong>表由列和行组成</strong>，一种有用的方式是将表想象成一个网格，列从左到右穿过顶部，包含单元格的名称，行从上到下，每一行都有 实际数据。</p>
 <p><img src="/images/tryhackme%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%9502-SQL%E6%B3%A8%E5%85%A5/cee2844345f5ab5bc704b163797b3604.png" srcset="/img/loading.gif" lazyload alt="img"></p>
 <p><strong>列：</strong></p>
-<p>每个列，更好地称为字段，每个表都有一个唯一的名称。 创建列时，您还可以设置它将包含的数据类型，常见的有整数（数字）、字符串（标准文本）或日期。 一些数据库可以包含更复杂的数据，例如包含位置信息的地理空间数据。 设置数据类型还可以确保不会存储不正确的信息，例如字符串“hello world”存储在用于日期的列中。 如果发生这种情况，数据库服务器通常会产生一条错误消息。 包含整数的列也可以启用自动递增功能； 这为每一行数据提供了一个唯一的数字，该数字随后续每一行而增长（递增），这样做会创建所谓的关键字段  <strong>key</strong> field ，关键字段对于每一行数据都必须是唯一的，可用于在 SQL 查询中查找确切的行。</p>
-<p>行：</p>
+<p>每个列（或者称为字段），每个表都有一个唯一的名称。 创建列时，您还可以设置它将包含的数据类型，常见的有整数（数字）、字符串（标准文本）或日期。 一些数据库可以包含更复杂的数据，例如包含位置信息的地理空间数据。 设置数据类型还可以确保不会存储不正确的信息，例如字符串 “hello world” 存储在用于日期的列中。 如果发生这种情况，数据库服务器通常会产生一条错误消息。 包含整数的列也可以启用自动递增功能； 这为每一行数据提供了一个唯一的数字，该数字随后续每一行而增长（递增），这样做会创建所谓的关键字段  <strong>key field</strong> ，关键字段对于每一行数据都必须是唯一的，可用于在 SQL 查询中查找确切的行。</p>
+<p><strong>行：</strong></p>
 <p>行或记录是包含各个数据行的内容。 当您向表中添加数据时，会创建新的行&#x2F;记录，而当您删除数据时，会删除行&#x2F;记录。</p>
 <p><strong>关系数据库与非关系数据库：</strong></p>
 <p>关系数据库将信息存储在表中，表之间通常共享信息，它们使用列来指定和定义所存储的数据，使用行来实际存储数据。表通常包含一个具有唯一ID(主键)的列，然后在其他表中使用该ID来引用它，并在表之间产生关系，因此称为关系数据库。</p>
 <p>另一方面，非关系数据库有时被称为 NoSQL，它是不使用表、列和行来存储数据的任何类型的数据库，不需要构造特定的数据库布局，因此每一行数据都可以包含不同的信息，这可以比关系数据库提供更多的灵活性。这种类型的一些流行数据库是 MongoDB、Cassandra和 ElasticSearch。</p>
-<p>现在您已经了解了数据库是什么，让我们学习如何使用SQL与它进行实际对话。</p>
-<h4 id="22-什么是-sql"><a href="#2-2-什么是-SQL？" class="headerlink" title="2.2 什么是 SQL？"></a>2.2 什么是 SQL？</h4><p>SQL(结构化查询语言)是一种功能丰富的用于查询数据库的语言，这些SQL查询更好的称谓为“语句”。</p>
-<p>我们将在这个任务中介绍的最简单的命令用于检索(选择)、更新、插入和删除数据。尽管有些相似，但一些数据库服务器有自己的语法和工作方式的轻微变化。所有这些例子都是基于MySQL数据库的。在学习了这些课程之后，您将能够轻松地为不同的服务器在线搜索替代语法。值得注意的是，SQL语法不区分大小写。</p>
+<p>现在您已经了解了数据库是什么，让我们学习如何使用 SQL 与它进行实际对话。</p>
+<h4 id="22-什么是-sql"><a href="#2-2-什么是-SQL？" class="headerlink" title="2.2 什么是 SQL？"></a>2.2 什么是 SQL？</h4><p>SQL(结构化查询语言)是一种功能丰富的用于查询数据库的语言，这些 SQL 查询更好的称谓为 “语句” 。</p>
+<p>我们将在这个任务中介绍的最简单的命令用于检索(选择)、更新、插入和删除数据。尽管有些相似，但一些数据库服务器有自己的语法和工作方式的轻微变化。以下所有例子都是基于MySQL 数据库的。值得注意的是，SQL 语法不区分大小写。</p>
 <p><strong>SELECT</strong></p>
-<p>我们将学习的第一个查询类型是用于从数据库检索数据的 SELECT 查询。</p>
-<p>select * from users;</p>
+<p>我们将学习的第一个查询命令是用于从数据库检索数据的 SELECT 查询。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mysql">select * from users;<br></code></pre></td></tr></table></figure>
+
 <p><img src="/images/tryhackme%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%9502-SQL%E6%B3%A8%E5%85%A5/image-20230204095901860.png" srcset="/img/loading.gif" lazyload alt="image-20230204095901860"></p>
-<p>第一个单词SELECT告诉数据库我们想要检索一些数据，*告诉数据库我们想要从表中接收回所有列。例如，表可能包含三列(id、用户名和密码)。”from users”告诉数据库我们要从名为users的表中检索数据。最后，结尾的分号告诉数据库查询到此结束。</p>
-<p>下一个查询与上面的查询类似，但这一次，我们不再使用*返回数据库表中的所有列，而是只请求用户名和密码字段。</p>
-<p>select username,password from users;</p>
+<p>第一个单词 SELECT 告诉数据库我们想要检索一些数据，* 告诉数据库我们想要从表中接收回所有列。例如，表可能包含三列(id、用户名和密码)。”from users” 告诉数据库我们要从名为users 的表中检索数据。最后，结尾的分号告诉数据库查询到此结束。</p>
+<p>下一个查询与上面的查询类似，但这一次，我们不再使用 * 返回数据库表中的所有列，而是只请求用户名和密码字段。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mysql">select username,password from users;<br></code></pre></td></tr></table></figure>
+
 <p><img src="/images/tryhackme%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%9502-SQL%E6%B3%A8%E5%85%A5/image-20230204095937155.png" srcset="/img/loading.gif" lazyload alt="image-20230204095937155"></p>
-<p>下面的查询与第一个查询一样，通过使用*选择器返回所有列，然后使用“LIMIT 1”子句强制数据库只返回一行数据。将查询更改为“LIMIT 1,1”将强制查询跳过第一个结果，然后“LIMIT 2,1”将跳过前两个结果，以此类推。您需要记住，第一个数字告诉数据库希望跳过多少结果，第二个数字告诉数据库要返回多少行。</p>
-<p>select * from users LIMIT 1;</p>
+<p>下面的查询与第一个查询一样，通过使用 * 选择器返回所有列，然后使用“LIMIT 1”子句强制数据库只返回一行数据。将查询更改为“LIMIT 1,1”将强制查询跳过第一个结果，然后“LIMIT 2,1”将跳过前两个结果，以此类推。您需要记住，第一个数字告诉数据库希望跳过多少结果，第二个数字告诉数据库要返回多少行。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mysql">select * from users LIMIT 1;<br></code></pre></td></tr></table></figure>
+
 <p><img src="/images/tryhackme%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%9502-SQL%E6%B3%A8%E5%85%A5/image-20230204100010236.png" srcset="/img/loading.gif" lazyload alt="image-20230204100010236"></p>
-<p>最后，我们将使用where子句;这就是我们如何通过返回与特定子句匹配的数据来精细地挑选出我们需要的确切数据:</p>
-<p>select * from users where username&#x3D;’admin’;</p>
+<p>最后，我们将使用 where 子句;这就是我们如何通过返回与特定子句匹配的数据来精细地挑选出我们需要的确切数据:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mysql">select * from users where username=&#x27;admin&#x27;;<br></code></pre></td></tr></table></figure>
+
 <p><img src="/images/tryhackme%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%9502-SQL%E6%B3%A8%E5%85%A5/image-20230204100032828.png" srcset="/img/loading.gif" lazyload alt="image-20230204100032828"></p>
 <p>这将只返回用户名等于 admin 的行。</p>
-<p>select * from users where username !&#x3D; ‘admin’;</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mysql">select * from users where username != &#x27;admin&#x27;;<br></code></pre></td></tr></table></figure>
+
 <p><img src="/images/tryhackme%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%9502-SQL%E6%B3%A8%E5%85%A5/image-20230204100056669.png" srcset="/img/loading.gif" lazyload alt="image-20230204100056669"></p>
 <p>这将只返回用户名不等于 admin 的行。</p>
-<p>select * from users where username&#x3D;’admin’ or username&#x3D;’jon’;</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mysql">select * from users where username=&#x27;admin&#x27; or username=&#x27;jon&#x27;;<br></code></pre></td></tr></table></figure>
+
 <p><img src="/images/tryhackme%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%9502-SQL%E6%B3%A8%E5%85%A5/image-20230204100116582.png" srcset="/img/loading.gif" lazyload alt="image-20230204100116582"></p>
 <p>这将只返回用户名等于 admin 或 jon 的行。</p>
-<p>select * from users where username&#x3D;’admin’ and password&#x3D;’p4ssword’;</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mysql">select * from users where username=&#x27;admin&#x27; and password=&#x27;p4ssword&#x27;;<br></code></pre></td></tr></table></figure>
+
 <p><img src="/images/tryhackme%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%9502-SQL%E6%B3%A8%E5%85%A5/image-20230204100134438.png" srcset="/img/loading.gif" lazyload alt="image-20230204100134438"></p>
 <p>这将只返回用户名等于 admin 且密码等于 p4ssword 的行。</p>
 <p>使用 like 子句可以指定不是完全匹配的数据，而是通过选择百分号 % 表示的通配符的放置位置来指定以某些字符开头、包含或结尾的数据。</p>
-<p>select * from users where username like ‘a%’;</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mysql">select * from users where username like &#x27;a%&#x27;;<br></code></pre></td></tr></table></figure>
+
 <p><img src="/images/tryhackme%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%9502-SQL%E6%B3%A8%E5%85%A5/image-20230204100230949.png" srcset="/img/loading.gif" lazyload alt="image-20230204100230949"></p>
 <p>这将返回用户名以字母 a 开头的所有行。</p>
-<p>select * from users where username like ‘%n’;</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mysql">select * from users where username like &#x27;%n&#x27;;<br></code></pre></td></tr></table></figure>
+
 <p><img src="/images/tryhackme%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%9502-SQL%E6%B3%A8%E5%85%A5/image-20230204100248129.png" srcset="/img/loading.gif" lazyload alt="image-20230204100248129"></p>
-<p>这将返回用户名以字母n结尾的所有行。</p>
+<p>这将返回用户名以字母 n 结尾的所有行。</p>
 <figure class="highlight axapta"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs axapta"><span class="hljs-keyword">select</span> * <span class="hljs-keyword">from</span> users <span class="hljs-keyword">where</span> username <span class="hljs-keyword">like</span> <span class="hljs-string">&#x27;%mi%&#x27;</span>;<br></code></pre></td></tr></table></figure>
 
 <p><img src="/images/tryhackme%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%9502-SQL%E6%B3%A8%E5%85%A5/image-20230204100323307.png" srcset="/img/loading.gif" lazyload alt="image-20230204100323307"></p>
 <p>这将返回用户名中包含字符 mi 的任何行。</p>
 <p><strong>UNION</strong></p>
-<p>UNION语句结合两个或多个SELECT语句的结果，从单个或多个表中检索数据;该查询的规则是，UNION语句必须在每个SELECT语句中检索相同数量的列，列必须具有相似的数据类型，列的顺序必须相同。这听起来可能不太清楚，所以让我们用下面的类比。假设一家公司希望为所有客户和供应商创建一个地址列表，以便发布新的目录。我们有一个表叫customers，内容如下:</p>
+<p>UNION 语句结合两个或多个 SELECT 语句的结果，从单个或多个表中检索数据;该查询的规则是：UNION 语句必须在每个 SELECT 语句中检索相同数量的列，列必须具有相似的数据类型，列的顺序必须相同。</p>
+<p>这听起来可能不太清楚，所以让我们用下面的类比。假设一家公司希望为所有客户和供应商创建一个地址列表，以便发布新的目录。我们有一个表叫 customers，内容如下:</p>
 <p><img src="/images/tryhackme%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%9502-SQL%E6%B3%A8%E5%85%A5/image-20230204100428044.png" srcset="/img/loading.gif" lazyload alt="image-20230204100428044"></p>
 <p>另一个叫 suppliers 表，内容如下:</p>
 <p><img src="/images/tryhackme%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%9502-SQL%E6%B3%A8%E5%85%A5/image-20230204100511507.png" srcset="/img/loading.gif" lazyload alt="image-20230204100511507"></p>
 <p>使用下面的 SQL 语句，我们可以从两个表中收集结果并将它们放入一个结果集中：</p>
-<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs pgsql"><span class="hljs-keyword">SELECT</span> <span class="hljs-type">name</span>,address,city,postcode <span class="hljs-keyword">from</span> customers <span class="hljs-keyword">UNION</span> <span class="hljs-keyword">SELECT</span> company,address,city,postcode <span class="hljs-keyword">from</span> suppliers;<br></code></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mysql">SELECT name,address,city,postcode from customers UNION SELECT company,address,city,postcode from suppliers;<br></code></pre></td></tr></table></figure>
 
 <p><img src="/images/tryhackme%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%9502-SQL%E6%B3%A8%E5%85%A5/image-20230204100545937.png" srcset="/img/loading.gif" lazyload alt="image-20230204100545937"></p>
 <p><strong>INSERT</strong></p>
-<p>INSERT语句告诉数据库，我们希望向表中插入一行新数据。”into users”告诉数据库我们希望将数据插入到哪个表中，”(username，password)”提供我们要为其提供数据的列，然后”values (‘bob’，’password’);”为前面指定的列提供数据。</p>
+<p>INSERT 语句告诉数据库，我们希望向表中插入一行新数据。”into users”告诉数据库我们希望将数据插入到哪个表中，”(username，password)”提供我们要为其提供数据的列，然后”values (‘bob’，’password’);”为前面指定的列提供数据。</p>
 <figure class="highlight n1ql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs n1ql"><span class="hljs-keyword">insert</span> <span class="hljs-keyword">into</span> users (username,<span class="hljs-keyword">password</span>) <span class="hljs-keyword">values</span> (<span class="hljs-string">&#x27;bob&#x27;</span>,<span class="hljs-string">&#x27;password123&#x27;</span>);<br></code></pre></td></tr></table></figure>
 
 <p><img src="/images/tryhackme%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%9502-SQL%E6%B3%A8%E5%85%A5/image-20230204100659457.png" srcset="/img/loading.gif" lazyload alt="image-20230204100659457"></p>
@@ -403,11 +413,11 @@
 <figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs routeros">delete <span class="hljs-keyword">from</span><span class="hljs-built_in"> users </span>where <span class="hljs-attribute">username</span>=<span class="hljs-string">&#x27;martin&#x27;</span>;<br></code></pre></td></tr></table></figure>
 
 <p><img src="/images/tryhackme%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%9502-SQL%E6%B3%A8%E5%85%A5/image-20230204100839601.png" srcset="/img/loading.gif" lazyload alt="image-20230204100839601"></p>
-<figure class="highlight coffeescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs coffeescript"><span class="hljs-keyword">delete</span> <span class="hljs-keyword">from</span> users;<br></code></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mysql">delete from users;<br></code></pre></td></tr></table></figure>
 
 <p>由于查询中没有使用WHERE子句，因此将删除表中的所有数据。</p>
 <p><img src="/images/tryhackme%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%9502-SQL%E6%B3%A8%E5%85%A5/image-20230204100916044.png" srcset="/img/loading.gif" lazyload alt="image-20230204100916044"></p>
-<h4 id="23-什么是sql注入"><a href="#2-3-什么是SQL注入？" class="headerlink" title="2.3 什么是SQL注入？"></a>2.3 什么是SQL注入？</h4><p>当用户提供的数据被包含在SQL查询中时，使用SQL的web应用程序就会变成SQL注入。</p>
+<h4 id="23-什么是sql注入"><a href="#2-3-什么是SQL注入？" class="headerlink" title="2.3 什么是SQL注入？"></a>2.3 什么是SQL注入？</h4><p>当用户提供的数据被包含在 SQL 查询中时，使用 SQL 的 web 应用程序就会变成 SQL 注入。</p>
 <p>它看起来像什么?<br>以下面的场景为例，您遇到了一个在线博客，每个博客条目都有一个唯一的id号。博客条目可以设置为公共或私有，这取决于它们是否准备好公开发布。每个博客条目的URL可能看起来像这样:</p>
 <figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">https:<span class="hljs-regexp">//</span>website.thm/blog?id=<span class="hljs-number">1</span><br></code></pre></td></tr></table></figure>
 
@@ -534,16 +544,16 @@
 <figure class="highlight gauss"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs gauss">admin123&#x27; <span class="hljs-built_in">UNION</span> <span class="hljs-built_in">SELECT</span> <span class="hljs-built_in">SLEEP</span>(<span class="hljs-number">5</span>);--<br></code></pre></td></tr></table></figure>
 
 <p>如果在响应时间中没有暂停，我们知道查询是不成功的，所以像前面的任务一样，我们添加另一列:</p>
-<figure class="highlight gauss"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs gauss">admin123&#x27; <span class="hljs-built_in">UNION</span> <span class="hljs-built_in">SELECT</span> <span class="hljs-built_in">SLEEP</span>(<span class="hljs-number">5</span>),<span class="hljs-number">2</span>;--<br></code></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mysql">admin123&#x27; UNION SELECT SLEEP(5),2;--<br></code></pre></td></tr></table></figure>
 
 <p>这个有效负载应该产生了5秒的时间延迟，这证实了UNION语句的成功执行，并且有两列。</p>
 <p>现在可以从基于布尔的SQL注入中重复枚举过程，将SLEEP()方法添加到UNION SELECT语句中。<br>如果你正在努力寻找表名，下面的查询应该会帮助你:</p>
-<figure class="highlight n1ql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs n1ql">referrer=admin123&#x27; UNION <span class="hljs-keyword">SELECT</span> SLEEP(<span class="hljs-number">5</span>),<span class="hljs-number">2</span> <span class="hljs-keyword">where</span> <span class="hljs-keyword">database</span>() <span class="hljs-keyword">like</span> <span class="hljs-string">&#x27;u%&#x27;</span>;--<br></code></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mysql">referrer=admin123&#x27; UNION SELECT SLEEP(5),2 where database() like &#x27;u%&#x27;;--<br></code></pre></td></tr></table></figure>
 
-<h4 id="28-out-of-band-sqli"><a href="#2-8-Out-of-Band-SQLi" class="headerlink" title="2.8 Out-of-Band SQLi"></a>2.8 Out-of-Band SQLi</h4><p>带外SQL注入并不常见，因为它要么依赖于数据库服务器上启用的特定功能，要么依赖于web应用程序的业务逻辑，后者基于SQL查询的结果进行某种外部网络调用。</p>
+<h4 id="28-out-of-band-sqli"><a href="#2-8-Out-of-Band-SQLi" class="headerlink" title="2.8 Out-of-Band SQLi"></a>2.8 Out-of-Band SQLi</h4><p>带外 SQL 注入并不常见，因为它要么依赖于数据库服务器上启用的特定功能，要么依赖于web 应用程序的业务逻辑，后者基于 SQL 查询的结果进行某种外部网络调用。</p>
 <p>带外攻击通过具有两个不同的通信通道进行分类，一个用于发起攻击，另一个用于收集结果。例如，攻击通道可以是一个web请求，而数据收集通道可以监视向您控制的服务发出的HTTP&#x2F;DNS请求。</p>
-<p>1)攻击者使用注入有效载荷向易受SQL注入攻击的网站发出请求。</p>
-<p>2)本网站对数据库进行SQL查询，该数据库也传递了黑客的有效载荷。</p>
+<p>1)攻击者使用注入 payload 向易受 SQL 注入攻击的网站发出请求。</p>
+<p>2)本网站对数据库进行 SQL 查询，该数据库也传递了黑客的 payload。</p>
 <p>3)有效载荷包含一个请求，该请求迫使一个HTTP请求返回黑客的机器，其中包含数据库中的数据。</p>
 <p><img src="/images/tryhackme%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%9502-SQL%E6%B3%A8%E5%85%A5/75103b88e95d4eda2244dbb360cba4ff.png" srcset="/img/loading.gif" lazyload alt="img"></p>
 <h4 id="29-修复sql注入"><a href="#2-9-修复SQL注入" class="headerlink" title="2.9 修复SQL注入"></a>2.9 修复SQL注入</h4><p><strong>修复</strong></p>

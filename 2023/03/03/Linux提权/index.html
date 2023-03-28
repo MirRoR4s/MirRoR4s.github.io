@@ -1,0 +1,1005 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="MirRoR4s">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="tags: tryhackmeLinux 提权">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux提权">
+<meta property="og:url" content="https://mirror4s.github.io/2023/03/03/Linux%E6%8F%90%E6%9D%83/index.html">
+<meta property="og:site_name" content="学习记录">
+<meta property="og:description" content="tags: tryhackmeLinux 提权">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i.imgur.com/gzmcqTg.png">
+<meta property="og:image" content="https://i.imgur.com/eGrJOFn.png">
+<meta property="og:image" content="https://i.imgur.com/2KaaBLT.png">
+<meta property="og:image" content="https://i.imgur.com/5MJJZK2.png">
+<meta property="og:image" content="https://i.imgur.com/QsYnLCs.png">
+<meta property="og:image" content="https://i.imgur.com/W4Knz1t.png">
+<meta property="og:image" content="https://i.imgur.com/ECddRM6.png">
+<meta property="og:image" content="https://i.imgur.com/WqpJcMZ.png">
+<meta property="og:image" content="https://i.imgur.com/teDg35x.png">
+<meta property="og:image" content="https://i.imgur.com/iO4je25.png">
+<meta property="og:image" content="https://i.imgur.com/zA8luIS.png">
+<meta property="og:image" content="https://i.imgur.com/1iWjl59.png">
+<meta property="og:image" content="https://i.imgur.com/p8T119D.png">
+<meta property="og:image" content="https://i.imgur.com/YlKvanS.png">
+<meta property="og:image" content="https://i.imgur.com/qdHbOyu.png">
+<meta property="og:image" content="https://i.imgur.com/gpd4Ub8.png">
+<meta property="og:image" content="https://i.imgur.com/HoMc2Ij.png">
+<meta property="og:image" content="https://i.imgur.com/t19UFTW.png">
+<meta property="og:image" content="https://i.imgur.com/514OZ1V.png">
+<meta property="og:image" content="https://i.imgur.com/eZcZfsW.png">
+<meta property="og:image" content="https://i.imgur.com/MmjqURa.png">
+<meta property="og:image" content="https://i.imgur.com/lRjTXOd.png">
+<meta property="og:image" content="https://i.imgur.com/zcWSSN0.png">
+<meta property="og:image" content="https://i.imgur.com/gnTa9tK.png">
+<meta property="og:image" content="https://i.imgur.com/yTMffvw.png">
+<meta property="og:image" content="https://i.imgur.com/WO1iHXE.png">
+<meta property="og:image" content="https://i.imgur.com/MCZkRp4.png">
+<meta property="og:image" content="https://i.imgur.com/g1dHAD2.png">
+<meta property="og:image" content="https://i.imgur.com/LB9NTdG.png">
+<meta property="og:image" content="https://i.imgur.com/yhcR76Z.png">
+<meta property="og:image" content="https://i.imgur.com/qBhUfDi.png">
+<meta property="og:image" content="https://i.imgur.com/o2vFRFm.png">
+<meta property="og:image" content="https://i.imgur.com/oHnwfki.png">
+<meta property="og:image" content="https://i.imgur.com/gwPIl2U.png">
+<meta property="og:image" content="https://i.imgur.com/QutPTQB.png">
+<meta property="og:image" content="https://i.imgur.com/FRaztWL.png">
+<meta property="og:image" content="https://i.imgur.com/nCCrhGX.png">
+<meta property="og:image" content="https://i.imgur.com/bmOh0CG.png">
+<meta property="og:image" content="https://i.imgur.com/rPipHqi.png">
+<meta property="og:image" content="https://i.imgur.com/tScWLdO.png">
+<meta property="og:image" content="https://i.imgur.com/WtNhmNr.png">
+<meta property="article:published_time" content="2023-03-03T13:38:00.000Z">
+<meta property="article:modified_time" content="2023-03-04T01:09:36.421Z">
+<meta property="article:author" content="MirRoR4s">
+<meta property="article:tag" content="Linux提权">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://i.imgur.com/gzmcqTg.png">
+  
+  
+  
+  <title>Linux提权 - 学习记录</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"mirror4s.github.io","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Linux提权"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-03-03 21:38" pubdate>
+          2023年3月3日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          8.1k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          68 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Linux提权</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    本文最后更新于：2023年3月4日 上午
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <h6 id="tags-tryhackme"><a href="#tags-tryhackme" class="headerlink" title="tags: tryhackme"></a>tags: <code>tryhackme</code></h6><h1 id="linux-提权"><a href="#Linux-提权" class="headerlink" title="Linux 提权"></a>Linux 提权</h1><span id="more"></span>
+
+<h2 id="0x01-前言"><a href="#0x01-前言" class="headerlink" title="0x01 前言"></a>0x01 前言</h2><p>本篇文章主要学习基础的 Linux 提权技巧。从暴力破解到漏洞利用，实操8个不同的提权技巧。</p>
+<h2 id="0x02-简介"><a href="#0x02-简介" class="headerlink" title="0x02 简介"></a>0x02 简介</h2><p>提权是一个循序渐进的过程，不能一蹴而就。大部分提权手法都取决于目标系统的配置。<br>内核版本、已安装的应用、支持的编程语言以及其他用户的密码都是我们提权到 root 权限的关键点。</p>
+<p>本篇文章主要涵盖一些主要的提权手法，希望能让您对提权过程有一个更好的理解。</p>
+<h2 id="0x03-什么是提权"><a href="#0x03-什么是提权？" class="headerlink" title="0x03 什么是提权？"></a>0x03 什么是提权？</h2><h3 id="提权意味着什么"><a href="#提权意味着什么？" class="headerlink" title="提权意味着什么？"></a>提权意味着什么？</h3><p>顾名思义，提权通常涉及到从一个低权限的账户到一个高权限的账户。用更技术的话来说，提权是利用操作系统或应用程序的漏洞、设计缺陷或配置疏忽等来获得对用户有限制的资源的未授权访问。</p>
+<h3 id="为什么提权很重要"><a href="#为什么提权很重要？" class="headerlink" title="为什么提权很重要？"></a>为什么提权很重要？</h3><p>在实际的渗透过程中，很少可以直接拿到一个具有管理员权限的 shell。<br>因为提权能让你获得系统管理员级别的访问权限，所以提权是至关重要的。提权允许你进行以下操作：</p>
+<ul>
+<li>重置密码</li>
+<li>绕过访问控制并损害受保护的数据</li>
+<li>编辑软件配置</li>
+<li>权限维持 Enabling persistence</li>
+<li>改变已存在的用户的权限</li>
+<li>执行任意管理员权限命令</li>
+</ul>
+<h3 id="枚举主机信息"><a href="#枚举主机信息" class="headerlink" title="枚举主机信息"></a>枚举主机信息</h3><p>枚举什么呢？当然是枚举主机上的各种信息。</p>
+<p>一旦你已获得系统的访问权限，枚举就是你要做的第一件事。<br>实际的渗透不像 CTF 在拿到特定系统的访问权限就结束。枚举在 post-compromise 阶段和它之前一样重要。下面介绍一些常见的枚举主机信息的手段。</p>
+<h4 id="1-hostname-命令"><a href="#1-hostname-命令" class="headerlink" title="1. hostname 命令"></a>1. hostname 命令</h4><p><code>hostname</code> 命令将会返回目标主机的主机名。尽管该值可被轻易改变或是含有一个相对无意义的字符串（比如 Ubuntu-3487340239）。但在某些情况下，<code>hostname</code> 命令可提供目标系统在组织网络内所充当的角色信息。（比如 SQL-PROD-01 表明这是一台 SQL 服务器）</p>
+<h4 id="2-uname-a-命令"><a href="#2-uname-a-命令" class="headerlink" title="2. uname -a 命令"></a>2. uname -a 命令</h4><p>该命令将会打印系统信息，给我们一个有关系统所用内核的额外细节。当我们寻找潜在的内核提权漏洞时，该信息特别有用。</p>
+<h4 id="x2fprocx2fversion-文件"><a href="#x2F-proc-x2F-version-文件" class="headerlink" title="&#x2F;proc&#x2F;version 文件"></a>&#x2F;proc&#x2F;version 文件</h4><p>proc 文件系统(procfs) 提供有关目标系统进程的信息。你可在许多不同的 Linux 发行版中找到 proc，这使其成为你的武器库中的一个重要工具。<br> <code>/proc/version</code> 将给你内核版本信息以及一些额外的数据。比如是否安装了编译器（例如 GCC）</p>
+<h4 id="x2fetcx2fissue-文件"><a href="#x2F-etc-x2F-issue-文件" class="headerlink" title="&#x2F;etc&#x2F;issue 文件"></a>&#x2F;etc&#x2F;issue 文件</h4><p>通过查看 <code>/etc/issue</code> 文件可以确定系统类型。这个文件通常包含一些关于操作系统的信息，但是可以被轻易地改变或定制。所有包含系统信息的文件都可被定制化或改变，所以为了对系统有一个更好的理解，最好是把所有相关的文件都查看一下。</p>
+<h4 id="ps-命令"><a href="#ps-命令" class="headerlink" title="ps 命令"></a>ps 命令</h4><p>在 Linux 系统上，<code>ps</code> 命令是一个查看运行中的进程的一个高效的方式。</p>
+<p><code>ps</code>（Process Status） 的输出将会展示以下信息：</p>
+<ul>
+<li>PID：进程 ID（对进程来说是唯一的）</li>
+<li>TTY：用户所用的终端类型</li>
+<li>Time：进程使用的 CPU 时间数（这不是进程已运行的时间）</li>
+<li>CMD：正在运行的命令或可执行文件（将不会展示任意的命令行参数）</li>
+</ul>
+<p><code>ps</code> 命令提供了一些有用的选项：</p>
+<ul>
+<li>ps-A：查看所有运行着的进程</li>
+<li>ps axjf：查看进程树，如下图：</li>
+</ul>
+<p><img src="https://i.imgur.com/gzmcqTg.png" srcset="/img/loading.gif" lazyload></p>
+<ul>
+<li>ps aux：</li>
+</ul>
+<h4 id="env-命令"><a href="#env-命令" class="headerlink" title="env 命令"></a>env 命令</h4><p><code>env</code> 命令将显示环境变量。</p>
+<p><img src="https://i.imgur.com/eGrJOFn.png" srcset="/img/loading.gif" lazyload></p>
+<p>PATH 变量可能具有编译器或脚本语言（例如 Python），可用于在目标系统上运行代码或用于特权升级。</p>
+<h4 id="sudo-l"><a href="#sudo-l" class="headerlink" title="sudo -l"></a>sudo -l</h4><p>目标系统可以配置为允许用户以 root 权限运行一些（或所有）命令。 <code>sudo -l</code> 命令可用于列出您的用户可以使用 <code>sudo</code> 运行的所有命令。</p>
+<h4 id="ls"><a href="#ls" class="headerlink" title="ls"></a>ls</h4><p>Linux 中常用的命令之一可能是 <code>ls</code>。</p>
+<p>在寻找潜在的特权升级向量时，请记住始终使用带有 <code>-la</code> 参数的 <code>ls</code> 命令。下面的示例显示了使用 ls 或 ls -l 命令时遗漏了 “secret.txt” 文件的情况。</p>
+<p><img src="https://i.imgur.com/2KaaBLT.png" srcset="/img/loading.gif" lazyload></p>
+<h4 id="id-命令"><a href="#id-命令" class="headerlink" title="id 命令"></a>id 命令</h4><p><code>id</code> 命令将提供用户权限级别和组成员身份的总体概览。 值得记住的是，<code>id</code> 命令也可用于获取另一个用户的相同信息，如下所示。</p>
+<p><img src="https://i.imgur.com/5MJJZK2.png" srcset="/img/loading.gif" lazyload></p>
+<h4 id="x2fetcx2fpasswd-文件"><a href="#x2F-etc-x2F-passwd-文件" class="headerlink" title="&#x2F;etc&#x2F;passwd 文件"></a>&#x2F;etc&#x2F;passwd 文件</h4><p>读取 <code>/etc/passwd</code> 文件是发现系统用户的一种简单方法。</p>
+<p><img src="https://i.imgur.com/QsYnLCs.png" srcset="/img/loading.gif" lazyload></p>
+<p>虽然输出可能很长而且有点吓人，但它可以很容易地被剪切并转换成一个有用的列表以用于暴力攻击。</p>
+<p><img src="https://i.imgur.com/W4Knz1t.png" srcset="/img/loading.gif" lazyload></p>
+<p>请记住，这将返回所有用户，其中有一些不是很有用的系统或服务用户。另一种方法可能是 grep 查找 “home” ，因为真实用户很可能将他们的文件夹放在 “home” 目录下。</p>
+<p><img src="https://i.imgur.com/ECddRM6.png" srcset="/img/loading.gif" lazyload></p>
+<h4 id="history"><a href="#history" class="headerlink" title="history"></a>history</h4><p>使用 <code>history</code> 命令查看较早的命令可以让我们对目标系统有一些了解，并且尽管很少发生，但之前的命令可能存储了密码或用户名等信息。</p>
+<h4 id="ifconfig"><a href="#ifconfig" class="headerlink" title="ifconfig"></a>ifconfig</h4><p>目标系统可能是另一个网络的枢轴点。 <code>ifconfig</code> 命令将为我们提供有关系统网络接口的信息。下面的示例显示目标系统具有三个接口（eth0、tun0 和 tun1）。我们的攻击机器可以到达 eth0 接口，但不能直接访问其他两个网络。</p>
+<p><img src="https://i.imgur.com/WqpJcMZ.png" srcset="/img/loading.gif" lazyload></p>
+<p>这可以使用 <code>ip route</code> 命令确认，以查看存在哪些网络路由。</p>
+<p><img src="https://i.imgur.com/teDg35x.png" srcset="/img/loading.gif" lazyload></p>
+<h4 id="netstat"><a href="#netstat" class="headerlink" title="netstat"></a>netstat</h4><p>在对现有接口和网络路由进行初步检查后，可以尝试查看现有通信。 <code>netstat</code> 命令可以与几个不同的选项一起使用，以收集有关现有连接的信息。</p>
+<ul>
+<li><code>netstat -a</code>：显示所有侦听端口和已建立的连接。</li>
+<li><code>netstat -at</code> 或 <code>netstat -au</code> 可分别列出 TCP 或 UDP 协议的连接</li>
+<li><code>netstat -l</code>：列出处于 “侦听” 模式的端口。这些端口已打开并准备好接受传入连接。这可以与 “t” 选项一起使用，以仅列出使用 TCP 协议侦听的端口（如下）</li>
+</ul>
+<p><img src="https://i.imgur.com/iO4je25.png" srcset="/img/loading.gif" lazyload></p>
+<ul>
+<li><code>netstat -s</code>：按协议列出网络使用的统计信息（如下）这也可以与 <code>-t</code> 或 <code>-u</code> 选项一起使用，以将输出限制为特定协议。</li>
+</ul>
+<p><img src="https://i.imgur.com/zA8luIS.png" srcset="/img/loading.gif" lazyload></p>
+<ul>
+<li><code>netstat -tp</code>：列出带有服务名称和 PID 信息的连接。</li>
+</ul>
+<p><img src="https://i.imgur.com/1iWjl59.png" srcset="/img/loading.gif" lazyload></p>
+<p>这也可以与 <code>-l</code> 选项一起使用以列出监听端口（如下）</p>
+<p><img src="https://i.imgur.com/p8T119D.png" srcset="/img/loading.gif" lazyload></p>
+<p>我们可以看到 “PID&#x2F;Program name” 列是空的，因为这个进程属于另一个用户。 使用 root 权限再运行该命令一次，可以看到此信息显示为 2641&#x2F;nc (netcat)</p>
+<p><img src="https://i.imgur.com/YlKvanS.png" srcset="/img/loading.gif" lazyload></p>
+<ul>
+<li><code>netstat -i</code>：显示接口统计信息。我们在下面看到 “eth0” 和 “tun0” 比 “tun1” 更活跃。</li>
+</ul>
+<p><img src="https://i.imgur.com/qdHbOyu.png" srcset="/img/loading.gif" lazyload></p>
+<p>您在博客文章、文章和课程中最常看到的 <code>netstat</code> 用法是 <code>netstat -ano</code>，它可以细分如下：</p>
+<ul>
+<li>-a：显示所有套接字</li>
+<li>-n：不解析主机名</li>
+<li>-o：显示计时器</li>
+</ul>
+<p><img src="https://i.imgur.com/gpd4Ub8.png" srcset="/img/loading.gif" lazyload></p>
+<h4 id="find-命令"><a href="#find-命令" class="headerlink" title="find 命令"></a>find 命令</h4><p>在目标系统中搜索重要信息和潜在的特权升级向量可能会很有成效。内置的 “find” 命令很有用，值得保留在您的武器库中。 以下是 “find” 命令的一些有用示例。</p>
+<p><strong>查找文件：</strong></p>
+<ul>
+<li><code>find . -name flag1.txt</code>：在当前目录下查找名为 “flag1.txt” 的文件。</li>
+<li><code>find /home -name flag1.txt</code>：在 &#x2F;home 目录下查找名为 “flag1.txt” 的文件</li>
+<li><code>find / -type d -name config</code>：在 &#x2F; 目录下查找名为 config 的目录</li>
+<li><code>find / -type f -perm 0777</code>：在根目录下查找具有 777 权限的文件（777 表示所有用户可读、可写、可执行）</li>
+<li><code>find / -perm a=x</code>：在根目录下查找可执行文件</li>
+<li><code>find /home -user frank</code>：在 &#x2F;home 目录下查找用户 ”frank“ 的所有文件</li>
+<li><code>find / -mtime 10</code>：在根目录下查找最近十天内修改过的文件</li>
+<li><code>find / -atime 10</code>：在根目录下查找最近十天内访问过的文件。</li>
+<li><code>find / -cmin -60</code>：在根目录下查找在最近一小时内改变过的文件（60 分钟）</li>
+<li><code>find / -amin -60</code>：在根目录下查找在最近一小时内访问过的文件（60 分钟）</li>
+<li><code>find / -size 50M</code>：在根目录下查找大小为 50MB 的文件。此命令还可以与 (+) 和 (-) 符号一起使用，以指定大于或小于给定大小的文件。</li>
+</ul>
+<p><img src="https://i.imgur.com/HoMc2Ij.png" srcset="/img/loading.gif" lazyload></p>
+<p>上面的示例返回大于 100 MB 的文件。重要的是要注意 “find” 命令往往会产生错误，有时会使输出难以阅读。这就是为什么明智的做法是使用带有 “-type f 2&gt;&#x2F;dev&#x2F;null” 选项的 “find” 命令将错误重定向到 “&#x2F;dev&#x2F;null” 并获得更清晰的输出（如下）。</p>
+<p><img src="https://i.imgur.com/t19UFTW.png" srcset="/img/loading.gif" lazyload></p>
+<p>以下三个命令在根目录下查找可写的文件夹：</p>
+<ul>
+<li><code>find / -writable -type d 2&gt;/dev/null</code></li>
+<li><code>find / -perm -222 -type d 2&gt;/dev/null</code></li>
+<li><code>find / -perm -o w -type d 2&gt;/dev/null</code></li>
+</ul>
+<p>我们看到三个可能导致相同结果的不同 “find” 命令的原因可以在手册文档中看到。正如您在下面看到的，perm 参数会影响 “find” 的工作方式。</p>
+<p><img src="https://i.imgur.com/514OZ1V.png" srcset="/img/loading.gif" lazyload></p>
+<p>以下命令在根目录下查找可以执行的目录：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">find / -perm -o x -<span class="hljs-built_in">type</span> d 2&gt;/dev/null<br></code></pre></td></tr></table></figure>
+
+<p>以下命令在根目录下查找开发工具和支持的编程语言：</p>
+<ul>
+<li><code>find / -name perl*</code></li>
+<li><code>find / -name python*</code></li>
+<li><code>find / -name gcc*</code></li>
+</ul>
+<p><strong>查找具有特定权限的文件</strong></p>
+<p>下面是一个简短的示例，用于查找设置了 SUID 位的文件。 SUID 位允许文件以拥有它的帐户的特权级别运行，而不是运行它的帐户，这导致了一个有趣的提权手法。</p>
+<ul>
+<li><code>find / -perm -u=s -type f 2&gt;/dev/null</code>：在根目录下查找带有 SUID 位的文件，这允许我们以比当前用户更高的权限级别运行该文件。</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">find / -writable -<span class="hljs-built_in">type</span> d 2&gt;/dev/null<br></code></pre></td></tr></table></figure>
+
+<h2 id="0x04-内核漏洞提权"><a href="#0x04-内核漏洞提权" class="headerlink" title="0x04 内核漏洞提权"></a>0x04 内核漏洞提权</h2><h2 id="0x05-sudo-提权"><a href="#0x05-Sudo-提权" class="headerlink" title="0x05 Sudo 提权"></a>0x05 Sudo 提权</h2><p>sudo 命令默认允许你以 root 权限运行一个程序。在一些情况下，系统管理员可能需要为普通用户提供一些灵活的权限。<br>举个例子，初级 SOC 分析师可能需要定期使用 Nmap，但不会获得完全 root 访问权限。在这种情况下，系统管理员可以允许该用户仅以 root 权限运行 Nmap，同时在系统的其余部分保持其常规权限级别。</p>
+<p>任何用户都可以使用 <code>sudo -l</code> 命令查看其当前与 root 权限相关的情况。</p>
+<p><a target="_blank" rel="noopener" href="https://gtfobins.github.io/">https://gtfobins.github.io/</a> 是一个有价值的资源，它提供了有关如何使用您可能拥有 sudo 权限的任何程序的信息。例如 namp 具有 sudo 权限时，如何通过其得到一个 root shell。</p>
+<h3 id="1-利用应用程序功能"><a href="#1-利用应用程序功能" class="headerlink" title="1. 利用应用程序功能"></a>1. 利用应用程序功能</h3><p>有些应用程序运行时是以 sudo 权限运行的，如果该应用程序具有一些能读取或加载文件的选项，那么我们就可以利用这个选项来进行一些提权操作。</p>
+<p>例如以下的 Apache2 应用。Apache2 有一个选项支持加载备用配置文件（<code>-f</code>：指定备用 ServerConfigFile）。</p>
+<p><img src="https://i.imgur.com/eZcZfsW.png" srcset="/img/loading.gif" lazyload></p>
+<p>使用此选项加载 <code>/etc/shadow</code> 文件将导致包含 &#x2F;etc&#x2F;shadow 文件第一行的错误消息。</p>
+<h3 id="2-利用-ld_preload"><a href="#2-利用-LD-PRELOAD" class="headerlink" title="2. 利用 LD_PRELOAD"></a>2. 利用 LD_PRELOAD</h3><p>在某些系统上，您可能会看到 LD_PRELOAD 环境选项。</p>
+<p><img src="https://i.imgur.com/MmjqURa.png" srcset="/img/loading.gif" lazyload></p>
+<p>LD_PRELOAD 是一个允许任何程序使用共享库的函数。这篇<a target="_blank" rel="noopener" href="https://rafalcieslak.wordpress.com/2013/04/02/dynamic-linker-tricks-using-ld_preload-to-cheat-inject-features-and-investigate-programs/">文章</a>将让您了解 LD_PRELOAD 的功能。如果启用 “env_keep” 选项，我们可以生成一个共享库，它将在程序运行之前加载和执行。请注意，如果真实用户 ID 与有效用户 ID 不同，LD_PRELOAD 选项将被忽略。</p>
+<p>这个特权升级向量的步骤可以总结如下:</p>
+<ol>
+<li>检查 LD_PRELOAD（使用 env_keep 选项）</li>
+<li>编写编译为共享对象（.so 扩展名）文件的简单 C 代码</li>
+<li>使用 sudo 权限和指向我们的 .so 文件的 LD_PRELOAD 选项运行程序</li>
+</ol>
+<p>以下 C 代码将简单地生成一个 root shell：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;sys/types.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdlib.h&gt;</span></span><br><br><span class="hljs-type">void</span> _init() &#123;<br><span class="hljs-built_in">unsetenv</span>(<span class="hljs-string">&quot;LD_PRELOAD&quot;</span>);<br><span class="hljs-built_in">setgid</span>(<span class="hljs-number">0</span>);<br><span class="hljs-built_in">setuid</span>(<span class="hljs-number">0</span>);<br><span class="hljs-built_in">system</span>(<span class="hljs-string">&quot;/bin/bash&quot;</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>我们可以将此代码保存为 shell.c，并使用以下参数使用 gcc 将其编译为共享对象文件；</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">gcc -fPIC -shared -o shell.so shell.c -nostartfiles<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://i.imgur.com/lRjTXOd.png" srcset="/img/loading.gif" lazyload></p>
+<p>当我们运行具有 sudo 权限的任意程序时，我们就可以使用以上的共享对象文件。在我们的例子中，可以使用 Apache2、find 或几乎任何我们可以使用 sudo 运行的程序。</p>
+<p><strong>回答以下问题：</strong></p>
+<ul>
+<li>用户 “karen” 可在目标系统上执行多少个具有sudo 权限的程序？</li>
+<li>如果您的用户对 nmap 具有 sudo 权限，您将如何使用 Nmap 生成 root shell？</li>
+<li>frank 密码的哈希值是多少？（用sudo -l 看到的 nano 去读 &#x2F;etc&#x2F;shadow）</li>
+</ul>
+<h2 id="0x06-suid-提权"><a href="#0x06-SUID-提权" class="headerlink" title="0x06 SUID 提权"></a>0x06 SUID 提权</h2><p>许多 Linux 权限控制依赖于控制用户和文件的交互，这是通过权限完成的。到目前为止，您知道文件可以具有读取、写入和执行权限。Linux 根据用户的权限级别分配文件权限。这随着 SUID（Set-user Identification）和 SGID（Set-group Identification）而改变。这两项标识允许用户分别以文件所有者和文件组所有者的权限级别来执行文件。</p>
+<p>您会注意到这些文件设置了一个 “s” 位来显示它们的特殊权限级别。</p>
+<p><code>find / -type f -perm -04000 -ls 2&gt;/dev/null</code> 将列出设置了 SUID 或 SGID 位的文件。</p>
+<p><img src="https://i.imgur.com/zcWSSN0.png" srcset="/img/loading.gif" lazyload></p>
+<p>一个好的做法是将此列表中的可执行文件与 GTFOBins (<a target="_blank" rel="noopener" href="https://gtfobins.github.io/">https://gtfobins.github.io</a>) 进行比较。单击 SUID 按钮将在设置 SUID 位时过滤已知可利用的二进制文件（您也可以使用此链接获取预过滤列表 <a target="_blank" rel="noopener" href="https://gtfobins.github.io/#+suid%EF%BC%89%E3%80%82">https://gtfobins.github.io/#+suid）。</a></p>
+<p>上面的列表显示 nano 设置了 SUID 位。不幸的是，GTFObins 并没有让我们轻松获胜。典型的现实生活中的特权升级场景，我们需要找到中间步骤来帮助我们利用我们所拥有的任何微小发现。</p>
+<p><img src="https://i.imgur.com/gnTa9tK.png" srcset="/img/loading.gif" lazyload></p>
+<p>为 nano 文本编辑器设置的 SUID 位允许我们使用文件所有者的权限创建、编辑和读取文件。 Nano 由 root 拥有，这可能意味着我们可以以比当前用户更高的权限级别读取和编辑文件。在这个阶段，我们有两个基本的权限提升选项：读取 <code>/etc/shadow</code> 文件或将我们的用户添加到 <code>/etc/passwd</code>。</p>
+<p>以下是使用这两种向量的简单步骤。</p>
+<ol>
+<li>读取 <code>/etc/shadow</code> 文件</li>
+<li>通过运行 <code>find / -type f -perm -04000 -ls 2&gt;/dev/null</code> 命令我们可以看到 nano 文本编辑器设置了 SUID 比特位。</li>
+<li><code>nano /etc/shadow</code> 将打印 <code>/etc/shadow</code> 文件的内容。我们现在可以使用 unshadow 工具创建一个可被 John the Ripper 破解的文件。为此，unshadow 需要 <code>/etc/shadow</code> 和 <code>/etc/passwd</code> 文件。</li>
+</ol>
+<p><img src="https://i.imgur.com/yTMffvw.png" srcset="/img/loading.gif" lazyload></p>
+<p>unshadow 工具的用法如下所示:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">unshadow passwd.txt shadow.txt &gt; passwords.txt<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://i.imgur.com/WO1iHXE.png" srcset="/img/loading.gif" lazyload></p>
+<p>有了正确的单词表和一点运气， John the Ripper 可以以明文形式返回一个或多个密码。有关 John the Ripper 的更详细的房间，您可以访问 <a target="_blank" rel="noopener" href="https://tryhackme.com/room/johntheripper0">https://tryhackme.com/room/johntheripper0</a></p>
+<p>另一种选择是添加一个具有 root 权限的新用户。这将帮助我们规避繁琐的密码破解过程。下面是一个简单的方法来做到这一点：</p>
+<p>我们需要新建用户的密码哈希值。这可以使用 Kali Linux 上的 openssl 工具快速完成。 </p>
+<p><img src="https://i.imgur.com/MCZkRp4.png" srcset="/img/loading.gif" lazyload></p>
+<p>然后，我们会将此密码和用户名添加到 <code>/etc/passwd</code> 文件中。</p>
+<p><img src="https://i.imgur.com/g1dHAD2.png" srcset="/img/loading.gif" lazyload></p>
+<p>添加用户后（请注意如何使用 root:&#x2F;bin&#x2F;bash 提供 root shell）我们将需要切换到该用户并希望拥有 root 权限。</p>
+<p><img src="https://i.imgur.com/LB9NTdG.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="0x07-capabilities-提权"><a href="#0x07-Capabilities-提权" class="headerlink" title="0x07 Capabilities 提权"></a>0x07 Capabilities 提权</h2><p>系统管理员可以用来提高进程或二进制文件特权级别的另一种方法是 “Capabilities”（功能）。Capabilities 有助于在更精细的级别管理权限。<br>例如，如果 SOC 分析师需要使用需要发起套接字连接的工具，普通用户将无法做到这一点。如果系统管理员不想给这个用户更高的权限，他们可以更改二进制文件的功能。因此，二进制文件无需更高权限的用户即可完成任务。</p>
+<p>capabilities 手册页提供了有关其用法和选项的详细信息。</p>
+<p>我们可以使用 <code>getcap</code> 工具列出启用的 capabilities。</p>
+<p><img src="https://i.imgur.com/yhcR76Z.png" srcset="/img/loading.gif" lazyload></p>
+<p>当以非特权用户身份运行时，<code>getcap -r /</code> 会产生大量错误，因此最好将错误消息重定向到 &#x2F;dev&#x2F;null。</p>
+<p>请注意，vim 及其副本都没有设置 SUID 位。因此，在枚举查找 SUID 的文件时，无法发现此特权升级向量。</p>
+<p><img src="https://i.imgur.com/qBhUfDi.png" srcset="/img/loading.gif" lazyload></p>
+<p>GTFObins 有一个很好的二进制文件列表，如果我们发现任何设置的 capabilities，可以利用这些二进制文件进行特权升级。 我们注意到 vim 可以与以下命令和有效负载一起使用：</p>
+<p><img src="https://i.imgur.com/o2vFRFm.png" srcset="/img/loading.gif" lazyload></p>
+<p>这将启动一个 root shell，如下所示；</p>
+<p><img src="https://i.imgur.com/oHnwfki.png" srcset="/img/loading.gif" lazyload></p>
+<p><strong>回答下列问题：</strong></p>
+<ol>
+<li>有多少二进制文件设置了 capabilities？</li>
+</ol>
+<p>使用 <code>getcap -r / 2&gt;/dev/null</code> 命令即可</p>
+<ol start="3">
+<li>flag4.txt 文件的内容是什么？</li>
+</ol>
+<p>用 vim 或 view 的功能提权都可以。记得把 py 换成 py3</p>
+<p><img src="https://i.imgur.com/gwPIl2U.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="提权定时任务"><a href="#提权：定时任务" class="headerlink" title="提权：定时任务"></a>提权：定时任务</h2><p>Cron job 定时任务用于在特定时间运行脚本或二进制文件。默认情况下，它们以其所有者而非当前用户的权限运行。虽然正确配置的定时任务本身并不容易受到攻击，但它们可以在某些情况下提供特权升级向量。</p>
+<p>这个想法很简单：如果有一个以 root 权限运行的计划任务，并且我们可以更改将要运行的脚本，那么我们的脚本将以 root 权限运行。</p>
+<p>定时任务配置被存储为 crontabs(crons tables)，以查看该任务下次将会被运行的时间和日期。</p>
+<p>系统上的每个用户都有他们的 crontab 文件，并且无论他们是否登录都可以运行特定的任务。如您所料，我们的目标是找到一个由 root 设置的定时任务并让它运行我们的脚本，最好是一个 shell。</p>
+<p>任何用户都可在 <code>/etc/crontab</code> 目录下读取系统内的定时任务文件。</p>
+<p>虽然 CTF 机器可以让定时任务每分钟或每 5 分钟运行一次，但在渗透测试活动中，您会更频繁地看到每天、每周或每月运行的任务。</p>
+<p><img src="https://i.imgur.com/QutPTQB.png" srcset="/img/loading.gif" lazyload></p>
+<p>您可以看到 <code>backup.sh</code> 脚本被配置为每分钟运行一次。该文件的内容显示了一个创建 prices.xls 文件备份的简单脚本。</p>
+<p><img src="https://i.imgur.com/FRaztWL.png" srcset="/img/loading.gif" lazyload></p>
+<p>由于我们当前的用户可以访问这个脚本，我们可以很容易地修改它来创建一个反向 shell 并希望具有 root 权限。</p>
+<p>但有两个点需要注意：</p>
+<ol>
+<li><p>命令语法会因可用工具而异。 （例如 <code>nc</code> 可能不支持您在其他情况下使用过的 -e 选项）</p>
+</li>
+<li><p>我们应该总是更喜欢启动反向 shell，因为我们不想在真正的渗透测试过程中损害系统的完整性。</p>
+</li>
+</ol>
+<p>所以 backup.sh 的内容应如下图：</p>
+<p><img src="https://i.imgur.com/nCCrhGX.png" srcset="/img/loading.gif" lazyload></p>
+<p>我们现在将在我们的攻击机器上运行一个监听器来接收传入的连接。</p>
+<p><img src="https://i.imgur.com/bmOh0CG.png" srcset="/img/loading.gif" lazyload></p>
+<p>Crontab 始终值得检查，因为它有时会导致简单的特权升级向量。以下场景在不具备一定网络安全成熟度级别的公司中并不少见：</p>
+<ol>
+<li>系统管理员需要定期运行脚本。</li>
+<li>他们创建了一个定时任务来执行此操作</li>
+<li>一段时间后，脚本变得无用，所以他们将其删除</li>
+<li>但他们未清理相关的定时任务</li>
+</ol>
+<p>此变更管理问题导致利用定时任务的潜在漏洞。</p>
+<p><img src="https://i.imgur.com/rPipHqi.png" srcset="/img/loading.gif" lazyload></p>
+<p>上面的示例显示了类似的情况，其中删除了 antivirus.sh 脚本，但定时任务仍然存在。</p>
+<p>如果未定义脚本的完整路径（如对 backup.sh 脚本所做的那样），cron 将引用 &#x2F;etc&#x2F;crontab 文件中 PATH 变量下列出的路径。在这种情况下，我们应该能够在用户的主文件夹下创建一个名为“antivirus.sh”的脚本，它应该由定时任务运行。</p>
+<p>目标系统上的文件应该看起来很熟悉：</p>
+<p><img src="https://i.imgur.com/tScWLdO.png" srcset="/img/loading.gif" lazyload></p>
+<p>传入的反向 shell 连接具有 root 权限：</p>
+<p><img src="https://i.imgur.com/WtNhmNr.png" srcset="/img/loading.gif" lazyload></p>
+<p>在奇怪的情况下，您会发现一个现有的脚本或任务附加到定时任务。花时间了解脚本的功能以及如何在上下文中使用任何工具总是值得的。<br>例如，tar、7z、rsync 等，可以使用它们的通配符功能进行利用。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/tryhackme/" class="category-chain-item">tryhackme</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Linux%E6%8F%90%E6%9D%83/">#Linux提权</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Linux提权</div>
+      <div>https://mirror4s.github.io/2023/03/03/Linux提权/index.html</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>MirRoR4s</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年3月3日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/03/07/%E7%BA%A2%E9%98%9F%E5%9F%BA%E7%A1%80/index.html" title="红队基础">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">红队基础</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/02/28/1-3-%E5%8F%A4%E5%85%B8%E5%AF%86%E7%A0%81%E5%AD%A6%E5%92%8C%E5%AE%83%E4%BB%AC%E7%9A%84%E5%AF%86%E7%A0%81%E5%88%86%E6%9E%90/index.html" title="1-3_古典密码学和它们的密码分析">
+                        <span class="hidden-mobile">1-3_古典密码学和它们的密码分析</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
