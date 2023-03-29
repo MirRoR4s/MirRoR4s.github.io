@@ -3446,10 +3446,11 @@
     <content><![CDATA[<!--toc-->
 <p>最近复现 PHP 的一个题目，很想动态调试一下，所以写了这篇文章。</p>
 <span id="more"></span>
-<h2 id="2023328"><a href="#2023-3-28" class="headerlink" title="2023/3/28"></a>2023/3/28</h2><p>今天在审计的时候发现了 Phpstudypro 自带安装 xdebug 扩展功能，傻瓜式安装手法：</p>
-<p><img src="/images/PHP代码审计-环境搭建/image-20230328170616988.png" alt="image-20230328170616988"></p>
+
+<h2 id="2023x2f3x2f28"><a href="#2023-x2F-3-x2F-28" class="headerlink" title="2023&#x2F;3&#x2F;28"></a>2023&#x2F;3&#x2F;28</h2><p>今天在审计的时候发现了 Phpstudypro 自带安装 xdebug 扩展功能，傻瓜式安装手法：</p>
+<p><img src="/images/PHP%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/image-20230328170616988.png" alt="image-20230328170616988"></p>
 <p>安装之后会自动在 php.ini 下写入特定的配置选项，可以说是很方便了。但是其默认没有开启远程调试，所以如果我们想打开网页逐步动调，需要手动把 remote_enable 选项设为 On。</p>
-<p><img src="/images/PHP代码审计-环境搭建/image-20230328170807919.png" alt="image-20230328170807919"></p>
+<p><img src="/images/PHP%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/image-20230328170807919.png" alt="image-20230328170807919"></p>
 <h3 id="前提"><a href="#前提" class="headerlink" title="前提"></a>前提</h3><h3 id="1-安装-xdebug"><a href="#1-安装-XDebug" class="headerlink" title="1. 安装 XDebug"></a>1. 安装 XDebug</h3><p>先去 <a href="https://xdebug.org/wizard">https://xdebug.org/wizard</a> 这里把你的 phpinfo 的输出复制上去，随后根据推荐指南下载即可</p>
 <p>以下是我的指南：</p>
 <blockquote>
@@ -3462,31 +3463,32 @@
 </blockquote>
 <h3 id="2-配置-xdebug"><a href="#2-配置-XDebug" class="headerlink" title="2. 配置 XDebug"></a>2. 配置 XDebug</h3><p>在 <strong>php.ini</strong> 末尾添加如下信息</p>
 <figure class="highlight ini"><table><tr><td class="code"><pre><code class="hljs ini"><span class="hljs-section">[XDebug]</span><br><span class="hljs-comment">; 性能分析信息文件的输出目录（根据实际环境修改）</span><br><span class="hljs-attr">xdebug.output_dir</span>=<span class="hljs-string">&quot;C:\phpstudy_pro\PHPTutorial\tmp\xdebug&quot;</span><br><span class="hljs-comment">; 堆栈跟踪文件的存放目录（根据实际环境修改）</span><br><span class="hljs-attr">xdebug.trace_output_dir</span>=<span class="hljs-string">&quot;C:\phpstudy_pro\PHPTutorial\tmp\xdebug&quot;</span><br><span class="hljs-comment">; xdebug 库文件，就是从官网下载下来的dll文件的绝对路径</span><br><span class="hljs-attr">zend_extension</span> = <span class="hljs-string">&quot;C:\phpstudy_pro\Extensions\php\php7.3.4nts\ext\php_xdebug-3.1.6-7.3-vc15-nts-x86_64.dll&quot;</span><br><span class="hljs-comment">; 开启远程调试</span><br><span class="hljs-attr">xdebug.remote_enable</span>= <span class="hljs-literal">On</span><br><span class="hljs-comment">; IP 地址</span><br><span class="hljs-attr">xdebug.client_host</span>=<span class="hljs-string">&quot;127.0.0.1&quot;</span><br><span class="hljs-comment">; xdebug 监听端口和协议</span><br><span class="hljs-attr">xdebug.client_port</span>=<span class="hljs-number">9000</span><br><span class="hljs-attr">xdebug.remote_handler</span>=dbgp<br><span class="hljs-comment">; idekey</span><br><span class="hljs-attr">xdebug.idekey</span>=<span class="hljs-string">&quot;PHPSTORM&quot;</span><br><span class="hljs-attr">xdebug.profiler_enable</span>= <span class="hljs-literal">On</span><br><span class="hljs-attr">xdebug.auto_trace</span>= <span class="hljs-literal">On</span><br><span class="hljs-attr">xdebug.collect_params</span>=<span class="hljs-literal">On</span><br><span class="hljs-attr">xdebug.collect_return</span>=<span class="hljs-literal">On</span><br><span class="hljs-attr">xdebug.mode</span>=<span class="hljs-string">&quot;debug&quot;</span><br></code></pre></td></tr></table></figure>
-<h3 id><a href="#" class="headerlink" title=" "></a> </h3><h3 id="3-配置网站"><a href="#3-配置网站" class="headerlink" title="3. 配置网站"></a>3. 配置网站</h3><p>打开 phpstudy，开启 apache</p>
+
+<h3 id><a href="#" class="headerlink" title></a></h3><h3 id="3-配置网站"><a href="#3-配置网站" class="headerlink" title="3. 配置网站"></a>3. 配置网站</h3><p>打开 phpstudy，开启 apache</p>
 <p>我的主域名是 localhost<br>网站根目录是c:\phpstudy\www<br>端口是 800</p>
-<p><img src="/images/PHP代码审计-环境搭建/image-20230206112615691.png" alt="image-20230206112615691"></p>
-<p><img src="/images/PHP代码审计-环境搭建/image-20230206112606087.png" alt="image-20230206112606087"></p>
-<h3 id="4-配置-phpstorm"><a href="#4-配置-phpstorm" class="headerlink" title="4. 配置 phpstorm"></a>4. 配置 phpstorm</h3><p><img src="/images/PHP代码审计-环境搭建/image-20230206112750094.png" alt="image-20230206112750094"></p>
+<p><img src="/images/PHP%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/image-20230206112615691.png" alt="image-20230206112615691"></p>
+<p><img src="/images/PHP%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/image-20230206112606087.png" alt="image-20230206112606087"></p>
+<h3 id="4-配置-phpstorm"><a href="#4-配置-phpstorm" class="headerlink" title="4. 配置 phpstorm"></a>4. 配置 phpstorm</h3><p><img src="/images/PHP%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/image-20230206112750094.png" alt="image-20230206112750094"></p>
 <p><strong>配置调试</strong></p>
-<p><img src="/images/PHP代码审计-环境搭建/image-20230206112724226.png" alt="image-20230206112724226"></p>
+<p><img src="/images/PHP%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/image-20230206112724226.png" alt="image-20230206112724226"></p>
 <p>端口与刚刚php.ini里边的xdebug.client_port一样</p>
 <p><strong>配置dbgp</strong></p>
 <p>不用解释了，端口都是和php.ini里边的xdebug.client_port一样，主机填本机的。</p>
-<p><img src="/images/PHP代码审计-环境搭建/image-20230206112912691.png" alt="image-20230206112912691"></p>
+<p><img src="/images/PHP%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/image-20230206112912691.png" alt="image-20230206112912691"></p>
 <p><strong>配置服务器</strong></p>
-<p><img src="/images/PHP代码审计-环境搭建/image-20230206112735908.png" alt="image-20230206112735908"></p>
+<p><img src="/images/PHP%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/image-20230206112735908.png" alt="image-20230206112735908"></p>
 <p>我127.0.0.1，你也可以直接填 localhost, 只要你知道该域名指向的文件根目录在哪里就行了。<br>后面验证会用到域名对应的文件根目录</p>
 <p><strong>编辑配置：</strong></p>
-<p><img src="/images/PHP代码审计-环境搭建/image-20230206113057456.png" alt="image-20230206113057456"></p>
+<p><img src="/images/PHP%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/image-20230206113057456.png" alt="image-20230206113057456"></p>
 <p>新建 php web page页面 （php 网页）</p>
-<p><img src="/images/PHP代码审计-环境搭建/image-20230206113012459.png" alt="image-20230206113012459"></p>
+<p><img src="/images/PHP%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/image-20230206113012459.png" alt="image-20230206113012459"></p>
 <h3 id="5-安装-xdebug-helper"><a href="#5-安装-Xdebug-helper" class="headerlink" title="5. 安装 Xdebug helper"></a>5. 安装 Xdebug helper</h3><p>谷歌浏览器扩展商店搜索然后安装即可</p>
-<p><img src="/images/PHP代码审计-环境搭建/image-20230206140831556.png" alt="image-20230206140831556"></p>
-<p>随后进入选项页面：<strong>chrome-extension://eadndfjplgieldjbigjakmdgkmoaaaoc/options.html</strong> 配置 idekey</p>
-<p><img src="/images/PHP代码审计-环境搭建/image-20230206140854377.png" alt="image-20230206140854377"></p>
-<p><img src="/images/PHP代码审计-环境搭建/image-20230206140656041.png" alt="image-20230206140656041"></p>
+<p><img src="/images/PHP%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/image-20230206140831556.png" alt="image-20230206140831556"></p>
+<p>随后进入选项页面：<strong>chrome-extension:&#x2F;&#x2F;eadndfjplgieldjbigjakmdgkmoaaaoc&#x2F;options.html</strong> 配置 idekey</p>
+<p><img src="/images/PHP%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/image-20230206140854377.png" alt="image-20230206140854377"></p>
+<p><img src="/images/PHP%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/image-20230206140656041.png" alt="image-20230206140656041"></p>
 <h3 id="6-注意事项"><a href="#6-注意事项" class="headerlink" title="6. 注意事项"></a>6. 注意事项</h3><p>在调试的时候发现页面500之后调试就自动中断了，可以看看这个：<a href="https://blog.csdn.net/qq_44836237/article/details/122324587">(14条消息) XDEBUG调试时页面500和自动中断问题_XiXioo1的博客-CSDN博客_nginx xdebug 自动断开</a></p>
-<h2 id="远程调试"><a href="#远程调试" class="headerlink" title="远程调试"></a>远程调试</h2><p><img src="/images/PHP代码审计-环境搭建/image-20230221110245588.png" alt="image-20230221110245588"></p>
+<h2 id="远程调试"><a href="#远程调试" class="headerlink" title="远程调试"></a>远程调试</h2><p><img src="/images/PHP%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/image-20230221110245588.png" alt="image-20230221110245588"></p>
 <h3 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h3><p><a href="https://blog.51cto.com/u_13640989/2709976">https://blog.51cto.com/u_13640989/2709976</a></p>
 ]]></content>
       <categories>
@@ -14874,6 +14876,216 @@ if($request_method !~ ^(GET|HEAD|POST)$)&#123;
       </categories>
       <tags>
         <tag>日记</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Desktop Experience vs. Server Core</title>
+    <url>/2023/03/29/Desktop-Experience-vs-Server-Core/index.html</url>
+    <content><![CDATA[<h1 id="desktop-experience-vs-server-core"><a href="#Desktop-Experience-vs-Server-Core" class="headerlink" title="Desktop Experience vs. Server Core"></a>Desktop Experience vs. Server Core</h1><hr>
+<p><a href="https://docs.microsoft.com/en-us/windows-server/administration/server-core/what-is-server-core">Windows Server Core</a> was first released with Windows Server 2008 as a minimalistic Server environment only containing key Server functionality. As a result, Server Core has lower management requirements, a smaller attack surface, and uses less disk space and memory than its Desktop Experience (GUI) counterpart. In Server Core, all configuration and maintenance tasks are performed via the command-line, PowerShell, or remote management with MMC or Remote Server Administration Tools (RSAT).</p>
+<p>While Server Core aims to have a smaller footprint by lacking a GUI, some graphical programs are still supported, such as Registry Editor, Notepad, System Information, Windows Installer, Task Manager, and PowerShell. It also supports some Sysinternals suite tools such as Active Directory Explorer, Process Explorer, Process Monitor, and TCPView.</p>
+<p>As of Windows Server 2019, Server Core or Desktop Experience must be selected at installation, and neither can be rolled back (i.e., converting Server Core to Desktop Experience). Once installed, the initial setup for Server Core can be done via <code>Sconfig</code>, which is a text-based interface (actually a VBScript executed by WScript). <code>Sconfig</code> is used for performing a variety of common commands such as configuring networking, checking for&#x2F;installing Windows updates, account management, configuring remote management, activating Windows, and more.</p>
+<p><img src="https://academy.hackthebox.com/storage/modules/49/sconfig.png" alt="image"></p>
+<p>Certain server applications cannot run on Server Core, including Microsoft Server Virtual Machine Manager 2019 (SCVMM), System Center Data Protection Manager 2019, SharePoint Server 2019, Project Server 2019.</p>
+<p>In summary, Server Core is lighter weight and less resource-intensive but has a steeper learning curve and can be more difficult to manage. It also has some limitations, such as performing management tasks using certain GUI programs.</p>
+<p>In any environment, the determination between using Desktop Experience or Server Core for a server installation should be made by both the business need and intended use of the server and the skill level of the administrators responsible for maintaining it. The following table shows some of the applications available on Server Core vs. Desktop Experience. This is a list of common applications and not an exhaustive list.</p>
+<table>
+<thead>
+<tr>
+<th><strong>Application</strong></th>
+<th><strong>Server Core</strong></th>
+<th><strong>Desktop Experience</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Command prompt</td>
+<td>Available</td>
+<td>Available</td>
+</tr>
+<tr>
+<td>Windows PowerShell&#x2F; Microsoft .NET</td>
+<td>Available</td>
+<td>Available</td>
+</tr>
+<tr>
+<td>Regedit</td>
+<td>Available</td>
+<td>Available</td>
+</tr>
+<tr>
+<td>Diskmgmt.msc</td>
+<td>Not Available</td>
+<td>Available</td>
+</tr>
+<tr>
+<td>Server Manager</td>
+<td>Not Available</td>
+<td>Available</td>
+</tr>
+<tr>
+<td>Mmc.exe</td>
+<td>Not Available</td>
+<td>Available</td>
+</tr>
+<tr>
+<td>Eventvwr</td>
+<td>Not Available</td>
+<td>Available</td>
+</tr>
+<tr>
+<td>Services.msc</td>
+<td>Not Available</td>
+<td>Available</td>
+</tr>
+<tr>
+<td>Control Panel</td>
+<td>Not Available</td>
+<td>Available</td>
+</tr>
+<tr>
+<td>Windows Explorer</td>
+<td>Not Available</td>
+<td>Available</td>
+</tr>
+<tr>
+<td>Taskmgr</td>
+<td>Available</td>
+<td>Available</td>
+</tr>
+<tr>
+<td>Internet Explorer or Edge</td>
+<td>Not Available</td>
+<td>Available</td>
+</tr>
+<tr>
+<td>Remote Desktop Services</td>
+<td>Available</td>
+<td>Available</td>
+</tr>
+</tbody></table>
+<p><a href="https://academy.hackthebox.com/module/49/section/464"> Previous</a> Mark Complete &amp; Next<a href="https://academy.hackthebox.com/module/49/section/462">Next </a></p>
+<p> Cheat Sheet</p>
+]]></content>
+      <categories>
+        <category>Windows基础</category>
+      </categories>
+      <tags>
+        <tag>HackTheBox</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Microsoft Management Console(MMC)</title>
+    <url>/2023/03/29/Microsoft-Management-Console-MMC/index.html</url>
+    <content><![CDATA[<h1 id="microsoft-management-console-mmc"><a href="#Microsoft-Management-Console-MMC" class="headerlink" title="Microsoft Management Console (MMC)"></a>Microsoft Management Console (MMC)</h1><hr>
+<p>The MMC can be used to group snap-ins, or administrative tools, to manage hardware, software, and network components within a Windows host. It has been around since Windows Server 2000 and runs on all Windows versions. We can also use MMC to create custom tools and distribute them to users. MMC works with the concept of snap-ins, allowing administrators to create a customized console with only the administrative tools needed to manage several services. These snap-ins can be added to manage both local and remote systems.</p>
+<p>We can open MMC by just typing <code>mmc</code> in the Start menu. When we open MMC for the first time, it will be blank.</p>
+<p><img src="https://academy.hackthebox.com/storage/modules/49/MMC.png" alt="image"></p>
+<p>From here, we can browse to File –&gt; <code>Add or Remove Snap-ins</code>, and begin customizing our administrative console.</p>
+<p><img src="https://academy.hackthebox.com/storage/modules/49/MMC_add_remove.png" alt="image"></p>
+<p>As we begin adding snap-ins, we will be asked if we want to add the snap-in to manage just the local computer or if it will be used to manage another computer on the network.</p>
+<p><img src="https://academy.hackthebox.com/storage/modules/49/MMC_services.png" alt="image"></p>
+<p>Once we have finished adding snap-ins, they will appear on the left-hand side of MMC. From here, we can save the set of snap-ins as a .msc file, so they will all be loaded the next time we open MMC. By default, they are saved in the Windows Administrative Tools directory under the Start menu. Next time we open MMC, we can choose to load any of the views that we have created.</p>
+<p><img src="https://academy.hackthebox.com/storage/modules/49/saved_msc.png" alt="image"></p>
+]]></content>
+      <categories>
+        <category>Windows基础</category>
+      </categories>
+      <tags>
+        <tag>HackTheBox</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Windows Management Instrumentation (WMI)</title>
+    <url>/2023/03/29/Windows-Management-Instrumentation-WMI/index.html</url>
+    <content><![CDATA[<h1 id="windows-management-instrumentation-wmi"><a href="#Windows-Management-Instrumentation-WMI" class="headerlink" title="Windows Management Instrumentation (WMI)"></a>Windows Management Instrumentation (WMI)</h1><hr>
+<p>WMI is a subsystem of PowerShell that provides system administrators with powerful tools for system monitoring. The goal of WMI is to consolidate device and application management across corporate networks. WMI is a core part of the Windows operating system and has come pre-installed since Windows 2000. It is made up of the following components:</p>
+<table>
+<thead>
+<tr>
+<th><strong>Component Name</strong></th>
+<th><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>WMI service</td>
+<td>The Windows Management Instrumentation process, which runs automatically at boot and acts as an intermediary between WMI providers, the WMI repository, and managing applications.</td>
+</tr>
+<tr>
+<td>Managed objects</td>
+<td>Any logical or physical components that can be managed by WMI.</td>
+</tr>
+<tr>
+<td>WMI providers</td>
+<td>Objects that monitor events&#x2F;data related to a specific object.</td>
+</tr>
+<tr>
+<td>Classes</td>
+<td>These are used by the WMI providers to pass data to the WMI service.</td>
+</tr>
+<tr>
+<td>Methods</td>
+<td>These are attached to classes and allow actions to be performed. For example, methods can be used to start&#x2F;stop processes on remote machines.</td>
+</tr>
+<tr>
+<td>WMI repository</td>
+<td>A database that stores all static data related to WMI.</td>
+</tr>
+<tr>
+<td>CMI Object Manager</td>
+<td>The system that requests data from WMI providers and returns it to the application requesting it.</td>
+</tr>
+<tr>
+<td>WMI API</td>
+<td>Enables applications to access the WMI infrastructure.</td>
+</tr>
+<tr>
+<td>WMI Consumer</td>
+<td>Sends queries to objects via the CMI Object Manager.</td>
+</tr>
+</tbody></table>
+<p>Some of the uses for WMI are:</p>
+<ul>
+<li>Status information for local&#x2F;remote systems</li>
+<li>Configuring security settings on remote machines&#x2F;applications</li>
+<li>Setting and changing user and group permissions</li>
+<li>Setting&#x2F;modifying system properties</li>
+<li>Code execution</li>
+<li>Scheduling processes</li>
+<li>Setting up logging</li>
+</ul>
+<p>These tasks can all be performed using a combination of PowerShell and the WMI Command-Line Interface (WMIC). WMI can be run via the Windows command prompt by typing <code>WMIC</code> to open an interactive shell or by running a command directly such as <code>wmic computersystem get name</code> to get the hostname. We can view a listing of WMIC commands and aliases by typing <code>WMIC /?</code>.</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs cmd-session">C:\htb&gt; wmic /?<br><br>WMIC is deprecated.<br><br>[global switches] &lt;command&gt;<br><br>The following global switches are available:<br>/NAMESPACE           Path for the namespace the alias operate against.<br>/ROLE                Path for the role containing the alias definitions.<br>/NODE                Servers the alias will operate against.<br>/IMPLEVEL            Client impersonation level.<br>/AUTHLEVEL           Client authentication level.<br>/LOCALE              Language id the client should use.<br>/PRIVILEGES          Enable or disable all privileges.<br>/TRACE               Outputs debugging information to stderr.<br>/RECORD              Logs all input commands and output.<br>/INTERACTIVE         Sets or resets the interactive mode.<br>/FAILFAST            Sets or resets the FailFast mode.<br>/USER                User to be used during the session.<br>/PASSWORD            Password to be used for session login.<br>/OUTPUT              Specifies the mode for output redirection.<br>/APPEND              Specifies the mode for output redirection.<br>/AGGREGATE           Sets or resets aggregate mode.<br>/AUTHORITY           Specifies the &lt;authority type&gt; for the connection.<br>/?[:&lt;BRIEF|FULL&gt;]    Usage information.<br><br>For more information on a specific global switch, type: switch-name /?<br><br>Press any key to continue, or press the ESCAPE key to stop<br></code></pre></td></tr></table></figure>
+
+<p>The following command example lists information about the operating system.</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs cmd-session">C:\htb&gt; wmic os list brief<br><br>BuildNumber  Organization  RegisteredUser  SerialNumber             SystemDirectory      Version<br>19041                      Owner           00123-00123-00123-AAOEM  C:\Windows\system32  10.0.19041<br></code></pre></td></tr></table></figure>
+
+<p>WMIC uses aliases and associated verbs, adverbs, and switches. The above command example uses <code>LIST</code> to show data and the adverb <code>BRIEF</code> to provide just the core set of properties. An in-depth listing of verbs, switches, and adverbs is available <a href="https://docs.microsoft.com/en-us/windows/win32/wmisdk/wmic">here</a>. WMI can be used with PowerShell by using the <code>Get-WmiObject</code> <a href="https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.management/get-wmiobject?view=powershell-5.1">module</a>. This module is used to get instances of WMI classes or information about available classes. This module can be used against local or remote machines.</p>
+<p>Here we can get information about the operating system.</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs powershell-session">PS C:\htb&gt; Get-WmiObject -Class Win32_OperatingSystem | select SystemDirectory,BuildNumber,SerialNumber,Version | ft<br><br>SystemDirectory     BuildNumber SerialNumber            Version<br>---------------     ----------- ------------            -------<br>C:\Windows\system32 19041       00123-00123-00123-AAOEM 10.0.19041<br></code></pre></td></tr></table></figure>
+
+<p>We can also use the <code>Invoke-WmiMethod</code> <a href="https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.management/invoke-wmimethod?view=powershell-5.1">module</a>, which is used to call the methods of WMI objects. A simple example is renaming a file. We can see that the command completed properly because the <code>ReturnValue</code> is set to 0.</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs powershell-session">PS C:\htb&gt; Invoke-WmiMethod -Path &quot;CIM_DataFile.Name=&#x27;C:\users\public\spns.csv&#x27;&quot; -Name Rename -ArgumentList &quot;C:\Users\Public\kerberoasted_users.csv&quot;<br><br><br>__GENUS          : 2<br>__CLASS          : __PARAMETERS<br>__SUPERCLASS     :<br>__DYNASTY        : __PARAMETERS<br>__RELPATH        :<br>__PROPERTY_COUNT : 1<br>__DERIVATION     : &#123;&#125;<br>__SERVER         :<br>__NAMESPACE      :<br>__PATH           :<br>ReturnValue      : 0<br>PSComputerName   :<br></code></pre></td></tr></table></figure>
+
+<p>This section provides a brief overview of <code>WMI</code>, <code>WMIC</code>, and combining <code>WMIC</code> and <code>PowerShell</code>. <code>WMI</code> has a wide variety of uses for both blue team and red team operators. Later sections of this course will show some ways that <code>WMI</code> can be leveraged offensively for both enumeration and lateral movement.</p>
+]]></content>
+  </entry>
+  <entry>
+    <title>Windows Subsystem for Linux (WSL)</title>
+    <url>/2023/03/29/Windows-Subsystem-for-Linux-WSL/index.html</url>
+    <content><![CDATA[<h1 id="windows-subsystem-for-linux-wsl"><a href="#Windows-Subsystem-for-Linux-WSL" class="headerlink" title="Windows Subsystem for Linux (WSL)"></a>Windows Subsystem for Linux (WSL)</h1><hr>
+<p><a href="https://docs.microsoft.com/en-us/windows/wsl/">WSL</a> is a feature that allows Linux binaries to be run natively on Windows 10 and Windows Server 2019. It was originally intended for developers who needed to run Bash, Ruby, and native Linux command-line tools such as <code>sed</code>, <code>awk</code>, <code>grep</code>, etc., directly on their Windows workstation. The second version of WSL, released in May 2019, introduced a real Linux kernel utilizing a subset of Hyper-V features.</p>
+<p>WSL can be installed by running the PowerShell command <code>Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux</code> as an Administrator. Once this feature is enabled, we can either download a Linux distro from the Microsoft Store and install it or manually download the Linux distro of our choice and unpack and install it from the command line.</p>
+<p>WSL installs an application called <code>Bash.exe</code>, which can be run by merely typing <code>bash</code> into a Windows console to spawn a Bash shell. We have the full look and feel of a Linux host from this shell, including the standard Linux directory structure.</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs powershell-session">PS C:\htb&gt; ls /<br><br>bin dev home lib lLib64 media opt root sbin srv tmp var<br>boot etc init 1lib32 Libx32 mnt proc run Snap sys usr<br></code></pre></td></tr></table></figure>
+
+<p>We can access the C$ volume and other volumes on the host operating system via the <code>mnt</code> directory, making the transition from the WSL host and the Windows host OS seamless. Once in this bash shell, we can interact with WSL as we would interact with any Linux-based operating system: running commands, installing updates&#x2F;packages, etc.</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs powershell-session">PS C:\htb&gt; uname -a<br><br>Linux WS01 4.4.0-18362-Microsoft #476-Microsoft Frit Nov 01 16:53:00<br>PST 2019 x86_64 x86 _64 x86_64 GNU/Linux<br></code></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>Windows基础</category>
+      </categories>
+      <tags>
+        <tag>HackTheBox</tag>
       </tags>
   </entry>
 </search>
