@@ -1,0 +1,891 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="MirRoR4s">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Windows Security Security is a critical topic in Windows operating systems. Windows systems have many moving parts that present a vast attack surface. Due to the many built-in applications, features,">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Windows Security">
+<meta property="og:url" content="https://mirror4s.github.io/2023/03/29/Windows-Security/index.html">
+<meta property="og:site_name" content="学习记录">
+<meta property="og:description" content="Windows Security Security is a critical topic in Windows operating systems. Windows systems have many moving parts that present a vast attack surface. Due to the many built-in applications, features,">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://academy.hackthebox.com/storage/modules/49/uacarchitecture1.png">
+<meta property="og:image" content="https://academy.hackthebox.com/storage/modules/49/regedit.png">
+<meta property="og:image" content="https://academy.hackthebox.com/storage/modules/49/regedit2.png">
+<meta property="og:image" content="https://academy.hackthebox.com/storage/modules/49/Local_GP.png">
+<meta property="og:image" content="https://academy.hackthebox.com/storage/modules/49/credguard.png">
+<meta property="og:image" content="https://academy.hackthebox.com/storage/modules/49/Defender_sec_center.png">
+<meta property="og:image" content="https://academy.hackthebox.com/storage/modules/49/meterp_caught.png">
+<meta property="article:published_time" content="2023-03-29T11:30:17.000Z">
+<meta property="article:modified_time" content="2023-03-29T11:34:17.567Z">
+<meta property="article:author" content="MirRoR4s">
+<meta property="article:tag" content="HackTheBox">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://academy.hackthebox.com/storage/modules/49/uacarchitecture1.png">
+  
+  
+  
+  <title>Windows Security - 学习记录</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"mirror4s.github.io","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Windows Security"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-03-29 19:30" pubdate>
+          2023年3月29日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          16k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          136 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Windows Security</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    本文最后更新于：2023年3月29日 晚上
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="windows-security"><a href="#Windows-Security" class="headerlink" title="Windows Security"></a>Windows Security</h1><hr>
+<p>Security is a critical topic in Windows operating systems. Windows systems have many moving parts that present a vast attack surface. Due to the many built-in applications, features, and layers of settings, Windows systems can be easily misconfigured, thus opening them up to attack even if they are fully patched.</p>
+<p>It has many built-in features that can be abused and has suffered from a wide variety of critical vulnerabilities, resulting in widely used and very effective remote and local exploits.</p>
+<p>Microsoft has improved upon Windows security over the years. As our world’s interconnectedness continues to expand and attackers become more sophisticated, Microsoft has continued to add new features that can be used by systems administrators to harden systems and actively block and detect attempts at intrusion and misuse.</p>
+<p>Windows follows certain security principles. These are units in the system that can be authorized or authenticated for a particular action. These units include users, computers on the network, threads, or processes. The principles are designed to make it more difficult for attackers or malicious software to gain unauthorized access and exploit the system in an unintended way.</p>
+<hr>
+<h2 id="security-identifier-sid"><a href="#Security-Identifier-SID" class="headerlink" title="Security Identifier (SID)"></a>Security Identifier (SID)</h2><p>Each of the security principals on the system has a unique security identifier (SID). The system automatically generates SIDs. This means that even if, for example, we have two identical users on the system, Windows can distinguish the two and their rights based on their SIDs. SIDs are string values with different lengths, which are stored in the security database. These SIDs are added to the user’s access token to identify all actions that the user is authorized to take.</p>
+<p>A SID consists of the Identifier Authority and the Relative ID (RID). In an Active Directory (AD) domain environment, the SID also includes the domain SID.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs powershell-session">PS C:\htb&gt; whoami /user<br><br>USER INFORMATION<br>----------------<br><br>User Name           SID<br>=================== =============================================<br>ws01\bob S-1-5-21-674899381-4069889467-2080702030-1002<br></code></pre></td></tr></table></figure>
+
+<p>The SID is broken down into this pattern.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs powershell-session">(SID)-(revision level)-(identifier-authority)-(subauthority1)-(subauthority2)-(etc)<br></code></pre></td></tr></table></figure>
+
+<p>Let’s break down the SID piece by piece.</p>
+<table>
+<thead>
+<tr>
+<th><strong>Number</strong></th>
+<th><strong>Meaning</strong></th>
+<th><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>S</td>
+<td>SID</td>
+<td>Identifies the string as a SID.</td>
+</tr>
+<tr>
+<td>1</td>
+<td>Revision Level</td>
+<td>To date, this has never changed and has always been <code>1</code>.</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Identifier-authority</td>
+<td>A 48-bit string that identifies the authority (the computer or network) that created the SID.</td>
+</tr>
+<tr>
+<td>21</td>
+<td>Subauthority1</td>
+<td>This is a variable number that identifies the user’s relation or group described by the SID to the authority that created it. It tells us in what order this authority created the user’s account.</td>
+</tr>
+<tr>
+<td>674899381-4069889467-2080702030</td>
+<td>Subauthority2</td>
+<td>Tells us which computer (or domain) created the number</td>
+</tr>
+<tr>
+<td>1002</td>
+<td>Subauthority3</td>
+<td>The RID that distinguishes one account from another. Tells us whether this user is a normal user, a guest, an administrator, or part of some other group</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="security-accounts-manager-sam-and-access-control-entries-ace"><a href="#Security-Accounts-Manager-SAM-and-Access-Control-Entries-ACE" class="headerlink" title="Security Accounts Manager (SAM) and Access Control Entries (ACE)"></a>Security Accounts Manager (SAM) and Access Control Entries (ACE)</h2><p>SAM grants rights to a network to execute specific processes.</p>
+<p>The access rights themselves are managed by Access Control Entries (ACE) in Access Control Lists (ACL). The ACLs contain ACEs that define which users, groups, or processes have access to a file or to execute a process, for example.</p>
+<p>The permissions to access a securable object are given by the security descriptor, classified into two types of ACLs: the <code>Discretionary Access Control List (DACL)</code> or <code>System Access Control List (SACL)</code>. Every thread and process started or initiated by a user goes through an authorization process. An integral part of this process is access tokens, validated by the Local Security Authority (LSA). In addition to the SID, these access tokens contain other security-relevant information. Understanding these functionalities is an essential part of learning how to use and work around these security mechanisms during the privilege escalation phase.</p>
+<hr>
+<h2 id="user-account-control-uac"><a href="#User-Account-Control-UAC" class="headerlink" title="User Account Control (UAC)"></a>User Account Control (UAC)</h2><p><a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/windows/security/identity-protection/user-account-control/how-user-account-control-works">User Account Control (UAC)</a> is a security feature in Windows to prevent malware from running or manipulating processes that could damage the computer or its contents. There is the Admin Approval Mode in UAC, which is designed to prevent unwanted software from being installed without the administrator’s knowledge or to prevent system-wide changes from being made. Surely you have already seen the consent prompt if you have installed a specific software, and your system has asked for confirmation if you want to have it installed. Since the installation requires administrator rights, a window pops up, asking you if you want to confirm the installation. With a standard user who has no rights for the installation, execution will be denied, or you will be asked for the administrator password. This consent prompt interrupts the execution of scripts or binaries that malware or attackers try to execute until the user enters the password or confirms execution. To understand how UAC works, we need to know how it is structured and how it works, and what triggers the consent prompt. The following diagram, adapted from the source <a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/windows/security/identity-protection/user-account-control/how-user-account-control-works">here</a>, illustrates how UAC works.</p>
+<p><img src="https://academy.hackthebox.com/storage/modules/49/uacarchitecture1.png" srcset="/img/loading.gif" lazyload alt="image"></p>
+<hr>
+<h2 id="registry"><a href="#Registry" class="headerlink" title="Registry"></a>Registry</h2><p>The <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Windows_Registry">Registry</a> is a hierarchical database in Windows critical for the operating system. It stores low-level settings for the Windows operating system and applications that choose to use it. It is divided into computer-specific and user-specific data. We can open the Registry Editor by typing <code>regedit</code> from the command line or Windows search bar.</p>
+<p><img src="https://academy.hackthebox.com/storage/modules/49/regedit.png" srcset="/img/loading.gif" lazyload alt="image"></p>
+<p>The tree-structure consists of main folders (root keys) in which subfolders (subkeys) with their entries&#x2F;files (values) are located. There are 11 different types of values that can be entered in a subkey.</p>
+<table>
+<thead>
+<tr>
+<th><strong>Value</strong></th>
+<th><strong>Type</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>REG_BINARY</td>
+<td>Binary data in any form.</td>
+</tr>
+<tr>
+<td>REG_DWORD</td>
+<td>A 32-bit number.</td>
+</tr>
+<tr>
+<td>REG_DWORD_LITTLE_ENDIAN</td>
+<td>A 32-bit number in little-endian format. Windows is designed to run on little-endian computer architectures. Therefore, this value is defined as REG_DWORD in the Windows header files.</td>
+</tr>
+<tr>
+<td>REG_DWORD_BIG_ENDIAN</td>
+<td>A 32-bit number in big-endian format. Some UNIX systems support big-endian architectures.</td>
+</tr>
+<tr>
+<td>REG_EXPAND_SZ</td>
+<td>A null-terminated string that contains unexpanded references to environment variables (for example, “%PATH%”). It will be a Unicode or ANSI string depending on whether you use the Unicode or ANSI functions. To expand the environment variable references, use the <a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/windows/win32/api/processenv/nf-processenv-expandenvironmentstringsa"><strong>ExpandEnvironmentStrings</strong></a> function.</td>
+</tr>
+<tr>
+<td>REG_LINK</td>
+<td>A null-terminated Unicode string containing the target path of a symbolic link created by calling the <a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/windows/desktop/api/Winreg/nf-winreg-regcreatekeyexa"><strong>RegCreateKeyEx</strong></a> function with REG_OPTION_CREATE_LINK.</td>
+</tr>
+<tr>
+<td>REG_MULTI_SZ</td>
+<td>A sequence of null-terminated strings, terminated by an empty string (\0). The following is an example: <em>String1</em>\0<em>String2</em>\0<em>String3</em>\0<em>LastString</em>\0\0 The first \0 terminates the first string, the second to the last \0 terminates the last string, and the final \0 terminates the sequence. Note that the final terminator must be factored into the length of the string.</td>
+</tr>
+<tr>
+<td>REG_NONE</td>
+<td>No defined value type.</td>
+</tr>
+<tr>
+<td>REG_QWORD</td>
+<td>A 64-bit number.</td>
+</tr>
+<tr>
+<td>REG_QWORD_LITTLE_ENDIAN</td>
+<td>A 64-bit number in little-endian format. Windows is designed to run on little-endian computer architectures. Therefore, this value is defined as REG_QWORD in the Windows header files.</td>
+</tr>
+<tr>
+<td>REG_SZ</td>
+<td>A null-terminated string. This will be either a Unicode or an ANSI string, depending on whether you use the Unicode or ANSI functions.</td>
+</tr>
+</tbody></table>
+<p>Source: <a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/windows/win32/sysinfo/registry-value-types">https://docs.microsoft.com/en-us/windows/win32/sysinfo/registry-value-types</a></p>
+<p>Each folder under <code>Computer</code> is a key. The root keys all start with <code>HKEY</code>. A key such as <code>HKEY-LOCAL-MACHINE</code> is abbreviated to <code>HKLM</code>. HKLM contains all settings that are relevant to the local system. This root key contains six subkeys like <code>SAM</code>, <code>SECURITY</code>, <code>SYSTEM</code>, <code>SOFTWARE</code>, <code>HARDWARE</code>, and <code>BCD</code>, loaded into memory at boot time (except <code>HARDWARE</code> which is dynamically loaded).</p>
+<p><img src="https://academy.hackthebox.com/storage/modules/49/regedit2.png" srcset="/img/loading.gif" lazyload alt="image"></p>
+<p>The entire system registry is stored in several files on the operating system. You can find these under <code>C:\Windows\System32\Config\</code>.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs powershell-session">PS C:\htb&gt; ls<br><br>    Directory: C:\Windows\system32\config<br><br>Mode                 LastWriteTime         Length Name<br>----                 -------------         ------ ----<br>d-----         12/7/2019   4:14 AM                Journal<br>d-----         12/7/2019   4:14 AM                RegBack<br>d-----         12/7/2019   4:14 AM                systemprofile<br>d-----         8/12/2020   1:43 AM                TxR<br>-a----         8/13/2020   6:02 PM        1048576 BBI<br>-a----         6/25/2020   4:36 PM          28672 BCD-Template<br>-a----         8/30/2020  12:17 PM       33816576 COMPONENTS<br>-a----         8/13/2020   6:02 PM         524288 DEFAULT<br>-a----         8/26/2020   7:51 PM        4603904 DRIVERS<br>-a----         6/25/2020   3:37 PM          32768 ELAM<br>-a----         8/13/2020   6:02 PM          65536 SAM<br>-a----         8/13/2020   6:02 PM          65536 SECURITY<br>-a----         8/13/2020   6:02 PM       87818240 SOFTWARE<br>-a----         8/13/2020   6:02 PM       17039360 SYSTEM<br></code></pre></td></tr></table></figure>
+
+<p>The user-specific registry hive (HKCU) is stored in the user folder (i.e., <code>C:\Windows\Users\&lt;USERNAME&gt;\Ntuser.dat</code>).</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs powershell-session">PS C:\htb&gt; gci -Hidden<br><br>    Directory: C:\Users\bob<br><br>Mode                 LastWriteTime         Length Name<br>----                 -------------         ------ ----<br>d--h--         6/25/2020   5:12 PM                AppData<br>d--hsl         6/25/2020   5:12 PM                Application Data<br>d--hsl         6/25/2020   5:12 PM                Cookies<br>d--hsl         6/25/2020   5:12 PM                Local Settings<br>d--h--         6/25/2020   5:12 PM                MicrosoftEdgeBackups<br>d--hsl         6/25/2020   5:12 PM                My Documents<br>d--hsl         6/25/2020   5:12 PM                NetHood<br>d--hsl         6/25/2020   5:12 PM                PrintHood<br>d--hsl         6/25/2020   5:12 PM                Recent<br>d--hsl         6/25/2020   5:12 PM                SendTo<br>d--hsl         6/25/2020   5:12 PM                Start Menu<br>d--hsl         6/25/2020   5:12 PM                Templates<br>-a-h--         8/13/2020   6:01 PM        2883584 NTUSER.DAT<br>-a-hs-         6/25/2020   5:12 PM         524288 ntuser.dat.LOG1<br>-a-hs-         6/25/2020   5:12 PM        1011712 ntuser.dat.LOG2<br>-a-hs-         8/17/2020   5:46 PM        1048576 NTUSER.DAT&#123;53b39e87-18c4-11ea-a811-000d3aa4692b&#125;.TxR.0.regtrans-ms<br>-a-hs-         8/17/2020  12:13 PM        1048576 NTUSER.DAT&#123;53b39e87-18c4-11ea-a811-000d3aa4692b&#125;.TxR.1.regtrans-ms<br>-a-hs-         8/17/2020  12:13 PM        1048576 NTUSER.DAT&#123;53b39e87-18c4-11ea-a811-000d3aa4692b&#125;.TxR.2.regtrans-ms<br>-a-hs-         8/17/2020   5:46 PM          65536 NTUSER.DAT&#123;53b39e87-18c4-11ea-a811-000d3aa4692b&#125;.TxR.blf<br>-a-hs-         6/25/2020   5:15 PM          65536 NTUSER.DAT&#123;53b39e88-18c4-11ea-a811-000d3aa4692b&#125;.TM.blf<br>-a-hs-         6/25/2020   5:12 PM         524288 NTUSER.DAT&#123;53b39e88-18c4-11ea-a811-000d3aa4692b&#125;.TMContainer000000000<br>                                                  00000000001.regtrans-ms<br>-a-hs-         6/25/2020   5:12 PM         524288 NTUSER.DAT&#123;53b39e88-18c4-11ea-a811-000d3aa4692b&#125;.TMContainer000000000<br>                                                  00000000002.regtrans-ms<br>---hs-         6/25/2020   5:12 PM             20 ntuser.ini<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="run-and-runonce-registry-keys"><a href="#Run-and-RunOnce-Registry-Keys" class="headerlink" title="Run and RunOnce Registry Keys"></a>Run and RunOnce Registry Keys</h2><p>There are also so-called registry hives, which contain a logical group of keys, subkeys, and values to support software and files loaded into memory when the operating system is started or a user logs in. These hives are useful for maintaining access to the system. These are called <a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/windows/win32/setupapi/run-and-runonce-registry-keys">Run and RunOnce registry keys</a>.</p>
+<p>The Windows registry includes the following four keys:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs powershell-session">HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Run<br>HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Run<br>HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\RunOnce<br>HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\RunOnce<br></code></pre></td></tr></table></figure>
+
+<p>Here is an example of the <code>HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Run</code> key while logged in to a system.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs powershell-session">PS C:\htb&gt; reg query HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Run<br><br>HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Run<br>    SecurityHealth    REG_EXPAND_SZ    %windir%\system32\SecurityHealthSystray.exe<br>    RTHDVCPL    REG_SZ    &quot;C:\Program Files\Realtek\Audio\HDA\RtkNGUI64.exe&quot; -s<br>    Greenshot    REG_SZ    C:\Program Files\Greenshot\Greenshot.exe<br></code></pre></td></tr></table></figure>
+
+<p>Here is an example of the <code>HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Run</code> showing applications running under the current user while logged in to a system.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs powershell-session">PS C:\htb&gt; reg query HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Run<br><br>HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Run<br>    OneDrive    REG_SZ    &quot;C:\Users\bob\AppData\Local\Microsoft\OneDrive\OneDrive.exe&quot; /background<br>    OPENVPN-GUI    REG_SZ    C:\Program Files\OpenVPN\bin\openvpn-gui.exe<br>    Docker Desktop    REG_SZ    C:\Program Files\Docker\Docker\Docker Desktop.exe<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="application-whitelisting"><a href="#Application-Whitelisting" class="headerlink" title="Application Whitelisting"></a>Application Whitelisting</h2><p>An application whitelist is a list of approved software applications or executables allowed to be present and run on a system. The goal is to protect the environment from harmful malware and unapproved software that does not align with the specific business needs of an organization. Implementing an enforced whitelist can be a challenge, especially in a large network. An organization should implement a whitelist in audit mode initially to make sure that all necessary applications are whitelisted and not blocked by an error of omission, which can cause more problems than it fixes.</p>
+<p>Blacklisting, in contrast, specifies a list of harmful or disallowed software&#x2F;applications to block, and all others are allowed to run&#x2F;be installed. Whitelisting is based on a “zero trust” principle in which all software&#x2F;applications are deemed “bad” except for those specifically allowed. Maintaining a whitelist generally has less overheard as a system administrator will only need to specify what is allowed and not constantly update a “blacklist” with new malicious applications.</p>
+<p>Whitelisting is recommended by organizations such as <a target="_blank" rel="noopener" href="https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-167.pdf">NIST</a>, especially in high-security environments.</p>
+<hr>
+<h2 id="applocker"><a href="#AppLocker" class="headerlink" title="AppLocker"></a>AppLocker</h2><p><a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/windows/security/threat-protection/windows-defender-application-control/applocker/applocker-overview">AppLocker</a> is Microsoft’s application whitelisting solution and was first introduced in Windows 7. AppLocker gives system administrators control over which applications and files users can run. It gives granular control over executables, scripts, Windows installer files, DLLs, packaged apps, and packed app installers.</p>
+<p>It allows for creating rules based on file attributes such as the publisher’s name (which can be derived from the digital signature), product name, file name, and version. Rules can also be set up based on file paths and hashes. Rules can be applied to either security groups or individual users, based on the business need. AppLocker can be deployed in audit mode first to test the impact before enforcing all of the rules.</p>
+<hr>
+<h2 id="local-group-policy"><a href="#Local-Group-Policy" class="headerlink" title="Local Group Policy"></a>Local Group Policy</h2><p>Group Policy allows administrators to set, configure, and adjust a variety of settings. In a domain environment, group policies are pushed down from a Domain Controller onto all domain-joined machines that Group Policy objects (GPOs) are linked to. These settings can also be defined on individual machines using Local Group Policy.</p>
+<p>Group Policy can be configured locally, in both domain environments and non-domain environments. Local Group Policy can be used to tweak certain graphical and network settings that are otherwise not accessible via the Control Panel. It can also be used to lock down an individual computer policy with stringent security settings, such as only allowing certain programs to be installed&#x2F;run or enforcing strict user account password requirements.</p>
+<p>We can open the Local Group Policy Editor by opening the Start menu and typing <code>gpedit.msc</code>. The editor is split into two categories under Local Computer Policy - <code>Computer Configuration</code> and <code>User Configuration</code>.</p>
+<p><img src="https://academy.hackthebox.com/storage/modules/49/Local_GP.png" srcset="/img/loading.gif" lazyload alt="image"></p>
+<p>For example, we can open the Local Computer Policy to enable Credential Guard by enabling the setting <code>Turn On Virtualization Based Security</code>. Credential Guard is a feature in Windows 10 that protects against credential theft attacks by isolating the operating system’s LSA process.</p>
+<p><img src="https://academy.hackthebox.com/storage/modules/49/credguard.png" srcset="/img/loading.gif" lazyload alt="image"></p>
+<p>We can also enable fine-tuned account auditing and configure AppLocker from the Local Group Policy Editor. It is worth exploring Local Group Policy and learning about the wide variety of ways it can be used to lock down a Windows system.</p>
+<hr>
+<h2 id="windows-defender-antivirus"><a href="#Windows-Defender-Antivirus" class="headerlink" title="Windows Defender Antivirus"></a>Windows Defender Antivirus</h2><p>Windows Defender Antivirus (Defender), formerly known as Windows Defender, is built-in antivirus that ships for free with Windows operating systems. It was first released as a downloadable anti-spyware tool for Windows XP and Server 2003. Defender started coming prepackaged as part of the operating system with Windows Vista&#x2F;Server 2008. The program was renamed to Windows Defender Antivirus with the Windows 10 Creators Update.</p>
+<p>Defender comes with several features such as real-time protection, which protects the device from known threats in real-time and cloud-delivered protection, which works in conjunction with automatic sample submission to upload suspicious files for analysis. When files are submitted to the cloud protection service, they are “locked” to prevent any potentially malicious behavior until the analysis is complete. Another feature is Tamper Protection, which prevents security settings from being changed through the Registry, PowerShell cmdlets, or group policy.</p>
+<p>Windows Defender is managed from the Security Center, from which a variety of additional security features and settings can be enabled and managed.</p>
+<p><img src="https://academy.hackthebox.com/storage/modules/49/Defender_sec_center.png" srcset="/img/loading.gif" lazyload alt="image"></p>
+<p>Real-time protection settings can be tweaked to add files, folders, and memory areas to controlled folder access to prevent unauthorized changes. We can also add files or folders to an exclusion list, so they are not scanned. An example would be excluding a folder of tools used for penetration testing from scanning as they will be flagged malicious and quarantined or removed from the system. Controlled folder access is Defender’s built-in Ransomware protection.</p>
+<p>We can use the PowerShell cmdlet <code>Get-MpComputerStatus</code> to check which protection settings are enabled.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs powershell-session">PS C:\htb&gt; Get-MpComputerStatus | findstr &quot;True&quot;<br>AMServiceEnabled                : True<br>AntispywareEnabled              : True<br>AntivirusEnabled                : True<br>BehaviorMonitorEnabled          : True<br>IoavProtectionEnabled           : True<br>IsTamperProtected               : True<br>NISEnabled                      : True<br>OnAccessProtectionEnabled       : True<br>RealTimeProtectionEnabled       : True<br></code></pre></td></tr></table></figure>
+
+<p>While no antivirus solution is perfect, Windows Defender does very well in monthly detection rate tests compared to other solutions, even paid ones. Also, since it comes preinstalled as part of the operating system, it does not introduce “bloat” to the system, such as other programs that add browser extensions and trackers. Other products are known to slow down the system due to the way they hook into the operating system.</p>
+<p>Windows Defender is not without its flaws and should be part of a defense-in-depth strategy built around core principles of configuration and patch management, not treated as a silver bullet for protecting our systems. Definitions are updated constantly, and new versions of Windows Defender are built-in to major operating releases such as Windows 10, version 1909, which is the most recent version at the time of writing.</p>
+<p>Windows Defender will pick up payloads from common open-source frameworks such as Metasploit or unaltered versions of tools such as Mimikatz.</p>
+<p><img src="https://academy.hackthebox.com/storage/modules/49/meterp_caught.png" srcset="/img/loading.gif" lazyload alt="image"></p>
+<p>Though it is becoming increasingly difficult, it is still possible to fully bypass Windows Defender protections enforced by the latest version with the most up-to-date definitions installed.</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Windows%E5%9F%BA%E7%A1%80/" class="category-chain-item">Windows基础</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/HackTheBox/">#HackTheBox</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Windows Security</div>
+      <div>https://mirror4s.github.io/2023/03/29/Windows-Security/index.html</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>MirRoR4s</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年3月29日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/03/29/%E7%BB%87%E6%A2%A6CMS/index.html" title="织梦CMS">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">织梦CMS</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/03/29/Desktop-Experience-vs-Server-Core/index.html" title="Desktop Experience vs. Server Core">
+                        <span class="hidden-mobile">Desktop Experience vs. Server Core</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
