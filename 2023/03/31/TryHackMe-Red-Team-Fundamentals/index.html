@@ -1,0 +1,909 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="MirRoR4s">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Red Team Fundamentals一. IntroductionCybersecurity is a constant race between white hat hackers and black hat hackers. As threats in the cyber-world evolve, so does the need for more specialized servic">
+<meta property="og:type" content="article">
+<meta property="og:title" content="TryHackMe-Red-Team-Fundamentals">
+<meta property="og:url" content="https://mirror4s.github.io/2023/03/31/TryHackMe-Red-Team-Fundamentals/index.html">
+<meta property="og:site_name" content="学习记录">
+<meta property="og:description" content="Red Team Fundamentals一. IntroductionCybersecurity is a constant race between white hat hackers and black hat hackers. As threats in the cyber-world evolve, so does the need for more specialized servic">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://mirror4s.github.io/2023/03/31/TryHackMe-Red-Team-Fundamentals/blog/source/images/TryHackMe-Red-Team-Fundamentals/ee93fb3de94655a02ae7a6b69676944b.png">
+<meta property="og:image" content="https://mirror4s.github.io/2023/03/31/TryHackMe-Red-Team-Fundamentals/blog/source/images/TryHackMe-Red-Team-Fundamentals/da055515377a73c12f0dcef197c1ac8c.png">
+<meta property="og:image" content="https://mirror4s.github.io/2023/03/31/TryHackMe-Red-Team-Fundamentals/blog/source/images/TryHackMe-Red-Team-Fundamentals/f9c16ff60c1412eefd77f12253643bab.png">
+<meta property="og:image" content="https://mirror4s.github.io/images/TryHackMe-Red-Team-Fundamentals/6e1f7ed550b706def50cb8df996caa8e.png">
+<meta property="og:image" content="https://mirror4s.github.io/images/TryHackMe-Red-Team-Fundamentals/b90aad9dcdf10846c71ade3cca3d2e37.png">
+<meta property="og:image" content="https://mirror4s.github.io/images/TryHackMe-Red-Team-Fundamentals/33e4c2dc2ab851b11654ae61953a7df1.png">
+<meta property="article:published_time" content="2023-03-31T04:42:15.000Z">
+<meta property="article:modified_time" content="2023-03-31T04:49:34.016Z">
+<meta property="article:author" content="MirRoR4s">
+<meta property="article:tag" content="tryhackme">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://mirror4s.github.io/2023/03/31/TryHackMe-Red-Team-Fundamentals/blog/source/images/TryHackMe-Red-Team-Fundamentals/ee93fb3de94655a02ae7a6b69676944b.png">
+  
+  
+  
+  <title>TryHackMe-Red-Team-Fundamentals - 学习记录</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"mirror4s.github.io","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="TryHackMe-Red-Team-Fundamentals"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-03-31 12:42" pubdate>
+          2023年3月31日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          15k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          124 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">TryHackMe-Red-Team-Fundamentals</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    本文最后更新于：2023年3月31日 下午
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="red-team-fundamentals"><a href="#Red-Team-Fundamentals" class="headerlink" title="Red Team Fundamentals"></a>Red Team Fundamentals</h1><h2 id="一-introduction"><a href="#一-Introduction" class="headerlink" title="一. Introduction"></a>一. Introduction</h2><p>Cybersecurity is a constant race between white hat hackers and black hat hackers. As threats in the cyber-world evolve, so does the need for more specialized services that allow companies to prepare for real attacks the best they can.</p>
+<p>While conventional security engagements like vulnerability assessments and penetration tests could provide an excellent overview of the technical security posture of a company, they might overlook some other aspects that a real attacker can exploit. In that sense, we could say that conventional penetration tests are good at showing vulnerabilities so that you can take proactive measures but might not teach you how to respond to an actual ongoing attack by a motivated adversary.</p>
+<h3 id="room-objectives"><a href="#Room-objectives" class="headerlink" title="Room objectives"></a>Room objectives</h3><ul>
+<li>Learn about the basics of red team engagements</li>
+<li>Identify the main components and stakeholders involved in a red team engagement</li>
+<li>Understand the main differences between red teaming and other types of cybersecurity engagements</li>
+</ul>
+<h3 id="room-prerequisites"><a href="#Room-prerequisites" class="headerlink" title="Room prerequisites"></a>Room prerequisites</h3><p>Before beginning this room, familiarity with general hacking techniques is required. Although not strictly necessary, completing the Jr. Penetration Tester Learning Path is recommended.</p>
+<p>Answer the questions below</p>
+<p>Click to continue to the next task</p>
+<h2 id="二-vulnerability-assessment-and-penetration-tests-limitations"><a href="#二-Vulnerability-Assessment-and-Penetration-Tests-Limitations" class="headerlink" title="二. Vulnerability Assessment and Penetration Tests Limitations"></a>二. Vulnerability Assessment and Penetration Tests Limitations</h2><p>Vulnerability Assessments</p>
+<p>This is the simplest form of security assessment, and its main objective is to identify as many vulnerabilities in as many systems in the network as possible. To this end, concessions may be made to meet this goal effectively. For example, the attacker’s machine may be allowlisted on the available security solutions to avoid interfering with the vulnerability discovery process. This makes sense since the objective is to look at every host on the network and evaluate its security posture individually while providing the most information to the company about where to focus its remediation efforts.</p>
+<p>To summarize, a vulnerability assessment focuses on scanning hosts for vulnerabilities as individual entities so that security deficiencies can be <strong>identified</strong> and effective security measures can be deployed to <strong>protect</strong> the network in a prioritized manner. Most of the work can be done with automated tools and performed by operators without requiring much technical knowledge.</p>
+<p>As an example, if you were to run a vulnerability assessment over a network, you would normally try to scan as many of the hosts as possible, but wouldn’t actually try exploiting any vulnerabilities at all:</p>
+<p><img src="blog\source\images\TryHackMe-Red-Team-Fundamentals\ee93fb3de94655a02ae7a6b69676944b.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<h3 id="penetration-tests"><a href="#Penetration-Tests" class="headerlink" title="Penetration Tests"></a>Penetration Tests</h3><p>On top of scanning every single host for vulnerabilities, we often need to understand how they impact our network as a whole. Penetration tests add to vulnerability assessments by allowing the pentester to explore the impact of an attacker on the overall network by doing additional steps that include:</p>
+<ul>
+<li>Attempt to <strong>exploit</strong> the vulnerabilities found on each system. This is important as sometimes a vulnerability might exist in a system, but compensatory controls in place effectively prevent its exploitation. It also allows us to test if we can use the detected vulnerabilities to compromise a given host.</li>
+<li>Conduct <strong>post-exploitation</strong> tasks on any compromised host, allowing us to find if we can extract any helpful information from them or if we might use them to pivot to other hosts that were not previously accessible from where we stand.</li>
+</ul>
+<p>Penetration tests might start by scanning for vulnerabilities just as a regular vulnerability assessment but provide further information on how an attacker can chain vulnerabilities to achieve specific goals. While its focus remains on <strong>identifying</strong> vulnerabilities and establishing measures to <strong>protect</strong> the network, it also considers the network as a whole ecosystem and how an attacker could profit from interactions between its components.</p>
+<p>If we were to perform a penetration test using the same example network as before, on top of scanning all of the hosts on the network for vulnerabilities we would try confirm if they can be exploited in order to show the impact an attacker could have on the network: </p>
+<p><img src="blog\source\images\TryHackMe-Red-Team-Fundamentals\da055515377a73c12f0dcef197c1ac8c.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>By analyzing how an attacker could move around our network, we also gain a basic insight on possible security measure bypasses and our ability to <strong>detect</strong> a real threat actor to a certain extent, limited because the scope of a penetration test is usually extensive and Penetration testers don’t care much about being loud or generating lots of alerts on security devices since time constraints on such projects often requires us to check the network in a short time.</p>
+<h3 id="advanced-persistent-threats-and-why-regular-pentesting-is-not-enough"><a href="#Advanced-Persistent-Threats-and-why-Regular-Pentesting-is-not-Enough" class="headerlink" title="Advanced Persistent Threats and why Regular Pentesting is not Enough"></a>Advanced Persistent Threats and why Regular Pentesting is not Enough</h3><p>While the conventional security engagements we have mentioned cover the finding of most technical vulnerabilities, there are limitations on such processes and the extent to which they can effectively prepare a company against a real attacker. Such limitations include:</p>
+<p><img src="blog\source\images\TryHackMe-Red-Team-Fundamentals\f9c16ff60c1412eefd77f12253643bab.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>As a consequence, some aspects of penetration tests might significantly differ from a real attack, like:</p>
+<ul>
+<li><strong>Penetration tests are LOUD:</strong> Usually, pentesters won’t put much effort into trying to go undetected. Unlike real attackers, they don’t mind being easy to detect, as they have been contracted to find as many vulnerabilities as they can in as many hosts as possible.</li>
+<li><strong>Non-technical attack vectors might be overlooked:</strong> Attacks based on social engineering or physical intrusions are usually not included in what is tested.</li>
+<li><strong>Relaxation of security mechanisms:</strong> While doing a regular penetration test, some security mechanisms might be temporarily disabled or relaxed for the pentesting team in favor of efficiency. Although this might sound counterintuitive, it is essential to remember that pentesters have limited time to check the network. Therefore, it is usually desired not to waste their time searching for exotic ways to bypass IDS&#x2F;IPS, WAF, intrusion deception or other security measures, but rather focus on reviewing critical technological infrastructure for vulnerabilities.</li>
+</ul>
+<p>On the other hand, real attackers won’t follow an ethical code and are mostly unrestricted in their actions. Nowadays, the most prominent threat actors are known as <strong>Advanced Persistent Threats (APT)</strong>, which are highly skilled groups of attackers, usually sponsored by nations or organised criminal groups. They primarily target critical infrastructure, financial organisations, and government institutions. They are called persistent because the operations of these groups can remain undetected on compromised networks for long periods.</p>
+<p>If a company is affected by an APT, would it be prepared to respond effectively? Could they detect the methods used to gain and maintain access on their networks if the attacker has been there for several months? What if the initial access was obtained because John at accounting opened a suspicious email attachment? What if a zero-day exploit was involved? Do previous penetration tests prepare us for this?</p>
+<p>To provide a more realistic approach to security, red team Engagements were born.</p>
+<p>Answer the questions below</p>
+<p>Would vulnerability assessments prepare us to <strong>detect</strong> a real attacker on our networks? (Yay&#x2F;Nay)</p>
+<p> Submit</p>
+<p>During a penetration test, are you concerned about being detected by the client? (Yay&#x2F;Nay)</p>
+<p> Submit</p>
+<p>Highly organised groups of skilled attackers are nowadays referred to as …</p>
+<h2 id="三-red-team-engagements"><a href="#三-Red-Team-Engagements" class="headerlink" title="三. Red Team Engagements"></a>三. Red Team Engagements</h2><p>To keep up with the emerging threats, red team engagements were designed to shift the focus from regular penetration tests into a process that allows us to clearly see our defensive team’s capabilities at <strong>detecting</strong> and <strong>responding</strong> to a real threat actor. They don’t replace traditional penetration tests, but complement them by focusing on detection and response rather than prevention.</p>
+<p>Red teaming is a term borrowed from the military. In military exercises, a group would take the role of a red team to simulate attack techniques to test the reaction capabilities of a defending team, generally known as <strong>blue team</strong>, against known adversary strategies. Translated into the world of cybersecurity, red team engagements consist of emulating a real threat actor’s <strong>Tactics, Techniques and Procedures (TTPs)</strong> so that we can measure how well our blue team responds to them and ultimately improve any security controls in place.</p>
+<p>Every red team engagement will start by defining clear goals, often referenced as <strong>crown jewels</strong> or <strong>flags</strong>, ranging from compromising a given critical host to stealing some sensitive information from the target. Usually, the blue team won’t be informed of such exercises to avoid introducing any biases in their analysis. The red team will do everything they can to achieve the goals while remaining undetected and evading any existing security mechanisms like firewalls, antivirus, EDR, IPS and others. Notice how on a red team engagement, not all of the hosts on a network will be checked for vulnerabilities. A real attacker would only need to find a single path to its goal and is not interested in performing noisy scans that the blue team could detect.</p>
+<p>Taking the same network as before, on a red team engagement where the goal is to compromise the intranet server, we would plan for a way to reach our objective while interacting as little as possible with other hosts. Meanwhile, the blue team’s capacity to detect and respond accordingly to the attack can be evaluated: </p>
+<p><img src="/../images/TryHackMe-Red-Team-Fundamentals/6e1f7ed550b706def50cb8df996caa8e.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>It is important to note that the final objective of such exercises should never be for the red team to “beat” the blue team, but rather simulate enough TTPs for the blue team to learn to react to a real ongoing threat adequately. If needed, they could tweak or add security controls that help to improve their detection capabilities.</p>
+<p>Red team engagements also improve on regular penetration tests by considering several attack surfaces:</p>
+<ul>
+<li><strong>Technical Infrastructure:</strong> Like in a regular penetration test, a red team will try to uncover technical vulnerabilities, with a much higher emphasis on stealth and evasion.</li>
+<li><strong>Social Engineering:</strong> Targeting people through phishing campaigns, phone calls or social media to trick them into revealing information that should be private.</li>
+<li><strong>Physical Intrusion:</strong> Using techniques like lockpicking, RFID cloning, exploiting weaknesses in electronic access control devices to access restricted areas of facilities.</li>
+</ul>
+<p>Depending on the resources available, the red team exercise can be run in several ways:</p>
+<ul>
+<li><strong>Full Engagement:</strong> Simulate an attacker’s full workflow, from initial compromise until final goals have been achieved.</li>
+<li><strong>Assumed Breach:</strong> Start by assuming the attacker has already gained control over some assets, and try to achieve the goals from there. As an example, the red team could receive access to some user’s credentials or even a workstation in the internal network.</li>
+<li><strong>Table-top Exercise:</strong> An over the table simulation where scenarios are discussed between the red and blue teams to evaluate how they would theoretically respond to certain threats. Ideal for situations where doing live simulations might be complicated.</li>
+</ul>
+<p>Answer the questions below</p>
+<p>The goals of a red team engagement will often be referred to as flags or…</p>
+<p> Submit</p>
+<p>During a red team engagement, common methods used by attackers are emulated against the target. Such methods are usually called TTPs. What does TTP stand for?</p>
+<p> Submit</p>
+<p>The main objective of a red team engagement is to detect as many vulnerabilities in as many hosts as possible (Yay&#x2F;Nay)</p>
+<h2 id="四-teams-and-functions-of-an-engagement"><a href="#四-Teams-and-Functions-of-an-Engagement" class="headerlink" title="四. Teams and Functions of an Engagement"></a>四. Teams and Functions of an Engagement</h2><p>There are several factors and people involved within a red team engagement. Everyone will have their mindset and methodology to approach the engagement personnel; however, each engagement can be broken into three teams or cells. Below is a brief table illustrating each of the teams and a brief explanation of their responsibilities.</p>
+<table>
+<thead>
+<tr>
+<th>Team</th>
+<th>Definition</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Red Cell</td>
+<td>A red cell is the component that makes up the offensive portion of a red team engagement that simulates a given target’s strategic and tactical responses.</td>
+</tr>
+<tr>
+<td>Blue Cell</td>
+<td>The blue cell is the opposite side of red. It includes all the components defending a target network. The blue cell is typically comprised of blue team members, defenders, internal staff, and an organisation’s management.</td>
+</tr>
+<tr>
+<td>White Cell</td>
+<td>Serves as referee between red cell activities and blue cell responses during an engagement. Controls the engagement environment&#x2F;network. Monitors adherence to the ROE. Coordinates activities required to achieve engagement goals. Correlates red cell activities with defensive actions. Ensures the engagement is conducted without bias to either side.</td>
+</tr>
+</tbody></table>
+<p>Definitions are sourced from <a target="_blank" rel="noopener" href="https://redteam.guide/docs/definitions">redteam.guide</a>.</p>
+<p>These teams or cells can be broken down further into an engagement hierarchy.</p>
+<p><img src="/../images/TryHackMe-Red-Team-Fundamentals/b90aad9dcdf10846c71ade3cca3d2e37.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>Since this is a red team-oriented room, we will focus on the responsibilities of the red cell. Below is a table outlining the roles and responsibilities of members of the red team.</p>
+<table>
+<thead>
+<tr>
+<th>Role</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Red Team Lead</td>
+<td>Plans and organises engagements at a high level—delegates, assistant lead, and operators engagement assignments.</td>
+</tr>
+<tr>
+<td>Red Team Assistant Lead</td>
+<td>Assists the team lead in overseeing engagement operations and operators. Can also assist in writing engagement plans and documentation if needed.</td>
+</tr>
+<tr>
+<td>Red Team Operator</td>
+<td>Executes assignments delegated by team leads. Interpret and analyse engagement plans from team leads.</td>
+</tr>
+</tbody></table>
+<p>As with most red team functions, each team and company will have its own structure and roles for each team member. The above table only acts as an example of the typical responsibilities of each role.</p>
+<p>Answer the questions below</p>
+<p>What cell is responsible for the offensive operations of an engagement?</p>
+<p> Submit</p>
+<p>What cell is the trusted agent considered part of?</p>
+<h2 id="engagement-structure"><a href="#Engagement-Structure" class="headerlink" title="Engagement Structure"></a>Engagement Structure</h2><p>A core function of the red team is adversary emulation. While not mandatory, it is commonly used to assess what a real adversary would do in an environment using their tools and methodologies. The red team can use various cyber kill chains to summarize and assess the steps and procedures of an engagement.</p>
+<p>The blue team commonly uses cyber kill chains to map behaviors and break down an adversaries movement. The red team can adapt this idea to map adversary TTPs (<strong>T</strong>actics, <strong>T</strong>echniques, and <strong>P</strong>rocedures) to components of an engagement.</p>
+<p>Many regulation and standardization bodies have released their cyber kill chain. Each kill chain follows roughly the same structure, with some going more in-depth or defining objectives differently. Below is a small list of standard cyber kill chains.</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.lockheedmartin.com/en-us/capabilities/cyber/cyber-kill-chain.html">Lockheed Martin Cyber Kill Chain</a></li>
+<li><a target="_blank" rel="noopener" href="https://unifiedkillchain.com/">Unified Kill Chain</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.varonis.com/blog/cyber-kill-chain/">Varonis Cyber Kill Chain</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/infosecn1nja/AD-Attack-Defense">Active Directory Attack Cycle</a></li>
+<li><a target="_blank" rel="noopener" href="https://attack.mitre.org/">MITRE ATT&amp;CK Framework</a></li>
+</ul>
+<p>In this room, we will commonly reference the “Lockheed Martin Cyber Kill Chain.” It is a more standardized kill chain than others and is very commonly used among red and blue teams.</p>
+<p>The Lockheed Martin kill chain focuses on a perimeter or external breach. Unlike other kill chains, it does not provide an in-depth breakdown of internal movement. You can think of this kill chain as a summary of all behaviors and operations present.</p>
+<p><img src="/../images/TryHackMe-Red-Team-Fundamentals/33e4c2dc2ab851b11654ae61953a7df1.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>Components of the kill chain are broken down in the table below.</p>
+<table>
+<thead>
+<tr>
+<th>Technique</th>
+<th>Purpose</th>
+<th>Examples</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Reconnaissance</td>
+<td>Obtain information on the target</td>
+<td>Harvesting emails, OSINT</td>
+</tr>
+<tr>
+<td>Weaponization</td>
+<td>Combine the objective with an exploit. Commonly results in a deliverable payload.</td>
+<td>Exploit with backdoor, malicious office document</td>
+</tr>
+<tr>
+<td>Delivery</td>
+<td>How will the weaponized function be delivered to the target</td>
+<td>Email, web, USB</td>
+</tr>
+<tr>
+<td>Exploitation</td>
+<td>Exploit the target’s system to execute code</td>
+<td>MS17-010, Zero-Logon, etc.</td>
+</tr>
+<tr>
+<td>Installation</td>
+<td>Install malware or other tooling</td>
+<td>Mimikatz, Rubeus, etc.</td>
+</tr>
+<tr>
+<td>Command &amp; Control</td>
+<td>Control the compromised asset from a remote central controller</td>
+<td>Empire, Cobalt Strike, etc.</td>
+</tr>
+<tr>
+<td>Actions on Objectives</td>
+<td>Any end objectives: ransomware, data exfiltration, etc.</td>
+<td>Conti, LockBit2.0, etc.</td>
+</tr>
+</tbody></table>
+<p>Answer the questions below</p>
+<p>If an adversary deployed Mimikatz on a target machine, where would they be placed in the Lockheed Martin cyber kill chain?</p>
+<p> Submit</p>
+<p>What technique’s purpose is to exploit the target’s system to execute code?</p>
+<h2 id="overview-of-a-red-team-engagement"><a href="#Overview-of-a-Red-Team-Engagement" class="headerlink" title="Overview of a Red Team Engagement"></a>Overview of a Red Team Engagement</h2><p>All the things we have discussed come together when performing a red team engagement. To better understand how the components and stakeholders interact, we will analyse a simplified engagement example. Navigate to the green “View Site” button to continue.</p>
+<p>Notice how the Cyber Kill Chain naturally aligns with the exercise: We start with a <strong>recon</strong> phase where we gather as much intel as we can about our target, followed by <strong>weaponization</strong> and <strong>delivery</strong> by sending a phishing email with a malicious attachment, continued by <strong>exploitation</strong> and <strong>installation</strong> phases when using local exploits to elevate privileges on BOB-PC and then installing tools on compromised hosts to dump password hashes and perform lateral movement, to finish with <strong>actions on objectives</strong> where a connection to our target is finally made.</p>
+<p>Answer the questions below</p>
+<p>Click the “View Site” button and follow the example engagement to get the flag</p>
+<h2 id="conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>A simplified overview of Red Team Engagements has been provided in this room. The main concepts, components and stakeholders have been introduced to gain a first understanding of such exercises. In the rooms that follow you will learn all of the planning behind a real engagement, as well as a lot of cool techniques a real attacker would use along the way, including how to use threat intelligence to your advantage, evade security mechanisms present in any modern host, perform lateral movement and try to avoid detection at all costs.</p>
+<p>Answer the questions below</p>
+<p>Read the above and continue learning!</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E7%BA%A2%E9%98%9F%E5%9F%BA%E7%A1%80/" class="category-chain-item">红队基础</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/tryhackme/">#tryhackme</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>TryHackMe-Red-Team-Fundamentals</div>
+      <div>https://mirror4s.github.io/2023/03/31/TryHackMe-Red-Team-Fundamentals/index.html</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>MirRoR4s</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年3月31日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/04/01/TryHackMe-Vulnerabilities-101/index.html" title="TryHackMe-Vulnerabilities-101">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">TryHackMe-Vulnerabilities-101</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/03/31/Port-Swigger-Blind-SQL-injection/index.html" title="Port-Swigger-Blind-SQL-injection">
+                        <span class="hidden-mobile">Port-Swigger-Blind-SQL-injection</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

