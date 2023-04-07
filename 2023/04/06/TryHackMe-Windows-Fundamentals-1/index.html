@@ -1,0 +1,993 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="MirRoR4s">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Windows Fundamentals 1Introduction to WindowsThe Windows operating system (OS) is a complex product with many system files, utilities, settings, features, etc.  This module will attempt to provide a g">
+<meta property="og:type" content="article">
+<meta property="og:title" content="TryHackMe-Windows Fundamentals 1">
+<meta property="og:url" content="https://mirror4s.github.io/2023/04/06/TryHackMe-Windows-Fundamentals-1/index.html">
+<meta property="og:site_name" content="学习记录">
+<meta property="og:description" content="Windows Fundamentals 1Introduction to WindowsThe Windows operating system (OS) is a complex product with many system files, utilities, settings, features, etc.  This module will attempt to provide a g">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://assets.tryhackme.com/additional/win-event-logs/remmina.png">
+<meta property="og:image" content="https://assets.tryhackme.com/additional/win-fun1/win-desktop2.png">
+<meta property="og:image" content="https://assets.tryhackme.com/additional/win-fun1/win-desktop-menu.png">
+<meta property="og:image" content="https://assets.tryhackme.com/additional/win-fun1/win-desktop-setdisplay.png">
+<meta property="og:image" content="https://assets.tryhackme.com/additional/win-fun1/win-display-settings.png">
+<meta property="og:image" content="https://assets.tryhackme.com/additional/win-fun1/win-desktop-personalize.png">
+<meta property="og:image" content="https://assets.tryhackme.com/additional/win-fun1/win-personalize-settings.png">
+<meta property="og:image" content="https://assets.tryhackme.com/additional/win-fun1/win-start-menu.png">
+<meta property="og:image" content="https://assets.tryhackme.com/additional/win-fun1/win-start-hamburger.png">
+<meta property="og:image" content="https://assets.tryhackme.com/additional/win-fun1/win-start-programs.png">
+<meta property="og:image" content="https://assets.tryhackme.com/additional/win-fun1/win-start-grid.png">
+<meta property="og:image" content="https://assets.tryhackme.com/additional/win-fun1/win-start-tile.png">
+<meta property="og:image" content="https://assets.tryhackme.com/additional/win-fun1/win-start-pin.png">
+<meta property="og:image" content="https://assets.tryhackme.com/additional/win-fun1/win-start-pin2.png">
+<meta property="og:image" content="https://assets.tryhackme.com/additional/win-fun1/win-taskbar1.png">
+<meta property="og:image" content="https://assets.tryhackme.com/additional/win-fun1/win-taskbar-chrome.png">
+<meta property="og:image" content="https://assets.tryhackme.com/additional/win-fun1/win-taskbar-settings.png">
+<meta property="og:image" content="https://assets.tryhackme.com/additional/win-fun1/win-taskbar-notifarea.png">
+<meta property="og:image" content="https://assets.tryhackme.com/additional/win-fun1/win-file-system.gif">
+<meta property="og:image" content="https://assets.tryhackme.com/additional/win-fun1/ntfs-permissions1.png">
+<meta property="og:image" content="https://assets.tryhackme.com/additional/win-fun1/windows-folder-permissions.png">
+<meta property="og:image" content="https://assets.tryhackme.com/additional/win-fun1/windows-folder.png">
+<meta property="og:image" content="https://assets.tryhackme.com/additional/win-fun1/windows-system32.png">
+<meta property="og:image" content="https://assets.tryhackme.com/additional/win-fun1/win-other-user1.png">
+<meta property="og:image" content="https://assets.tryhackme.com/additional/win-fun1/win-other-user.png">
+<meta property="og:image" content="https://assets.tryhackme.com/additional/win-fun1/win-other-user2.png">
+<meta property="og:image" content="https://assets.tryhackme.com/additional/win-fun1/win-other-user3.png">
+<meta property="og:image" content="https://assets.tryhackme.com/additional/win-fun1/win-profile-service.png">
+<meta property="og:image" content="https://assets.tryhackme.com/additional/win-fun1/win-profile-service2.png">
+<meta property="og:image" content="https://assets.tryhackme.com/additional/win-fun1/win-lusrmgr.gif">
+<meta property="og:image" content="https://assets.tryhackme.com/additional/win-fun1/win-wireshark.png">
+<meta property="og:image" content="https://assets.tryhackme.com/additional/win-fun1/win-wireshark.png">
+<meta property="og:image" content="https://assets.tryhackme.com/additional/win-fun1/win-wireshark2.png">
+<meta property="og:image" content="https://assets.tryhackme.com/additional/win-fun1/win-uac.png">
+<meta property="og:image" content="https://assets.tryhackme.com/additional/win-fun1/win-settings.png">
+<meta property="og:image" content="https://assets.tryhackme.com/additional/win-fun1/win-control-panel.png">
+<meta property="og:image" content="https://assets.tryhackme.com/additional/win-fun1/win-settings-cp.png">
+<meta property="og:image" content="https://assets.tryhackme.com/additional/win-fun1/win-change-adapter1.png">
+<meta property="og:image" content="https://assets.tryhackme.com/additional/win-fun1/win-change-adapter2.png">
+<meta property="og:image" content="https://assets.tryhackme.com/additional/win-fun1/win-change-wallpaper.png">
+<meta property="og:image" content="https://assets.tryhackme.com/additional/win-fun1/win-change-wallpaper2.png">
+<meta property="og:image" content="https://assets.tryhackme.com/additional/win-fun1/win-task-manager.png">
+<meta property="og:image" content="https://assets.tryhackme.com/additional/win-fun1/win-task-manager2.png">
+<meta property="og:image" content="https://assets.tryhackme.com/additional/win-fun1/win-task-manager3.png">
+<meta property="article:published_time" content="2023-04-06T13:35:07.000Z">
+<meta property="article:modified_time" content="2023-04-07T07:47:46.792Z">
+<meta property="article:author" content="MirRoR4s">
+<meta property="article:tag" content="tryhackme">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://assets.tryhackme.com/additional/win-event-logs/remmina.png">
+  
+  
+  
+  <title>TryHackMe-Windows Fundamentals 1 - 学习记录</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"mirror4s.github.io","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="TryHackMe-Windows Fundamentals 1"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-04-06 21:35" pubdate>
+          2023年4月6日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          17k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          145 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">TryHackMe-Windows Fundamentals 1</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    本文最后更新于：2023年4月7日 下午
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="windows-fundamentals-1"><a href="#Windows-Fundamentals-1" class="headerlink" title="Windows Fundamentals 1"></a>Windows Fundamentals 1</h1><h2 id="introduction-to-windows"><a href="#Introduction-to-Windows" class="headerlink" title="Introduction to Windows"></a>Introduction to Windows</h2><p>The Windows operating system (OS) is a complex product with many system files, utilities, settings, features, etc. </p>
+<p>This module will attempt to provide a general overview of just a handful of what makes up the Windows OS, navigate the user interface, make changes to the system, etc. The content is aimed at those who wish to understand and use the Windows OS on a more comfortable level. </p>
+<p>Launch the attached virtual machine. The virtual machine should open within your web browser. </p>
+<p>If you want to access the virtual machine via <a target="_blank" rel="noopener" href="https://www.cyberark.com/resources/threat-research-blog/explain-like-i-m-5-remote-desktop-protocol-rdp">Remote Desktop</a>, use the credentials below. </p>
+<p><strong>Machine IP</strong>: <code>MACHINE_IP</code></p>
+<p><strong>User</strong>: <code>administrator</code></p>
+<p><strong>Password</strong>: <code>letmein123!</code></p>
+<p><img src="https://assets.tryhackme.com/additional/win-event-logs/remmina.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>Accept the Certificate when prompted, and you should be logged into the remote system now.</p>
+<p><strong>Note</strong>: The virtual machine may take up to 3 minutes to load.</p>
+<h2 id="windows-editions"><a href="#Windows-Editions" class="headerlink" title="Windows Editions"></a>Windows Editions</h2><p>The Windows operating system has a long history dating back to 1985, and currently, it is the dominant operating system in both home use and corporate networks. Because of this, Windows has always been targeted by hackers &amp; malware writers.</p>
+<p>Windows XP was a popular version of Windows and had a long-running. Microsoft announced Windows Vista, which was a complete overhaul of the Windows operating system. There were many issues with Windows Vista. It wasn’t received well by Windows users, and it was quickly phased out.</p>
+<p>When Microsoft announced the end-of-life date for Windows XP, many customers panicked. Corporations, hospitals, etc., scrambled and tested the next viable Windows version, which was Windows 7, against many other hardware and devices. Vendors had to work against the clock to ensure their products worked with Windows 7 for their customers. If they couldn’t, their customers had to break their agreement and find another vendor that upgraded their products to work with Windows 7. It was a nightmare for many, and Microsoft took note of it.</p>
+<p>Windows 7, as quickly as it was released soon after, was marked with an end of support date. Windows 8.x came and left and it was short-lived, like Vista.</p>
+<p>Then arrived <a target="_blank" rel="noopener" href="https://www.microsoft.com/en-us/windows/features?activetab=NewPopular">Windows 10</a>, which is the current Windows operating system version for desktop computers.</p>
+<p>Windows 10 comes in 2 flavors, Home and Pro. You can read the difference between the Home and Pro <a target="_blank" rel="noopener" href="https://www.microsoft.com/en-us/windows/compare-windows-10-home-vs-pro">here</a>. </p>
+<p>Even though we didn’t talk about servers, the current version of the Windows operating system for servers is <a target="_blank" rel="noopener" href="https://www.microsoft.com/en-us/windows-server">Windows Server 2019</a>.</p>
+<p>Many critics like to bash on Microsoft, but they have made long strides to improve the usability and security with each new version of Windows.</p>
+<p><strong>Note</strong>: The Windows edition for the attached VM is Windows Server 2019 Standard, as seen in <strong>System Information</strong>.</p>
+<p><strong>Update</strong>: As of June 2021, Microsoft announced the retirement dates for Windows 10 <a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/lifecycle/products/windows-10-home-and-pro?ranMID=24542&ranEAID=kXQk6*ivFEQ&ranSiteID=kXQk6.ivFEQ-M28j3qbUhtM2JFCT2wmhOA&epi=kXQk6.ivFEQ-M28j3qbUhtM2JFCT2wmhOA&irgwc=1&OCID=AID2000142_aff_7593_1243925&tduid=(ir__uszrgcddyskfqz3fkk0sohz3wv2xuurc01kgzkod00)(7593)(1243925)(kXQk6.ivFEQ-M28j3qbUhtM2JFCT2wmhOA)()&irclickid=_uszrgcddyskfqz3fkk0sohz3wv2xuurc01kgzkod00&ranMID=24542&ranEAID=kXQk6*ivFEQ&ranSiteID=kXQk6.ivFEQ-4cKUPfbv9lM_IR2EX7K_hw&epi=kXQk6.ivFEQ-4cKUPfbv9lM_IR2EX7K_hw&irgwc=1&OCID=AID2000142_aff_7593_1243925&tduid=(ir__feexvhocigkfqna9kk0sohznb32xutanagupypus00)(7593)(1243925)(kXQk6.ivFEQ-4cKUPfbv9lM_IR2EX7K_hw)()&irclickid=_feexvhocigkfqna9kk0sohznb32xutanagupypus00">here</a>. </p>
+<p>“<em>Microsoft will continue to support at least one Windows 10 Semi-Annual Channel until October 14, 2025</em>“.</p>
+<p>As of October 5th, 2021 - Windows 11 now is the current Windows operating system for end-users. Read more about Windows 11 <a target="_blank" rel="noopener" href="https://www.microsoft.com/en-us/windows?wa=wsignin1.0">here</a>. </p>
+<h2 id="the-desktop-gui"><a href="#The-Desktop-GUI" class="headerlink" title="The Desktop (GUI)"></a>The Desktop (GUI)</h2><p>The Windows Desktop, aka the graphical user interface or GUI in short, is the screen that welcomes you once you log into a Windows 10 machine.</p>
+<p>Traditionally, you need to pass the login screen first. The login screen is where you need to enter valid account credentials; usually, a username &amp; password of a preexisting Windows account on that particular system or in the Active Directory environment (if it’s a domain-joined machine). </p>
+<p><img src="https://assets.tryhackme.com/additional/win-fun1/win-desktop2.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>The above screenshot is an example of a typical Windows Desktop. Each component that makes up the GUI is explained briefly below.</p>
+<ol>
+<li>The Desktop</li>
+<li>Start Menu</li>
+<li>Search Box (Cortana)</li>
+<li>Task View</li>
+<li>Taskbar</li>
+<li>Toolbars</li>
+<li>Notification Area</li>
+</ol>
+<p><strong>The Desktop</strong></p>
+<p>The desktop is where you will have shortcuts to programs, folders, files, etc. These icons will either be well organized in folders sorted alphabetically or scattered randomly with no specific organization on the desktop. In either case, these items are typically placed on the desktop for quick access.</p>
+<p>The look and feel of the desktop can be changed to suit your liking. By right-clicking anywhere on the desktop, a context menu will appear. This menu will allow you to change the sizes of the desktop icons, specify how you want to arrange them, copy&#x2F;paste items to the desktop, and create new items, such as a folder, shortcut, or text document.</p>
+<p><img src="https://assets.tryhackme.com/additional/win-fun1/win-desktop-menu.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>Under <strong>Display settings</strong>, you can make changes to the screen’s resolution and orientation. In case you have multiple computer screens, you can make configurations to the multi-screen setup here. </p>
+<p><img src="https://assets.tryhackme.com/additional/win-fun1/win-desktop-setdisplay.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><strong>Note</strong>: In a Remote Desktop session, some of the display settings will be disabled. </p>
+<p><img src="https://assets.tryhackme.com/additional/win-fun1/win-display-settings.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>You can also change the wallpaper by selecting <strong>Personalize</strong>.</p>
+<p><img src="https://assets.tryhackme.com/additional/win-fun1/win-desktop-personalize.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>Under Personalize, you can change the background image to the Desktop, change fonts, themes, color scheme, etc. </p>
+<p><img src="https://assets.tryhackme.com/additional/win-fun1/win-personalize-settings.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><strong>The Start Menu</strong></p>
+<p>In previous versions of Windows, the word <strong>Start</strong> was visible at the bottom left corner of the desktop GUI. In modern versions of Windows, such as Windows 10, the word ‘Start’ doesn’t appear anymore, but rather a Windows Logo is shown instead. Even though the look of the Start Menu has changed, its overall purpose is the same. </p>
+<p>The Start Menu provides access to all the apps&#x2F;programs, files, utility tools, etc., that are most useful. </p>
+<p>Clicking on the Windows logo, the Start Menu will open. The Start Menu is broken up into sections. See below.</p>
+<p><img src="https://assets.tryhackme.com/additional/win-fun1/win-start-menu.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<ol>
+<li>This section of the Start Menu provides quick shortcuts to actions that you can perform with your account or login session, such as making changes to your user account, lock your screen, or signing out of your account. Other shortcuts specific to your account are your Documents (document icon) folder and Pictures folder (pictures icon). Lastly, the gear&#x2F;cog icon will take you to the Settings screen, and the power icon will allow you to Disconnect from a <a target="_blank" rel="noopener" href="https://community.windows.com/en-us/stories/work-from-anywhere-with-windows-10-remote-desktop">Remote Desktop</a> session, shut down the computer, or restart the computer.</li>
+</ol>
+<p>In the below image, you can see what each of the icons represents. To expand this section, click on the icon that resembles a hamburger at the top. </p>
+<p><img src="https://assets.tryhackme.com/additional/win-fun1/win-start-hamburger.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<ol start="2">
+<li>This section will show all <strong>Recently added</strong> apps&#x2F;programs at the top and all the installed apps&#x2F;programs (that are configured to appear in the Start Menu). In this section, you’ll also see the apps&#x2F;programs will be listed in alphabetical order. Each letter will have its own section. See below.</li>
+</ol>
+<p><img src="https://assets.tryhackme.com/additional/win-fun1/win-start-programs.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>In the above image, the first box is where the recently added apps&#x2F;programs will appear. The second box is where all the installed apps&#x2F;programs will appear. </p>
+<p><strong>Note</strong>: In your VM, Google Chrome will not show up as a Recently Added program anymore.</p>
+<p>If you have a LONG list of installed apps&#x2F;programs, you can jump to a particular section in the list by clicking on the letter headings to launch an alphabet grid. See below.</p>
+<p><img src="https://assets.tryhackme.com/additional/win-fun1/win-start-grid.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><strong>Note</strong>: The white letters match the letter headings. </p>
+<ol start="3">
+<li>The right side of the Start Menu is where you will find icons for specific apps&#x2F;programs or utilities. These icons are known as <strong>tiles</strong>. Some tiles are added to this section by default. If you right-click any of the tiles, you guessed it; a menu will appear to allow you to perform more actions on the selected tile; such as resizing the tile, unpinning from Start Menu, view its Properties, etc. See below.</li>
+</ol>
+<p><img src="https://assets.tryhackme.com/additional/win-fun1/win-start-tile.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>Apps&#x2F;programs can be added to this Start Menu section by right-clicking the app&#x2F;program and selecting Pin to Start. See below.</p>
+<p><img src="https://assets.tryhackme.com/additional/win-fun1/win-start-pin.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><img src="https://assets.tryhackme.com/additional/win-fun1/win-start-pin2.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><strong>The Taskbar</strong></p>
+<p>Some of the components are enabled and visible by default. The Toolbar (6), for example, was enabled for demonstration purposes. </p>
+<p>If you’re like me and want to disable some of these components, you can right-click on Taskbar to bring up a context menu that will allow you to make changes.</p>
+<p><img src="https://assets.tryhackme.com/additional/win-fun1/win-taskbar1.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>Any apps&#x2F;programs, folders, files, etc., that you open&#x2F;start will appear in the taskbar. </p>
+<p><img src="https://assets.tryhackme.com/additional/win-fun1/win-taskbar-chrome.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>Hovering over the icon will provide a preview thumbnail, along with a tooltip. This tooltip is handy if you have many apps&#x2F;programs open, such as Google Chrome, and you wish to find which instance of Google Chrome is the one you need to bring in to focus. </p>
+<p>When you close any of these items, they will disappear from the taskbar (unless you explicitly pinned it to the taskbar). </p>
+<p><strong>The Notification Area</strong></p>
+<p>The Notification Area, which is typically located at the bottom right of the Windows screen, is where the date and time are displayed. Other icons possibly visible in this area is the volume icon, network&#x2F;wireless icon, to name a few. Icons can be either added or removed from the Notification Area in Taskbar settings. </p>
+<p><img src="https://assets.tryhackme.com/additional/win-fun1/win-taskbar-settings.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>From there, scroll down to the Notification Area section to make changes. </p>
+<p><img src="https://assets.tryhackme.com/additional/win-fun1/win-taskbar-notifarea.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>Here are Microsoft’s brief documents for the <a target="_blank" rel="noopener" href="https://support.microsoft.com/en-us/windows/see-what-s-on-the-start-menu-a8ccb400-ad49-962b-d2b1-93f453785a13">Start Menu</a> and <a target="_blank" rel="noopener" href="https://support.microsoft.com/en-us/windows/customize-the-taskbar-notification-area-e159e8d2-9ac5-b2bd-61c5-bb63c1d437c3#WindowsVersion=Windows_10">Notification Area</a>.</p>
+<p><strong>Tip</strong>: You can right-click any folder, file, app&#x2F;program, or icon to view more information or perform other actions on the clicked item. </p>
+<h2 id="the-file-system"><a href="#The-File-System" class="headerlink" title="The File System"></a>The File System</h2><p>The file system used in modern versions of Windows is the <strong>New Technology File System</strong> or simply <a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/windows-server/storage/file-server/ntfs-overview">NTFS</a>.</p>
+<p>Before NTFS, there was <strong>FAT16&#x2F;FAT32</strong> (File Allocation Table) and <strong>HPFS</strong> (High Performance File System). </p>
+<p>You still see FAT partitions in use today. For example, you typically see FAT partitions in USB devices, MicroSD cards, etc. but traditionally not on personal Windows computers&#x2F;laptops or Windows servers.</p>
+<p>NTFS is known as a journaling file system. In case of a failure, the file system can automatically repair the folders&#x2F;files on disk using information stored in a log file. This function is not possible with FAT.  </p>
+<p>NTFS addresses many of the limitations of the previous file systems; such as: </p>
+<ul>
+<li>Supports files larger than 4GB</li>
+<li>Set specific permissions on folders and files</li>
+<li>Folder and file compression</li>
+<li>Encryption (<a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/windows/win32/fileio/file-encryption">Encryption File System</a> or <strong>EFS</strong>)</li>
+</ul>
+<p>If you’re running Windows, what is the file system your Windows installation is using? You can check the Properties (right-click) of the drive your operating system is installed on, typically the C drive (C:).</p>
+<p> <img src="https://assets.tryhackme.com/additional/win-fun1/win-file-system.gif" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>You can read Microsoft’s official documentation on FAT, HPFS, and NTFS <a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/troubleshoot/windows-client/backup-and-storage/fat-hpfs-and-ntfs-file-systems">here</a>. </p>
+<p>Let’s speak briefly on some features that are specific to NTFS. </p>
+<p>On NTFS volumes, you can set permissions that grant or deny access to files and folders.</p>
+<p>The permissions are:</p>
+<ul>
+<li><strong>Full control</strong></li>
+<li><strong>Modify</strong></li>
+<li><strong>Read &amp; Execute</strong></li>
+<li><strong>List folder contents</strong></li>
+<li><strong>Read</strong></li>
+<li><strong>Write</strong></li>
+</ul>
+<p>The below image lists the meaning of each permission on how it applies to a file and a folder. (credit <a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/previous-versions/windows/it-pro/windows-2000-server/bb727008(v=technet.10)?redirectedfrom=MSDN">Microsoft</a>)</p>
+<p><img src="https://assets.tryhackme.com/additional/win-fun1/ntfs-permissions1.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>How can you view the permissions for a file or folder?</p>
+<ul>
+<li>Right-click the file or folder you want to check for permissions.</li>
+<li>From the context menu, select <code>Properties</code>.</li>
+<li>Within Properties, click on the <code>Security</code> tab.</li>
+<li>In the <code>Group or user names</code> list, select the user, computer, or group whose permissions you want to view.</li>
+</ul>
+<p>In the below image, you can see the permissions for the <code>Users</code> group for the Windows folder. </p>
+<p><img src="https://assets.tryhackme.com/additional/win-fun1/windows-folder-permissions.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>Refer to the Microsoft documentation to get a better understanding of the NTFS permissions for <strong>Special Permissions</strong>.</p>
+<p>Another feature of NTFS is <strong>Alternate Data Streams</strong> (<strong>ADS</strong>).</p>
+<p><strong>Alternate Data Streams</strong> (ADS) is a file attribute specific to Windows <strong>NTFS</strong> (New Technology File System).</p>
+<p>Every file has at least one data stream (<code>$DATA</code>), and ADS allows files to contain more than one stream of data. Natively <a target="_blank" rel="noopener" href="https://support.microsoft.com/en-us/windows/what-s-changed-in-file-explorer-ef370130-1cca-9dc5-e0df-2f7416fe1cb1">Window Explorer</a> doesn’t display ADS to the user. There are 3rd party executables that can be used to view this data, but <a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/powershell/scripting/overview?view=powershell-7.1">Powershell</a> gives you the ability to view ADS for files.</p>
+<p>From a security perspective, malware writers have used ADS to hide data.</p>
+<p>Not all its uses are malicious. For example, when you download a file from the Internet, there are identifiers written to ADS to identify that the file was downloaded from the Internet.</p>
+<p>To learn more about ADS, refer to the following link from MalwareBytes <a target="_blank" rel="noopener" href="https://blog.malwarebytes.com/101/2015/07/introduction-to-alternate-data-streams/">here</a>. </p>
+<p><strong>Bonus</strong>: If you wish to interact hands-on with ADS, I suggest exploring Day 21 of <a target="_blank" rel="noopener" href="https://tryhackme.com/room/adventofcyber2">Advent of Cyber 2</a>.</p>
+<h2 id="the-windowssystem32-folders"><a href="#The-Windows-System32-Folders" class="headerlink" title="The Windows\System32 Folders"></a>The Windows\System32 Folders</h2><p>The Windows folder (<code>C:\Windows</code>) is traditionally known as the folder which contains the Windows operating system. </p>
+<p>The folder doesn’t have to reside in the C drive necessarily. It can reside in any other drive and technically can reside in a different folder.</p>
+<p>This is where environment variables, more specifically system environment variables, come into play. Even though not discussed yet, the system environment variable for the Windows directory is <code>%windir%</code>.</p>
+<p>Per <a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_environment_variables?view=powershell-7.1">Microsoft</a>, “<em>Environment variables store information about the operating system environment. This information includes details such as the operating system path, the number of processors used by the operating system, and the location of temporary folders</em>“.</p>
+<p>There are many folders within the ‘Windows’ folder. See below.</p>
+<p><img src="https://assets.tryhackme.com/additional/win-fun1/windows-folder.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>One of the many folders is <strong>System32</strong>. </p>
+<p><img src="https://assets.tryhackme.com/additional/win-fun1/windows-system32.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>The System32 folder holds the important files that are critical for the operating system.</p>
+<p>You should proceed with extreme caution when interacting with this folder. Accidentally deleting any files or folders within System32 can render the Windows OS inoperational. Read more about this action <a target="_blank" rel="noopener" href="https://www.howtogeek.com/346997/what-is-the-system32-directory-and-why-you-shouldnt-delete-it/">here</a>. </p>
+<p><strong>Note</strong>: Many of the tools that will be covered in the Windows Fundamentals series reside within the System32 folder. </p>
+<h2 id="user-accounts-profiles-and-permissions"><a href="#User-Accounts-Profiles-and-Permissions" class="headerlink" title="User Accounts, Profiles, and Permissions"></a>User Accounts, Profiles, and Permissions</h2><p>User accounts can be one of two types on a typical local Windows system: <strong>Administrator</strong> &amp; <strong>Standard User</strong>. </p>
+<p>The user account type will determine what actions the user can perform on that specific Windows system. </p>
+<ul>
+<li>An Administrator can make changes to the system: add users, delete users, modify groups, modify settings on the system, etc. </li>
+<li>A Standard User can only make changes to folders&#x2F;files attributed to the user &amp; can’t perform system-level changes, such as install programs.</li>
+</ul>
+<p>You are currently logged in as an Administrator. There are several ways to determine which user accounts exist on the system. </p>
+<p>One way is to click the <code>Start Menu</code> and type <code>Other User</code>. A shortcut to <code>System Settings &gt; Other users</code> should appear. </p>
+<p><img src="https://assets.tryhackme.com/additional/win-fun1/win-other-user1.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>If you click on it, a Settings window should now appear. See below.</p>
+<p><img src="https://assets.tryhackme.com/additional/win-fun1/win-other-user.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>Since you’re the Administrator, you see an option to <strong>Add someone else to this PC</strong>.</p>
+<p><strong>Note</strong>: A Standard User will not see this option. </p>
+<p>Click on the local user account. More options should appear: <strong>Change account type</strong> and <strong>Remove</strong>. </p>
+<p><img src="https://assets.tryhackme.com/additional/win-fun1/win-other-user2.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>Click on Change account type. The value in the drop-down box (or the highlighted value if you click the drop-down) is the current account type. </p>
+<p><img src="https://assets.tryhackme.com/additional/win-fun1/win-other-user3.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>When a user account is created, a profile is created for the user. The location for each user profile folder will fall under is C:\Users.</p>
+<p>For example, the user profile folder for the user account Max will be C:\Users\Max.</p>
+<p>The creation of the user’s profile is done upon initial login. When a new user account logs in to a local system for the first time, they’ll see several messages on the login screen. One of the messages, User Profile Service, sits on the login screen for a while, which is at work creating the user profile. See below.</p>
+<p> <img src="https://assets.tryhackme.com/additional/win-fun1/win-profile-service.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>Once logged in, the user will see a dialog box similar to the one below (again), indicating that the profile is in creation.</p>
+<p><img src="https://assets.tryhackme.com/additional/win-fun1/win-profile-service2.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>Each user profile will have the same folders; a few of them are:</p>
+<ul>
+<li>Desktop</li>
+<li>Documents</li>
+<li>Downloads</li>
+<li>Music</li>
+<li>Pictures</li>
+</ul>
+<p>Another way to access this information, and then some, is using <strong>Local User and Group Management</strong>. </p>
+<p>Right-click on the Start Menu and click <strong>Run</strong>. Type <code>lusrmgr.msc</code>. See below</p>
+<p><img src="https://assets.tryhackme.com/additional/win-fun1/win-lusrmgr.gif" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><strong>Note</strong>: The Run Dialog Box allows us to open items quickly. </p>
+<p>Back to lusrmgr, you should see two folders: <strong>Users</strong> and <strong>Groups</strong>. </p>
+<p>If you click on Groups, you see all the names of the local groups along with a brief description for each group. </p>
+<p>Each group has permissions set to it, and users are assigned&#x2F;added to groups by the Administrator. When a user is assigned to a group, the user inherits the permissions of that group. A user can be assigned to multiple groups.</p>
+<p><strong>Note</strong>: If you click on <strong>Add someone else to this PC</strong> from <strong>Other users</strong>, it will open <strong>Local Users and Management</strong>. </p>
+<h2 id="user-account-control"><a href="#User-Account-Control" class="headerlink" title="User Account Control"></a>User Account Control</h2><p>The large majority of home users are logged into their Windows systems as local administrators. Remember from the previous task that any user with administrator as the account type can make changes to the system.</p>
+<p>A user doesn’t need to run with high (elevated) privileges on the system to run tasks that don’t require such privileges, such as surfing the Internet, working on a Word document, etc. This elevated privilege increases the risk of system compromise because it makes it easier for malware to infect the system. Consequently, since the user account can make changes to the system, the malware would run in the context of the logged-in user.</p>
+<p>To protect the local user with such privileges, Microsoft introduced <strong>User Account Control</strong> (UAC). This concept was first introduced with the short-lived <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Windows_Vista">Windows Vista</a> and continued with versions of Windows that followed.</p>
+<p><strong>Note</strong>: UAC (by default) doesn’t apply for the built-in local administrator account. </p>
+<p>How does UAC work? When a user with an account type of administrator logs into a system, the current session doesn’t run with elevated permissions. When an operation requiring higher-level privileges needs to execute, the user will be prompted to confirm if they permit the operation to run. </p>
+<p>Let’s look at the program on the account you’re currently logged into, the built-in administrator account—Right-click to view its Properties.</p>
+<p>In the Security tab, we can see the users&#x2F;groups and their permissions to this file. Notice that the standard user is not listed. </p>
+<p><img src="https://assets.tryhackme.com/additional/win-fun1/win-wireshark.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>Log in as the standard user and try to install this program. To do this, you can remote desktop into the machine as the standard user account. </p>
+<p><strong>Note</strong>: You have the username and password for the standard user. It’s visible in <code>lusrmgr.msc</code>.</p>
+<p>Before installing the program, notice the icon. Do you see the difference? When you’re logged in as the standard user, the shield icon is on the program’s default icon. See below.</p>
+<p><img src="https://assets.tryhackme.com/additional/win-fun1/win-wireshark.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>This shield icon is an indicator that UAC will prompt to allow higher-level privileges to install the program.</p>
+<p><img src="https://assets.tryhackme.com/additional/win-fun1/win-wireshark2.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>Double-click the program, and you’ll see the UAC prompt. Notice that the built-in administrator account is already set as the user name and prompts the account’s password. See below.</p>
+<p><img src="https://assets.tryhackme.com/additional/win-fun1/win-uac.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>After some time, if a password is not entered, the UAC prompt disappears, and the program does not install. </p>
+<p>This feature reduces the likelihood of malware successfully compromising your system. You can read more about <a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/windows/security/identity-protection/user-account-control/how-user-account-control-works">UAC</a> here.</p>
+<h2 id="settings-and-the-control-panel"><a href="#Settings-and-the-Control-Panel" class="headerlink" title="Settings and the Control Panel"></a>Settings and the Control Panel</h2><p>On a Windows system, the primary locations to make changes are the Settings menu and the Control Panel.</p>
+<p>For a long time, the Control Panel has been the go-to location to make system changes, such as adding a printer, uninstall a program, etc. </p>
+<p>The Settings menu was introduced in Windows 8, the first Windows operating system catered to touch screen tablets, and is still available in Windows 10. As a matter of fact, the Settings menu is now the primary location a user goes to if they are looking to change the system. </p>
+<p>There are similarities and differences between the two menus. Below are screenshots of each.</p>
+<p><strong>Settings</strong>:</p>
+<p><img src="https://assets.tryhackme.com/additional/win-fun1/win-settings.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><strong>Control Panel</strong>: </p>
+<p><img src="https://assets.tryhackme.com/additional/win-fun1/win-control-panel.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><strong>Note</strong>: The icons for Settings might be different in the version of Windows on your personal device. </p>
+<p>Both can be accessed from the Start Menu. See below.</p>
+<p><img src="https://assets.tryhackme.com/additional/win-fun1/win-settings-cp.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>Control Panel is the menu where you will access more complex settings and perform more complex actions. In some cases, you can start in Settings and end up in the Control Panel.</p>
+<p>For example, in Settings, click on <strong>Network &amp; Internet</strong>. From here, click on <strong>Change adapter options</strong>. </p>
+<p><img src="https://assets.tryhackme.com/additional/win-fun1/win-change-adapter1.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>Notice that the next window that pops up is from the Control Panel. </p>
+<p><img src="https://assets.tryhackme.com/additional/win-fun1/win-change-adapter2.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>If you’re unclear which to open if you wish to change a setting, use the Start menu and search for it. </p>
+<p>In the example below, the search was ‘wallpaper.’ Notice that few results were returned. </p>
+<p><img src="https://assets.tryhackme.com/additional/win-fun1/win-change-wallpaper.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>If we click on the Best match, a window to the Settings menu appears to make changes to the wallpaper. </p>
+<p><img src="https://assets.tryhackme.com/additional/win-fun1/win-change-wallpaper2.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<h2 id="task-manager"><a href="#Task-Manager" class="headerlink" title="Task Manager"></a>Task Manager</h2><p>The last subject that will be touched on in this module is the <strong>Task Manager</strong>.</p>
+<p>The Task Manager provides information about the applications and processes currently running on the system. Other information is also available, such as how much CPU and RAM are being utilized, which falls under <strong>Performance</strong>. </p>
+<p>You can access the Task Manager by right-clicking the taskbar. </p>
+<p><img src="https://assets.tryhackme.com/additional/win-fun1/win-task-manager.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>Task Manager will open in Simple View and won’t show much information. </p>
+<p><img src="https://assets.tryhackme.com/additional/win-fun1/win-task-manager2.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>Click on <code>More details</code>, and the view changes.</p>
+<p><img src="https://assets.tryhackme.com/additional/win-fun1/win-task-manager3.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>You can refer to this <a target="_blank" rel="noopener" href="https://www.howtogeek.com/405806/windows-task-manager-the-complete-guide/">blog post</a> for more detailed information about the Task Manager.</p>
+<p>If you wish to learn more about the core Windows processes and what each process is responsible for, visit the <a target="_blank" rel="noopener" href="https://tryhackme.com/jr/btwindowsinternals">Core Windows Processes room</a>. </p>
+<h2 id="conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>Again, this was a generic overview of the Windows OS. </p>
+<p>There are intermediate and advanced topics for each topic (task) that was covered in this room. </p>
+<p>Hence, <strong>Task 9</strong> ended with a detailed blog post explaining the Task Manager in great detail. </p>
+<p>In future modules, we’ll cover topics like the Windows folder, the management console, security tools (Windows Defender, Windows Firewall, etc.), to name a few. </p>
+<h2 id="问题答案"><a href="#问题答案" class="headerlink" title="问题答案"></a>问题答案</h2><p><a target="_blank" rel="noopener" href="https://rudra0x01.xyz/tryhackme-windows-fundamentals-1/">https://rudra0x01.xyz/tryhackme-windows-fundamentals-1/</a></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Windows%E5%9F%BA%E7%A1%80/" class="category-chain-item">Windows基础</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/tryhackme/">#tryhackme</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>TryHackMe-Windows Fundamentals 1</div>
+      <div>https://mirror4s.github.io/2023/04/06/TryHackMe-Windows-Fundamentals-1/index.html</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>MirRoR4s</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年4月6日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/04/06/TryHackMe-Linux-Fundamentals-Part-1/index.html" title="TryHackMe-Linux Fundamentals Part 1">
+                        <span class="hidden-mobile">TryHackMe-Linux Fundamentals Part 1</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
