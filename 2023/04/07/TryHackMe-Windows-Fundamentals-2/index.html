@@ -1,0 +1,960 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="MirRoR4s">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Windows Fundamentals 2In part 2 of the Windows Fundamentals module, discover more about System Configuration, UAC Settings, Resource Monitoring, the Windows Registry and more.. IntroductionWe will con">
+<meta property="og:type" content="article">
+<meta property="og:title" content="TryHackMe-Windows Fundamentals 2">
+<meta property="og:url" content="https://mirror4s.github.io/2023/04/07/TryHackMe-Windows-Fundamentals-2/index.html">
+<meta property="og:site_name" content="学习记录">
+<meta property="og:description" content="Windows Fundamentals 2In part 2 of the Windows Fundamentals module, discover more about System Configuration, UAC Settings, Resource Monitoring, the Windows Registry and more.. IntroductionWe will con">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://assets.tryhackme.com/additional/win-event-logs/remmina.png">
+<meta property="og:image" content="https://assets.tryhackme.com/additional/win-fun2/msconfig-start.png">
+<meta property="og:image" content="https://assets.tryhackme.com/additional/win-fun2/msconfig1.png">
+<meta property="og:image" content="https://assets.tryhackme.com/additional/win-fun2/msconfig2.png">
+<meta property="og:image" content="https://assets.tryhackme.com/additional/win-fun2/msconfig3.png">
+<meta property="og:image" content="https://assets.tryhackme.com/additional/win-fun2/msconfig4.png">
+<meta property="og:image" content="https://assets.tryhackme.com/additional/win-fun2/msconfig5.png">
+<meta property="og:image" content="https://assets.tryhackme.com/additional/win-fun2/uac.png">
+<meta property="og:image" content="https://assets.tryhackme.com/additional/win-fun2/compmgmt1.png">
+<meta property="og:image" content="https://assets.tryhackme.com/additional/win-fun2/create-task.png">
+<meta property="og:image" content="https://assets.tryhackme.com/additional/win-fun2/event-viewer.png">
+<meta property="og:image" content="https://assets.tryhackme.com/additional/win-event-logs/five-event-types.png">
+<meta property="og:image" content="https://assets.tryhackme.com/additional/win-event-logs/standard-event-logs.png">
+<meta property="og:image" content="https://assets.tryhackme.com/additional/win-fun2/shared-folders.png">
+<meta property="og:image" content="https://assets.tryhackme.com/additional/win-fun2/perfmon.png">
+<meta property="og:image" content="https://assets.tryhackme.com/additional/win-fun2/device-mgr.png">
+<meta property="og:image" content="https://assets.tryhackme.com/additional/win-fun2/disk-mgmt.png">
+<meta property="og:image" content="https://assets.tryhackme.com/additional/win-fun2/services-apps.png">
+<meta property="og:image" content="https://assets.tryhackme.com/additional/win-fun2/service.png">
+<meta property="og:image" content="https://assets.tryhackme.com/additional/win-fun2/system-summary.png">
+<meta property="og:image" content="https://assets.tryhackme.com/additional/win-fun2/hardware-resources.png">
+<meta property="og:image" content="https://assets.tryhackme.com/additional/win-fun2/components.png">
+<meta property="og:image" content="https://assets.tryhackme.com/additional/win-fun2/software-env.png">
+<meta property="og:image" content="https://assets.tryhackme.com/additional/win-fun2/env-variables.png">
+<meta property="og:image" content="https://assets.tryhackme.com/additional/win-fun2/env-variables2.png">
+<meta property="og:image" content="https://assets.tryhackme.com/additional/win-fun2/msinfo32-search.png">
+<meta property="og:image" content="https://assets.tryhackme.com/additional/win-fun2/resmon1.png">
+<meta property="og:image" content="https://assets.tryhackme.com/additional/win-fun2/resmon2.png">
+<meta property="og:image" content="https://assets.tryhackme.com/additional/win-fun2/resmon-cpu.png">
+<meta property="og:image" content="https://assets.tryhackme.com/additional/win-fun2/resmon-mem.png">
+<meta property="og:image" content="https://assets.tryhackme.com/additional/win-fun2/resmon-disk.png">
+<meta property="og:image" content="https://assets.tryhackme.com/additional/win-fun2/resmon-network.png">
+<meta property="og:image" content="https://assets.tryhackme.com/additional/win-fun2/hostname.png">
+<meta property="og:image" content="https://assets.tryhackme.com/additional/win-fun2/whoami.png">
+<meta property="og:image" content="https://assets.tryhackme.com/additional/win-fun2/ipconfig.png">
+<meta property="og:image" content="https://assets.tryhackme.com/additional/win-fun2/ipconfig-help.png">
+<meta property="og:image" content="https://assets.tryhackme.com/additional/win-fun2/netstat.png">
+<meta property="og:image" content="https://assets.tryhackme.com/additional/win-fun2/net.png">
+<meta property="og:image" content="https://assets.tryhackme.com/additional/win-fun2/net-help.png">
+<meta property="og:image" content="https://assets.tryhackme.com/additional/win-fun2/net-help-user2.png">
+<meta property="og:image" content="https://assets.tryhackme.com/additional/win-fun2/regedit.png">
+<meta property="og:image" content="https://assets.tryhackme.com/additional/win-fun2/start-menu.png">
+<meta property="article:published_time" content="2023-04-07T08:25:44.000Z">
+<meta property="article:modified_time" content="2023-04-07T08:29:53.298Z">
+<meta property="article:author" content="MirRoR4s">
+<meta property="article:tag" content="tryhackme">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://assets.tryhackme.com/additional/win-event-logs/remmina.png">
+  
+  
+  
+  <title>TryHackMe-Windows Fundamentals 2 - 学习记录</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"mirror4s.github.io","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="TryHackMe-Windows Fundamentals 2"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-04-07 16:25" pubdate>
+          2023年4月7日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          13k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          110 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">TryHackMe-Windows Fundamentals 2</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    本文最后更新于：2023年4月7日 下午
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="windows-fundamentals-2"><a href="#Windows-Fundamentals-2" class="headerlink" title="Windows Fundamentals 2"></a>Windows Fundamentals 2</h1><p>In part 2 of the Windows Fundamentals module, discover more about System Configuration, UAC Settings, Resource Monitoring, the Windows Registry and more..</p>
+<h2 id="introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>We will continue our journey exploring the Windows operating system. </p>
+<p>In <a target="_blank" rel="noopener" href="https://tryhackme.com/room/windowsfundamentals1xbx">Windows Fundamentals 1</a>, we covered the desktop, the file system, user account control, the control panel, settings, and the task manager. </p>
+<p>This module will attempt to provide an overview of some other utilities available within the Windows operating system and different methods to access these utilities.</p>
+<p>Launch the attached virtual machine. If you wish to access the virtual machine via Remote Desktop, use the credentials below. </p>
+<p><strong>Machine IP</strong>: <code>MACHINE_IP</code></p>
+<p><strong>User</strong>: <code>administrator</code></p>
+<p><strong>Password</strong>: <code>letmein123!</code></p>
+<p><img src="https://assets.tryhackme.com/additional/win-event-logs/remmina.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>Accept the Certificate when prompted, and you should be logged into the remote system now.</p>
+<p><strong>Note</strong>: The virtual machine may take up to 3 minutes to load.</p>
+<h2 id="system-configuration"><a href="#System-Configuration" class="headerlink" title="System Configuration"></a>System Configuration</h2><p>The <strong>System Configuration</strong> utility (<code>MSConfig</code>) is for advanced troubleshooting, and its main purpose is to help diagnose startup issues. </p>
+<p>Reference the following document <a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/troubleshoot/windows-client/performance/system-configuration-utility-troubleshoot-configuration-errors">here </a>for more information on the System Configuration utility. </p>
+<p>There are several methods to launch System Configuration. One method is from the Start Menu.</p>
+<p><img src="https://assets.tryhackme.com/additional/win-fun2/msconfig-start.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><strong>Note</strong>: You need local administrator rights to open this utility. </p>
+<p>The utility has five tabs across the top. Below are the names for each tab. We will briefly cover each tab in this task. </p>
+<ol>
+<li>General</li>
+<li>Boot</li>
+<li>Services</li>
+<li>Startup</li>
+<li>Tools</li>
+</ol>
+<p><img src="https://assets.tryhackme.com/additional/win-fun2/msconfig1.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>In the <strong>General</strong> tab, we can select what devices and services for Windows to load upon boot. The options are: <strong>Normal</strong>, <strong>Diagnostic</strong>, or <strong>Selective</strong>. </p>
+<p>In the <strong>Boot</strong> tab, we can define various boot options for the Operating System. </p>
+<p><img src="https://assets.tryhackme.com/additional/win-fun2/msconfig2.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>The <strong>Services</strong> tab lists all services configured for the system regardless of their state (running or stopped). A service is a special type of application that runs in the background. </p>
+<p><img src="https://assets.tryhackme.com/additional/win-fun2/msconfig3.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>In the <strong>Startup</strong> tab, you won’t see anything interesting in the attached VM. Below is a screenshot of the Startup tab for <strong>MSConfig</strong> from my local machine. </p>
+<p><img src="https://assets.tryhackme.com/additional/win-fun2/msconfig4.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>As you can see, Microsoft advises using <strong>Task Manager (</strong><code>taskmgr</code><strong>)</strong> to manage (enable&#x2F;disable) startup items. The System Configuration utility is <strong>NOT</strong> a startup management program. </p>
+<p><strong>Note</strong>: If you open Task Manager for the attached VM, you will notice that Task Manager doesn’t show a Startup tab. </p>
+<p>There is a list of various utilities (tools) in the Tools tab that we can run to configure the operating system further. There is a brief description of each tool to provide some insight into what the tool is for. </p>
+<p><img src="https://assets.tryhackme.com/additional/win-fun2/msconfig5.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>Notice the <strong>Selected command</strong> section. The information in this textbox will change per tool.</p>
+<p>To run a tool, we can use the command to launch the tool via the run prompt, command prompt, or by clicking the <code>Launch</code> button. </p>
+<h2 id="change-uac-settings"><a href="#Change-UAC-Settings" class="headerlink" title="Change UAC Settings"></a>Change UAC Settings</h2><p>We’re continuing with Tools that are available through the <strong>System Configuration</strong> panel.</p>
+<p><strong>User Account Control</strong> (UAC) was covered in great detail in <a target="_blank" rel="noopener" href="https://tryhackme.com/room/windowsfundamentals1xbx">Windows Fundamentals 1</a>. </p>
+<p>The UAC settings can be changed or even turned off entirely (not recommended).</p>
+<p>You can move the slider to see how the setting will change the UAC settings and Microsoft’s stance on the setting.</p>
+<p><img src="https://assets.tryhackme.com/additional/win-fun2/uac.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<h2 id="computer-management"><a href="#Computer-Management" class="headerlink" title="Computer Management"></a>Computer Management</h2><p>We’re continuing with Tools that are available through the <strong>System Configuration</strong> panel.</p>
+<p>The <strong>Computer Management</strong> (<code>compmgmt</code>) utility has three primary sections: <strong>System Tools</strong>, <strong>Storage</strong>, and <strong>Services and Applications</strong>.</p>
+<p><img src="https://assets.tryhackme.com/additional/win-fun2/compmgmt1.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><strong>System Tools</strong></p>
+<p>Let’s start with <strong>Task Scheduler</strong>. Per Microsoft, with Task Scheduler, we can create and manage common tasks that our computer will carry out automatically at the times we specify.</p>
+<p>A task can run an application, a script, etc., and tasks can be configured to run at any point. A task can run at log in or at log off. Tasks can also be configured to run on a specific schedule, for example, every five mins.</p>
+<p>To create a basic task, click on <code>Create Basic Task</code> under <strong>Actions</strong> (right pane).</p>
+<p><img src="https://assets.tryhackme.com/additional/win-fun2/create-task.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>Next is <strong>Event Viewer</strong>.</p>
+<p>Event Viewer allows us to view events that have occurred on the computer. These records of events can be seen as an audit trail that can be used to understand the activity of the computer system. This information is often used to diagnose problems and investigate actions executed on the system. </p>
+<p><img src="https://assets.tryhackme.com/additional/win-fun2/event-viewer.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>Event Viewer has three panes.</p>
+<ol>
+<li>The pane on the left provides a hierarchical tree listing of the event log providers. (as shown in the image above)</li>
+<li>The pane in the middle will display a general overview and summary of the events specific to a selected provider.</li>
+<li>The pane on the right is the actions pane.</li>
+</ol>
+<p>There are five types of events that can be logged. Below is a table from <a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/windows/win32/eventlog/event-types">docs.microsoft.com</a> providing a brief description for each.</p>
+<p><img src="https://assets.tryhackme.com/additional/win-event-logs/five-event-types.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>The standard logs are visible under <strong>Windows Logs</strong>. Below is a table from <a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/windows/win32/eventlog/eventlog-key">docs.microsoft.com</a> providing a brief description for each.</p>
+<p><img src="https://assets.tryhackme.com/additional/win-event-logs/standard-event-logs.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>For more information about Event Viewer and Event Logs, please refer to the Windows Event Log <a target="_blank" rel="noopener" href="https://tryhackme.com/room/windowseventlogs">room</a>. </p>
+<p><strong>Shared Folders</strong> is where you will see a complete list of shares and folders shared that others can connect to. </p>
+<p><img src="https://assets.tryhackme.com/additional/win-fun2/shared-folders.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>In the above image, under Shares, are the default share of Windows, C$, and default remote administration shares created by Windows, such as ADMIN$. </p>
+<p>As with any object in Windows, you can right-click on a folder to view its properties, such as Permissions (who can access the shared resource). </p>
+<p>Under <strong>Sessions</strong>, you will see a list of users who are currently connected to the shares. In this VM, you won’t see anybody connected to the shares.</p>
+<p>All the folders and&#x2F;or files that the connected users access will list under <strong>Open Files</strong>.</p>
+<p>The <strong>Local Users and Groups</strong> section you should be familiar with from <a target="_blank" rel="noopener" href="https://tryhackme.com/room/windowsfundamentals1xbx">Windows Fundamentals 1</a> because it’s <code>lusrmgr.msc</code>.</p>
+<p>In <strong>Performance</strong>, you’ll see a utility called <strong>Performance Monitor</strong> (<code>perfmon</code>).</p>
+<p>Perfmon is used to view performance data either in real-time or from a log file. This utility is useful for troubleshooting performance issues on a computer system, whether local or remote. </p>
+<p><img src="https://assets.tryhackme.com/additional/win-fun2/perfmon.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><strong>Device Manager</strong> allows us to view and configure the hardware, such as disabling any hardware attached to the computer.</p>
+<p><img src="https://assets.tryhackme.com/additional/win-fun2/device-mgr.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><strong>Storage</strong> </p>
+<p>Under Storage is <strong>Windows Server Backup</strong> and <strong>Disk Management</strong>. We’ll only look at Disk Management in this room.</p>
+<p><strong>Note</strong>: Since the virtual machine is a Windows Server operating system, there are utilities available that you will typically not see in Windows 10. </p>
+<p><img src="https://assets.tryhackme.com/additional/win-fun2/disk-mgmt.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>Disk Management is a system utility in Windows that enables you to perform advanced storage tasks. Some tasks are:</p>
+<ul>
+<li>Set up a new drive</li>
+<li>Extend a partition</li>
+<li>Shrink a partition</li>
+<li>Assign or change a drive letter (ex. E:)</li>
+</ul>
+<p><strong>Services and Applications</strong></p>
+<p><img src="https://assets.tryhackme.com/additional/win-fun2/services-apps.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>Recall from the previous task; a service is a special type of application that runs in the background. Here you can do more than enable and disable a service, such as view the Properties for the service. </p>
+<p><img src="https://assets.tryhackme.com/additional/win-fun2/service.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>WMI Control configures and controls the <strong>Windows Management Instrumentation</strong> (WMI) service.</p>
+<p>Per Wikipedia, “<em>WMI allows scripting languages (such as VBScript or Windows PowerShell) to manage Microsoft Windows personal computers and servers, both locally and remotely. Microsoft also provides a command-line interface to WMI called Windows Management Instrumentation Command-line (WMIC).</em>“</p>
+<p><strong>Note</strong>: The WMIC tool is deprecated in Windows 10, version 21H1. Windows PowerShell supersedes this tool for WMI. </p>
+<h2 id="system-information"><a href="#System-Information" class="headerlink" title="System Information"></a>System Information</h2><p>We’re continuing with Tools that are available through the <strong>System Configuration</strong> panel.</p>
+<p>What is the <strong>System Information</strong> (<code>msinfo32</code>) tool?</p>
+<p>Per Microsoft, “<em>Windows includes a tool called Microsoft System Information (Msinfo32.exe). This tool gathers information about your computer and displays a comprehensive view of your hardware, system components, and software environment, which you can use to diagnose computer issues.</em>“</p>
+<p>The information in <strong>System Summary</strong> is divided into three sections:</p>
+<ul>
+<li><strong>Hardware Resources</strong></li>
+<li><strong>Components</strong></li>
+<li><strong>Software Environment</strong></li>
+</ul>
+<p>System Summary will display general technical specifications for the computer, such as processor brand and model.</p>
+<p><img src="https://assets.tryhackme.com/additional/win-fun2/system-summary.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>The information displayed in <strong>Hardware Resources</strong> is not for the average computer user. If you want to learn more about this section, refer to the official Microsoft [page](<a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/windows-hardware/drivers/kernel/hardware-resources#:~:text=Hardware">https://docs.microsoft.com/en-us/windows-hardware/drivers/kernel/hardware-resources#:~:text=Hardware</a> resources are the assignable,of bus-relative memory addresses.).</p>
+<p><img src="https://assets.tryhackme.com/additional/win-fun2/hardware-resources.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>Under <strong>Components</strong>, you can see specific information about the hardware devices installed on the computer. Some sections don’t show any information, but some sections do, such as <strong>Display</strong> and <strong>Input</strong>.</p>
+<p><img src="https://assets.tryhackme.com/additional/win-fun2/components.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>In the <strong>Software Environmen</strong>t section, you can see information about software baked into the operating system and software you have installed. Other details are visible in this section as well, such as the <strong>Environment Variables</strong> and <strong>Network Connections</strong>. </p>
+<p><img src="https://assets.tryhackme.com/additional/win-fun2/software-env.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>Recall from the <a target="_blank" rel="noopener" href="https://tryhackme.com/room/windowsfundamentals1xbx">Windows Fundamentals 1 room </a>(The Windows\System32 Folder task) where <strong>Environment Variables</strong> was briefly touched on. </p>
+<p>Per <a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_environment_variables?view=powershell-7.1">Microsoft</a>, “<em>Environment variables store information about the operating system environment. This information includes details such as the operating system path, the number of processors used by the operating system, and the location of temporary folders.</em></p>
+<p><em>The environment variables store data that is used by the operating system and other programs. For example, the WINDIR environment variable contains the location of the Windows installation directory. Programs can query the value of this variable to determine where Windows operating system files are located</em>“.</p>
+<p>Click on <code>Environment Variables</code> to see the assigned values for the virtual machine.</p>
+<p><img src="https://assets.tryhackme.com/additional/win-fun2/env-variables.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>Another method to view environment variables is <code>Control Panel &gt; System and Security &gt; System &gt; Advanced system settings &gt; Environment Variables</code> <strong>OR</strong> <code>Settings &gt; System &gt; About &gt; system info &gt; Advanced system settings &gt; Environment Variables</code>.</p>
+<p><img src="https://assets.tryhackme.com/additional/win-fun2/env-variables2.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>The detour is over. Let’s redirect our attention back to <code>msinfo32</code> and pick up where we left off.</p>
+<p>Towards the very bottom of this utility, there is a search bar. Please give it a go. Select Components and search for <code>IP address</code>.</p>
+<p><img src="https://assets.tryhackme.com/additional/win-fun2/msinfo32-search.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<h2 id="resource-monitor"><a href="#Resource-Monitor" class="headerlink" title="Resource Monitor"></a>Resource Monitor</h2><p>We’re continuing with Tools that are available through the <strong>System Configuration</strong> panel.</p>
+<p>What is <strong>Resource Monitor</strong> (<code>resmon</code>)?</p>
+<p>Per Microsoft, “<em>Resource Monitor displays per-process and aggregate CPU, memory, disk, and network usage information, in addition to providing details about which processes are using individual file handles and modules. Advanced filtering allows users to isolate the data related to one or more processes (either applications or services), start, stop, pause, and resume services, and close unresponsive applications from the user interface. It also includes a process analysis feature that can help identify deadlocked processes and file locking conflicts so that the user can attempt to resolve the conflict instead of closing an application and potentially losing data.</em>“</p>
+<p>As some of the other tools mentioned in this room, this utility is geared primarily to advanced users who need to perform advanced troubleshooting on the computer system.</p>
+<p>In the Overview tab, Resmon has four sections:</p>
+<ul>
+<li><strong>CPU</strong></li>
+<li><strong>Disk</strong></li>
+<li><strong>Network</strong></li>
+<li><strong>Memory</strong></li>
+</ul>
+<p><img src="https://assets.tryhackme.com/additional/win-fun2/resmon1.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>The same four sections have corresponding tabs across the top. See below.</p>
+<p><img src="https://assets.tryhackme.com/additional/win-fun2/resmon2.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>Note that each tab has additional information for each. An image is shown below for each tab. </p>
+<p><strong>CPU</strong></p>
+<p><img src="https://assets.tryhackme.com/additional/win-fun2/resmon-cpu.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><strong>Memory</strong></p>
+<p><img src="https://assets.tryhackme.com/additional/win-fun2/resmon-mem.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><strong>Disk</strong></p>
+<p><img src="https://assets.tryhackme.com/additional/win-fun2/resmon-disk.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><strong>Network</strong></p>
+<p><img src="https://assets.tryhackme.com/additional/win-fun2/resmon-network.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>Although not captured in any of the images above, Resource Monitor has a pane at the far right. This pane shows a graphical view in real-time for each section. </p>
+<p><strong>Note</strong>: The information displayed in Resource Monitor will be different for you compared to the images above.</p>
+<h2 id="command-prompt"><a href="#Command-Prompt" class="headerlink" title="Command Prompt"></a>Command Prompt</h2><p>We’re continuing with Tools that are available through the <strong>System Configuration</strong> panel.</p>
+<p>The command prompt (<code>cmd</code>) can seem daunting at first, but it’s really not that bad once you understand how to interact with it. </p>
+<p>In early operating systems, the command line was the sole way to interact with the operating system.</p>
+<p>When the GUI (graphical user interface) was introduced, it allowed users to perform complex tasks with a few clicks of a button instead of entering commands in the command prompt. </p>
+<p>Even though the GUI is the primary way to interact with the operating system, a computer user can still interact via the command prompt. </p>
+<p>In this task, we’ll only cover a few commands that a computer user can run in the command prompt to obtain information about the computer system.</p>
+<p>Let’s start with a few simple commands, such as <code>hostname</code> and <code>whoami</code>.</p>
+<p>The command <strong>hostname</strong> will output the computer name.</p>
+<p><img src="https://assets.tryhackme.com/additional/win-fun2/hostname.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>The command <strong>whoami</strong> will output the name of the logged-in user.</p>
+<p><img src="https://assets.tryhackme.com/additional/win-fun2/whoami.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>Next, let’s look at some commands that are useful when troubleshooting.</p>
+<p>A command used often is <code>ipconfig</code>. This command will show the network address settings for the computer.</p>
+<p><img src="https://assets.tryhackme.com/additional/win-fun2/ipconfig.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>Each command will have a help manual to explain the expected syntax to execute the command properly, along with any additional parameters that can be added to the command to expand its execution.</p>
+<p>A command to retrieve the help manual for a command is <code>/?</code>.</p>
+<p>For example, to see the help manual for <strong>ipconfig</strong>, you can use the following command: <code>ipconfig /?</code></p>
+<p><img src="https://assets.tryhackme.com/additional/win-fun2/ipconfig-help.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><strong>Note</strong>: To clear the command prompt screen, the command is <code>cls</code>. </p>
+<p>The next command is <code>netstat</code>. Per the help manual, this command will display protocol statistics and current TCP&#x2F;IP network connections. </p>
+<p><img src="https://assets.tryhackme.com/additional/win-fun2/netstat.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>In the above image, the line within the red box shows us an example syntax for the command. </p>
+<p>The structure tells us the <strong>netstat</strong> command can be run alone or with parameters, such as <code>-a</code>, <code>-b</code>, <code>-e</code>, etc. </p>
+<p>When any of the parameters are appended to the root command, <strong>netstat</strong> in this case, the output changes. Play with a few to see for yourself. </p>
+<p>The <code>net</code> command is primarily used to manage network resources. This command supports sub-commands.</p>
+<p>If you type <strong>net</strong> without a sub-command, the output will show the syntax for the root command showing a few of the sub-commands you can use.</p>
+<p><img src="https://assets.tryhackme.com/additional/win-fun2/net.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>For the net command, to display the help manual <code>/?</code> will not work. In this case, you need to use different syntax, which is <code>net help</code>.</p>
+<p><img src="https://assets.tryhackme.com/additional/win-fun2/net-help.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>So, if you wish to see the help information for <code>net user</code> , the command is <code>net help user</code>. </p>
+<p><img src="https://assets.tryhackme.com/additional/win-fun2/net-help-user2.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>You can use the same command to view the help information for other useful <strong>net</strong> sub-commands, such as <strong>localgroup</strong>, <strong>use</strong>, <strong>share</strong>, and <strong>session</strong>. </p>
+<p>Refer to the following link to see a comprehensive list of commands you can execute in the command prompt <a target="_blank" rel="noopener" href="https://ss64.com/nt/">here</a>. </p>
+<h2 id="registry-editor"><a href="#Registry-Editor" class="headerlink" title="Registry Editor"></a>Registry Editor</h2><p>We’re continuing with Tools that are available through the <strong>System Configuration</strong> panel.</p>
+<p>The <strong>Windows Registry</strong> (per Microsoft) is a central hierarchical database used to store information necessary to configure the system for one or more users, applications, and hardware devices.</p>
+<p>The registry contains information that Windows continually references during operation, such as:</p>
+<ul>
+<li>Profiles for each user</li>
+<li>Applications installed on the computer and the types of documents that each can create</li>
+<li>Property sheet settings for folders and application icons</li>
+<li>What hardware exists on the system</li>
+<li>The ports that are being used.</li>
+</ul>
+<p><strong>Warning</strong>: The registry is for advanced computer users. Making changes to the registry can affect normal computer operations. </p>
+<p>There are various ways to view&#x2F;edit the registry. One way is to use the <strong>Registry Editor</strong> (<code>regedit</code>).</p>
+<p><img src="https://assets.tryhackme.com/additional/win-fun2/regedit.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>Refer to the following Microsoft documentation <a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/troubleshoot/windows-server/performance/windows-registry-advanced-users">here</a> to learn more about the Windows Registry. </p>
+<h2 id="conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>Recall that the tasks covered in this room were some of the tools that can launch from <code>MSConfig</code>. </p>
+<p>Throughout the room, commands and shortcuts were shared for the utilities. This means you don’t have to launch <strong>MSConfig</strong> to run these utilities. </p>
+<p>You can also run some of these utilities directly from the Start Menu. See below where some of these utilities can be found.</p>
+<p><img src="https://assets.tryhackme.com/additional/win-fun2/start-menu.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>Some of the tools listed in <strong>MSConfig</strong> that weren’t mentioned in this room were either covered in Windows Fundamentals 1 or were left for you to explore on your own.</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Windows%E5%9F%BA%E7%A1%80/" class="category-chain-item">Windows基础</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/tryhackme/">#tryhackme</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>TryHackMe-Windows Fundamentals 2</div>
+      <div>https://mirror4s.github.io/2023/04/07/TryHackMe-Windows-Fundamentals-2/index.html</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>MirRoR4s</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年4月7日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/04/07/IDEA%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/index.html" title="IDEA学习记录">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">IDEA学习记录</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/04/06/TryHackMe-Windows-Fundamentals-1/index.html" title="TryHackMe-Windows Fundamentals 1">
+                        <span class="hidden-mobile">TryHackMe-Windows Fundamentals 1</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
