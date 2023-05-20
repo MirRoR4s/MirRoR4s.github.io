@@ -16,22 +16,22 @@
   <meta name="author" content="MirRoR4s">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Test">
+    <meta name="description" content="加油冲！ SRC 漏洞挖掘前言现阶段我主要是分析别人是如何挖到 src 的漏洞的，大概学习两个月后我会开始着手自己挖漏洞。 src 文章分析支付逻辑漏洞实战某src支付漏洞0元购 某 src 支付漏洞 0 元购  这个漏洞基本操作就是下单商品然后抓包得到下单操作对应的 HTTP 请求，在请求中含有商品价格、账号余额等参数。但是我们可以修改余额对应的参数值，使得购买的时候用余额支付。 某src支付">
 <meta property="og:type" content="article">
-<meta property="og:title" content="CC1分析">
-<meta property="og:url" content="https://mirror4s.github.io/2023/05/18/JavaSec/CC/CC1/images/index.html">
+<meta property="og:title" content="src漏洞挖掘">
+<meta property="og:url" content="https://mirror4s.github.io/2023/05/18/%E6%BC%8F%E6%B4%9E%E6%8C%96%E6%8E%98/src/images/index.html">
 <meta property="og:site_name" content="学习记录">
-<meta property="og:description" content="Test">
+<meta property="og:description" content="加油冲！ SRC 漏洞挖掘前言现阶段我主要是分析别人是如何挖到 src 的漏洞的，大概学习两个月后我会开始着手自己挖漏洞。 src 文章分析支付逻辑漏洞实战某src支付漏洞0元购 某 src 支付漏洞 0 元购  这个漏洞基本操作就是下单商品然后抓包得到下单操作对应的 HTTP 请求，在请求中含有商品价格、账号余额等参数。但是我们可以修改余额对应的参数值，使得购买的时候用余额支付。 某src支付">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2023-05-18T03:07:13.000Z">
-<meta property="article:modified_time" content="2023-05-18T03:07:41.008Z">
+<meta property="article:published_time" content="2023-05-18T09:28:43.000Z">
+<meta property="article:modified_time" content="2023-05-18T09:40:19.273Z">
 <meta property="article:author" content="MirRoR4s">
-<meta property="article:tag" content="CC链">
+<meta property="article:tag" content="src">
 <meta name="twitter:card" content="summary_large_image">
   
   
   
-  <title>CC1分析 - 学习记录</title>
+  <title>src漏洞挖掘 - 学习记录</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -212,7 +212,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="CC1分析"></span>
+            <span id="subtitle" data-typed-text="src漏洞挖掘"></span>
           
         </div>
 
@@ -223,8 +223,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-05-18 11:07" pubdate>
-          2023年5月18日 上午
+        <time datetime="2023-05-18 17:28" pubdate>
+          2023年5月18日 下午
         </time>
       </span>
     
@@ -235,7 +235,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          4 字
+          613 字
         
       </span>
     
@@ -246,7 +246,7 @@
         
         
         
-          1 分钟
+          6 分钟
         
       </span>
     
@@ -284,12 +284,12 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">CC1分析</h1>
+            <h1 style="display: none">src漏洞挖掘</h1>
             
               <p class="note note-info">
                 
                   
-                    本文最后更新于：2023年5月18日 上午
+                    本文最后更新于：2023年5月18日 下午
                   
                 
               </p>
@@ -297,7 +297,21 @@
             
               <div class="markdown-body">
                 
-                <p>Test</p>
+                <span id="more"></span>
+<p>加油冲！</p>
+<h1 id="src-漏洞挖掘"><a href="#SRC-漏洞挖掘" class="headerlink" title="SRC 漏洞挖掘"></a>SRC 漏洞挖掘</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>现阶段我主要是分析别人是如何挖到 src 的漏洞的，大概学习两个月后我会开始着手自己挖漏洞。</p>
+<h2 id="src-文章分析"><a href="#src-文章分析" class="headerlink" title="src 文章分析"></a>src 文章分析</h2><h3 id="支付逻辑漏洞"><a href="#支付逻辑漏洞" class="headerlink" title="支付逻辑漏洞"></a>支付逻辑漏洞</h3><h4 id="实战某src支付漏洞0元购"><a href="#实战某src支付漏洞0元购" class="headerlink" title="实战某src支付漏洞0元购"></a>实战某src支付漏洞0元购</h4><ul>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/0IFp_nS0bHDieuykLa19GQ">某 src 支付漏洞 0 元购</a></li>
+</ul>
+<p>这个漏洞基本操作就是下单商品然后抓包得到下单操作对应的 HTTP 请求，在请求中含有商品价格、账号余额等参数。但是我们可以修改余额对应的参数值，使得购买的时候用余额支付。</p>
+<h4 id="某src支付逻辑有误导致任意支付"><a href="#某src支付逻辑有误导致任意支付" class="headerlink" title="某src支付逻辑有误导致任意支付"></a>某src支付逻辑有误导致任意支付</h4><ul>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=Mzg5MDk3NDE2Mw==&amp;mid=2247483686&amp;idx=1&amp;sn=c064ff86ca6da19ae90508571625594a&amp;chksm=cfd53b9af8a2b28caa6072c19e485fc4fef099809d752cabb2e11ff8f4db9ed1a9f90d724123&amp;cur_album_id=2912733224823652356&amp;scene=189#wechat_redirect">https://mp.weixin.qq.com/s?__biz=Mzg5MDk3NDE2Mw==&amp;mid=2247483686&amp;idx=1&amp;sn=c064ff86ca6da19ae90508571625594a&amp;chksm=cfd53b9af8a2b28caa6072c19e485fc4fef099809d752cabb2e11ff8f4db9ed1a9f90d724123&amp;cur_album_id=2912733224823652356&amp;scene=189#wechat_redirect</a></li>
+</ul>
+<p>这个漏洞比较有意思，依旧是下单页面抓包进行操作，但是此时修改所有的参数都会发现有校验，但是关键的点来了：</p>
+<p>挖掘者查看了返回包的信息并分析出了其中蕴含着的关键字段，然后它复制了返回包的所有参数到请求包中，同时修改关键字段的值，最后也是成功完成了任意支付。</p>
+<blockquote>
+<p>这件事情告诉我们返回包的审查也是十分重要的！！</p>
+</blockquote>
 
                 
               </div>
@@ -316,7 +330,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/JAVA-%E5%AE%89%E5%85%A8/" class="category-chain-item">JAVA 安全</a>
+  <a href="/categories/%E6%BC%8F%E6%B4%9E%E6%8C%96%E6%8E%98/" class="category-chain-item">漏洞挖掘</a>
   
   
 
@@ -331,7 +345,7 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/CC%E9%93%BE/">#CC链</a>
+        <a href="/tags/src/">#src</a>
       
     </div>
   
@@ -343,8 +357,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>CC1分析</div>
-      <div>https://mirror4s.github.io/2023/05/18/JavaSec/CC/CC1/images/index.html</div>
+      <div>src漏洞挖掘</div>
+      <div>https://mirror4s.github.io/2023/05/18/漏洞挖掘/src/images/index.html</div>
     </div>
     <div class="license-meta">
       
@@ -388,9 +402,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/05/18/%E6%BC%8F%E6%B4%9E%E6%8C%96%E6%8E%98/images/index.html" title="漏洞挖掘">
+                      <a href="/2023/05/18/JavaSec/CommonsBeanUtils/CommonsBeanUtils1/images/index.html" title="CommonsBeanUtils1反序列化">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">漏洞挖掘</span>
+                        <span class="hidden-mobile">CommonsBeanUtils1反序列化</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -398,8 +412,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/05/18/JavaSec/Shiro/Shiro550/images/index.html" title="Shiro550流程分析">
-                        <span class="hidden-mobile">Shiro550流程分析</span>
+                      <a href="/2023/05/18/%E6%BC%8F%E6%B4%9E%E6%8C%96%E6%8E%98/images/index.html" title="漏洞挖掘">
+                        <span class="hidden-mobile">漏洞挖掘</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
