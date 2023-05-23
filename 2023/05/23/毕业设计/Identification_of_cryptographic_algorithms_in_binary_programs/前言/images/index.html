@@ -1,0 +1,785 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="MirRoR4s">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="二进制程序中的密码算法识别-前言">
+<meta property="og:type" content="article">
+<meta property="og:title" content="本科论文学习记录-前言">
+<meta property="og:url" content="https://mirror4s.github.io/2023/05/23/%E6%AF%95%E4%B8%9A%E8%AE%BE%E8%AE%A1/Identification_of_cryptographic_algorithms_in_binary_programs/%E5%89%8D%E8%A8%80/images/index.html">
+<meta property="og:site_name" content="学习记录">
+<meta property="og:description" content="二进制程序中的密码算法识别-前言">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://mirror4s.github.io/2023/05/23/%E6%AF%95%E4%B8%9A%E8%AE%BE%E8%AE%A1/Identification_of_cryptographic_algorithms_in_binary_programs/%E5%89%8D%E8%A8%80/images/index/image-20230523172538390.png">
+<meta property="article:published_time" content="2023-05-23T09:02:10.000Z">
+<meta property="article:modified_time" content="2023-05-23T10:56:54.878Z">
+<meta property="article:author" content="MirRoR4s">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://mirror4s.github.io/2023/05/23/%E6%AF%95%E4%B8%9A%E8%AE%BE%E8%AE%A1/Identification_of_cryptographic_algorithms_in_binary_programs/%E5%89%8D%E8%A8%80/images/index/image-20230523172538390.png">
+  
+  
+  
+  <title>本科论文学习记录-前言 - 学习记录</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"mirror4s.github.io","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="本科论文学习记录-前言"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-05-23 17:02" pubdate>
+          2023年5月23日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          5.7k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          48 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">本科论文学习记录-前言</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    本文最后更新于：2023年5月23日 晚上
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="二进制程序中的密码算法识别-前言"><a href="#二进制程序中的密码算法识别-前言" class="headerlink" title="二进制程序中的密码算法识别-前言"></a>二进制程序中的密码算法识别-前言</h1><span id="more"></span>
+
+
+
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><blockquote>
+<p>我其实真的很想努力做好一次毕业设计，写好我的毕业论文。但是找工作这件事情时刻给我莫大压力，我已然没有办法专心在毕业设计上面，所以只能照着这篇论文机翻+人工修正。</p>
+</blockquote>
+<h3 id="1-逆向工程"><a href="#1-逆向工程" class="headerlink" title="1 逆向工程"></a>1 逆向工程</h3><p>逆向工程是从一个技术对象中提取信息，以理解它是如何构建的或它是如何工作的过程。这种做法存在于许多技术领域，如化学、电子学或生物学。本篇论文专门处理计算机程序的逆向工程，特别是，编译成机器代码的程序。</p>
+<p>将逆向工程程序编译成机器代码（也称为二进制程序）有各种各样的原因。例如，人们可能需要在没有源代码的情况下修复古老的遗留系统中的 bug，或者希望在未经创建者同意的情况下绕过程序中的限制（创建未经授权的副本或访问限制内容），或者作为最后一个例子，可能需要构建一个系统，该系统需要和其他的规范未知的系统进行交互。本文中提出的逆向工程技术，因为它们针对的是加密算法，所以主要是出于安全问题（原因）。这些技术可以用于查找二进制程序中的安全缺陷，或者相反地验证不存在任何缺陷。不过，因为它们有助于全局理解包含加密算法的二进制程序，所以它们对许多其他情况都很有用，包括前面提到的那些情况。</p>
+<h4 id="11-黑盒和白盒"><a href="#1-1-黑盒和白盒" class="headerlink" title="1.1 黑盒和白盒"></a>1.1 黑盒和白盒</h4><p>如果分析人员无法访问该程序的机器代码，则该程序将在黑盒中进行分析。在这种情况下，获得有关该程序的信息的唯一方法是观察其执行情况。如果分析人员只能监控程序执行的输入和输出，则分析是被动的；如果分析人员也能够向程序提交选定的输入，则分析是主动的。[68] 是密码算法的被动黑盒逆向工程的一个例子。通过查看 RSA 公钥，作者能够高精度地对生成该密钥的 RSA 实现进行分类。</p>
+<p>相比之下，如果分析人员能够访问程序的机器代码，那么程序将在白盒中进行分析。在本篇论文中，我们只考虑白盒的情况。</p>
+<h4 id="12-混淆"><a href="#1-2-混淆" class="headerlink" title="1.2 混淆"></a>1.2 混淆</h4><p>混淆技术是一种程序转换（技术），它不改变程序的功能，但使逆向工程任务更加困难。在逆向工程技术中，也有许多混淆的可能性。例如，混淆可能以静态或动态分析和手动或自动检查为目标。据我们所知，没有一种混淆技术能够击败广泛的逆向工程企图，混淆仅带来了一个很小的性能损失。为了实现广而有效的保护，需要同时使用多种弱混淆技术。保护的质量取决于混淆技术的数量以及其稀有性。如果某个混淆技术被广泛使用，人们就会开发特定的工具来减轻其对逆向工程程序的影响。通过将几种混淆技术结合在一起，并引入变量，人们将有更好的机会得到一个有效的保护，绕过该保护通常需要特定的逆向工程企图。</p>
+<p>本篇论文不处理混淆的代码。这意味着论文中提出的方法不是专门处理混淆的代码。但这并不意味着它们对分析混淆后的程序是完全没有价值的。如果可以撤销混淆转换的作用并得到原始程序，或者它们不直接影响包含加密算法的程序执行的部分，那么我们的方法就可能是有效的。例如，一个基本但常见的混淆策略，包括使用包装和各种反调试和反虚拟化技巧，仍然与我们的识别方法完全兼容。事实上，这些方法依赖于执行跟踪，因此它们不受所使用的任何包装方法的影响。而反调试和反虚拟化的技巧可能会阻止我们收集执行跟踪的信息，不过可以在执行我们的方法之前手工地移除掉这两种技巧的影响。</p>
+<h3 id="2-密码学概念"><a href="#2-密码学概念" class="headerlink" title="2 密码学概念"></a>2 密码学概念</h3><h4 id="21-对称和非对称密钥学"><a href="#2-1-对称和非对称密钥学" class="headerlink" title="2.1 对称和非对称密钥学"></a>2.1 对称和非对称密钥学</h4><p>在对称密码学中，通信方共享一个密钥。这个密钥被用于实现两个安全概念：机密性和真实性。机密性确保加密消息不会在不知道共享密钥的情况下泄露有关其初始内容的任何信息。真实性可以确保只有拥有共享密钥的各方才能写入消息。第三个安全概念，称为完整性，属于对称密码学的领域，尽管它不需要一个共享的密钥。完整性可以确保消息在其存储或传输过程中不会被更改。</p>
+<p>相反地，所有其他通信方不具有共享密钥的情况，都属于非对称密码学领域。非对称密码学依赖于很强的数学结构来实现更丰富、更多样化的安全概念。非对称密码学最著名的用途可能是公钥加密。在公钥加密中，任何人都可以使用公钥对消息进行加密，但只有那些拥有与该公钥对应的私钥的人才能解密消息。其他常用的非对称方案有：密钥交换算法和数字签名算法。</p>
+<p>从实际应用角度来看，对称算法简单快速，适用于处理大量数据。而非对称算法则较为复杂缓慢，只用于密码协议的关键部分，以提供无法通过其他方式实现的安全性质。</p>
+<p>本篇论文仅限于对称算法的识别。有两个主要的原因可以解释这种选择。</p>
+<ul>
+<li>首先，程序不太可能包含它们自己的非对称方案的实现。相反，它们可能使用为数不多的某个可用的加密库。从我们的经验来看，软件开发人员从头开始实现对称方案最多需要几天的时间，而对于非对称方案，则可能需要一个多月的时间。作为一个例子，我们对开源的 SSL 库进行了一个调查，它表明其中大量的库依赖于同一个库来实现大整数。因此，我们认为，非对称方案的识别问题在许多情况下可以通过寻找外部库来解决（参见第1.1.1节）。</li>
+<li>其次，由于非对称方案比对称方案复杂得多，对它们的二进制实现进行分析也更具挑战性。在我们看来，从对称加密开始是更为合理的选择，但不幸的是，在开始进行任何关于非对称加密的严肃工作之前，我们就已经没有时间了。请注意，我们设计的方法无法轻松地适应于非对称方案。首先，额外的复杂性降低了成功的可能性，其次这些方法依赖于它们所针对的密码对象的特殊性，而这些特殊性不太可能被非对称方案所共享。</li>
+</ul>
+<h4 id="22-原语和操作模式"><a href="#2-2-原语和操作模式" class="headerlink" title="2.2 原语和操作模式"></a>2.2 原语和操作模式</h4><p>对称方案由两种抽象类型的结构组成：原语和操作模式。原语是最基本的结构：它们不依赖于任何其他结构。然而，原语本身是有限的，为了获得保密性和真实性等安全概念，需要建立第二层加密结构。例如，分组密码是一种特殊类型的原语，它只能加密或解密固定长度的小消息。要获得对任意长度的消息的机密性，就需要一种操作模式来指定如何重复执行分组密码加密。由于以下几节将解释的原因，原语和操作模式之间的区别对本篇论文来说至关重要。</p>
+<h3 id="3-动机"><a href="#3-动机" class="headerlink" title="3 动机"></a>3 动机</h3><h4 id="31-关于软件中密码学的安全问题"><a href="#3-1-关于软件中密码学的安全问题" class="headerlink" title="3.1 关于软件中密码学的安全问题"></a>3.1 关于软件中密码学的安全问题</h4><p>在软件中设计和实现加密方案是一项困难且容易出错的任务，特别是对于非专业密码学人员而言。下面我们简要概述影响加密方案设计和实现的常见错误，这些错误可能会危及它们最初预期实现的安全性质。此摘要主要关注对称加密。</p>
+<ul>
+<li>算法的选择可能会带来问题。已经发布实际攻击的算法不应再被使用，例如 MD5 [79] 和 SHA1 [67] 的碰撞被发现，但这些哈希函数仍然在许多应用程序中使用。此外，密码学家尚未进行彻底分析的算法应被视为不安全。这包括任何开发人员试图设计自己的加密方案，例如在Xbox安全系统中，微软的工程师使用了RC4和TEA来验证引导加载程序 [66]。但是，这两种身份验证方案都无法防止实际攻击改变启动顺序。</li>
+<li>算法的实现可能存在问题。实现不良的算法可能会泄露有关秘密数据的信息。基于对 AES 表格实现的缓存时序攻击[71] 和基于声音泄漏的最近针对 RSA 的攻击 [30] 是实际侧信道攻击的很好例子。操作模式对于安全实现也很微妙。众所周知，操作模式中使用的填充方案非常敏感。例如，糟糕的填充方案已经导致了许多 IETF 标准的毁灭性攻击[73]。</li>
+<li>最后，输入参数可能存在问题。在这里，我们指的是密钥和初始化向量（IV）。对于可变长度密钥的方案，密钥必须足够长。密钥必须是不可预测的（例如硬编码密钥只提供了虚假的安全感）。IV 必须符合操作模式的要求。例如，在 CBC 模式下使用可预测的 IV 已经导致针对 SSL 和 TLS 的实际攻击 [63]。</li>
+</ul>
+<p>结论是，在软件中使用的加密方案需要进行分析，以确定它们提供的实际安全级别。攻击者的目标是找到安全漏洞，以便利用它们，对于关注安全的用户而言，则需要检查自己在使用某个特定软件时是否存在风险。</p>
+<p>分析软件中使用的加密方案安全性的第一步是识别和定位其主要算法。身份信息可用于标记已废弃的算法，而位置信息则可用于开始对其实现的深入分析。本文旨在提出自动化解决方案，以识别和定位二进制程序中的基本原语和操作模式。</p>
+<h4 id="32-本地代码分析"><a href="#3-2-本地代码分析" class="headerlink" title="3.2 本地代码分析"></a>3.2 本地代码分析</h4><p>显然，通过检查加密方案的源代码或高级描述，可以更容易地验证它们的安全性。然而，在二进制程序上直接执行这种验证的能力仍然非常重要，原因有几个。</p>
+<p>第一，源代码和文档并不总是可用的。对于试图在未经创建者同意的情况下查找封闭源代码程序中的安全漏洞的攻击者来说，情况就是如此。对于试图代表第三方或仅具有有限信息以模拟真正攻击者来评估程序安全性的安全分析师也是如此。 </p>
+<p>第二，源代码和文档并不总是可信的。文档和源代码并不会被执行，只有二进制程序的安全性才真正重要。源代码和文档可能存在意外偏差。例如，编译器可能引入安全漏洞 [9] 。在这方面，我们在此项工作中发现，在Crypto++ 库的一个 AES 实现中，编译器优化移除了旨在避免缓存时序攻击的保护措施 [5] 。此外，人们可能会怀疑是否存在故意的偏差。事实上，没有编译器工具链，很难准确确定二进制程序是否真正来自特定的源代码。在软件评估的背景下，编译器工具链并不总是由软件开发公司提供，源代码的全部内容也不一定会提供。</p>
+<h4 id="33-识别加密算法的其他原因"><a href="#3-3-识别加密算法的其他原因" class="headerlink" title="3.3 识别加密算法的其他原因"></a>3.3 识别加密算法的其他原因</h4><p>正如之前解释的那样，逆向工程加密方案的主要原因是测试其安全性。但是，快速识别加密算法还有其他优点。例如，在模糊测试中，如果目标应用程序对其输入执行完整性检查，则畸形的输入将被系统地拒绝。通过自动识别校验和和哈希函数，可以设计一个能够绕过完整性检查的 fuzzing 系统 [75]。另一个例子是，人们可能对识别加密方案感兴趣，这不是为了方案本身，而是为了操纵的数据。例如，转储解密数据可能有助于去除数字版权管理（DRM）保护 [74]或分析恶意软件的通信 [15]。最后，正如本文所指出的，与其他类型的算法相比，检测对称方案相对容易。通过寻找加密算法来开始对二进制程序的逆向工程可能是个好主意，特别是如果它可以以最小的成本完成的话。从第一步检索到的知识对于理解程序如何处理其输入&#x2F;输出可能是非常重要的。</p>
+<h3 id="4-解决方案概述"><a href="#4-解决方案概述" class="headerlink" title="4 解决方案概述"></a>4 解决方案概述</h3><p>为了识别加密方案，我们使用了一种自下而上的方法。我们设计了两种识别方法：一种是原语方法，另一种是操作模式方法。首先执行原语识别方法，并将其结果传递到操作模式的识别方法中。这两种方法都依赖于相同的数据结构来表示汇编代码。这种数据结构被称为数据流图（DFG），它有几个优点。</p>
+<ol>
+<li>它可以用来重写代码。也就是说，数据流图可以修改代码表达式而不破坏它们的原始语义。</li>
+<li>它还可以用于搜索已知表达式的代码。</li>
+<li>最后，它可以在一定程度上被人类分析人员使用来可视化一段代码。DFGs 数据流图是由指令序列构造出来的。在实践中，为了获得指令序列，程序是在一个监视环境中执行的，并且执行的指令会记录在执行轨迹中。图 1 总结了这两种识别方法的流程图。</li>
+</ol>
+<img src="/2023/05/23/%E6%AF%95%E4%B8%9A%E8%AE%BE%E8%AE%A1/Identification_of_cryptographic_algorithms_in_binary_programs/%E5%89%8D%E8%A8%80/images/index/image-20230523172538390.png" srcset="/img/loading.gif" lazyload class title="image-20230523172538390">
+
+<h4 id="41-原语识别"><a href="#4-1-原语识别" class="headerlink" title="4.1 原语识别"></a>4.1 原语识别</h4><p>我们使用签名来识别原语。签名是表示一个或多个独特表达式的 DFG 数据流图。将签名与表示要分析的程序的DFG 进行比较。为了最小化签名的数量，首先将表示着我们要分析的程序的 DFG 进行规范化。规范化过程的目标是消除在同一算法的不同机器代码实现之间可能存在的一些小的变化。</p>
+<p>签名方法对识别原语特别有效，原因有二：</p>
+<ol>
+<li>首先，在软件中经常使用的原语的数量相对较少。解释这一观察结果的可能原因之一是存在完善的标准，如AES 和 SHA。</li>
+<li>其次，这些原语的实现之间没有很多变化。引用已存在的实现是一种可能的解释。此外，这些实现在性能和安全性方面都得到了仔细的研究，并没有给创造性的软件工程留下太大的空间。因此，签名的数量应该保持相对较少。请注意，签名方法非常准确，并提供了比任何其他识别方法都性能更好的细节级别。通过创建大型签名，人们甚至可以自动定位原语的输入和输出参数。</li>
+</ol>
+<p>简而言之，我们的原语识别方法是一个三步的过程。</p>
+<ol>
+<li>首先，我们从一个执行跟踪段开始，创建它的 DFG 数据流图表示形式。</li>
+<li>其次，我们使用重写规则来规范化这个 DFG 数据流图。</li>
+<li>第三，我们使用子图同构算法来搜索签名实例的规范化的 DFG 数据流图。这三个步骤表示在图 1 的左上角。</li>
+</ol>
+<blockquote>
+<p> 声明：仅使用少量的签名就可以检测到广泛的原始实例。</p>
+</blockquote>
+<h4 id="42-操作模式识别"><a href="#4-2-操作模式识别" class="headerlink" title="4.2 操作模式识别"></a>4.2 操作模式识别</h4><p>我们不使用签名来识别操作模式。相反，我们生成了在原语执行之间发生的主要数据传输的合成表示。这种合成表示称为切片，是从表示分析程序的 DFG 数据流图中提取的。为提取一个切片，我们需要知道每个原语执行的位置。该信息是通过原语识别方法获得的，该方法必须在操作模式识别方法之前执行。切片由用户手动解释。</p>
+<p>在两种情况下，都可以手动解释切片。</p>
+<ol>
+<li>首先，操作模式必须相对简单。否则，人类分析师将很难识别其复杂的数据流模式。</li>
+<li>其次，切片必须只包含操作模式识别所严格必需的内容。否则，人类分析人员将很难在切片中搜索独特的数据流模式。</li>
+</ol>
+<p>手动解释相比于自动模式匹配技术有两个优势。</p>
+<ol>
+<li>首先，手动解释比自动模式匹配技术更灵活。</li>
+<li>其次，返回一个合成表示似乎是一个很好的解决方案，可以弥合自动处理和人工分析之间的差距。自动模式匹配技术通常会产生完全处理过的结果，如果人工分析人员必须手动进行分析，那么他可能很难抓住这些结果。</li>
+</ol>
+<p>我们选择了自动签名检测来识别原语，因为它需要找到少量但复杂的数据流模式。相反，我们选择了自动合成和手动解释来识别操作模式，因为它需要找到大量的但简单的数据流模式。</p>
+<p>总之，我们的操作模式识别方法只是部分自动化的，因为我们必须手工解释切片。该方法分为三个步骤。</p>
+<ol>
+<li>首先，我们删除了对应于原语执行部分的数据流图 DFGs。DFGs 由原语识别方法得到。如果这些 DFGs 没有覆盖足够大的跟踪段，由于 DFG 的组成，我们有可能扩大它们的覆盖范围。</li>
+<li>其次，DFGs 会进行一个轻微的规范化处理，其目的是制备用于切片提取的 DFGs。</li>
+<li>最后提取切片。操作模式识别方法如图 1 的右下角所示。</li>
+</ol>
+<blockquote>
+<p>声明：可以基于在原语执行之间发生的数据传输的合成表示来手动识别大多数操作模式。</p>
+</blockquote>
+<h3 id="5-论文布局"><a href="#5-论文布局" class="headerlink" title="5 论文布局"></a>5 论文布局</h3><p>相关工作详见第一章。本章详细描述了现有的识别密码算法的解决方案，以及可用于比较目的的实验结果。DFGs 在第 2 章给出。第 3 章专门介绍了规范化机制，大部分机制都采用了原语识别方法。第 4 章将讨论签名检测。本章包含了原语识别方法的实验结果。操作模式识别方法详见第 5 章。本章还包含了操作模式识别方法的实验结果。最后，在第 6 章中，我们用两个实例来总结了这项工作。在附录 A 中，我们简要描述了本文档中提到的主要密码算法。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E6%AF%95%E4%B8%9A%E8%AE%BA%E6%96%87/" class="category-chain-item">毕业论文</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>本科论文学习记录-前言</div>
+      <div>https://mirror4s.github.io/2023/05/23/毕业设计/Identification_of_cryptographic_algorithms_in_binary_programs/前言/images/index.html</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>MirRoR4s</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年5月23日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/05/23/%E6%AF%95%E4%B8%9A%E8%AE%BE%E8%AE%A1/bacs/images/index.html" title="bacs 学习记录">
+                        <span class="hidden-mobile">bacs 学习记录</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
