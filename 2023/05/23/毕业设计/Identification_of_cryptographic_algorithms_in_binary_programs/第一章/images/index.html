@@ -1,0 +1,782 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="MirRoR4s">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="第 1 章 相关的工作">
+<meta property="og:type" content="article">
+<meta property="og:title" content="本科论文学习记录-第一章">
+<meta property="og:url" content="https://mirror4s.github.io/2023/05/23/%E6%AF%95%E4%B8%9A%E8%AE%BE%E8%AE%A1/Identification_of_cryptographic_algorithms_in_binary_programs/%E7%AC%AC%E4%B8%80%E7%AB%A0/images/index.html">
+<meta property="og:site_name" content="学习记录">
+<meta property="og:description" content="第 1 章 相关的工作">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://mirror4s.github.io/2023/05/23/%E6%AF%95%E4%B8%9A%E8%AE%BE%E8%AE%A1/Identification_of_cryptographic_algorithms_in_binary_programs/%E7%AC%AC%E4%B8%80%E7%AB%A0/images/index/image-20230523202620347.png">
+<meta property="article:published_time" content="2023-05-23T10:58:13.000Z">
+<meta property="article:modified_time" content="2023-05-23T14:10:36.573Z">
+<meta property="article:author" content="MirRoR4s">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://mirror4s.github.io/2023/05/23/%E6%AF%95%E4%B8%9A%E8%AE%BE%E8%AE%A1/Identification_of_cryptographic_algorithms_in_binary_programs/%E7%AC%AC%E4%B8%80%E7%AB%A0/images/index/image-20230523202620347.png">
+  
+  
+  
+  <title>本科论文学习记录-第一章 - 学习记录</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"mirror4s.github.io","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="本科论文学习记录-第一章"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-05-23 18:58" pubdate>
+          2023年5月23日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          7.1k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          60 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">本科论文学习记录-第一章</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    本文最后更新于：2023年5月23日 晚上
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="第-1-章-相关的工作"><a href="#第-1-章-相关的工作" class="headerlink" title="第 1 章 相关的工作"></a>第 1 章 相关的工作</h1><span id="more"></span>
+
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>人们已对二进制程序中密码算法的识别进行了相关的研究。在工业界中存在着实际的解决方案（第 1.1 节），此外学术界也提出了更详细的解决方案（第 1.4 节）。</p>
+<p>在本章中，我们也提到了两个密切相关的研究领域：自动的加密参数检索（第 1.2 节）和二进制代码比较。（第 1.3 节）</p>
+<h2 id="11-基本技术"><a href="#1-1-基本技术" class="headerlink" title="1.1 基本技术"></a>1.1 基本技术</h2><p>在本节中，我们将介绍两个在实践中用于逆向包含加密代码的二进制程序的方法。第一个方法涉及到静态链接库的识别，第二个方法则与特定常量的识别有关。</p>
+<h3 id="111-静态链接库"><a href="#1-1-1-静态链接库" class="headerlink" title="1.1.1 静态链接库"></a>1.1.1 静态链接库</h3><p>许多使用密码学的程序自身并不含有加密算法。相反，它们使用外部的密码学库。这种情况可能会大大简化分析人员的工作。如果密码学库是文档化的和可信的，分析人员将能够通过简单地查看由程序执行的库函数来回答大多数问题。不幸的是，由于可移植性的原因，这些库通常是静态链接的。当密码学库静态链接到程序中时，我们无法一眼区分程序代码和库代码。（那么如何区分程序本身的代码和库代码呢？）</p>
+<p>一个基本的思路是将程序与每个已知的密码学库进行比较，看看它们是否共享相同的部分。这个简单的策略可以从以下改进中获益。</p>
+<ul>
+<li>存储所有平台生成的所有库的所有版本所需的空间相对较大。为了减少存储消耗，我们可以仅为每个函数存储哈希值而不是其完整内容。</li>
+<li>某些地址在链接时和加载时被修改。我们必须识别这些地址并在比较两个函数内容时跳过它们。</li>
+<li>一些函数可能非常相似，除了它们自身调用了不同的子函数之外。为了区分它们，我们必须根据它们调用的子函数的特征来表征相似的函数。因此，现在需要进行多次遍历，以完全识别一些函数。</li>
+</ul>
+<p>这种解决方案已在 IDA [2] 中大规模实施（不仅用于加密库）。IDA 带有一个签名数据库，涵盖了最常用的库、编译器和平台。当识别到一个函数时，它会自动重命名。IDA 可能会为初始数据库未覆盖的库或编译环境创建新的签名。Radare2 [61] 中也存在类似的功能，名为 zignature ，但该主题的文档非常少。</p>
+<p>总之，对静态链接库的识别并不特定于密码学库。这可能是开始对软件进行逆向工程时要尝试的第一种技术。在其最基本的形式中，它是准确和极其有效的。但是，为了获得明确的结果，要求签名必须涵盖精确的库版本，并且该库版本必须用某个确切的编译器编译，同时编译选项必须针对某个确切的体系结构。本文第 1.3 节介绍了比较两个二进制代码片段的更灵活的技术。</p>
+<h3 id="112-特定常量"><a href="#1-1-2-特定常量" class="headerlink" title="1.1.2 特定常量"></a>1.1.2 特定常量</h3><p>对称加密算法通常包含特定的常量。这些常量的范围从几个比特的单个值到几千字节的大型查找表不等。由于不太可能在不同的算法中找到它们，所以它们可用于识别加密代码。</p>
+<p>基于常量特征识别加密代码是一种广泛使用的技术，几个公开可用的工具中已实现了该技术。例如 Findcrypt2（ IDA 插件）[34]、KANAL（ PEiD 插件）或 H＆C Detector 等等。除了具有集成在交互式反汇编器中的优点的 Findcrypt2 之外，我们不建议使用它们中的任何一个。正如在 [33] 中所示，它们中的大多数是不完整的，仅针对特定的体系结构或操作系统，并且界面难以使用。需要注意的是，为了搜索加密常量，并不需要反汇编甚至解析可执行文件格式。</p>
+<p>据我们所知，所有基于常量识别的工具都仅依赖于静态分析。然而，我们应该记住，常量识别也可以使用动态分析来执行。这在程序被打包或常量是动态计算的情况下特别有用。我们开发了一个基于 PIN [52] 的概念性证明，它会对二进制程序进行插桩，监视其内存访问，并检测动态计算的加密常量。我们在使用 ASProtect [7] 打包的一个简单程序上运行它（该程序仅使用AES 表实现加密少量数据块），以及在 7-Zip [34]（一种众所周知的压缩工具，具备加密的功能，可作为不同归档格式规范的一部分）中运行。在 7-Zip 中，AES 查找表是动态计算的。对于两个程序，静态搜索无法找到查找表，但是我们的工具能够检测到它们。</p>
+<p>常量识别是一个非常有效的第一步，但它不足以准确和完全地揭示加密原语和操作模式。我们举一个使用 AES 表实现作为目标的例子来展示它的一些局限性。给定一个二进制程序，假设先前列出的工具之一已检测到了一个 AES 替换盒。我们现在仍需要调查 AES 加密&#x2F;解密程序的精确位置。事实上，程序的多个部分都可以访问替换盒，例如：AES 密钥调度（用于加密或解密）或四千字节查找表生成程序。此外，我们还没有确定参数。最后但并非最不重要的是，检测到的算法可能是另一个使用了 AES 替换盒的加密原语，例如 Pelican 消息认证码（MAC）函数 [22] 、Fugue 哈希函数 [36] 或 LEX 流密码 [13]。尽管在实践中这种情况一般不会发生，但这个例子远非只是理论上的。例如，对 EasyLock [27]（用于加密 USB 闪存驱动器上的文件的一个商业解决方案）进行常量搜索会显示一个 AES 替换盒。虽然这个替换盒被两个不同的函数访问，但它们都不是加密或解密程序，尽管 AES 实际上用于加密和解密文件。</p>
+<h2 id="12-加密参数检索"><a href="#1-2-加密参数检索" class="headerlink" title="1.2 加密参数检索"></a>1.2 加密参数检索</h2><h3 id="121-从正在运行的程序中提取的明文"><a href="#1-2-1-从正在运行的程序中提取的明文" class="headerlink" title="1.2.1 从正在运行的程序中提取的明文"></a>1.2.1 从正在运行的程序中提取的明文</h3><p>让我们考虑一个解密其输入或加密其输出的程序。这里介绍的工作提供了在程序加密或解密之前从程序内存中自动检索明文数据的解决方案。这个问题值得在这里提及，因为它需要检测加密&#x2F;解密算法发生的时间和地点，并识别输出参数（用于解密）或其中一个输入参数（用于加密）。下面的工作都集中在解密问题上。</p>
+<p>Lutz [26] 是第一个在恶意软件分析中解决这个问题的人。动态二进制插桩（ DBI ）框架用于执行动态数据污染（污染源是加密的数据），并收集包含已执行的基本块列表和受污染内存值列表的执行轨迹。首先由执行轨迹构造一个动态控制流图（CFG），然后利用这个 CFG 来恢复循环（这里一个循环被定义为 CFG 中的后边）。解密算法应该是一个使用整数运算和 XOR 运算的循环，它减少了受污染内存的熵。Reformat[76] 是一种工具，用于在加密消息时自动化地拟定逆向工程。它还使用数据污染来跟踪内存中的加密数据，但仅仅依赖于算术指令和按位指令的比率来检测加密数据和解密数据之间的转折点。Wang等人 [74] 提出了一种自动机制来移除几种流行的流媒体服务的 DRM 保护。他们的方法是由实时约束驱动的。程序执行根据循环抽象进行分割（这里循环定义为基本块序列的重复）。对于每个循环，使用相对复杂的规则重构输入和输出内存缓冲区。最后，通过输入和输出缓冲区之间的随机性减小来描述解密算法的特点。根据这项工作，随机性（使用卡方随机性检验进行评估）应该优于熵，以区分加密数据和压缩数据。</p>
+<p>总之，这三种方法相对来说都比较类似：它们都依赖于沉重的动态工具，使用近似相同的启发式集合（循环、算术和位指令以及熵&#x2F;随机性），并且不需要任何关于解密算法的信息。但是，除了非常基本的位置信息外，它们几乎没有提供关于加密算法本身的任何信息。</p>
+<h3 id="122-从内存转储中提取密钥"><a href="#1-2-2-从内存转储中提取密钥" class="headerlink" title="1.2.2 从内存转储中提取密钥"></a>1.2.2 从内存转储中提取密钥</h3><p>第二个研究方向旨在从内存转储中提取加密密钥，解决以下情况：需要获取运行程序用于执行加密操作的密钥，但与程序交互的唯一可能方式是对其内存进行转储。这种情况在数字取证领域尤其重要。调查人员可能可以物理访问正在运行的系统，但也可能缺乏在其上执行特权操作的凭据。此时，一种可能性是读取物理内存或存储设备，其中可能包括交换或休眠文件。与上一段提到的技术不同，这里介绍的技术依赖于算法，并且大多数情况下快速而准确。</p>
+<p><strong>对称密钥：</strong>许多分组密码算法采用密钥编排算法将密钥扩展为多个轮密钥。出于性能原因，在分组密码的多次执行中，轮密钥仅计算一次。由于轮密钥的数量和尺寸较大，它们通常存储在内存缓冲区中，在分组密码的多次执行过程中不断更新。因此，在进行加密或解密时收集的内存转储信息中通常会包含轮密钥。如果我们可以反推密钥编排的一部分，并从其中的一些轮密钥中获取密钥，则可以利用以下的算法 1 从任何包含轮密钥的内存转储中提取密钥。该方法的效率主要取决于反推密钥编排的难度：有些非常简单，比如在 AES 中，密钥就等于第一轮密钥，而有些则需要进行大量的计算，比如在 Twofish 中。</p>
+<blockquote>
+<p>算法 1 密钥提取</p>
+<p>概念：$ks$ 是密钥编排算法，$reverse_ks$ 是反向密钥编排，$s_r$ 表示以字节为单位的轮密钥缓冲区的大小，$m$ 是以字节序列形式规范化的内存转储，而 $m[i:j]$ 则表示从偏移量 $i$ 开始到偏移量 $j-1$ 结束的 $m$ 的子序列。</p>
+</blockquote>
+<p>以下是伪代码：</p>
+<img src="/2023/05/23/%E6%AF%95%E4%B8%9A%E8%AE%BE%E8%AE%A1/Identification_of_cryptographic_algorithms_in_binary_programs/%E7%AC%AC%E4%B8%80%E7%AB%A0/images/index/image-20230523202620347.png" srcset="/img/loading.gif" lazyload class title="image-20230523202620347">
+
+<p>这项技术最初在文献 [35] 中被用于 AES、DES，也被用于提取 LRW 和 XTS 中使用的 tweak 值。后来，它也扩展到了Serpent 和 Twofish [53] 中。尽管它在实际中具有有限的实用价值，但我们注意到该技术也可以应用于 SHA1、SHA-256和 SHA-512，以便恢复最后处理的消息块。</p>
+<p><strong>非对称密钥：</strong>RSA 公钥和私钥的格式作为 PKCS #1 的一部分被标准化 [3]。RSA 密钥被定义为 ASN.1 对象并根据 DER 编码进行存储和交换。在内存转储中高效地检测 RSA 密钥的方法是搜索符合 DER 语法并定义正确类型的 ASN.1 对象的内存段 [35]。</p>
+<h2 id="13-二进制代码比较"><a href="#1-3-二进制代码比较" class="headerlink" title="1.3 二进制代码比较"></a>1.3 二进制代码比较</h2><p>第二个紧密相关的领域是二进制代码比较。这是一个更普遍的问题，但其中使用的一些技术可能会对密码算法识别产生一些兴趣。二进制代码比较是一个广泛的研究领域。它本身与<strong>恶意软件分析</strong>（其目标是确定一个二进制程序是否良性或恶意，在后一种情况下确定它是否属于先前已知的恶意软件家族）和源代码比较相关。我们并不打算在此处给出所有关于二进制代码比较的研究工作的综合总结，而是仅介绍三个不同的解决方案，以简要但有限的方式概述可用于此领域的技术类型。我们通过解释为什么我们认为专门设计的解决方案来识别加密算法往往会产生比二进制代码比较更好的结果来结束本节。</p>
+<h3 id="131-例子"><a href="#1-3-1-例子" class="headerlink" title="1.3.1 例子"></a>1.3.1 例子</h3><p>在密码算法的情况下，设计特定的识别方法似乎很有意义。实际上，对称密码算法具有共同的特征。例如，它们具有非常简单的CFG（控制流图），不调用任何子函数（仅针对原语），也不进行任何系统调用，它们包含大量的位运算和算术指令，操作数是内存缓冲区。通过考虑这些特征，专门的识别方法将具有更高的效率并产生更精确的结果。例如，根据CFG、调用的子函数或XOR指令计数来分类密码原语是无效的。然而，这些特征非常有趣，可以设计有效的前端筛选器，以快速检测大型程序中可能的密码算法。</p>
+<p>总之，可以使用二进制代码比较来识别算法，但是设计一个以算法的抽象描述为输入的识别方法更有效。同时，创建专门的解决方案来识别密码算法非常有意义，因为它们具有显著的特征。</p>
+<h3 id="132-与加密算法识别的相关性"><a href="#1-3-2-与加密算法识别的相关性" class="headerlink" title="1.3.2 与加密算法识别的相关性"></a>1.3.2 与加密算法识别的相关性</h3><p>为了识别代码中实现的算法，可以将该代码与已知算法的参考实现进行比较。为了增加召回率，不仅可以与每个算法的一个参考实现进行比较，还可以与多个参考实现进行比较。二进制代码比较方法的成功取决于所选特征抽象出实现噪声的算法特征的能力。这种危险的提取必须做两次：对于每个二进制代码一次。为了识别算法，似乎更可靠的做法是从算法的抽象描述开始，而不是从具体实现开始。在二进制克隆检测的背景下，分析师不一定知道哪些算法被复制。而在算法识别的背景下，我们可以假设分析师可以访问他想要识别的算法的抽象描述。在这种情况下，拒绝抽象描述的算法，转而选择需要经历抽象阶段的参考实现是不太优化的。这是反对使用二进制代码比较进行算法识别的第一个论点。</p>
+<p>Sæbjørnsen等人提出了一种解决方案，用于在二进制程序中检测代码克隆。在高层次上，他们的解决方案遵循了一个经典的方法。首先将程序分成几个部分。一段程序可以是函数，如[43,28]中的函数，也可以只是指令反汇编后的滑动窗口。每段代码由一个特征向量来表征。为确定两段代码是否相似，需要比较它们的特征向量。二进制代码比较的方法通常在特征向量的组成和特征向量的比较方式上有所不同。在Sæbjørnsen等人提出的解决方案中，一段代码由指令助记符、操作数类型1和各种指令助记符和操作数类型的组合组成的袋子来表征。将这些袋子转换成特征向量的方法是计算每个元素出现的次数。然后使用1距离来比较特征向量。</p>
+<h2 id="14-原语识别"><a href="#1-4-原语识别" class="headerlink" title="1.4 原语识别"></a>1.4 原语识别</h2><p>本节将介绍两种已有的技术来识别密码原语。第一种技术基于密码原语输入输出值之间存在的独特关系。在某种程度上，这种技术可以被视为 BLEX [28] 中使用的动态方法的专业化版本。第二种技术依赖于密码函数的雪崩效应。</p>
+<h3 id="141-输入输出关系"><a href="#1-4-1-输入输出关系" class="headerlink" title="1.4.1 输入输出关系"></a>1.4.1 输入输出关系</h3><p>输入&#x2F;输出关系（ IOR ）是一种动态技术。它依赖于以下原则：对于给定的密码原语 $f: I → O$，输入值和相应输出值之间的关系以极高的概率标识了 $f$ 。换句话说，如果在执行过程中，一系列指令读取一个值 $i∈I$ 并写入一个值 $o∈O$ ，使得$f（i）&#x3D; o$，则可以得出结论该序列实现了 $f$ 。</p>
+<p>在其最基本的形式中，可以使用调试器实现这种技术。在给定函数之前和之后手动设置断点。命中断点后，将函数的参数转储并与已知的密码原语进行比较。然而，由于需测试的函数数量众多，手动查找正确参数的难度大，因此自动化该技术以进行更系统化的搜索是有意义的。</p>
+<p><strong>在完整执行轨迹中的 IOR</strong></p>
+<p>Gröbert 等人 [33] 是第一批使用 IOR 自动识别密码原语的人。他们的主要假设是：在程序执行的某个时刻，将从内存中读取并写入密码学参数。从实现的角度来看，目标程序在 DBI 环境中执行。每个内存访问的值和地址都记录在执行轨迹中。因为密码学参数通常比体系结构的字长要大，所以它们需要使用多个操作进行访问。为了重建可能的密码学参数，根据以下规则对内存操作数进行重新分组：</p>
+<ul>
+<li><p>参数存储在连续的内存位置上； </p>
+</li>
+<li><p>参数通过相同大小的操作访问； </p>
+</li>
+<li><p>参数以升序或降序访问； </p>
+</li>
+<li><p>用于访问同一参数的操作彼此接近。</p>
+</li>
+</ul>
+<p>第一个规则总是满足的。当在同一地址进行多次访问时，其他三个规则用于决定如何组织这些访问：组合在一个参数中或分成多个参数。其参数重建算法的详细伪代码在 [32] 中给出。尽管作者发布了他们的实现，但我们无法使其正常工作。我们的 AES合成样本（参见第 4.3.1 节）没有被检测到。这可能是由于我们方面的误解，或者他们的实现可能不够成熟。</p>
+<p><strong>函数轨迹中的 IOR</strong></p>
+<p>Zhao 等人 [81,80] 也使用 IOR 自动识别密码原语。但是，他们并非在整个执行轨迹上运行 IOR，而是仅在预选的轨迹段上运行 IOR 。在他们的工作中，一个轨迹段对应于一个函数的执行。根据三个简单的启发式准则选择轨迹段：</p>
+<ol>
+<li>它们必须包含特定的常量（参见第 1.1.2 节）</li>
+<li>它们必须至少包含一个 XOR 指令</li>
+<li>它们不能调用任何子函数。</li>
+</ol>
+<p>最后一个标准来自于密码原语通常实现为单个函数，不依赖于任何子函数。</p>
+<p>对于在轨迹段内被访问的每个内存地址，记录第一个读取的值（如果没有先前的写入）和最后一个写入的值。这样，重建了两个部分的内存快照。第一个快照对应于轨迹段执行之前的内存状态，它仅包含在轨迹段中读取的内存位置。第二个快照对应于轨迹段执行之后的内存状态。它仅包含在轨迹段中写入的内存位置。密码参数可在具有恰当大小的任何连续的内存位置，它们要么在第一个快照中（用于输入参数），要么在第二个快照中（用于输出参数）。</p>
+<p><strong>实验结果</strong></p>
+<p>我们根据 Zhao 等人提出的原语识别方案，实现了我们自己的版本。但这个实现仅限于 IOR 部分。我们没有实现他们的段选择启发式。因此，在下面的实验中，轨迹段是手动选择的。我们在合成样本数据集上得到的结果见表 1.1 。这些合成样本在第4.3.1 节中介绍。尽管存在一些特殊情况，我们下面会详细描述，但对于大多数合成样本，原语识别是成功的。</p>
+<p>基于 Crypto++ 的 AES 实现的合成样本在 192 位和 256 位密钥下未正确识别。这是因为四个第一轮密钥的字节序与其他轮的字节序不同，而我们用于验证 IOR 的相关实现与这种独特的轮密钥格式不兼容。</p>
+<p>基于 OpenSSL 的 AES 实现的合成样本也未正确识别。因为实现 AES 原语的函数是用汇编语言编写的，并且没有使用标准调用约定。此外，参数从 XMM 寄存器中读取。但是，如果跟踪段包括从内存读取参数并将它们写入 XMM 寄存器的包装函数，则可以成功识别。</p>
+<p>对于我们自己实现的 MD5 的所有合成样本，识别也失败了。在我们自己的 MD5 实现中，压缩函数没有作为单独的函数实现，而是直接在哈希函数的代码中实现。因为我们只使用压缩函数的参考实现来验证 IOR ，所以没有找到任何匹配项。</p>
+<p>基于 RC4 的任何合成样本都没有被正确识别。由于合成样本加密的消息大小不足以访问整个置换，因此无法重构输入参数中的初始置换状态。使用 MSVC -O2 编译的给 RFC 3174 给出的 SHA1 实现仅做到了部分识别。压缩函数被内联，我们需要提取相应的调用函数所对应的跟踪段。其中一个调用函数还填充了最后一个消息块，因此只有未填充的消息块被视为输入参数，并且未识别最后一次执行压缩函数。最后，基于Botan和TomCrypt的XTEA实现的合成样本也未正确识别。这是由于轮密钥格式的特殊性。综上所述，我们观察到以下限制：</p>
+<ul>
+<li>特定的调用约定，其中参数通过寄存器传递给被调用者。</li>
+<li>特定的参数格式。</li>
+<li>较小的参数（例如RC4的两个8位索引指针）。它增加了候选项的数量，并使系统搜索更加困难。值得注意的是，在[81]中提供的结果中，没有一个RC4测试场景被正确检测；</li>
+<li>在已记录的执行中必须访问的参数个数。</li>
+<li>特定的应用程序接口（API），如我们自己的 MD5 实现。</li>
+</ul>
+<p>然而，赵等人描述的方法简单且在大多数情况下可以得到令人满意的结果。由于分析仅限于跟踪片段，因此可以准确确定输入和输出值的集合。此外，在函数层面提取候选项增加了以合理格式写入内存的参数的发现机会。我们认为，这种方法在性能与复杂性之比方面表现最佳。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E6%AF%95%E4%B8%9A%E8%AE%BA%E6%96%87/" class="category-chain-item">毕业论文</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>本科论文学习记录-第一章</div>
+      <div>https://mirror4s.github.io/2023/05/23/毕业设计/Identification_of_cryptographic_algorithms_in_binary_programs/第一章/images/index.html</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>MirRoR4s</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年5月23日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/05/23/%E6%AF%95%E4%B8%9A%E8%AE%BE%E8%AE%A1/Identification_of_cryptographic_algorithms_in_binary_programs/%E5%89%8D%E8%A8%80/images/index.html" title="本科论文学习记录-前言">
+                        <span class="hidden-mobile">本科论文学习记录-前言</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
