@@ -24,7 +24,7 @@
 <meta property="og:description" content="跟随尚硅谷学习 Nginx">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-05-20T09:38:11.000Z">
-<meta property="article:modified_time" content="2023-05-21T09:17:58.021Z">
+<meta property="article:modified_time" content="2023-05-29T09:42:08.296Z">
 <meta property="article:author" content="MirRoR4s">
 <meta name="twitter:card" content="summary_large_image">
   
@@ -234,7 +234,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          730 字
+          2.1k 字
         
       </span>
     
@@ -245,7 +245,7 @@
         
         
         
-          7 分钟
+          18 分钟
         
       </span>
     
@@ -288,7 +288,7 @@
               <p class="note note-info">
                 
                   
-                    本文最后更新于：2023年5月21日 下午
+                    本文最后更新于：2023年5月29日 下午
                   
                 
               </p>
@@ -298,7 +298,6 @@
                 
                 <p>跟随尚硅谷学习 Nginx</p>
 <span id="more"></span>
-
 <h1 id="nginx-学习记录"><a href="#Nginx-学习记录" class="headerlink" title="Nginx 学习记录"></a>Nginx 学习记录</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><blockquote>
 <p>尚硅谷Nginx从入门到精通视频教程<br>B站直达：<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1yS4y1N76R">https://www.bilibili.com/video/BV1yS4y1N76R</a><br>百度网盘：<a target="_blank" rel="noopener" href="https://pan.baidu.com/s/1dfVx6w6KslkjJXQuf3Zyeg">https://pan.baidu.com/s/1dfVx6w6KslkjJXQuf3Zyeg</a> 提取码：yyds<br>阿里云盘：<a target="_blank" rel="noopener" href="https://www.aliyundrive.com/s/xHrkEckiQZw">https://www.aliyundrive.com/s/xHrkEckiQZw</a> （教程配套资料请从百度网盘下载）</p>
 <p>围观尚硅谷Java课程：<a target="_blank" rel="noopener" href="http://www.atguigu.com/kecheng.shtml">http://www.atguigu.com/kecheng.shtml</a><br>更多尚硅谷视频教程请访问：<a target="_blank" rel="noopener" href="http://www.atguigu.com/download.shtml">http://www.atguigu.com/download.shtml</a></p>
@@ -312,35 +311,65 @@
 <li>修改网卡配置文件</li>
 </ul>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">vi /etc/sysconfig/network-scripts/ifcfg-ens33<br></code></pre></td></tr></table></figure>
-
 <p>将 <code>onboot</code> 选项改为 yes。</p>
 <ul>
 <li>重启网络服务</li>
 </ul>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">systemctl restart network<br></code></pre></td></tr></table></figure>
-
 <ul>
 <li>测试</li>
 </ul>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">ping qq.com<br></code></pre></td></tr></table></figure>
-
 <ul>
 <li>之后老师采用 Xshell 来管理虚拟机了，好在我已经安装了此软件，所以这里直接跟着继续学。</li>
 </ul>
 <p><strong>配置静态 ip：</strong></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">vi /etc/sysconfig/network-scripts/ifcfg-ens33<br></code></pre></td></tr></table></figure>
-
 <p>追加如下内容：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">IPADDR=192.168.184.130<br>NETMASK=255.255.255.0<br>GATEWAY=192.168.184.2 <br>DNS1=8.8.8.8<br></code></pre></td></tr></table></figure>
-
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">systemctl restart network<br></code></pre></td></tr></table></figure>
-
 <ul>
 <li>关于网络的问题尚硅谷老师也说的很清楚，跟着他基本就可以解决。</li>
 </ul>
-<h3 id="安装-nginx"><a href="#安装-Nginx" class="headerlink" title="安装 Nginx"></a>安装 Nginx</h3><ul>
+<h3 id="安装-开源版-nginx"><a href="#安装-开源版-Nginx" class="headerlink" title="安装 开源版 Nginx"></a>安装 开源版 Nginx</h3><ul>
 <li>我们使用 Nginx 最原始版本</li>
 </ul>
+<p>Nginx 软件的话尚硅谷的百度网盘里面自带了，下载下来即可。</p>
+<p>然后安装的话通过 Xshell 的 文件传输功能即可，感觉这里有点麻烦，正常来说应该直接在 linux 下下载源文件的。</p>
+<p>之后解压：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash">tar zxvf filename<br><span class="hljs-built_in">cd</span> filename<br><span class="hljs-built_in">ls</span><br>./configure<br><br></code></pre></td></tr></table></figure>
+<p>缺少 gcc 用 yum 安装：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cmake">yum <span class="hljs-keyword">install</span> -y gcc<br></code></pre></td></tr></table></figure>
+<p>重新运行 configure，指定安装路径：</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">.<span class="hljs-regexp">/configure --prefix=/u</span>sr<span class="hljs-regexp">/local/</span>nginx<br></code></pre></td></tr></table></figure>
+<p>缺少 perl 库，安装：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cmake">yum <span class="hljs-keyword">install</span> -y pcre pcre-devel<br></code></pre></td></tr></table></figure>
+<p>缺少 zlib 库：</p>
+<figure class="highlight nsis"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs nsis">yum install -y <span class="hljs-literal">zlib</span> <span class="hljs-literal">zlib</span>-devel<br></code></pre></td></tr></table></figure>
+<p>没什么问题后就 make：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">make<br>make install<br></code></pre></td></tr></table></figure>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">cd <span class="hljs-regexp">/usr/</span>local <span class="hljs-comment">#可以看到 安装的 nginx</span><br></code></pre></td></tr></table></figure>
+<p><strong>启动nginx</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">cd</span> /usr/local/sbin<br><span class="hljs-built_in">ls</span> <span class="hljs-comment"># nginx</span><br>./nginx <span class="hljs-comment">#启动</span><br>ip addr <span class="hljs-comment"># 查看 IP</span><br><span class="hljs-comment">#在浏览器中访问，无法访问可能是防火墙的问题</span><br></code></pre></td></tr></table></figure>
+<p><strong>关闭防火墙</strong></p>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs arduino">systemctl stop firewalld.service<br></code></pre></td></tr></table></figure>
+<p>再次访问应该就可以了。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">./nginx -s stop <span class="hljs-comment"># 快速停止</span><br>./nginx -s quit <span class="hljs-comment"># 优雅关闭，在退出前完成已连接的请求</span><br>./nginx -s reload <span class="hljs-comment"># 重新加载配置</span><br></code></pre></td></tr></table></figure>
+<p><strong>禁止防火墙开机自启动</strong></p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs routeros">systemctl <span class="hljs-built_in">disable</span> firewalld.service<br></code></pre></td></tr></table></figure>
+<p><strong>将 nginx 安装成系统服务</strong></p>
+<p>创建服务脚本</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">vi /usr/lib/systemmd/system/nginx.service<br></code></pre></td></tr></table></figure>
+<p>服务脚本内容</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs bash">[Unit]<br>Description=nginx - web server<br>After=network.target remote-fs.target nss-lookup.target<br>[Service]<br>Type=forking<br>PIDFile=/usr/local/nginx/logs/nginx.pid<br>ExecStartPre=/usr/local/nginx/sbin/nginx -t -c /usr/local/nginx/conf/nginx.conf<br>ExecStart=/usr/local/nginx/sbin/nginx -c /usr/local/nginx/conf/nginx.conf<br>ExecReload=/usr/local/nginx/sbin/nginx -s reload<br>ExecStop=/usr/local/nginx/sbin/nginx -s stop<br>ExecQuit=/usr/local/nginx/sbin/nginx -s quit<br>PrivateTmp=<span class="hljs-literal">true</span><br>[Install]<br>WantedBy=multi-user.target<br></code></pre></td></tr></table></figure>
+<p>重新加载系统服务</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">systemctl daemon-reload<br></code></pre></td></tr></table></figure>
+<p>启动服务</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">./nginx -s stop <span class="hljs-comment">#先停止之前的服务</span><br>systemctl start nginx.service<br>systemctl status ngix <span class="hljs-comment"># 查看服务状态</span><br>systemctl reload nginx.service<br></code></pre></td></tr></table></figure>
+<p><strong>设置开机自启动</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">systemctl <span class="hljs-built_in">enable</span> nginx.service<br></code></pre></td></tr></table></figure>
+<h2 id="nginx-目录结构"><a href="#nginx-目录结构" class="headerlink" title="nginx 目录结构"></a>nginx 目录结构</h2><p>logs 是日志目录</p>
+<h2 id="别人的笔记"><a href="#别人的笔记" class="headerlink" title="别人的笔记"></a>别人的笔记</h2><p>懒得自己做笔记，参看这位好哥哥的：<a target="_blank" rel="noopener" href="https://www.yuque.com/wexiao/nginx/nr0app#h2d6n">https://www.yuque.com/wexiao/nginx/nr0app#h2d6n</a></p>
 
                 
               </div>

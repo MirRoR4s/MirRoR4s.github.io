@@ -964,7 +964,6 @@
     <url>/2023/05/20/%E5%BC%80%E5%8F%91/Nginx/images/index.html</url>
     <content><![CDATA[<p>跟随尚硅谷学习 Nginx</p>
 <span id="more"></span>
-
 <h1 id="nginx-学习记录"><a href="#Nginx-学习记录" class="headerlink" title="Nginx 学习记录"></a>Nginx 学习记录</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><blockquote>
 <p>尚硅谷Nginx从入门到精通视频教程<br>B站直达：<a href="https://www.bilibili.com/video/BV1yS4y1N76R">https://www.bilibili.com/video/BV1yS4y1N76R</a><br>百度网盘：<a href="https://pan.baidu.com/s/1dfVx6w6KslkjJXQuf3Zyeg">https://pan.baidu.com/s/1dfVx6w6KslkjJXQuf3Zyeg</a> 提取码：yyds<br>阿里云盘：<a href="https://www.aliyundrive.com/s/xHrkEckiQZw">https://www.aliyundrive.com/s/xHrkEckiQZw</a> （教程配套资料请从百度网盘下载）</p>
 <p>围观尚硅谷Java课程：<a href="http://www.atguigu.com/kecheng.shtml">http://www.atguigu.com/kecheng.shtml</a><br>更多尚硅谷视频教程请访问：<a href="http://www.atguigu.com/download.shtml">http://www.atguigu.com/download.shtml</a></p>
@@ -978,35 +977,65 @@
 <li>修改网卡配置文件</li>
 </ul>
 <figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">vi /etc/sysconfig/network-scripts/ifcfg-ens33<br></code></pre></td></tr></table></figure>
-
 <p>将 <code>onboot</code> 选项改为 yes。</p>
 <ul>
 <li>重启网络服务</li>
 </ul>
 <figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">systemctl restart network<br></code></pre></td></tr></table></figure>
-
 <ul>
 <li>测试</li>
 </ul>
 <figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">ping qq.com<br></code></pre></td></tr></table></figure>
-
 <ul>
 <li>之后老师采用 Xshell 来管理虚拟机了，好在我已经安装了此软件，所以这里直接跟着继续学。</li>
 </ul>
 <p><strong>配置静态 ip：</strong></p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">vi /etc/sysconfig/network-scripts/ifcfg-ens33<br></code></pre></td></tr></table></figure>
-
 <p>追加如下内容：</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">IPADDR=192.168.184.130<br>NETMASK=255.255.255.0<br>GATEWAY=192.168.184.2 <br>DNS1=8.8.8.8<br></code></pre></td></tr></table></figure>
-
 <figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">systemctl restart network<br></code></pre></td></tr></table></figure>
-
 <ul>
 <li>关于网络的问题尚硅谷老师也说的很清楚，跟着他基本就可以解决。</li>
 </ul>
-<h3 id="安装-nginx"><a href="#安装-Nginx" class="headerlink" title="安装 Nginx"></a>安装 Nginx</h3><ul>
+<h3 id="安装-开源版-nginx"><a href="#安装-开源版-Nginx" class="headerlink" title="安装 开源版 Nginx"></a>安装 开源版 Nginx</h3><ul>
 <li>我们使用 Nginx 最原始版本</li>
 </ul>
+<p>Nginx 软件的话尚硅谷的百度网盘里面自带了，下载下来即可。</p>
+<p>然后安装的话通过 Xshell 的 文件传输功能即可，感觉这里有点麻烦，正常来说应该直接在 linux 下下载源文件的。</p>
+<p>之后解压：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">tar zxvf filename<br><span class="hljs-built_in">cd</span> filename<br><span class="hljs-built_in">ls</span><br>./configure<br><br></code></pre></td></tr></table></figure>
+<p>缺少 gcc 用 yum 安装：</p>
+<figure class="highlight cmake"><table><tr><td class="code"><pre><code class="hljs cmake">yum <span class="hljs-keyword">install</span> -y gcc<br></code></pre></td></tr></table></figure>
+<p>重新运行 configure，指定安装路径：</p>
+<figure class="highlight awk"><table><tr><td class="code"><pre><code class="hljs awk">.<span class="hljs-regexp">/configure --prefix=/u</span>sr<span class="hljs-regexp">/local/</span>nginx<br></code></pre></td></tr></table></figure>
+<p>缺少 perl 库，安装：</p>
+<figure class="highlight cmake"><table><tr><td class="code"><pre><code class="hljs cmake">yum <span class="hljs-keyword">install</span> -y pcre pcre-devel<br></code></pre></td></tr></table></figure>
+<p>缺少 zlib 库：</p>
+<figure class="highlight nsis"><table><tr><td class="code"><pre><code class="hljs nsis">yum install -y <span class="hljs-literal">zlib</span> <span class="hljs-literal">zlib</span>-devel<br></code></pre></td></tr></table></figure>
+<p>没什么问题后就 make：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">make<br>make install<br></code></pre></td></tr></table></figure>
+<figure class="highlight awk"><table><tr><td class="code"><pre><code class="hljs awk">cd <span class="hljs-regexp">/usr/</span>local <span class="hljs-comment">#可以看到 安装的 nginx</span><br></code></pre></td></tr></table></figure>
+<p><strong>启动nginx</strong></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">cd</span> /usr/local/sbin<br><span class="hljs-built_in">ls</span> <span class="hljs-comment"># nginx</span><br>./nginx <span class="hljs-comment">#启动</span><br>ip addr <span class="hljs-comment"># 查看 IP</span><br><span class="hljs-comment">#在浏览器中访问，无法访问可能是防火墙的问题</span><br></code></pre></td></tr></table></figure>
+<p><strong>关闭防火墙</strong></p>
+<figure class="highlight arduino"><table><tr><td class="code"><pre><code class="hljs arduino">systemctl stop firewalld.service<br></code></pre></td></tr></table></figure>
+<p>再次访问应该就可以了。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">./nginx -s stop <span class="hljs-comment"># 快速停止</span><br>./nginx -s quit <span class="hljs-comment"># 优雅关闭，在退出前完成已连接的请求</span><br>./nginx -s reload <span class="hljs-comment"># 重新加载配置</span><br></code></pre></td></tr></table></figure>
+<p><strong>禁止防火墙开机自启动</strong></p>
+<figure class="highlight routeros"><table><tr><td class="code"><pre><code class="hljs routeros">systemctl <span class="hljs-built_in">disable</span> firewalld.service<br></code></pre></td></tr></table></figure>
+<p><strong>将 nginx 安装成系统服务</strong></p>
+<p>创建服务脚本</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">vi /usr/lib/systemmd/system/nginx.service<br></code></pre></td></tr></table></figure>
+<p>服务脚本内容</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">[Unit]<br>Description=nginx - web server<br>After=network.target remote-fs.target nss-lookup.target<br>[Service]<br>Type=forking<br>PIDFile=/usr/local/nginx/logs/nginx.pid<br>ExecStartPre=/usr/local/nginx/sbin/nginx -t -c /usr/local/nginx/conf/nginx.conf<br>ExecStart=/usr/local/nginx/sbin/nginx -c /usr/local/nginx/conf/nginx.conf<br>ExecReload=/usr/local/nginx/sbin/nginx -s reload<br>ExecStop=/usr/local/nginx/sbin/nginx -s stop<br>ExecQuit=/usr/local/nginx/sbin/nginx -s quit<br>PrivateTmp=<span class="hljs-literal">true</span><br>[Install]<br>WantedBy=multi-user.target<br></code></pre></td></tr></table></figure>
+<p>重新加载系统服务</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">systemctl daemon-reload<br></code></pre></td></tr></table></figure>
+<p>启动服务</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">./nginx -s stop <span class="hljs-comment">#先停止之前的服务</span><br>systemctl start nginx.service<br>systemctl status ngix <span class="hljs-comment"># 查看服务状态</span><br>systemctl reload nginx.service<br></code></pre></td></tr></table></figure>
+<p><strong>设置开机自启动</strong></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">systemctl <span class="hljs-built_in">enable</span> nginx.service<br></code></pre></td></tr></table></figure>
+<h2 id="nginx-目录结构"><a href="#nginx-目录结构" class="headerlink" title="nginx 目录结构"></a>nginx 目录结构</h2><p>logs 是日志目录</p>
+<h2 id="别人的笔记"><a href="#别人的笔记" class="headerlink" title="别人的笔记"></a>别人的笔记</h2><p>懒得自己做笔记，参看这位好哥哥的：<a href="https://www.yuque.com/wexiao/nginx/nr0app#h2d6n">https://www.yuque.com/wexiao/nginx/nr0app#h2d6n</a></p>
 ]]></content>
       <categories>
         <category>Nginx</category>
@@ -1672,6 +1701,85 @@
 <h3 id="intro-to-htmlx2fcss"><a href="#Intro-to-HTML-x2F-CSS" class="headerlink" title="Intro to HTML&#x2F;CSS"></a>Intro to HTML&#x2F;CSS</h3>]]></content>
       <categories>
         <category>MIT Web Development Crash Course</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>代码审计</title>
+    <url>/2023/05/29/%E6%BC%8F%E6%B4%9E%E6%8C%96%E6%8E%98/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/images/index.html</url>
+    <content><![CDATA[<h1 id="代码审计"><a href="#代码审计" class="headerlink" title="代码审计"></a>代码审计</h1><span id="more"></span>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>才刚刚开始的我，当然要站在别人的肩膀上。以下是阅读过的好哥哥文章：</p>
+<h3 id="java-相关"><a href="#Java-相关" class="headerlink" title="Java 相关"></a>Java 相关</h3><ul>
+<li><a href="https://github.com/proudwind/javasec_study">https://github.com/proudwind/javasec_study</a></li>
+<li><a href="https://github.com/zxcvbn001/CodeReview">https://github.com/zxcvbn001/CodeReview</a></li>
+</ul>
+<h3 id="php-相关"><a href="#Php-相关" class="headerlink" title="Php 相关"></a>Php 相关</h3><ul>
+<li><a href="https://github.com/aleenzz/php_bug_wiki">https://github.com/aleenzz/php_bug_wiki</a></li>
+</ul>
+]]></content>
+  </entry>
+  <entry>
+    <title>代码审计靶场</title>
+    <url>/2023/05/29/%E6%BC%8F%E6%B4%9E%E6%8C%96%E6%8E%98/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E9%9D%B6%E5%9C%BA/images/index.html</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
+    <title>WebGoat</title>
+    <url>/2023/05/29/%E6%BC%8F%E6%B4%9E%E6%8C%96%E6%8E%98/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E9%9D%B6%E5%9C%BA/WebGoat/images/index.html</url>
+    <content><![CDATA[<h1 id="webgoat"><a href="#WebGoat" class="headerlink" title="WebGoat"></a>WebGoat</h1><span id="more"></span>
+<h2 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建</h2><ul>
+<li>地址：<a href="https://github.com/WebGoat/WebGoat">https://github.com/WebGoat/WebGoat</a></li>
+</ul>
+<p>官方已经说了，只要你的机器安装了浏览器和 burp，就可以直接使用 docker 安装 WebGoat</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">git <span class="hljs-built_in">clone</span> https://github.com/WebGoat/WebGoat.git<br><span class="hljs-built_in">cd</span> WebGoat<br><span class="hljs-comment">#docker run -it -p 127.0.0.1:8080:8080 -p 127.0.0.1:9090:9090 webgoat/webgoat</span><br><span class="hljs-comment">#为了方便，我改成 0.0.0.0</span><br>sudo docker run --name webgoat -it -p 0.0.0.0:8080:8080 -p 0.0.0.0:9090:9090 webgoat/webgoat<br><br></code></pre></td></tr></table></figure>
+<ul>
+<li>快速开始也可以参看<a href="https://owasp.org/www-project-webgoat/">此处</a></li>
+</ul>
+<p>浏览器访问 <a href="http://localhost:8080/WebGoat">http://localhost:8080/WebGoat</a>.</p>
+<p>之后注册，这里记忆一下我的账号密码：</p>
+<blockquote>
+<p>账号：mirror4s</p>
+<p>密码：mirror4s</p>
+</blockquote>
+<p>忽然想到后续我可能需要动态调试，所以安装了一个 idea。</p>
+<blockquote>
+<p>破解版链接可以看这里：<a href="https://www.ajihuo.com/idea/4222.html">https://www.ajihuo.com/idea/4222.html</a></p>
+</blockquote>
+<h3 id="配置动调调试"><a href="#配置动调调试" class="headerlink" title="配置动调调试"></a>配置动调调试</h3><ul>
+<li>感谢 ChatGPT，真的帮助了我很多。或许我真正要感谢的是 OpenAI，<strong>是给我提供 GPT 服务的大哥</strong>。</li>
+</ul>
+<h4 id="配置-dockerfile"><a href="#配置-Dockerfile" class="headerlink" title="配置 Dockerfile"></a>配置 Dockerfile</h4><p>修改 Dockerfile，在 <code>ENTRYPOINT</code> 命令中增加调试相关参数，如下所示：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java">ENTRYPOINT [<span class="hljs-string">&quot;java&quot;</span>, \<br>   <span class="hljs-string">&quot;-Duser.home=/home/webgoat&quot;</span>, \<br>   <span class="hljs-string">&quot;-Dfile.encoding=UTF-8&quot;</span>, \<br>   <span class="hljs-string">&quot;--add-opens&quot;</span>, <span class="hljs-string">&quot;java.base/java.lang=ALL-UNNAMED&quot;</span>, \<br>   <span class="hljs-string">&quot;--add-opens&quot;</span>, <span class="hljs-string">&quot;java.base/java.util=ALL-UNNAMED&quot;</span>, \<br>   <span class="hljs-string">&quot;--add-opens&quot;</span>, <span class="hljs-string">&quot;java.base/java.lang.reflect=ALL-UNNAMED&quot;</span>, \<br>   <span class="hljs-string">&quot;--add-opens&quot;</span>, <span class="hljs-string">&quot;java.base/java.text=ALL-UNNAMED&quot;</span>, \<br>   <span class="hljs-string">&quot;--add-opens&quot;</span>, <span class="hljs-string">&quot;java.desktop/java.beans=ALL-UNNAMED&quot;</span>, \<br>   <span class="hljs-string">&quot;--add-opens&quot;</span>, <span class="hljs-string">&quot;java.desktop/java.awt.font=ALL-UNNAMED&quot;</span>, \<br>   <span class="hljs-string">&quot;--add-opens&quot;</span>, <span class="hljs-string">&quot;java.base/sun.nio.ch=ALL-UNNAMED&quot;</span>, \<br>   <span class="hljs-string">&quot;--add-opens&quot;</span>, <span class="hljs-string">&quot;java.base/java.io=ALL-UNNAMED&quot;</span>, \<br>   <span class="hljs-string">&quot;--add-opens&quot;</span>, <span class="hljs-string">&quot;java.base/java.util=ALL-UNNAMED&quot;</span>, \<br>   <span class="hljs-string">&quot;-Drunning.in.docker=true&quot;</span>, \<br>   <span class="hljs-string">&quot;-Dwebgoat.host=0.0.0.0&quot;</span>, \<br>   <span class="hljs-string">&quot;-Dwebwolf.host=0.0.0.0&quot;</span>, \<br>   <span class="hljs-string">&quot;-Dwebgoat.port=8080&quot;</span>, \<br>   <span class="hljs-string">&quot;-Dwebwolf.port=9090&quot;</span>, \<br>   <span class="hljs-string">&quot;-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005&quot;</span>, \<br>   <span class="hljs-string">&quot;-jar&quot;</span>, <span class="hljs-string">&quot;webgoat.jar&quot;</span>]<br><br></code></pre></td></tr></table></figure>
+<p>其中 <code>-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005</code> 是启用远程调试的参数。这将在容器内开放 5005 端口，作为调试端口。</p>
+<p>在 Intel IDEA 中，您需要创建一个新的远程配置，并使用容器的 IP 地址和 5005 端口来进行连接和调试。</p>
+<p>运行容器时，请确保将 <code>-p 5005:5005</code> 参数添加到 <code>docker run</code> 命令中以映射容器的端口。</p>
+<p>启动：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">docker run --name webgoat -it -p 8080:8080 -p 9090:9090 -p 5005:5005 -e JAVA_TOOL_OPTIONS=<span class="hljs-string">&quot;-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005&quot;</span> webgoat/webgoat<br><br></code></pre></td></tr></table></figure>
+<h4 id="配置-idea"><a href="#配置-IDEA" class="headerlink" title="配置 IDEA"></a>配置 IDEA</h4><ol>
+<li>获取 WebGoat 源代码</li>
+</ol>
+<p>您可以通过以下命令从 WebGoat GitHub 存储库中克隆源代码：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">git <span class="hljs-built_in">clone</span> https://github.com/WebGoat/WebGoat.git<br></code></pre></td></tr></table></figure>
+<ol>
+<li>将源代码导入 Intel IDEA</li>
+</ol>
+<p>在 Intel IDEA 中，选择 <code>File -&gt; Open</code>，然后选择从第一步中克隆的 WebGoat 目录，并等待 Intel IDEA 将项目导入。</p>
+<ol>
+<li>在 IDEA 左侧的 <code>Run</code> 面板中，点击 <code>Edit Configurations...</code>。</li>
+<li>在弹出的窗口中，点击左上角的 <code>+</code> 按钮，选择 <code>Remote</code>。</li>
+<li>在创建一个新的 Remote 配置后，设置 <code>Name</code> 为您喜欢的名称，<code>Debugger mode</code> 选择 <code>Attach to remote JVM</code>，<code>Host</code> 填写 <code>localhost</code>（如果是在远程服务器上运行，则需要填写服务器的 IP 地址），<code>Port</code> 填写您在 <code>docker run</code> 命令中设置的调试端口，即 5005。</li>
+<li>class path 就选择刚打开的 WebGoat 目录</li>
+<li>点击 <code>OK</code> 按钮保存并退出配置窗口。</li>
+<li>启动 WebGoat 容器并等待其启动完毕。</li>
+<li>在 IDEA 左侧的 <code>Run</code> 面板中，选择您刚刚创建的 Remote 配置。然后，单击绿色的 <code>Debug</code> 按钮启动远程调试。</li>
+<li>如果一切正常，您应该能够连接到 WebGoat 的远程调试进程。现在，您可以开始像本地调试一样操作，并在 IDEA 中进行断点调试和查看变量等。</li>
+</ol>
+<h2 id="injection"><a href="#Injection" class="headerlink" title="Injection"></a>Injection</h2><h3 id="sql-injection-intro"><a href="#SQL-Injection-intro" class="headerlink" title="SQL Injection (intro)"></a>SQL Injection (intro)</h3><p>里面的一些东西真的是我闻所未闻的（这也体现出我对 SQL 的理解太浅薄），十分建议参看。总的来说，WebGoat 很学院派，我喜欢。</p>
+<h3 id="第二关"><a href="#第二关" class="headerlink" title="第二关"></a>第二关</h3><p>首先记录一下路由：<br><img src="/2023/05/29/%E6%BC%8F%E6%B4%9E%E6%8C%96%E6%8E%98/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E9%9D%B6%E5%9C%BA/WebGoat/images/index/image-20230529203147156.png" class title="image-20230529203147156"></p>
+<p><strong>开始动调</strong></p>
+<img src="/2023/05/29/%E6%BC%8F%E6%B4%9E%E6%8C%96%E6%8E%98/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E9%9D%B6%E5%9C%BA/WebGoat/images/index/image-20230529203532885.png" class title="image-20230529203532885">
+]]></content>
+      <categories>
+        <category>代码审计</category>
       </categories>
   </entry>
 </search>
