@@ -4,8 +4,13 @@ jobs:
     Write-Good-Action:
         runs-on: ubuntu-latest
         steps:
+            - name: Check out repository code
+              uses: actions/checkout@v4
             - name: Lint Markdown
               uses: tomwhross/write-good-action@v1.6
+            - name: List files in the repository
+              run: |
+                ls ${{ github.workspace }}
             - run: echo "The check is finished!"
             - run: echo "This job's status is ${{ job.status }}."
             
