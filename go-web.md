@@ -12,6 +12,6 @@
 
 ## gnext
 
-[gnext](https://meteran.github.io/gnext/documentation/site/) 是一个基于Gin的Webu框架，其和Gin最大的不同之处在于完全自动化的API文档生成、自动化的请求数据和响应数据校验，同时又能够兼容Gin的中间件等一些关键特性。
+[gnext](https://meteran.github.io/gnext/documentation/site/) 是一个基于Gin的Web框架，其和Gin最大的不同之处在于完全自动化的API文档生成、自动化的请求数据和响应数据校验，同时又能够兼容Gin的中间件等一些关键特性。
 
 不过这款框架目前还在开发过程中，许多功能设置的并不完善，不过鉴于其保留了大部分Gin特性/功能的缘故，投入到生产项目中使用应该问题不大。
