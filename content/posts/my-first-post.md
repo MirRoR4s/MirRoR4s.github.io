@@ -16,3 +16,7 @@ title = '博客搭建'
 根据[官方文档](https://gohugo.io/hosting-and-deployment/hosting-on-github/)的描述，需要利用github的workflow完成hugo网页的部署。
 
 > 这里一定要注意博客目录本身要和远程仓库关联起来。
+
+## 引用
+
+如果遇到了一些问题，可以参看此处的[文章](https://jianzhnie.github.io/post/hugo_site/)。
