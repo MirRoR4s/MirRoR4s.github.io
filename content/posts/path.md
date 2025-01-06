@@ -1,5 +1,8 @@
-# Computer-learning-resources
-
++++
+date = '2025-01-06T09:32:17+08:00'
+draft = true
+title = '学习路线'
++++
 ## 前言
 
 汇总我的计算机学习资源
@@ -15,6 +18,7 @@ Web 开发跟随 MDN 的脚步即可，学习完毕之后上手 React 或者 Vue
 ## 编程语言
 
 ### Python
+
 1. [官方教程](https://docs.python.org/zh-cn/3/tutorial/index.html)
 2. [python 之禅](https://pythontips.readthedocs.io/zh/latest/2016-03-07-iterator-and-generator/)
 
@@ -45,6 +49,14 @@ Web 开发跟随 MDN 的脚步即可，学习完毕之后上手 React 或者 Vue
 - [6.031 中文翻译-工大李秋豪](https://www.cnblogs.com/liqiuhao/category/1167752.html)
 
 ## 数据库
+
 - [w3School-sql](https://www.w3schools.com/sql/)
 - [SQL样式指南](https://www.sqlstyle.guide/zh/)：描述SQL语句的编写规范等，有一款名为 Prettier SQL VSCode 的插件支持这种格式。
 
+## Go
+
+1. [官方教程](https://go.dev/doc/tutorial/#)
+2. [Go 指南中文版](https://tour.go-zh.org/list)
+3. [Effective Go 中文版](https://github.com/liupzmin/effective-go-zh/tree/main)
+4. [Go 入门指南](https://github.com/unknwon/the-way-to-go_ZH_CN/tree/master)
+5. [Gin 框架文档-中文版](https://gin-gonic.com/zh-cn/docs/)
