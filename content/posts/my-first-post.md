@@ -1,6 +1,6 @@
 +++
 date = '2025-01-06T09:07:27+08:00'
-draft = true
+draft = false
 title = '博客搭建'
 +++
 ## 前言
