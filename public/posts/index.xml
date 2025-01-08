@@ -2,17 +2,79 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>Posts on 博客</title>
-    <link>http://localhost:1313/posts/</link>
+    <link>https://mirror4s.github.io/posts/</link>
     <description>Recent content in Posts on 博客</description>
     <generator>Hugo -- 0.140.2</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Mon, 06 Jan 2025 09:32:17 +0800</lastBuildDate>
-    <atom:link href="http://localhost:1313/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 07 Jan 2025 21:54:02 +0800</lastBuildDate>
+    <atom:link href="https://mirror4s.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>61b Lec35</title>
+      <link>https://mirror4s.github.io/posts/61b-lec35/</link>
+      <pubDate>Tue, 07 Jan 2025 21:54:02 +0800</pubDate>
+      <guid>https://mirror4s.github.io/posts/61b-lec35/</guid>
+      <description>&lt;p&gt;这是一个测试&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>61b Lec34</title>
+      <link>https://mirror4s.github.io/posts/61b-lec34/</link>
+      <pubDate>Mon, 06 Jan 2025 20:37:52 +0800</pubDate>
+      <guid>https://mirror4s.github.io/posts/61b-lec34/</guid>
+      <description>&lt;h2 id=&#34;课后习题&#34;&gt;课后习题&lt;/h2&gt;
+&lt;p&gt;问：对下面的三个序列对，对每一对序列，判断第二个序列是否会出现在第一个序列的排序过程中。&lt;/p&gt;
+&lt;p&gt;&lt;img alt=&#34;alt text&#34; loading=&#34;lazy&#34; src=&#34;../../static/61b-lec34/image.png&#34;&gt;&lt;/p&gt;
+&lt;p&gt;答：考察插入排序、归并排序、快速排序、堆排序。我觉得这道题的难点在于要在20分钟之内解决。（试卷11道题只给了110分钟，本题占据最高的3分）&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>你好</title>
+      <link>https://mirror4s.github.io/posts/61b-lec33/</link>
+      <pubDate>Mon, 06 Jan 2025 20:26:32 +0800</pubDate>
+      <guid>https://mirror4s.github.io/posts/61b-lec33/</guid>
+      <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;
+&lt;p&gt;本节课程讲述的内容如下：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;快速排序（quicksort）算法的起源&lt;/li&gt;
+&lt;li&gt;快速排序算法描述&lt;/li&gt;
+&lt;li&gt;快速排序算法性能&lt;/li&gt;
+&lt;/ol&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;起源httpsdocsgooglecompresentationd19cbz7ou-_b5y0btyo1ifiaeqcn0digccz49cmo9_hy4editslideidg9816be120_1_370&#34;&gt;&lt;a href=&#34;https://docs.google.com/presentation/d/19CbZ7oU-_b5y0Btyo1IfIAEqcn0DIgcCz49cMO9_hy4/edit#slide=id.g9816be120_1_370&#34;&gt;起源&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;快速排序算法（以下简称快排）是一个名为 Tony Hoare 的人提出的。他当时在开发一个将英文翻译为俄文的程序，具体的实现思路是在遇见一个英文单词时利用二分查找算法在字典中查找该英文单词对应的俄文单词并进行相应的替换。&lt;/p&gt;
+&lt;p&gt;在理想的情况下，如果字典的长度是D，那么执行一次二分查找的时间复杂度是$\Theta(logD)$，所以将N个英文单词翻译为对应俄文单词的时间复杂度就为$\Theta(NlogD)$（执行N次二分查找）。然而现实并没有这么理想，因为字典信息存储在磁带上，所以从后面的单词跳到前面的单词就需要移动磁带，这会花费一定的时间，所以执行二分查找的时间复杂度并不是$O(logD)$。解决这个问题的办法就是让磁带不会来回移动而是一直往后走，实现该目标的措施就是事先排序英文句子，所以Tone Hoare就需要找到一个能够排序英文句子的算法，这就引出了快排。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;算法描述&#34;&gt;算法描述&lt;/h2&gt;
+&lt;p&gt;快排的核心是一个称为&lt;a href=&#34;https://docs.google.com/presentation/d/19CbZ7oU-_b5y0Btyo1IfIAEqcn0DIgcCz49cMO9_hy4/edit#slide=id.g4661758db_113&#34;&gt;分区&lt;/a&gt;（partition）的操作，分区指的是选中数组的某个元素（这个被选中的元素成为pivot），经过一些步骤使得pivot左边的元素都小于等于pivot，而pivot右边的元素都大于等于pivot（这个过程中pivot在数组中的位置可能会也可能不会改变）。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;课后习题&#34;&gt;课后习题&lt;/h2&gt;
+&lt;p&gt;问：找到快排一个最坏情况下的输入（假设总选择最左边的元素作为pivot）&lt;/p&gt;
+&lt;p&gt;答：最坏情况出现在pivot分区后总落在数组的第一个位置，这种情况对应的输入可以是 [1, 2, 3, 4, 5]&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;问：快排在最好、最坏、平均情况下的递归深度是多少？&lt;/p&gt;
+&lt;p&gt;答：&lt;strong&gt;分区的次数和递归深度相等&lt;/strong&gt;，假设总选择最左边的元素作为pivot，那么：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;最好情况：最好情况下会进行$O(log^n)$次分区，所以最好情况下的递归深度是$O(log^n)$&lt;/li&gt;
+&lt;li&gt;最坏情况：最坏情况下会进行N次分区，所以最坏情况下的递归深度是$O(n)$&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://docs.google.com/presentation/d/19CbZ7oU-_b5y0Btyo1IfIAEqcn0DIgcCz49cMO9_hy4/edit#slide=id.g4661758db_1583&#34;&gt;平均情况&lt;/a&gt;：$O(log^n)$&lt;/li&gt;
+&lt;/ol&gt;
+&lt;hr&gt;
+&lt;p&gt;问：假设采用的分区策略是将元素分为3类：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;小于pivot&lt;/li&gt;
+&lt;li&gt;等于pivot&lt;/li&gt;
+&lt;li&gt;大于pivot&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;假设该分区策略的运行时间是$\Theta(N)$，证明一个快排对一个长为N但仅有7个不同元素的数组的运行时间是$\Theta(N)$。（比如[0, 1, 0, 0, 6, 6, 5, 5, 4, 2, 2, 0, 3, 0, 1, …, 2, 6]）&lt;/p&gt;
+&lt;p&gt;由于每次分区至少都会排除一个键的所有元素，所以最多会进行7次分区。&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;问：找到一个使得&lt;code&gt;Arrays.sort&lt;/code&gt; 崩溃（crash）的整型数组。&lt;code&gt;Arrays.sort(int[])&lt;/code&gt;使用的排序算法是快排。更多细节参阅 &lt;a href=&#34;https://www.cs.dartmouth.edu/~doug/mdmspe.pdf&#34;&gt;A Killer Adversary for Quicksort&lt;/a&gt;。&lt;/p&gt;
+&lt;p&gt;答：一个使得Arrays.sort崩溃的输入必然是由于快排的性能过差导致的，根据&lt;a href=&#34;https://docs.google.com/presentation/d/19CbZ7oU-_b5y0Btyo1IfIAEqcn0DIgcCz49cMO9_hy4/edit#slide=id.g4661758db_1458&#34;&gt;讲义&lt;/a&gt;可以知道，快排性能退化的原因是分区后pivot落在了导致左右两个子数组长度极不均衡的位置，这会导致分区次数的增加从而对性能产生影响。所以现在要找到一个使得分区落点不平衡的输入，关键的问题是如何找到？&lt;/p&gt;
+&lt;p&gt;之前的问题可以知道快排对近乎有序的数组性能很差，但在构造一个很大的有序数组并传给&lt;code&gt;Arrays.sort&lt;/code&gt;后程序并没有崩溃，猜测内部做了一些优化。看起来必须依照论文给出的方法构造输入。&lt;/p&gt;</description>
+    </item>
     <item>
       <title>学习路线</title>
-      <link>http://localhost:1313/posts/path/</link>
+      <link>https://mirror4s.github.io/posts/path/</link>
       <pubDate>Mon, 06 Jan 2025 09:32:17 +0800</pubDate>
-      <guid>http://localhost:1313/posts/path/</guid>
+      <guid>https://mirror4s.github.io/posts/path/</guid>
       <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;
 &lt;p&gt;汇总我的计算机学习资源&lt;/p&gt;
 &lt;h2 id=&#34;web-开发&#34;&gt;Web 开发&lt;/h2&gt;
@@ -70,9 +132,9 @@
     </item>
     <item>
       <title>博客搭建</title>
-      <link>http://localhost:1313/posts/my-first-post/</link>
+      <link>https://mirror4s.github.io/posts/my-first-post/</link>
       <pubDate>Mon, 06 Jan 2025 09:07:27 +0800</pubDate>
-      <guid>http://localhost:1313/posts/my-first-post/</guid>
+      <guid>https://mirror4s.github.io/posts/my-first-post/</guid>
       <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;
 &lt;p&gt;本篇文章描述了如何基于Hugo和Github Page搭建一个私人博客。&lt;/p&gt;
 &lt;h2 id=&#34;hugo配置&#34;&gt;Hugo配置&lt;/h2&gt;
