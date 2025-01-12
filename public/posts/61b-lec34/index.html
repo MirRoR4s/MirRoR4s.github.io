@@ -1,27 +1,30 @@
 <!DOCTYPE html>
 <html lang="en" dir="auto">
 
-<head><meta charset="utf-8">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="robots" content="index, follow">
+<meta name="robots" content="noindex, nofollow">
 <title>61b Lec34 | 博客</title>
 <meta name="keywords" content="">
 <meta name="description" content="课后习题
 问：对下面的三个序列对，对每一对序列，判断第二个序列是否会出现在第一个序列的排序过程中。
 
-答：考察插入排序、归并排序、快速排序、堆排序。我觉得这道题的难点在于要在20分钟之内解决。（试卷11道题只给了110分钟，本题占据最高的3分）">
+答：考察插入排序、归并排序、快速排序、堆排序。我觉得这道题的难点在于要在20分钟之内解决。（试卷11道题只给了110分钟，本题占据最高的3分）
+
+问：为什么Java的Arrays.sort对int、long、char这样的基本数据类型数组采用快排，但对对象类型数组却采用归并排序呢？
+答：经过一番查阅，这个问题的答案应该是稳定性。快排是不稳定的（61B的讲义提到稳不稳定取决于分区策略，我有点迷茫了），而归并排序是稳定的。我们希望排序对象类型数组时它是稳定的，所以才采用归并排序。比如讲义中提到的将学生根据名称排序，如果名称相同则再根据学分排序。在这里如果排序算法不稳定，那么学分排序之后名称相同的学生的相对顺序就会被破坏。">
 <meta name="author" content="">
-<link rel="canonical" href="https://mirror4s.github.io/posts/61b-lec34/">
+<link rel="canonical" href="http://localhost:1313/posts/61b-lec34/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.9de45e225101e4f99701d2b68fc6b8a1ef6027928be6391fa15bf7f56326c909.css" integrity="sha256-neReIlEB5PmXAdK2j8a4oe9gJ5KL5jkfoVv39WMmyQk=" rel="preload stylesheet" as="style">
-<link rel="icon" href="https://mirror4s.github.io/favicon.ico">
-<link rel="icon" type="image/png" sizes="16x16" href="https://mirror4s.github.io/favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="https://mirror4s.github.io/favicon-32x32.png">
-<link rel="apple-touch-icon" href="https://mirror4s.github.io/apple-touch-icon.png">
-<link rel="mask-icon" href="https://mirror4s.github.io/safari-pinned-tab.svg">
+<link rel="icon" href="http://localhost:1313/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/favicon-32x32.png">
+<link rel="apple-touch-icon" href="http://localhost:1313/apple-touch-icon.png">
+<link rel="mask-icon" href="http://localhost:1313/safari-pinned-tab.svg">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
-<link rel="alternate" hreflang="en" href="https://mirror4s.github.io/posts/61b-lec34/">
+<link rel="alternate" hreflang="en" href="http://localhost:1313/posts/61b-lec34/">
 <noscript>
     <style>
         #theme-toggle,
@@ -58,73 +61,7 @@
         }
 
     </style>
-</noscript><meta property="og:url" content="https://mirror4s.github.io/posts/61b-lec34/">
-  <meta property="og:site_name" content="博客">
-  <meta property="og:title" content="61b Lec34">
-  <meta property="og:description" content="课后习题 问：对下面的三个序列对，对每一对序列，判断第二个序列是否会出现在第一个序列的排序过程中。
-答：考察插入排序、归并排序、快速排序、堆排序。我觉得这道题的难点在于要在20分钟之内解决。（试卷11道题只给了110分钟，本题占据最高的3分）">
-  <meta property="og:locale" content="zh-cn">
-  <meta property="og:type" content="article">
-    <meta property="article:section" content="posts">
-    <meta property="article:published_time" content="2025-01-06T20:37:52+08:00">
-    <meta property="article:modified_time" content="2025-01-06T20:37:52+08:00">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="61b Lec34">
-<meta name="twitter:description" content="课后习题
-问：对下面的三个序列对，对每一对序列，判断第二个序列是否会出现在第一个序列的排序过程中。
-
-答：考察插入排序、归并排序、快速排序、堆排序。我觉得这道题的难点在于要在20分钟之内解决。（试卷11道题只给了110分钟，本题占据最高的3分）">
-
-
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  "itemListElement": [
-    {
-      "@type": "ListItem",
-      "position":  1 ,
-      "name": "Posts",
-      "item": "https://mirror4s.github.io/posts/"
-    }, 
-    {
-      "@type": "ListItem",
-      "position":  2 ,
-      "name": "61b Lec34",
-      "item": "https://mirror4s.github.io/posts/61b-lec34/"
-    }
-  ]
-}
-</script>
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "BlogPosting",
-  "headline": "61b Lec34",
-  "name": "61b Lec34",
-  "description": "课后习题 问：对下面的三个序列对，对每一对序列，判断第二个序列是否会出现在第一个序列的排序过程中。\n答：考察插入排序、归并排序、快速排序、堆排序。我觉得这道题的难点在于要在20分钟之内解决。（试卷11道题只给了110分钟，本题占据最高的3分）\n",
-  "keywords": [
-    
-  ],
-  "articleBody": "课后习题 问：对下面的三个序列对，对每一对序列，判断第二个序列是否会出现在第一个序列的排序过程中。\n答：考察插入排序、归并排序、快速排序、堆排序。我觉得这道题的难点在于要在20分钟之内解决。（试卷11道题只给了110分钟，本题占据最高的3分）\n",
-  "wordCount" : "3",
-  "inLanguage": "en",
-  "datePublished": "2025-01-06T20:37:52+08:00",
-  "dateModified": "2025-01-06T20:37:52+08:00",
-  "mainEntityOfPage": {
-    "@type": "WebPage",
-    "@id": "https://mirror4s.github.io/posts/61b-lec34/"
-  },
-  "publisher": {
-    "@type": "Organization",
-    "name": "博客",
-    "logo": {
-      "@type": "ImageObject",
-      "url": "https://mirror4s.github.io/favicon.ico"
-    }
-  }
-}
-</script>
+</noscript>
 </head>
 
 <body class="" id="top">
@@ -142,7 +79,7 @@
 <header class="header">
     <nav class="nav">
         <div class="logo">
-            <a href="https://mirror4s.github.io/" accesskey="h" title="博客 (Alt + H)">博客</a>
+            <a href="http://localhost:1313/" accesskey="h" title="博客 (Alt + H)">博客</a>
             <div class="logo-switches">
                 <button id="theme-toggle" accesskey="t" title="(Alt + T)">
                     <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
@@ -184,8 +121,11 @@
   </header> 
   <div class="post-content"><h2 id="课后习题">课后习题<a hidden class="anchor" aria-hidden="true" href="#课后习题">#</a></h2>
 <p>问：对下面的三个序列对，对每一对序列，判断第二个序列是否会出现在第一个序列的排序过程中。</p>
-<p><img alt="alt text" loading="lazy" src="../../static/61b-lec34/image.png"></p>
+<p><img alt="alt text" loading="lazy" src="/images/image.png"></p>
 <p>答：考察插入排序、归并排序、快速排序、堆排序。我觉得这道题的难点在于要在20分钟之内解决。（试卷11道题只给了110分钟，本题占据最高的3分）</p>
+<hr>
+<p>问：为什么Java的Arrays.sort对int、long、char这样的基本数据类型数组采用快排，但对对象类型数组却采用归并排序呢？</p>
+<p>答：经过一番<a href="https://stackoverflow.com/questions/3707190/why-does-javas-arrays-sort-method-use-two-different-sorting-algorithms-for-diff">查阅</a>，这个问题的答案应该是稳定性。快排是不稳定的（61B的讲义提到稳不稳定取决于分区策略，我有点迷茫了），而归并排序是稳定的。我们希望排序对象类型数组时它是稳定的，所以才采用归并排序。比如讲义中提到的将学生根据名称排序，如果名称相同则再根据学分排序。在这里如果排序算法不稳定，那么学分排序之后名称相同的学生的相对顺序就会被破坏。</p>
 
 
   </div>
@@ -198,7 +138,7 @@
     </main>
     
 <footer class="footer">
-        <span>&copy; 2025 <a href="https://mirror4s.github.io/">博客</a></span> · 
+        <span>&copy; 2025 <a href="http://localhost:1313/">博客</a></span> · 
 
     <span>
         Powered by
