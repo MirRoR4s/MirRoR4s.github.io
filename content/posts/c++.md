@@ -22,3 +22,11 @@ title = 'C++之旅'
 ## 序列化/反序列化
 
 经常会需要将数据序列化然后放到网络上传输并从网络上接收数据反序列化回来，此时可以利用[nlohmann/json](https://github.com/nlohmann/json)这个库帮助我们序列化/反序列化数据。通过该库提供的`NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE`等宏可以超级轻松地实现数据的序列化和反序列化。
+
+---
+
+## Windows编程
+
+### netstat API版本
+
+在Windows系统上可以通过在命令行键入`netstat`来查询本机开放的TCP/UDP端口相关状态，关于其C++ API版本可以参见微软官方提供的[GetTcpTable2](https://learn.microsoft.com/en-us/windows/win32/api/iphlpapi/nf-iphlpapi-gettcptable2)函数和[GetExtendedUdpTable](https://learn.microsoft.com/en-us/windows/win32/api/iphlpapi/nf-iphlpapi-getextendedudptable)函数。
